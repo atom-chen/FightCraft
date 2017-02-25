@@ -1,0 +1,122 @@
+fileFormatVersion: 2
+guid: 57f2bca2882acaa4abf356cc11f7cbcd
+ModelImporter:
+  serializedVersion: 15
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Stage_DiXiaCheng_DiMian01
+    100004: Stage_DiXiaCheng_DiMianBaoBian006
+    100006: Stage_DiXiaCheng_DiMianBaoBian01
+    100008: Stage_DiXiaCheng_DiMianBaoBian010
+    100010: Stage_DiXiaCheng_DiMianBaoBian02
+    100012: Stage_DiXiaCheng_DiMianBaoBian03
+    100014: Stage_DiXiaCheng_DiMianBaoBian04
+    100016: Stage_DiXiaCheng_DiMianBaoBian05
+    100018: Stage_DiXiaCheng_DiMianBaoBian06
+    100020: Stage_DiXiaCheng_DiMianBaoBian07
+    100022: Stage_DiXiaCheng_DiMianBaoBian08
+    100024: Stage_DiXiaCheng_DiMianBaoBian09
+    400000: //RootNode
+    400002: Stage_DiXiaCheng_DiMian01
+    400004: Stage_DiXiaCheng_DiMianBaoBian006
+    400006: Stage_DiXiaCheng_DiMianBaoBian01
+    400008: Stage_DiXiaCheng_DiMianBaoBian010
+    400010: Stage_DiXiaCheng_DiMianBaoBian02
+    400012: Stage_DiXiaCheng_DiMianBaoBian03
+    400014: Stage_DiXiaCheng_DiMianBaoBian04
+    400016: Stage_DiXiaCheng_DiMianBaoBian05
+    400018: Stage_DiXiaCheng_DiMianBaoBian06
+    400020: Stage_DiXiaCheng_DiMianBaoBian07
+    400022: Stage_DiXiaCheng_DiMianBaoBian08
+    400024: Stage_DiXiaCheng_DiMianBaoBian09
+    2300000: //RootNode
+    2300002: Stage_DiXiaCheng_DiMian01
+    2300004: Stage_DiXiaCheng_DiMianBaoBian006
+    2300006: Stage_DiXiaCheng_DiMianBaoBian01
+    2300008: Stage_DiXiaCheng_DiMianBaoBian010
+    2300010: Stage_DiXiaCheng_DiMianBaoBian02
+    2300012: Stage_DiXiaCheng_DiMianBaoBian03
+    2300014: Stage_DiXiaCheng_DiMianBaoBian04
+    2300016: Stage_DiXiaCheng_DiMianBaoBian05
+    2300018: Stage_DiXiaCheng_DiMianBaoBian06
+    2300020: Stage_DiXiaCheng_DiMianBaoBian07
+    2300022: Stage_DiXiaCheng_DiMianBaoBian08
+    2300024: Stage_DiXiaCheng_DiMianBaoBian09
+    3300000: //RootNode
+    3300002: Stage_DiXiaCheng_DiMian01
+    3300004: Stage_DiXiaCheng_DiMianBaoBian006
+    3300006: Stage_DiXiaCheng_DiMianBaoBian01
+    3300008: Stage_DiXiaCheng_DiMianBaoBian010
+    3300010: Stage_DiXiaCheng_DiMianBaoBian02
+    3300012: Stage_DiXiaCheng_DiMianBaoBian03
+    3300014: Stage_DiXiaCheng_DiMianBaoBian04
+    3300016: Stage_DiXiaCheng_DiMianBaoBian05
+    3300018: Stage_DiXiaCheng_DiMianBaoBian06
+    3300020: Stage_DiXiaCheng_DiMianBaoBian07
+    3300022: Stage_DiXiaCheng_DiMianBaoBian08
+    3300024: Stage_DiXiaCheng_DiMianBaoBian09
+    4300000: Stage_DiXiaCheng_DiMianBaoBian01
+    4300002: Stage_DiXiaCheng_DiMianBaoBian02
+    4300004: Stage_DiXiaCheng_DiMian01
+    4300006: Stage_DiXiaCheng_DiMianBaoBian03
+    4300008: Stage_DiXiaCheng_DiMianBaoBian006
+    4300010: Stage_DiXiaCheng_DiMianBaoBian04
+    4300012: Stage_DiXiaCheng_DiMianBaoBian05
+    4300014: Stage_DiXiaCheng_DiMianBaoBian06
+    4300016: Stage_DiXiaCheng_DiMianBaoBian07
+    4300018: Stage_DiXiaCheng_DiMianBaoBian08
+    4300020: Stage_DiXiaCheng_DiMianBaoBian09
+    4300022: Stage_DiXiaCheng_DiMianBaoBian010
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  userData: 

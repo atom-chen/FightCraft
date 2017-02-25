@@ -1,0 +1,3765 @@
+fileFormatVersion: 2
+guid: 394ebab419836d841b0d69c82000728a
+ModelImporter:
+  serializedVersion: 15
+  fileIDToRecycleName:
+    100000: Bip001 HeadNub
+    100002: Bip001 L Calf
+    100004: Bip001 L Clavicle
+    100006: Bip001 L Foot
+    100008: Bip001 L Forearm
+    100010: Bip001 L Thigh
+    100012: Bip001 L Toe0
+    100014: Bip001 L Toe0Nub
+    100016: Bip001 L UpperArm
+    100018: Bip001 Neck
+    100020: Bip001 Pelvis
+    100022: Bip001 R Calf
+    100024: Bip001 R Clavicle
+    100026: Bip001 R Foot
+    100028: Bip001 R Forearm
+    100030: Bip001 R Thigh
+    100032: Bip001 R Toe0
+    100034: Bip001 R Toe0Nub
+    100036: Bip001 R UpperArm
+    100038: Bip001 Spine
+    100040: Bip001 Spine1
+    100042: buttle
+    100044: center
+    100046: center L ForeTwist
+    100048: center L ForeTwist1
+    100050: center R ForeTwist
+    100052: center R ForeTwist1
+    100054: //RootNode
+    100056: Char_Girl_02_AM
+    100058: FixP1
+    100060: FixP2
+    100062: Hair_01
+    100064: Hair_02
+    100066: Hair_03
+    100068: head
+    100070: Hit
+    100072: lefthand
+    100074: QB_B01
+    100076: QB_B02
+    100078: QB_F01
+    100080: QB_F02
+    100082: QB_L01
+    100084: QB_L02
+    100086: QB_R01
+    100088: QB_R02
+    100090: righthand
+    100092: rightweapon
+    100094: sole
+    100096: Char_Girl_01
+    100098: Char_Girl_02
+    400000: Bip001 HeadNub
+    400002: Bip001 L Calf
+    400004: Bip001 L Clavicle
+    400006: Bip001 L Foot
+    400008: Bip001 L Forearm
+    400010: Bip001 L Thigh
+    400012: Bip001 L Toe0
+    400014: Bip001 L Toe0Nub
+    400016: Bip001 L UpperArm
+    400018: Bip001 Neck
+    400020: Bip001 Pelvis
+    400022: Bip001 R Calf
+    400024: Bip001 R Clavicle
+    400026: Bip001 R Foot
+    400028: Bip001 R Forearm
+    400030: Bip001 R Thigh
+    400032: Bip001 R Toe0
+    400034: Bip001 R Toe0Nub
+    400036: Bip001 R UpperArm
+    400038: Bip001 Spine
+    400040: Bip001 Spine1
+    400042: buttle
+    400044: center
+    400046: center L ForeTwist
+    400048: center L ForeTwist1
+    400050: center R ForeTwist
+    400052: center R ForeTwist1
+    400054: //RootNode
+    400056: Char_Girl_02_AM
+    400058: FixP1
+    400060: FixP2
+    400062: Hair_01
+    400064: Hair_02
+    400066: Hair_03
+    400068: head
+    400070: Hit
+    400072: lefthand
+    400074: QB_B01
+    400076: QB_B02
+    400078: QB_F01
+    400080: QB_F02
+    400082: QB_L01
+    400084: QB_L02
+    400086: QB_R01
+    400088: QB_R02
+    400090: righthand
+    400092: rightweapon
+    400094: sole
+    400096: Char_Girl_01
+    400098: Char_Girl_02
+    4300000: Char_Girl_02_AM
+    4300002: Char_Girl_01
+    4300004: Char_Girl_02
+    7400000: Act_S_Attack_01
+    7400002: Act_S_Attack_02
+    7400004: Act_S_Attack_03
+    7400006: Act_S_Attack_04
+    7400008: Act_S_Attack_05
+    7400010: Act_S_Skill_02
+    7400012: Act_S_Skill_05
+    7400014: Act_S_Skill_03_Start
+    7400016: Act_S_Skill_03_End
+    7400018: Act_S_Skill_04
+    7400020: Act_S_Stand_01
+    7400022: Act_S_Hit_01
+    7400024: Act_S_Fly_01
+    7400026: Act_S_Rise_01
+    7400028: Act_S_Roll_01
+    7400030: Act_S_Move_01
+    7400032: Act_S_CA_01_Start
+    7400034: Act_S_CA_01_Hit
+    7400036: Act_S_CA_01_End
+    7400038: Act_S_Fall_01
+    7400040: Act_S_Skill_01
+    7400042: Act_S_Super_01_Start
+    7400044: Act_S_Super_01
+    7400046: Act_S_Skill_05_Start
+    7400048: Act_S_Skill_03_End
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: Char_Girl_02_AM
+    13700002: Char_Girl_01
+    13700004: Char_Girl_02
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Act_S_Attack_01
+      takeName: Char_Girl_02_AM
+      firstFrame: 2
+      lastFrame: 27
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: center
+        weight: 1
+      - path: center/Bip001 Pelvis
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0/Bip001 L Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0/Bip001 R Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm/lefthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist/center L ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon/buttle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist/center R ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Bip001
+          HeadNub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02/Hair_03
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01/QB_B02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01/QB_F02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01/QB_L02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01/QB_R02
+        weight: 1
+      - path: center/sole
+        weight: 1
+      - path: Char_Girl_02_AM
+        weight: 1
+      - path: FixP1
+        weight: 1
+      - path: FixP2
+        weight: 1
+      - path: Hit
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Act_S_Attack_02
+      takeName: Char_Girl_02_AM
+      firstFrame: 30
+      lastFrame: 54
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: center
+        weight: 1
+      - path: center/Bip001 Pelvis
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0/Bip001 L Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0/Bip001 R Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm/lefthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist/center L ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon/buttle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist/center R ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Bip001
+          HeadNub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02/Hair_03
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01/QB_B02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01/QB_F02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01/QB_L02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01/QB_R02
+        weight: 1
+      - path: center/sole
+        weight: 1
+      - path: Char_Girl_02_AM
+        weight: 1
+      - path: FixP1
+        weight: 1
+      - path: FixP2
+        weight: 1
+      - path: Hit
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Act_S_Attack_03
+      takeName: Char_Girl_02_AM
+      firstFrame: 57
+      lastFrame: 87
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: center
+        weight: 1
+      - path: center/Bip001 Pelvis
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0/Bip001 L Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0/Bip001 R Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm/lefthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist/center L ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon/buttle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist/center R ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Bip001
+          HeadNub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02/Hair_03
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01/QB_B02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01/QB_F02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01/QB_L02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01/QB_R02
+        weight: 1
+      - path: center/sole
+        weight: 1
+      - path: Char_Girl_02_AM
+        weight: 1
+      - path: FixP1
+        weight: 1
+      - path: FixP2
+        weight: 1
+      - path: Hit
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Act_S_Attack_04
+      takeName: Char_Girl_02_AM
+      firstFrame: 90
+      lastFrame: 124
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: center
+        weight: 1
+      - path: center/Bip001 Pelvis
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0/Bip001 L Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0/Bip001 R Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm/lefthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist/center L ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon/buttle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist/center R ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Bip001
+          HeadNub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02/Hair_03
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01/QB_B02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01/QB_F02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01/QB_L02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01/QB_R02
+        weight: 1
+      - path: center/sole
+        weight: 1
+      - path: Char_Girl_02_AM
+        weight: 1
+      - path: FixP1
+        weight: 1
+      - path: FixP2
+        weight: 1
+      - path: Hit
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Act_S_Attack_05
+      takeName: Char_Girl_02_AM
+      firstFrame: 127
+      lastFrame: 163
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: center
+        weight: 1
+      - path: center/Bip001 Pelvis
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0/Bip001 L Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0/Bip001 R Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm/lefthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist/center L ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon/buttle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist/center R ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Bip001
+          HeadNub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02/Hair_03
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01/QB_B02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01/QB_F02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01/QB_L02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01/QB_R02
+        weight: 1
+      - path: center/sole
+        weight: 1
+      - path: Char_Girl_02_AM
+        weight: 1
+      - path: FixP1
+        weight: 1
+      - path: FixP2
+        weight: 1
+      - path: Hit
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Act_S_Skill_01
+      takeName: Char_Girl_02_AM
+      firstFrame: 200
+      lastFrame: 269
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: center
+        weight: 1
+      - path: center/Bip001 Pelvis
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0/Bip001 L Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0/Bip001 R Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm/lefthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist/center L ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon/buttle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist/center R ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Bip001
+          HeadNub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02/Hair_03
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01/QB_B02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01/QB_F02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01/QB_L02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01/QB_R02
+        weight: 1
+      - path: center/sole
+        weight: 1
+      - path: Char_Girl_02_AM
+        weight: 1
+      - path: FixP1
+        weight: 1
+      - path: FixP2
+        weight: 1
+      - path: Hit
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Act_S_Skill_02
+      takeName: Char_Girl_02_AM
+      firstFrame: 273
+      lastFrame: 303
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: center
+        weight: 1
+      - path: center/Bip001 Pelvis
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0/Bip001 L Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0/Bip001 R Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm/lefthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist/center L ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon/buttle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist/center R ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Bip001
+          HeadNub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02/Hair_03
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01/QB_B02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01/QB_F02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01/QB_L02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01/QB_R02
+        weight: 1
+      - path: center/sole
+        weight: 1
+      - path: Char_Girl_02_AM
+        weight: 1
+      - path: FixP1
+        weight: 1
+      - path: FixP2
+        weight: 1
+      - path: Hit
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Act_S_Skill_03_Start
+      takeName: Char_Girl_02_AM
+      firstFrame: 307
+      lastFrame: 343
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: center
+        weight: 1
+      - path: center/Bip001 Pelvis
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0/Bip001 L Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0/Bip001 R Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm/lefthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist/center L ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon/buttle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist/center R ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Bip001
+          HeadNub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02/Hair_03
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01/QB_B02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01/QB_F02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01/QB_L02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01/QB_R02
+        weight: 1
+      - path: center/sole
+        weight: 1
+      - path: Char_Girl_02_AM
+        weight: 1
+      - path: FixP1
+        weight: 1
+      - path: FixP2
+        weight: 1
+      - path: Hit
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Act_S_Skill_03_End
+      takeName: Char_Girl_02_AM
+      firstFrame: 343
+      lastFrame: 382
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: center
+        weight: 1
+      - path: center/Bip001 Pelvis
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0/Bip001 L Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0/Bip001 R Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm/lefthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist/center L ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon/buttle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist/center R ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Bip001
+          HeadNub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02/Hair_03
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01/QB_B02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01/QB_F02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01/QB_L02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01/QB_R02
+        weight: 1
+      - path: center/sole
+        weight: 1
+      - path: Char_Girl_02_AM
+        weight: 1
+      - path: FixP1
+        weight: 1
+      - path: FixP2
+        weight: 1
+      - path: Hit
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Act_S_Skill_04
+      takeName: Char_Girl_02_AM
+      firstFrame: 386
+      lastFrame: 431
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: center
+        weight: 1
+      - path: center/Bip001 Pelvis
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0/Bip001 L Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0/Bip001 R Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm/lefthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist/center L ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon/buttle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist/center R ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Bip001
+          HeadNub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02/Hair_03
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01/QB_B02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01/QB_F02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01/QB_L02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01/QB_R02
+        weight: 1
+      - path: center/sole
+        weight: 1
+      - path: Char_Girl_02_AM
+        weight: 1
+      - path: FixP1
+        weight: 1
+      - path: FixP2
+        weight: 1
+      - path: Hit
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Act_S_Stand_01
+      takeName: Char_Girl_02_AM
+      firstFrame: 435
+      lastFrame: 475
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: center
+        weight: 1
+      - path: center/Bip001 Pelvis
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0/Bip001 L Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0/Bip001 R Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm/lefthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist/center L ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon/buttle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist/center R ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Bip001
+          HeadNub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02/Hair_03
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01/QB_B02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01/QB_F02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01/QB_L02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01/QB_R02
+        weight: 1
+      - path: center/sole
+        weight: 1
+      - path: Char_Girl_02_AM
+        weight: 1
+      - path: FixP1
+        weight: 1
+      - path: FixP2
+        weight: 1
+      - path: Hit
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Act_S_Hit_01
+      takeName: Char_Girl_02_AM
+      firstFrame: 480
+      lastFrame: 495
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: center
+        weight: 1
+      - path: center/Bip001 Pelvis
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0/Bip001 L Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0/Bip001 R Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm/lefthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist/center L ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon/buttle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist/center R ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Bip001
+          HeadNub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02/Hair_03
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01/QB_B02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01/QB_F02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01/QB_L02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01/QB_R02
+        weight: 1
+      - path: center/sole
+        weight: 1
+      - path: Char_Girl_02_AM
+        weight: 1
+      - path: FixP1
+        weight: 1
+      - path: FixP2
+        weight: 1
+      - path: Hit
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Act_S_Fly_01
+      takeName: Char_Girl_02_AM
+      firstFrame: 500
+      lastFrame: 530
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: center
+        weight: 1
+      - path: center/Bip001 Pelvis
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0/Bip001 L Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0/Bip001 R Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm/lefthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist/center L ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon/buttle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist/center R ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Bip001
+          HeadNub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02/Hair_03
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01/QB_B02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01/QB_F02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01/QB_L02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01/QB_R02
+        weight: 1
+      - path: center/sole
+        weight: 1
+      - path: Char_Girl_02_AM
+        weight: 1
+      - path: FixP1
+        weight: 1
+      - path: FixP2
+        weight: 1
+      - path: Hit
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Act_S_Rise_01
+      takeName: Char_Girl_02_AM
+      firstFrame: 535
+      lastFrame: 555
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: center
+        weight: 1
+      - path: center/Bip001 Pelvis
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0/Bip001 L Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0/Bip001 R Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm/lefthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist/center L ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon/buttle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist/center R ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Bip001
+          HeadNub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02/Hair_03
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01/QB_B02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01/QB_F02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01/QB_L02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01/QB_R02
+        weight: 1
+      - path: center/sole
+        weight: 1
+      - path: Char_Girl_02_AM
+        weight: 1
+      - path: FixP1
+        weight: 1
+      - path: FixP2
+        weight: 1
+      - path: Hit
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Act_S_Roll_01
+      takeName: Char_Girl_02_AM
+      firstFrame: 565
+      lastFrame: 585
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: center
+        weight: 1
+      - path: center/Bip001 Pelvis
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0/Bip001 L Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0/Bip001 R Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm/lefthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist/center L ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon/buttle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist/center R ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Bip001
+          HeadNub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02/Hair_03
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01/QB_B02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01/QB_F02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01/QB_L02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01/QB_R02
+        weight: 1
+      - path: center/sole
+        weight: 1
+      - path: Char_Girl_02_AM
+        weight: 1
+      - path: FixP1
+        weight: 1
+      - path: FixP2
+        weight: 1
+      - path: Hit
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Act_S_Move_01
+      takeName: Char_Girl_02_AM
+      firstFrame: 590
+      lastFrame: 608
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: center
+        weight: 1
+      - path: center/Bip001 Pelvis
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0/Bip001 L Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0/Bip001 R Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm/lefthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist/center L ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon/buttle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist/center R ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Bip001
+          HeadNub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02/Hair_03
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01/QB_B02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01/QB_F02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01/QB_L02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01/QB_R02
+        weight: 1
+      - path: center/sole
+        weight: 1
+      - path: Char_Girl_02_AM
+        weight: 1
+      - path: FixP1
+        weight: 1
+      - path: FixP2
+        weight: 1
+      - path: Hit
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Act_S_CA_01_Start
+      takeName: Char_Girl_02_AM
+      firstFrame: 620
+      lastFrame: 640
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: center
+        weight: 1
+      - path: center/Bip001 Pelvis
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0/Bip001 L Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0/Bip001 R Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm/lefthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist/center L ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon/buttle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist/center R ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Bip001
+          HeadNub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02/Hair_03
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01/QB_B02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01/QB_F02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01/QB_L02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01/QB_R02
+        weight: 1
+      - path: center/sole
+        weight: 1
+      - path: Char_Girl_02_AM
+        weight: 1
+      - path: FixP1
+        weight: 1
+      - path: FixP2
+        weight: 1
+      - path: Hit
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Act_S_CA_01_Hit
+      takeName: Char_Girl_02_AM
+      firstFrame: 641
+      lastFrame: 651
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: center
+        weight: 1
+      - path: center/Bip001 Pelvis
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0/Bip001 L Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0/Bip001 R Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm/lefthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist/center L ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon/buttle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist/center R ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Bip001
+          HeadNub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02/Hair_03
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01/QB_B02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01/QB_F02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01/QB_L02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01/QB_R02
+        weight: 1
+      - path: center/sole
+        weight: 1
+      - path: Char_Girl_02_AM
+        weight: 1
+      - path: FixP1
+        weight: 1
+      - path: FixP2
+        weight: 1
+      - path: Hit
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Act_S_CA_01_End
+      takeName: Char_Girl_02_AM
+      firstFrame: 651
+      lastFrame: 673
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: center
+        weight: 1
+      - path: center/Bip001 Pelvis
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0/Bip001 L Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0/Bip001 R Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm/lefthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist/center L ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon/buttle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist/center R ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Bip001
+          HeadNub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02/Hair_03
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01/QB_B02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01/QB_F02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01/QB_L02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01/QB_R02
+        weight: 1
+      - path: center/sole
+        weight: 1
+      - path: Char_Girl_02_AM
+        weight: 1
+      - path: FixP1
+        weight: 1
+      - path: FixP2
+        weight: 1
+      - path: Hit
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Act_S_Fall_01
+      takeName: Char_Girl_02_AM
+      firstFrame: 680
+      lastFrame: 755
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: center
+        weight: 1
+      - path: center/Bip001 Pelvis
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0/Bip001 L Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0/Bip001 R Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm/lefthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist/center L ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon/buttle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist/center R ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Bip001
+          HeadNub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02/Hair_03
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01/QB_B02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01/QB_F02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01/QB_L02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01/QB_R02
+        weight: 1
+      - path: center/sole
+        weight: 1
+      - path: Char_Girl_02_AM
+        weight: 1
+      - path: FixP1
+        weight: 1
+      - path: FixP2
+        weight: 1
+      - path: Hit
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Act_S_Skill_05
+      takeName: Char_Girl_02_AM
+      firstFrame: 765
+      lastFrame: 795
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: center
+        weight: 1
+      - path: center/Bip001 Pelvis
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0/Bip001 L Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0/Bip001 R Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm/lefthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist/center L ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon/buttle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist/center R ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Bip001
+          HeadNub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02/Hair_03
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01/QB_B02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01/QB_F02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01/QB_L02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01/QB_R02
+        weight: 1
+      - path: center/sole
+        weight: 1
+      - path: Char_Girl_02_AM
+        weight: 1
+      - path: FixP1
+        weight: 1
+      - path: FixP2
+        weight: 1
+      - path: Hit
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Act_S_Super_01_Start
+      takeName: Char_Girl_02_AM
+      firstFrame: 804
+      lastFrame: 814
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: center
+        weight: 1
+      - path: center/Bip001 Pelvis
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0/Bip001 L Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0/Bip001 R Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm/lefthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist/center L ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon/buttle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist/center R ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Bip001
+          HeadNub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02/Hair_03
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01/QB_B02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01/QB_F02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01/QB_L02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01/QB_R02
+        weight: 1
+      - path: center/sole
+        weight: 1
+      - path: Char_Girl_02_AM
+        weight: 1
+      - path: FixP1
+        weight: 1
+      - path: FixP2
+        weight: 1
+      - path: Hit
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Act_S_Super_01
+      takeName: Char_Girl_02_AM
+      firstFrame: 814
+      lastFrame: 887
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: center
+        weight: 1
+      - path: center/Bip001 Pelvis
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0/Bip001 L Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0/Bip001 R Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm/lefthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist/center L ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon/buttle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist/center R ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Bip001
+          HeadNub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02/Hair_03
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01/QB_B02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01/QB_F02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01/QB_L02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01/QB_R02
+        weight: 1
+      - path: center/sole
+        weight: 1
+      - path: Char_Girl_02_AM
+        weight: 1
+      - path: FixP1
+        weight: 1
+      - path: FixP2
+        weight: 1
+      - path: Hit
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Act_S_Skill_05_Start
+      takeName: Char_Girl_02_AM
+      firstFrame: 900
+      lastFrame: 922
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: center
+        weight: 1
+      - path: center/Bip001 Pelvis
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0/Bip001 L Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0/Bip001 R Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm/lefthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist/center L ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon/buttle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist/center R ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Bip001
+          HeadNub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02/Hair_03
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01/QB_B02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01/QB_F02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01/QB_L02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01/QB_R02
+        weight: 1
+      - path: center/sole
+        weight: 1
+      - path: Char_Girl_02_AM
+        weight: 1
+      - path: FixP1
+        weight: 1
+      - path: FixP2
+        weight: 1
+      - path: Hit
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Act_S_Skill_03_End
+      takeName: Char_Girl_02_AM
+      firstFrame: 923
+      lastFrame: 945
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: center
+        weight: 1
+      - path: center/Bip001 Pelvis
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 L Thigh/Bip001 L Calf/Bip001
+          L Foot/Bip001 L Toe0/Bip001 L Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 R Thigh/Bip001 R Calf/Bip001
+          R Foot/Bip001 R Toe0/Bip001 R Toe0Nub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/Bip001 L Forearm/lefthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L
+          Clavicle/Bip001 L UpperArm/center L ForeTwist/center L ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon/buttle
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R
+          Clavicle/Bip001 R UpperArm/center R ForeTwist/center R ForeTwist1
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Bip001
+          HeadNub
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02
+        weight: 1
+      - path: center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Hair_01/Hair_02/Hair_03
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_B01/QB_B02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_F01/QB_F02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_L01/QB_L02
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01
+        weight: 1
+      - path: center/Bip001 Pelvis/QB_R01/QB_R02
+        weight: 1
+      - path: center/sole
+        weight: 1
+      - path: Char_Girl_02_AM
+        weight: 1
+      - path: FixP1
+        weight: 1
+      - path: FixP2
+        weight: 1
+      - path: Hit
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  userData: 

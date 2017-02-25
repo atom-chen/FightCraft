@@ -1,0 +1,130 @@
+fileFormatVersion: 2
+guid: 99278f6d31b082b41b2c24e80a24b8ee
+TextureImporter:
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: 2
+    aniso: 1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 1
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 0
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 0
+  textureType: 0
+  buildTargetSettings:
+  - buildTarget: Android
+    maxTextureSize: 1024
+    textureFormat: -3
+    compressionQuality: 50
+  spriteSheet:
+    sprites:
+    - name: dayan2_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 624
+        width: 256
+        height: 256
+      alignment: 1
+      pivot: {x: 0, y: 1}
+    - name: dayan2_4
+      rect:
+        serializedVersion: 2
+        x: 258
+        y: 624
+        width: 256
+        height: 256
+      alignment: 1
+      pivot: {x: 0, y: 1}
+    - name: dayan2_5
+      rect:
+        serializedVersion: 2
+        x: 516
+        y: 624
+        width: 256
+        height: 256
+      alignment: 1
+      pivot: {x: 0, y: 1}
+    - name: dayan2_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 366
+        width: 256
+        height: 256
+      alignment: 1
+      pivot: {x: 0, y: 1}
+    - name: dayan2_7
+      rect:
+        serializedVersion: 2
+        x: 258
+        y: 366
+        width: 256
+        height: 256
+      alignment: 1
+      pivot: {x: 0, y: 1}
+    - name: dayan2_8
+      rect:
+        serializedVersion: 2
+        x: 516
+        y: 366
+        width: 256
+        height: 256
+      alignment: 1
+      pivot: {x: 0, y: 1}
+    - name: dayan2_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 108
+        width: 256
+        height: 256
+      alignment: 1
+      pivot: {x: 0, y: 1}
+    - name: dayan2_11
+      rect:
+        serializedVersion: 2
+        x: 258
+        y: 108
+        width: 256
+        height: 256
+      alignment: 1
+      pivot: {x: 0, y: 1}
+    - name: dayan2_12
+      rect:
+        serializedVersion: 2
+        x: 516
+        y: 108
+        width: 256
+        height: 256
+      alignment: 1
+      pivot: {x: 0, y: 1}
+  spritePackingTag: 
+  userData: 

@@ -1,0 +1,104 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: ShadowMaterial
+  m_Shader: {fileID: 4800000, guid: d6ec004a16ec0ce4c8d13e24306fcc2f, type: 3}
+  m_ShaderKeywords: []
+  m_CustomRenderQueue: -1
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats:
+      data:
+        first:
+          name: _Width
+        second: .200000003
+      data:
+        first:
+          name: _Length1
+        second: 1
+      data:
+        first:
+          name: _Length2
+        second: .200000003
+      data:
+        first:
+          name: _OutLineRange
+        second: .100000001
+      data:
+        first:
+          name: _Circle1Range
+        second: .100000001
+      data:
+        first:
+          name: _Circle1Alpha
+        second: .699999988
+      data:
+        first:
+          name: _Circle2Range
+        second: .100000001
+      data:
+        first:
+          name: _Circle2Alpha
+        second: .699999988
+      data:
+        first:
+          name: _HaloSpeed
+        second: .699999988
+      data:
+        first:
+          name: _HaloDis
+        second: 0
+      data:
+        first:
+          name: _Range
+        second: .400000006
+      data:
+        first:
+          name: _RangeInner
+        second: .200000003
+      data:
+        first:
+          name: _Angle
+        second: 45
+      data:
+        first:
+          name: _AngleTan
+        second: 0
+      data:
+        first:
+          name: _LineDisParam
+        second: 0
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: .441176474, g: .441176474, b: .441176474, a: 1}
+      data:
+        first:
+          name: _OutLineColor
+        second: {r: 1, g: 0, b: 0, a: 0}
+      data:
+        first:
+          name: _Circle1Color
+        second: {r: 1, g: 0, b: 0, a: 0}
+      data:
+        first:
+          name: _Circle2Color
+        second: {r: 1, g: 0, b: 0, a: 0}
+      data:
+        first:
+          name: _ShadowColor
+        second: {r: .0784313753, g: .0784313753, b: .0784313753, a: .70588237}

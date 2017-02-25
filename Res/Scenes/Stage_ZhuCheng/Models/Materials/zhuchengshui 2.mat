@@ -1,0 +1,102 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: zhuchengshui 2
+  m_Shader: {fileID: 4800000, guid: 1da46b72e7429484693adce4dbf9e97b, type: 3}
+  m_ShaderKeywords: []
+  m_CustomRenderQueue: -1
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 85ae6bacc9151274089fe066b68c7837, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _ReflectionTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 8e6137a0481d98d44b3d432b8fe63baa, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Normal
+        second:
+          m_Texture: {fileID: 2800000, guid: 0c013071b4d34924da5369b60e28b3bb, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats:
+      data:
+        first:
+          name: _CW
+        second: .625
+      data:
+        first:
+          name: _AW
+        second: .232142851
+      data:
+        first:
+          name: _Shininess
+        second: 13.6468964
+      data:
+        first:
+          name: _ReflectionAlpha
+        second: .357142866
+      data:
+        first:
+          name: _ReflectionBias
+        second: .620000005
+      data:
+        first:
+          name: _MainAlpha
+        second: .800000012
+      data:
+        first:
+          name: _FogStrength
+        second: .375
+      data:
+        first:
+          name: _FogShininess
+        second: 2.5
+      data:
+        first:
+          name: _InvFadeParemeter
+        second: 10
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _TintColor
+        second: {r: .75, g: .75, b: .75, a: .403921574}
+      data:
+        first:
+          name: _TexAtlasTiling
+        second: {r: .100000001, g: .100000001, b: 0, a: 1}
+      data:
+        first:
+          name: _MainColor
+        second: {r: .307309657, g: .740051746, b: .852941155, a: 1}
+      data:
+        first:
+          name: _FogColor
+        second: {r: .109999999, g: .109999999, b: .319999993, a: 1}
+      data:
+        first:
+          name: _DirectionUv
+        second: {r: -2, g: 1.37, b: 0, a: -5}
+      data:
+        first:
+          name: _SunPos
+        second: {r: 0, g: 0, b: 0, a: 0}
