@@ -8,7 +8,8 @@ public class ObjMotionFly : ObjMotionHit
     public override void InitMotion(MotionManager manager)
     {
         base.InitMotion(manager);
-
+        if (_RiseAnim != null)
+            _MotionManager.InitAnimation(_RiseAnim);
         _MotionPriority = 1001; 
     }
 
