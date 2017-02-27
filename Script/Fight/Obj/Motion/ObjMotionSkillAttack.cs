@@ -58,6 +58,7 @@ public class ObjMotionSkillAttack : ObjMotionSkillBase
                 break;
             case "NextInputEnd":
                 _CanNextInput = false;
+                FinishSkillImmediately();
                 break;
         }
     }
@@ -65,6 +66,22 @@ public class ObjMotionSkillAttack : ObjMotionSkillBase
     protected override void InitEvent()
     {
         base.InitEvent();
+    }
+
+    protected override void FinishSkillImmediately()
+    {
+        base.FinishSkillImmediately();
+
+        if (_Effect != null)
+            _MotionManager.StopSkillEffect(_Effect);
+
+        foreach (var effect in _NextEffect)
+        {
+            if (effect != null)
+            {
+                _MotionManager.StopSkillEffect(effect);
+            }
+        }
     }
     #endregion
 
@@ -97,7 +114,16 @@ public class ObjMotionSkillAttack : ObjMotionSkillBase
             _SkillLastTime = _NextAnim[_CurStep].length;
             if (_NextEffect.Length > _CurStep && _NextEffect[_CurStep] != null)
             {
-                _NextEffect[_CurStep].PlayEffect(_MotionManager._RoleAttrManager.SkillSpeed);
+                _MotionManager.PlaySkillEffect(_NextEffect[_CurStep]);
+            }
+
+            if (_CurStep - 1 >= 0 && _NextEffect[_CurStep - 1] != null)
+            {
+                _MotionManager.StopSkillEffect(_NextEffect[_CurStep - 1]);
+            }
+            else
+            {
+                _MotionManager.StopSkillEffect(_Effect);
             }
 
             StopAllCoroutines();
@@ -106,5 +132,7 @@ public class ObjMotionSkillAttack : ObjMotionSkillBase
             _CanNextInput = false;
         }
     }
+
+
 
 }

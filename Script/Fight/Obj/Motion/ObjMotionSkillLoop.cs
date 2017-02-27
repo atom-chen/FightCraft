@@ -80,6 +80,13 @@ public class ObjMotionSkillLoop : ObjMotionSkillBase
     {
         base.InitEvent();
     }
+
+    protected override void FinishSkillImmediately()
+    {
+        base.FinishSkillImmediately();
+        if (_EffectEnd != null)
+            _MotionManager.StopSkillEffect(_EffectEnd);
+    }
     #endregion
 
     public AnimationClip _AnimLoop;
@@ -96,7 +103,7 @@ public class ObjMotionSkillLoop : ObjMotionSkillBase
         {
             _MotionManager.PlayAnimation(_AnimationClip);
             if (_Effect != null)
-                _Effect.PlayEffect(_MotionManager._RoleAttrManager.SkillSpeed);
+                _MotionManager.PlaySkillEffect(_Effect);
         }
         else if (_AnimLoop != null)
         {
@@ -113,7 +120,10 @@ public class ObjMotionSkillLoop : ObjMotionSkillBase
     {
         _MotionManager.PlayAnimation(_AnimLoop);
         if (_EffectLoop != null)
-            _EffectLoop.PlayEffect(_MotionManager._RoleAttrManager.SkillSpeed);
+            _MotionManager.PlaySkillEffect(_EffectLoop);
+
+        if (_Effect != null)
+            _MotionManager.StopSkillEffect(_Effect);
 
         StartCoroutine(SkillLoopEnd());
     }
@@ -126,7 +136,10 @@ public class ObjMotionSkillLoop : ObjMotionSkillBase
         {
             _MotionManager.PlayAnimation(_AnimEnd);
             if (_EffectEnd != null)
-                _EffectEnd.PlayEffect(_MotionManager._RoleAttrManager.SkillSpeed);
+                _MotionManager.PlaySkillEffect(_EffectEnd);
+
+            if (_EffectLoop != null)
+                _MotionManager.StopSkillEffect(_EffectLoop);
         }
     }
 

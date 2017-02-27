@@ -96,7 +96,7 @@ public class ObjMotionSkillDushHit : ObjMotionSkillBase
         {
             _MotionManager.PlayAnimation(_AnimationClip);
             if (_Effect != null)
-                _Effect.PlayEffect(_MotionManager._RoleAttrManager.SkillSpeed);
+                _MotionManager.PlaySkillEffect(_Effect);
         }
         else if (_AnimLoop != null)
         {
@@ -113,7 +113,7 @@ public class ObjMotionSkillDushHit : ObjMotionSkillBase
     {
         _MotionManager.PlayAnimation(_AnimLoop);
         if (_EffectLoop != null)
-            _EffectLoop.PlayEffect(_MotionManager._RoleAttrManager.SkillSpeed);
+            _MotionManager.PlaySkillEffect(_EffectLoop);
 
         StartCoroutine(SkillLoopEnd());
     }
@@ -126,7 +126,7 @@ public class ObjMotionSkillDushHit : ObjMotionSkillBase
         {
             _MotionManager.PlayAnimation(_AnimEnd);
             if (_EffectEnd != null)
-                _EffectEnd.PlayEffect(_MotionManager._RoleAttrManager.SkillSpeed);
+                _MotionManager.PlaySkillEffect(_EffectEnd);
         }
     }
 

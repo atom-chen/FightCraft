@@ -90,7 +90,7 @@ public class ObjMotionSkillBase : ObjMotionBase
         _MotionManager.MotionStart(this);
         _MotionManager.PlayAnimation(_AnimationClip);
         if(_Effect != null)
-            _Effect.PlayEffect(_MotionManager._RoleAttrManager.SkillSpeed);
+            _MotionManager.PlaySkillEffect(_Effect);
 
         StartCoroutine(FinishSkill());
 
@@ -105,6 +105,8 @@ public class ObjMotionSkillBase : ObjMotionBase
 
     protected virtual void FinishSkillImmediately()
     {
+        if (_Effect != null)
+            _MotionManager.StopSkillEffect(_Effect);
         _MotionManager.MotionFinish(this);
     }
 
