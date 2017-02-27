@@ -9,7 +9,7 @@ public class MotionManager : MonoBehaviour
         InitMotions();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         UpdateMove();
     }
@@ -80,7 +80,7 @@ public class MotionManager : MonoBehaviour
     }
     #endregion
 
-    #region 
+    #region Animation
 
     public Animation _Animaton;
     public bool _IsRoleHit;
@@ -132,7 +132,7 @@ public class MotionManager : MonoBehaviour
 
     #endregion
 
-    #region 
+    #region roleAttr
 
     public RoleAttrManager _RoleAttrManager;
 
@@ -151,6 +151,46 @@ public class MotionManager : MonoBehaviour
     {
         buff.RemoveBuff();
         _ImpactBuffs.Remove(buff);
+    }
+
+    #endregion
+
+    #region effect
+
+    private Dictionary<string, Transform> _BindTransform = new Dictionary<string, Transform>();
+
+    public void PlaySkillEffect(EffectController effect)
+    {
+        effect.PlayEffect(_RoleAttrManager.SkillSpeed);
+    }
+
+    public void StopSkillEffect(EffectController effect)
+    {
+        effect.HideEffect();
+    }
+
+    public void PlayDynamicEffect(EffectController effect)
+    {
+        if (!_BindTransform.ContainsKey(effect._BindPos))
+        {
+            var bindTran = transform.FindChild(_Animaton.name + "/" + effect._BindPos);
+            _BindTransform.Add(effect._BindPos, bindTran);
+        }
+
+        var idleEffect = EffectController.GetIdleEffect(effect);
+        idleEffect.transform.SetParent(_BindTransform[effect._BindPos]);
+        idleEffect.transform.localPosition = Vector3.zero;
+        idleEffect.transform.localRotation = Quaternion.Euler(Vector3.zero);
+        idleEffect._EffectLastTime = effect._EffectLastTime;
+        idleEffect.PlayEffect();
+        StartCoroutine(StopDynamicEffect(idleEffect));
+    }
+
+    public IEnumerator StopDynamicEffect(EffectController effct)
+    {
+        yield return new WaitForSeconds( effct._EffectLastTime);
+        effct.HideEffect();
+        EffectController.RecvIldeEffect(effct);
     }
 
     #endregion

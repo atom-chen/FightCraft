@@ -11,11 +11,6 @@ public class ObjMotionHit : ObjMotionBase
         base.InitMotion(manager);
 
         _MotionPriority = 1000;
-
-        foreach (var effect in _HitEffect)
-        {
-            _HitEffectPres.Add(effect, new List<EffectController>() { effect });
-        }
     }
 
     public override void PlayMotion(object go, Hashtable eventArgs)
@@ -72,7 +67,6 @@ public class ObjMotionHit : ObjMotionBase
     public EffectController[] _HitEffect;
 
     private float _StopKeyFrameTime = 0.0f;
-    private Dictionary<EffectController, List<EffectController>> _HitEffectPres = new Dictionary<EffectController, List<EffectController>>();
 
     public void MotionHit(float hitTime, int hitEffect, MotionManager impactSender)
     {
@@ -114,21 +108,7 @@ public class ObjMotionHit : ObjMotionBase
     {
         if (_HitEffect.Length > effectIdx && effectIdx >= 0)
         {
-            foreach (var effect in _HitEffectPres[_HitEffect[effectIdx]])
-            {
-                if (!effect.gameObject.activeSelf)
-                {
-                    effect.PlayEffect();
-                    return;
-                }
-            }
-            var newEffect = GameObject.Instantiate(_HitEffect[effectIdx]);
-            newEffect.transform.SetParent(_HitEffect[effectIdx].transform.parent);
-            newEffect.transform.localPosition = _HitEffect[effectIdx].transform.localPosition;
-            newEffect.transform.LookAt(impactSender.transform);
-            var effectScript = newEffect.GetComponent<EffectController>();
-            _HitEffectPres[_HitEffect[effectIdx]].Add(effectScript);
-            effectScript.PlayEffect(1);
+            _MotionManager.PlayDynamicEffect(_HitEffect[effectIdx]);
         }
     }
 }

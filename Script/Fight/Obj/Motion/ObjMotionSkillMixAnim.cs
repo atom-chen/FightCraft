@@ -49,6 +49,13 @@ public class ObjMotionSkillMixAnim : ObjMotionSkillBase
         }
     }
 
+    protected override void FinishSkillImmediately()
+    {
+        base.FinishSkillImmediately();
+
+        if (_NextEffect[_NextEffect.Length - 1] != null)
+            _MotionManager.StopSkillEffect(_NextEffect[_NextEffect.Length - 1]);
+    }
     #endregion
 
     public AnimationClip[] _NextAnim;
@@ -71,7 +78,7 @@ public class ObjMotionSkillMixAnim : ObjMotionSkillBase
         _MotionManager.MotionStart(this);
         _MotionManager.PlayAnimation(_AnimationClip);
         if (_Effect != null)
-            _Effect.PlayEffect(_MotionManager._RoleAttrManager.SkillSpeed);
+            _MotionManager.PlaySkillEffect(_Effect);
 
         _CurStep = -1;
 
@@ -90,9 +97,17 @@ public class ObjMotionSkillMixAnim : ObjMotionSkillBase
             _MotionManager.PlayAnimation(_NextAnim[_CurStep]);
             if (_NextEffect.Length > _CurStep && _NextEffect[_CurStep] != null)
             {
-                _NextEffect[_CurStep].PlayEffect(_MotionManager._RoleAttrManager.SkillSpeed);
+                _MotionManager.PlaySkillEffect(_NextEffect[_CurStep]);
             }
 
+            if (_CurStep - 1 > 0 && _NextEffect[_CurStep - 1] != null)
+            {
+                _MotionManager.StopSkillEffect(_NextEffect[_CurStep - 1]);
+            }
+            else
+            {
+                _MotionManager.StopSkillEffect(_Effect);
+            }
         }
     }
 }
