@@ -15,7 +15,7 @@ public class SelectCollider : SelectBase
 
     void OnTriggerStay(Collider other)
     {
-        Debug.Log("OnTriggerStay:" + _ColliderID);
+        
         if (!_TrigCollider.Contains(other))
         {
             _TrigCollider.Add(other);

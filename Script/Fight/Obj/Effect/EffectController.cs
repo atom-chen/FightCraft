@@ -10,12 +10,12 @@ public class EffectController : MonoBehaviour
     private float _LastPlaySpeed = 1;
     private ParticleSystem[] _Particles;
 
-    public void PlayEffect()
+    public virtual void PlayEffect()
     {
         gameObject.SetActive(true);
     }
 
-    public void PlayEffect(float speed)
+    public virtual void PlayEffect(float speed)
     {
         if (speed != _LastPlaySpeed)
         {
@@ -31,7 +31,7 @@ public class EffectController : MonoBehaviour
         gameObject.SetActive(true);
     }
 
-    public void HideEffect()
+    public virtual void HideEffect()
     {
         gameObject.SetActive(false);
     }
