@@ -94,7 +94,7 @@ public class ObjMotionSkillMixAnim : ObjMotionSkillBase
         else
         {
             ++_CurStep;
-            _MotionManager.PlayAnimation(_NextAnim[_CurStep]);
+            _MotionManager.RePlayAnimation(_NextAnim[_CurStep]);
             if (_NextEffect.Length > _CurStep && _NextEffect[_CurStep] != null)
             {
                 _MotionManager.PlaySkillEffect(_NextEffect[_CurStep]);
@@ -106,7 +106,8 @@ public class ObjMotionSkillMixAnim : ObjMotionSkillBase
             }
             else
             {
-                _MotionManager.StopSkillEffect(_Effect);
+                if(_Effect != null)
+                    _MotionManager.StopSkillEffect(_Effect);
             }
         }
     }

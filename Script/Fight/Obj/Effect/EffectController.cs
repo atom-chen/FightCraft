@@ -12,6 +12,10 @@ public class EffectController : MonoBehaviour
 
     public virtual void PlayEffect()
     {
+        if (gameObject.activeSelf)
+        {
+            gameObject.SetActive(false);
+        }
         gameObject.SetActive(true);
     }
 
@@ -27,6 +31,10 @@ public class EffectController : MonoBehaviour
             {
                 particle.playbackSpeed = speed;
             }
+        }
+        if (gameObject.activeSelf)
+        {
+            gameObject.SetActive(false);
         }
         gameObject.SetActive(true);
     }
