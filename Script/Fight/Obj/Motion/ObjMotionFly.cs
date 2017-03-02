@@ -88,7 +88,7 @@ public class ObjMotionFly : ObjMotionHit
         PlayHitEffect(effectID, impactSender);
         _MotionManager.MotionStart(this);
 
-        _MotionManager.RePlayAnimation(_AnimationClip);
+        _MotionManager.RePlayAnimation(_AnimationClip, 1);
 
         _FlyHeight = flyHeight;
     }
@@ -98,7 +98,7 @@ public class ObjMotionFly : ObjMotionHit
         PlayHitEffect(effectID, impactSender);
         _MotionManager.MotionStart(this);
 
-        _MotionManager.RePlayAnimation(_AnimationClip);
+        _MotionManager.RePlayAnimation(_AnimationClip, 1);
 
         _StayTime = time;
     }

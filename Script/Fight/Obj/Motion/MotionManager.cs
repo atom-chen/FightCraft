@@ -102,9 +102,16 @@ public class MotionManager : MonoBehaviour
         _Animaton.Play(animClip.name);
     }
 
+    public void RePlayAnimation(AnimationClip animClip, float speed)
+    {
+        _Animaton[animClip.name].speed = speed;
+        _Animaton.Stop();
+        _Animaton.Play(animClip.name);
+    }
+
     public void RePlayAnimation(AnimationClip animClip)
     {
-        
+        _Animaton[animClip.name].speed = _RoleAttrManager.SkillSpeed;
         _Animaton.Stop();
         _Animaton.Play(animClip.name);
     }

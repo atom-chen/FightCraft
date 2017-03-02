@@ -80,7 +80,7 @@ public class ObjMotionHit : ObjMotionBase
         {
             _StopKeyFrameTime = 0;
         }
-        _MotionManager.RePlayAnimation(_AnimationClip);
+        _MotionManager.RePlayAnimation(_AnimationClip, 1);
 
     }
 
