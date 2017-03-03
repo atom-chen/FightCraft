@@ -3,78 +3,54 @@ using System.Collections;
 
 public class ObjMotionSkillAttack : ObjMotionSkillBase
 {
+    void Update()
+    {
+        if (_CanNextInput)
+        {
+            if (InputManager.Instance.IsKeyDown(_ActInput))
+            {
+                ContinueAttack();
+            }
+        }
+    }
+
     #region override
 
-    public override void InitMotion(MotionManager manager)
+    public override void Init()
     {
-        base.InitMotion(manager);
+        base.Init();
 
         foreach (var anim in _NextAnim)
         {
-            _MotionManager.InitAnimation(anim);
+            if (anim != null)
+            {
+                _MotionManager.InitAnimation(anim);
+                _MotionManager.AddAnimationEndEvent(anim);
+            }
         }
-        _MotionPriority = 50;
     }
-
-    public override void PlayMotion(object go, Hashtable eventArgs)
-    {
-        base.PlayMotion(go, eventArgs);
-    }
-
-    public override bool ActiveInput(InputManager inputManager)
-    {
-        if (!IsCanActiveMotion())
-            return false;
-
-        if (inputManager.IsKeyDown(_ActInput))
-        {
-            ActSkill();
-            return true;
-        }
-        return false;
-    }
-
-    public override bool ContinueInput(InputManager inputManager)
-    {
-        if (!_CanNextInput)
-            return false;
-
-        if (inputManager.IsKeyDown(_ActInput))
-        {
-            ContinueAttack();
-            return true;
-        }
-        return false;
-    }
-
+    
     public override void AnimEvent(string function, object param)
     {
         base.AnimEvent(function, param);
 
         switch (function)
         {
-            case "NextInputStart":
+            case AnimationEvent.NEXT_INPUT_START:
                 _CanNextInput = true;
+                NextInputPress();
                 break;
-            case "NextInputEnd":
+            case AnimationEvent.NEXT_INPUT_END:
                 _CanNextInput = false;
-                FinishSkillImmediately();
                 break;
         }
     }
 
-    protected override void InitEvent()
-    {
-        base.InitEvent();
-    }
-
-    protected override void FinishSkillImmediately()
+    public override void FinishSkillImmediately()
     {
         base.FinishSkillImmediately();
 
-        if (_Effect != null)
-            _MotionManager.StopSkillEffect(_Effect);
-
+        _CurStep = -1;
         foreach (var effect in _NextEffect)
         {
             if (effect != null)
@@ -82,7 +58,14 @@ public class ObjMotionSkillAttack : ObjMotionSkillBase
                 _MotionManager.StopSkillEffect(effect);
             }
         }
+
+        if (InputManager.Instance.IsKeyHold(_ActInput))
+        {
+            ActSkill();
+        }
+        Debug.Log("FinishSkillImmediately");
     }
+
     #endregion
 
     public AnimationClip[] _NextAnim;
@@ -90,7 +73,22 @@ public class ObjMotionSkillAttack : ObjMotionSkillBase
     public SelectBase[] _Collider;
 
     private bool _CanNextInput = false;
+    public bool CanNextInput
+    {
+        get
+        {
+            return _CanNextInput;
+        }
+    }
+
     private int _CurStep;
+    public int CurStep
+    {
+        get
+        {
+            return _CurStep;
+        }
+    }
 
     public override bool ActSkill()
     {
@@ -98,11 +96,20 @@ public class ObjMotionSkillAttack : ObjMotionSkillBase
         if (!isActSkill)
             return false;
 
-        _SkillLastTime = _AnimationClip.length;
         _CanNextInput = false;
         _CurStep = -1;
+        ContinueAttack();
 
         return true;
+    }
+
+    public void NextInputPress()
+    {
+        if (InputManager.Instance.IsKeyHold(_ActInput))
+        {
+            ContinueAttack();
+        }
+
     }
 
     public void ContinueAttack()
@@ -110,6 +117,10 @@ public class ObjMotionSkillAttack : ObjMotionSkillBase
         if (_CurStep + 1 < _NextAnim.Length)
         {
             ++_CurStep;
+            if (InputManager.Instance._Axis != Vector2.zero)
+            {
+                _MotionManager.SetRotate(new Vector3(InputManager.Instance._Axis.x, 0, InputManager.Instance._Axis.y));
+            }
             _MotionManager.PlayAnimation(_NextAnim[_CurStep]);
             _SkillLastTime = _NextAnim[_CurStep].length;
             if (_NextEffect.Length > _CurStep && _NextEffect[_CurStep] != null)
@@ -121,13 +132,6 @@ public class ObjMotionSkillAttack : ObjMotionSkillBase
             {
                 _MotionManager.StopSkillEffect(_NextEffect[_CurStep - 1]);
             }
-            else
-            {
-                _MotionManager.StopSkillEffect(_Effect);
-            }
-
-            StopAllCoroutines();
-            StartCoroutine(FinishSkill());
 
             _CanNextInput = false;
         }

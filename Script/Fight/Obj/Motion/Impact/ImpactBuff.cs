@@ -7,6 +7,7 @@ public class ImpactBuff : ImpactBase
     public EffectController _BuffEffect;
 
     protected MotionManager _ReciverManager;
+    private EffectController _DynamicEffect;
 
     public override void ActImpact(MotionManager senderManager, MotionManager reciverManager)
     {
@@ -14,13 +15,19 @@ public class ImpactBuff : ImpactBase
 
         _ReciverManager = reciverManager;
         _ReciverManager.AddBuff(this);
-        _BuffEffect.PlayEffect();
+        if (_BuffEffect != null)
+        {
+            _DynamicEffect = _ReciverManager.PlayDynamicEffect(_BuffEffect);
+        }
         StartCoroutine(TimeOut());
     }
 
     public virtual void RemoveBuff()
     {
-        _BuffEffect.HideEffect();
+        if (_DynamicEffect != null)
+        {
+            _ReciverManager.StopDynamicEffectImmediately(_DynamicEffect);
+        }
     }
 
     public IEnumerator TimeOut()

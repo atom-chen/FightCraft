@@ -10,6 +10,9 @@ public class ImpactPushForward : ImpactBase
     {
         base.ActImpact(senderManager, reciverManager);
 
+        if (reciverManager.ActingSkill is ObjMotionSkillDefence)
+            return;
+
         Vector3 destMove = senderManager.transform.forward.normalized * _Speed * _Time;
         reciverManager.SetMove(destMove, _Time / senderManager._RoleAttrManager.SkillSpeed);
     }

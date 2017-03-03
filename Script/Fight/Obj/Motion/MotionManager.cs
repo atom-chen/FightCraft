@@ -6,7 +6,18 @@ public class MotionManager : MonoBehaviour
 {
     void Start()
     {
-        InitMotions();
+        _Animaton = GetComponentInChildren<Animation>();
+        _AnimationEvent = GetComponentInChildren<AnimationEvent>();
+        if (_AnimationEvent == null)
+        {
+            _AnimationEvent = _Animaton.gameObject.AddComponent<AnimationEvent>();
+        }
+        _AnimationEvent.Init();
+
+        _BaseMotionManager = GetComponent<BaseMotionManager>();
+        _BaseMotionManager.Init();
+
+        InitSkills();
     }
 
     void FixedUpdate()
@@ -16,74 +27,54 @@ public class MotionManager : MonoBehaviour
 
     #region motion
 
-    private ObjMotionBase[] _MotionList;
-    private int _MotionCount;
+    public bool _IsRoleHit = false;
 
-    private ObjMotionBase _CurMotion;
-    public ObjMotionBase CurMotion
+    private int _MotionPrior;
+    public int MotionPrior
     {
         get
         {
-            return _CurMotion;
+            return _MotionPrior;
+        }
+        set
+        {
+            _MotionPrior = value;
         }
     }
 
-    private void InitMotions()
+    private BaseMotionManager _BaseMotionManager;
+    public BaseMotionManager BaseMotionManager
     {
-        _MotionList = gameObject.GetComponentsInChildren<ObjMotionBase>();
-        _MotionCount = _MotionList.Length;
-
-        for (int i = 0; i< _MotionCount; ++i)
+        get
         {
-            _MotionList[i].InitMotion(this);
-        }
-    }
-
-    public void MotionInput(InputManager input)
-    {
-        if (_CurMotion != null)
-        {
-            _CurMotion.ContinueInput(input);
-        }
-
-        for (int i = 0; i < _MotionCount; ++i)
-        {
-            _MotionList[i].ActiveInput(input);
-        }
-    }
-
-    public void MotionStart(ObjMotionBase motion)
-    {
-        if (_CurMotion != null && _CurMotion != motion)
-        {
-            _CurMotion.StopMotion();
-        }
-        _CurMotion = motion;
-    }
-
-    public void MotionFinish(ObjMotionBase motion)
-    {
-        if (motion == _CurMotion)
-        {
-            _CurMotion.StopMotion();
-            _CurMotion = null;
-            _EventController.PushEvent(GameBase.EVENT_TYPE.EVENT_MOTION_FINISH, this, new Hashtable());
+            return _BaseMotionManager;
         }
     }
 
     public void NotifyAnimEvent(string function, object param)
     {
-        if (_CurMotion != null)
+        if (_ActingSkill != null)
         {
-            _CurMotion.AnimEvent(function, param);
+            _ActingSkill.AnimEvent(function, param);
+        }
+        else
+        {
+            _BaseMotionManager.DispatchAnimEvent(function, param);
         }
     }
     #endregion
 
     #region Animation
 
-    public Animation _Animaton;
-    public bool _IsRoleHit;
+    private Animation _Animaton;
+    private AnimationEvent _AnimationEvent;
+    public AnimationEvent AnimationEvent
+    {
+        get
+        {
+            return _AnimationEvent;
+        }
+    }
 
     public void InitAnimation(AnimationClip animClip)
     {
@@ -131,6 +122,62 @@ public class MotionManager : MonoBehaviour
         }
     }
 
+    public void AddAnimationEndEvent(AnimationClip animClip)
+    {
+        if (animClip == null)
+            return;
+
+        UnityEngine.AnimationEvent animEvent = new UnityEngine.AnimationEvent();
+        animEvent.time = animClip.length;
+        animEvent.functionName = "AnimationEnd";
+        animClip.AddEvent(animEvent);
+    }
+
+    #endregion
+
+    #region skill
+
+    public Dictionary<string, ObjMotionSkillBase> _SkillMotions = new Dictionary<string, ObjMotionSkillBase>();
+
+    private ObjMotionSkillBase _ActingSkill;
+    public ObjMotionSkillBase ActingSkill
+    {
+        get
+        {
+            return _ActingSkill;
+        }
+    }
+
+    private void InitSkills()
+    {
+        var skillList = gameObject.GetComponentsInChildren<ObjMotionSkillBase>();
+        foreach (var skill in skillList)
+        {
+            _SkillMotions.Add(skill._ActInput, skill);
+            skill.Init();
+        }
+    }
+
+    public void ActSkill(ObjMotionSkillBase skillMotion)
+    {
+        if (!skillMotion.IsCanActSkill())
+            return;
+
+        if (_ActingSkill != null)
+            _ActingSkill.FinishSkill();
+
+        skillMotion.ActSkill();
+        _ActingSkill = skillMotion;
+        MotionPrior = _ActingSkill._SkillMotionPrior;
+    }
+
+    public void FinishSkill(ObjMotionSkillBase skillMotion)
+    {
+        _ActingSkill = null;
+        skillMotion.FinishSkillImmediately();
+        BaseMotionManager.MotionIdle();
+    }
+
     #endregion
 
     #region event
@@ -176,7 +223,7 @@ public class MotionManager : MonoBehaviour
         effect.HideEffect();
     }
 
-    public void PlayDynamicEffect(EffectController effect)
+    public EffectController PlayDynamicEffect(EffectController effect)
     {
         if (!_BindTransform.ContainsKey(effect._BindPos))
         {
@@ -190,12 +237,21 @@ public class MotionManager : MonoBehaviour
         idleEffect.transform.localRotation = Quaternion.Euler(Vector3.zero);
         idleEffect._EffectLastTime = effect._EffectLastTime;
         idleEffect.PlayEffect();
-        StartCoroutine(StopDynamicEffect(idleEffect));
+        if (idleEffect._EffectLastTime > 0)
+        {
+            StartCoroutine(StopDynamicEffect(idleEffect));
+        }
+        return idleEffect;
     }
 
     public IEnumerator StopDynamicEffect(EffectController effct)
     {
         yield return new WaitForSeconds( effct._EffectLastTime);
+        StopDynamicEffectImmediately(effct);
+    }
+
+    public void StopDynamicEffectImmediately(EffectController effct)
+    {
         effct.HideEffect();
         EffectController.RecvIldeEffect(effct);
     }
@@ -208,6 +264,11 @@ public class MotionManager : MonoBehaviour
     private Vector3 _TargetVec;
     private float _LastTime;
     private float _Speed;
+
+    public void SetRotate(Vector3 rotate)
+    {
+        transform.rotation = Quaternion.LookRotation(rotate);
+    }
 
     public void SetMove(Vector3 moveVec, float lastTime)
     {
