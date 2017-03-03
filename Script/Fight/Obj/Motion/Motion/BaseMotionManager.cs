@@ -18,6 +18,7 @@ public class BaseMotionManager : MonoBehaviour
         _NavAgent = gameObject.GetComponent<NavMeshAgent>();
 
         _MotionManager.AddAnimationEndEvent(_HitAnim);
+        _MotionManager.AddAnimationEndEvent(_RiseAnim);
         _FlyBody = _MotionManager.AnimationEvent.gameObject;
 
         _MotionManager.InitAnimation(_IdleAnim);
@@ -85,6 +86,9 @@ public class BaseMotionManager : MonoBehaviour
             case HIT_PRIOR:
                 DispatchHitEvent(funcName, param);
                 break;
+            case RISE_PRIOR:
+                DispatchRiseEvent(funcName, param);
+                break;
         }
     }
 
@@ -100,7 +104,7 @@ public class BaseMotionManager : MonoBehaviour
 
     public bool CanMotionIdle()
     {
-        if (_MotionManager.MotionPrior != MOVE_PRIOR && _MotionManager.MotionPrior > IDLE_PRIOR)
+        if (_MotionManager.MotionPrior != RISE_PRIOR && _MotionManager.MotionPrior != MOVE_PRIOR && _MotionManager.MotionPrior > IDLE_PRIOR)
             return false;
 
         if (_MotionManager.ActingSkill != null)
@@ -223,6 +227,9 @@ public class BaseMotionManager : MonoBehaviour
 
     public void MotionHit(float hitTime, int hitEffect, MotionManager impactSender)
     {
+        if (_MotionManager.ActingSkill != null)
+            _MotionManager.ActingSkill.FinishSkill();
+
         PlayHitEffect(impactSender, hitEffect);
 
         if (hitTime > _HitAnim.length)
@@ -347,7 +354,22 @@ public class BaseMotionManager : MonoBehaviour
     {
         _MotionManager.MotionPrior = RISE_PRIOR;
         _MotionManager.PlayAnimation(_RiseAnim);
+
     }
 
+    private void RiseEnd()
+    {
+        MotionIdle();
+    }
+
+    private void DispatchRiseEvent(string funcName, object param)
+    {
+        switch (funcName)
+        {
+            case AnimationEvent.ANIMATION_END:
+                RiseEnd();
+                break;
+        }
+    }
     #endregion
 }
