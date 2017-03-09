@@ -14,7 +14,7 @@ public class ImpactPushForward : ImpactBase
             return;
 
         Vector3 destMove = senderManager.transform.forward.normalized * _Speed * _Time;
-        reciverManager.SetMove(destMove, _Time / senderManager._RoleAttrManager.SkillSpeed);
+        reciverManager.SetMove(destMove, _Time / senderManager.RoleAttrManager.SkillSpeed);
     }
 
 }

@@ -27,20 +27,17 @@ public class EffectAfterAnim : EffectController
     public SkinnedMeshRenderer[] SkinnedRenderers;
     public Material _Material;
 
-    void Awake()
-    {
-        InitMesh();
-    }
-
     public override void PlayEffect()
     {
         base.PlayEffect();
+        InitMesh();
         StartCoroutine(DoAddImage());
     }
 
     public override void PlayEffect(float speed)
     {
         base.PlayEffect();
+        InitMesh();
         StartCoroutine(DoAddImage());
     }
 
@@ -52,19 +49,22 @@ public class EffectAfterAnim : EffectController
 
     private void InitMesh()
     {
-        var motion = gameObject.GetComponentInParent<MotionManager>();
-        _MeshRenderers = motion.GetComponentsInChildren<MeshRenderer>();
-        SkinnedRenderers = motion.GetComponentsInChildren<SkinnedMeshRenderer>();
+        if (_MeshRenderers.Length == 0 || SkinnedRenderers.Length == 0)
+        {
+            var motion = gameObject.GetComponentInParent<MotionManager>();
+            _MeshRenderers = motion.GetComponentsInChildren<MeshRenderer>();
+            SkinnedRenderers = motion.GetComponentsInChildren<SkinnedMeshRenderer>();
+        }
     }
 
     IEnumerator DoAddImage()
     {
-        float startTime = Time.realtimeSinceStartup;
+        float startTime = Time.time;
         while (true)
         {
             CreateImage();
 
-            if (Time.realtimeSinceStartup - startTime > _Duration)
+            if (Time.time - startTime > _Duration)
             {
                 break;
             }
@@ -119,7 +119,7 @@ public class EffectAfterAnim : EffectController
             mesh = combinedMesh,
             material = mat,
             matrix = t.localToWorldMatrix,
-            showStartTime = Time.realtimeSinceStartup,
+            showStartTime = Time.time,
             duration = _FadeOut,
         });
     }

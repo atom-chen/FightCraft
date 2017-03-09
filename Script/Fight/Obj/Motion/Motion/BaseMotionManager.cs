@@ -27,8 +27,8 @@ public class BaseMotionManager : MonoBehaviour
         _MotionManager.InitAnimation(_FlyAnim);
         _MotionManager.InitAnimation(_RiseAnim);
 
-        _MotionManager._EventController.RegisteEvent(GameBase.EVENT_TYPE.EVENT_MOTION_HIT, HitEvent);
-        _MotionManager._EventController.RegisteEvent(GameBase.EVENT_TYPE.EVENT_MOTION_FLY, FlyEvent);
+        _MotionManager.EventController.RegisteEvent(GameBase.EVENT_TYPE.EVENT_MOTION_HIT, HitEvent);
+        _MotionManager.EventController.RegisteEvent(GameBase.EVENT_TYPE.EVENT_MOTION_FLY, FlyEvent);
     }
 
     public void HitEvent(object go, Hashtable eventArgs)
@@ -149,8 +149,8 @@ public class BaseMotionManager : MonoBehaviour
     public void MoveDirect(Vector3 derectV3)
     {
         _MotionManager.MotionPrior = MOVE_PRIOR;
-        Vector3 destPoint = transform.position + derectV3.normalized * Time.deltaTime * _NavAgent.speed * _MotionManager._RoleAttrManager.MoveSpeed;
-        _MotionManager.PlayAnimation(_MoveAnim, _MotionManager._RoleAttrManager.MoveSpeed);
+        Vector3 destPoint = transform.position + derectV3.normalized * Time.deltaTime * _NavAgent.speed * _MotionManager.RoleAttrManager.MoveSpeed;
+        _MotionManager.PlayAnimation(_MoveAnim, _MotionManager.RoleAttrManager.MoveSpeed);
         _MotionManager.transform.rotation = Quaternion.LookRotation(derectV3);
 
         //NavMeshHit navHit = new NavMeshHit();
@@ -159,6 +159,14 @@ public class BaseMotionManager : MonoBehaviour
         //    return;
         //}
         _NavAgent.Warp(destPoint);
+    }
+
+    public void MoveTarget(Vector3 targetPos)
+    {
+        _MotionManager.MotionPrior = MOVE_PRIOR;
+        _MotionManager.PlayAnimation(_MoveAnim, _MotionManager.RoleAttrManager.MoveSpeed);
+
+        _NavAgent.destination = targetPos;
     }
 
     #endregion

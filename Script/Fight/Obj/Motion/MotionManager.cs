@@ -1,11 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 
 public class MotionManager : MonoBehaviour
 {
     void Start()
     {
+        _EventController = GetComponent<GameBase.EventController>();
+        if (_EventController == null)
+        {
+            _EventController = gameObject.AddComponent<GameBase.EventController>();
+        }
+
+        _RoleAttrManager = GetComponent<RoleAttrManager>();
+        if (_RoleAttrManager == null)
+        {
+            _RoleAttrManager = gameObject.AddComponent<RoleAttrManager>();
+        }
+
         _Animaton = GetComponentInChildren<Animation>();
         _AnimationEvent = GetComponentInChildren<AnimationEvent>();
         if (_AnimationEvent == null)
@@ -83,7 +96,7 @@ public class MotionManager : MonoBehaviour
 
     public void PlayAnimation(AnimationClip animClip)
     {
-        _Animaton[animClip.name].speed = _RoleAttrManager.SkillSpeed;
+        _Animaton[animClip.name].speed = RoleAttrManager.SkillSpeed;
         _Animaton.Play(animClip.name);
     }
 
@@ -102,7 +115,7 @@ public class MotionManager : MonoBehaviour
 
     public void RePlayAnimation(AnimationClip animClip)
     {
-        _Animaton[animClip.name].speed = _RoleAttrManager.SkillSpeed;
+        _Animaton[animClip.name].speed = RoleAttrManager.SkillSpeed;
         _Animaton.Stop();
         _Animaton.Play(animClip.name);
     }
@@ -114,11 +127,35 @@ public class MotionManager : MonoBehaviour
         _Animaton[animClip.name].speed = 0;
     }
 
+    public void PauseAnimation()
+    {
+        foreach (AnimationState state in _Animaton)
+        {
+            if (_Animaton.IsPlaying(state.name))
+            {
+                _OrgSpeed = state.speed;
+                state.speed = 0;
+            }
+        }
+        
+    }
+
     public void ResumeAnimation(AnimationClip animClip)
     {
         if (_Animaton.IsPlaying(animClip.name))
         {
             _Animaton[animClip.name].speed = _OrgSpeed;
+        }
+    }
+
+    public void ResumeAnimation()
+    {
+        foreach (AnimationState state in _Animaton)
+        {
+            if (_Animaton.IsPlaying(state.name))
+            {
+                state.speed = _OrgSpeed;
+            }
         }
     }
 
@@ -182,61 +219,120 @@ public class MotionManager : MonoBehaviour
 
     #region event
 
-    public GameBase.EventController _EventController;
+    private GameBase.EventController _EventController;
+    public GameBase.EventController EventController
+    {
+        get
+        {
+            return _EventController;
+        }
+    }
 
     #endregion
 
     #region roleAttr
 
-    public RoleAttrManager _RoleAttrManager;
+    private RoleAttrManager _RoleAttrManager;
+    public RoleAttrManager RoleAttrManager
+    {
+        get
+        {
+            return _RoleAttrManager;
+        }
+    }
 
     #endregion
 
     #region buff
 
-    List<ImpactBuff> _ImpactBuffs = new List<ImpactBuff>();
+    private List<ImpactBuff> _ImpactBuffs = new List<ImpactBuff>();
+    private GameObject _BuffBindPos;
 
     public void AddBuff(ImpactBuff buff)
     {
-        _ImpactBuffs.Add(buff);
+        if (_BuffBindPos == null)
+        {
+            _BuffBindPos = new GameObject("BuffBind");
+            _BuffBindPos.transform.SetParent(transform);
+        }
+        
+        var newBuff = _BuffBindPos.AddComponent(buff.GetType()) as ImpactBuff;
+        CopyComponent(buff, newBuff);
+        _ImpactBuffs.Add(newBuff);
+        newBuff.ActBuff();
     }
 
     public void RemoveBuff(ImpactBuff buff)
     {
         buff.RemoveBuff();
         _ImpactBuffs.Remove(buff);
+        GameObject.DestroyImmediate(buff);
+    }
+
+    void CopyComponent(object original, object destination)
+    {
+        System.Type type = original.GetType();
+        System.Reflection.FieldInfo[] fields = type.GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+        foreach (System.Reflection.FieldInfo field in fields)
+        {
+            field.SetValue(destination, field.GetValue(original));
+        }
     }
 
     #endregion
 
     #region effect
 
+    private Dictionary<string, EffectController> _SkillEffects = new Dictionary<string, EffectController>();
     private Dictionary<string, Transform> _BindTransform = new Dictionary<string, Transform>();
 
     public void PlaySkillEffect(EffectController effect)
     {
-        effect.PlayEffect(_RoleAttrManager.SkillSpeed);
+        if (!_SkillEffects.ContainsKey(effect.name))
+        {
+            var idleEffect = GameObject.Instantiate(effect);
+            idleEffect.transform.SetParent(GetBindTransform(effect._BindPos));
+            idleEffect.transform.localPosition = Vector3.zero;
+            idleEffect.transform.localRotation = Quaternion.Euler(Vector3.zero);
+            CopyComponent(effect, idleEffect);
+            _SkillEffects.Add(effect.name, idleEffect);
+        }
+        _SkillEffects[effect.name].PlayEffect(RoleAttrManager.SkillSpeed);
     }
 
     public void StopSkillEffect(EffectController effect)
     {
-        effect.HideEffect();
+        if (_SkillEffects.ContainsKey(effect.name))
+        {
+            _SkillEffects[effect.name].HideEffect();
+        }
     }
 
-    public EffectController PlayDynamicEffect(EffectController effect)
+    public Transform GetBindTransform(string bindName)
     {
-        if (!_BindTransform.ContainsKey(effect._BindPos))
+        if (string.IsNullOrEmpty(bindName))
+            return null;
+
+        if (!_BindTransform.ContainsKey(bindName))
         {
-            var bindTran = transform.FindChild(_Animaton.name + "/" + effect._BindPos);
-            _BindTransform.Add(effect._BindPos, bindTran);
+            var bindTran = transform.FindChild(_Animaton.name + "/" + bindName);
+            _BindTransform.Add(bindName, bindTran);
         }
 
-        var idleEffect = EffectController.GetIdleEffect(effect);
-        idleEffect.transform.SetParent(_BindTransform[effect._BindPos]);
+        return _BindTransform[bindName];
+    }
+
+    public EffectController PlayDynamicEffect(EffectController effect, Hashtable hashParam = null)
+    {
+        var idleEffect = ResourcePool.Instance.GetIdleEffect(effect);
+        idleEffect.transform.SetParent(GetBindTransform(effect._BindPos));
         idleEffect.transform.localPosition = Vector3.zero;
         idleEffect.transform.localRotation = Quaternion.Euler(Vector3.zero);
         idleEffect._EffectLastTime = effect._EffectLastTime;
-        idleEffect.PlayEffect();
+        if(hashParam == null)
+            idleEffect.PlayEffect();
+        else
+            idleEffect.PlayEffect(hashParam);
         if (idleEffect._EffectLastTime > 0)
         {
             StartCoroutine(StopDynamicEffect(idleEffect));
@@ -253,7 +349,7 @@ public class MotionManager : MonoBehaviour
     public void StopDynamicEffectImmediately(EffectController effct)
     {
         effct.HideEffect();
-        EffectController.RecvIldeEffect(effct);
+        ResourcePool.Instance.RecvIldeEffect(effct);
     }
 
     #endregion
@@ -277,7 +373,7 @@ public class MotionManager : MonoBehaviour
             _NavAgent = GetComponent<NavMeshAgent>();
         }
         
-        _TargetVec += moveVec;
+        _TargetVec = moveVec;
         _LastTime = lastTime;
         _Speed = _TargetVec.magnitude / _LastTime;
     }

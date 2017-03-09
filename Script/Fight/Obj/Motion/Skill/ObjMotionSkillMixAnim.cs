@@ -41,6 +41,9 @@ public class ObjMotionSkillMixAnim : ObjMotionSkillBase
 
         if (_NextEffect[_NextEffect.Length - 1] != null)
             _MotionManager.StopSkillEffect(_NextEffect[_NextEffect.Length - 1]);
+
+        if (_Effect != null)
+            _MotionManager.StopSkillEffect(_Effect);
     }
     #endregion
 
@@ -58,6 +61,9 @@ public class ObjMotionSkillMixAnim : ObjMotionSkillBase
 
         _CurStep = -1;
         PlayerNextAnim();
+
+        if(_Effect != null)
+            _MotionManager.PlaySkillEffect(_Effect);
 
         return true;
     }

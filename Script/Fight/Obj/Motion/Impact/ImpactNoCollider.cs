@@ -5,9 +5,9 @@ public class ImpactNoCollider : ImpactBuff
 {
 
 
-    public override void ActImpact(MotionManager senderManager, MotionManager reciverManager)
+    public override void ActBuff(MotionManager senderManager, MotionManager reciverManager)
     {
-        base.ActImpact(senderManager, reciverManager);
+        base.ActBuff(senderManager, reciverManager);
 
     }
 

@@ -39,6 +39,11 @@ public class EffectController : MonoBehaviour
         gameObject.SetActive(true);
     }
 
+    public virtual void PlayEffect(Hashtable hash)
+    {
+        PlayEffect();
+    }
+
     public virtual void HideEffect()
     {
         gameObject.SetActive(false);
@@ -50,43 +55,7 @@ public class EffectController : MonoBehaviour
 
     public string _BindPos;
     public float _EffectLastTime;
-
-    private static Dictionary<string, Stack<EffectController>> _IdleEffects = new Dictionary<string, Stack<EffectController>>();
-
-    public static EffectController GetIdleEffect(EffectController effct)
-    {
-        EffectController idleEffect = null;
-        if (_IdleEffects.ContainsKey(effct.name))
-        {
-            if (_IdleEffects[effct.name].Count > 0)
-            {
-                idleEffect = _IdleEffects[effct.name].Pop();
-            }
-        }
-
-        if (idleEffect == null)
-        {
-            idleEffect = GameObject.Instantiate<EffectController>(effct);
-        }
-
-        return idleEffect;
-    }
-
-    public static void RecvIldeEffect(EffectController effct)
-    {
-        string effectName = effct.name.Replace("(Clone)", "");
-        if (!_IdleEffects.ContainsKey(effectName))
-        {
-            _IdleEffects.Add(effectName, new Stack<EffectController>());
-        }
-
-        _IdleEffects[effectName].Push(effct);
-    }
-
-    public static void ClearEffects()
-    {
-        _IdleEffects = new Dictionary<string, Stack<EffectController>>();
-    }
+    
     #endregion
 
 }

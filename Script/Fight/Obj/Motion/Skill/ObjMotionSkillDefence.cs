@@ -33,8 +33,8 @@ public class ObjMotionSkillDefence : ObjMotionSkillBase
     {
         base.Init();
 
-        _MotionManager._EventController.RegisteEvent(GameBase.EVENT_TYPE.EVENT_MOTION_HIT, HitEvent, 100);
-        _MotionManager._EventController.RegisteEvent(GameBase.EVENT_TYPE.EVENT_MOTION_FLY, HitEvent, 100);
+        _MotionManager.EventController.RegisteEvent(GameBase.EVENT_TYPE.EVENT_MOTION_HIT, HitEvent, 100);
+        _MotionManager.EventController.RegisteEvent(GameBase.EVENT_TYPE.EVENT_MOTION_FLY, HitEvent, 100);
     }
 
     public override void AnimEvent(string function, object param)

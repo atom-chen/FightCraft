@@ -40,7 +40,7 @@ public class AI_CloseAttack : AI_Base
                 _CloseWait -= Time.fixedDeltaTime;
                 return;
             }
-            _SelfMotion.BaseMotionManager.MoveDirect(_TargetMotion.transform.position - transform.position);
+            _SelfMotion.BaseMotionManager.MoveTarget(_TargetMotion.transform.position);
         }
         else
         {

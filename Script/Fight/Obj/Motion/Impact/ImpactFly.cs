@@ -13,7 +13,7 @@ public class ImpactFly : ImpactBase
         Hashtable hash = new Hashtable();
         hash.Add("FlyHeight", _FlyHeight);
         hash.Add("HitEffect", _HitEffect);
-        reciverManager._EventController.PushEvent(GameBase.EVENT_TYPE.EVENT_MOTION_FLY, senderManager, hash);
+        reciverManager.EventController.PushEvent(GameBase.EVENT_TYPE.EVENT_MOTION_FLY, senderManager, hash);
     }
 
 }
