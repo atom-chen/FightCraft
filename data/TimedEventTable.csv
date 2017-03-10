@@ -1,0 +1,45 @@
+"Id
+===
+Id
+===
+int-cs","名称
+===
+Name
+===
+string-cs","是否开启
+===
+Enable
+===
+int-s","触发时间点(时:分)
+===
+TriggerTime
+===
+string-s","触发间隔(小时)
+===
+Duration
+===
+int-s","最大缓存次数
+===
+CacheCount
+===
+int-s","动作
+===
+Action
+===
+string-s"
+1,Reset关卡信息,1,2013/7/11 5:00,24,1,ResetStage
+2,增加宝石,1,2013/7/11 5:00,24,1,AddDiamond
+3,增加Pvp点数,1,2013/7/11 5:00,24,1,AddPvpPoint
+4,重置体力点购买次数,1,2013/7/11 5:00,24,1,ResetActionPointCC
+5,重置每日任务,1,2013/7/11 5:00,24,1,ResetEveryDay9xTask
+6,重置世界boss,1,2013/7/11 5:00,24,1,ResetWorldBoss
+7,重置蟠桃任务,1,2013/7/11 5:00,24,1,ResetPeachActivity
+8,重置任务每日兑换特品次数,1,2013/7/11 5:00,24,1,ResetEveryDayTaskExchangeFrequency
+9,重置探索抽卡信息,1,2013/7/11 5:00,24,1,ResetGrope
+10,重置好友赠送信息,1,2013/7/11 5:00,24,1,ResetDonateFriendList
+11,重置商店刷新次数,1,2013/7/11 5:00,24,1,ResetShopInfo
+12,重置PVP次数,1,2013/7/11 5:00,24,1,ResetPvpCount
+13,重置金币购买次数,1,2013/7/11 5:00,24,1,ResetMoneyCC
+14,重置免费邮件发送次数,1,2013/7/11 5:00,24,1,ResetFreeMailCC
+15,每日刷新,1,2013/7/11 5:00,24,1,EverydayCheckAndToNoticeClient
+16,重置冒险副本,1,2013/7/11 5:00,24,1,ResetVentureDungeon
