@@ -21,7 +21,7 @@ public class SelectCollider : SelectBase
             _TrigCollider.Add(other);
             
             var motion = other.gameObject.GetComponentInParent<MotionManager>();
-            if (motion != null)
+            if (motion != null && motion._CanBeSelectByEnemy)
             {
                 foreach (var impact in _ImpactList)
                 {

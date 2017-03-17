@@ -12,6 +12,7 @@ public class EffectController : MonoBehaviour
 
     public virtual void PlayEffect()
     {
+        _LastPlaySpeed = 1;
         if (gameObject.activeSelf)
         {
             gameObject.SetActive(false);
@@ -24,7 +25,7 @@ public class EffectController : MonoBehaviour
         if (speed != _LastPlaySpeed)
         {
             _LastPlaySpeed = speed;
-            if (_Particles == null)
+            if (_Particles == null || _Particles.Length == 0)
                 _Particles = gameObject.GetComponentsInChildren<ParticleSystem>();
 
             foreach (var particle in _Particles)
@@ -47,6 +48,36 @@ public class EffectController : MonoBehaviour
     public virtual void HideEffect()
     {
         gameObject.SetActive(false);
+    }
+
+    public virtual void PauseEffect()
+    {
+        if (!gameObject.activeSelf)
+            return;
+
+        if (_Particles == null || _Particles.Length == 0)
+            _Particles = gameObject.GetComponentsInChildren<ParticleSystem>();
+
+        foreach (var particle in _Particles)
+        {
+            particle.Pause();
+        }
+        Debug.Log("PauseEffect");
+    }
+
+    public virtual void ResumeEffect()
+    {
+        if (!gameObject.activeSelf)
+            return;
+
+        if (_Particles == null)
+            _Particles = gameObject.GetComponentsInChildren<ParticleSystem>();
+
+        foreach (var particle in _Particles)
+        {
+            particle.Play();
+        }
+        Debug.Log("ResumeEffect");
     }
 
     #endregion

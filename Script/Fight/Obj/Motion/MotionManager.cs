@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System;
 
 public class MotionManager : MonoBehaviour
 {
@@ -96,18 +97,21 @@ public class MotionManager : MonoBehaviour
 
     public void PlayAnimation(AnimationClip animClip)
     {
+        RemoveBuff(typeof(ImpactBlock));
         _Animaton[animClip.name].speed = RoleAttrManager.SkillSpeed;
         _Animaton.Play(animClip.name);
     }
 
     public void PlayAnimation(AnimationClip animClip, float speed)
     {
+        RemoveBuff(typeof(ImpactBlock));
         _Animaton[animClip.name].speed = speed;
         _Animaton.Play(animClip.name);
     }
 
     public void RePlayAnimation(AnimationClip animClip, float speed)
     {
+        RemoveBuff(typeof(ImpactBlock));
         _Animaton[animClip.name].speed = speed;
         _Animaton.Stop();
         _Animaton.Play(animClip.name);
@@ -115,6 +119,7 @@ public class MotionManager : MonoBehaviour
 
     public void RePlayAnimation(AnimationClip animClip)
     {
+        RemoveBuff(typeof(ImpactBlock));
         _Animaton[animClip.name].speed = RoleAttrManager.SkillSpeed;
         _Animaton.Stop();
         _Animaton.Play(animClip.name);
@@ -247,6 +252,7 @@ public class MotionManager : MonoBehaviour
 
     private List<ImpactBuff> _ImpactBuffs = new List<ImpactBuff>();
     private GameObject _BuffBindPos;
+    private List<ImpactBuff> _RemoveTemp = new List<ImpactBuff>();
 
     public void AddBuff(ImpactBuff buff)
     {
@@ -266,7 +272,24 @@ public class MotionManager : MonoBehaviour
     {
         buff.RemoveBuff();
         _ImpactBuffs.Remove(buff);
-        GameObject.DestroyImmediate(buff);
+        GameObject.Destroy(buff);
+    }
+
+    public void RemoveBuff(Type buffType)
+    {
+        _RemoveTemp.Clear();
+        foreach (var buff in _ImpactBuffs)
+        {
+            if (buff.GetType() == buffType)
+            {
+                _RemoveTemp.Add(buff);
+            }
+        }
+
+        foreach (var buff in _RemoveTemp)
+        {
+            RemoveBuff(buff);
+        }
     }
 
     void CopyComponent(object original, object destination)
@@ -308,10 +331,32 @@ public class MotionManager : MonoBehaviour
         }
     }
 
+    public void PauseSkillEffect()
+    {
+        foreach (var skillEffect in _SkillEffects)
+        {
+            skillEffect.Value.PauseEffect();
+        }
+    }
+
+    public void ResumeSkillEffect()
+    {
+        foreach (var skillEffect in _SkillEffects)
+        {
+            skillEffect.Value.ResumeEffect();
+        }
+    }
+
     public Transform GetBindTransform(string bindName)
     {
         if (string.IsNullOrEmpty(bindName))
-            return null;
+        {
+            if (!_BindTransform.ContainsKey(_Animaton.name))
+            {
+                var bindTran = transform.FindChild(_Animaton.name);
+                _BindTransform.Add(_Animaton.name, bindTran);
+            }
+        }
 
         if (!_BindTransform.ContainsKey(bindName))
         {
@@ -366,6 +411,17 @@ public class MotionManager : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(rotate);
     }
 
+    public void SetLookAt(Vector3 target)
+    {
+        transform.LookAt(target);
+    }
+
+    public void ResetMove()
+    {
+        _TargetVec = Vector3.zero;
+        _LastTime = 0;
+    }
+
     public void SetMove(Vector3 moveVec, float lastTime)
     {
         if (_NavAgent == null)
@@ -393,8 +449,56 @@ public class MotionManager : MonoBehaviour
             _TargetVec = Vector3.zero;
         }
 
-        _NavAgent.Warp(transform.position + moveVec);
+        var destPoint = transform.position + moveVec;
+        NavMeshHit navHit = new NavMeshHit();
+        if (!NavMesh.SamplePosition(destPoint, out navHit, 5, NavMesh.AllAreas))
+        {
+            return;
+        }
+        _NavAgent.Warp(navHit.position);
     }
+
+    #endregion
+
+    #region motion pause
+
+    public void SkillPause()
+    {
+        if (ActingSkill != null)
+        {
+            ActingSkill.PauseSkill();
+            PauseAnimation();
+            PauseSkillEffect();
+        }
+    }
+
+    public void SkillPause(float time)
+    {
+        SkillPause();
+        StartCoroutine(SkillResumeLater(time));
+    }
+
+    public void SkillResume()
+    {
+        if (ActingSkill != null)
+        {
+            ActingSkill.ResumeSkill();
+            ResumeAnimation();
+            ResumeSkillEffect();
+        }
+    }
+
+    public IEnumerator SkillResumeLater(float time)
+    {
+        yield return new WaitForSeconds(time);
+        SkillResume();
+    }
+
+    #endregion
+
+    #region target
+
+    public bool _CanBeSelectByEnemy = true;
 
     #endregion
 }

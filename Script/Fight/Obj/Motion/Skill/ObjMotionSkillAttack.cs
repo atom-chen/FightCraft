@@ -96,6 +96,7 @@ public class ObjMotionSkillAttack : ObjMotionSkillBase
         if (!isActSkill)
             return false;
 
+        Debug.Log("ActSkill motion attack");
         _CanNextInput = false;
         _CurStep = -1;
         ContinueAttack();
@@ -137,6 +138,11 @@ public class ObjMotionSkillAttack : ObjMotionSkillBase
         }
     }
 
-
+    public void DushAttack()
+    {
+        _CanNextInput = false;
+        _CurStep = 0;
+        ContinueAttack();
+    }
 
 }

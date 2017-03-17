@@ -98,6 +98,9 @@ public class BaseMotionManager : MonoBehaviour
         FlyUpdate();
     }
 
+    public void PauseMotion()
+    { }
+
     #region idle
 
     public AnimationClip _IdleAnim;
@@ -126,6 +129,11 @@ public class BaseMotionManager : MonoBehaviour
     public AnimationClip _MoveAnim;
 
     private NavMeshAgent _NavAgent;
+
+    public bool IsMoving()
+    {
+        return _MotionManager.MotionPrior == MOVE_PRIOR;
+    }
 
     public bool CanMotionMove()
     {
@@ -167,6 +175,13 @@ public class BaseMotionManager : MonoBehaviour
         _MotionManager.PlayAnimation(_MoveAnim, _MotionManager.RoleAttrManager.MoveSpeed);
 
         _NavAgent.destination = targetPos;
+    }
+
+    public void StopMove()
+    {
+        _NavAgent.ResetPath();
+        if (CanMotionIdle())
+            MotionIdle();
     }
 
     #endregion
@@ -249,6 +264,7 @@ public class BaseMotionManager : MonoBehaviour
             _StopKeyFrameTime = 0;
         }
         _MotionManager.MotionPrior = HIT_PRIOR;
+        StopAllCoroutines();
         _MotionManager.RePlayAnimation(_HitAnim, 1);
 
     }
@@ -265,6 +281,7 @@ public class BaseMotionManager : MonoBehaviour
     public IEnumerator ComsumeAnim()
     {
         yield return new WaitForSeconds(_StopKeyFrameTime);
+        Debug.Log("Hit ComsumeAnim");
         _MotionManager.ResumeAnimation(_HitAnim);
     }
 
@@ -362,7 +379,7 @@ public class BaseMotionManager : MonoBehaviour
     {
         _MotionManager.MotionPrior = RISE_PRIOR;
         _MotionManager.PlayAnimation(_RiseAnim);
-
+        _MotionManager.EventController.PushEvent(GameBase.EVENT_TYPE.EVENT_MOTION_RISE, this, new Hashtable());
     }
 
     private void RiseEnd()

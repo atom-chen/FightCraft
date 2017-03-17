@@ -10,5 +10,5 @@ public class AI_Base : MonoBehaviour
         public float SkillRange;
         public float SkillInterval;
     }
-	
+
 }

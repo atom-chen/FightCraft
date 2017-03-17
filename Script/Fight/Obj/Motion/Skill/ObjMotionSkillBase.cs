@@ -62,8 +62,15 @@ public class ObjMotionSkillBase : MonoBehaviour
         if(_Effect != null)
             _MotionManager.PlaySkillEffect(_Effect);
 
+        gameObject.SetActive(true);
         return true;
     }
+
+    public virtual void PauseSkill()
+    { }
+
+    public virtual void ResumeSkill()
+    { }
 
     public virtual void FinishSkill()
     {
@@ -74,6 +81,9 @@ public class ObjMotionSkillBase : MonoBehaviour
     {
         if (_Effect != null)
             _MotionManager.StopSkillEffect(_Effect);
+
+        gameObject.SetActive(false);
+        _MotionManager.ResetMove();
     }
 
     public virtual void AnimEvent(string function, object param)

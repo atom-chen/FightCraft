@@ -1,6 +1,5 @@
-﻿Shader "TDGame/CharOutline" {
+﻿Shader "TYImage/CharOutline" {
 	Properties {
-		_MainTex ("Base (RGB)", 2D) = "white" { }
 		_AlphaTex ("ALPHA Texture Image", 2D) = "white" {} 
 		_OutlineColor ("Outline Color", Color) = (0,0,0,1)
 		_Outline ("Outline width", Range (.002, 0.03)) = .003	
@@ -45,34 +44,7 @@ CGINCLUDE
 	SubShader 
 	{
 		//Tags {"Queue" = "Geometry+100" }
-		CGPROGRAM
-			#pragma surface surf Lambert
- 
-			uniform sampler2D _MainTex;
-			uniform sampler2D _AlphaTex;    
-            uniform sampler2D _SubTex;  
-            uniform float _BlendValue;  
- 
-			struct Input 
-			{
-				float2 uv_MainTex;
-			};
- 
-			void surf (Input IN, inout SurfaceOutput o) {
-				float2 uv = IN.uv_MainTex;
-         		float4 clr  = tex2D(_MainTex,  uv);
-         		float4 clr2 = tex2D(_AlphaTex, uv);
-         	     if(_BlendValue > 0.01f)
-                {
-                    float4 clr1  = tex2D(_SubTex,  uv);
-                    clr = lerp(clr,clr1,_BlendValue);                
-                }
-	            half4 ret =float4(clr.r, clr.g, clr.b, clr2.r)  ;
-     	       	o.Albedo = ret.rgb + ret.rgb * UNITY_LIGHTMODEL_AMBIENT.xyz*0.85;
-				o.Emission = ret.rgb;
-            	o.Alpha = ret.a;
-			}
-		ENDCG
+		
  
 		// note that a vertex shader is specified here but its using the one above
 		Pass {
@@ -90,7 +62,7 @@ CGINCLUDE
             uniform sampler2D _AlphaTex;   
 			half4 frag(vertexOutput i) :COLOR 
             { 
-                float2 uv = float2(i.tex);
+                float2 uv = float2(i.tex.xy);
                 float4 clr  = tex2D(_AlphaTex,  uv);
                 return float4( i.color.rgb,clr.r); 
             }
@@ -98,51 +70,6 @@ CGINCLUDE
 		}
 	}
  
-	SubShader 
-	{
-		CGPROGRAM
-			#pragma surface surf Lambert
- 
-			uniform sampler2D _MainTex;
-			uniform sampler2D _AlphaTex;
-            uniform sampler2D _SubTex;  
-            uniform float _BlendValue;  
-			struct Input {
-				float2 uv_MainTex;
-			};
- 
-			void surf (Input IN, inout SurfaceOutput o) 
-			{
-				float2 uv = IN.uv_MainTex;
-         		float4 clr  = tex2D(_MainTex,  uv);
-         		float4 clr2 = tex2D(_AlphaTex, uv);
-         	    if(_BlendValue > 0.01f)
-                {
-                    float4 clr1  = tex2D(_SubTex,  uv);
-                    clr = lerp(clr,clr1,_BlendValue);                
-                }
-	            half4 ret =float4(clr.r, clr.g, clr.b, clr2.r) ;
-     	       	o.Albedo = ret.rgb + ret.rgb * UNITY_LIGHTMODEL_AMBIENT.xyz*0.85;
-				o.Emission = ret.rgb;
-            	o.Alpha = ret.a;
-			}
-		ENDCG
- 
-		Pass {
-			Name "OUTLINE"
-			Tags { "LightMode" = "Always" }
-			Cull Front
-			ZWrite On
-			ColorMask RGB
-			Blend SrcAlpha OneMinusSrcAlpha
- 
-			CGPROGRAM
-			#pragma vertex vert
-			#pragma exclude_renderers gles xbox360 ps3
-			ENDCG
-			SetTexture [_MainTex] { combine primary }
-		}
-	}
- 
+	
 	Fallback "Mobile/Diffuse"
 }

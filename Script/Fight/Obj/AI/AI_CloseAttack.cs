@@ -18,6 +18,8 @@ public class AI_CloseAttack : AI_Base
     public void Start()
     {
         _SelfMotion = GetComponent<MotionManager>();
+        _SelfMotion.EventController.RegisteEvent(GameBase.EVENT_TYPE.EVENT_MOTION_RISE, RiseEvent);
+        _SelfMotion.EventController.RegisteEvent(GameBase.EVENT_TYPE.EVENT_MOTION_RISE_FINISH, RiseFinishEvent);
     }
 
     public void FixedUpdate()
@@ -30,10 +32,11 @@ public class AI_CloseAttack : AI_Base
 
     private void CloseUpdate()
     {
-        if (_TargetMotion.ActingSkill != null)
+        if (_SelfMotion.ActingSkill != null)
             return;
 
-        if (Vector3.Distance(transform.position, _TargetMotion.transform.position) > _CloseRange)
+        float distance = Vector3.Distance(transform.position, _TargetMotion.transform.position);
+        if (distance > _CloseRange)
         {
             if (_CloseWait > 0)
             {
@@ -44,21 +47,51 @@ public class AI_CloseAttack : AI_Base
         }
         else
         {
+            if (_SelfMotion.BaseMotionManager.IsMoving())
+            {
+                _SelfMotion.BaseMotionManager.StopMove();
+            }
             UseSkill();
             _CloseWait = _CloseInterval;
         }
     }
 
-    private void UseSkill()
+    private bool UseSkill()
     {
+        _SelfMotion.transform.LookAt(_TargetMotion.transform.position);
         if (_SkillWait > 0)
         {
             _SkillWait -= Time.fixedDeltaTime;
-            return;
+            return false;
         }
-
+        
         _SkillWait = _SkillInterval;
         int rand = Random.Range(0, _Skills.Length);
         _SelfMotion.ActSkill(_Skills[rand]);
+        return true;
     }
+
+    #region rise
+
+    private float _RiseTime = 1f;
+
+    public void RiseEvent(object sender, Hashtable eventArgs)
+    {
+        _SelfMotion._CanBeSelectByEnemy = false;
+        StartCoroutine(RiseFinish());
+    }
+
+    public IEnumerator RiseFinish()
+    {
+        yield return new WaitForSeconds(_RiseTime);
+
+        _SelfMotion._CanBeSelectByEnemy = true;
+    }
+
+    public void RiseFinishEvent(object sender, Hashtable eventArgs)
+    {
+
+    }
+
+    #endregion
 }

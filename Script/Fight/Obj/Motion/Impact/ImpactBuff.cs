@@ -30,7 +30,8 @@ public class ImpactBuff : ImpactBase
         {
             _DynamicEffect = _ReciverManager.PlayDynamicEffect(_BuffEffect);
         }
-        StartCoroutine(TimeOut());
+        if(_LastTime > 0)
+            StartCoroutine(TimeOut());
     }
 
     public virtual void RemoveBuff()

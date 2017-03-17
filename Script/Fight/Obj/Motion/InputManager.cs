@@ -36,7 +36,7 @@ public class InputManager : InstanceBase<InputManager>
                 _InputMotion.BaseMotionManager.MotionIdle();
         }
 
-        if (_InputMotion.ActingSkill == null)
+        //if (_InputMotion.ActingSkill == null)
         {
             foreach (var skill in _InputMotion._SkillMotions)
             {

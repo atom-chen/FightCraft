@@ -1,163 +1,185 @@
-#warning Upgrade NOTE: unity_Scale shader variable was removed; replaced 'unity_Scale.w' with '1.0'
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 
-Shader "TDGame/Water" {
-Properties {
-	_horizonColor ("Horizon color", COLOR)  = ( .172 , .463 , .435 , 0)
-	_WaveScale ("Wave scale", Range (0.02,0.15)) = .07
-	_DepthAlpha ("Inverse Alpha, Depth and Color ranges", Range (0,1)) = 0.17
-	WaveSpeed ("Wave speed (map1 x,y; map2 x,y)", Vector) = (19,9,-16,-7)
-	_BumpMap ("Waves Normalmap ", 2D) = "" { }
-	_MainTex ("Fallback texture", 2D) = "" { }
-	_ColorControl ("Reflective color (RGB) fresnel (A) ", 2D) = "" { }
-	_ColorControlCube ("Reflective color cube (RGB) fresnel (A) ", Cube) = "" { TexGen CubeReflect }
-}
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 
-CGINCLUDE
-// -----------------------------------------------------------
-// This section is included in all program sections below
-
-#include "UnityCG.cginc"
-
-uniform float4 _horizonColor;
-
-uniform float4 WaveSpeed;
-uniform float _WaveScale;
-uniform float4 _WaveOffset;
-uniform float _DepthAlpha;
-
-sampler2D _CameraDepthTexture;
-
-struct appdata {
-	float4 vertex : POSITION;
-	float3 normal : NORMAL;
-};
-
-struct v2f {
-	float4 pos : SV_POSITION;
-	float2 bumpuv[2] : TEXCOORD0;
-	float3 viewDir : TEXCOORD2;
-	float4 proj0   	 : TEXCOORD3;	// Used for depth and reflection textures
-};
-
-v2f vert(appdata v)
-{
-	v2f o;
-	float4 s;
-
-	o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
-
-	// scroll bump waves
-	float4 temp;
-	temp.xyzw = v.vertex.xzxz * _WaveScale / 1.0 + _WaveOffset;
-	o.bumpuv[0] = temp.xy * float2(.4, .45);
-	o.bumpuv[1] = temp.wz;
-
-	// object space view direction
-	o.viewDir.xzy = normalize( ObjSpaceViewDir(v.vertex) );
-
-	o.proj0 = ComputeScreenPos(o.pos);
-	COMPUTE_EYEDEPTH(o.proj0.z);
-
-	return o;
-}
-
-ENDCG
-	
-// -----------------------------------------------------------
-// Fragment program
-
-Subshader {
-	Tags { "Queue" = "Transparent" "RenderType"="Transparent" }
-	Pass {
-	    Blend SrcAlpha OneMinusSrcAlpha
-	    ZTest LEqual
-	    ZWrite Off
-        CGPROGRAM
-        #pragma vertex vert
-        #pragma fragment frag
-        #pragma fragmentoption ARB_precision_hint_fastest 
-
-        sampler2D _BumpMap;
-        sampler2D _ColorControl;
-
-        half4 frag( v2f i ) : COLOR
-        {
-	        half3 bump1 = UnpackNormal(tex2D( _BumpMap, i.bumpuv[0] )).rgb;
-	        half3 bump2 = UnpackNormal(tex2D( _BumpMap, i.bumpuv[1] )).rgb;
-	        half3 bump = (bump1 + bump2) * 0.5;
-	
-	        half fresnel = dot( i.viewDir, bump );
-	        half4 water = tex2D( _ColorControl, float2(fresnel,fresnel) );
-	
-	        half4 col;
-	        col.rgb = lerp( water.rgb, _horizonColor.rgb, water.a );
-
-	        // edge alpha
-	        float depth = tex2Dproj(_CameraDepthTexture, i.proj0).r;
-	        depth = LinearEyeDepth(depth);
-	        depth -= i.proj0.z;
-
-	        float range= saturate(_DepthAlpha * depth);
-	        range = 1.0 - range;
-	        range = lerp(range, range * range * range, 0.5);
-
-	        col.a = (1.0 - range * range) * _horizonColor.a;
-
-	        return col;
-        }
-        ENDCG
+Shader "Zhanyou/Water" {
+	Properties{
+		[NoScaleOffset]  _WaterMap("BumpMap", 2D) = "black" { }
+	[NoScaleOffset]  _Skybox("Skybox", CUBE) = "black" { }
+	[HideInInspector][NoScaleOffset]  _ReflectionTexture("ReflectionTexture", 2D) = "black" { }
+	_LightDirection("LightDirection", Vector) = (1,2,1,1)
+		_WaveFreqSpeed1("WaveFreqSpeed1", Vector) = (5,5,2,0)
+		_WaveFreqSpeed2("WaveFreqSpeed2", Vector) = (25,25,0.6,0)
+		_WaterColor("WaterColor", Color) = (0.3,0.4,0.5,0.7)
+		_WaterClarity("WaterClarity", Range(0.01,1)) = 0.8
+		_SpecularColor("SpecularColor", Color) = (1,1,1,1)
+		_SpecularGlossy("SpecularGlossy", Range(1,100)) = 50
+		_SpecularIntensity("SpecularIntensity", Range(0,2)) = 1
+		_ReflectionIntensity("ReflectionIntensity", Range(0,1)) = 0.7
+		_ReflectionClarity("ReflectionClarity", Range(0,1)) = 1
+		_ReflectionDistort("ReflectionDistort", Range(0,1)) = 0.05
+		_DepthAlpha("Inverse Alpha, Depth and Color ranges", Range(0,1)) = 0.17
 	}
-}
 
-// -----------------------------------------------------------
-//  Old cards
+		SubShader{
 
-// three texture, cubemaps
-Subshader {
-	Tags { "RenderType"="Opaque" }
-	Pass {
-		Color (0.5,0.5,0.5,0.5)
-		SetTexture [_MainTex] {
-			Matrix [_WaveMatrix]
-			combine texture * primary
-		}
-		SetTexture [_MainTex] {
-			Matrix [_WaveMatrix2]
-			combine texture * primary + previous
-		}
-		SetTexture [_ColorControlCube] {
-			combine texture +- previous, primary
-			Matrix [_Reflection]
-		}
+		Tags{ "queue" = "Transparent+100" "RenderType" = "Transparent" }
+		ZWrite Off
+		Blend SrcAlpha OneMinusSrcAlpha
+
+		Pass{
+		CGPROGRAM
+#pragma vertex vert  
+#pragma fragment frag  
+
+#include "UnityCG.cginc"  
+
+		uniform sampler2D _WaterMap;
+	uniform samplerCUBE  _Skybox;
+	uniform float3 _LightDirection;
+	uniform float4 _WaveFreqSpeed1;
+	uniform float4 _WaveFreqSpeed2;
+	uniform float4 _WaterColor;
+	uniform float _WaterClarity;
+	uniform float3 _SpecularColor;
+	uniform float _SpecularGlossy;
+	uniform float _SpecularIntensity;
+	uniform float _ReflectionIntensity;
+	uniform float _ReflectionClarity;
+	uniform float _ReflectionDistort;
+	uniform float _DepthAlpha;
+
+	sampler2D _CameraDepthTexture;
+
+	struct appdata_t
+	{
+		float4 vertex : POSITION;
+		float2 texcoord : TEXCOORD0;
+		float4 color : COLOR;
+	};
+
+	struct v2f
+	{
+		float4 pos : SV_POSITION;
+		float3 texcoord0 : TEXCOORD0;
+		float4 texcoord1 : TEXCOORD1;
+		float2 texcoord2 : TEXCOORD2;
+		float4 texcoord3 : TEXCOORD3;
+		float4 proj0 :TEXCOORD4;
+		UNITY_FOG_COORDS(3)
+	};
+
+	v2f vert(appdata_t v)
+	{
+		v2f o;
+		float4 tmpvar_1;
+		float4 tmpvar_2;
+		tmpvar_2 = mul(unity_ObjectToWorld , v.vertex);
+		tmpvar_1.xyz = ((_WaterColor.xyz * v.color.xyz) * 2.0);
+		float tmpvar_3;
+		tmpvar_3 = clamp(((
+			(v.color.w * 2.0)
+			- 1.0) / _WaterClarity), 0.0, 1.0);
+		tmpvar_1.w = (_WaterColor.w * tmpvar_3);
+		float2 tmpvar_4;
+		tmpvar_4 = (tmpvar_2.xz * 0.01);
+		float2 tmpvar_5;
+		tmpvar_5 = (_Time.yy * 0.01);
+		float4 tmpvar_6;
+		tmpvar_6.zw = float2(0.0, 0.0);
+		tmpvar_6.xy = ((tmpvar_4 * _WaveFreqSpeed1.xy) + (tmpvar_5 * _WaveFreqSpeed1.zw));
+
+		o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+		o.texcoord0 = (_WorldSpaceCameraPos - tmpvar_2.xyz);
+		o.texcoord1 = tmpvar_6;
+		o.texcoord2 = ((tmpvar_4 * _WaveFreqSpeed2.xy) + (tmpvar_5 * _WaveFreqSpeed2.zw));
+		o.texcoord3 = tmpvar_1;
+
+		o.proj0 = ComputeScreenPos(o.pos);
+		COMPUTE_EYEDEPTH(o.proj0.z);
+
+		return o;
 	}
-}
 
-// dual texture, cubemaps
-Subshader {
-	Tags { "RenderType"="Opaque" }
-	Pass {
-		Color (0.5,0.5,0.5,0.5)
-		SetTexture [_MainTex] {
-			Matrix [_WaveMatrix]
-			combine texture
-		}
-		SetTexture [_ColorControlCube] {
-			combine texture +- previous, primary
-			Matrix [_Reflection]
-		}
+	float4 frag(v2f i) : COLOR
+	{
+		float4 color_1;
+	float reflectIntensity_2;
+	float3 waterColor_3;
+	float specular_4;
+	float3 normal_5;
+	float3 normal1_6;
+	float3 normal0_7;
+	float3 tmpvar_8;
+
+	tmpvar_8 = tex2D(_WaterMap, i.texcoord1.xy).xyz;
+	normal0_7 = tmpvar_8;
+	float3 tmpvar_9;
+	tmpvar_9 = tex2D(_WaterMap, i.texcoord2).xyz;
+	normal1_6 = tmpvar_9;
+	float3 tmpvar_10;
+	tmpvar_10 = normalize(((2.0 *
+		(normal0_7 + normal1_6)
+		) - 2.0));
+	normal_5.xz = tmpvar_10.xz;
+	normal_5.y = ((tmpvar_10.y * 0.5) + 1.0);
+	float3 tmpvar_11;
+	tmpvar_11 = normalize(normal_5);
+	normal_5 = tmpvar_11;
+	float3 tmpvar_12;
+	tmpvar_12 = normalize(i.texcoord0);
+	float tmpvar_13;
+	tmpvar_13 = max(0.0, dot(tmpvar_12, tmpvar_11));
+	float3 tmpvar_14;
+	tmpvar_14 = normalize(_LightDirection);
+	float tmpvar_15;
+	tmpvar_15 = (pow(max(0.0,
+		dot(-(normalize((tmpvar_14 -
+			(2.0 * (dot(tmpvar_11, tmpvar_14) * tmpvar_11))
+			))), tmpvar_12)
+		), _SpecularGlossy) * _SpecularIntensity);
+	specular_4 = tmpvar_15;
+	float3 tmpvar_16;
+	tmpvar_16 = (-(normalize(
+		(tmpvar_12 - (tmpvar_12.y * float3(0.0, 2.0, 0.0)))
+		)) + ((tmpvar_11 * _ReflectionDistort) * 0.5));
+	float4 tmpvar_17;
+	tmpvar_17 = texCUBE(_Skybox, tmpvar_16);
+	float3 tmpvar_18;
+	tmpvar_18 = (2.0 * tmpvar_17.xyz);
+	float3 tmpvar_19;
+	tmpvar_19 = ((1.0 - (0.25 * tmpvar_13)) * i.texcoord3.xyz);
+	waterColor_3 = tmpvar_19;
+	float tmpvar_20;
+	tmpvar_20 = max((_ReflectionIntensity + (
+		(1.0 - _ReflectionIntensity)
+		*
+		pow(max(0.0, (1.0 - tmpvar_13)), 5.0)
+		)), 0.0);
+	reflectIntensity_2 = tmpvar_20;
+	color_1.xyz = (((waterColor_3 * reflectIntensity_2) * (
+		((tmpvar_18 * 2.0) * _ReflectionClarity)
+		+
+		(1.0 - _ReflectionClarity)
+		)) + (specular_4 * _SpecularColor));
+	color_1.w = i.texcoord3.w;
+
+	// edge alpha
+	/*float depth = tex2Dproj(_CameraDepthTexture, i.proj0).r;
+	depth = LinearEyeDepth(depth);
+	depth -= i.proj0.z;
+
+	float range = saturate(_DepthAlpha * depth);
+	range = 1.0 - range;
+	range = lerp(range, range * range * range, 0.5);
+
+	color_1.a *= (1.0 - range * range);*/
+
+	return color_1;
 	}
-}
 
-// single texture
-Subshader {
-	Tags { "RenderType"="Opaque" }
-	Pass {
-		Color (0.5,0.5,0.5,0)
-		SetTexture [_MainTex] {
-			Matrix [_WaveMatrix]
-			combine texture, primary
-		}
+		ENDCG
 	}
-}
-
+	}
+		FallBack "Diffuse"
 }

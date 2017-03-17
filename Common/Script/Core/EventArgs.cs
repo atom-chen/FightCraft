@@ -59,6 +59,8 @@ namespace GameBase
         EVENT_MOTION_MOVE,
         EVENT_MOTION_HIT,
         EVENT_MOTION_FLY,
+        EVENT_MOTION_RISE,
+        EVENT_MOTION_RISE_FINISH,
         EVENT_MOTION_FINISH,
 
         EVENT_FIGHT_END = 3001,

@@ -27,7 +27,7 @@ public class SelectTargetCommon
         return nearMotion;
     }
 
-    public static List<MotionManager> GetNearMotions(MotionManager selfMotion)
+    public static List<MotionManager> GetNearMotions(MotionManager selfMotion, float length = 100)
     {
         var motions = GameObject.FindObjectsOfType<MotionManager>();
 
@@ -37,7 +37,33 @@ public class SelectTargetCommon
             if (motion == selfMotion)
                 continue;
 
+            float distance = Vector3.Distance(selfMotion.transform.position, motion.transform.position);
+            if (distance > length)
+                continue;
+
             nearMotions.Add(motion);
+        }
+
+        return nearMotions;
+    }
+
+    public static List<MotionManager> GetFrontMotions(MotionManager selfMotion, float length)
+    {
+        var motions = GameObject.FindObjectsOfType<MotionManager>();
+
+        List<MotionManager> nearMotions = new List<MotionManager>();
+        foreach (var motion in motions)
+        {
+            if (motion == selfMotion)
+                continue;
+
+            float distance = Vector3.Distance(selfMotion.transform.position, motion.transform.position);
+            if (distance > length)
+                continue;
+
+            float angle = Vector3.Angle(motion.transform.position - selfMotion.transform.position, selfMotion.transform.forward);
+            if(angle < 30)
+                nearMotions.Add(motion);
         }
 
         return nearMotions;
