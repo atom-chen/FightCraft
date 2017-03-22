@@ -43,12 +43,12 @@ public class ObjMotionSkillDush : ObjMotionSkillBase
 
         switch (function)
         {
-            case AnimationEvent.NEXT_INPUT_START:
+            case AnimEventManager.NEXT_INPUT_START:
                 Debug.Log("Dush NEXT_INPUT_START");
                 _CanNextInput = true;
                 NextInputPress();
                 break;
-            case AnimationEvent.NEXT_INPUT_END:
+            case AnimEventManager.NEXT_INPUT_END:
                 _CanNextInput = false;
                 break;
         }

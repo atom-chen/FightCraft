@@ -47,13 +47,63 @@ public class ResourcePool : InstanceBase<ResourcePool>
         {
             _IdleEffects.Add(effectName, new Stack<EffectController>());
         }
-        effct.transform.SetParent(null);
+        effct.transform.SetParent(transform);
         _IdleEffects[effectName].Push(effct);
     }
 
     public void ClearEffects()
     {
         _IdleEffects = new Dictionary<string, Stack<EffectController>>();
+    }
+
+    public void PlaySceneEffect(EffectController effct, Vector3 position, Vector3 rotation)
+    {
+        var effectInstance = GetIdleEffect(effct);
+        effectInstance.transform.SetParent(transform);
+        effectInstance.transform.position = position;
+        effectInstance.transform.rotation = Quaternion.Euler(rotation);
+        effectInstance.PlayEffect();
+    }
+    #endregion
+
+    #region bullet
+
+    private Dictionary<string, Stack<BulletBase>> _IdleBullets = new Dictionary<string, Stack<BulletBase>>();
+
+    public BulletBase GetIdleBullet(BulletBase bullet)
+    {
+        BulletBase idleBullet = null;
+        if (_IdleBullets.ContainsKey(bullet.name))
+        {
+            if (_IdleBullets[bullet.name].Count > 0)
+            {
+                idleBullet = _IdleBullets[bullet.name].Pop();
+            }
+        }
+
+        if (idleBullet == null)
+        {
+            idleBullet = GameObject.Instantiate<BulletBase>(bullet);
+        }
+
+        return idleBullet;
+    }
+
+    public void RecvIldeBullet(BulletBase bullet)
+    {
+        string BulletName = bullet.name.Replace("(Clone)", "");
+        if (!_IdleBullets.ContainsKey(BulletName))
+        {
+            _IdleBullets.Add(BulletName, new Stack<BulletBase>());
+        }
+        bullet.gameObject.SetActive(false);
+        bullet.transform.SetParent(transform);
+        _IdleBullets[BulletName].Push(bullet);
+    }
+
+    public void ClearBullets()
+    {
+        _IdleBullets = new Dictionary<string, Stack<BulletBase>>();
     }
 
     #endregion

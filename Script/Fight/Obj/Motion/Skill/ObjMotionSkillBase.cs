@@ -90,13 +90,13 @@ public class ObjMotionSkillBase : MonoBehaviour
     {
         switch (function)
         {
-            case AnimationEvent.ANIMATION_END:
+            case AnimEventManager.ANIMATION_END:
                 FinishSkill();
                 break;
-            case AnimationEvent.COLLIDER_START:
+            case AnimEventManager.COLLIDER_START:
                 ColliderStart(param);
                 break;
-            case AnimationEvent.COLLIDER_END:
+            case AnimEventManager.COLLIDER_END:
                 ColliderEnd(param);
                 break;
         }

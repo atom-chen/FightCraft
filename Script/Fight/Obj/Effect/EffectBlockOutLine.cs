@@ -9,7 +9,7 @@ public class EffectBlockOutLine : EffectController
     public Material _OutLineMaterial;
 
     private bool _IsPlayingEffect = false;
-    private float _LastTime = 0.3f;
+    private float _LastTime = 0.1f;
     private float _StartPlayTime = 0;
 
     public override void PlayEffect()

@@ -21,10 +21,10 @@ public class MotionManager : MonoBehaviour
         }
 
         _Animaton = GetComponentInChildren<Animation>();
-        _AnimationEvent = GetComponentInChildren<AnimationEvent>();
+        _AnimationEvent = GetComponentInChildren<AnimEventManager>();
         if (_AnimationEvent == null)
         {
-            _AnimationEvent = _Animaton.gameObject.AddComponent<AnimationEvent>();
+            _AnimationEvent = _Animaton.gameObject.AddComponent<AnimEventManager>();
         }
         _AnimationEvent.Init();
 
@@ -81,8 +81,8 @@ public class MotionManager : MonoBehaviour
     #region Animation
 
     private Animation _Animaton;
-    private AnimationEvent _AnimationEvent;
-    public AnimationEvent AnimationEvent
+    private AnimEventManager _AnimationEvent;
+    public AnimEventManager AnimationEvent
     {
         get
         {
@@ -207,6 +207,11 @@ public class MotionManager : MonoBehaviour
 
         if (_ActingSkill != null)
             _ActingSkill.FinishSkill();
+
+        if (BaseMotionManager.IsMoving())
+        {
+            BaseMotionManager.StopMove();
+        }
 
         skillMotion.ActSkill();
         _ActingSkill = skillMotion;
@@ -373,6 +378,10 @@ public class MotionManager : MonoBehaviour
         idleEffect.transform.SetParent(GetBindTransform(effect._BindPos));
         idleEffect.transform.localPosition = Vector3.zero;
         idleEffect.transform.localRotation = Quaternion.Euler(Vector3.zero);
+        if (hashParam != null && hashParam.ContainsKey("WorldPos"))
+        {
+            idleEffect.transform.position = (Vector3)hashParam["WorldPos"];
+        }
         idleEffect._EffectLastTime = effect._EffectLastTime;
         if(hashParam == null)
             idleEffect.PlayEffect();
@@ -500,5 +509,26 @@ public class MotionManager : MonoBehaviour
 
     public bool _CanBeSelectByEnemy = true;
 
+    #endregion
+
+    #region bullet
+
+    private Transform _BulletBindPos = null;
+    public Transform BulletBindPos
+    {
+        get
+        {
+            if (_BulletBindPos == null)
+            {
+                var bulletGO = new GameObject("BulletBind");
+                _BulletBindPos = bulletGO.transform;
+                _BulletBindPos.transform.SetParent(transform);
+                _BulletBindPos.transform.localPosition = Vector3.zero;
+                _BulletBindPos.transform.localRotation = Quaternion.Euler(Vector3.zero);
+            }
+            return _BulletBindPos;
+        }
+    }
+    
     #endregion
 }

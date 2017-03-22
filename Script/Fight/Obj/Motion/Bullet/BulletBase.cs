@@ -2,16 +2,27 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class BulletBase : SelectCollider
+public class BulletBase : MonoBehaviour
 {
-    public GameObject _BulletPrefab;
-    public Vector3 _InitPositionOffset;
+    protected ImpactBase[] _ImpactList;
+    protected MotionManager _SkillMotion;
 
-    public override void ColliderStart()
+    public virtual void Init(MotionManager senderMotion)
     {
-        var bulletObj = GameObject.Instantiate(_BulletPrefab);
-        bulletObj.transform.position = transform.position + _InitPositionOffset;
-        bulletObj.transform.rotation = transform.rotation;
-        bulletObj.SetActive(true);
+        _SkillMotion = senderMotion;
+        _ImpactList = gameObject.GetComponents<ImpactBase>();
+    }
+
+    protected virtual void BulletHit(MotionManager hitMotion)
+    {
+        foreach (var impact in _ImpactList)
+        {
+            impact.ActImpact(_SkillMotion, hitMotion);
+        }
+    }
+
+    protected virtual void BulletFinish()
+    {
+        ResourcePool.Instance.RecvIldeBullet(this);
     }
 }

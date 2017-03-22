@@ -105,6 +105,14 @@ public class BaseMotionManager : MonoBehaviour
 
     public AnimationClip _IdleAnim;
 
+    public bool IsMotionIdle()
+    {
+        if (_MotionManager.MotionPrior == IDLE_PRIOR)
+            return true;
+
+        return false;
+    }
+
     public bool CanMotionIdle()
     {
         if (_MotionManager.MotionPrior != RISE_PRIOR && _MotionManager.MotionPrior != MOVE_PRIOR && _MotionManager.MotionPrior > IDLE_PRIOR)
@@ -239,10 +247,10 @@ public class BaseMotionManager : MonoBehaviour
     {
         switch (funcName)
         {
-            case AnimationEvent.KEY_FRAME:
+            case AnimEventManager.KEY_FRAME:
                 HitKeyframe(param);
                 break;
-            case AnimationEvent.ANIMATION_END:
+            case AnimEventManager.ANIMATION_END:
                 HitEnd();
                 break;
         }
@@ -281,7 +289,7 @@ public class BaseMotionManager : MonoBehaviour
     public IEnumerator ComsumeAnim()
     {
         yield return new WaitForSeconds(_StopKeyFrameTime);
-        Debug.Log("Hit ComsumeAnim");
+
         _MotionManager.ResumeAnimation(_HitAnim);
     }
 
@@ -385,13 +393,14 @@ public class BaseMotionManager : MonoBehaviour
     private void RiseEnd()
     {
         MotionIdle();
+        _MotionManager.EventController.PushEvent(GameBase.EVENT_TYPE.EVENT_MOTION_RISE_FINISH, this, new Hashtable());
     }
 
     private void DispatchRiseEvent(string funcName, object param)
     {
         switch (funcName)
         {
-            case AnimationEvent.ANIMATION_END:
+            case AnimEventManager.ANIMATION_END:
                 RiseEnd();
                 break;
         }
