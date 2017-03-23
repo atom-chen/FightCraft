@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BulletEmitterDiaoChan : BulletEmitterBase
+public class BulletEmitterPlayPosSingle : BulletEmitterBase
 {
     public override void ActImpact(MotionManager senderManager, MotionManager reciverManager)
     {
@@ -10,7 +10,7 @@ public class BulletEmitterDiaoChan : BulletEmitterBase
         var target = GameObject.FindGameObjectWithTag("Player");
         var targetMotion = target.GetComponent<MotionManager>();
 
-        var bullet = InitBulletGO<BulletDaiJiHeart>();
+        var bullet = InitBulletGO<BulletBase>();
 
         bullet.transform.position = targetMotion.transform.position;
     }

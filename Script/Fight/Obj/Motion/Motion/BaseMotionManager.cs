@@ -258,10 +258,12 @@ public class BaseMotionManager : MonoBehaviour
 
     public void MotionHit(float hitTime, int hitEffect, MotionManager impactSender)
     {
+        PlayHitEffect(impactSender, hitEffect);
+        if (hitTime <= 0)
+            return;
+
         if (_MotionManager.ActingSkill != null)
             _MotionManager.ActingSkill.FinishSkill();
-
-        PlayHitEffect(impactSender, hitEffect);
 
         if (hitTime > _HitAnim.length)
         {
