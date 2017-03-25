@@ -13,7 +13,7 @@ public class ImpactFrozen : ImpactBuff
         base.ActBuff(senderManager, reciverManager);
 
         StartCoroutine(StopAnimation(reciverManager));
-        StartCoroutine(TimeOut());
+        StartCoroutine(TimeOut(reciverManager));
     }
 
     private IEnumerator StopAnimation(MotionManager reciverManager)
@@ -22,11 +22,11 @@ public class ImpactFrozen : ImpactBuff
         reciverManager.PauseAnimation();
     }
 
-    public override void RemoveBuff()
+    public override void RemoveBuff(MotionManager reciverManager)
     {
-        base.RemoveBuff();
+        base.RemoveBuff(reciverManager);
 
-        _ReciverManager.ResumeAnimation();
+        reciverManager.ResumeAnimation();
     }
 
 

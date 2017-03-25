@@ -62,7 +62,7 @@ public class ObjMotionSkillBase : MonoBehaviour
         if(_Effect != null)
             _MotionManager.PlaySkillEffect(_Effect);
 
-        gameObject.SetActive(true);
+        //gameObject.SetActive(true);
         return true;
     }
 
@@ -82,7 +82,7 @@ public class ObjMotionSkillBase : MonoBehaviour
         if (_Effect != null)
             _MotionManager.StopSkillEffect(_Effect);
 
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
         _MotionManager.ResetMove();
     }
 

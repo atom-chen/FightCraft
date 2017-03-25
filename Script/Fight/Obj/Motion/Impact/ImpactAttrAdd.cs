@@ -14,11 +14,11 @@ public class ImpactAttrAdd : ImpactBuff
         reciverManager.RoleAttrManager.SetAttr(_Attr, value);
     }
 
-    public override void RemoveBuff()
+    public override void RemoveBuff(MotionManager reciverManager)
     {
-        base.RemoveBuff();
+        base.RemoveBuff(reciverManager);
 
-        var value = _ReciverManager.RoleAttrManager.GetAttrFloat(_Attr) - _AddValue;
-        _ReciverManager.RoleAttrManager.SetAttr(_Attr, value);
+        var value = reciverManager.RoleAttrManager.GetAttrFloat(_Attr) - _AddValue;
+        reciverManager.RoleAttrManager.SetAttr(_Attr, value);
     }
 }

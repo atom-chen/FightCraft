@@ -259,7 +259,7 @@ public class MotionManager : MonoBehaviour
     private GameObject _BuffBindPos;
     private List<ImpactBuff> _RemoveTemp = new List<ImpactBuff>();
 
-    public void AddBuff(ImpactBuff buff)
+    public ImpactBuff AddBuff(ImpactBuff buff)
     {
         if (_BuffBindPos == null)
         {
@@ -270,12 +270,14 @@ public class MotionManager : MonoBehaviour
         var newBuff = _BuffBindPos.AddComponent(buff.GetType()) as ImpactBuff;
         CopyComponent(buff, newBuff);
         _ImpactBuffs.Add(newBuff);
-        newBuff.ActBuff();
+        newBuff.ActBuff(this);
+
+        return newBuff;
     }
 
     public void RemoveBuff(ImpactBuff buff)
     {
-        buff.RemoveBuff();
+        buff.RemoveBuff(this);
         _ImpactBuffs.Remove(buff);
         GameObject.Destroy(buff);
     }

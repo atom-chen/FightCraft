@@ -9,4 +9,7 @@ public class ImpactBase : MonoBehaviour
 
     }
 
+    public virtual void RemoveImpact(MotionManager reciverManager)
+    { }
+
 }

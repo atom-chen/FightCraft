@@ -1,39 +1,38 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BulletLine : MonoBehaviour
+public class BulletLine : BulletBase
 {
-    public float lifeTime = 2.0f;
-    public float speed;
-
-    private MotionManager _SkillMotion;
-    private ImpactBase[] _ImpactList;
+    public float _LifeTime = 2.0f;
+    public float _Speed = 10;
 
     // Use this for initialization
-    void Start ()
+    public override void Init(MotionManager senderMotion)
     {
-        GameObject.Destroy(gameObject, lifeTime);
+        base.Init(senderMotion);
+    }
 
-        _SkillMotion = gameObject.GetComponentInParent<MotionManager>();
-        _ImpactList = gameObject.GetComponentsInChildren<ImpactBase>();
+    private IEnumerator FinishDelay()
+    {
+        yield return new WaitForSeconds(_LifeTime);
+
+        BulletFinish();
     }
 	
 	// Update is called once per frame
 	void FixedUpdate ()
     {
-        transform.position += transform.forward.normalized * speed * Time.fixedDeltaTime;
+        transform.position += transform.forward.normalized * _Speed * Time.fixedDeltaTime;
 	}
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("OnTriggerEnter");
-        var motion = other.gameObject.GetComponent<MotionManager>();
-        if (motion != null)
-        {
-            foreach (var impact in _ImpactList)
-            {
-                impact.ActImpact(_SkillMotion, motion);
-            }
-        }
+        Debug.Log("OnTriggerEnter:" + other.ToString());
+        var targetMotion = other.GetComponentInParent<MotionManager>();
+        if (targetMotion == null)
+            return;
+
+        BulletHit(targetMotion);
+        BulletFinish();
     }
 }

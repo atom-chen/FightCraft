@@ -11,9 +11,9 @@ public class ImpactNoCollider : ImpactBuff
 
     }
 
-    public override void RemoveBuff()
+    public override void RemoveBuff(MotionManager reciverManager)
     {
-        base.RemoveBuff();
+        base.RemoveBuff(reciverManager);
 
     }
 }

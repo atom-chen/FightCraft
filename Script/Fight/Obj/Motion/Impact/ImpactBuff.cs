@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class ImpactBuff : ImpactBase
 {
@@ -7,44 +8,56 @@ public class ImpactBuff : ImpactBase
     public EffectController _BuffEffect;
 
     protected MotionManager _BuffSender;
-    protected MotionManager _ReciverManager;
     protected EffectController _DynamicEffect;
+
+    protected Dictionary<MotionManager, ImpactBuff> _ReciverDict = new Dictionary<MotionManager, ImpactBuff>();
 
     public override sealed void ActImpact(MotionManager senderManager, MotionManager reciverManager)
     {
         base.ActImpact(senderManager, reciverManager);
 
         _BuffSender = senderManager;
-        _ReciverManager = reciverManager;
-        _ReciverManager.AddBuff(this);
+        var dynamicBuff = reciverManager.AddBuff(this);
+
+        _ReciverDict.Add(reciverManager, dynamicBuff);
     }
 
-    public void ActBuff()
+    public override void RemoveImpact(MotionManager reciverManager)
     {
-        ActBuff(_BuffSender, _ReciverManager);
+        base.RemoveImpact(reciverManager);
+
+        if (_ReciverDict.ContainsKey(reciverManager))
+        {
+            reciverManager.RemoveBuff(_ReciverDict[reciverManager]);
+        }
+    }
+
+    public void ActBuff(MotionManager reciverManager)
+    {
+        ActBuff(_BuffSender, reciverManager);
     }
 
     public virtual void ActBuff(MotionManager senderManager, MotionManager ownerManager)
     {
         if (_BuffEffect != null)
         {
-            _DynamicEffect = _ReciverManager.PlayDynamicEffect(_BuffEffect);
+            _DynamicEffect = ownerManager.PlayDynamicEffect(_BuffEffect);
         }
         if(_LastTime > 0)
-            StartCoroutine(TimeOut());
+            StartCoroutine(TimeOut(ownerManager));
     }
 
-    public virtual void RemoveBuff()
+    public virtual void RemoveBuff(MotionManager ownerManager)
     {
         if (_DynamicEffect != null)
         {
-            _ReciverManager.StopDynamicEffectImmediately(_DynamicEffect);
+            ownerManager.StopDynamicEffectImmediately(_DynamicEffect);
         }
     }
 
-    public IEnumerator TimeOut()
+    public IEnumerator TimeOut(MotionManager ownerManager)
     {
         yield return new WaitForSeconds(_LastTime);
-        _ReciverManager.RemoveBuff(this);
+        ownerManager.RemoveBuff(this);
     }
 }

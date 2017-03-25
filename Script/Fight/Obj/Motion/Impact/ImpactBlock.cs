@@ -5,6 +5,8 @@ public class ImpactBlock : ImpactBuff
 {
     public EffectController _HitEffect;
 
+    private MotionManager _BuffOwner;
+
     public override void ActBuff(MotionManager senderManager, MotionManager reciverManager)
     {
         base.ActBuff(senderManager, reciverManager);
@@ -12,14 +14,15 @@ public class ImpactBlock : ImpactBuff
         reciverManager.EventController.RegisteEvent(GameBase.EVENT_TYPE.EVENT_MOTION_HIT, HitEvent, 99);
         reciverManager.EventController.RegisteEvent(GameBase.EVENT_TYPE.EVENT_MOTION_FLY, FlyEvent, 99);
         Debug.Log("ImpactBlock act");
+        _BuffOwner = reciverManager;
     }
 
-    public override void RemoveBuff()
+    public override void RemoveBuff(MotionManager reciverManager)
     {
-        base.RemoveBuff();
+        base.RemoveBuff(reciverManager);
 
-        _ReciverManager.EventController.UnRegisteEvent(GameBase.EVENT_TYPE.EVENT_MOTION_HIT, HitEvent);
-        _ReciverManager.EventController.UnRegisteEvent(GameBase.EVENT_TYPE.EVENT_MOTION_FLY, FlyEvent);
+        reciverManager.EventController.UnRegisteEvent(GameBase.EVENT_TYPE.EVENT_MOTION_HIT, HitEvent);
+        reciverManager.EventController.UnRegisteEvent(GameBase.EVENT_TYPE.EVENT_MOTION_FLY, FlyEvent);
         Debug.Log("ImpactBlock remove");
     }
 
@@ -27,18 +30,18 @@ public class ImpactBlock : ImpactBuff
     {
         eventArgs.Add("StopEvent", true);
         //GlobalEffect.Instance.Pause(0.1f);
-        _ReciverManager.ResetMove();
-        _ReciverManager.SkillPause(0.3f);
-        _ReciverManager.PlaySkillEffect(_HitEffect);
+        _BuffOwner.ResetMove();
+        _BuffOwner.SkillPause(0.3f);
+        _BuffOwner.PlaySkillEffect(_HitEffect);
     }
 
     private void FlyEvent(object sender, Hashtable eventArgs)
     {
         eventArgs.Add("StopEvent", true);
         //GlobalEffect.Instance.Pause(0.1f);
-        _ReciverManager.ResetMove();
-        _ReciverManager.SkillPause(0.3f);
-        _ReciverManager.PlaySkillEffect(_HitEffect);
+        _BuffOwner.ResetMove();
+        _BuffOwner.SkillPause(0.3f);
+        _BuffOwner.PlaySkillEffect(_HitEffect);
 
     }
 }
