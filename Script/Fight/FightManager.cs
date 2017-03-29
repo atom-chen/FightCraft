@@ -2,21 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class FightManager : MonoBehaviour
+public class FightManager : SingleClass<FightManager>
 {
-    #region instance
-
-    private FightManager _Instance;
-
-    public FightManager Instance
-    {
-        get
-        {
-            return _Instance;
-        }
-    }
-
-    #endregion
 
     // Use this for initialization
     void Start ()
@@ -110,16 +97,45 @@ public class FightManager : MonoBehaviour
         }
     }
 
+    public void InitEnemy(string modelBase, Vector3 pos, Vector3 rot)
+    {
+        Debug.Log("InitEnemy:" + pos + " ; " + rot);
+        var mainBase = ResourcePool.Instance.GetIdleMotion(modelBase);
+        mainBase.SetPosition(pos);
+        mainBase.SetRotate(rot);
+        Debug.Log("InitEnemy:" + mainBase.transform.position + " ; " + mainBase.transform.rotation.eulerAngles);
+
+        AI_Base aiBase = mainBase.GetComponent<AI_Base>();
+        
+    }
+
+    public void ObjDie(MotionManager objMotion)
+    {
+
+    }
+
     #endregion
 
     #region scene
 
-    private FightSceneLogic _FightScene;
+    private FightSceneLogicBase _FightScene;
 
     private void InitScene()
     {
         var sceneGO = GameObject.Find("FightSceneLogic");
-        _FightScene = sceneGO.GetComponent<FightSceneLogic>();
+        _FightScene = sceneGO.GetComponent<FightSceneLogicBase>();
+        StartCoroutine(StartSceneLogic());
+    }
+
+    private IEnumerator StartSceneLogic()
+    {
+        yield return new WaitForSeconds(2);
+        _FightScene.StartLogic();
+    }
+
+    public void OnObjDie()
+    {
+
     }
 
     #endregion

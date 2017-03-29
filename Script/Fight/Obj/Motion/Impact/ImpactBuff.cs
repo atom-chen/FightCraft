@@ -10,7 +10,7 @@ public class ImpactBuff : ImpactBase
     protected MotionManager _BuffSender;
     protected EffectController _DynamicEffect;
 
-    protected Dictionary<MotionManager, ImpactBuff> _ReciverDict = new Dictionary<MotionManager, ImpactBuff>();
+    protected Dictionary<MotionManager, List<ImpactBuff>> _ReciverDict = new Dictionary<MotionManager, List<ImpactBuff>>();
 
     public override sealed void ActImpact(MotionManager senderManager, MotionManager reciverManager)
     {
@@ -19,17 +19,13 @@ public class ImpactBuff : ImpactBase
         _BuffSender = senderManager;
         var dynamicBuff = reciverManager.AddBuff(this);
 
-        _ReciverDict.Add(reciverManager, dynamicBuff);
     }
 
     public override void RemoveImpact(MotionManager reciverManager)
     {
         base.RemoveImpact(reciverManager);
 
-        if (_ReciverDict.ContainsKey(reciverManager))
-        {
-            reciverManager.RemoveBuff(_ReciverDict[reciverManager]);
-        }
+        reciverManager.RemoveBuff(GetType());
     }
 
     public void ActBuff(MotionManager reciverManager)

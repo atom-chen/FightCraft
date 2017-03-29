@@ -118,10 +118,11 @@ public class ObjMotionSkillAttack : ObjMotionSkillBase
         if (_CurStep + 1 < _NextAnim.Length)
         {
             ++_CurStep;
-            if (InputManager.Instance._Axis != Vector2.zero)
-            {
-                _MotionManager.SetRotate(new Vector3(InputManager.Instance._Axis.x, 0, InputManager.Instance._Axis.y));
-            }
+            //if (InputManager.Instance._Axis != Vector2.zero)
+            //{
+            //    _MotionManager.SetRotate(new Vector3(InputManager.Instance._Axis.x, 0, InputManager.Instance._Axis.y));
+            //}
+            InputManager.Instance.AutoRotate();
             _MotionManager.PlayAnimation(_NextAnim[_CurStep]);
             _SkillLastTime = _NextAnim[_CurStep].length;
             if (_NextEffect.Length > _CurStep && _NextEffect[_CurStep] != null)

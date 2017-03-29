@@ -76,7 +76,7 @@ public class AI_HeroBase : AI_Base
         }
 
         _SkillWait = _SkillInterval;
-        Debug.Log("use attack skill " + Time.time);
+
         _SelfMotion.ActSkill(_NormalAttack);
         return;
     }

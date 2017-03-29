@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+
+using GameUI;
 
 public class InputManager : InstanceBase<InputManager>
 {
@@ -23,8 +26,10 @@ public class InputManager : InstanceBase<InputManager>
 	// Update is called once per frame
 	void Update ()
     {
+#if UNITY_EDITOR
         _Axis.x = Input.GetAxis("Horizontal");
         _Axis.y = Input.GetAxis("Vertical");
+#endif
         if (_Axis != Vector2.zero)
         {
             if (_InputMotion.BaseMotionManager.CanMotionMove())
@@ -32,7 +37,9 @@ public class InputManager : InstanceBase<InputManager>
         }
         else
         {
-            if(_InputMotion.BaseMotionManager.CanMotionIdle())
+            if (_InputMotion.BaseMotionManager.IsMoving())
+                _InputMotion.BaseMotionManager.StopMove();
+            if (_InputMotion.BaseMotionManager.CanMotionIdle())
                 _InputMotion.BaseMotionManager.MotionIdle();
         }
 
@@ -54,12 +61,29 @@ public class InputManager : InstanceBase<InputManager>
     #region input 
 
     public Vector2 _Axis;
+    private UISkillBar _UISkillBar;
+    public UISkillBar UISkillBar
+    {
+        get
+        {
+            if (_UISkillBar == null)
+            {
+                _UISkillBar = GameObject.FindObjectOfType<UISkillBar>();
+            }
+            return _UISkillBar;
+        }
+    }
 
     public bool IsKeyDown(string key)
     {
+
         if (key.Length != 1)
             return false;
+#if UNITY_EDITOR
         return Input.GetKeyDown(key);
+#else
+        return UISkillBar.IsKeyDown(key);
+#endif
     }
 
     public bool IsKeyHold(string key)
@@ -67,9 +91,9 @@ public class InputManager : InstanceBase<InputManager>
         return Input.GetKey(key);
     }
 
-    #endregion
+#endregion
 
-    #region normal skill
+#region normal skill
 
     private ObjMotionSkillAttack _NormalAttack;
     public void CharSkill()
@@ -84,6 +108,7 @@ public class InputManager : InstanceBase<InputManager>
                 string inputKey = "k" + (_NormalAttack.CurStep + 1);
                 if (_InputMotion._SkillMotions.ContainsKey(inputKey))
                 {
+                    AutoRotate();
                     _InputMotion.ActSkill(_InputMotion._SkillMotions[inputKey]);
                 }
             }
@@ -118,5 +143,26 @@ public class InputManager : InstanceBase<InputManager>
         }
     }
 
-    #endregion
+    public void AutoRotate()
+    {
+        List<MotionManager> targetMotions;
+        if (InputManager.Instance._Axis != Vector2.zero)
+        {
+            _InputMotion.SetLookRotate(new Vector3(InputManager.Instance._Axis.x, 0, InputManager.Instance._Axis.y));
+            targetMotions = SelectTargetCommon.GetFrontMotions(_InputMotion, 3, 30, true);
+        }
+        else
+        {
+            targetMotions = SelectTargetCommon.GetFrontMotions(_InputMotion, 3, 80, true);
+        }
+        
+        
+        if (targetMotions != null && targetMotions.Count > 0)
+        {
+            _InputMotion.SetLookAt(targetMotions[0].gameObject.transform.position);
+        }
+
+    }
+
+#endregion
 }

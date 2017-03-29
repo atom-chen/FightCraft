@@ -14,11 +14,7 @@ public class MotionManager : MonoBehaviour
             _EventController = gameObject.AddComponent<GameBase.EventController>();
         }
 
-        _RoleAttrManager = GetComponent<RoleAttrManager>();
-        if (_RoleAttrManager == null)
-        {
-            _RoleAttrManager = gameObject.AddComponent<RoleAttrManager>();
-        }
+        InitRoleAttr();
 
         _Animaton = GetComponentInChildren<Animation>();
         _AnimationEvent = GetComponentInChildren<AnimEventManager>();
@@ -37,6 +33,12 @@ public class MotionManager : MonoBehaviour
     void FixedUpdate()
     {
         UpdateMove();
+        
+    }
+
+    public void Reset()
+    {
+        _IsMotionDie = true;
     }
 
     #region motion
@@ -242,6 +244,15 @@ public class MotionManager : MonoBehaviour
 
     #region roleAttr
 
+    private bool _IsMotionDie = false;
+    public bool IsMotionDie
+    {
+        get
+        {
+            return _IsMotionDie;
+        }
+    }
+
     private RoleAttrManager _RoleAttrManager;
     public RoleAttrManager RoleAttrManager
     {
@@ -249,6 +260,25 @@ public class MotionManager : MonoBehaviour
         {
             return _RoleAttrManager;
         }
+    }
+
+    private void InitRoleAttr()
+    {
+        _IsMotionDie = true;
+        _RoleAttrManager = GetComponent<RoleAttrManager>();
+        if (_RoleAttrManager == null)
+        {
+            _RoleAttrManager = gameObject.AddComponent<RoleAttrManager>();
+        }
+        _RoleAttrManager._MotionManager = this;
+
+        _RoleAttrManager.InitAttrByLevel(1);
+    }
+
+    public void MotionDie()
+    {
+        _IsMotionDie = true;
+        _EventController.PushEvent(GameBase.EVENT_TYPE.EVENT_MOTION_FLY, this, new Hashtable());
     }
 
     #endregion
@@ -417,9 +447,24 @@ public class MotionManager : MonoBehaviour
     private float _LastTime;
     private float _Speed;
 
-    public void SetRotate(Vector3 rotate)
+    public void SetPosition(Vector3 position)
+    {
+        NavMeshHit navHit = new NavMeshHit();
+        if (!NavMesh.SamplePosition(position, out navHit, 5, NavMesh.AllAreas))
+        {
+            return;
+        }
+        transform.position = navHit.position;
+    }
+
+    public void SetLookRotate(Vector3 rotate)
     {
         transform.rotation = Quaternion.LookRotation(rotate);
+    }
+
+    public void SetRotate(Vector3 rotate)
+    {
+        transform.rotation = Quaternion.Euler(rotate);
     }
 
     public void SetLookAt(Vector3 target)

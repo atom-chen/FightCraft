@@ -15,15 +15,17 @@ public class AI_CloseAttack : AI_Base
     private float _CloseWait;
     private MotionManager _SelfMotion;
 
-    public void Start()
+    protected override void Init()
     {
+        base.Init();
+
         _SelfMotion = GetComponent<MotionManager>();
-        _SelfMotion.EventController.RegisteEvent(GameBase.EVENT_TYPE.EVENT_MOTION_RISE, RiseEvent);
-        _SelfMotion.EventController.RegisteEvent(GameBase.EVENT_TYPE.EVENT_MOTION_RISE_FINISH, RiseFinishEvent);
     }
 
-    public void FixedUpdate()
+    protected override void AIUpdate()
     {
+        base.AIUpdate();
+
         if (_TargetMotion == null)
             return;
 
@@ -58,6 +60,9 @@ public class AI_CloseAttack : AI_Base
 
     private bool UseSkill()
     {
+        if (_Skills.Length == 0)
+            return false;
+
         _SelfMotion.transform.LookAt(_TargetMotion.transform.position);
         if (_SkillWait > 0)
         {
@@ -70,28 +75,4 @@ public class AI_CloseAttack : AI_Base
         _SelfMotion.ActSkill(_Skills[rand]);
         return true;
     }
-
-    #region rise
-
-    private float _RiseTime = 1f;
-
-    public void RiseEvent(object sender, Hashtable eventArgs)
-    {
-        _SelfMotion._CanBeSelectByEnemy = false;
-        StartCoroutine(RiseFinish());
-    }
-
-    public IEnumerator RiseFinish()
-    {
-        yield return new WaitForSeconds(_RiseTime);
-
-        _SelfMotion._CanBeSelectByEnemy = true;
-    }
-
-    public void RiseFinishEvent(object sender, Hashtable eventArgs)
-    {
-
-    }
-
-    #endregion
 }

@@ -69,7 +69,11 @@ public class BaseMotionManager : MonoBehaviour
 
     public void FlyEvent(object go, Hashtable eventArgs)
     {
-        float flyHeight = (float)eventArgs["FlyHeight"];
+        float flyHeight = 0.6f;
+        if (eventArgs.ContainsKey("FlyHeight"))
+        {
+            flyHeight = (float)eventArgs["FlyHeight"];
+        }
         int hitEffect = 0;
         if (eventArgs.ContainsKey("HitEffect"))
         {
@@ -165,16 +169,16 @@ public class BaseMotionManager : MonoBehaviour
     public void MoveDirect(Vector3 derectV3)
     {
         _MotionManager.MotionPrior = MOVE_PRIOR;
-        Vector3 destPoint = transform.position + derectV3.normalized * Time.deltaTime * _NavAgent.speed * _MotionManager.RoleAttrManager.MoveSpeed;
+        Vector3 destPoint = transform.position + derectV3.normalized * Time.deltaTime * _NavAgent.speed * _MotionManager.RoleAttrManager.MoveSpeed * 10;
         _MotionManager.PlayAnimation(_MoveAnim, _MotionManager.RoleAttrManager.MoveSpeed);
         _MotionManager.transform.rotation = Quaternion.LookRotation(derectV3);
-
+        _NavAgent.SetDestination(destPoint);
         //NavMeshHit navHit = new NavMeshHit();
         //if (!NavMesh.SamplePosition(destPoint, out navHit, 5, NavMesh.AllAreas))
         //{
         //    return;
         //}
-        _NavAgent.Warp(destPoint);
+        //_NavAgent.Warp(destPoint);
     }
 
     public void MoveTarget(Vector3 targetPos)
@@ -187,6 +191,7 @@ public class BaseMotionManager : MonoBehaviour
 
     public void StopMove()
     {
+        _NavAgent.Stop();
         _NavAgent.ResetPath();
         if (CanMotionIdle())
             MotionIdle();
@@ -387,6 +392,11 @@ public class BaseMotionManager : MonoBehaviour
 
     private void MotionRise()
     {
+        if (_MotionManager.IsMotionDie)
+        {
+            _MotionManager.MotionPrior = DIE_PRIOR;
+            return;
+        }
         _MotionManager.MotionPrior = RISE_PRIOR;
         _MotionManager.PlayAnimation(_RiseAnim);
         _MotionManager.EventController.PushEvent(GameBase.EVENT_TYPE.EVENT_MOTION_RISE, this, new Hashtable());

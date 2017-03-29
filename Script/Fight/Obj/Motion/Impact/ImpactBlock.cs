@@ -13,7 +13,7 @@ public class ImpactBlock : ImpactBuff
 
         reciverManager.EventController.RegisteEvent(GameBase.EVENT_TYPE.EVENT_MOTION_HIT, HitEvent, 99);
         reciverManager.EventController.RegisteEvent(GameBase.EVENT_TYPE.EVENT_MOTION_FLY, FlyEvent, 99);
-        Debug.Log("ImpactBlock act");
+
         _BuffOwner = reciverManager;
     }
 
@@ -23,7 +23,7 @@ public class ImpactBlock : ImpactBuff
 
         reciverManager.EventController.UnRegisteEvent(GameBase.EVENT_TYPE.EVENT_MOTION_HIT, HitEvent);
         reciverManager.EventController.UnRegisteEvent(GameBase.EVENT_TYPE.EVENT_MOTION_FLY, FlyEvent);
-        Debug.Log("ImpactBlock remove");
+        
     }
 
     private void HitEvent(object sender, Hashtable eventArgs)
