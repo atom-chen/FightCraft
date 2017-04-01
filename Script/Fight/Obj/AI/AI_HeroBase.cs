@@ -17,14 +17,16 @@ public class AI_HeroBase : AI_Base
 
     private float _SkillWait;
     private float _CloseWait;
-    private MotionManager _SelfMotion;
 
     protected override void Init()
     {
         base.Init();
 
-        _SelfMotion = GetComponent<MotionManager>();
-        
+        if (_TargetMotion == null)
+        {
+            _TargetMotion = SelectTargetCommon.GetMainPlayer();
+        }
+
         InitAttackBlock();
         InitRise();
     }

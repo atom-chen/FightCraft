@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <enumColumn>
+    <enumName>
+    </enumName>
+    <enumCode>WEAPON</enumCode>
+    <enumValue>0</enumValue>
+    <enumDesc>枚举必须保留0值</enumDesc>
+  </enumColumn>
+  <enumColumn>
+    <enumName>
+    </enumName>
+    <enumCode>TORSO</enumCode>
+    <enumValue>1</enumValue>
+    <enumDesc>
+    </enumDesc>
+  </enumColumn>
+  <enumColumn>
+    <enumName>
+    </enumName>
+    <enumCode>LEGS</enumCode>
+    <enumValue>2</enumValue>
+    <enumDesc>
+    </enumDesc>
+  </enumColumn>
+  <enumColumn>
+    <enumName>
+    </enumName>
+    <enumCode>AMULET</enumCode>
+    <enumValue>3</enumValue>
+    <enumDesc>
+    </enumDesc>
+  </enumColumn>
+  <enumColumn>
+    <enumName>
+    </enumName>
+    <enumCode>RING</enumCode>
+    <enumValue>4</enumValue>
+    <enumDesc>
+    </enumDesc>
+  </enumColumn>
+</root>

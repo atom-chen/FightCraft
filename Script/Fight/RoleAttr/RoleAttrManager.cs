@@ -172,7 +172,6 @@ public class RoleAttrManager : MonoBehaviour
         {
             Die();
         }
-        Debug.Log("DamageHP:" + damageValue + " HP:" + _HP);
     }
 
     private void Die()

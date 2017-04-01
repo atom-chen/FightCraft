@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
+using GameLogic;
+
 public class FightManager : SingleClass<FightManager>
 {
 
@@ -34,7 +36,7 @@ public class FightManager : SingleClass<FightManager>
 
         var cameraFollow = cameraRoot.AddComponent<CameraFollow>();
         cameraFollow._FollowObj = _MainChatMotion.gameObject;
-        cameraFollow._Distance = new Vector3(0, 8, -8);
+        cameraFollow._Distance = new Vector3(0, 6, -6);
 
         var globalEffect = cameraRoot.AddComponent<GlobalEffect>();
         var inputManager = cameraRoot.AddComponent<InputManager>();
@@ -51,12 +53,19 @@ public class FightManager : SingleClass<FightManager>
     #region Objects
 
     private MotionManager _MainChatMotion;
+    public MotionManager MainChatMotion
+    {
+        get
+        {
+            return _MainChatMotion;
+        }  
+    }
 
     private void InitMainRole()
     {
-        string mainBaseName = "MainCharBoy";
-        string modelName = "Char_Boy_01_JL_AM";
-        string weaponName = "Weapon_HW_01_SM";
+        string mainBaseName = PlayerDataPack.Instance._SelectedRole.MainBaseName;
+        string modelName = PlayerDataPack.Instance._SelectedRole.ModelName;
+        string weaponName = PlayerDataPack.Instance._SelectedRole.GetWeaponModelName();
         List<string> skillMotions = new List<string>() { "Attack", "Buff1", "Buff2", "Defence", "Dush", "Skill1", "Skill2", "Skill3" };
 
         var mainBase = GameBase.ResourceManager.Instance.GetInstanceGameObject("ModelBase/" + mainBaseName);
@@ -71,7 +80,6 @@ public class FightManager : SingleClass<FightManager>
 
         var weapon = GameBase.ResourceManager.Instance.GetInstanceGameObject("Model/" + weaponName);
         var weaponTrans = model.transform.FindChild("center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon");
-        Debug.Log("weaponTrans:" + weaponTrans.name);
         var weaponTransChild = weaponTrans.GetComponentsInChildren<Transform>();
         for (int i = weapon.transform.childCount - 1; i >= 0; --i)
         {
@@ -92,6 +100,7 @@ public class FightManager : SingleClass<FightManager>
             if (motionObj != null)
             {
                 motionObj.transform.SetParent(motionTran);
+                motionObj.transform.localPosition = Vector3.zero;
                 motionObj.SetActive(true);
             }
         }
@@ -99,11 +108,9 @@ public class FightManager : SingleClass<FightManager>
 
     public void InitEnemy(string modelBase, Vector3 pos, Vector3 rot)
     {
-        Debug.Log("InitEnemy:" + pos + " ; " + rot);
         var mainBase = ResourcePool.Instance.GetIdleMotion(modelBase);
         mainBase.SetPosition(pos);
         mainBase.SetRotate(rot);
-        Debug.Log("InitEnemy:" + mainBase.transform.position + " ; " + mainBase.transform.rotation.eulerAngles);
 
         AI_Base aiBase = mainBase.GetComponent<AI_Base>();
         
@@ -111,7 +118,8 @@ public class FightManager : SingleClass<FightManager>
 
     public void ObjDie(MotionManager objMotion)
     {
-
+        ResourcePool.Instance.RecvIldeMotion(objMotion);
+        _FightScene.MotionDie(objMotion);
     }
 
     #endregion
@@ -136,6 +144,12 @@ public class FightManager : SingleClass<FightManager>
     public void OnObjDie()
     {
 
+    }
+
+    public void LogicFinish(bool isWin)
+    {
+        Debug.Log("LogicFinish");
+        GameLogic.LogicManager.Instance.ExitFight();
     }
 
     #endregion

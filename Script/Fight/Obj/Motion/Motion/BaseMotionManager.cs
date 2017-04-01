@@ -55,7 +55,8 @@ public class BaseMotionManager : MonoBehaviour
             {
                 eventArgs.Add("StopEvent", true);
             }
-            var hitTime = (float)eventArgs["HitTime"];
+            //var hitTime = (float)eventArgs["HitTime"];
+            float hitTime = 0.5f;
 
             int hitEffect = 0;
             if (eventArgs.ContainsKey("HitEffect"))
@@ -183,6 +184,9 @@ public class BaseMotionManager : MonoBehaviour
 
     public void MoveTarget(Vector3 targetPos)
     {
+        if (!CanMotionMove())
+            return;
+
         _MotionManager.MotionPrior = MOVE_PRIOR;
         _MotionManager.PlayAnimation(_MoveAnim, _MotionManager.RoleAttrManager.MoveSpeed);
 
@@ -307,7 +311,7 @@ public class BaseMotionManager : MonoBehaviour
 
     protected void PlayHitEffect(MotionManager impactSender, int effectIdx)
     {
-        if (ResourcePool.Instance._CommonHitEffect.Length > effectIdx && effectIdx >= 0)
+        if (ResourcePool.Instance._CommonHitEffect.Count > effectIdx && effectIdx >= 0)
         {
             _MotionManager.PlayDynamicEffect(ResourcePool.Instance._CommonHitEffect[effectIdx]);
         }
@@ -336,6 +340,8 @@ public class BaseMotionManager : MonoBehaviour
         _MotionManager.RePlayAnimation(_FlyAnim, 1);
 
         _FlyHeight = flyHeight;
+
+        _MotionManager.SetCorpsePrior();
     }
 
     public void MotionFlyStay(float time, int effectID, MotionManager impactSender)
@@ -352,7 +358,6 @@ public class BaseMotionManager : MonoBehaviour
     {
         if (_StayTime > 0)
         {
-            _FlyHeight = 0f;
             _StayTime -= Time.fixedDeltaTime;
         }
         else if (_FlyHeight > 0)
@@ -389,12 +394,14 @@ public class BaseMotionManager : MonoBehaviour
     #region rise
 
     public AnimationClip _RiseAnim;
+    public float _BodyDisappearTime = 1.0f;
 
     private void MotionRise()
     {
         if (_MotionManager.IsMotionDie)
         {
             _MotionManager.MotionPrior = DIE_PRIOR;
+            StartCoroutine(BodyDisappear());
             return;
         }
         _MotionManager.MotionPrior = RISE_PRIOR;
@@ -402,9 +409,17 @@ public class BaseMotionManager : MonoBehaviour
         _MotionManager.EventController.PushEvent(GameBase.EVENT_TYPE.EVENT_MOTION_RISE, this, new Hashtable());
     }
 
+    private IEnumerator BodyDisappear()
+    {
+        yield return new WaitForSeconds(_BodyDisappearTime);
+
+        _MotionManager.MotionDisappear();
+    }
+
     private void RiseEnd()
     {
         MotionIdle();
+        _MotionManager.ResumeCorpsePrior();
         _MotionManager.EventController.PushEvent(GameBase.EVENT_TYPE.EVENT_MOTION_RISE_FINISH, this, new Hashtable());
     }
 

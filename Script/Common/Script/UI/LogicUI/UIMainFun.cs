@@ -6,7 +6,7 @@ using GameBase;
 using GameLogic;
 namespace GameUI
 {
-    public class UIMainFun : UIConflictBase
+    public class UIMainFun : UIBase
     {
 
         #region static funs
@@ -57,23 +57,16 @@ namespace GameUI
             LogicManager.Instance.EnterFight("Stage_01_01");
         }
 
-        //lottery
-        public void BtnLottery()
+        public void BtnBagPack()
         {
-            GameCore.Instance.UIManager.ShowUI("LogicUI/UILottery");
+            UIBagPack.ShowAsyn();
         }
 
-        //shop
-        public void BtnShop()
+        public void BtnTestPanel()
         {
-            GameCore.Instance.UIManager.ShowUI("LogicUI/UIShopRes");
-        }
 
-        //mission
-        public void BtnMission()
-        {
-            //UIMissionPack.ShowAsyn();
         }
+             
 
         #endregion
     }

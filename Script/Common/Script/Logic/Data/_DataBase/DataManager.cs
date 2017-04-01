@@ -6,6 +6,7 @@ using System.Reflection;
 using System;
 
 using GameBase;
+//using Tables;
 using GameUI;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -35,8 +36,6 @@ namespace GameLogic
 
         #region MyRegion
 
-        private const string DATA_PACK_DIRECT = "\\FightCraft\\Script\\Common\\Script\\Logic\\Data";
-
         private Dictionary<string, DataPackBase> _DataDict = new Dictionary<string, DataPackBase>();
 
         public object GetData(string name)
@@ -51,20 +50,18 @@ namespace GameLogic
 
         public void Load()
         {
-            //string dataScriptPath = Application.dataPath + DATA_PACK_DIRECT;
-            //var files = Directory.GetFiles(dataScriptPath, "*.cs");
-
-            //foreach (var file in files)
-            //{
-            //    string className = Path.GetFileNameWithoutExtension(file);
-            //    DataPackBase obj = LoadClass(className);
-            //    _DataDict.Add(className, obj);
-            //}
-
             foreach (var className in DataConfig._DataPackList)
             {
                 DataPackBase obj = LoadClass(className);
                 _DataDict.Add(className, obj);
+            }
+        }
+
+        public void InitEvent()
+        {
+            foreach (var file in _DataDict)
+            {
+                file.Value.InitEvents();
             }
         }
 
@@ -85,14 +82,15 @@ namespace GameLogic
             Type classType = Type.GetType("GameLogic." + className);
             var instanceField = classType.GetProperty("Instance", BindingFlags.Static | BindingFlags.Public);
             var classInstance = (DataPackBase)instanceField.GetValue(null, null);
-            classInstance.LoadData();
+            DataPackSave.LoadData(classInstance);
 
             return classInstance;
         }
 
         private void SaveClass(DataPackBase classObj)
         {
-            classObj.SaveData();
+            DataPackSave.SaveData(classObj);
+            //classObj.SaveData();
         }
         #endregion
 

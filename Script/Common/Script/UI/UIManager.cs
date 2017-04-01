@@ -7,6 +7,7 @@ using GameBase;
 using System.IO;
 using System;
 using System.Reflection;
+using UnityEngine.UI;
 
 namespace GameUI
 {
@@ -127,6 +128,28 @@ namespace GameUI
             }
         }
 
+        public void DestoryUI(UIBase uiBase)
+        {
+            if (_UIObjs.ContainsValue(uiBase))
+            {
+                string uiKey = "";
+                foreach (var ui in _UIObjs)
+                {
+                    if (ui.Value == uiBase)
+                    {
+                        uiKey = ui.Key;
+                        break;
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(uiKey))
+                {
+                    _UIObjs.Remove(uiKey);
+                }
+            }
+            GameObject.Destroy(uiBase.gameObject);
+        }
+
         public void InitAllUI()
         {
             foreach (var uiEvent in _InitEvent)
@@ -160,6 +183,31 @@ namespace GameUI
                 uiPair.Value.Destory();
             }
             _UIObjs.Clear();
+        }
+
+        #endregion
+
+        #region rayCast
+
+        //防死循环
+        bool _RayCasting = false;
+        public void RayCastBebind(PointerEventData eventData)
+        {
+            if (_RayCasting)
+                return;
+
+            _RayCasting = true;
+            List<RaycastResult> raycastResults = new List<RaycastResult>();
+            _InputEventSystem.RaycastAll(eventData, raycastResults);
+            if (raycastResults.Count > 0)
+            {
+                var pointClick = raycastResults[0].gameObject.GetComponent<Graphic>();
+                //if (ExecuteEvents.CanHandleEvent<IPointerClickHandler>(raycastResults[0].gameObject))
+                {
+                    ExecuteEvents.ExecuteHierarchy<IPointerClickHandler>(raycastResults[0].gameObject, eventData, (x, y) => x.OnPointerClick(eventData));
+                }
+            }
+            _RayCasting = false;
         }
 
         #endregion

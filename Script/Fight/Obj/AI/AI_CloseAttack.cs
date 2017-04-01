@@ -13,13 +13,16 @@ public class AI_CloseAttack : AI_Base
 
     private float _SkillWait;
     private float _CloseWait;
-    private MotionManager _SelfMotion;
+    
 
     protected override void Init()
     {
         base.Init();
 
-        _SelfMotion = GetComponent<MotionManager>();
+        if (_TargetMotion == null)
+        {
+            _TargetMotion = SelectTargetCommon.GetMainPlayer();
+        }
     }
 
     protected override void AIUpdate()
@@ -63,15 +66,18 @@ public class AI_CloseAttack : AI_Base
         if (_Skills.Length == 0)
             return false;
 
-        _SelfMotion.transform.LookAt(_TargetMotion.transform.position);
         if (_SkillWait > 0)
         {
             _SkillWait -= Time.fixedDeltaTime;
             return false;
         }
-        
-        _SkillWait = _SkillInterval;
+
         int rand = Random.Range(0, _Skills.Length);
+        if (!_Skills[rand].IsCanActSkill())
+            return false;
+
+        _SkillWait = _SkillInterval;
+        _SelfMotion.transform.LookAt(_TargetMotion.transform.position);
         _SelfMotion.ActSkill(_Skills[rand]);
         return true;
     }

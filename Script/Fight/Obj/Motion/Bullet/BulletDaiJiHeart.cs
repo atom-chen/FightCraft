@@ -17,8 +17,11 @@ public class BulletDaiJiHeart : BulletBase
     {
         base.Init(senderMotion);
 
-        var target = GameObject.FindGameObjectWithTag("Player");
-        _TargetMotion = target.GetComponent<MotionManager>();
+        var target = SelectTargetCommon.GetMainPlayer();
+        if (target != null)
+        {
+            _TargetMotion = target.GetComponent<MotionManager>();
+        }
     }
 
     public void SetInitSpeed(Vector3 initSpeed)
@@ -46,7 +49,6 @@ public class BulletDaiJiHeart : BulletBase
             _TrackSpeed += _TrackAccelate * _TrackSpeed.normalized;
             if (transform.position.y < _TargetPosition.y)
             {
-                Debug.Log("OnBulletNoHit:");
                 if (_SubEffect != null)
                 {
                     ResourcePool.Instance.PlaySceneEffect(_SubEffect, transform.position, Vector3.zero);

@@ -4,6 +4,20 @@ using System.Collections.Generic;
 
 public class SelectTargetCommon
 {
+    public static MotionManager GetMainPlayer()
+    {
+        if (FightManager.Instance != null)
+        {
+            return FightManager.Instance.MainChatMotion;
+        }
+        else
+        {
+            var player = GameObject.FindGameObjectWithTag("Player");
+            return player.GetComponent<MotionManager>();
+        }
+
+        return null;
+    }
 
     public static MotionManager GetNearMotion(Vector3 startPosition, List<MotionManager> excludeMotions)
     {

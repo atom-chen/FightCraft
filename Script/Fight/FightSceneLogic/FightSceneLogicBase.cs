@@ -28,5 +28,8 @@ public class FightSceneLogicBase : MonoBehaviour
 
     }
 
+    public virtual void MotionDie(MotionManager motion)
+    { }
+
     #endregion
 }

@@ -39,6 +39,8 @@ namespace GameLogic
 
             DataManager.Instance.Load();
 
+            PlayerDataPack.Instance.InitPlayerData();
+
             GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_LOAD_FINISH, this, new Hashtable());
 
             return sceneLoader;
@@ -48,7 +50,7 @@ namespace GameLogic
         {
             GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_LOGIC_START, this, new Hashtable());
 
-            GameUI.UIMainFun.ShowAsyn();
+            GameUI.UIRoleSelect.ShowAsyn();
         }
 
         public void SaveGame()

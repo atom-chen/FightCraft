@@ -13,8 +13,16 @@ public class AI_Base : MonoBehaviour
 
     bool _Init = false;
 
+    protected MotionManager _SelfMotion;
+
     void Start()
     {
+        
+        //var navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
+        //if (navMeshAgent != null)
+        //{
+        //    navMeshAgent.enabled = false;
+        //}
         StartCoroutine(InitDelay());
     }
 
@@ -22,6 +30,10 @@ public class AI_Base : MonoBehaviour
     {
         if (!_Init)
             return;
+
+        if (_SelfMotion == null || _SelfMotion.IsMotionDie)
+            return;
+
         AIUpdate();
     }
 
@@ -34,6 +46,7 @@ public class AI_Base : MonoBehaviour
     protected virtual void Init()
     {
         _Init = true;
+        _SelfMotion = GetComponent<MotionManager>();
     }
 
     protected virtual void AIUpdate()

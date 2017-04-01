@@ -4,36 +4,88 @@ using System.Collections.Generic;
 
 public class FightSceneLogicSimple : FightSceneLogicBase
 {
-    public Transform[] _EnemyBornPos;
-    public string _EnemyMotionName;
-    public Transform _BossBornPos;
-    public string _BossMotionName;
-    public int _KillEnemyCnt = 20;
-    public int _FightingEnemyCnt = 2;
+   
 
-    private int _DeadEnemyCnt = 0;
-    private int _InitPosIdx = 0;
+    private int _LogicStep = 0;
 
     public override void StartLogic()
     {
         base.StartLogic();
 
-        _DeadEnemyCnt = 0;
-        _InitPosIdx = 0;
+        _LogicStep = 0;
+        StartStep0();
 
-        CreateEngoughEnemy();
+        //_LogicStep = 1;
+        //StartStep1();
     }
 
     protected override void UpdateLogic()
     {
         base.UpdateLogic();
 
+        if(_LogicStep == 1)
+            UpdateBoss();
+    }
+
+    public override void MotionDie(MotionManager motion)
+    {
+        Debug.Log("MotionDie motion " + motion.name);
+        if (motion.RoleAttrManager.MotionType == MotionType.MainChar)
+        {
+            FightManager.Instance.LogicFinish(false);
+            return;
+        }
+
+        base.MotionDie(motion);
+
+        if (_LogicStep == 0)
+        {
+            Step0MotionDie(motion);
+        }
+        else if (_LogicStep == 1)
+        {
+            Step1MotionDie(motion);
+        }
+    }
+
+    #region enemy step
+
+    public Transform[] _EnemyBornPos;
+    public string _EnemyMotionName;
+    public int _KillEnemyCnt = 20;
+    public int _FightingEnemyCnt = 6;
+
+    private int _DeadEnemyCnt = 0;
+    private int _InitPosIdx = 0;
+    private int _CurEnemyCnt = 0;
+
+    private void StartStep0()
+    {
+        _DeadEnemyCnt = 0;
+        _InitPosIdx = 0;
+        _CurEnemyCnt = 0;
+        for (int i = 0; i < _FightingEnemyCnt; ++i)
+        {
+            CreateEngoughEnemy();
+        }
 
     }
 
-    private void UpdateNoBoss()
+    private void Step0MotionDie(MotionManager motion)
     {
+        if (motion.RoleAttrManager.MotionType == MotionType.Elite
+                || motion.RoleAttrManager.MotionType == MotionType.Normal)
+        {
+            ++_DeadEnemyCnt;
+            --_CurEnemyCnt;
+            CreateEngoughEnemy();
+        }
 
+        if (_DeadEnemyCnt >= _KillEnemyCnt)
+        {
+            _LogicStep = 1;
+            StartStep1();
+        }
     }
 
     private void CreateEngoughEnemy()
@@ -43,18 +95,69 @@ public class FightSceneLogicSimple : FightSceneLogicBase
             return;
         }
 
-        int createCnt = _KillEnemyCnt - _DeadEnemyCnt;
-        createCnt = createCnt > _FightingEnemyCnt ? _FightingEnemyCnt : createCnt;
-
-        for (int i = 0; i < createCnt; ++i)
+        if (_InitPosIdx >= _EnemyBornPos.Length)
         {
-            if (_InitPosIdx >= _EnemyBornPos.Length)
-            {
-                _InitPosIdx = 0;
-            }
+            _InitPosIdx = 0;
+        }
 
-            FightManager.Instance.InitEnemy(_EnemyMotionName, _EnemyBornPos[_InitPosIdx].position, _EnemyBornPos[_InitPosIdx].rotation.eulerAngles);
-            ++_InitPosIdx;
+        FightManager.Instance.InitEnemy(_EnemyMotionName, _EnemyBornPos[_InitPosIdx].position, _EnemyBornPos[_InitPosIdx].rotation.eulerAngles);
+        ++_InitPosIdx;
+        ++_CurEnemyCnt;
+    }
+
+    #endregion
+
+    #region boss
+
+    public Transform _BossBornPos;
+    public string _BossMotionName;
+    public int _BossStepEnemyCnt = 2;
+    public float _BossStepEnemyInterval = 10;
+
+    private float _CreateEnemyTimeCD = 0;
+    private int _CurEnemyCnt1 = 0;
+
+    private void Step1MotionDie(MotionManager motion)
+    {
+        --_CurEnemyCnt1;
+
+        if (motion.RoleAttrManager.MotionType == MotionType.Hero)
+        {
+            FightManager.Instance.LogicFinish(true);
         }
     }
+
+    private void StartStep1()
+    {
+        FightManager.Instance.InitEnemy(_BossMotionName, _BossBornPos.position, _BossBornPos.rotation.eulerAngles);
+        _CreateEnemyTimeCD = _BossStepEnemyInterval;
+        _CurEnemyCnt1 = 0;
+    }
+
+
+    private void BossStepCreateEnemy()
+    {
+        int initPosIdx = Random.Range(0, _EnemyBornPos.Length);
+        FightManager.Instance.InitEnemy(_EnemyMotionName, _EnemyBornPos[initPosIdx].position, _EnemyBornPos[initPosIdx].rotation.eulerAngles);
+        ++_CurEnemyCnt1;
+    }
+
+    private void UpdateBoss()
+    {
+        if (_CreateEnemyTimeCD > 0)
+        {
+            _CreateEnemyTimeCD -= Time.fixedDeltaTime;
+
+            if (_CreateEnemyTimeCD <= 0)
+            {
+                for (int i = _CurEnemyCnt1; i < _BossStepEnemyCnt; ++i)
+                {
+                    BossStepCreateEnemy();
+                }
+            }
+        }
+    }
+
+    #endregion
+
 }

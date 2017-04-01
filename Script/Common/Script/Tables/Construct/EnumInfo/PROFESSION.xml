@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <enumColumn>
+    <enumName>
+    </enumName>
+    <enumCode>BOY_DEFENCE</enumCode>
+    <enumValue>0</enumValue>
+    <enumDesc>枚举必须保留0值</enumDesc>
+  </enumColumn>
+  <enumColumn>
+    <enumName>
+    </enumName>
+    <enumCode>GIRL_DOUGE</enumCode>
+    <enumValue>1</enumValue>
+    <enumDesc>
+    </enumDesc>
+  </enumColumn>
+  <enumColumn>
+    <enumName>
+    </enumName>
+    <enumCode>BOY_DOUGE</enumCode>
+    <enumValue>2</enumValue>
+    <enumDesc>
+    </enumDesc>
+  </enumColumn>
+  <enumColumn>
+    <enumName>
+    </enumName>
+    <enumCode>GIRL_DEFENCE</enumCode>
+    <enumValue>3</enumValue>
+    <enumDesc>
+    </enumDesc>
+  </enumColumn>
+  <enumColumn>
+    <enumName>
+    </enumName>
+    <enumCode>MAX</enumCode>
+    <enumValue>4</enumValue>
+    <enumDesc>
+    </enumDesc>
+  </enumColumn>
+</root>

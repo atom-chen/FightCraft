@@ -5,30 +5,16 @@ using System;
 using UnityEngine;
 
 using GameBase;
+using Tables;
 using GameUI;
 
 namespace GameLogic
 {
     public class DataPackBase
     {
+        #region 
 
-
-        #region save/load
-
-        public virtual void SaveData()
-        {
-            
-        }
-
-        public virtual void LoadData()
-        {
-
-        }
-
-        public virtual void ClearAllData()
-        {
-           
-        }
+        public virtual void InitEvents() { }
 
         #endregion
     }

@@ -8,6 +8,7 @@ public class ResourcePool : InstanceBase<ResourcePool>
     void Start()
     {
         SetInstance(this);
+        InitEffect();
     }
 
     void Destory()
@@ -17,9 +18,19 @@ public class ResourcePool : InstanceBase<ResourcePool>
 
     #region effect
 
-    public EffectController[] _CommonHitEffect;
+    public List<EffectController> _CommonHitEffect;
 
     private Dictionary<string, Stack<EffectController>> _IdleEffects = new Dictionary<string, Stack<EffectController>>();
+
+    private void InitEffect()
+    {
+        _CommonHitEffect = new List<EffectController>();
+        var effect1 = GameBase.ResourceManager.Instance.GetGameObject("Effect/Hit/Effect_Dead_A_Hit");
+        _CommonHitEffect.Add(effect1.GetComponent<EffectController>());
+
+        var effect2 = GameBase.ResourceManager.Instance.GetGameObject("Effect/Hit/Effect_Dead_B_Hit");
+        _CommonHitEffect.Add(effect2.GetComponent<EffectController>());
+    }
 
     public EffectController GetIdleEffect(EffectController effct)
     {
@@ -129,7 +140,7 @@ public class ResourcePool : InstanceBase<ResourcePool>
             var obj = GameBase.ResourceManager.Instance.GetInstanceGameObject("ModelBase/" + motionName);
             idle = obj.GetComponent<MotionManager>();
         }
-
+        idle.gameObject.SetActive(true);
         return idle;
     }
 

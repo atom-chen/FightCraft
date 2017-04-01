@@ -4,102 +4,200 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-namespace GameUI
+
+public class UIContainerBase : UIBase
 {
-    public class UIContainerBase : UIBase
+
+    
+
+    public int _InitShowCnt;
+    public Transform _ContainerObj;
+    public UIItemBase _ContainItemPre;
+
+    protected List<UIItemBase> _ItemPrefabList = new List<UIItemBase>();
+    protected List<object> _ValueList = new List<object>();
+    protected UIItemBase.ItemClick _OnClickItem;
+
+    private int _RealInitShowCnt;
+
+    public virtual void InitContentItem(ICollection valueList, UIItemBase.ItemClick onClick = null, Hashtable exhash = null)
     {
-        public GameObject _ContainItemPre;
-        public GameObject _ContainerObj;
-        protected List<UIItemBase> _ItemPrefabList = new List<UIItemBase>();
-        protected Dictionary<object, UIItemBase> _ActivedItems = new Dictionary<object, UIItemBase>();
+        _ValueList.Clear();
+        if (valueList == null)
+            return;
 
-        public virtual void InitContentItem(IEnumerator enumerator, Hashtable exhash = null, UIItemBase.ItemClick onClick = null)
+        foreach (var itemValue in valueList)
         {
-            enumerator.Reset();
-            int preIdx = 0;
-            _ActivedItems.Clear();
+            _ValueList.Add(itemValue);
+        }
 
-            InitItems();
+        _RealInitShowCnt = Math.Min(_ValueList.Count, _InitShowCnt);
 
-            while (enumerator.MoveNext())
+        _OnClickItem = onClick;
+
+        if (_ValueList.Count > 0)
+        {
+            StartCoroutine(InitItems(exhash));
+        }
+        else
+        {
+            ClearPrefab();
+        }
+
+        //_LayoutGroup.enabled = false;
+
+    }
+
+    public virtual void ShowItems()
+    {
+        
+    }
+
+    public virtual void ShowItemsFinish()
+    {
+
+    }
+
+    private void InitItem(object itemValue, UIItemBase preItem, Hashtable exhash)
+    {
+        preItem.gameObject.SetActive(true);
+        //preItem.transform.localPosition = new Vector3(contentItem.Pos.x, contentItem.Pos.y, 0);
+        //if (preItem._InitInfo != contentItem.Obj)
+        {
+            Hashtable hash;
+            if (exhash == null)
             {
-                if (_ItemPrefabList.Count < preIdx + 1)
-                {
-                    GameObject obj = GameObject.Instantiate<GameObject>(_ContainItemPre);
-                    obj.transform.parent = _ContainerObj.transform;
-                    obj.transform.localScale = new Vector3(1,1,1);
-                    var itemScript = obj.GetComponent<UIItemBase>();
-                    
-                    _ItemPrefabList.Add(itemScript);
-                }
-
-                Hashtable hash = new Hashtable();
-                if (exhash != null)
-                    hash = new Hashtable(exhash);
-
-                hash.Add("InitObj", enumerator.Current);
-
-                _ItemPrefabList[preIdx].Show(hash);
-                _ItemPrefabList[preIdx]._InitInfo = enumerator.Current;
-                _ItemPrefabList[preIdx]._ClickEvent = onClick;
-
-                _ActivedItems.Add(enumerator.Current, _ItemPrefabList[preIdx]);
-                ++preIdx;
+                hash = new Hashtable();
             }
-            
-
-            if (_ItemPrefabList.Count > preIdx)
+            else
             {
-                for (int i = preIdx; i < _ItemPrefabList.Count; ++i)
-                {
-                    _ItemPrefabList[i].Hide();
-                }
+                hash = new Hashtable(exhash);
+            }
+            hash.Add("InitObj", itemValue);
+            preItem.Show(hash);
+            preItem._InitInfo = itemValue;
+            preItem._ClickEvent = _OnClickItem;
+        }
+    }
+
+    public virtual void RefreshItems()
+    {
+        foreach (var item in _ItemPrefabList)
+        {
+            item.Refresh();
+        }
+    }
+
+    public virtual void RefreshItems(Hashtable hash)
+    {
+        foreach (var item in _ItemPrefabList)
+        {
+            item.Refresh(hash);
+        }
+    }
+
+    public void PreLoadItem(int preLoadCount)
+    {
+        InitItems(null);
+    }
+
+    private void ClearPrefab()
+    {
+        foreach (var prefab in _ItemPrefabList)
+        {
+            //prefab.transform.localPosition = new Vector3(1000, 1000, 1);
+            prefab.Hide();
+            prefab._InitInfo = null;
+        }
+    }
+
+    private UIItemBase InstantiateItem()
+    {
+        UIItemBase uiItemBase = GameObject.Instantiate<UIItemBase>(_ContainItemPre);
+        uiItemBase.transform.SetParent(_ContainerObj.transform);
+        uiItemBase.transform.localScale = Vector3.one;
+        uiItemBase.transform.localPosition = Vector3.zero;
+
+        _ItemPrefabList.Add(uiItemBase);
+
+        return uiItemBase;
+    }
+
+    private IEnumerator InitItems(Hashtable exhash)
+    {
+        if (_RealInitShowCnt > _ItemPrefabList.Count)
+        {
+            for (int i = _ItemPrefabList.Count; i < _RealInitShowCnt; ++i)
+            {
+                InstantiateItem();
             }
         }
 
-        public void PreLoadItem(int preLoadCount)
+        for (int i = 0; i < _RealInitShowCnt; ++i)
         {
-            InitItems();
-            for (int i = 0; i < preLoadCount; ++i)
+            InitItem(_ValueList[i], _ItemPrefabList[i], exhash);
+        }
+
+        if (_RealInitShowCnt >= _ValueList.Count)
+        {
+            ShowItemsFinish();
+            yield break;
+        }
+
+        yield return new WaitForFixedUpdate();
+
+        int nextNeedCount = _ValueList.Count - _RealInitShowCnt;
+        if (nextNeedCount > 0)
+        {
+            int needCreateCount = nextNeedCount - (_ItemPrefabList.Count - _RealInitShowCnt);
+            for (int i = 0; i < needCreateCount; ++i)
             {
-                GameObject obj = GameObject.Instantiate<GameObject>(_ContainItemPre);
-                obj.transform.parent = _ContainerObj.transform;
-                obj.transform.localScale = new Vector3(1, 1, 1);
-                var itemScript = obj.GetComponent<UIItemBase>();
-                obj.SetActive(false);
-                _ItemPrefabList.Add(itemScript);
+                InstantiateItem();
+            }
+
+            for (int i = _RealInitShowCnt; i < _ValueList.Count; ++i)
+            {
+                InitItem(_ValueList[i], _ItemPrefabList[i], exhash);
             }
         }
 
-        private void InitItems()
+        if (_ItemPrefabList.Count > _ValueList.Count)
         {
-            if (_ItemPrefabList.Count == 0)
+            for (int i = _ValueList.Count; i < _ItemPrefabList.Count; ++i)
             {
-                _ContainerObj.GetComponentsInChildren<UIItemBase>(true, _ItemPrefabList);
+                _ItemPrefabList[i].Hide();
             }
         }
 
-        public T GetContainItem<T>(int idx)
-        {
-            return _ItemPrefabList[idx].GetComponent<T>();
-        }
+        ShowItemsFinish();
+    }
 
-        public T GetContainItem<T>(object dataObj)
-        {
-            if (_ActivedItems.ContainsKey(dataObj))
-                return _ActivedItems[dataObj].GetComponent<T>();
-            return default(T);
-        }
+    public T GetContainItem<T>(int idx)
+    {
+        return _ItemPrefabList[idx].GetComponent<T>();
+    }
 
-        public void ForeachActiveItem<T>(Action<T> action)
+    public void ForeachActiveItem<T>(Action<T> action)
+    {
+        for (int i = 0; i < _ItemPrefabList.Count; ++i)
         {
-            for (int i = 0; i < _ItemPrefabList.Count; ++i)
+            if (_ItemPrefabList[i].gameObject.activeSelf)
             {
-                if (_ItemPrefabList[i].gameObject.activeSelf)
-                {
-                    action((_ItemPrefabList[i].gameObject.GetComponent<T>()));
-                }
+                action((_ItemPrefabList[i].gameObject.GetComponent<T>()));
             }
         }
     }
+
+    public Vector3 GetObjItemPos(object obj)
+    {
+        foreach (var item in _ItemPrefabList)
+        {
+            if (item._InitInfo == obj)
+            {
+                return item.transform.position;
+            }
+        }
+        return Vector3.zero;
+    }
 }
+

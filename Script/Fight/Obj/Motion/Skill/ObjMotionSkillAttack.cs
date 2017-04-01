@@ -96,7 +96,6 @@ public class ObjMotionSkillAttack : ObjMotionSkillBase
         if (!isActSkill)
             return false;
 
-        Debug.Log("ActSkill motion attack");
         _CanNextInput = false;
         _CurStep = -1;
         ContinueAttack();

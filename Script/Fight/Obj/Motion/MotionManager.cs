@@ -27,6 +27,11 @@ public class MotionManager : MonoBehaviour
         _BaseMotionManager = GetComponent<BaseMotionManager>();
         _BaseMotionManager.Init();
 
+        if (_NavAgent == null)
+        {
+            _NavAgent = GetComponent<NavMeshAgent>();
+        }
+
         InitSkills();
     }
 
@@ -38,7 +43,7 @@ public class MotionManager : MonoBehaviour
 
     public void Reset()
     {
-        _IsMotionDie = true;
+        _IsMotionDie = false;
     }
 
     #region motion
@@ -264,7 +269,7 @@ public class MotionManager : MonoBehaviour
 
     private void InitRoleAttr()
     {
-        _IsMotionDie = true;
+        _IsMotionDie = false;
         _RoleAttrManager = GetComponent<RoleAttrManager>();
         if (_RoleAttrManager == null)
         {
@@ -279,6 +284,14 @@ public class MotionManager : MonoBehaviour
     {
         _IsMotionDie = true;
         _EventController.PushEvent(GameBase.EVENT_TYPE.EVENT_MOTION_FLY, this, new Hashtable());
+    }
+
+    public void MotionDisappear()
+    {
+        if (FightManager.Instance != null)
+        {
+            FightManager.Instance.ObjDie(this);
+        }
     }
 
     #endregion
@@ -442,6 +455,15 @@ public class MotionManager : MonoBehaviour
 
     #region move
 
+    private static int _NormalNavPrior = 50;
+    private static int _NormalCorpsePrior = 49;
+    private static int _EliteNavPrior = 40;
+    private static int _EliteCorpsePrior = 39;
+    private static int _PlayerNavPrior = 30;
+    private static int _PlayerCorpsePrior = 29;
+    private static int _HeroNavPrior = 20;
+    private static int _HeroCorpsePrior = 19;
+
     private NavMeshAgent _NavAgent;
     private Vector3 _TargetVec;
     private float _LastTime;
@@ -512,6 +534,50 @@ public class MotionManager : MonoBehaviour
             return;
         }
         _NavAgent.Warp(navHit.position);
+    }
+
+    public void SetCorpsePrior()
+    {
+        int corpsePrior = 99;
+        switch (RoleAttrManager.MotionType)
+        {
+            case MotionType.Normal:
+                corpsePrior = _NormalCorpsePrior;
+                break;
+            case MotionType.Elite:
+                corpsePrior = _EliteCorpsePrior;
+                break;
+            case MotionType.Hero:
+                corpsePrior = _HeroCorpsePrior;
+                break;
+            case MotionType.MainChar:
+                corpsePrior = _PlayerCorpsePrior;
+                break;
+        }
+
+        _NavAgent.avoidancePriority = corpsePrior;
+    }
+
+    public void ResumeCorpsePrior()
+    {
+        int corpsePrior = 99;
+        switch (RoleAttrManager.MotionType)
+        {
+            case MotionType.Normal:
+                corpsePrior = _NormalNavPrior;
+                break;
+            case MotionType.Elite:
+                corpsePrior = _EliteNavPrior;
+                break;
+            case MotionType.Hero:
+                corpsePrior = _HeroNavPrior;
+                break;
+            case MotionType.MainChar:
+                corpsePrior = _PlayerNavPrior;
+                break;
+        }
+
+        _NavAgent.avoidancePriority = corpsePrior;
     }
 
     #endregion

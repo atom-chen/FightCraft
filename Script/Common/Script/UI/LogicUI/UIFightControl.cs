@@ -6,7 +6,7 @@ using GameBase;
 using GameLogic;
 namespace GameUI
 {
-    public class UIFightControl : UIConflictBase
+    public class UIFightControl : UIBase
     {
 
         #region static funs

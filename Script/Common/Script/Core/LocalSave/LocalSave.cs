@@ -42,6 +42,16 @@ namespace GameBase
             PlayerPrefs.DeleteAll();
         }
 
+        public static void Save(string key, string value)
+        {
+            PlayerPrefs.SetString(key, value);
+        }
+
+        public static string Load(string key)
+        {
+            return PlayerPrefs.GetString(key);
+        }
+
         public static void Save(LocalSaveType saveType, int value)
         {
             PlayerPrefs.SetInt(saveType.ToString(), value);
