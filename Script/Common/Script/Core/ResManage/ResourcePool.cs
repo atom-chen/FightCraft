@@ -30,6 +30,9 @@ public class ResourcePool : InstanceBase<ResourcePool>
 
         var effect2 = GameBase.ResourceManager.Instance.GetGameObject("Effect/Hit/Effect_Dead_B_Hit");
         _CommonHitEffect.Add(effect2.GetComponent<EffectController>());
+
+        var effect3 = GameBase.ResourceManager.Instance.GetGameObject("Effect/Hit/Effect_Blade_Red");
+        _CommonHitEffect.Add(effect3.GetComponent<EffectController>());
     }
 
     public EffectController GetIdleEffect(EffectController effct)
