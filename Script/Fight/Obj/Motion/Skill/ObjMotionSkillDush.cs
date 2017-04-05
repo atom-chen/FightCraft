@@ -9,20 +9,26 @@ public class ObjMotionSkillDush : ObjMotionSkillBase
         {
             if (InputManager.Instance.IsKeyDown(_SkillAttack._ActInput))
             {
-                Debug.Log("Dush NextInput");
-                AttackNext();
+                if (_Step == 0)
+                {
+                    AttackStep();
+                }
+                else if(_Step == 1)
+                {
+                    AttackNext();
+                }
             }
         }
 
-        if (_DushPos != Vector3.zero)
-        {
-            float dis = Vector3.Distance(_DushPos, _MotionManager.transform.position);
-            if (dis < _DushAttackDis)
-            {
-                AttackStep();
-                _DushPos = Vector3.zero;
-            }
-        }
+        //if (_DushPos != Vector3.zero)
+        //{
+        //    float dis = Vector3.Distance(_DushPos, _MotionManager.transform.position);
+        //    if (dis < _DushAttackDis)
+        //    {
+        //        AttackStep();
+        //        _DushPos = Vector3.zero;
+        //    }
+        //}
     }
 
     #region override
@@ -44,7 +50,6 @@ public class ObjMotionSkillDush : ObjMotionSkillBase
         switch (function)
         {
             case AnimEventManager.NEXT_INPUT_START:
-                Debug.Log("Dush NEXT_INPUT_START");
                 _CanNextInput = true;
                 NextInputPress();
                 break;
@@ -64,21 +69,23 @@ public class ObjMotionSkillDush : ObjMotionSkillBase
     private ObjMotionSkillAttack _SkillAttack;
     private bool _CanNextInput = false;
     private Vector3 _DushPos;
+    private int _Step = 0;
 
     public override bool ActSkill()
     {
         if (!base.ActSkill())
             return false;
 
-        _CanNextInput = false;
+        _CanNextInput = true;
+        _Step = 0;
         //Invoke("AttackStep", 0.3f);
-        var targetMotion = SelectTargetCommon.GetNearMotions(_MotionManager, _DushImpact._Time * _DushImpact._Speed);
-        if (targetMotion.Count > 0)
-        {
-            _DushPos = targetMotion[0].transform.position;
-            _DushImpact.DestPos = _DushPos;
-            _MotionManager.SetLookAt(_DushPos);
-        }
+        //var targetMotion = SelectTargetCommon.GetNearMotions(_MotionManager, _DushImpact._Time * _DushImpact._Speed);
+        //if (targetMotion.Count > 0)
+        //{
+        //    _DushPos = targetMotion[0].transform.position;
+        //    _DushImpact.DestPos = _DushPos;
+        //    _MotionManager.SetLookAt(_DushPos);
+        //}
         return true;
     }
 
@@ -99,7 +106,7 @@ public class ObjMotionSkillDush : ObjMotionSkillBase
 
     private void AttackStep()
     {
-        Debug.Log("AttackStep");
+        _Step = 1;
         _MotionManager.ResetMove();
         
         _MotionManager.PlayAnimation(_AttackAnim);
@@ -109,7 +116,6 @@ public class ObjMotionSkillDush : ObjMotionSkillBase
 
     private void AttackNext()
     {
-        Debug.Log("AttackNext");
         _MotionManager.FinishSkill(this);
         _MotionManager.ActSkill(_SkillAttack);
         _SkillAttack.DushAttack();

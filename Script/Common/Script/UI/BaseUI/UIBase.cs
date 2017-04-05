@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public class UIBase : MonoBehaviour
 {
+    
     public string UIPath;
 
     #region fiex fun

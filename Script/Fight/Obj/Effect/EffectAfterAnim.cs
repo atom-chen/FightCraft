@@ -52,7 +52,7 @@ public class EffectAfterAnim : EffectController
         if (_MeshRenderers.Length == 0 || SkinnedRenderers.Length == 0)
         {
             var motion = gameObject.GetComponentInParent<MotionManager>();
-            _MeshRenderers = motion.GetComponentsInChildren<MeshRenderer>();
+            //_MeshRenderers = motion.GetComponentsInChildren<MeshRenderer>();
             SkinnedRenderers = motion.GetComponentsInChildren<SkinnedMeshRenderer>();
         }
     }

@@ -8,7 +8,7 @@ namespace GameLogic
     public class ItemBase
     {
         [SaveField(1)]
-        private string _ItemDataID;
+        protected string _ItemDataID;
         public string ItemDataID
         {
             get
@@ -45,6 +45,32 @@ namespace GameLogic
         }
 
         [SaveField(2)]
-        private List<int> _DynamicData;
+        public List<int> _DynamicData;
+
+        #region fun
+
+        public void ResetItem()
+        {
+            _EquipItemRecord = null;
+        }
+
+        public void ExchangeInfo(ItemBase itembase)
+        {
+            if (itembase == null)
+                return;
+
+            var tempId = itembase.ItemDataID;
+            itembase.ItemDataID = ItemDataID;
+            ItemDataID = tempId;
+
+            var tempData = itembase._DynamicData;
+            itembase._DynamicData = _DynamicData;
+            _DynamicData = tempData;
+
+            itembase.ResetItem();
+            ResetItem();
+        }
+
+        #endregion
     }
 }

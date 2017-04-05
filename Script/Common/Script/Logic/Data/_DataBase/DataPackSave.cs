@@ -71,7 +71,7 @@ namespace GameLogic
             List<FieldInfo> fieldList = new List<FieldInfo>();
             if (fieldNames == null || fieldNames.Count == 0)
             {
-                var fields = dataType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                var fields = dataType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy);
                 fieldList.AddRange(fields);
             }
             else

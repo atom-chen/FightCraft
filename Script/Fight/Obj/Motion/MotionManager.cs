@@ -283,6 +283,8 @@ public class MotionManager : MonoBehaviour
     public void MotionDie()
     {
         _IsMotionDie = true;
+        Hashtable hash = new Hashtable();
+        hash.Add("HitEffect", -1);
         _EventController.PushEvent(GameBase.EVENT_TYPE.EVENT_MOTION_FLY, this, new Hashtable());
     }
 
