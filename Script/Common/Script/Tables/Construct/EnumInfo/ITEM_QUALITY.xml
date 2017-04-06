@@ -3,36 +3,32 @@
   <enumColumn>
     <enumName>
     </enumName>
-    <enumCode>WEAPON</enumCode>
+    <enumCode>WHITE</enumCode>
     <enumValue>0</enumValue>
-    <enumDesc>武器</enumDesc>
+    <enumDesc>枚举必须保留0值</enumDesc>
   </enumColumn>
   <enumColumn>
     <enumName>
     </enumName>
-    <enumCode>TORSO</enumCode>
+    <enumCode>BLUE</enumCode>
     <enumValue>1</enumValue>
-    <enumDesc>装甲</enumDesc>
+    <enumDesc>
+    </enumDesc>
   </enumColumn>
   <enumColumn>
     <enumName>
     </enumName>
-    <enumCode>LEGS</enumCode>
+    <enumCode>PURPER</enumCode>
     <enumValue>2</enumValue>
-    <enumDesc>护腿</enumDesc>
+    <enumDesc>
+    </enumDesc>
   </enumColumn>
   <enumColumn>
     <enumName>
     </enumName>
-    <enumCode>AMULET</enumCode>
+    <enumCode>ORIGIN</enumCode>
     <enumValue>3</enumValue>
-    <enumDesc>项链</enumDesc>
-  </enumColumn>
-  <enumColumn>
-    <enumName>
-    </enumName>
-    <enumCode>RING</enumCode>
-    <enumValue>4</enumValue>
-    <enumDesc>戒指</enumDesc>
+    <enumDesc>
+    </enumDesc>
   </enumColumn>
 </root>

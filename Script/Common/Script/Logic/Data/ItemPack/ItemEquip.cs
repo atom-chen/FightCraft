@@ -6,6 +6,7 @@ namespace GameLogic
     public class ItemEquip : ItemBase
     {
 
+
         
     }
 }

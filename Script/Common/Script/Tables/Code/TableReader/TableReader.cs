@@ -26,14 +26,18 @@ namespace Tables
 
 //
         public static EquipItem EquipItem { get; internal set; }
+//
+        public static CommonItem CommonItem { get; internal set; }
 
         public static void ReadTables()
         {
             //读取所有表
             EquipItem = new EquipItem(TableReadBase.GetTableText("EquipItem"), false);
+            CommonItem = new CommonItem(TableReadBase.GetTableText("CommonItem"), false);
 
             //初始化所有表
             EquipItem.CoverTableContent();
+            CommonItem.CoverTableContent();
         }
 
         #endregion

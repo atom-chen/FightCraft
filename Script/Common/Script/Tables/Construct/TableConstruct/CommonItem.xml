@@ -39,43 +39,46 @@
     <constructRepeat>1</constructRepeat>
   </constructColumn>
   <constructColumn>
-    <constructName>Slot</constructName>
-    <constructCode>Slot</constructCode>
-    <constructType1>自定义枚举</constructType1>
-    <constructType2>
-      <constructType2>EQUIP_SLOT</constructType2>
-    </constructType2>
-    <constructDefault>0</constructDefault>
-    <constructRepeat>1</constructRepeat>
-  </constructColumn>
-  <constructColumn>
-    <constructName>BaseAttrs</constructName>
-    <constructCode>BaseAttrs</constructCode>
+    <constructName>Icon</constructName>
+    <constructCode>Icon</constructCode>
     <constructType1>基本类型</constructType1>
     <constructType2>
-      <constructType2>三元组</constructType2>
+      <constructType2>字符串</constructType2>
     </constructType2>
-    <constructDefault>0;0;0</constructDefault>
+    <constructDefault>
+    </constructDefault>
     <constructRepeat>1</constructRepeat>
   </constructColumn>
   <constructColumn>
-    <constructName>LevelLimit</constructName>
-    <constructCode>LevelLimit</constructCode>
+    <constructName>Model</constructName>
+    <constructCode>Model</constructCode>
     <constructType1>基本类型</constructType1>
     <constructType2>
-      <constructType2>整数</constructType2>
+      <constructType2>字符串</constructType2>
+    </constructType2>
+    <constructDefault>
+    </constructDefault>
+    <constructRepeat>1</constructRepeat>
+  </constructColumn>
+  <constructColumn>
+    <constructName>Quality</constructName>
+    <constructCode>Quality</constructCode>
+    <constructType1>自定义枚举</constructType1>
+    <constructType2>
+      <constructType2>ITEM_QUALITY</constructType2>
     </constructType2>
     <constructDefault>0</constructDefault>
     <constructRepeat>1</constructRepeat>
   </constructColumn>
   <constructColumn>
-    <constructName>ProfessionLimit</constructName>
-    <constructCode>ProfessionLimit</constructCode>
-    <constructType1>自定义枚举</constructType1>
+    <constructName>DropItem</constructName>
+    <constructCode>DropItem</constructCode>
+    <constructType1>基本类型</constructType1>
     <constructType2>
-      <constructType2>PROFESSION</constructType2>
+      <constructType2>字符串</constructType2>
     </constructType2>
-    <constructDefault>0</constructDefault>
+    <constructDefault>
+    </constructDefault>
     <constructRepeat>1</constructRepeat>
   </constructColumn>
 </root>

@@ -63,6 +63,26 @@ namespace GameLogic
             return _EquipList[(int)equipSlot];
         }
 
+        public bool IsCanEquipItem(EQUIP_SLOT equipSlot, ItemEquip equipItem)
+        {
+            if (equipItem == null)
+                return false;
+
+            if (equipItem.EquipItemRecord == null)
+                return false;
+
+            if (equipItem.EquipItemRecord.Slot != equipSlot)
+                return false;
+
+            if (equipItem.EquipItemRecord.LevelLimit > _Level)
+                return false;
+
+            if (equipItem.EquipItemRecord.ProfessionLimit != Profession)
+                return false;
+
+            return false;
+        }
+
         public string GetWeaponModelName()
         {
             var equip = GetEquipItem(EQUIP_SLOT.WEAPON);

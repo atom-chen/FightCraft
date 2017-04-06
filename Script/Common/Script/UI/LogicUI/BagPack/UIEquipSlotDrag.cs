@@ -15,7 +15,7 @@ namespace GameUI
 
         #region 
 
-        public EQUIP_SLOT _EquipSlot;
+        private EQUIP_SLOT _EquipSlot;
 
         public override void Show(Hashtable hash)
         {
@@ -80,7 +80,15 @@ namespace GameUI
             if (_DropEnable == null)
                 return;
 
-            _DropEnable.gameObject.SetActive(true);
+            if (PlayerDataPack.Instance._SelectedRole.IsCanEquipItem(_EquipSlot, _BagPack.GetDragItem() as ItemEquip))
+            {
+                _DropEnable.gameObject.SetActive(true);
+            }
+            else
+            {
+                _DropDisable.gameObject.SetActive(true);
+            }
+
         }
 
         public void OnPointerExit(PointerEventData eventData)
@@ -95,6 +103,8 @@ namespace GameUI
             if (_DropEnable == null)
                 return;
 
+            
+            _DropDisable.gameObject.SetActive(false);
             _DropEnable.gameObject.SetActive(false);
         }
 
@@ -109,10 +119,14 @@ namespace GameUI
             if (_DropEnable == null)
                 return;
 
-            _DropEnable.gameObject.SetActive(false);
-
-            ShowItem.ExchangeInfo(_BagPack.GetDragItem());
-            _BagPack.RefreshItems();
+            _DropDisable.gameObject.SetActive(false);
+            if (_DropEnable.gameObject.activeSelf)
+            {
+                ShowItem.ExchangeInfo(_BagPack.GetDragItem());
+                _BagPack.RefreshItems();
+                _DropEnable.gameObject.SetActive(false);
+            }
+            
         }
 
         #endregion

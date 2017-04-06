@@ -31,6 +31,9 @@ namespace GameLogic
                     if (string.IsNullOrEmpty(_ItemDataID))
                         return null;
 
+                    if (_ItemDataID == "-1")
+                        return null;
+
                     _EquipItemRecord = TableReader.EquipItem.GetRecord(_ItemDataID);
                 }
                 return _EquipItemRecord;
