@@ -26,6 +26,7 @@ namespace GameBase
 
             TimeController.Load();
             StartEvent();
+            Tables.TableReader.ReadTables();
             DataLog.StartLog();
         }
 

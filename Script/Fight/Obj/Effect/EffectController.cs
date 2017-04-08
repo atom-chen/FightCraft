@@ -10,6 +10,17 @@ public class EffectController : MonoBehaviour
     private float _LastPlaySpeed = 1;
     private ParticleSystem[] _Particles;
 
+    public ParticleSystem[] Particles
+    {
+        get
+        {
+            if (_Particles == null || _Particles.Length == 0)
+                _Particles = gameObject.GetComponentsInChildren<ParticleSystem>(true);
+
+            return _Particles;
+        }
+    }
+
     public virtual void PlayEffect()
     {
         _LastPlaySpeed = 1;
@@ -25,10 +36,8 @@ public class EffectController : MonoBehaviour
         if (speed != _LastPlaySpeed)
         {
             _LastPlaySpeed = speed;
-            if (_Particles == null || _Particles.Length == 0)
-                _Particles = gameObject.GetComponentsInChildren<ParticleSystem>();
 
-            foreach (var particle in _Particles)
+            foreach (var particle in Particles)
             {
                 particle.playbackSpeed = speed;
             }
@@ -55,10 +64,7 @@ public class EffectController : MonoBehaviour
         if (!gameObject.activeSelf)
             return;
 
-        if (_Particles == null || _Particles.Length == 0)
-            _Particles = gameObject.GetComponentsInChildren<ParticleSystem>();
-
-        foreach (var particle in _Particles)
+        foreach (var particle in Particles)
         {
             particle.Pause();
         }
@@ -70,10 +76,7 @@ public class EffectController : MonoBehaviour
         if (!gameObject.activeSelf)
             return;
 
-        if (_Particles == null)
-            _Particles = gameObject.GetComponentsInChildren<ParticleSystem>();
-
-        foreach (var particle in _Particles)
+        foreach (var particle in Particles)
         {
             particle.Play();
         }
@@ -86,7 +89,47 @@ public class EffectController : MonoBehaviour
 
     public string _BindPos;
     public float _EffectLastTime;
-    
+
+    #endregion
+
+    #region element color
+
+    private ParticleSystem[] _EffectElements;
+
+    public ParticleSystem[] EffectElements
+    {
+        get
+        {
+            if (_EffectElements == null || _EffectElements.Length == 0)
+            {
+                var elementParticles = gameObject.GetComponentsInChildren<EffectElementPart>(true);
+                _EffectElements = new ParticleSystem[elementParticles.Length];
+                for (int i = 0; i < elementParticles.Length; ++i)
+                {
+                    _EffectElements[i] = elementParticles[i].GetComponent<ParticleSystem>();
+                }
+            }
+
+            return _EffectElements;
+        }
+    }
+
+    public void SetEffectColor(ElementType elementType)
+    {
+        var startColor = ResourceConfig.Instance._ElementColor[(int)elementType];
+
+        foreach (var particle in EffectElements)
+        {
+            if (particle.colorOverLifetime.enabled)
+            {
+                var colorModule = particle.colorOverLifetime;
+                colorModule.color = new ParticleSystem.MinMaxGradient( ResourceConfig.Instance._ElementGradient[(int)elementType]);
+            }
+
+            particle.startColor = ResourceConfig.Instance._ElementColor[(int)elementType];
+        }
+    }
+
     #endregion
 
 }

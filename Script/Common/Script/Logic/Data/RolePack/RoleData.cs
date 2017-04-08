@@ -80,8 +80,11 @@ namespace GameLogic
             if (equipItem.EquipItemRecord.ProfessionLimit != Profession)
                 return false;
 
-            return false;
+            return true;
         }
+
+        public void PutOnEquip(EQUIP_SLOT equipSlot, ItemEquip equipItem)
+        { }
 
         public string GetWeaponModelName()
         {

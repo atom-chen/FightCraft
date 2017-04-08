@@ -203,6 +203,7 @@ public class MotionManager : MonoBehaviour
         foreach (var skill in skillList)
         {
             _SkillMotions.Add(skill._ActInput, skill);
+            skill.SetImpactElement(ElementType.Cold);
             skill.Init();
         }
     }
@@ -372,6 +373,7 @@ public class MotionManager : MonoBehaviour
             CopyComponent(effect, idleEffect);
             _SkillEffects.Add(effect.name, idleEffect);
         }
+        _SkillEffects[effect.name].SetEffectColor(ElementType.Wind);
         _SkillEffects[effect.name].PlayEffect(RoleAttrManager.SkillSpeed);
     }
 

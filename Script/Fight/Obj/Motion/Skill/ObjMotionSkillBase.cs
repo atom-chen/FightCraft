@@ -13,7 +13,7 @@ public class ObjMotionSkillBase : MonoBehaviour
         {
             _MotionManager.InitAnimation(_Anim);
             _MotionManager.AddAnimationEndEvent(_Anim);
-        }
+        }   
     }
 
     public AnimationClip _Anim;
@@ -30,6 +30,9 @@ public class ObjMotionSkillBase : MonoBehaviour
         var collidercontrollers = gameObject.GetComponentsInChildren<SelectBase>(true);
         foreach (var collider in collidercontrollers)
         {
+            //if (!IsColliderCanAct(collider.gameObject.name))
+            //    continue;
+
             collider.Init();
             if (_ColliderControl.ContainsKey(collider._ColliderID))
             {
@@ -127,5 +130,54 @@ public class ObjMotionSkillBase : MonoBehaviour
             }
         }
     }
+
+    #region element
+
+    private static string _EleImpactBaseStr = "EleImpact";
+    private static string _EleImpactFireStr = "EleImpactFire";
+    private static string _EleImpactColdStr = "EleImpactCold";
+    private static string _EleImpactLightingStr = "EleImpactLighting";
+    private static string _EleImpactWindStr = "EleImpactWind";
+
+    private string _CurEleImpact = "";
+    public void SetImpactElement(ElementType eleType)
+    {
+        _CurEleImpact = "";
+        switch (eleType)
+        {
+            case ElementType.Fire:
+                _CurEleImpact = _EleImpactFireStr;
+                break;
+            case ElementType.Cold:
+                _CurEleImpact = _EleImpactColdStr;
+                break;
+            case ElementType.Lighting:
+                _CurEleImpact = _EleImpactLightingStr;
+                break;
+            case ElementType.Wind:
+                _CurEleImpact = _EleImpactWindStr;
+                break;
+        }
+    }
+
+    private bool IsColliderCanAct(string colliderName)
+    {
+        if (colliderName.Contains(_EleImpactBaseStr))
+        {
+            if (string.IsNullOrEmpty(_CurEleImpact))
+                return false;
+
+            if (colliderName == _CurEleImpact)
+                return true;
+
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    #endregion
 
 }

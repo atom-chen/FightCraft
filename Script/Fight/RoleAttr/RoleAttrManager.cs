@@ -35,6 +35,15 @@ public enum MotionType
     
 }
 
+public enum ElementType
+{
+    None,
+    Fire,
+    Cold,
+    Lighting,
+    Wind,
+}
+
 public class RoleAttrManager : MonoBehaviour
 {
     #region baseAttr
