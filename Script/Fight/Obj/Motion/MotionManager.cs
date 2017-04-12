@@ -133,8 +133,19 @@ public class MotionManager : MonoBehaviour
     }
 
     float _OrgSpeed = 1;
+    int _PauseCnt = 0;
     public void PauseAnimation(AnimationClip animClip)
     {
+        if (_Animaton[animClip.name].speed == 0)
+        {
+            ++_PauseCnt;
+            return;
+        }
+        else
+        {
+            _PauseCnt = 1;
+        }
+
         _OrgSpeed = _Animaton[animClip.name].speed;
         _Animaton[animClip.name].speed = 0;
     }
@@ -145,8 +156,7 @@ public class MotionManager : MonoBehaviour
         {
             if (_Animaton.IsPlaying(state.name))
             {
-                _OrgSpeed = state.speed;
-                state.speed = 0;
+                PauseAnimation(state.clip);
             }
         }
         
@@ -154,6 +164,10 @@ public class MotionManager : MonoBehaviour
 
     public void ResumeAnimation(AnimationClip animClip)
     {
+        --_PauseCnt;
+        if (_PauseCnt > 0)
+            return;
+
         if (_Animaton.IsPlaying(animClip.name))
         {
             _Animaton[animClip.name].speed = _OrgSpeed;
@@ -166,7 +180,7 @@ public class MotionManager : MonoBehaviour
         {
             if (_Animaton.IsPlaying(state.name))
             {
-                state.speed = _OrgSpeed;
+                ResumeAnimation(state.clip);
             }
         }
     }

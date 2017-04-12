@@ -57,14 +57,31 @@ public class BaseMotionManager : MonoBehaviour
             }
             //var hitTime = (float)eventArgs["HitTime"];
             float hitTime = 0.5f;
+            if (eventArgs.ContainsKey("HitTime"))
+            {
+                hitTime = (float)eventArgs["HitTime"];
+            }
 
             int hitEffect = 0;
             if (eventArgs.ContainsKey("HitEffect"))
             {
                 hitEffect = (int)eventArgs["HitEffect"];
             }
+            bool ifForce = false;
+            if (eventArgs.ContainsKey("HitForce"))
+            {
+                ifForce = (bool)eventArgs["HitForce"];
+            }
+
             MotionManager impactSender = go as MotionManager;
-            MotionFlyStay(hitTime, hitEffect, impactSender);
+            if (!ifForce)
+            {
+                MotionFlyStay(hitTime, hitEffect, impactSender);
+            }
+            else
+            {
+                MotionHit(hitTime, hitEffect, impactSender);
+            }
         }
     }
 
@@ -384,7 +401,8 @@ public class BaseMotionManager : MonoBehaviour
             _LieTime -= Time.fixedDeltaTime;
             if (_LieTime <= 0)
             {
-                MotionRise();
+                if(_MotionManager.MotionPrior == FLY_PRIOR)
+                    MotionRise();
             }
         }
     }

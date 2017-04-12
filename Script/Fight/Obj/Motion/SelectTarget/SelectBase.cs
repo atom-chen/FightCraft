@@ -37,7 +37,7 @@ public class SelectBase : MonoBehaviour
 
     public virtual void ColliderFinish()
     {
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
 
 }

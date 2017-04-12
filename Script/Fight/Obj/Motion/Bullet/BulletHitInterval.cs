@@ -7,6 +7,7 @@ public class BulletHitInterval : BulletBase
     public GameObject _AlertObj;
     public GameObject _HitObj;
     public float _AlertTime = 0.6f;
+    public float _FirstHitTime = 0f;
     public float _HitInterval = 0.1f;
     public float _StayTime = 10;
 
@@ -37,6 +38,8 @@ public class BulletHitInterval : BulletBase
         _AlertObj.SetActive(false);
         _HitObj.SetActive(true);
         //_Collider.enabled = true;
+
+        yield return new WaitForSeconds(_FirstHitTime);
         _StartHit = true;
     }
 

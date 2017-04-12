@@ -6,10 +6,22 @@ public class SelectCollider : SelectBase
 {
     private List<Collider> _TrigCollider = new List<Collider>();
 
+    private Collider _SelectCollider;
+
+    public override void ColliderStart()
+    {
+        if (_SelectCollider == null)
+        {
+            _SelectCollider = gameObject.GetComponent<Collider>();
+        }
+        _SelectCollider.enabled = true;
+        base.ColliderStart();
+    }
+
     public override void ColliderFinish()
     {
         base.ColliderFinish();
-
+        _SelectCollider.enabled = false;
         _TrigCollider.Clear();
     }
 

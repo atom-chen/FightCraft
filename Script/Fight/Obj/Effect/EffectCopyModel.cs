@@ -6,14 +6,18 @@ using System.Linq;
 // 残影效果
 public class EffectCopyModel : EffectController
 {
-
-    public float _Duration;
-    
-    public MeshRenderer[] _MeshRenderers;
-    public SkinnedMeshRenderer[] SkinnedRenderers;
+    public float _MoveSpeed = 30;
     public Material _Material;
 
-    private List<Mesh> _BakedMeshes = new List<Mesh>();
+    protected MeshRenderer[] _MeshRenderers;
+    protected SkinnedMeshRenderer[] SkinnedRenderers;
+
+    protected List<GameObject> _BakedMeshes = new List<GameObject>();
+
+    void FixedUpdate()
+    {
+        transform.position += transform.forward * _MoveSpeed * Time.fixedDeltaTime;
+    }
 
     public override void PlayEffect()
     {
@@ -31,13 +35,17 @@ public class EffectCopyModel : EffectController
 
     public override void HideEffect()
     {
+        foreach(var meshGO in _BakedMeshes)
+        {
+            GameObject.Destroy(meshGO);
+        }
         _BakedMeshes.Clear();
         base.HideEffect();
     }
 
-    private void InitMesh()
+    protected virtual void InitMesh()
     {
-        if (_MeshRenderers.Length == 0 || SkinnedRenderers.Length == 0)
+        if ((_MeshRenderers != null && _MeshRenderers.Length == 0) || (SkinnedRenderers != null && SkinnedRenderers.Length == 0))
         {
             var motion = gameObject.GetComponentInParent<MotionManager>();
             //_MeshRenderers = motion.GetComponentsInChildren<MeshRenderer>();
@@ -48,38 +56,42 @@ public class EffectCopyModel : EffectController
     private void CreateImage()
     {
 
-        CombineInstance[] combineInstances = new CombineInstance[_MeshRenderers.Length + SkinnedRenderers.Length];
+        var materials = new List<Mesh>();
 
         Transform t = transform;
-        Material mat = null;
         
         for (int i = 0; i < _MeshRenderers.Length; ++i)
         {
             var item = _MeshRenderers[i];
-            t = item.transform;
-            mat = new Material(_Material);
-            //mat.shader = _shaderAfterImage;
-
             var mesh = GameObject.Instantiate<Mesh>(item.GetComponent<MeshFilter>().mesh);
-            _BakedMeshes.Add(mesh);
+            BakeMesh(mesh, item.gameObject);
         }
         for (int i = 0; i < SkinnedRenderers.Length; ++i)
         {
             var item = SkinnedRenderers[i];
-            t = item.transform;
-            mat = new Material(_Material);
-            //mat.shader = _shaderAfterImage;
-
             var mesh = new Mesh();
             item.BakeMesh(mesh);
-            _BakedMeshes.Add(mesh);
-        }
-
-        foreach (var mesh in _BakedMeshes)
-        {
-
+            BakeMesh(mesh, item.gameObject);
         }
 
     }
 
+    private void BakeMesh(Mesh mesh, GameObject originGO)
+    {
+        GameObject bakeMeshGo = new GameObject("BakeMesh");
+        bakeMeshGo.transform.SetParent(transform);
+        InitEffectObj(bakeMeshGo, originGO.transform);
+        var bakeMesh = bakeMeshGo.AddComponent<MeshFilter>();
+        bakeMesh.mesh = mesh;
+        var meshRender = bakeMeshGo.AddComponent<MeshRenderer>();
+        meshRender.materials = new Material[1] { new Material(_Material) };
+
+        _BakedMeshes.Add(bakeMeshGo);
+    }
+
+    protected virtual void InitEffectObj(GameObject initObj, Transform originTransform)
+    {
+        initObj.transform.position = originTransform.position;
+        initObj.transform.rotation = originTransform.rotation;
+    }
 }
