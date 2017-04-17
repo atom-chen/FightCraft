@@ -25,19 +25,23 @@ namespace Tables
         #region Logic
 
 //
+        public static CommonItem CommonItem { get; internal set; }
+//
         public static EquipItem EquipItem { get; internal set; }
 //
-        public static CommonItem CommonItem { get; internal set; }
+        public static FightAttr FightAttr { get; internal set; }
 
         public static void ReadTables()
         {
             //读取所有表
-            EquipItem = new EquipItem(TableReadBase.GetTableText("EquipItem"), false);
             CommonItem = new CommonItem(TableReadBase.GetTableText("CommonItem"), false);
+            EquipItem = new EquipItem(TableReadBase.GetTableText("EquipItem"), false);
+            FightAttr = new FightAttr(TableReadBase.GetTableText("FightAttr"), false);
 
             //初始化所有表
-            EquipItem.CoverTableContent();
             CommonItem.CoverTableContent();
+            EquipItem.CoverTableContent();
+            FightAttr.CoverTableContent();
         }
 
         #endregion

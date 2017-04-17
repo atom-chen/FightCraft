@@ -8,18 +8,19 @@ using UnityEngine;
 
 namespace Tables
 {
-    public partial class EquipItemRecord  : TableRecordBase
+    public partial class FightAttrRecord  : TableRecordBase
     {
         public DataRecord ValueStr;
 
         public override string Id { get; set; }        public string Name { get; set; }
         public string Desc { get; set; }
-        public EQUIP_SLOT Slot { get; set; }
-        public EQUIP_CLASS EquipClass { get; set; }
-        public Vector3 BaseAttrs { get; set; }
-        public int LevelLimit { get; set; }
+        public int LevelMin { get; set; }
+        public int LevelMax { get; set; }
+        public int SlotLimit { get; set; }
         public int ProfessionLimit { get; set; }
-        public EquipItemRecord(DataRecord dataRecord)
+        public int Conflict { get; set; }
+        public List<Vector3> Values { get; set; }
+        public FightAttrRecord(DataRecord dataRecord)
         {
             if (dataRecord != null)
             {
@@ -27,6 +28,7 @@ namespace Tables
                 Id = ValueStr[0];
 
             }
+            Values = new List<Vector3>();
         }
         public override string[] GetRecordStr()
         {
@@ -34,26 +36,30 @@ namespace Tables
             recordStrList.Add(TableWriteBase.GetWriteStr(Id));
             recordStrList.Add(TableWriteBase.GetWriteStr(Name));
             recordStrList.Add(TableWriteBase.GetWriteStr(Desc));
-            recordStrList.Add(((int)Slot).ToString());
-            recordStrList.Add(((int)EquipClass).ToString());
-            recordStrList.Add(TableWriteBase.GetWriteStr(BaseAttrs));
-            recordStrList.Add(TableWriteBase.GetWriteStr(LevelLimit));
+            recordStrList.Add(TableWriteBase.GetWriteStr(LevelMin));
+            recordStrList.Add(TableWriteBase.GetWriteStr(LevelMax));
+            recordStrList.Add(TableWriteBase.GetWriteStr(SlotLimit));
             recordStrList.Add(TableWriteBase.GetWriteStr(ProfessionLimit));
+            recordStrList.Add(TableWriteBase.GetWriteStr(Conflict));
+            foreach (var testTableItem in Values)
+            {
+                recordStrList.Add(TableWriteBase.GetWriteStr(testTableItem));
+            }
 
             return recordStrList.ToArray();
         }
     }
 
-    public partial class EquipItem : TableFileBase
+    public partial class FightAttr : TableFileBase
     {
-        public Dictionary<string, EquipItemRecord> Records { get; internal set; }
+        public Dictionary<string, FightAttrRecord> Records { get; internal set; }
 
         public bool ContainsKey(string key)
         {
              return Records.ContainsKey(key);
         }
 
-        public EquipItemRecord GetRecord(string id)
+        public FightAttrRecord GetRecord(string id)
         {
             try
             {
@@ -61,13 +67,13 @@ namespace Tables
             }
             catch (Exception ex)
             {
-                throw new Exception("EquipItem" + ": " + id, ex);
+                throw new Exception("FightAttr" + ": " + id, ex);
             }
         }
 
-        public EquipItem(string pathOrContent,bool isPath = true)
+        public FightAttr(string pathOrContent,bool isPath = true)
         {
-            Records = new Dictionary<string, EquipItemRecord>();
+            Records = new Dictionary<string, FightAttrRecord>();
             if(isPath)
             {
                 string[] lines = File.ReadAllLines(pathOrContent);
@@ -92,7 +98,7 @@ namespace Tables
                     if (data[0].StartsWith("#"))
                         continue;
 
-                    EquipItemRecord record = new EquipItemRecord(data);
+                    FightAttrRecord record = new FightAttrRecord(data);
                     Records.Add(record.Id, record);
                 }
             }
@@ -104,11 +110,16 @@ namespace Tables
             {
                 pair.Value.Name = TableReadBase.ParseString(pair.Value.ValueStr[1]);
                 pair.Value.Desc = TableReadBase.ParseString(pair.Value.ValueStr[2]);
-                pair.Value.Slot =  (EQUIP_SLOT)TableReadBase.ParseInt(pair.Value.ValueStr[3]);
-                pair.Value.EquipClass =  (EQUIP_CLASS)TableReadBase.ParseInt(pair.Value.ValueStr[4]);
-                pair.Value.BaseAttrs = TableReadBase.ParseVector3(pair.Value.ValueStr[5]);
-                pair.Value.LevelLimit = TableReadBase.ParseInt(pair.Value.ValueStr[6]);
-                pair.Value.ProfessionLimit = TableReadBase.ParseInt(pair.Value.ValueStr[7]);
+                pair.Value.LevelMin = TableReadBase.ParseInt(pair.Value.ValueStr[3]);
+                pair.Value.LevelMax = TableReadBase.ParseInt(pair.Value.ValueStr[4]);
+                pair.Value.SlotLimit = TableReadBase.ParseInt(pair.Value.ValueStr[5]);
+                pair.Value.ProfessionLimit = TableReadBase.ParseInt(pair.Value.ValueStr[6]);
+                pair.Value.Conflict = TableReadBase.ParseInt(pair.Value.ValueStr[7]);
+                pair.Value.Values.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[8]));
+                pair.Value.Values.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[9]));
+                pair.Value.Values.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[10]));
+                pair.Value.Values.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[11]));
+                pair.Value.Values.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[12]));
             }
         }
     }

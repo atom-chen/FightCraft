@@ -39,38 +39,28 @@
     <constructRepeat>1</constructRepeat>
   </constructColumn>
   <constructColumn>
-    <constructName>Slot</constructName>
-    <constructCode>Slot</constructCode>
-    <constructType1>自定义枚举</constructType1>
-    <constructType2>
-      <constructType2>EQUIP_SLOT</constructType2>
-    </constructType2>
-    <constructDefault>0</constructDefault>
-    <constructRepeat>1</constructRepeat>
-  </constructColumn>
-  <constructColumn>
-    <constructName>EquipClass</constructName>
-    <constructCode>EquipClass</constructCode>
-    <constructType1>自定义枚举</constructType1>
-    <constructType2>
-      <constructType2>EQUIP_CLASS</constructType2>
-    </constructType2>
-    <constructDefault>0</constructDefault>
-    <constructRepeat>1</constructRepeat>
-  </constructColumn>
-  <constructColumn>
-    <constructName>BaseAttrs</constructName>
-    <constructCode>BaseAttrs</constructCode>
+    <constructName>LevelMin</constructName>
+    <constructCode>LevelMin</constructCode>
     <constructType1>基本类型</constructType1>
     <constructType2>
-      <constructType2>三元组</constructType2>
+      <constructType2>整数</constructType2>
     </constructType2>
-    <constructDefault>0;0;0</constructDefault>
+    <constructDefault>0</constructDefault>
     <constructRepeat>1</constructRepeat>
   </constructColumn>
   <constructColumn>
-    <constructName>LevelLimit</constructName>
-    <constructCode>LevelLimit</constructCode>
+    <constructName>LevelMax</constructName>
+    <constructCode>LevelMax</constructCode>
+    <constructType1>基本类型</constructType1>
+    <constructType2>
+      <constructType2>整数</constructType2>
+    </constructType2>
+    <constructDefault>0</constructDefault>
+    <constructRepeat>1</constructRepeat>
+  </constructColumn>
+  <constructColumn>
+    <constructName>SlotLimit</constructName>
+    <constructCode>SlotLimit</constructCode>
     <constructType1>基本类型</constructType1>
     <constructType2>
       <constructType2>整数</constructType2>
@@ -87,5 +77,25 @@
     </constructType2>
     <constructDefault>0</constructDefault>
     <constructRepeat>1</constructRepeat>
+  </constructColumn>
+  <constructColumn>
+    <constructName>Conflict</constructName>
+    <constructCode>Conflict</constructCode>
+    <constructType1>基本类型</constructType1>
+    <constructType2>
+      <constructType2>整数</constructType2>
+    </constructType2>
+    <constructDefault>0</constructDefault>
+    <constructRepeat>1</constructRepeat>
+  </constructColumn>
+  <constructColumn>
+    <constructName>Values</constructName>
+    <constructCode>Values</constructCode>
+    <constructType1>基本类型</constructType1>
+    <constructType2>
+      <constructType2>三元组</constructType2>
+    </constructType2>
+    <constructDefault>0;0;0</constructDefault>
+    <constructRepeat>5</constructRepeat>
   </constructColumn>
 </root>

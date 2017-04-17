@@ -110,7 +110,7 @@ namespace GameLogic
                         if (valueList == null)
                             continue;
 
-                        Debug.Log("SaveList cnt:" + valueList.Count);
+                        //Debug.Log("SaveList cnt:" + valueList.Count);
                         for (int j = 0; j < valueList.Count; ++j)
                         {
                             if (childType == null)
@@ -252,7 +252,7 @@ namespace GameLogic
                     string[] listValues = valueStrs[i].Split(SaveSplitChars[depth + 1]);
                     List<string> notEmptyList = new List<string>(listValues);
                     ListTool.ExcludeEmptyStr(notEmptyList);
-                    Debug.Log("LoadLise cnt:" + notEmptyList.Count);
+                    //Debug.Log("LoadLise cnt:" + notEmptyList.Count);
                     Type childType = null;
                     for (int j = 0; j < notEmptyList.Count; ++j)
                     {
@@ -286,7 +286,7 @@ namespace GameLogic
                     var record = TableReadEx.GetTableRecord(sortedFields[i].FieldType.Name.Replace("Record", ""), recordID);
                     if (record == null)
                     {
-                        Debug.LogError("Load Record error:" + sortedFields[i].FieldType.Name + "," + recordID);
+                        //Debug.LogError("Load Record error:" + sortedFields[i].FieldType.Name + "," + recordID);
                     }
                     else
                     {

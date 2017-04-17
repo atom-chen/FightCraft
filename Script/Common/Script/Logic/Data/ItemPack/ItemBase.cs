@@ -48,7 +48,10 @@ namespace GameLogic
         }
 
         [SaveField(2)]
-        public List<int> _DynamicData;
+        public List<int> _DynamicDataInt;
+
+        [SaveField(3)]
+        public List<Vector3> _DynamicDataVector;
 
         #region fun
 
@@ -66,9 +69,13 @@ namespace GameLogic
             itembase.ItemDataID = ItemDataID;
             ItemDataID = tempId;
 
-            var tempData = itembase._DynamicData;
-            itembase._DynamicData = _DynamicData;
-            _DynamicData = tempData;
+            var tempData = itembase._DynamicDataInt;
+            itembase._DynamicDataInt = _DynamicDataInt;
+            _DynamicDataInt = tempData;
+
+            var tempDataVector = itembase._DynamicDataVector;
+            itembase._DynamicDataVector = _DynamicDataVector;
+            _DynamicDataVector = tempDataVector;
 
             itembase.ResetItem();
             ResetItem();

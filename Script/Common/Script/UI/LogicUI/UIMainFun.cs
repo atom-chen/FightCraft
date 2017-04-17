@@ -64,7 +64,7 @@ namespace GameUI
 
         public void BtnTestPanel()
         {
-
+            UITestEquip.ShowAsyn();
         }
              
 

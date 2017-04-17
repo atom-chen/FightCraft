@@ -56,7 +56,7 @@ namespace GameLogic
 
         }
 
-        #region 
+        #region equipManager
 
         public ItemEquip GetEquipItem(EQUIP_SLOT equipSlot)
         {
@@ -77,8 +77,10 @@ namespace GameLogic
             if (equipItem.EquipItemRecord.LevelLimit > _Level)
                 return false;
 
-            if (equipItem.EquipItemRecord.ProfessionLimit != Profession)
+            if (((equipItem.EquipItemRecord.ProfessionLimit >> (int)equipItem.EquipItemRecord.ProfessionLimit) & 1) == 0)
+            {
                 return false;
+            }
 
             return true;
         }
@@ -104,6 +106,13 @@ namespace GameLogic
             List<string> skillMotions = new List<string>() { "Attack", "Buff1", "Buff2", "Defence", "Dush", "Skill1", "Skill2", "Skill3" };
             return skillMotions;
         }
+
+        #endregion
+
+        #region role attr
+
+        [SaveField(4)]
+        public int _CurExp;
 
         #endregion
     }
