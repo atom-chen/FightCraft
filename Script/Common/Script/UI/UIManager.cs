@@ -25,7 +25,6 @@ namespace GameUI
         public void Start()
         {
             InitUIEvents();
-            PushInitEvent();
         }
 
         #endregion
@@ -84,7 +83,9 @@ namespace GameUI
         }
 
         private Dictionary<string, UIBase> _UIObjs = new Dictionary<string, UIBase>();
-        public void ShowOrCreateUI(string uiPath, Hashtable hashtable)
+        private Dictionary<UILayer, RectTransform> _UILayers = new Dictionary<UILayer, RectTransform>();
+
+        public void ShowOrCreateUI(string uiPath, UILayer uilayer, Hashtable hashtable)
         {
             if (_UIObjs.ContainsKey(uiPath))
             {
@@ -92,22 +93,36 @@ namespace GameUI
             }
             else
             {
+                if (!_UILayers.ContainsKey(uilayer))
+                {
+                    GameObject layer = new GameObject(uilayer.ToString());
+                    layer.transform.SetParent(ScreenCanvas.transform);
+                    RectTransform rectTransform = layer.AddComponent<RectTransform>();
+                    rectTransform.anchoredPosition = Vector2.zero;
+                    rectTransform.anchorMin = Vector2.zero;
+                    rectTransform.anchorMax = Vector2.one;
+                    rectTransform.pivot = new Vector2(0.5f, 0.5f);
+                    _UILayers.Add(uilayer, rectTransform);
+                }
                 var obj = InitUI(uiPath);
                 obj.transform.localScale = new Vector3(1,1,1);
+                obj.transform.SetParent(_UILayers[uilayer]);
                 var script = obj.GetComponent<UIBase>();
                 obj.name = script.GetType().Name;
                 script.Show(hashtable);
                 script.UIPath = uiPath;
                 _UIObjs.Add(uiPath, script);
             }
+
+            UIShowed(uiPath, uilayer, _UIObjs[uiPath]);
         }
 
         //异步显示
-        public void ShowUI(string uiPath, Hashtable hashtable = null)
+        public void ShowUI(string uiPath, UILayer uilayer, Hashtable hashtable = null)
         {
             if (_UIObjs.ContainsKey(uiPath))
             {
-                ShowOrCreateUI(uiPath, hashtable);
+                ShowOrCreateUI(uiPath, uilayer, hashtable);
             }
             else
             {
@@ -116,7 +131,16 @@ namespace GameUI
                     hashtable = new Hashtable();
                 }
                 hashtable.Add("UIPath", uiPath);
+                hashtable.Add("UILayer", uilayer);
                 GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_UI_CREATE, this, hashtable);
+            }
+        }
+
+        public void HideUI(string uiPath)
+        {
+            if (_UIObjs.ContainsKey(uiPath))
+            {
+                _UIObjs[uiPath].Hide();
             }
         }
 
@@ -148,23 +172,6 @@ namespace GameUI
                 }
             }
             GameObject.Destroy(uiBase.gameObject);
-        }
-
-        public void InitAllUI()
-        {
-            foreach (var uiEvent in _InitEvent)
-            {
-                if (!_UIObjs.ContainsKey(uiEvent.UIPath) && uiEvent.UIPath != "SystemUI/UILogin")
-                {
-                    var obj = InitUI(uiEvent.UIPath);
-                    obj.transform.localScale = new Vector3(1, 1, 1);
-                    var script = obj.GetComponent<UIBase>();
-                    obj.name = script.GetType().Name;
-                    script.UIPath = uiEvent.UIPath;
-                    script.PreLoad();
-                    _UIObjs.Add(uiEvent.UIPath, script);
-                }
-            }
         }
 
         public void HideAllUI()
@@ -214,76 +221,39 @@ namespace GameUI
 
         #region 初始化事件
 
-        private class UIInitEvent
-        {
-            public EVENT_TYPE EventType;
-            public string UIPath;
-        }
-
-        private List<UIInitEvent> _InitEvent = new List<UIInitEvent>();
-        private Dictionary<EVENT_TYPE, List<string>> _InitUIs;
-
-        public const string UI_SYSTEM_SCRIPT_PATH = "\\FightCraft\\Script\\Common\\Script\\UI\\SystemUI";
-        public const string UI_LOGIC_SCRIPT_PATH = "\\FightCraft\\Script\\Common\\Script\\UI\\LogicUI";
-        public const int PATH_FOLD_CNT = 6;
-
         private void InitUIEvents()
         {
-
-        }
-
-        private static string GetUIObjPath(string path)
-        {
-
-            string uiObjPath = path.Replace(Application.dataPath, "_");
-            string[] pathStrs = uiObjPath.Split('\\');
-            string uiPath = "";
-            for (int i = PATH_FOLD_CNT; i < pathStrs.Length - 1; ++i)
-            {
-                uiPath += pathStrs[i] + '/';
-            }
-            uiPath += Path.GetFileNameWithoutExtension(path);
-            return uiPath;
-        }
-
-        private void PushInitEvent()
-        {
-            _InitUIs = new Dictionary<EVENT_TYPE, List<string>>();
-            foreach (var uievent in _InitEvent)
-            {
-                if (_InitUIs.ContainsKey(uievent.EventType))
-                {
-                    _InitUIs[uievent.EventType].Add(uievent.UIPath);
-                }
-                else
-                {
-                    List<string> pathList = new List<string>();
-                    pathList.Add(uievent.UIPath);
-                    _InitUIs.Add(uievent.EventType, pathList);
-                }
-                GameCore.Instance.EventController.RegisteEvent(uievent.EventType, ShowEvent);
-            }
-
             GameCore.Instance.EventController.RegisteEvent(EVENT_TYPE.EVENT_UI_CREATE, ShowLogicUIEvent);
         }
-
-        public void ShowEvent(object sender, Hashtable hash)
-        {
-            EVENT_TYPE type = (EVENT_TYPE)hash["EVENT_TYPE"];
-            if (_InitUIs.ContainsKey(type))
-            {
-                foreach (var initUI in _InitUIs[type])
-                {
-                    ShowOrCreateUI(initUI, hash);
-                }
-            }
-        }
-
+        
         public void ShowLogicUIEvent(object sender, Hashtable hash)
         {
             string uiPath = (string)hash["UIPath"];
-            ShowOrCreateUI(uiPath, hash);
+            UILayer uilayer = (UILayer)hash["UILayer"];
+            ShowOrCreateUI(uiPath, uilayer, hash);
         }
+        #endregion
+
+        #region UIConfilict
+
+        private void UIShowed(string uipath, UILayer uilayer, UIBase showUI)
+        {
+            if (uilayer == UILayer.PopUI)
+            {
+                PopUIConflict(showUI);
+            }
+        }
+
+        private UIBase _ShowingPopUI;
+        private void PopUIConflict(UIBase showUI)
+        {
+            if (_ShowingPopUI != null && _ShowingPopUI.IsShowing())
+            {
+                _ShowingPopUI.Hide();
+            }
+            _ShowingPopUI = showUI;
+        }
+
         #endregion
     }
 }

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 using GameBase;
 using GameLogic;
+using System;
+
 namespace GameUI
 {
     public class UIMainFun : UIBase
@@ -14,7 +16,7 @@ namespace GameUI
         public static void ShowAsyn()
         {
             Hashtable hash = new Hashtable();
-            GameCore.Instance.UIManager.ShowUI("LogicUI/UIMainFun", hash);
+            GameCore.Instance.UIManager.ShowUI("LogicUI/UIMainFun", UILayer.BaseUI, hash);
         }
 
         public static List<EVENT_TYPE> GetShowEvent()
@@ -65,6 +67,11 @@ namespace GameUI
         public void BtnTestPanel()
         {
             UITestEquip.ShowAsyn();
+        }
+
+        public void BtnResetEquip()
+        {
+            UIEquipResetAttr.ShowAsyn();
         }
              
 

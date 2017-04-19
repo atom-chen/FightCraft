@@ -14,7 +14,7 @@ namespace GameUI
         public static void ShowAsyn()
         {
             Hashtable hash = new Hashtable();
-            GameCore.Instance.UIManager.ShowUI("LogicUI/UIRoleSelect", hash);
+            GameCore.Instance.UIManager.ShowUI("LogicUI/UIRoleSelect", UILayer.PopUI, hash);
         }
 
         public static List<EVENT_TYPE> GetShowEvent()

@@ -23,6 +23,11 @@ public class UIBase : MonoBehaviour
 
     #region show
 
+    public bool IsShowing()
+    {
+        return gameObject.activeInHierarchy;
+    }
+
     public virtual void PreLoad()
     {
         gameObject.SetActive(false);

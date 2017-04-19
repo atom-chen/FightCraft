@@ -13,7 +13,7 @@ namespace GameUI
         public static void ShowAsyn()
         {
             Hashtable hash = new Hashtable();
-            GameCore.Instance.UIManager.ShowUI("LogicUI/Fight/UISkillBar", hash);
+            GameCore.Instance.UIManager.ShowUI("LogicUI/Fight/UISkillBar", UILayer.BaseUI, hash);
         }
 
         #endregion

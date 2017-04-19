@@ -48,10 +48,6 @@ namespace GameLogic
                 {
                     _BackPackItems.Add(new ItemEquip() { ItemDataID = "-1" });
                 }
-                for (int i = 0; i < 10; ++i)
-                {
-                    _BackPackItems[i].ItemDataID = "1";
-                }
             }
 
         }
@@ -77,7 +73,8 @@ namespace GameLogic
             if (equipItem.EquipItemRecord.LevelLimit > _Level)
                 return false;
 
-            if (((equipItem.EquipItemRecord.ProfessionLimit >> (int)equipItem.EquipItemRecord.ProfessionLimit) & 1) == 0)
+            if (equipItem.EquipItemRecord.ProfessionLimit > 0 &&
+                ((equipItem.EquipItemRecord.ProfessionLimit >> (int)Profession) & 1) == 0)
             {
                 return false;
             }
@@ -105,6 +102,19 @@ namespace GameLogic
         {
             List<string> skillMotions = new List<string>() { "Attack", "Buff1", "Buff2", "Defence", "Dush", "Skill1", "Skill2", "Skill3" };
             return skillMotions;
+        }
+
+        public ItemEquip AddNewEquip(ItemEquip itemEquip)
+        {
+            for (int i = 0; i < _BackPackItems.Count; ++i)
+            {
+                if (string.IsNullOrEmpty(_BackPackItems[i].ItemDataID) || _BackPackItems[i].ItemDataID == "-1")
+                {
+                    _BackPackItems[i].ExchangeInfo(itemEquip);
+                    return _BackPackItems[i];
+                }
+            }
+            return null;
         }
 
         #endregion

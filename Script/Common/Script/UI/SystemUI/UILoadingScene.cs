@@ -17,7 +17,7 @@ namespace GameUI
             Hashtable hash = new Hashtable();
             hash.Add("SceneLoader", operation);
             hash.Add("SceneName", sceneName);
-            GameCore.Instance.UIManager.ShowUI("SystemUI/UILoadingScene", hash);
+            GameCore.Instance.UIManager.ShowUI("SystemUI/UILoadingScene", UILayer.BaseUI, hash);
         }
 
         public static List<EVENT_TYPE> GetShowEvent()

@@ -93,7 +93,6 @@ namespace GameUI
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            Debug.Log("OnPointerExit");
             if (_BagPack == null)
                 return;
 

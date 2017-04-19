@@ -5,12 +5,17 @@ using System;
 
 namespace GameUI
 {
+    public enum UILayer
+    {
+        BaseUI = 0,
+        MainFunUI,
+        PopUI,
+        MessageUI,
+    }
+
     public class UIConfig
     {
 
-        public static List<Type> _UIConfig = new List<Type>()
-        {
-            typeof(UILogin),
-        };
+        
     }
 }

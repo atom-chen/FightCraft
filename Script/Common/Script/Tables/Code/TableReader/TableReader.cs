@@ -30,6 +30,8 @@ namespace Tables
         public static EquipItem EquipItem { get; internal set; }
 //
         public static FightAttr FightAttr { get; internal set; }
+//
+        public static StrDictionary StrDictionary { get; internal set; }
 
         public static void ReadTables()
         {
@@ -37,11 +39,13 @@ namespace Tables
             CommonItem = new CommonItem(TableReadBase.GetTableText("CommonItem"), false);
             EquipItem = new EquipItem(TableReadBase.GetTableText("EquipItem"), false);
             FightAttr = new FightAttr(TableReadBase.GetTableText("FightAttr"), false);
+            StrDictionary = new StrDictionary(TableReadBase.GetTableText("StrDictionary"), false);
 
             //初始化所有表
             CommonItem.CoverTableContent();
             EquipItem.CoverTableContent();
             FightAttr.CoverTableContent();
+            StrDictionary.CoverTableContent();
         }
 
         #endregion

@@ -5,6 +5,16 @@ using Tables;
 
 namespace GameLogic
 {
+    public class EquipExAttr
+    {
+        [SaveField(1)]
+        public int AttrID;
+        [SaveField(2)]
+        public int AttrValue1;
+        [SaveField(3)]
+        public int AttrValue2;
+    }
+
     public class ItemBase
     {
         [SaveField(1)]
@@ -48,16 +58,24 @@ namespace GameLogic
         }
 
         [SaveField(2)]
-        public List<int> _DynamicDataInt;
+        public List<int> _DynamicDataInt = new List<int>();
 
         [SaveField(3)]
-        public List<Vector3> _DynamicDataVector;
+        public List<EquipExAttr> _DynamicDataVector = new List<EquipExAttr>();
 
         #region fun
 
-        public void ResetItem()
+        public void RefreshItemData()
         {
             _EquipItemRecord = null;
+        }
+
+        public void ResetItem()
+        {
+            _ItemDataID = "-1";
+            _EquipItemRecord = null;
+            _DynamicDataInt = new List<int>();
+            _DynamicDataVector = new List<EquipExAttr>();
         }
 
         public void ExchangeInfo(ItemBase itembase)
@@ -77,8 +95,8 @@ namespace GameLogic
             itembase._DynamicDataVector = _DynamicDataVector;
             _DynamicDataVector = tempDataVector;
 
-            itembase.ResetItem();
-            ResetItem();
+            itembase.RefreshItemData();
+            RefreshItemData();
         }
 
         #endregion

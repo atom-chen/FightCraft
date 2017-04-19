@@ -18,7 +18,7 @@ namespace GameUI
         public static void ShowAsyn()
         {
             Hashtable hash = new Hashtable();
-            GameCore.Instance.UIManager.ShowUI("SystemUI/UILogin", hash);
+            GameCore.Instance.UIManager.ShowUI("SystemUI/UILogin", UILayer.BaseUI, hash);
         }
 
         #endregion

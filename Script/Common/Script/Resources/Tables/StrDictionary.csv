@@ -1,0 +1,6 @@
+"""ID""","""Name""","""Desc""","""Value"""
+1,,Attr,Attack:{0}
+2,,Attr,HP:{0}
+3,,Attr,Defence:{0}
+4,,Attr,Equip Value:{0}
+5,,Attr,Require Level:{0}

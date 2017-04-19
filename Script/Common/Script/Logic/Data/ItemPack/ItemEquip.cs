@@ -7,20 +7,31 @@ using System;
 
 namespace GameLogic
 {
-
     public class ItemEquip : ItemBase
     {
         #region equipData
-            
+
+        public List<int> DynamicDataInt
+        {
+            get
+            {
+                if (_DynamicDataInt == null || _DynamicDataInt.Count == 0)
+                {
+                    _DynamicDataInt = new List<int>() { 0, 0, 0 };
+                }
+                return _DynamicDataInt;
+            }
+        }
+
         public int EquipLevel
         {
             get
             {
-                return _DynamicDataInt[0];
+                return DynamicDataInt[0];
             }
             set
             {
-                _DynamicDataInt[0] = value;
+                DynamicDataInt[0] = value;
             }
         }
 
@@ -28,11 +39,11 @@ namespace GameLogic
         {
             get
             {
-                return (ITEM_QUALITY)_DynamicDataInt[1];
+                return (ITEM_QUALITY)DynamicDataInt[1];
             }
             set
             {
-                _DynamicDataInt[1] = (int)value;
+                DynamicDataInt[1] = (int)value;
             }
         }
 
@@ -40,26 +51,62 @@ namespace GameLogic
         {
             get
             {
-                return _DynamicDataInt[2];
+                return DynamicDataInt[2];
             }
             set
             {
-                _DynamicDataInt[2] = value;
+                DynamicDataInt[2] = value;
             }
         }
 
+        public string GetEquipNameWithColor()
+        {
+            return CommonDefine.GetQualityColorStr(EquipQuality) + EquipItemRecord.CommonItem.Name + "</color>";
+        }
+
+        public string GetBaseAttrStr()
+        {
+            string attrStr = "";
+            if (EquipItemRecord.Slot == EQUIP_SLOT.WEAPON)
+            {
+                string attackValue = BaseAttack.ToString();
+                if (BaseAttack > EquipItemRecord.BaseAttrs[0])
+                {
+                    attackValue = CommonDefine.GetQualityColorStr(EquipQuality) + attackValue + "</color>";
+                }
+                attrStr = StrDictionary.GetFormatStr(1, attackValue);
+            }
+            else if (EquipItemRecord.Slot == EQUIP_SLOT.TORSO || EquipItemRecord.Slot == EQUIP_SLOT.LEGS)
+            {
+                string hpValue = BaseAttack.ToString();
+                if (BaseAttack > EquipItemRecord.BaseAttrs[0])
+                {
+                    hpValue = CommonDefine.GetQualityColorStr(EquipQuality) + hpValue + "</color>";
+                }
+                attrStr = StrDictionary.GetFormatStr(2, hpValue);
+
+                string defenceValue = BaseAttack.ToString();
+                if (BaseAttack > EquipItemRecord.BaseAttrs[0])
+                {
+                    defenceValue = CommonDefine.GetQualityColorStr(EquipQuality) + defenceValue + "</color>";
+                }
+                attrStr += "\n" + StrDictionary.GetFormatStr(3, defenceValue);
+            }
+            return attrStr;
+
+        }
         #endregion
 
         #region equipAttr
 
-        public Vector3 GetExAttr(int idx)
+        public EquipExAttr GetExAttr(int idx)
         {
             if (_DynamicDataVector.Count > idx)
                 return _DynamicDataVector[idx];
-            return Vector3.zero;
+            return null;
         }
 
-        public void AddExAttr(Vector3 attr)
+        public void AddExAttr(EquipExAttr attr)
         {
             _DynamicDataVector.Add(attr);
         }
@@ -68,8 +115,258 @@ namespace GameLogic
 
         #region equipBase
 
+        private int _BaseAttack = -1;
+        public int BaseAttack
+        {
+            get
+            {
+                if (_BaseAttack < 0)
+                {
+                    int exValue = 0;
+                    _BaseAttack = EquipItemRecord.BaseAttrs[0];
+                    foreach (var exAttr in _DynamicDataVector)
+                    {
+                        if (exAttr.AttrID == 3)
+                        {
+                            exValue += exAttr.AttrValue1;
+                        }
+                        else if (exAttr.AttrID == 4)
+                        {
+                            exValue += (int)(_BaseAttack * (exAttr.AttrValue1 / 100.0f));
+                        }
+                    }
+                    _BaseAttack += exValue;
+                }
+                return _BaseAttack;
+            }
+        }
 
+        private int _BaseHP = -1;
+        public int BaseHP
+        {
+            get
+            {
+                if (_BaseHP < 0)
+                {
+                    int exValue = 0;
+                    _BaseHP = EquipItemRecord.BaseAttrs[1];
+                    foreach (var exAttr in _DynamicDataVector)
+                    {
+                        if (exAttr.AttrID == 1)
+                        {
+                            exValue += exAttr.AttrValue1;
+                        }
+                        else if (exAttr.AttrID == 2)
+                        {
+                            exValue += (int)(_BaseHP * (exAttr.AttrValue1 / 100.0f));
+                        }
+                    }
+                    _BaseHP += exValue;
+                }
+                return _BaseHP;
+            }
+        }
 
+        private int _BaseDefence = -1;
+        public int BaseDefence
+        {
+            get
+            {
+                if (_BaseDefence < 0)
+                {
+                    int exValue = 0;
+                    _BaseDefence = EquipItemRecord.BaseAttrs[0];
+                    foreach (var exAttr in _DynamicDataVector)
+                    {
+                        if (exAttr.AttrID == 5)
+                        {
+                            exValue += exAttr.AttrValue1;
+                        }
+                        else if (exAttr.AttrID == 6)
+                        {
+                            exValue += (int)(_BaseDefence * (exAttr.AttrValue1 / 100.0f));
+                        }
+                    }
+                    _BaseDefence += exValue;
+                }
+                return _BaseDefence;
+            }
+        }
+
+        private int _RequireLevel = -1;
+        public int RequireLevel
+        {
+            get
+            {
+                if (_RequireLevel < 0)
+                {
+                    int exValue = 0;
+                    _RequireLevel = EquipItemRecord.LevelLimit;
+                    foreach (var exAttr in _DynamicDataVector)
+                    {
+                        if (exAttr.AttrID == 16)
+                        {
+                            exValue += exAttr.AttrValue1;
+                        }
+                    }
+                    _RequireLevel -= exValue;
+                }
+                return _RequireLevel;
+            }
+        }
+        #endregion
+
+        #region equip reset
+
+        private CommonItemRecord _ResetCostItem = null;
+        public CommonItemRecord ResetCostItem
+        {
+            get
+            {
+                if (_ResetCostItem == null)
+                {
+                    InitEquipResetCostItemData();
+                }
+                return _ResetCostItem;
+            }
+        }
+
+        private int _ResetCostItemNum = -1;
+        public int ResetCostItemNum
+        {
+            get
+            {
+                if (_ResetCostItemNum < 0)
+                {
+                    InitEquipResetCostItemData();
+                }
+                return _ResetCostItemNum;
+            }
+        }
+
+        private int _ResetCostMoney = -1;
+        public int ResetCostMoney
+        {
+            get
+            {
+                if (_ResetCostMoney < 0)
+                {
+                    InitEquipResetCostItemData();
+                }
+                return _ResetCostMoney;
+            }
+        }
+
+        private void InitEquipResetCostItemData()
+        {
+            if (EquipItemRecord.Slot == EQUIP_SLOT.WEAPON)
+            {
+                if (EquipLevel < 40)
+                {
+                    _ResetCostItem = TableReader.CommonItem.GetRecord("20000");
+                    _ResetCostItemNum = 4;
+                    _ResetCostMoney = 400;
+                }
+                else if (EquipLevel < 70)
+                {
+                    _ResetCostItem = TableReader.CommonItem.GetRecord("20001");
+                    _ResetCostItemNum = 7;
+                    _ResetCostMoney = 700;
+                }
+                else if (EquipLevel < 90)
+                {
+                    _ResetCostItem = TableReader.CommonItem.GetRecord("20002");
+                    _ResetCostItemNum = 9;
+                    _ResetCostMoney = 900;
+                }
+                else if (EquipLevel < 100)
+                {
+                    _ResetCostItem = TableReader.CommonItem.GetRecord("20003");
+                    _ResetCostItemNum = 10;
+                    _ResetCostMoney = 1000;
+                }
+                else
+                {
+                    _ResetCostItem = TableReader.CommonItem.GetRecord("20004");
+                    _ResetCostItemNum = 10;
+                    _ResetCostMoney = 1000;
+                }
+            }
+            else if (EquipItemRecord.Slot == EQUIP_SLOT.TORSO
+                || EquipItemRecord.Slot == EQUIP_SLOT.LEGS)
+            {
+                if (EquipLevel < 40)
+                {
+                    _ResetCostItem = TableReader.CommonItem.GetRecord("20005");
+                    _ResetCostItemNum = 4;
+                    _ResetCostMoney = 400;
+                }
+                else if (EquipLevel < 70)
+                {
+                    _ResetCostItem = TableReader.CommonItem.GetRecord("20006");
+                    _ResetCostItemNum = 7;
+                    _ResetCostMoney = 700;
+                }
+                else if (EquipLevel < 90)
+                {
+                    _ResetCostItem = TableReader.CommonItem.GetRecord("20007");
+                    _ResetCostItemNum = 9;
+                    _ResetCostMoney = 900;
+                }
+                else if (EquipLevel < 100)
+                {
+                    _ResetCostItem = TableReader.CommonItem.GetRecord("20008");
+                    _ResetCostItemNum = 10;
+                    _ResetCostMoney = 1000;
+                }
+                else
+                {
+                    _ResetCostItem = TableReader.CommonItem.GetRecord("20009");
+                    _ResetCostItemNum = 10;
+                    _ResetCostMoney = 1000;
+                }
+            }
+            else if (EquipItemRecord.Slot == EQUIP_SLOT.AMULET
+                || EquipItemRecord.Slot == EQUIP_SLOT.RING)
+            {
+                if (EquipLevel < 40)
+                {
+                    _ResetCostItem = TableReader.CommonItem.GetRecord("20010");
+                    _ResetCostItemNum = 4;
+                    _ResetCostMoney = 400;
+                }
+                else if (EquipLevel < 70)
+                {
+                    _ResetCostItem = TableReader.CommonItem.GetRecord("20011");
+                    _ResetCostItemNum = 7;
+                    _ResetCostMoney = 700;
+                }
+                else if (EquipLevel < 90)
+                {
+                    _ResetCostItem = TableReader.CommonItem.GetRecord("20012");
+                    _ResetCostItemNum = 9;
+                    _ResetCostMoney = 900;
+                }
+                else if (EquipLevel < 100)
+                {
+                    _ResetCostItem = TableReader.CommonItem.GetRecord("20013");
+                    _ResetCostItemNum = 10;
+                    _ResetCostMoney = 1000;
+                }
+                else
+                {
+                    _ResetCostItem = TableReader.CommonItem.GetRecord("20014");
+                    _ResetCostItemNum = 10;
+                    _ResetCostMoney = 1000;
+                }
+            }
+        }
+
+        public void ResetEquipAttr()
+        {
+            _DynamicDataVector.Clear();
+            RandomEquipAttr(this);
+        }
 
         #endregion
 
@@ -130,18 +427,18 @@ namespace GameLogic
             for (int i = 0; i < attrCnt; ++i)
             {
                 int randomIdx = UnityEngine.Random.Range(0, canGetAttrs.Count);
-                itemEquip.AddExAttr(GetRandomAttr(canGetAttrs[i], itemEquip.EquipValue));
-                RemoveRandomAttr(canGetAttrs, canGetAttrs[i]);
+                itemEquip.AddExAttr(GetRandomAttr(canGetAttrs[randomIdx], itemEquip.EquipValue));
+                RemoveRandomAttr(canGetAttrs, canGetAttrs[randomIdx]);
             }
         }
 
-        private static Vector3 GetRandomAttr(FightAttrRecord attrRecord, int value)
+        private static EquipExAttr GetRandomAttr(FightAttrRecord attrRecord, int value)
         {
-            Vector3 attrItem = new Vector3();
-            attrItem.x = int.Parse(attrRecord.Id);
+            EquipExAttr attrItem = new EquipExAttr();
+            attrItem.AttrID = int.Parse(attrRecord.Id);
 
             Vector3 attrValue = new Vector3();
-            for (int i = attrRecord.Values.Count; i >= 0; --i)
+            for (int i = attrRecord.Values.Count - 1; i >= 0; --i)
             {
                 if (attrRecord.Values[i].z > 0 && value > attrRecord.Values[i].z)
                 {
@@ -150,7 +447,7 @@ namespace GameLogic
                 }
             }
 
-            attrItem.y = UnityEngine.Random.Range(attrValue.x, attrValue.y);
+            attrItem.AttrValue1 = UnityEngine.Random.Range((int)attrValue.x, (int)attrValue.y + 1);
             return attrItem;
         }
 
@@ -202,10 +499,10 @@ namespace GameLogic
             }
             else
             {
-                singleRate = 1 / (professionEquips.Count);
+                singleRate = 1.0f / (professionEquips.Count);
             }
 
-            float randomRate = UnityEngine.Random.Range(0, 1);
+            float randomRate = UnityEngine.Random.Range(0, 1.0f);
             float rateTotal = 0;
             foreach (var equipRecord in professionEquips.Values)
             {

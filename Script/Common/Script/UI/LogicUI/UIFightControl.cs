@@ -46,29 +46,6 @@ namespace GameUI
 
         #region event
 
-        //fight
-        public void BtnFight()
-        {
-            GameCore.Instance.UIManager.ShowUI("LogicUI/UIModeSelect");
-        }
-
-        //lottery
-        public void BtnLottery()
-        {
-            GameCore.Instance.UIManager.ShowUI("LogicUI/UILottery");
-        }
-
-        //shop
-        public void BtnShop()
-        {
-            GameCore.Instance.UIManager.ShowUI("LogicUI/UIShopRes");
-        }
-
-        //mission
-        public void BtnMission()
-        {
-            //UIMissionPack.ShowAsyn();
-        }
 
         #endregion
     }

@@ -68,6 +68,13 @@ namespace GameUI
             _Icon.gameObject.SetActive(true);
         }
 
+        #region 
 
+        public override void OnItemClick()
+        {
+            base.OnItemClick();
+        }
+
+        #endregion
     }
 }

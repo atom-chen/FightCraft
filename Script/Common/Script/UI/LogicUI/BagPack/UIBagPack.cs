@@ -14,7 +14,7 @@ namespace GameUI
         public static void ShowAsyn()
         {
             Hashtable hash = new Hashtable();
-            GameCore.Instance.UIManager.ShowUI("LogicUI/BagPack/UIBagPack", hash);
+            GameCore.Instance.UIManager.ShowUI("LogicUI/BagPack/UIBagPack", UILayer.PopUI, hash);
         }
 
 
@@ -35,7 +35,16 @@ namespace GameUI
         {
             base.Show(hash);
 
+            GameCore.Instance.EventController.RegisteEvent(EVENT_TYPE.EVENT_UI_ITEMS_REFRESH, ItemRefresh);
+
             ShowPackItems();
+        }
+
+        public override void Hide()
+        {
+            base.Hide();
+
+            GameCore.Instance.EventController.UnRegisteEvent(EVENT_TYPE.EVENT_UI_ITEMS_REFRESH, ItemRefresh);
         }
 
         private void ShowPackItems()
@@ -43,8 +52,8 @@ namespace GameUI
             Hashtable exHash = new Hashtable();
             exHash.Add("UIBagPack", this);
 
-            _EquipContainer.InitContentItem(PlayerDataPack.Instance._SelectedRole._EquipList, null, exHash);
-            _ItemsContainer.InitSelectContent(PlayerDataPack.Instance._SelectedRole._BackPackItems, null, null, null, exHash);
+            _EquipContainer.InitContentItem(PlayerDataPack.Instance._SelectedRole._EquipList, ShowEquipPackTooltips, exHash);
+            _ItemsContainer.InitSelectContent(PlayerDataPack.Instance._SelectedRole._BackPackItems, null, ShowBackPackTooltips, null, exHash);
 
         }
 
@@ -52,6 +61,32 @@ namespace GameUI
         {
             _EquipContainer.RefreshItems();
             _ItemsContainer.RefreshItems();
+        }
+
+        private void ShowBackPackTooltips(object equipObj)
+        {
+            ItemEquip equipItem = equipObj as ItemEquip;
+            if (equipItem == null || !equipItem.IsVolid())
+                return;
+
+            UIEquipTooltips.ShowAsyn(equipItem, ToolTipsShowType.ShowInBackPack);
+        }
+
+        private void ShowEquipPackTooltips(object equipObj)
+        {
+            ItemEquip equipItem = equipObj as ItemEquip;
+            if (equipItem == null || !equipItem.IsVolid())
+                return;
+
+            UIEquipTooltips.ShowAsyn(equipItem, ToolTipsShowType.ShowInEquipPack);
+        }
+        #endregion
+
+        #region 
+
+        private void ItemRefresh(object sender, Hashtable args)
+        {
+            RefreshItems();
         }
 
         #endregion

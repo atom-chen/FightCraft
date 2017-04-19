@@ -17,7 +17,7 @@
     <constructRepeat>1</constructRepeat>
   </constructColumn>
   <constructColumn>
-    <constructName>名称</constructName>
+    <constructName>Name</constructName>
     <constructCode>Name</constructCode>
     <constructType1>基本类型</constructType1>
     <constructType2>
@@ -28,7 +28,7 @@
     <constructRepeat>1</constructRepeat>
   </constructColumn>
   <constructColumn>
-    <constructName>描述</constructName>
+    <constructName>Desc</constructName>
     <constructCode>Desc</constructCode>
     <constructType1>基本类型</constructType1>
     <constructType2>
@@ -63,10 +63,10 @@
     <constructCode>BaseAttrs</constructCode>
     <constructType1>基本类型</constructType1>
     <constructType2>
-      <constructType2>三元组</constructType2>
+      <constructType2>整数</constructType2>
     </constructType2>
-    <constructDefault>0;0;0</constructDefault>
-    <constructRepeat>1</constructRepeat>
+    <constructDefault>0</constructDefault>
+    <constructRepeat>2</constructRepeat>
   </constructColumn>
   <constructColumn>
     <constructName>LevelLimit</constructName>

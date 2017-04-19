@@ -16,7 +16,7 @@ namespace Tables
         public string Desc { get; set; }
         public EQUIP_SLOT Slot { get; set; }
         public EQUIP_CLASS EquipClass { get; set; }
-        public Vector3 BaseAttrs { get; set; }
+        public List<int> BaseAttrs { get; set; }
         public int LevelLimit { get; set; }
         public int ProfessionLimit { get; set; }
         public EquipItemRecord(DataRecord dataRecord)
@@ -27,6 +27,7 @@ namespace Tables
                 Id = ValueStr[0];
 
             }
+            BaseAttrs = new List<int>();
         }
         public override string[] GetRecordStr()
         {
@@ -36,7 +37,10 @@ namespace Tables
             recordStrList.Add(TableWriteBase.GetWriteStr(Desc));
             recordStrList.Add(((int)Slot).ToString());
             recordStrList.Add(((int)EquipClass).ToString());
-            recordStrList.Add(TableWriteBase.GetWriteStr(BaseAttrs));
+            foreach (var testTableItem in BaseAttrs)
+            {
+                recordStrList.Add(TableWriteBase.GetWriteStr(testTableItem));
+            }
             recordStrList.Add(TableWriteBase.GetWriteStr(LevelLimit));
             recordStrList.Add(TableWriteBase.GetWriteStr(ProfessionLimit));
 
@@ -106,9 +110,10 @@ namespace Tables
                 pair.Value.Desc = TableReadBase.ParseString(pair.Value.ValueStr[2]);
                 pair.Value.Slot =  (EQUIP_SLOT)TableReadBase.ParseInt(pair.Value.ValueStr[3]);
                 pair.Value.EquipClass =  (EQUIP_CLASS)TableReadBase.ParseInt(pair.Value.ValueStr[4]);
-                pair.Value.BaseAttrs = TableReadBase.ParseVector3(pair.Value.ValueStr[5]);
-                pair.Value.LevelLimit = TableReadBase.ParseInt(pair.Value.ValueStr[6]);
-                pair.Value.ProfessionLimit = TableReadBase.ParseInt(pair.Value.ValueStr[7]);
+                pair.Value.BaseAttrs.Add(TableReadBase.ParseInt(pair.Value.ValueStr[5]));
+                pair.Value.BaseAttrs.Add(TableReadBase.ParseInt(pair.Value.ValueStr[6]));
+                pair.Value.LevelLimit = TableReadBase.ParseInt(pair.Value.ValueStr[7]);
+                pair.Value.ProfessionLimit = TableReadBase.ParseInt(pair.Value.ValueStr[8]);
             }
         }
     }

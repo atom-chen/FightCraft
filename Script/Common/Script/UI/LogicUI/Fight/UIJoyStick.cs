@@ -16,7 +16,7 @@ namespace GameUI
         public static void ShowAsyn()
         {
             Hashtable hash = new Hashtable();
-            GameCore.Instance.UIManager.ShowUI("LogicUI/Fight/UIJoyStick", hash);
+            GameCore.Instance.UIManager.ShowUI("LogicUI/Fight/UIJoyStick", UILayer.BaseUI, hash);
         }
 
         #endregion

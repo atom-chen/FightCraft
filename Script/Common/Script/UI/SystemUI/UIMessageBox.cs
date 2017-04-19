@@ -24,7 +24,7 @@ namespace GameUI
             hash.Add("OkAction", (Action)okAction);
             hash.Add("BtnType", btnType);
             //GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_UI_SHOW_MESSAGEBOX, null, hash);
-            GameCore.Instance.UIManager.ShowUI("SystemUI/UIMessageBox", hash);
+            GameCore.Instance.UIManager.ShowUI("SystemUI/UIMessageBox", UILayer.MessageUI, hash);
         }
 
         #endregion
