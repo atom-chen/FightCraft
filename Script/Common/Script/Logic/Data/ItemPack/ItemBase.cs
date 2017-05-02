@@ -8,7 +8,7 @@ namespace GameLogic
     public class EquipExAttr
     {
         [SaveField(1)]
-        public int AttrID;
+        public FightAttr.FightAttrType AttrID;
         [SaveField(2)]
         public int AttrValue1;
         [SaveField(3)]

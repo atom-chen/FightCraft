@@ -55,8 +55,8 @@ namespace GameUI
         //fight
         public void BtnFight()
         {
-            //GameCore.Instance.UIManager.ShowUI("LogicUI/UIModeSelect");
-            LogicManager.Instance.EnterFight("Stage_01_01");
+            UIStageSelect.ShowAsyn();
+            //LogicManager.Instance.EnterFight("Stage_01_01");
         }
 
         public void BtnBagPack()

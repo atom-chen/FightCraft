@@ -95,6 +95,7 @@ public class EffectController : MonoBehaviour
     #region element color
 
     private ParticleSystem[] _EffectElements;
+    private ElementType _LastElementType;
 
     public ParticleSystem[] EffectElements
     {
@@ -116,6 +117,10 @@ public class EffectController : MonoBehaviour
 
     public void SetEffectColor(ElementType elementType)
     {
+        if (_LastElementType == elementType)
+            return;
+        _LastElementType = elementType;
+
         var startColor = ResourceConfig.Instance._ElementColor[(int)elementType];
 
         foreach (var particle in EffectElements)

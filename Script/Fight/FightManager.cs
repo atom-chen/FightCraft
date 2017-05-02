@@ -66,12 +66,12 @@ public class FightManager : SingleClass<FightManager>
         string mainBaseName = PlayerDataPack.Instance._SelectedRole.MainBaseName;
         string modelName = PlayerDataPack.Instance._SelectedRole.ModelName;
         string weaponName = PlayerDataPack.Instance._SelectedRole.GetWeaponModelName();
-        List<string> skillMotions = new List<string>() { "Attack", "Buff1", "Buff2", "Defence", "Dush", "Skill1", "Skill2", "Skill3" };
 
         var mainBase = GameBase.ResourceManager.Instance.GetInstanceGameObject("ModelBase/" + mainBaseName);
         _MainChatMotion = mainBase.GetComponent<MotionManager>();
         mainBase.transform.position = _FightScene._MainCharBornPos.position;
         mainBase.transform.rotation = _FightScene._MainCharBornPos.rotation;
+        _MainChatMotion.InitRoleAttr(null);
 
         var model = GameBase.ResourceManager.Instance.GetInstanceGameObject("Model/" + modelName);
         model.transform.SetParent(mainBase.transform);
@@ -89,11 +89,40 @@ public class FightManager : SingleClass<FightManager>
         {
             GameObject.Destroy(oldWeaponChild.gameObject);
         }
-
-        
         GameObject.Destroy(weapon.gameObject);
 
+        PlayerDataPack.Instance._SelectedRole.InitExAttrs();
         var motionTran = mainBase.transform.FindChild("Motion");
+        List<string> skillMotions = new List<string>() { "Attack", "Buff1", "Buff2", "Skill1", "Skill2", "Skill3" };
+        if (PlayerDataPack.Instance._SelectedRole.Profession == Tables.PROFESSION.BOY_DEFENCE)
+        {
+            skillMotions.Add("Defence");
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.PRO1_SPECIL_SKILL1))
+            {
+                skillMotions.Remove("Skill1");
+                skillMotions.Add("");
+            }
+        }
+        if (PlayerDataPack.Instance._SelectedRole.Profession == Tables.PROFESSION.GIRL_DOUGE)
+        {
+            skillMotions.Add("Dush");
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.PRO2_SPECIL_SKILL1))
+            {
+                skillMotions.Remove("Skill1");
+                skillMotions.Add("Skill1Muti");
+            }
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.PRO2_SPECIL_SKILL2))
+            {
+                skillMotions.Remove("Skill2");
+                skillMotions.Add("Skill2AvataMuti");
+            }
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.PRO2_SPECIL_SKILL3))
+            {
+                skillMotions.Remove("Skill3");
+                skillMotions.Add("Skill3Assembly");
+            }
+        }
+
         foreach (var skillMotion in skillMotions)
         {
             var motionObj = GameBase.ResourceManager.Instance.GetInstanceGameObject("SkillMotion/" + mainBaseName + "/" + skillMotion);
@@ -102,24 +131,246 @@ public class FightManager : SingleClass<FightManager>
                 motionObj.transform.SetParent(motionTran);
                 motionObj.transform.localPosition = Vector3.zero;
                 motionObj.SetActive(true);
+                var skillBase = motionObj.GetComponent<ObjMotionSkillBase>();
+                if (skillBase == null)
+                    continue;
+
+                SetSkillElement(skillMotion, skillBase);
             }
+        }
+
+        GameUI.UIHPPanel.ShowHPItem(_MainChatMotion);
+    }
+
+    private void SetSkillElement(string skillName, ObjMotionSkillBase skillBase)
+    {
+        if (skillName.Contains("Skill1"))
+        {
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL1_FIRE_DAMAGE))
+            {
+                skillBase.SetEffectElement(ElementType.Fire);
+                skillBase.SetHitEffectElement(ElementType.Fire);
+            }
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL1_COLD_BUFF1)
+                || PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL1_COLD_BUFF2))
+            {
+                skillBase.SetHitEffectElement(ElementType.Fire);
+            }
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL1_FIRE_SPECIL))
+            {
+                skillBase.SetImpactElement(ElementType.Fire);
+            }
+
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL1_COLD_DAMAGE))
+            {
+                skillBase.SetEffectElement(ElementType.Cold);
+                skillBase.SetHitEffectElement(ElementType.Cold);
+            }
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL1_COLD_BUFF1)
+                || PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL1_COLD_BUFF2))
+            {
+                skillBase.SetHitEffectElement(ElementType.Cold);
+            }
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL1_COLD_SPECIL))
+            {
+                skillBase.SetImpactElement(ElementType.Cold);
+            }
+
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL1_LIGHTING_DAMAGE))
+            {
+                skillBase.SetEffectElement(ElementType.Lighting);
+                skillBase.SetHitEffectElement(ElementType.Lighting);
+            }
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL1_COLD_BUFF1)
+                || PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL1_COLD_BUFF2))
+            {
+                skillBase.SetHitEffectElement(ElementType.Lighting);
+            }
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL1_LIGHTING_SPECIL))
+            {
+                skillBase.SetImpactElement(ElementType.Lighting);
+            }
+
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL1_WIND_DAMAGE))
+            {
+                skillBase.SetEffectElement(ElementType.Wind);
+                skillBase.SetHitEffectElement(ElementType.Wind);
+            }
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL1_COLD_BUFF1)
+                || PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL1_COLD_BUFF2))
+            {
+                skillBase.SetHitEffectElement(ElementType.Wind);
+            }
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL1_WIND_SPECIL))
+            {
+                skillBase.SetImpactElement(ElementType.Wind);
+            }
+        }
+        else if (skillName.Contains("Skill2"))
+        {
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL2_FIRE_DAMAGE))
+            {
+                skillBase.SetEffectElement(ElementType.Fire);
+                skillBase.SetHitEffectElement(ElementType.Fire);
+            }
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL2_COLD_BUFF1)
+                || PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL2_COLD_BUFF2))
+            {
+                skillBase.SetHitEffectElement(ElementType.Fire);
+            }
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL2_FIRE_SPECIL))
+            {
+                skillBase.SetImpactElement(ElementType.Fire);
+            }
+
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL2_COLD_DAMAGE))
+            {
+                skillBase.SetEffectElement(ElementType.Cold);
+                skillBase.SetHitEffectElement(ElementType.Cold);
+            }
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL2_COLD_BUFF1)
+                || PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL2_COLD_BUFF2))
+            {
+                skillBase.SetHitEffectElement(ElementType.Cold);
+            }
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL2_COLD_SPECIL))
+            {
+                skillBase.SetImpactElement(ElementType.Cold);
+            }
+
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL2_LIGHTING_DAMAGE))
+            {
+                skillBase.SetEffectElement(ElementType.Lighting);
+                skillBase.SetHitEffectElement(ElementType.Lighting);
+            }
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL2_COLD_BUFF1)
+                || PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL2_COLD_BUFF2))
+            {
+                skillBase.SetHitEffectElement(ElementType.Lighting);
+            }
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL2_LIGHTING_SPECIL))
+            {
+                skillBase.SetImpactElement(ElementType.Lighting);
+            }
+
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL2_WIND_DAMAGE))
+            {
+                skillBase.SetEffectElement(ElementType.Wind);
+                skillBase.SetHitEffectElement(ElementType.Wind);
+            }
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL2_COLD_BUFF1)
+                || PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL2_COLD_BUFF2))
+            {
+                skillBase.SetHitEffectElement(ElementType.Wind);
+            }
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL2_WIND_SPECIL))
+            {
+                skillBase.SetImpactElement(ElementType.Wind);
+            }
+        }
+        else if (skillName.Contains("Skill3"))
+        {
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL3_FIRE_DAMAGE))
+            {
+                skillBase.SetEffectElement(ElementType.Fire);
+                skillBase.SetHitEffectElement(ElementType.Fire);
+            }
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL3_COLD_BUFF1)
+                || PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL3_COLD_BUFF2))
+            {
+                skillBase.SetHitEffectElement(ElementType.Fire);
+            }
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL3_FIRE_SPECIL))
+            {
+                skillBase.SetImpactElement(ElementType.Fire);
+            }
+
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL3_COLD_DAMAGE))
+            {
+                skillBase.SetEffectElement(ElementType.Cold);
+                skillBase.SetHitEffectElement(ElementType.Cold);
+            }
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL3_COLD_BUFF1)
+                || PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL3_COLD_BUFF2))
+            {
+                skillBase.SetHitEffectElement(ElementType.Cold);
+            }
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL3_COLD_SPECIL))
+            {
+                skillBase.SetImpactElement(ElementType.Cold);
+            }
+
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL3_LIGHTING_DAMAGE))
+            {
+                skillBase.SetEffectElement(ElementType.Lighting);
+                skillBase.SetHitEffectElement(ElementType.Lighting);
+            }
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL3_COLD_BUFF1)
+                || PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL3_COLD_BUFF2))
+            {
+                skillBase.SetHitEffectElement(ElementType.Lighting);
+            }
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL3_LIGHTING_SPECIL))
+            {
+                skillBase.SetImpactElement(ElementType.Lighting);
+            }
+
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL3_WIND_DAMAGE))
+            {
+                skillBase.SetEffectElement(ElementType.Wind);
+                skillBase.SetHitEffectElement(ElementType.Wind);
+            }
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL3_COLD_BUFF1)
+                || PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL3_COLD_BUFF2))
+            {
+                skillBase.SetHitEffectElement(ElementType.Wind);
+            }
+            if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.SKILL3_WIND_SPECIL))
+            {
+                skillBase.SetImpactElement(ElementType.Wind);
+            }
+        }
+
+    }
+
+    #endregion
+
+    #region scene obj
+
+    private int _SceneEnemyCnt = 0;
+    public int SceneEnemyCnt
+    {
+        get
+        {
+            return _SceneEnemyCnt;
         }
     }
 
-    public void InitEnemy(string modelBase, Vector3 pos, Vector3 rot)
+    public void InitEnemy(string monsterID, Vector3 pos, Vector3 rot)
     {
-        var mainBase = ResourcePool.Instance.GetIdleMotion(modelBase);
+        var monsterBase = Tables.TableReader.MonsterBase.GetRecord(monsterID);
+        if (monsterBase == null)
+            return;
+
+        var mainBase = ResourcePool.Instance.GetIdleMotion(monsterBase.Model);
         mainBase.SetPosition(pos);
         mainBase.SetRotate(rot);
-
+        GameUI.UIHPPanel.ShowHPItem(mainBase);
         AI_Base aiBase = mainBase.GetComponent<AI_Base>();
-        
+
+        mainBase.InitRoleAttr(monsterBase);
+
+        ++_SceneEnemyCnt;
     }
 
     public void ObjDie(MotionManager objMotion)
     {
         ResourcePool.Instance.RecvIldeMotion(objMotion);
         _FightScene.MotionDie(objMotion);
+
+        --_SceneEnemyCnt;
+
+        MonsterDrop.MonsterDripItems(objMotion);
     }
 
     #endregion
@@ -150,6 +401,19 @@ public class FightManager : SingleClass<FightManager>
     {
         Debug.Log("LogicFinish");
         GameLogic.LogicManager.Instance.ExitFight();
+    }
+
+    #endregion
+
+    #region combo
+
+    private int _Combo = 0;
+    public int Combo
+    {
+        get
+        {
+            return _Combo;
+        }
     }
 
     #endregion

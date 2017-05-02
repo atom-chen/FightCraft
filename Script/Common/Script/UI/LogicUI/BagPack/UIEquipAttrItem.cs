@@ -41,7 +41,7 @@ namespace GameUI
 
             _ShowAttr = attr;
 
-            var attrTab = TableReader.FightAttr.GetRecord(_ShowAttr.AttrID.ToString());
+            var attrTab = TableReader.FightAttr.GetRecord(((int)_ShowAttr.AttrID).ToString());
             string attrStr = string.Format(attrTab.ShowTip, attr.AttrValue1);
             if (_ItemEquip != null)
             {

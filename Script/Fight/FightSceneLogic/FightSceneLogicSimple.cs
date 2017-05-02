@@ -51,7 +51,7 @@ public class FightSceneLogicSimple : FightSceneLogicBase
     #region enemy step
 
     public Transform[] _EnemyBornPos;
-    public string _EnemyMotionName;
+    public string _EnemyMotionID;
     public int _KillEnemyCnt = 20;
     public int _FightingEnemyCnt = 6;
 
@@ -100,7 +100,7 @@ public class FightSceneLogicSimple : FightSceneLogicBase
             _InitPosIdx = 0;
         }
 
-        FightManager.Instance.InitEnemy(_EnemyMotionName, _EnemyBornPos[_InitPosIdx].position, _EnemyBornPos[_InitPosIdx].rotation.eulerAngles);
+        FightManager.Instance.InitEnemy(_EnemyMotionID, _EnemyBornPos[_InitPosIdx].position, _EnemyBornPos[_InitPosIdx].rotation.eulerAngles);
         ++_InitPosIdx;
         ++_CurEnemyCnt;
     }
@@ -110,7 +110,7 @@ public class FightSceneLogicSimple : FightSceneLogicBase
     #region boss
 
     public Transform _BossBornPos;
-    public string _BossMotionName;
+    public string _BossMotionID;
     public int _BossStepEnemyCnt = 2;
     public float _BossStepEnemyInterval = 10;
 
@@ -129,7 +129,7 @@ public class FightSceneLogicSimple : FightSceneLogicBase
 
     private void StartStep1()
     {
-        FightManager.Instance.InitEnemy(_BossMotionName, _BossBornPos.position, _BossBornPos.rotation.eulerAngles);
+        FightManager.Instance.InitEnemy(_BossMotionID, _BossBornPos.position, _BossBornPos.rotation.eulerAngles);
         _CreateEnemyTimeCD = _BossStepEnemyInterval;
         _CurEnemyCnt1 = 0;
     }
@@ -138,7 +138,7 @@ public class FightSceneLogicSimple : FightSceneLogicBase
     private void BossStepCreateEnemy()
     {
         int initPosIdx = Random.Range(0, _EnemyBornPos.Length);
-        FightManager.Instance.InitEnemy(_EnemyMotionName, _EnemyBornPos[initPosIdx].position, _EnemyBornPos[initPosIdx].rotation.eulerAngles);
+        FightManager.Instance.InitEnemy(_EnemyMotionID, _EnemyBornPos[initPosIdx].position, _EnemyBornPos[initPosIdx].rotation.eulerAngles);
         ++_CurEnemyCnt1;
     }
 

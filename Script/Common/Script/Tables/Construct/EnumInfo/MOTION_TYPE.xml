@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <enumColumn>
+    <enumName>
+    </enumName>
+    <enumCode>MainChar</enumCode>
+    <enumValue>0</enumValue>
+    <enumDesc>枚举必须保留0值</enumDesc>
+  </enumColumn>
+  <enumColumn>
+    <enumName>
+    </enumName>
+    <enumCode>Hero</enumCode>
+    <enumValue>1</enumValue>
+    <enumDesc>
+    </enumDesc>
+  </enumColumn>
+  <enumColumn>
+    <enumName>
+    </enumName>
+    <enumCode>Elite</enumCode>
+    <enumValue>2</enumValue>
+    <enumDesc>
+    </enumDesc>
+  </enumColumn>
+  <enumColumn>
+    <enumName>
+    </enumName>
+    <enumCode>Normal</enumCode>
+    <enumValue>3</enumValue>
+    <enumDesc>
+    </enumDesc>
+  </enumColumn>
+</root>

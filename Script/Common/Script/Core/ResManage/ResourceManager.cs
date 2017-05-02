@@ -190,6 +190,11 @@ namespace GameBase
             }
             return resource;
         }
+
+        public void DestoryObj(GameObject obj)
+        {
+            GameObject.Destroy(obj);
+        }
         #endregion
     }
 }

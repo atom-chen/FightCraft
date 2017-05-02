@@ -217,7 +217,7 @@ public class MotionManager : MonoBehaviour
         foreach (var skill in skillList)
         {
             _SkillMotions.Add(skill._ActInput, skill);
-            skill.SetImpactElement(ElementType.Cold);
+            //skill.SetImpactElement(ElementType.Cold);
             skill.Init();
         }
     }
@@ -264,6 +264,8 @@ public class MotionManager : MonoBehaviour
 
     #region roleAttr
 
+    private Tables.MonsterBaseRecord _MonsterBase;
+
     private bool _IsMotionDie = false;
     public bool IsMotionDie
     {
@@ -282,6 +284,11 @@ public class MotionManager : MonoBehaviour
         }
     }
 
+    public void InitRoleAttr(Tables.MonsterBaseRecord monsterBase)
+    {
+        _MonsterBase = monsterBase;
+    }
+
     private void InitRoleAttr()
     {
         _IsMotionDie = false;
@@ -292,7 +299,12 @@ public class MotionManager : MonoBehaviour
         }
         _RoleAttrManager._MotionManager = this;
 
-        _RoleAttrManager.InitAttrByLevel(1);
+        if (_IsRoleHit)
+            _RoleAttrManager.InitMainRoleAttr();
+        else if (_MonsterBase != null)
+            _RoleAttrManager.InitEnemyAttr(_MonsterBase);
+        else
+            Debug.LogError("MonsterBase is Null");
     }
 
     public void MotionDie()
@@ -375,8 +387,9 @@ public class MotionManager : MonoBehaviour
 
     private Dictionary<string, EffectController> _SkillEffects = new Dictionary<string, EffectController>();
     private Dictionary<string, Transform> _BindTransform = new Dictionary<string, Transform>();
+    private EffectController _PlayingEffect;
 
-    public void PlaySkillEffect(EffectController effect)
+    public void PlaySkillEffect(EffectController effect, ElementType elementType = ElementType.None)
     {
         if (!_SkillEffects.ContainsKey(effect.name))
         {
@@ -387,8 +400,9 @@ public class MotionManager : MonoBehaviour
             CopyComponent(effect, idleEffect);
             _SkillEffects.Add(effect.name, idleEffect);
         }
-        _SkillEffects[effect.name].SetEffectColor(ElementType.Wind);
-        _SkillEffects[effect.name].PlayEffect(RoleAttrManager.SkillSpeed);
+        _PlayingEffect = _SkillEffects[effect.name];
+        _PlayingEffect.SetEffectColor(elementType);
+        _PlayingEffect.PlayEffect(RoleAttrManager.SkillSpeed);
     }
 
     public void StopSkillEffect(EffectController effect)
@@ -399,21 +413,30 @@ public class MotionManager : MonoBehaviour
         }
     }
 
+    public void StopSkillEffect()
+    {
+        StopSkillEffect(_PlayingEffect);
+    }
+
     public void PauseSkillEffect()
     {
-        foreach (var skillEffect in _SkillEffects)
-        {
-            skillEffect.Value.PauseEffect();
-        }
+        _PlayingEffect.PauseEffect();
+        //foreach (var skillEffect in _SkillEffects)
+        //{
+        //    skillEffect.Value.PauseEffect();
+        //}
     }
 
     public void ResumeSkillEffect()
     {
-        foreach (var skillEffect in _SkillEffects)
-        {
-            skillEffect.Value.ResumeEffect();
-        }
+        _PlayingEffect.ResumeEffect();
+        //foreach (var skillEffect in _SkillEffects)
+        //{
+        //    skillEffect.Value.ResumeEffect();
+        //}
     }
+
+
 
     public Transform GetBindTransform(string bindName)
     {

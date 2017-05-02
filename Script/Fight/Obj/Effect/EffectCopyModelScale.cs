@@ -13,15 +13,14 @@ public class EffectCopyModelScale : EffectCopyModel
     protected override void InitMesh()
     {
         List<SkinnedMeshRenderer> weaponMesh = new List<SkinnedMeshRenderer>();
-        if ((_MeshRenderers != null && _MeshRenderers.Length == 0) || (SkinnedRenderers != null && SkinnedRenderers.Length == 0))
+        if ((SkinnedRenderers == null || SkinnedRenderers.Length == 0))
         {
             _ParentMotion = gameObject.GetComponentInParent<MotionManager>();
-            //_MeshRenderers = motion.GetComponentsInChildren<MeshRenderer>();
             var skinnedMeshes = _ParentMotion.GetComponentsInChildren<SkinnedMeshRenderer>();
             foreach (var skinnedMesh in skinnedMeshes)
             {
                 if (skinnedMesh.name.Contains("Weapon"))
-                {
+                { 
                     weaponMesh.Add(skinnedMesh);
                 }
             }

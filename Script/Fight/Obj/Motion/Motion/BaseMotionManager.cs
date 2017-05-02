@@ -340,7 +340,7 @@ public class BaseMotionManager : MonoBehaviour
 
     private const float _UpSpeed = 20;
     private const float _DownSpeed = 15;
-    private const float _LieTimeStatic = 1;
+    private const float _LieTimeStatic = 0.5f;
 
     public AnimationClip _FlyAnim;
 
@@ -398,11 +398,19 @@ public class BaseMotionManager : MonoBehaviour
         }
         else if (_LieTime > 0)
         {
-            _LieTime -= Time.fixedDeltaTime;
-            if (_LieTime <= 0)
+            if (_MotionManager.IsMotionDie)
             {
-                if(_MotionManager.MotionPrior == FLY_PRIOR)
-                    MotionRise();
+                _MotionManager.MotionPrior = DIE_PRIOR;
+                StartCoroutine(BodyDisappear());
+            }
+            else
+            {
+                _LieTime -= Time.fixedDeltaTime;
+                if (_LieTime <= 0)
+                {
+                    if (_MotionManager.MotionPrior == FLY_PRIOR)
+                        MotionRise();
+                }
             }
         }
     }
@@ -412,16 +420,10 @@ public class BaseMotionManager : MonoBehaviour
     #region rise
 
     public AnimationClip _RiseAnim;
-    public float _BodyDisappearTime = 1.0f;
+    public float _BodyDisappearTime = 0f;
 
     private void MotionRise()
     {
-        if (_MotionManager.IsMotionDie)
-        {
-            _MotionManager.MotionPrior = DIE_PRIOR;
-            StartCoroutine(BodyDisappear());
-            return;
-        }
         _MotionManager.MotionPrior = RISE_PRIOR;
         _MotionManager.PlayAnimation(_RiseAnim);
         _MotionManager.EventController.PushEvent(GameBase.EVENT_TYPE.EVENT_MOTION_RISE, this, new Hashtable());

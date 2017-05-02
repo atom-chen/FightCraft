@@ -63,7 +63,7 @@ public class ObjMotionSkillBase : MonoBehaviour
         if(_Anim != null)
             _MotionManager.PlayAnimation(_Anim);
         if(_Effect != null)
-            _MotionManager.PlaySkillEffect(_Effect);
+            PlaySkillEffect(_Effect);
 
         this.enabled = true;
         return true;
@@ -131,6 +131,16 @@ public class ObjMotionSkillBase : MonoBehaviour
         }
     }
 
+    protected void PlaySkillEffect(EffectController effect)
+    {
+        _MotionManager.PlaySkillEffect(effect, _EffectElement);
+    }
+
+    protected void StopSkillEffect(EffectController effect)
+    {
+        _MotionManager.StopSkillEffect(effect);
+    }
+
     #region element
 
     private static string _EleImpactBaseStr = "EleImpact";
@@ -140,8 +150,13 @@ public class ObjMotionSkillBase : MonoBehaviour
     private static string _EleImpactWindStr = "EleImpactWind";
 
     private string _CurEleImpact = "";
+    private ElementType _ImpactElement;
+    private ElementType _EffectElement;
+    private ElementType _HitElement;
+
     public void SetImpactElement(ElementType eleType)
     {
+        _ImpactElement = eleType;
         _CurEleImpact = "";
         switch (eleType)
         {
@@ -158,6 +173,16 @@ public class ObjMotionSkillBase : MonoBehaviour
                 _CurEleImpact = _EleImpactWindStr;
                 break;
         }
+    }
+
+    public void SetEffectElement(ElementType eleType)
+    {
+        _EffectElement = eleType;
+    }
+
+    public void SetHitEffectElement(ElementType eleType)
+    {
+        _HitElement = eleType;
     }
 
     private bool IsColliderCanAct(string colliderName)

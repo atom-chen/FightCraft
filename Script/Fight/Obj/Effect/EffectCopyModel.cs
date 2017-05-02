@@ -9,7 +9,6 @@ public class EffectCopyModel : EffectController
     public float _MoveSpeed = 30;
     public Material _Material;
 
-    protected MeshRenderer[] _MeshRenderers;
     protected SkinnedMeshRenderer[] SkinnedRenderers;
 
     protected List<GameObject> _BakedMeshes = new List<GameObject>();
@@ -45,10 +44,9 @@ public class EffectCopyModel : EffectController
 
     protected virtual void InitMesh()
     {
-        if ((_MeshRenderers != null && _MeshRenderers.Length == 0) || (SkinnedRenderers != null && SkinnedRenderers.Length == 0))
+        if ((SkinnedRenderers == null || SkinnedRenderers.Length == 0))
         {
             var motion = gameObject.GetComponentInParent<MotionManager>();
-            //_MeshRenderers = motion.GetComponentsInChildren<MeshRenderer>();
             SkinnedRenderers = motion.GetComponentsInChildren<SkinnedMeshRenderer>();
         }
     }
@@ -59,13 +57,7 @@ public class EffectCopyModel : EffectController
         var materials = new List<Mesh>();
 
         Transform t = transform;
-        
-        for (int i = 0; i < _MeshRenderers.Length; ++i)
-        {
-            var item = _MeshRenderers[i];
-            var mesh = GameObject.Instantiate<Mesh>(item.GetComponent<MeshFilter>().mesh);
-            BakeMesh(mesh, item.gameObject);
-        }
+
         for (int i = 0; i < SkinnedRenderers.Length; ++i)
         {
             var item = SkinnedRenderers[i];

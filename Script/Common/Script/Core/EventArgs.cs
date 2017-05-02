@@ -38,6 +38,11 @@ namespace GameBase
         EVENT_UI_BACK_MAIN,
 
         EVENT_UI_ITEMS_REFRESH,
+        EVENT_UI_SHOW_HP_ITEM,
+        EVENT_UI_HIDE_HP_ITEM,
+
+        EVENT_UI_SHOW_DROP_ITEM,
+        EVENT_UI_HIDE_DROP_ITEM,
 
         EVENT_UI_SHOW_MESSAGEBOX,
 

@@ -63,7 +63,7 @@ public class ObjMotionSkillMixAnim : ObjMotionSkillBase
         PlayerNextAnim();
 
         if(_Effect != null)
-            _MotionManager.PlaySkillEffect(_Effect);
+            PlaySkillEffect(_Effect);
 
         return true;
     }
@@ -81,12 +81,12 @@ public class ObjMotionSkillMixAnim : ObjMotionSkillBase
 
             if (_CurStep - 1 >= 0 && _NextEffect[_CurStep - 1] != null)
             {
-                _MotionManager.StopSkillEffect(_NextEffect[_CurStep - 1]);
+                StopSkillEffect(_NextEffect[_CurStep - 1]);
             }
 
             if (_NextEffect.Length > _CurStep && _NextEffect[_CurStep] != null)
             {
-                _MotionManager.PlaySkillEffect(_NextEffect[_CurStep]);
+                PlaySkillEffect(_NextEffect[_CurStep]);
             }
 
         }

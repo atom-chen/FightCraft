@@ -102,6 +102,7 @@ namespace GameUI
                     rectTransform.anchorMin = Vector2.zero;
                     rectTransform.anchorMax = Vector2.one;
                     rectTransform.pivot = new Vector2(0.5f, 0.5f);
+                    rectTransform.localScale = Vector3.one;
                     _UILayers.Add(uilayer, rectTransform);
                 }
                 var obj = InitUI(uiPath);
@@ -215,6 +216,24 @@ namespace GameUI
                 }
             }
             _RayCasting = false;
+        }
+
+        #endregion
+
+        #region cameraPos
+
+        private RectTransform _UICanvasRect;
+
+        public Vector3 WorldToScreenPoint(Vector3 worldPos)
+        {
+            if (_UICanvasRect == null)
+            {
+                _UICanvasRect = gameObject.GetComponent<RectTransform>();
+            }
+
+            Vector3 screenPos = Camera.main.WorldToViewportPoint(worldPos);//1024
+            //screenPos -= new Vector3(0.5f, 0.5f, 0.5f);
+            return new Vector3(screenPos.x * _UICanvasRect.sizeDelta.x, screenPos.y * _UICanvasRect.sizeDelta.y, screenPos.z * 1);
         }
 
         #endregion

@@ -35,6 +35,15 @@ namespace Tables
     }
 
     //
+    public enum MOTION_TYPE
+    {
+        MainChar = 0, //,枚举必须保留0值
+        Hero = 1, //,
+        Elite = 2, //,
+        Normal = 3, //,
+    }
+
+    //
     public enum PROFESSION
     {
         BOY_DEFENCE = 0, //,枚举必须保留0值

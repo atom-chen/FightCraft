@@ -124,6 +124,54 @@ namespace GameLogic
         [SaveField(4)]
         public int _CurExp;
 
+        public int GetBaseMoveSpeed()
+        {
+            return 1;
+        }
+
+        public int GetBaseAttackSpeed()
+        {
+            return 1;
+        }
+
+        public int GetBaseAttack()
+        {
+            return _Level * 10 + 10;
+        }
+
+        public int GetBaseHP()
+        {
+            return _Level * 100 + 100;
+        }
+
+        public int GetBaseDefence()
+        {
+            return _Level * 5 + 5;
+        }
+
+        //exAttr
+        public Dictionary<FightAttr.FightAttrType, int> _ExAttrs = new Dictionary<FightAttr.FightAttrType, int>();
+
+        public void InitExAttrs()
+        {
+            foreach (var equip in _EquipList)
+            {
+                if (!equip.IsVolid())
+                    continue;
+
+                foreach (var exAttr in equip._DynamicDataVector)
+                {
+                    if (_ExAttrs.ContainsKey(exAttr.AttrID))
+                    {
+                        _ExAttrs[exAttr.AttrID] += exAttr.AttrValue1;
+                    }
+                    else
+                    {
+                        _ExAttrs.Add(exAttr.AttrID, exAttr.AttrValue1);
+                    }
+                }
+            }
+        } 
         #endregion
     }
 }

@@ -126,12 +126,12 @@ public class ObjMotionSkillAttack : ObjMotionSkillBase
             _SkillLastTime = _NextAnim[_CurStep].length;
             if (_NextEffect.Length > _CurStep && _NextEffect[_CurStep] != null)
             {
-                _MotionManager.PlaySkillEffect(_NextEffect[_CurStep]);
+                PlaySkillEffect(_NextEffect[_CurStep]);
             }
 
             if (_CurStep - 1 >= 0 && _NextEffect[_CurStep - 1] != null)
             {
-                _MotionManager.StopSkillEffect(_NextEffect[_CurStep - 1]);
+                StopSkillEffect(_NextEffect[_CurStep - 1]);
             }
 
             _CanNextInput = false;

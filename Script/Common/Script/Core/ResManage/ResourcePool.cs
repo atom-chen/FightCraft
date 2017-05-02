@@ -166,4 +166,46 @@ public class ResourcePool : InstanceBase<ResourcePool>
 
     #endregion
 
+    #region ui
+
+    private Dictionary<string, Stack<UIItemBase>> _IdleUIItems = new Dictionary<string, Stack<UIItemBase>>();
+
+    public T GetIdleUIItem<T>(UIItemBase itemPrefab)
+    {
+        UIItemBase idleItem = null;
+        if (_IdleUIItems.ContainsKey(itemPrefab.name))
+        {
+            if (_IdleUIItems[itemPrefab.name].Count > 0)
+            {
+                idleItem = _IdleUIItems[itemPrefab.name].Pop();
+            }
+        }
+
+        if (idleItem == null)
+        {
+            idleItem = GameObject.Instantiate<UIItemBase>(itemPrefab);
+        }
+
+        return idleItem.GetComponent<T>();
+    }
+
+    public void RecvIldeUIItem(UIItemBase itemBase)
+    {
+        string itemName = itemBase.name.Replace("(Clone)", "");
+        if (!_IdleUIItems.ContainsKey(itemName))
+        {
+            _IdleUIItems.Add(itemName, new Stack<UIItemBase>());
+        }
+        itemBase.gameObject.SetActive(false);
+        //itemBase.transform.SetParent(transform);
+        _IdleUIItems[itemName].Push(itemBase);
+    }
+
+    public void ClearUIItems()
+    {
+        _IdleUIItems = new Dictionary<string, Stack<UIItemBase>>();
+    }
+
+    #endregion
+
 }

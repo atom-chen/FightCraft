@@ -98,6 +98,8 @@ namespace GameLogic
             InitFightScene();
             GameUI.UIJoyStick.ShowAsyn();
             GameUI.UISkillBar.ShowAsyn();
+            GameUI.UIHPPanel.ShowAsyn();
+            GameUI.UIDropNamePanel.ShowAsyn();
         }
 
         public void ExitFight()
