@@ -150,10 +150,10 @@ public class RoleAttrManager : MonoBehaviour
         {
             _MoveSpeed = 1;
             _SkillSpeed = 1;
-            _HPMax = 100;
-            _HP = 100;
+            _HPMax = 1000;
+            _HP = 1000;
             _Attack = 5;
-            _Defence = 1;
+            _Defence = 5;
             _Level = 1;
         }
 

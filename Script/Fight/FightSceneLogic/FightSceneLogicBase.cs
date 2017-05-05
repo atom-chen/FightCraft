@@ -32,4 +32,15 @@ public class FightSceneLogicBase : MonoBehaviour
     { }
 
     #endregion
+
+    protected void LogicFinish()
+    {
+        StartCoroutine(ExitFightLogic());
+    }
+
+    private IEnumerator ExitFightLogic()
+    {
+        yield return new WaitForSeconds(3);
+        FightManager.Instance.LogicFinish(true);
+    }
 }

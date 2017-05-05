@@ -18,6 +18,13 @@ public class DropItemData
 
 public class MonsterDrop
 {
+    public static string IdentifictionItem = "50000";
+    public static string[,] ResetItems = new string[5,3] { 
+        { "20000","30000","40000"},
+        { "20001","30001","40001"},
+        { "20002","30002","40002"},
+        { "20003","30003","40003"},
+        { "20004","30004","40004"}};
 
     public static void MonsterDripItems(MotionManager monsterMotion)
     {
@@ -43,26 +50,126 @@ public class MonsterDrop
     {
         List<DropItemData> dropList = new List<DropItemData>();
 
-        for (int i = 0; i < 1; ++i)
+        if (monsterMotion.RoleAttrManager.MotionType == MotionType.Normal)
         {
-            if (monsterMotion.RoleAttrManager.MotionType == MotionType.Normal)
-            {
-                DropItemData drop = new DropItemData();
-                drop._DropGold = 100;
-                dropList.Add(drop);
-            }
-            else if (monsterMotion.RoleAttrManager.MotionType == MotionType.Elite)
-            {
-                DropItemData drop = new DropItemData();
-                drop._DropGold = 300;
-                dropList.Add(drop);
-            }
-            else if (monsterMotion.RoleAttrManager.MotionType == MotionType.Hero)
-            {
-                DropItemData drop = new DropItemData();
-                drop._DropGold = 1000;
-                dropList.Add(drop);
-            }
+            return GetNormalMonsterDrops(monsterMotion);
+        }
+        else if (monsterMotion.RoleAttrManager.MotionType == MotionType.Elite)
+        {
+            return GetEliteMonsterDrops(monsterMotion);
+        }
+        else if (monsterMotion.RoleAttrManager.MotionType == MotionType.Hero)
+        {
+            return GetBossMonsterDrops(monsterMotion);
+        }
+        return dropList;
+    }
+
+    private static List<DropItemData> GetNormalMonsterDrops(MotionManager monsterMotion)
+    {
+        List<DropItemData> dropList = new List<DropItemData>();
+
+        int dropMoneyRandom = Random.Range(1, 10000);
+        if (dropMoneyRandom < 2000)
+        {
+            DropItemData drop = new DropItemData();
+            drop._DropGold = Random.Range(80, 120);
+            dropList.Add(drop);
+        }
+
+        int dropEquip = Random.Range(1, 10000);
+        if (dropEquip < 1000)
+        {
+            DropItemData drop = new DropItemData();
+            int quality = GameBase.GameRandom.GetRandomLevel(8000, 1900, 99, 1);
+            var dropItem = ItemEquip.CreateEquip(monsterMotion.RoleAttrManager.Level, (Tables.ITEM_QUALITY)quality, monsterMotion.RoleAttrManager.MonsterValue);
+            drop._ItemEquip = dropItem;
+            dropList.Add(drop);
+        }
+
+        return dropList;
+    }
+
+    private static List<DropItemData> GetEliteMonsterDrops(MotionManager monsterMotion)
+    {
+        List<DropItemData> dropList = new List<DropItemData>();
+
+        int dropMoneyCnt = Random.Range(1, 2);
+        for (int i = 0; i < dropMoneyCnt; ++i)
+        {
+            DropItemData drop = new DropItemData();
+            drop._DropGold = Random.Range(80, 120);
+            dropList.Add(drop);
+        }
+
+        {
+            DropItemData drop = new DropItemData();
+            int quality = GameBase.GameRandom.GetRandomLevel(8000, 1800, 195, 5);
+            var dropItem = ItemEquip.CreateEquip(monsterMotion.RoleAttrManager.Level, (Tables.ITEM_QUALITY)quality, monsterMotion.RoleAttrManager.MonsterValue);
+            drop._ItemEquip = dropItem;
+            dropList.Add(drop);
+        }
+        return dropList;
+    }
+
+    private static List<DropItemData> GetBossMonsterDrops(MotionManager monsterMotion)
+    {
+        List<DropItemData> dropList = new List<DropItemData>();
+
+        int dropMoneyCnt = Random.Range(3, 5);
+        for (int i = 0; i < dropMoneyCnt; ++i)
+        {
+            DropItemData drop = new DropItemData();
+            drop._DropGold = Random.Range(80, 120);
+            dropList.Add(drop);
+        }
+
+        int dropEquipCnt = Random.Range(1, 2);
+        for (int i = 0; i < dropEquipCnt; ++i)
+        {
+            DropItemData drop = new DropItemData();
+            int quality = GameBase.GameRandom.GetRandomLevel(4000, 5500, 450, 50);
+            var dropItem = ItemEquip.CreateEquip(monsterMotion.RoleAttrManager.Level, (Tables.ITEM_QUALITY)quality, monsterMotion.RoleAttrManager.MonsterValue);
+            drop._ItemEquip = dropItem;
+            dropList.Add(drop);
+        }
+
+        int dropIdentiRandom = Random.Range(1, 10000);
+        if (dropIdentiRandom < 2000)
+        {
+            DropItemData drop = new DropItemData();
+            drop._ItemBase = ItemBase.CreateItem(IdentifictionItem);
+            dropList.Add(drop);
+        }
+
+        int levelIdx = 0;
+        if (monsterMotion.RoleAttrManager.Level < 40)
+        {
+            levelIdx = 0;
+        }
+        else if (monsterMotion.RoleAttrManager.Level < 70)
+        {
+            levelIdx = 1;
+        }
+        else if (monsterMotion.RoleAttrManager.Level < 90)
+        {
+            levelIdx = 2;
+        }
+        else if (monsterMotion.RoleAttrManager.Level < 100)
+        {
+            levelIdx = 3;
+        }
+        else
+        {
+            levelIdx = 4;
+        }
+
+        int dropResetItemCnt = Random.Range(1, 3);
+        for (int i = 0; i < dropResetItemCnt; ++i)
+        {
+            DropItemData drop = new DropItemData();
+            drop._ItemBase = ItemBase.CreateItem(ResetItems[levelIdx, Random.Range(0, 3)]);
+            dropList.Add(drop);
         }
         return dropList;
     }

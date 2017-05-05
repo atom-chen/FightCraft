@@ -100,5 +100,16 @@ namespace GameLogic
         }
 
         #endregion
+
+        #region static create item
+
+        public static ItemBase CreateItem(string itemID)
+        {
+            ItemBase newItem = new ItemBase();
+            newItem.ItemDataID = itemID;
+            return newItem;
+        }
+
+        #endregion
     }
 }
