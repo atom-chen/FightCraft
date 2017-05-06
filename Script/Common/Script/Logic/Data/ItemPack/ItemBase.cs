@@ -31,12 +31,12 @@ namespace GameLogic
             }
         }
 
-        private EquipItemRecord _EquipItemRecord;
-        public EquipItemRecord EquipItemRecord
+        private CommonItemRecord _CommonItemRecord;
+        public CommonItemRecord CommonItemRecord
         {
             get
             {
-                if (_EquipItemRecord == null)
+                if (_CommonItemRecord == null)
                 {
                     if (string.IsNullOrEmpty(_ItemDataID))
                         return null;
@@ -44,9 +44,9 @@ namespace GameLogic
                     if (_ItemDataID == "-1")
                         return null;
 
-                    _EquipItemRecord = TableReader.EquipItem.GetRecord(_ItemDataID);
+                    _CommonItemRecord = TableReader.CommonItem.GetRecord(_ItemDataID);
                 }
-                return _EquipItemRecord;
+                return _CommonItemRecord;
             }
         }
 
@@ -65,15 +65,14 @@ namespace GameLogic
 
         #region fun
 
-        public void RefreshItemData()
+        public virtual void RefreshItemData()
         {
-            _EquipItemRecord = null;
+            _CommonItemRecord = null;
         }
 
-        public void ResetItem()
+        public virtual void ResetItem()
         {
             _ItemDataID = "-1";
-            _EquipItemRecord = null;
             _DynamicDataInt = new List<int>();
             _DynamicDataVector = new List<EquipExAttr>();
         }

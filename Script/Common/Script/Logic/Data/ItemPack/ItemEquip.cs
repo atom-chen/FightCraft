@@ -23,6 +23,25 @@ namespace GameLogic
             }
         }
 
+        private EquipItemRecord _EquipItemRecord;
+        public EquipItemRecord EquipItemRecord
+        {
+            get
+            {
+                if (_EquipItemRecord == null)
+                {
+                    if (string.IsNullOrEmpty(_ItemDataID))
+                        return null;
+
+                    if (_ItemDataID == "-1")
+                        return null;
+
+                    _EquipItemRecord = TableReader.EquipItem.GetRecord(_ItemDataID);
+                }
+                return _EquipItemRecord;
+            }
+        }
+
         public int EquipLevel
         {
             get
@@ -95,6 +114,22 @@ namespace GameLogic
             return attrStr;
 
         }
+        #endregion
+
+        #region fun
+
+        public override void RefreshItemData()
+        {
+            base.RefreshItemData();
+            _EquipItemRecord = null;
+        }
+
+        public override void ResetItem()
+        {
+            base.ResetItem();
+            _EquipItemRecord = null;
+        }
+
         #endregion
 
         #region equipAttr

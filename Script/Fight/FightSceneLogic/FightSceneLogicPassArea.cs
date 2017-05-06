@@ -71,7 +71,7 @@ public class FightSceneLogicPassArea : FightSceneLogicBase
         }
         else
         {
-            LogicFinish();
+            LogicFinish(true);
         }
     }
 

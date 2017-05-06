@@ -48,8 +48,12 @@ public class DropItem : MonoBehaviour
         else if (dropData._ItemBase != null)
         {
             InitItemModel(dropData._ItemBase);
-            _DropName = dropData._ItemBase.EquipItemRecord.CommonItem.Name;
+            _DropName = dropData._ItemBase.CommonItemRecord.Name;
             Collider.enabled = false;
+        }
+        else
+        {
+            Debug.Log("Drop Empty");
         }
 
         transform.position = dropData._MonsterPos;
@@ -71,7 +75,7 @@ public class DropItem : MonoBehaviour
 
     private void InitItemModel(ItemBase itembase)
     {
-        var obj = GameBase.ResourceManager.Instance.GetInstanceGameObject(itembase.EquipItemRecord.CommonItem.DropItem);
+        var obj = GameBase.ResourceManager.Instance.GetInstanceGameObject(itembase.CommonItemRecord.DropItem);
         obj.transform.SetParent(transform);
         obj.transform.localPosition = Vector3.zero;
 

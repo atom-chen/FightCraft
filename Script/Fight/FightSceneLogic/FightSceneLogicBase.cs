@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using GameUI;
 
 public class FightSceneLogicBase : MonoBehaviour
 {
@@ -29,18 +30,25 @@ public class FightSceneLogicBase : MonoBehaviour
     }
 
     public virtual void MotionDie(MotionManager motion)
-    { }
+    {
+        if (motion.RoleAttrManager.MotionType == MotionType.MainChar)
+        {
+            LogicFinish(false);
+            return;
+        }
+    }
 
     #endregion
 
-    protected void LogicFinish()
+    protected void LogicFinish(bool isWin)
     {
-        StartCoroutine(ExitFightLogic());
+        StartCoroutine(ExitFightLogic(isWin));
     }
 
-    private IEnumerator ExitFightLogic()
+    private IEnumerator ExitFightLogic(bool isWin)
     {
         yield return new WaitForSeconds(3);
-        FightManager.Instance.LogicFinish(true);
+        //FightManager.Instance.LogicFinish(true);
+        UIFightFinish.ShowAsyn(isWin);
     }
 }

@@ -3,7 +3,13 @@ using System.Collections;
 
 public class FightSceneAreaBase : MonoBehaviour
 {
-    
+
+    [SerializeField]
+    public class SerializeEnemyInfo
+    {
+        public Transform _EnemyTransform;
+        public string _EnemyDataID;
+    }
 
     public virtual void StartArea()
     {
@@ -22,11 +28,7 @@ public class FightSceneAreaBase : MonoBehaviour
 
     public virtual void MotionDie(MotionManager motion)
     {
-        if (motion.RoleAttrManager.MotionType == MotionType.MainChar)
-        {
-            FightManager.Instance.LogicFinish(false);
-            return;
-        }
+        
 
     }
 

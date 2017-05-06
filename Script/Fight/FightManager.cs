@@ -71,6 +71,7 @@ public class FightManager : SingleClass<FightManager>
         _MainChatMotion = mainBase.GetComponent<MotionManager>();
         mainBase.transform.position = _FightScene._MainCharBornPos.position;
         mainBase.transform.rotation = _FightScene._MainCharBornPos.rotation;
+        mainBase.tag = "Player";
         _MainChatMotion.InitRoleAttr(null);
 
         var model = GameBase.ResourceManager.Instance.GetInstanceGameObject("Model/" + modelName);
@@ -93,7 +94,7 @@ public class FightManager : SingleClass<FightManager>
 
         PlayerDataPack.Instance._SelectedRole.InitExAttrs();
         var motionTran = mainBase.transform.FindChild("Motion");
-        List<string> skillMotions = new List<string>() { "Attack", "Buff1", "Buff2", "Skill1", "Skill2", "Skill3" };
+        List<string> skillMotions = new List<string>() { "Attack", "Buff1", "Buff2", "Skill1", "Skill2", "Skill3", "Dush" };
         if (PlayerDataPack.Instance._SelectedRole.Profession == Tables.PROFESSION.BOY_DEFENCE)
         {
             skillMotions.Add("Defence");
@@ -105,7 +106,7 @@ public class FightManager : SingleClass<FightManager>
         }
         if (PlayerDataPack.Instance._SelectedRole.Profession == Tables.PROFESSION.GIRL_DOUGE)
         {
-            skillMotions.Add("Dush");
+            skillMotions.Add("Roll");
             if (PlayerDataPack.Instance._SelectedRole._ExAttrs.ContainsKey(Tables.FightAttr.FightAttrType.PRO2_SPECIL_SKILL1))
             {
                 skillMotions.Remove("Skill1");
