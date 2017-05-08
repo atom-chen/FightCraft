@@ -50,7 +50,14 @@ namespace GameLogic
         {
             GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_LOGIC_START, this, new Hashtable());
 
-            GameUI.UIRoleSelect.ShowAsyn();
+            if (PlayerDataPack.Instance._SelectedRole == null)
+            {
+                GameUI.UIRoleSelect.ShowAsyn();
+            }
+            else
+            {
+                GameUI.UIMainFun.ShowAsyn();
+            }
         }
 
         public void SaveGame()

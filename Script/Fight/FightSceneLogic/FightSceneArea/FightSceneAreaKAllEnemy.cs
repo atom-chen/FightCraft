@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
 public class FightSceneAreaKAllEnemy : FightSceneAreaBase
 {
     public override void StartArea()

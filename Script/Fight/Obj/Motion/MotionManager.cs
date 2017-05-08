@@ -506,6 +506,17 @@ public class MotionManager : MonoBehaviour
     private static int _HeroCorpsePrior = 19;
 
     private NavMeshAgent _NavAgent;
+    public NavMeshAgent NavAgent
+    {
+        get
+        {
+            if (_NavAgent == null)
+            {
+                _NavAgent = GetComponent<NavMeshAgent>();
+            }
+            return _NavAgent;
+        }
+    }
     private Vector3 _TargetVec;
     private float _LastTime;
     private float _Speed;
@@ -517,7 +528,8 @@ public class MotionManager : MonoBehaviour
         {
             return;
         }
-        transform.position = navHit.position;
+        //transform.position = navHit.position;
+        NavAgent.Warp(navHit.position);
     }
 
     public void SetLookRotate(Vector3 rotate)
@@ -543,11 +555,6 @@ public class MotionManager : MonoBehaviour
 
     public void SetMove(Vector3 moveVec, float lastTime)
     {
-        if (_NavAgent == null)
-        {
-            _NavAgent = GetComponent<NavMeshAgent>();
-        }
-        
         _TargetVec = moveVec;
         _LastTime = lastTime;
         _Speed = _TargetVec.magnitude / _LastTime;

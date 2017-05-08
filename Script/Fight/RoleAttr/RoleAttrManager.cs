@@ -237,6 +237,7 @@ public class RoleAttrManager : MonoBehaviour
 
         int finalDamage = CalculateDamage(sender, resultHash, damage);
 
+        
         DamageHP(finalDamage);
     }
 
@@ -246,6 +247,7 @@ public class RoleAttrManager : MonoBehaviour
         if (resultHash.ContainsKey("SkillDamageRate"))
         {
             skillDamageRate = (float)resultHash["SkillDamageRate"];
+            Debug.Log("SkillDamageRate:" + skillDamageRate);
         }
         int attackValue = (int)(sender._Attack * skillDamageRate);
 

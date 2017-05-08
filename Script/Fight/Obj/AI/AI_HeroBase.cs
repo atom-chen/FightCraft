@@ -3,17 +3,11 @@ using System.Collections;
 
 public class AI_HeroBase : AI_Base
 {
-
-    public MotionManager _TargetMotion;
-    public float _AlertRange;
-    public float _CloseRange;
-    public float _CloseInterval;
-    public float _SkillInterval;
-    public ObjMotionSkillBase _NormalAttack;
-    public ObjMotionSkillBase _RiseSkill;
-    public ObjMotionSkillBase _GlobalSkill;
-    public float _GlobalSkillCD = 30;
-    public EffectController _HitEffect;
+    public float _CloseRange = 2;
+    public float _CloseInterval = 1;
+    public int _NormalAttackIdx = 0;
+    public int _RiseSkillIdx = 1;
+    public int _GlobalSkillIdx = 2;
 
     private float _SkillWait;
     private float _CloseWait;
@@ -39,13 +33,17 @@ public class AI_HeroBase : AI_Base
             return;
 
         CloseUpdate();
-        GlobalSkillUpdate();
     }
 
     private void CloseUpdate()
     {
         if (!_SelfMotion.BaseMotionManager.IsMoving() && !_SelfMotion.BaseMotionManager.IsMotionIdle())
             return;
+
+        if (StartSkill())
+        {
+            return;
+        }
 
         float distance = Vector3.Distance(transform.position, _TargetMotion.transform.position);
         if (distance > _CloseRange)
@@ -70,29 +68,24 @@ public class AI_HeroBase : AI_Base
 
     protected virtual void CloseEnough()
     {
-        _SelfMotion.transform.LookAt(_TargetMotion.transform.position);
-        if (_SkillWait > 0)
-        {
-            _SkillWait -= Time.fixedDeltaTime;
-            return;
-        }
-
-        _SkillWait = _SkillInterval;
-
-        _SelfMotion.ActSkill(_NormalAttack);
-        return;
+        StartSkill();
     }
 
     #region attackBlock
 
+    private EffectController _HitEffect;
+
     private void InitAttackBlock()
     {
-        float attackConlliderTime = _SelfMotion.AnimationEvent.GetAnimFirstColliderEventTime(_NormalAttack._Anim);
+        float attackConlliderTime = _SelfMotion.AnimationEvent.GetAnimFirstColliderEventTime(_AISkills[_NormalAttackIdx].SkillBase._Anim);
         if (attackConlliderTime < 0)
             return;
 
-        _SelfMotion.AnimationEvent.AddEvent(_NormalAttack._Anim, 0, AttackStart);
-        _SelfMotion.AnimationEvent.AddEvent(_NormalAttack._Anim, attackConlliderTime + 0.05f, AttackCollider);
+        var effectObj = GameBase.ResourceManager.Instance.GetGameObject("Effect/Hit/Effect_Char_OutLineBlock");
+        _HitEffect = effectObj.GetComponent<EffectController>();
+
+        _SelfMotion.AnimationEvent.AddEvent(_AISkills[_NormalAttackIdx].SkillBase._Anim, 0, AttackStart);
+        _SelfMotion.AnimationEvent.AddEvent(_AISkills[_NormalAttackIdx].SkillBase._Anim, attackConlliderTime + 0.05f, AttackCollider);
     }
 
     private void AttackStart()
@@ -154,32 +147,18 @@ public class AI_HeroBase : AI_Base
 
     public void RiseFinishEvent(object sender, Hashtable eventArgs)
     {
+        if (_RiseSkillIdx < 0)
+            return;
+
         float distance = Vector3.Distance(transform.position, _TargetMotion.transform.position);
         if (distance < _CloseRange)
         {
             _SelfMotion.transform.LookAt(_TargetMotion.transform.position);
             Debug.Log("use rise skill " + Time.time);
-            _SelfMotion.ActSkill(_RiseSkill);
+            _SelfMotion.ActSkill(_AISkills[_RiseSkillIdx].SkillBase);
         }
     }
 
     #endregion
 
-    #region global Skill
-
-    private float _GlobalSkillLastTime = 0;
-
-    public void GlobalSkillUpdate()
-    {
-        if (Time.time - _GlobalSkillLastTime < _GlobalSkillCD)
-            return;
-
-        if (!_GlobalSkill.IsCanActSkill())
-            return;
-
-        _SelfMotion.ActSkill(_GlobalSkill);
-        _GlobalSkillLastTime = Time.time;
-    }
-
-    #endregion
 }

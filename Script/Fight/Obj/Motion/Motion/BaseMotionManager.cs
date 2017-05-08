@@ -340,14 +340,14 @@ public class BaseMotionManager : MonoBehaviour
 
     private const float _UpSpeed = 20;
     private const float _DownSpeed = 15;
-    private const float _LieTimeStatic = 0.5f;
+    private const float _LieTimeStatic = 1.5f;
 
     public AnimationClip _FlyAnim;
 
     private GameObject _FlyBody;
     private float _FlyHeight = 0;
     private float _StayTime = 0;
-    private float _LieTime = 0;
+    private float _LieTime = 1;
 
     public void MotionFly(float flyHeight, int effectID, MotionManager impactSender)
     {
@@ -393,8 +393,9 @@ public class BaseMotionManager : MonoBehaviour
             if (_FlyBody.transform.localPosition.y < 0)
             {
                 _FlyBody.transform.localPosition = Vector3.zero;
+                _LieTime = _LieTimeStatic;
             }
-            _LieTime = _LieTimeStatic;
+            
         }
         else if (_LieTime > 0)
         {

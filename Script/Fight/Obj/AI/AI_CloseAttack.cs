@@ -3,26 +3,15 @@ using System.Collections;
 
 public class AI_CloseAttack : AI_Base
 {
+    public float _AlertRange = 6;
+    public float _CloseRange = 2;
+    public float _CloseInterval = 1;
 
-    public MotionManager _TargetMotion;
-    public float _AlertRange;
-    public float _CloseRange;
-    public float _CloseInterval;
-    public float _SkillInterval;
-    public ObjMotionSkillBase[] _Skills;
-
-    private float _SkillWait;
     private float _CloseWait;
     
-
     protected override void Init()
     {
         base.Init();
-
-        if (_TargetMotion == null)
-        {
-            _TargetMotion = SelectTargetCommon.GetMainPlayer();
-        }
     }
 
     protected override void AIUpdate()
@@ -61,24 +50,8 @@ public class AI_CloseAttack : AI_Base
         }
     }
 
-    private bool UseSkill()
+    private void UseSkill()
     {
-        if (_Skills.Length == 0)
-            return false;
-
-        if (_SkillWait > 0)
-        {
-            _SkillWait -= Time.fixedDeltaTime;
-            return false;
-        }
-
-        int rand = Random.Range(0, _Skills.Length);
-        if (!_Skills[rand].IsCanActSkill())
-            return false;
-
-        _SkillWait = _SkillInterval;
-        _SelfMotion.transform.LookAt(_TargetMotion.transform.position);
-        _SelfMotion.ActSkill(_Skills[rand]);
-        return true;
+        base.StartSkill();
     }
 }

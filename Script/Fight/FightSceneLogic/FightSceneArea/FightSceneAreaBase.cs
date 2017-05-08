@@ -1,15 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
+
+[System.Serializable]
+public class SerializeEnemyInfo
+{
+    public Transform _EnemyTransform;
+    public string _EnemyDataID;
+}
+
 
 public class FightSceneAreaBase : MonoBehaviour
 {
-
-    [SerializeField]
-    public class SerializeEnemyInfo
-    {
-        public Transform _EnemyTransform;
-        public string _EnemyDataID;
-    }
 
     public virtual void StartArea()
     {

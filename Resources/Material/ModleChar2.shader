@@ -1,52 +1,30 @@
-﻿Shader "TYImage/ModleChar2" {
+﻿Shader "Example/Rim" {
 	Properties{
-		_MainTex("Albedo (RGB)", 2D) = "white" {}
+		_MainTex("Texture", 2D) = "white" {}
+	_BumpMap("Bumpmap", 2D) = "bump" {}
+	_RimColor("Rim Color", Color) = (0.26,0.19,0.16,0.0)
+		_RimPower("Rim Power", Range(0.5,8.0)) = 3.0
 	}
 		SubShader{
 		Tags{ "RenderType" = "Opaque" }
-
 		CGPROGRAM
-#pragma surface surf StandardDefaultGI
-
-#include "UnityPBSLighting.cginc"
-
-		sampler2D _MainTex;
-
-	inline half4 LightingStandardDefaultGI(SurfaceOutputStandard s, half3 viewDir, UnityGI gi)
-	{
-		s.Normal = normalize(s.Normal);
-
-		half oneMinusReflectivity;
-		half3 specColor;
-		s.Albedo = DiffuseAndSpecularFromMetallic(s.Albedo, s.Metallic, /*out*/ specColor, /*out*/ oneMinusReflectivity);
-
-		// shader relies on pre-multiply alpha-blend (_SrcBlend = One, _DstBlend = OneMinusSrcAlpha)
-		// this is necessary to handle transparency in physically correct way - only diffuse component gets affected by alpha
-		half outputAlpha;
-		s.Albedo = PreMultiplyAlpha(s.Albedo, s.Alpha, oneMinusReflectivity, /*out*/ outputAlpha);
-
-		half4 c = UNITY_BRDF_PBS(s.Albedo, specColor, oneMinusReflectivity, s.Smoothness, s.Normal, viewDir, gi.light, gi.indirect);
-		c.rgb += UNITY_BRDF_GI(s.Albedo, specColor, oneMinusReflectivity, s.Smoothness, s.Normal, viewDir, s.Occlusion, gi);
-		c.a = outputAlpha;
-		return c;
-	}
-
-	inline void LightingStandardDefaultGI_GI(
-		SurfaceOutputStandard s,
-		UnityGIInput data,
-		inout UnityGI gi)
-	{
-		LightingStandard_GI(s, data, gi);
-	}
-
+#pragma surface surf Lambert
 	struct Input {
 		float2 uv_MainTex;
+		float2 uv_BumpMap;
+		float3 viewDir;
 	};
-
-	void surf(Input IN, inout SurfaceOutputStandard o) {
-		o.Albedo = tex2D(_MainTex, IN.uv_MainTex);
+	sampler2D _MainTex;
+	sampler2D _BumpMap;
+	float4 _RimColor;
+	float _RimPower;
+	void surf(Input IN, inout SurfaceOutput o) {
+		o.Albedo = tex2D(_MainTex, IN.uv_MainTex).rgb;
+		o.Normal = UnpackNormal(tex2D(_BumpMap, IN.uv_BumpMap));
+		half rim = 1.0 - saturate(dot(normalize(IN.viewDir), o.Normal));
+		o.Emission = _RimColor.rgb * pow(rim, _RimPower) + o.Albedo * 0.6;
 	}
 	ENDCG
 	}
-		FallBack "Diffuse"
+		Fallback "Diffuse"
 }
