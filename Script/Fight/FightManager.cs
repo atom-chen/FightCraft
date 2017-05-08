@@ -69,8 +69,9 @@ public class FightManager : SingleClass<FightManager>
 
         var mainBase = GameBase.ResourceManager.Instance.GetInstanceGameObject("ModelBase/" + mainBaseName);
         _MainChatMotion = mainBase.GetComponent<MotionManager>();
-        mainBase.transform.position = _FightScene._MainCharBornPos.position;
-        mainBase.transform.rotation = _FightScene._MainCharBornPos.rotation;
+
+        _MainChatMotion.SetPosition(_FightScene._MainCharBornPos.position);
+        _MainChatMotion.SetRotate(_FightScene._MainCharBornPos.rotation.eulerAngles);
         mainBase.tag = "Player";
         _MainChatMotion.InitRoleAttr(null);
 

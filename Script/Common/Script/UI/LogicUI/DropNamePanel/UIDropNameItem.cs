@@ -21,6 +21,11 @@ namespace GameUI
             base.Show(hash);
 
             _DropItem = hash["InitObj"] as DropItem;
+            if (_DropItem == null)
+            {
+                UIDropNamePanel.HideDropItem(this);
+                return;
+            }
             _RectTransform = GetComponent<RectTransform>();
             _FollowTransform = _DropItem.transform;
 

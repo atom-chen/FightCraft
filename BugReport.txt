@@ -1,0 +1,2 @@
+MainChar init move in scene 02
+Fight finish return to menu
