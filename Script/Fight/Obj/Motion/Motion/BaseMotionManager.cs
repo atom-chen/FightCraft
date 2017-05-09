@@ -137,7 +137,7 @@ public class BaseMotionManager : MonoBehaviour
 
     public bool CanMotionIdle()
     {
-        if (_MotionManager.MotionPrior != RISE_PRIOR && _MotionManager.MotionPrior != MOVE_PRIOR && _MotionManager.MotionPrior > IDLE_PRIOR)
+        if (_MotionManager.MotionPrior != MOVE_PRIOR && _MotionManager.MotionPrior > IDLE_PRIOR)
             return false;
 
         if (_MotionManager.ActingSkill != null)

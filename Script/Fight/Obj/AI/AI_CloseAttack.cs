@@ -29,6 +29,9 @@ public class AI_CloseAttack : AI_Base
         if (_SelfMotion.ActingSkill != null)
             return;
 
+        if (StartSkill())
+            return;
+
         float distance = Vector3.Distance(transform.position, _TargetMotion.transform.position);
         if (distance > _CloseRange)
         {
@@ -45,13 +48,8 @@ public class AI_CloseAttack : AI_Base
             {
                 _SelfMotion.BaseMotionManager.StopMove();
             }
-            UseSkill();
+            StartSkill();
             _CloseWait = _CloseInterval;
         }
-    }
-
-    private void UseSkill()
-    {
-        base.StartSkill();
     }
 }
