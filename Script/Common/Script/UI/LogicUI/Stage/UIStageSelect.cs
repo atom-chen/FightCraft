@@ -97,7 +97,7 @@ namespace GameUI
 
         public void OnEnterStage()
         {
-            LogicManager.Instance.EnterFight(_SelectedStage.ScenePath);
+            LogicManager.Instance.EnterFight(_SelectedStage);
         }
 
         #endregion

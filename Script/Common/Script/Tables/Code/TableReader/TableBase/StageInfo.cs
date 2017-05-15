@@ -15,6 +15,8 @@ namespace Tables
         public override string Id { get; set; }        public string Name { get; set; }
         public string Desc { get; set; }
         public string ScenePath { get; set; }
+        public string FightLogicPath { get; set; }
+        public Vector3 CameraOffset { get; set; }
         public StageInfoRecord(DataRecord dataRecord)
         {
             if (dataRecord != null)
@@ -31,6 +33,8 @@ namespace Tables
             recordStrList.Add(TableWriteBase.GetWriteStr(Name));
             recordStrList.Add(TableWriteBase.GetWriteStr(Desc));
             recordStrList.Add(TableWriteBase.GetWriteStr(ScenePath));
+            recordStrList.Add(TableWriteBase.GetWriteStr(FightLogicPath));
+            recordStrList.Add(TableWriteBase.GetWriteStr(CameraOffset));
 
             return recordStrList.ToArray();
         }
@@ -97,6 +101,8 @@ namespace Tables
                 pair.Value.Name = TableReadBase.ParseString(pair.Value.ValueStr[1]);
                 pair.Value.Desc = TableReadBase.ParseString(pair.Value.ValueStr[2]);
                 pair.Value.ScenePath = TableReadBase.ParseString(pair.Value.ValueStr[3]);
+                pair.Value.FightLogicPath = TableReadBase.ParseString(pair.Value.ValueStr[4]);
+                pair.Value.CameraOffset = TableReadBase.ParseVector3(pair.Value.ValueStr[5]);
             }
         }
     }

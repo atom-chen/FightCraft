@@ -143,7 +143,7 @@ public class RoleAttrManager : MonoBehaviour
                 _Attack += equip.BaseAttack;
                 _Defence += equip.BaseDefence;
             }
-
+            _HP = _HPMax;
             _ExAttrs = new Dictionary<FightAttr.FightAttrType, int>(roleData._ExAttrs);
         }
         else

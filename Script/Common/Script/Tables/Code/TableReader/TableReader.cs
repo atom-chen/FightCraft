@@ -33,9 +33,9 @@ namespace Tables
 //
         public static MonsterBase MonsterBase { get; internal set; }
 //
-        public static StrDictionary StrDictionary { get; internal set; }
-//
         public static StageInfo StageInfo { get; internal set; }
+//
+        public static StrDictionary StrDictionary { get; internal set; }
 
         public static void ReadTables()
         {
@@ -44,16 +44,16 @@ namespace Tables
             EquipItem = new EquipItem(TableReadBase.GetTableText("EquipItem"), false);
             FightAttr = new FightAttr(TableReadBase.GetTableText("FightAttr"), false);
             MonsterBase = new MonsterBase(TableReadBase.GetTableText("MonsterBase"), false);
-            StrDictionary = new StrDictionary(TableReadBase.GetTableText("StrDictionary"), false);
             StageInfo = new StageInfo(TableReadBase.GetTableText("StageInfo"), false);
+            StrDictionary = new StrDictionary(TableReadBase.GetTableText("StrDictionary"), false);
 
             //初始化所有表
             CommonItem.CoverTableContent();
             EquipItem.CoverTableContent();
             FightAttr.CoverTableContent();
             MonsterBase.CoverTableContent();
-            StrDictionary.CoverTableContent();
             StageInfo.CoverTableContent();
+            StrDictionary.CoverTableContent();
         }
 
         #endregion

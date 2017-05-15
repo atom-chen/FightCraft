@@ -54,6 +54,12 @@ public class AI_Base : MonoBehaviour
 
     }
 
+    #region combatLevel
+
+    private int _ComBatLevel = 1;
+
+    #endregion
+
     #region skill
 
     [System.Serializable]

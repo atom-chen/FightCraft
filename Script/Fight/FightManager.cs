@@ -33,10 +33,10 @@ public class FightManager : SingleClass<FightManager>
         Camera.main.transform.SetParent(cameraRoot.transform);
         Camera.main.transform.localPosition = Vector3.zero;
         Camera.main.transform.localRotation = Quaternion.Euler(Vector3.zero);
-
+        
         var cameraFollow = cameraRoot.AddComponent<CameraFollow>();
         cameraFollow._FollowObj = _MainChatMotion.gameObject;
-        cameraFollow._Distance = new Vector3(0, 6, -6);
+        cameraFollow._Distance = LogicManager.Instance.EnterStageInfo.CameraOffset;
 
         var globalEffect = cameraRoot.AddComponent<GlobalEffect>();
         var inputManager = cameraRoot.AddComponent<InputManager>();
@@ -383,7 +383,7 @@ public class FightManager : SingleClass<FightManager>
 
     private void InitScene()
     {
-        var sceneGO = GameObject.Find("FightSceneLogic");
+        var sceneGO = GameBase.ResourceManager.Instance.GetInstanceGameObject("FightSceneLogic/" + LogicManager.Instance.EnterStageInfo.FightLogicPath);
         _FightScene = sceneGO.GetComponent<FightSceneLogicBase>();
         StartCoroutine(StartSceneLogic());
     }

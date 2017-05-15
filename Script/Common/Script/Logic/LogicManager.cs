@@ -2,6 +2,7 @@
 using System.Collections;
 using System;
 
+using Tables;
 using GameBase;
 namespace GameLogic
 {
@@ -87,10 +88,19 @@ namespace GameLogic
 
         #region Fight
 
-        public void EnterFight(string sceneName)
+        private StageInfoRecord _EnterStageInfo;
+        public StageInfoRecord EnterStageInfo
         {
+            get
+            {
+                return _EnterStageInfo;
+            }  
+        }
 
-            var sceneLoader = GameCore.Instance.SceneManager.ChangeFightScene(sceneName);
+        public void EnterFight(StageInfoRecord enterStage)
+        {
+            _EnterStageInfo = enterStage;
+            var sceneLoader = GameCore.Instance.SceneManager.ChangeFightScene(_EnterStageInfo.ScenePath);
 
             GameCore.Instance.UIManager.HideAllUI();
 
