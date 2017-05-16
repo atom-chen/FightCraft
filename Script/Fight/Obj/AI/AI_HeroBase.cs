@@ -71,6 +71,49 @@ public class AI_HeroBase : AI_Base
         StartSkill();
     }
 
+    #region combatLevel
+
+    protected override void ModifyInitSkill()
+    {
+        if (_AISkills.Count == 0)
+            return;
+
+        if (_CombatLevel == 1)
+            return;
+
+        float cdValue = _AISkills[_NormalAttackIdx].SkillInterval * _CombatLevel * 0.3f;
+        _AISkills[_NormalAttackIdx].SkillInterval = Mathf.Max(_AISkills[_NormalAttackIdx].SkillInterval, cdValue);
+        _AISkills[_NormalAttackIdx].StartCD = true;
+
+        if (_AISkills.Count > _RiseSkillIdx)
+        {
+            cdValue = _AISkills[_RiseSkillIdx].SkillInterval * _CombatLevel * 0.5f;
+            _AISkills[_RiseSkillIdx].SkillInterval = Mathf.Max(_AISkills[_NormalAttackIdx].SkillInterval, cdValue);
+            _AISkills[_RiseSkillIdx].StartCD = true;
+        }
+
+        if (_AISkills.Count > _GlobalSkillIdx)
+        {
+            cdValue = _AISkills[_GlobalSkillIdx].SkillInterval * _CombatLevel * 0.5f;
+            _AISkills[_GlobalSkillIdx].SkillInterval = Mathf.Max(_AISkills[_GlobalSkillIdx].SkillInterval, cdValue);
+            _AISkills[_GlobalSkillIdx].StartCD = false;
+            _AISkills[_GlobalSkillIdx].StartLock = true;
+        }
+    }
+
+    protected virtual void UpdateSkillLock()
+    {
+        if (_SelfMotion.RoleAttrManager.HPPersent < 0.6f)
+        {
+            if (_AISkills.Count > _GlobalSkillIdx)
+            {
+                UnLockSkill(_AISkills[_GlobalSkillIdx]);
+            }
+        }
+    }
+
+    #endregion
+
     #region attackBlock
 
     private EffectController _HitEffect;

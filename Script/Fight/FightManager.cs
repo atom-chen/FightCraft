@@ -359,6 +359,7 @@ public class FightManager : SingleClass<FightManager>
         mainBase.SetRotate(rot);
         GameUI.UIHPPanel.ShowHPItem(mainBase);
         AI_Base aiBase = mainBase.GetComponent<AI_Base>();
+        aiBase.SetCombatLevel(10);
 
         mainBase.InitRoleAttr(monsterBase);
 
