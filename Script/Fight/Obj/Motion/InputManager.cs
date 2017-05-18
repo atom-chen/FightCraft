@@ -78,7 +78,8 @@ public class InputManager : InstanceBase<InputManager>
     {
         get
         {
-            return transform.forward * Axis.y + transform.right * Axis.x;
+            var direct = transform.forward * Axis.y + transform.right * Axis.x;
+            return new Vector2(direct.x, direct.z);
         }
     }
 
@@ -169,7 +170,7 @@ public class InputManager : InstanceBase<InputManager>
         List<MotionManager> targetMotions;
         if (InputManager.Instance.Axis != Vector2.zero)
         {
-            _InputMotion.SetLookRotate(new Vector3(InputManager.Instance.Axis.x, 0, InputManager.Instance.Axis.y));
+            _InputMotion.SetLookRotate(new Vector3(InputManager.Instance.CameraAxis.x, 0, InputManager.Instance.CameraAxis.y));
             targetMotions = SelectTargetCommon.GetFrontMotions(_InputMotion, 3, 30, true);
         }
         else
