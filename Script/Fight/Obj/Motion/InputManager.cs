@@ -27,13 +27,14 @@ public class InputManager : InstanceBase<InputManager>
 	void Update ()
     {
 #if UNITY_EDITOR
-        _Axis.x = Input.GetAxis("Horizontal");
-        _Axis.y = Input.GetAxis("Vertical");
+        Axis = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 #endif
-        if (_Axis != Vector2.zero)
+        if (Axis != Vector2.zero)
         {
             if (_InputMotion.BaseMotionManager.CanMotionMove())
-                _InputMotion.BaseMotionManager.MoveDirect(_Axis);
+            {
+                _InputMotion.BaseMotionManager.MoveDirect(CameraAxis);
+            }
         }
         else
         {
@@ -59,8 +60,28 @@ public class InputManager : InstanceBase<InputManager>
     public MotionManager _InputMotion;
 
     #region input 
+    private Vector2 _Axis;
+    public Vector2 Axis
+    {
+        get
+        {
+            return _Axis;
+        }
 
-    public Vector2 _Axis;
+        set
+        {
+            _Axis = value;
+        }
+    }
+
+    public Vector2 CameraAxis
+    {
+        get
+        {
+            return transform.forward * Axis.y + transform.right * Axis.x;
+        }
+    }
+
     private UISkillBar _UISkillBar;
     public UISkillBar UISkillBar
     {
@@ -146,9 +167,9 @@ public class InputManager : InstanceBase<InputManager>
     public void AutoRotate()
     {
         List<MotionManager> targetMotions;
-        if (InputManager.Instance._Axis != Vector2.zero)
+        if (InputManager.Instance.Axis != Vector2.zero)
         {
-            _InputMotion.SetLookRotate(new Vector3(InputManager.Instance._Axis.x, 0, InputManager.Instance._Axis.y));
+            _InputMotion.SetLookRotate(new Vector3(InputManager.Instance.Axis.x, 0, InputManager.Instance.Axis.y));
             targetMotions = SelectTargetCommon.GetFrontMotions(_InputMotion, 3, 30, true);
         }
         else

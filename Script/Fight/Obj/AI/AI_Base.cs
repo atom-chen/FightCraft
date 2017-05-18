@@ -75,7 +75,6 @@ public class AI_Base : MonoBehaviour
         if (_SelfMotion.RoleAttrManager.MotionType == MotionType.Normal)
         {
             int randomLockTime = Random.Range((int)(_AISkills[0].SkillInterval * _CombatLevel * 0.5f), (int)(_AISkills[0].SkillInterval * _CombatLevel * 2));
-            Debug.Log("randomLockTime:" + randomLockTime);
             StartCoroutine(StartLockSkill(_AISkills[0], randomLockTime));
             _AISkills[0].SkillInterval = _AISkills[0].SkillInterval * _CombatLevel;
             _AISkills[0].StartCD = false;

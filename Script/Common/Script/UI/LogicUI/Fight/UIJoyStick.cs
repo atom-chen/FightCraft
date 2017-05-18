@@ -127,7 +127,7 @@ namespace GameUI
 
         private void SendMoveDirection()
         {
-            InputManager.Instance._Axis = _JoyStickRectTransform.anchoredPosition / _MaxRadius;
+            InputManager.Instance.Axis = _JoyStickRectTransform.anchoredPosition / _MaxRadius;
         }
     }
 }
