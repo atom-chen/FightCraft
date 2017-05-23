@@ -385,6 +385,7 @@ public class FightManager : SingleClass<FightManager>
     private void InitScene()
     {
         var sceneGO = GameBase.ResourceManager.Instance.GetInstanceGameObject("FightSceneLogic/" + LogicManager.Instance.EnterStageInfo.FightLogicPath);
+        sceneGO.SetActive(true);
         _FightScene = sceneGO.GetComponent<FightSceneLogicBase>();
         StartCoroutine(StartSceneLogic());
     }
