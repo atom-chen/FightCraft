@@ -3,7 +3,7 @@ using System.Collections;
 
 public class AI_CloseAttack : AI_Base
 {
-    public float _AlertRange = 6;
+    public float _AlertRange = 15;
     public float _CloseRange = 2;
     public float _CloseInterval = 1;
 
@@ -19,6 +19,10 @@ public class AI_CloseAttack : AI_Base
         base.AIUpdate();
 
         if (_TargetMotion == null)
+            return;
+
+        float distance = Vector3.Distance(transform.position, _TargetMotion.transform.position);
+        if (distance > _AlertRange)
             return;
 
         CloseUpdate();
