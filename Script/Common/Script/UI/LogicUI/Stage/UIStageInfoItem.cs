@@ -12,6 +12,7 @@ namespace GameUI
 {
     public class UIStageInfoItem : UIItemSelect
     {
+        public Text _StageName;
 
         public override void Show(Hashtable hash)
         {
@@ -23,7 +24,7 @@ namespace GameUI
 
         public void ShowStage(StageInfoRecord showItem)
         {
-          
+            _StageName.text = showItem.Name;
         }
 
 

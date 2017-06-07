@@ -34,72 +34,21 @@ namespace NavMeshExtension
             DrawDefaultInspector();
             EditorGUILayout.Space();
 
-            if (GUILayout.Button("FitEnemies"))
+            if (GUILayout.Button("ShowModel"))
             {
-                List<Transform> enemyPoses = new List<Transform>();
-                var trans = script.GetComponentsInChildren<Transform>();
-                foreach (var tran in trans)
-                {
-                    if (tran.name == "MapPos")
-                    {
-                        enemyPoses.Add(tran);
-                    }
-                }
-
-                var fightKAll = script.GetComponent<FightSceneAreaKAllEnemy>();
-                if (fightKAll != null)
-                {
-                    fightKAll._EnemyBornPos = new SerializeEnemyInfo[enemyPoses.Count];
-                    for (int i = 0; i < enemyPoses.Count; ++i)
-                    {
-                        fightKAll._EnemyBornPos[i] = new SerializeEnemyInfo();
-                        fightKAll._EnemyBornPos[i]._EnemyTransform = enemyPoses[i];
-                        fightKAll._EnemyBornPos[i]._EnemyDataID = "23";
-                    }
-                }
-
-                var fightKCnt = script.GetComponent<FightSceneAreaKEnemyCnt>();
-                if (fightKCnt != null)
-                {
-                    fightKCnt._EnemyBornPos = new Transform[enemyPoses.Count];
-                    for (int i = 0; i < enemyPoses.Count; ++i)
-                    {
-                        fightKCnt._EnemyBornPos[i] = enemyPoses[i];
-                        fightKCnt._EnemyMotionID = "23";
-                    }
-                }
+                script.ShowMonsterByID();
             }
 
-        }
-    
-
-        /// <summary>
-        /// Draw Scene GUI handles, circles and outlines for submesh vertices.
-        /// <summary>
-        public void OnSceneGUI()
-        {
-            Ray worldRay = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
-            RaycastHit hitInfo;
-            Event e = Event.current;
-
-            if (e.type == EventType.mouseDown && e.control)
+            if (GUILayout.Button("RemoveShow"))
             {
-                Physics.Raycast(worldRay, out hitInfo);
-                if (Physics.Raycast(worldRay, out hitInfo))
-                {
-                    GameObject go = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    go.name = "MapPos";
-                    go.transform.SetParent(script.transform);
-                    go.transform.position = hitInfo.point;
-                }
-                else
-                {
-                    Debug.Log("Not Hit Navmesh");
-                }
-
+                script.RemoveShow();
             }
-        }
 
+            //if (GUILayout.Button("FitEnemies"))
+            //{
+            //}
+
+        }
         
     }
 }
