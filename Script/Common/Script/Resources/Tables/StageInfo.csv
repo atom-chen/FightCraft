@@ -3,7 +3,7 @@
 2,Stage_01_02,-1,Stage_01_02,FightLogic_GongDian_02,0;6;-6
 3,Stage_01_03,-1,Stage_01_03,FightLogic_GongDian_03,0;6;6
 4,Stage_BingYuan_01,-1,Stage_BingYuan_01,FightLogic_BingYuan_01,0;6;6
-5,Stage_BingYuan_02,-1,Stage_BingYuan_02,FightLogic_BingYuan_02,0;6;-6
+5,Stage_BingYuan_02,-1,Stage_BingYuan_02,FightLogic_BingYuan_02,-6;6;0
 6,Stage_BingYuan_04,-1,Stage_BingYuan_04,FightLogic_BingYuan_04,0;6;-6
 7,Stage_BingYuan_05,-1,Stage_BingYuan_05,FightLogic_BingYuan_05,0;6;-6
 8,Stage_CaoYuan_01,-1,Stage_CaoYuan_01,FightLogic_CaoYuan_01,0;6;-6
