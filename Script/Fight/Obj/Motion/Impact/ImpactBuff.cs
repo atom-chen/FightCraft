@@ -12,6 +12,11 @@ public class ImpactBuff : ImpactBase
 
     protected Dictionary<MotionManager, List<ImpactBuff>> _ReciverDict = new Dictionary<MotionManager, List<ImpactBuff>>();
 
+    public void Awake()
+    {
+        enabled = false;
+    }
+
     public override sealed void ActImpact(MotionManager senderManager, MotionManager reciverManager)
     {
         base.ActImpact(senderManager, reciverManager);

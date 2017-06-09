@@ -9,11 +9,13 @@ public class ImpactNoCollider : ImpactBuff
     {
         base.ActBuff(senderManager, reciverManager);
 
+        reciverManager.TriggerCollider.enabled = false;
     }
 
     public override void RemoveBuff(MotionManager reciverManager)
     {
         base.RemoveBuff(reciverManager);
 
+        reciverManager.TriggerCollider.enabled = true;
     }
 }

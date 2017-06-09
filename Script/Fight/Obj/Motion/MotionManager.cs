@@ -266,6 +266,14 @@ public class MotionManager : MonoBehaviour
 
     private Tables.MonsterBaseRecord _MonsterBase;
 
+    public Tables.MonsterBaseRecord MonsterBase
+    {
+        get
+        {
+            return _MonsterBase;
+        }
+    }
+
     private bool _IsMotionDie = false;
     public bool IsMotionDie
     {
@@ -337,9 +345,16 @@ public class MotionManager : MonoBehaviour
         {
             _BuffBindPos = new GameObject("BuffBind");
             _BuffBindPos.transform.SetParent(transform);
+            _BuffBindPos.transform.localPosition = Vector3.zero;
+            _BuffBindPos.transform.localRotation = Quaternion.Euler(Vector3.zero);
         }
-        
-        var newBuff = _BuffBindPos.AddComponent(buff.GetType()) as ImpactBuff;
+
+        var buffGO = new GameObject("Buff-" + buff.ToString());
+        buffGO.transform.SetParent(_BuffBindPos.transform);
+        buffGO.transform.localPosition = Vector3.zero;
+        buffGO.transform.localRotation = Quaternion.Euler(Vector3.zero);
+
+        var newBuff = buffGO.AddComponent(buff.GetType()) as ImpactBuff;
         CopyComponent(buff, newBuff);
         _ImpactBuffs.Add(newBuff);
         newBuff.ActBuff(this);
@@ -351,7 +366,7 @@ public class MotionManager : MonoBehaviour
     {
         buff.RemoveBuff(this);
         _ImpactBuffs.Remove(buff);
-        GameObject.Destroy(buff);
+        GameObject.Destroy(buff.gameObject);
     }
 
     public void RemoveBuff(Type buffType)
@@ -690,6 +705,23 @@ public class MotionManager : MonoBehaviour
             return _BulletBindPos;
         }
     }
-    
+
+    #endregion
+
+    #region collider
+
+    private Collider _TriggerCollider;
+    public Collider TriggerCollider
+    {
+        get
+        {
+            if (_TriggerCollider == null)
+            {
+                _TriggerCollider = AnimationEvent.GetComponentInChildren<Collider>();
+            }
+            return _TriggerCollider;
+        }
+    }
+
     #endregion
 }

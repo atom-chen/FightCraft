@@ -58,7 +58,23 @@ namespace NavMeshExtension
                     for (int i = 0; i < enemyPoses.Length; ++i)
                     {
                         fightKCnt._EnemyBornPos[i] = enemyPoses[i].transform;
-                        fightKCnt._EnemyMotionID = enemyPoses[i]._MonsterId;
+                        //fightKCnt._EnemyMotionID = enemyPoses[i]._MonsterId;
+                        enemyPoses[i].ShowMonsterByID();
+                    }
+                }
+
+                var fightBossCnt = script.GetComponent<FightSceneAreaKBossWithFish>();
+                if (fightBossCnt != null)
+                {
+                    fightBossCnt._BossBornPos = enemyPoses[0].transform;
+                    fightBossCnt._BossMotionID = enemyPoses[0]._MonsterId;
+                    enemyPoses[0].ShowMonsterByID();
+
+                    fightBossCnt._EnemyBornPos = new Transform[enemyPoses.Length - 1];
+                    for (int i = 1; i < enemyPoses.Length; ++i)
+                    {
+                        fightBossCnt._EnemyBornPos[i - 1] = enemyPoses[i].transform;
+                        //fightKCnt._EnemyMotionID = enemyPoses[i]._MonsterId;
                         enemyPoses[i].ShowMonsterByID();
                     }
                 }
