@@ -42,7 +42,7 @@ public class SelectCollider : SelectBase
 
                 if (_SkillMotion._IsRoleHit)
                 {
-                    GlobalEffect.Instance.Pause(0.05f);
+                    GlobalEffect.Instance.Pause(_SkillMotion._RoleHitTime);
                 }
             }
         }

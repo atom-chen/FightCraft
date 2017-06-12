@@ -24,18 +24,19 @@ public class ImpactAttrAdd : ImpactBuff
     {
         base.ActBuff(senderManager, reciverManager);
 
+        float originValue = reciverManager.RoleAttrManager.GetBaseAttr(_Attr);
         float value = 0;
         if (_AddType == ADDTYPE.Value)
         {
-            value = reciverManager.RoleAttrManager.GetBaseAttr(_Attr) + _AddValue;
+            value = originValue + _AddValue;
         }
         else if (_AddType == ADDTYPE.Persent)
         {
-            value = reciverManager.RoleAttrManager.GetBaseAttr(_Attr)* (1 +_AddValue);
+            value = originValue * (1 +_AddValue);
         }
 
         reciverManager.RoleAttrManager.SetBaseAttr(_Attr, value);
-        _RealAddValue = reciverManager.RoleAttrManager.GetBaseAttr(_Attr);
+        _RealAddValue = reciverManager.RoleAttrManager.GetBaseAttr(_Attr) - originValue;
     }
 
     public override void RemoveBuff(MotionManager reciverManager)

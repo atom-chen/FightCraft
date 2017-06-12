@@ -12,25 +12,28 @@ public class FightLayerCommon
 
     public static void SetPlayerLayer(MotionManager playerMotion)
     {
-        var skillColliders = playerMotion.GetComponentsInChildren<Collider>();
+        var skillColliders = playerMotion.GetComponentsInChildren<Collider>(true);
         foreach (var collider in skillColliders)
         {
             collider.gameObject.layer = CAMP_2;
+            
         }
 
         playerMotion.TriggerCollider.gameObject.layer = CAMP_1;
         playerMotion.gameObject.tag = "Player";
+        playerMotion.RoleAttrManager.MotionType = MotionType.MainChar;
     }
 
     public static void SetEnemyLayer(MotionManager motion)
     {
-        var skillColliders = motion.GetComponentsInChildren<Collider>();
+        var skillColliders = motion.GetComponentsInChildren<Collider>(true);
         foreach (var collider in skillColliders)
         {
             collider.gameObject.layer = CAMP_1;
         }
 
         motion.TriggerCollider.gameObject.layer = CAMP_2;
+        motion.RoleAttrManager.MotionType = MotionType.Normal;
     }
 
     public static int GetBulletLayer(MotionManager motion)

@@ -124,9 +124,9 @@ namespace GameLogic
         [SaveField(4)]
         public int _CurExp;
 
-        public int GetBaseMoveSpeed()
+        public float GetBaseMoveSpeed()
         {
-            return 1;
+            return 4.5f;
         }
 
         public int GetBaseAttackSpeed()

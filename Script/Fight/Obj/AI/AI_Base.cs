@@ -72,15 +72,15 @@ public class AI_Base : MonoBehaviour
         if (_CombatLevel == 1)
             return;
 
-        if (_SelfMotion.RoleAttrManager.MotionType == MotionType.Normal)
+        if (_SelfMotion.RoleAttrManager.MotionType == MotionType.Normal || _SelfMotion.RoleAttrManager.MotionType == MotionType.Elite)
         {
-            int randomLockTime = Random.Range((int)(_AISkills[0].SkillInterval * _CombatLevel * 0.5f), (int)(_AISkills[0].SkillInterval * _CombatLevel * 2));
-            StartCoroutine(StartLockSkill(_AISkills[0], randomLockTime));
-            _AISkills[0].SkillInterval = _AISkills[0].SkillInterval * _CombatLevel;
-            _AISkills[0].StartCD = false;
-        }
-        else if (_SelfMotion.RoleAttrManager.MotionType == MotionType.Elite)
-        {
+        //    int randomLockTime = Random.Range((int)(_AISkills[0].SkillInterval * _CombatLevel * 0.5f), (int)(_AISkills[0].SkillInterval * _CombatLevel * 2));
+        //    StartCoroutine(StartLockSkill(_AISkills[0], randomLockTime));
+        //    _AISkills[0].SkillInterval = _AISkills[0].SkillInterval * _CombatLevel;
+        //    _AISkills[0].StartCD = false;
+        //}
+        //else if (_SelfMotion.RoleAttrManager.MotionType == MotionType.Elite)
+        //{
             _AISkills[0].SkillInterval = _AISkills[0].SkillInterval * _CombatLevel * 0.5f;
             _AISkills[0].StartCD = true;
 

@@ -114,7 +114,7 @@ public class BaseMotionManager : MonoBehaviour
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
         UpdateMove();
         FlyUpdate();
@@ -187,9 +187,11 @@ public class BaseMotionManager : MonoBehaviour
     public void MoveDirect(Vector3 derectV3)
     {
         _MotionManager.MotionPrior = MOVE_PRIOR;
-        Vector3 destPoint = transform.position + derectV3.normalized * Time.deltaTime * _NavAgent.speed * _MotionManager.RoleAttrManager.MoveSpeed * 10;
-        _MotionManager.PlayAnimation(_MoveAnim, _MotionManager.RoleAttrManager.MoveSpeed);
+        Vector3 destPoint = transform.position + derectV3.normalized;
+
+        _MotionManager.PlayAnimation(_MoveAnim, _MotionManager.RoleAttrManager.MoveSpeed / _MotionManager.RoleAttrManager.BaseMoveSpeed);
         _MotionManager.transform.rotation = Quaternion.LookRotation(derectV3);
+        _NavAgent.speed = _MotionManager.RoleAttrManager.MoveSpeed;
         _NavAgent.SetDestination(destPoint);
         //NavMeshHit navHit = new NavMeshHit();
         //if (!NavMesh.SamplePosition(destPoint, out navHit, 5, NavMesh.AllAreas))
@@ -205,9 +207,10 @@ public class BaseMotionManager : MonoBehaviour
             return;
 
         _MotionManager.MotionPrior = MOVE_PRIOR;
-        _MotionManager.PlayAnimation(_MoveAnim, _MotionManager.RoleAttrManager.MoveSpeed);
+        _MotionManager.PlayAnimation(_MoveAnim, _MotionManager.RoleAttrManager.MoveSpeed / _MotionManager.RoleAttrManager.BaseMoveSpeed);
 
-        _NavAgent.destination = targetPos;
+        _NavAgent.speed = _MotionManager.RoleAttrManager.MoveSpeed;
+        _NavAgent.SetDestination(targetPos);
     }
 
     public void StopMove()
@@ -291,6 +294,9 @@ public class BaseMotionManager : MonoBehaviour
         if (_MotionManager.ActingSkill != null)
             _MotionManager.ActingSkill.FinishSkill();
 
+        if(_MotionManager.MotionPrior == MOVE_PRIOR)
+            StopMove();
+
         if (hitTime > _HitAnim.length)
         {
             _StopKeyFrameTime = hitTime - _HitAnim.length;
@@ -353,6 +359,9 @@ public class BaseMotionManager : MonoBehaviour
     {
         PlayHitEffect(impactSender, effectID);
 
+        if (_MotionManager.MotionPrior == MOVE_PRIOR)
+            StopMove();
+
         _MotionManager.MotionPrior = FLY_PRIOR;
         _MotionManager.RePlayAnimation(_FlyAnim, 1);
 
@@ -399,18 +408,24 @@ public class BaseMotionManager : MonoBehaviour
         }
         else if (_LieTime > 0)
         {
-            if (_MotionManager.IsMotionDie)
-            {
-                _MotionManager.MotionPrior = DIE_PRIOR;
-                StartCoroutine(BodyDisappear());
-            }
-            else
+            //if (_MotionManager.IsMotionDie)
+            //{
+            //    _MotionManager.MotionPrior = DIE_PRIOR;
+            //    StartCoroutine(BodyDisappear());
+            //}
+            //else
             {
                 _LieTime -= Time.fixedDeltaTime;
                 if (_LieTime <= 0)
                 {
-                    if (_MotionManager.MotionPrior == FLY_PRIOR)
+                    if (_MotionManager.IsMotionDie)
+                    {
+                        _MotionManager.MotionPrior = DIE_PRIOR;
+                        StartCoroutine(BodyDisappear());
+                    }
+                    else if (_MotionManager.MotionPrior == FLY_PRIOR)
                         MotionRise();
+
                 }
             }
         }

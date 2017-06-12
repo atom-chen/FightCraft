@@ -141,6 +141,8 @@ public class FightManager : SingleClass<FightManager>
             }
         }
 
+        _MainChatMotion.InitMotion();
+        FightLayerCommon.SetPlayerLayer(_MainChatMotion);
         GameUI.UIHPPanel.ShowHPItem(_MainChatMotion);
     }
 
@@ -357,11 +359,14 @@ public class FightManager : SingleClass<FightManager>
         var mainBase = ResourcePool.Instance.GetIdleMotion(monsterBase.Model);
         mainBase.SetPosition(pos);
         mainBase.SetRotate(rot);
+
+        mainBase.InitRoleAttr(monsterBase);
+        mainBase.InitMotion();
+        FightLayerCommon.SetEnemyLayer(mainBase);
+
         GameUI.UIHPPanel.ShowHPItem(mainBase);
         AI_Base aiBase = mainBase.GetComponent<AI_Base>();
         aiBase.SetCombatLevel(10);
-
-        mainBase.InitRoleAttr(monsterBase);
 
         ++_SceneEnemyCnt;
     }

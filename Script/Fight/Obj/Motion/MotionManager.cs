@@ -6,7 +6,7 @@ using System;
 
 public class MotionManager : MonoBehaviour
 {
-    void Start()
+    public void InitMotion()
     {
         _EventController = GetComponent<GameBase.EventController>();
         if (_EventController == null)
@@ -26,6 +26,7 @@ public class MotionManager : MonoBehaviour
 
         _BaseMotionManager = GetComponent<BaseMotionManager>();
         _BaseMotionManager.Init();
+        _BaseMotionManager.MotionIdle();
 
         if (_NavAgent == null)
         {
@@ -49,6 +50,7 @@ public class MotionManager : MonoBehaviour
     #region motion
 
     public bool _IsRoleHit = false;
+    public float _RoleHitTime = 0.01f;
 
     private int _MotionPrior;
     public int MotionPrior
@@ -307,7 +309,7 @@ public class MotionManager : MonoBehaviour
         }
         _RoleAttrManager._MotionManager = this;
 
-        if (_IsRoleHit)
+        if (_RoleAttrManager.MotionType == MotionType.MainChar)
             _RoleAttrManager.InitMainRoleAttr();
         else if (_MonsterBase != null)
             _RoleAttrManager.InitEnemyAttr(_MonsterBase);

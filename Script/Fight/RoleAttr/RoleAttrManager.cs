@@ -67,6 +67,15 @@ public class RoleAttrManager : MonoBehaviour
         }
     }
 
+    private float _BaseMoveSpeed;
+    public float BaseMoveSpeed
+    {
+        get
+        {
+            return _BaseMoveSpeed;
+        }
+    }
+
     private float _SkillSpeed = 1;
     public float SkillSpeed
     {
@@ -93,6 +102,10 @@ public class RoleAttrManager : MonoBehaviour
         {
             return _MotionType;
         }
+        set
+        {
+            _MotionType = value;
+        }
     }
 
     //base
@@ -117,6 +130,16 @@ public class RoleAttrManager : MonoBehaviour
         }
     }
 
+    public RoleData BaseRoleDate
+    {
+        get
+        {
+            return PlayerDataPack.Instance._SelectedRole;
+        }
+    }
+
+    
+
     public Dictionary<FightAttr.FightAttrType, int> _ExAttrs = new Dictionary<FightAttr.FightAttrType, int>();
     #endregion
 
@@ -127,6 +150,7 @@ public class RoleAttrManager : MonoBehaviour
         var roleData = PlayerDataPack.Instance._SelectedRole;
         if (roleData != null)
         {
+            _BaseMoveSpeed = roleData.GetBaseMoveSpeed();
             _MoveSpeed = roleData.GetBaseMoveSpeed();
             _SkillSpeed = roleData.GetBaseAttackSpeed();
             _HPMax = roleData.GetBaseHP();
@@ -148,7 +172,8 @@ public class RoleAttrManager : MonoBehaviour
         }
         else
         {
-            _MoveSpeed = 1;
+            _BaseMoveSpeed = 4.5f;
+            _MoveSpeed = 4.5f;
             _SkillSpeed = 1;
             _HPMax = 1000;
             _HP = 1000;
@@ -162,7 +187,8 @@ public class RoleAttrManager : MonoBehaviour
 
     public void InitEnemyAttr(MonsterBaseRecord monsterBase)
     {
-        _MoveSpeed = 1;
+        _BaseMoveSpeed = 4;
+        _MoveSpeed = 4;
         _SkillSpeed = 1;
         _HPMax = 100;
         _HP = 100;
