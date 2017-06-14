@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "TDGame/SelectRect" {
 	Properties {
 		_Width ("Width", FlOAT) = 0.2
@@ -64,7 +66,7 @@ Shader "TDGame/SelectRect" {
 
 			fragmentInput vert(vertexInput i){
                 fragmentInput o;
-                o.position = mul (UNITY_MATRIX_MVP, i.vertex);
+                o.position = UnityObjectToClipPos (i.vertex);
 				o.modelPos = i.vertex;
                 return o;
             }

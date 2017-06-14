@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "Water/Water_RefletionTex" {
 	Properties {
 		_MainTex ("Base (RGB)", 2D) = "white" {}
@@ -44,7 +46,7 @@ Shader "Water/Water_RefletionTex" {
 			v2f_My vert(appdata_full v)
 			{
 				v2f_My o;
-				o.pos = mul(UNITY_MATRIX_MVP , v.vertex);
+				o.pos = UnityObjectToClipPos( v.vertex);
 				o.uv1 = v.texcoord.xyxy * _TexAtlasTiling.xyxy + frac((_Time.xxxx) * _TexAtlasTiling.zwzw);
 				o.uv1.zw = v.texcoord.xy;
 				o.c = v.color;

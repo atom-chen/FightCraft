@@ -1,4 +1,6 @@
-﻿// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 // Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
 
 Shader "TDGame/WuQiFightEffectShader" {
@@ -63,7 +65,7 @@ SubShader {
                     vertexOutput output;
  
                     output.tex = input.texcoord;
-                    output.pos = mul(UNITY_MATRIX_MVP, input.vertex);
+                    output.pos = UnityObjectToClipPos(input.vertex);
                     output.normal = input.normal;
                     output.worldpos =  mul(unity_ObjectToWorld,input.vertex);
                     return output;
@@ -135,7 +137,7 @@ SubShader {
                     o.tex = input.texcoord;		                            
                     if(_Outline > 0.0001)
                     {                    
-                        o.pos = mul(UNITY_MATRIX_MVP, input.vertex); 
+                        o.pos = UnityObjectToClipPos(input.vertex); 
 		                float3 norm   = mul ((float3x3)UNITY_MATRIX_IT_MV, input.normal);
 		                float2 offset = TransformViewToProjection(norm.xy); 
 		                o.pos.xy += offset * o.pos.z * _Outline;
@@ -207,7 +209,7 @@ SubShader {
                     vertexOutput output;
  
                     output.tex = input.texcoord;
-                    output.pos = mul(UNITY_MATRIX_MVP, input.vertex);
+                    output.pos = UnityObjectToClipPos(input.vertex);
                     output.normal = input.normal;
                     output.worldpos =  mul(unity_ObjectToWorld,input.vertex);
                     return output;

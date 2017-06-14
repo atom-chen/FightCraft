@@ -1,4 +1,6 @@
-﻿Shader "TDGame/Particles/MaskAlphaBlended" {
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "TDGame/Particles/MaskAlphaBlended" {
 	Properties {
 		_MainTex ("Particle Texture (RGB)", 2D) = "white" {}
         _MainTex_Alpha ("Particle Alpha Texture (RGB)", 2D) = "white" {}
@@ -45,7 +47,7 @@
 
                     vertexOutput vert(vertexInput v) {
                         vertexOutput o;
-                        o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+                        o.pos = UnityObjectToClipPos(v.vertex);
                         o.color = v.color;
                         o.uv = TRANSFORM_TEX(v.texcoord, _MainTex);
                         o.uv1 = TRANSFORM_TEX(v.texcoord1, _MaskTex);

@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 //这个脚本和脚本相关的shader就是个杯具
 //现在我已经看不懂shader和脚本了
 //任何修改的企图都是徒劳的
@@ -71,7 +73,7 @@ Shader "TDGame/SelectCircle1" {
 			fragmentInput vert(vertexInput i)
 			{
                 fragmentInput o;
-                o.position = mul (UNITY_MATRIX_MVP, i.vertex);
+                o.position = UnityObjectToClipPos (i.vertex);
 				o.modelPos = i.vertex;
                 return o;
             }

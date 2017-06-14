@@ -1,4 +1,6 @@
-﻿Shader "TDGame/SimpleAlphaSurface" {
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "TDGame/SimpleAlphaSurface" {
    Properties {
       _MainTex ("RGBA Texture Image", 2D) = "white" {} 
       _AlphaTex ("ALPHA Texture Image", 2D) = "white" {} 
@@ -38,7 +40,7 @@
             vertexOutput output;
  
             output.tex = input.texcoord;
-            output.pos = mul(UNITY_MATRIX_MVP, input.vertex);
+            output.pos = UnityObjectToClipPos(input.vertex);
             return output;
          }
  

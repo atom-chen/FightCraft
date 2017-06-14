@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "TDGame/Particles/Alpha Blended_PNG" {
     Properties {
         _MainTex ("Particle Texture", 2D) = "white" {}
@@ -38,7 +40,7 @@ Shader "TDGame/Particles/Alpha Blended_PNG" {
 
             vertexOutput vert(vertexInput v) {
                 vertexOutput o;
-                o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+                o.pos = UnityObjectToClipPos(v.vertex);
                 o.color = v.color;
                 o.uv = TRANSFORM_TEX(v.texcoord, _MainTex);
                 return o;

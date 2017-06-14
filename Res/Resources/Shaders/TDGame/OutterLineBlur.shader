@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "TDGame/OutterLineBlur" {
 
 Properties {
@@ -36,7 +38,7 @@ Category {
 					float offX = _MainTex_TexelSize.x * _BlurOffsets.x;
 					float offY = _MainTex_TexelSize.y * _BlurOffsets.y;
 
-					o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
+					o.pos = UnityObjectToClipPos (v.vertex);
 					o.uv = MultiplyUV (UNITY_MATRIX_TEXTURE0, v.texcoord.xy-float2(offX, offY));
 					o.off.x = offX;
 					o.off.y = offY;

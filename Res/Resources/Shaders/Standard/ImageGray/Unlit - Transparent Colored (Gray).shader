@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "Unlit/Transparent Colored (Gray)" {
 	Properties {
 		_MainTex ("Base (ARGB)", 2D) = "black" {}
@@ -47,7 +49,7 @@ Shader "Unlit/Transparent Colored (Gray)" {
 			};
 			v2f vert (appdata v) {
 			    v2f o;
-			    o.pos = mul( UNITY_MATRIX_MVP, v.vertex );
+			    o.pos = UnityObjectToClipPos( v.vertex );
 			    o.uv = float4( v.texcoord.xy, 0, 0 );
 				o.color = v.color;
 			    return o;

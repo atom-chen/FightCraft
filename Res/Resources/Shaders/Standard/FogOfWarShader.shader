@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "HxageShaders/FogOfWarShader" {
 	Properties {
 		_MainTex ("Base (RGB)", 2D) = "black" {}
@@ -36,7 +38,7 @@ Shader "HxageShaders/FogOfWarShader" {
 			v2f vert(vIn _in)
 			{
 				v2f output;
-				output.position = mul(UNITY_MATRIX_MVP,_in.vertex);
+				output.position = UnityObjectToClipPos(_in.vertex);
 				output.uv = _in.texcoord;
 				return output;
 			}

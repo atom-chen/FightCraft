@@ -1,4 +1,6 @@
-﻿Shader "TDGame/GuideBackgroup" {
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "TDGame/GuideBackgroup" {
 	Properties {
         _MainColor("Main Color",Color) = (1,1,1,1)
         _Rect ("Rect",Vector) = (0,0,0,0)
@@ -18,7 +20,7 @@
         v2f vert(appdata_base v)
         {
             v2f o;
-            o.pos = mul(UNITY_MATRIX_MVP,v.vertex);
+            o.pos = UnityObjectToClipPos(v.vertex);
             o.uv = v.texcoord.xy;
             return o;
         }

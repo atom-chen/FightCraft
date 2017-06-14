@@ -16,7 +16,7 @@ namespace NavMeshExtension
     public class AgentAnimator : MonoBehaviour
     {
         //movement script references
-        private NavMeshAgent nAgent;
+        private UnityEngine.AI.NavMeshAgent nAgent;
         //Mecanim animator reference
         private Animator animator;
 
@@ -25,7 +25,7 @@ namespace NavMeshExtension
         void Start()
         {
             animator = GetComponentInChildren<Animator>();
-            nAgent = GetComponent<NavMeshAgent>();
+            nAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         }
 
 

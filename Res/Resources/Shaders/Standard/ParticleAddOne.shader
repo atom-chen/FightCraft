@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "HxageShaders/Particles/ParticleAddOne"
  {
  
@@ -54,7 +56,7 @@ Shader "HxageShaders/Particles/ParticleAddOne"
                  
                 V2F output;
      
-                output.pos = mul(UNITY_MATRIX_MVP,v.vertex);
+                output.pos = UnityObjectToClipPos(v.vertex);
 				output.col = v.color;
                 output.txr1 = v.texcoord;
              

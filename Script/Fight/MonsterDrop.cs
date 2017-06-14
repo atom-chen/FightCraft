@@ -186,8 +186,8 @@ public class MonsterDrop
         pos.x = monsterMotion.transform.position.x + Mathf.Sin(angle) * range;
         pos.z = monsterMotion.transform.position.z + Mathf.Cos(angle) * range;
 
-        NavMeshHit navMeshHit;
-        if (NavMesh.SamplePosition(pos, out navMeshHit, range, NavMesh.AllAreas))
+        UnityEngine.AI.NavMeshHit navMeshHit;
+        if (UnityEngine.AI.NavMesh.SamplePosition(pos, out navMeshHit, range, UnityEngine.AI.NavMesh.AllAreas))
         {
             return navMeshHit.position;
         }

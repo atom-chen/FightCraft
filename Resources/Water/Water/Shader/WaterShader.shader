@@ -1,4 +1,6 @@
-﻿// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 
 // Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 
@@ -94,7 +96,7 @@ Shader "TYImage/Water"
 		tmpvar_6.zw = float2(0.0, 0.0);
 		tmpvar_6.xy = ((tmpvar_4 * _WaveFreqSpeed1.xy) + (tmpvar_5 * _WaveFreqSpeed1.zw));
 
-		o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+		o.pos = UnityObjectToClipPos(v.vertex);
 		o.texcoord0 = (_WorldSpaceCameraPos - tmpvar_2.xyz);
 		o.texcoord1 = tmpvar_6;
 		o.texcoord2 = ((tmpvar_4 * _WaveFreqSpeed2.xy) + (tmpvar_5 * _WaveFreqSpeed2.zw));

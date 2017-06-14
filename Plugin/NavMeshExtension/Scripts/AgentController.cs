@@ -12,7 +12,7 @@ using NavMeshExtension;
 /// <summary>
 /// Example integration of NavMesh Agents with portal behavior.
 /// <summary>
-[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(UnityEngine.AI.NavMeshAgent))]
 public class AgentController : MonoBehaviour
 {
     /// <summary>
@@ -23,7 +23,7 @@ public class AgentController : MonoBehaviour
     //reference to pointer object
     private static GameObject pointerObj;
     //reference to agent
-    private NavMeshAgent agent;
+    private UnityEngine.AI.NavMeshAgent agent;
     //resulting path from the PortalManager call
     private Vector3[] path;
 
@@ -34,7 +34,7 @@ public class AgentController : MonoBehaviour
         if(!pointerObj) 
             pointerObj = (GameObject)Instantiate(pointer, transform.position, Quaternion.identity);
         
-        agent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
     }
 
 
@@ -90,7 +90,7 @@ public class AgentController : MonoBehaviour
             //wait until we reached this position
             float remain = agent.remainingDistance;
             while (remain == Mathf.Infinity || remain - agent.stoppingDistance > float.Epsilon
-            || agent.pathStatus != NavMeshPathStatus.PathComplete)
+            || agent.pathStatus != UnityEngine.AI.NavMeshPathStatus.PathComplete)
             {
                 remain = agent.remainingDistance;
                 yield return null;

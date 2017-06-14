@@ -7,6 +7,8 @@ using System.IO;
 public class CommonTool : Editor
 {
 
+    #region disableCollider
+
     [MenuItem("TyTools/Map/DisableMapCollider")]
     public static void DisableMapCollider()
     {
@@ -16,8 +18,6 @@ public class CommonTool : Editor
             DisableCollider(selectGO as GameObject);
         }
     }
-
-    #region particleTime
 
     private static void DisableCollider(GameObject particleObj)
     {
@@ -29,5 +29,36 @@ public class CommonTool : Editor
     }
 
     #endregion
-    
+
+    #region disableshadow
+
+    [MenuItem("TyTools/Model/DisableShadow")]
+    public static void DisableShadow()
+    {
+        var selects = Selection.GetFiltered(typeof(GameObject), SelectionMode.TopLevel);
+        foreach (var selectGO in selects)
+        {
+            DisableShadow(selectGO as GameObject);
+        }
+    }
+
+    private static void DisableShadow(GameObject particleObj)
+    {
+        var skinRenders = particleObj.GetComponentsInChildren<SkinnedMeshRenderer>();
+        foreach (var render in skinRenders)
+        {
+            render.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            render.receiveShadows = false;
+        }
+
+        var meshRenders = particleObj.GetComponentsInChildren<MeshRenderer>();
+        foreach (var render in meshRenders)
+        {
+            render.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            render.receiveShadows = false;
+        }
+    }
+
+    #endregion
+
 }

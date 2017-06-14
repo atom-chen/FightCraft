@@ -79,7 +79,7 @@ namespace NavMeshExtension
         static Vector3? FindNearest(Transform parent, Vector3 pos)
         {
             //initialize variables
-            NavMeshPath path = new NavMeshPath();
+            UnityEngine.AI.NavMeshPath path = new UnityEngine.AI.NavMeshPath();
             Vector3? nearest = null;
             float distance = Mathf.Infinity;
 
@@ -93,8 +93,8 @@ namespace NavMeshExtension
                 Vector3 portal = portals[parent][i].position;
                 float length = Mathf.Infinity;
                 //let Unity calculate the path and set length, if valid
-                if (NavMesh.CalculatePath(pos, portal, -1, path)
-                    && path.status == NavMeshPathStatus.PathComplete)
+                if (UnityEngine.AI.NavMesh.CalculatePath(pos, portal, -1, path)
+                    && path.status == UnityEngine.AI.NavMeshPathStatus.PathComplete)
                     length = PathLength(path);
 
                 if (length < distance)
@@ -109,7 +109,7 @@ namespace NavMeshExtension
 
 
         //returns the length of a Unity-constructed NavMesh path
-        static float PathLength(NavMeshPath path)
+        static float PathLength(UnityEngine.AI.NavMeshPath path)
         {
             //passed in path is too short
             if (path.corners.Length < 2)
@@ -244,10 +244,10 @@ namespace NavMeshExtension
                     this.start = start;
 
                     //initialize variables
-                    NavMeshPath p = new NavMeshPath();
+                    UnityEngine.AI.NavMeshPath p = new UnityEngine.AI.NavMeshPath();
                     //let Unity calculate this path and set target, if valid
-                    if (NavMesh.CalculatePath(start, instance.final, -1, p)
-                        && p.status == NavMeshPathStatus.PathComplete)
+                    if (UnityEngine.AI.NavMesh.CalculatePath(start, instance.final, -1, p)
+                        && p.status == UnityEngine.AI.NavMeshPathStatus.PathComplete)
                     {
                         this.target = instance.final;
                     }
@@ -303,12 +303,12 @@ namespace NavMeshExtension
                 public void CalculateLength(float parLength)
                 {
                     //initialize variables
-                    NavMeshPath path = new NavMeshPath();
+                    UnityEngine.AI.NavMeshPath path = new UnityEngine.AI.NavMeshPath();
                     float myLength = Mathf.Infinity;
                     
                     //let Unity calculate this path
                     if (target.HasValue &&
-                        NavMesh.CalculatePath(start, target.Value, -1, path))
+                        UnityEngine.AI.NavMesh.CalculatePath(start, target.Value, -1, path))
                     {
                         myLength = parLength + PathLength(path);
                     }

@@ -161,6 +161,11 @@ namespace NavMeshExtension
                 //rename instance to prefab name
                 gObj.name = assetName + timestamp;
             }
+
+            if (GUILayout.Button("Create Mesh"))
+            {
+                script.CreateMeshFromPoints();
+            }
         }
     
 
@@ -505,7 +510,7 @@ namespace NavMeshExtension
         {
             mesh.RecalculateNormals();
             mesh.RecalculateBounds();
-            mesh.Optimize();
+            ;
         }
 
 

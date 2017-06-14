@@ -11,6 +11,10 @@ public class ShowFPS : MonoBehaviour {
 
     private float f_Fps;
 
+    private GUIStyle style;
+    private Color color = Color.green;
+    public Rect startRect = new Rect(0, 0, 50, 50);
+
     void Start() 
     {
 		//Application.targetFrameRate=60;
@@ -22,7 +26,25 @@ public class ShowFPS : MonoBehaviour {
 
     void OnGUI() 
     {
-        GUI.Label(new Rect(0, 100, 200, 200), "FPS:" + f_Fps.ToString("f2"));
+
+        if (style == null)
+        {
+            style = new GUIStyle(GUI.skin.label);
+            style.normal.textColor = Color.white;
+            style.alignment = TextAnchor.MiddleCenter;
+        }
+
+        GUI.color = color;
+        Rect rect = startRect;
+        rect.x += Screen.width / 2 - rect.width / 2;
+        startRect = GUI.Window(0, rect, DoMyWindow, "");
+        startRect.x -= Screen.width / 2 - rect.width / 2;
+
+    }
+
+    void DoMyWindow(int windowID)
+    {
+        GUI.Label(new Rect(0, -15, startRect.width, startRect.height), f_Fps + " FPS", style);
     }
 
     void Update() 

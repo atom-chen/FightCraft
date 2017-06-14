@@ -10,7 +10,7 @@ public class ImpactNoCollider : ImpactBuff
         base.ActBuff(senderManager, reciverManager);
 
         reciverManager.TriggerCollider.enabled = false;
-        reciverManager.NavAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+        reciverManager.NavAgent.obstacleAvoidanceType = UnityEngine.AI.ObstacleAvoidanceType.NoObstacleAvoidance;
     }
 
     public override void RemoveBuff(MotionManager reciverManager)
@@ -18,6 +18,6 @@ public class ImpactNoCollider : ImpactBuff
         base.RemoveBuff(reciverManager);
 
         reciverManager.TriggerCollider.enabled = true;
-        reciverManager.NavAgent.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
+        reciverManager.NavAgent.obstacleAvoidanceType = UnityEngine.AI.ObstacleAvoidanceType.LowQualityObstacleAvoidance;
     }
 }

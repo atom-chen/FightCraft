@@ -1,4 +1,6 @@
-﻿Shader "TYImage/CharOutline" {
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "TYImage/CharOutline" {
 	Properties {
 		_AlphaTex ("ALPHA Texture Image", 2D) = "white" {} 
 		_OutlineColor ("Outline Color", Color) = (0,0,0,1)
@@ -30,7 +32,7 @@ CGINCLUDE
 		// just make a copy of incoming vertex data but scaled according to normal direction
 		vertexOutput o;
         o.tex = input.texcoord;
-		o.pos = mul(UNITY_MATRIX_MVP, input.vertex);
+		o.pos = UnityObjectToClipPos(input.vertex);
  
 		float3 norm   = mul ((float3x3)UNITY_MATRIX_IT_MV, input.normal);
 		float2 offset = TransformViewToProjection(norm.xy);

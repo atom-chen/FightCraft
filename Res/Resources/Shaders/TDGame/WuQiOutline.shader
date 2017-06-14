@@ -1,4 +1,6 @@
-﻿Shader "TDGame/WuQiOutline" {
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "TDGame/WuQiOutline" {
 	Properties {
 		_MainTex ("Base (RGB)", 2D) = "white" { }
 		_AlphaTex ("ALPHA Texture Image", 2D) = "white" {} 
@@ -31,7 +33,7 @@ CGINCLUDE
 		// just make a copy of incoming vertex data but scaled according to normal direction
 		vertexOutput o;
         o.tex = input.texcoord;
-		o.pos = mul(UNITY_MATRIX_MVP, input.vertex);
+		o.pos = UnityObjectToClipPos(input.vertex);
  
 		float3 norm   = mul ((float3x3)UNITY_MATRIX_IT_MV, input.normal);
 		float2 offset = TransformViewToProjection(norm.xy);

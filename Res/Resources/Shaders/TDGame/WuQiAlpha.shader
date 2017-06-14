@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "TDGame/WuQiAlpha" 
 {
 	Properties {
@@ -38,7 +40,7 @@ Shader "TDGame/WuQiAlpha"
             vertexOutput output;
  
             output.tex = input.texcoord;
-            output.pos = mul(UNITY_MATRIX_MVP, input.vertex);
+            output.pos = UnityObjectToClipPos(input.vertex);
             return output;
          }
  

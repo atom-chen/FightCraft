@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "TDGame/RoleShadow" {
 	Properties {
 		_Range ("Range", FLOAT) = 0.2
@@ -29,7 +31,7 @@ Shader "TDGame/RoleShadow" {
             fragmentInput vert(float4 v:POSITION) 
 			{
 				fragmentInput o;
-				o.position = mul (UNITY_MATRIX_MVP, v);
+				o.position = UnityObjectToClipPos (v);
 				o.modelPos = v;
                 return o;
             }

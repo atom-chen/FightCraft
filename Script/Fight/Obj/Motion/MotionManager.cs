@@ -30,7 +30,7 @@ public class MotionManager : MonoBehaviour
 
         if (_NavAgent == null)
         {
-            _NavAgent = GetComponent<NavMeshAgent>();
+            _NavAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         }
 
         InitSkills();
@@ -522,14 +522,14 @@ public class MotionManager : MonoBehaviour
     private static int _HeroNavPrior = 20;
     private static int _HeroCorpsePrior = 19;
 
-    private NavMeshAgent _NavAgent;
-    public NavMeshAgent NavAgent
+    private UnityEngine.AI.NavMeshAgent _NavAgent;
+    public UnityEngine.AI.NavMeshAgent NavAgent
     {
         get
         {
             if (_NavAgent == null)
             {
-                _NavAgent = GetComponent<NavMeshAgent>();
+                _NavAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
             }
             return _NavAgent;
         }
@@ -540,8 +540,8 @@ public class MotionManager : MonoBehaviour
 
     public void SetPosition(Vector3 position)
     {
-        NavMeshHit navHit = new NavMeshHit();
-        if (!NavMesh.SamplePosition(position, out navHit, 5, NavMesh.AllAreas))
+        UnityEngine.AI.NavMeshHit navHit = new UnityEngine.AI.NavMeshHit();
+        if (!UnityEngine.AI.NavMesh.SamplePosition(position, out navHit, 5, UnityEngine.AI.NavMesh.AllAreas))
         {
             return;
         }
@@ -593,8 +593,8 @@ public class MotionManager : MonoBehaviour
         }
 
         var destPoint = transform.position + moveVec;
-        NavMeshHit navHit = new NavMeshHit();
-        if (!NavMesh.SamplePosition(destPoint, out navHit, 5, NavMesh.AllAreas))
+        UnityEngine.AI.NavMeshHit navHit = new UnityEngine.AI.NavMeshHit();
+        if (!UnityEngine.AI.NavMesh.SamplePosition(destPoint, out navHit, 5, UnityEngine.AI.NavMesh.AllAreas))
         {
             return;
         }

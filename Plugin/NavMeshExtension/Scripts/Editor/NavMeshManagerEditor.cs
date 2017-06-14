@@ -103,7 +103,7 @@ namespace NavMeshExtension
             }
 
             //trigger navmesh builder
-            NavMeshBuilder.BuildNavMesh();
+            UnityEditor.AI.NavMeshBuilder.BuildNavMesh();
             //re-enable disabled renderers
             disabledObjects.ForEach(obj => obj.enabled = false);
 

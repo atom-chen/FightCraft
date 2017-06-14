@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "TDGame/TransparentBlend" 
 {
     Properties 
@@ -45,7 +47,7 @@ Shader "TDGame/TransparentBlend"
             vertexOutput vert(vertexInput v) {
                 vertexOutput o;
                 o.uv = TRANSFORM_TEX(v.texcoord0, _MainTex);
-                o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+                o.pos = UnityObjectToClipPos(v.vertex);
                 return o;
             }
 			

@@ -15,7 +15,7 @@ public class BaseMotionManager : MonoBehaviour
     public void Init()
     {
         _MotionManager = gameObject.GetComponent<MotionManager>();
-        _NavAgent = gameObject.GetComponent<NavMeshAgent>();
+        _NavAgent = gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
 
         _MotionManager.AddAnimationEndEvent(_HitAnim);
         _MotionManager.AddAnimationEndEvent(_RiseAnim);
@@ -158,7 +158,7 @@ public class BaseMotionManager : MonoBehaviour
 
     public AnimationClip _MoveAnim;
 
-    private NavMeshAgent _NavAgent;
+    private UnityEngine.AI.NavMeshAgent _NavAgent;
 
     public bool IsMoving()
     {
@@ -238,7 +238,7 @@ public class BaseMotionManager : MonoBehaviour
     {
         if (_NavAgent == null)
         {
-            _NavAgent = GetComponent<NavMeshAgent>();
+            _NavAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         }
 
         _TargetVec += moveVec;

@@ -195,7 +195,7 @@ namespace NavMeshExtension
             //recalculate and optimize
             myFilter.sharedMesh.RecalculateNormals();
             myFilter.sharedMesh.RecalculateBounds();
-            myFilter.sharedMesh.Optimize();
+            var o_197_12_636329683418531818 = myFilter.sharedMesh;
         }
 
 
@@ -323,12 +323,39 @@ namespace NavMeshExtension
             //recalculate and optimize
             subMesh.RecalculateNormals();
             subMesh.RecalculateBounds();
-            subMesh.Optimize();
+            ;
 
             //assign mesh to filter
             subFilter.mesh = subMesh;
         }
 
+        public void CreateMeshFromPoints()
+        {
+            var meshFilter = GetComponent<MeshFilter>();
+            if (meshFilter == null)
+                return;
+
+            Vector2[] uvs = new Vector2[list.Count];
+            for (int i = 0; i < list.Count; i++)
+            {
+                if ((i % 2) == 0)
+                    uvs[i] = new Vector2(0, 0);
+                else
+                    uvs[i] = new Vector2(1, 1);
+            }
+
+            meshFilter.mesh.vertices = list.ToArray();
+            meshFilter.mesh.uv = uvs;
+            List<int> triangleList = new List<int>();
+            for (int i = 0; i < list.Count; ++i)
+            {
+                triangleList.Add(i);
+            }
+            meshFilter.mesh.triangles = RecalculateTriangles(triangleList);
+            meshFilter.mesh.RecalculateNormals();
+            meshFilter.mesh.RecalculateBounds();
+            var o_356_12_636329683418752402 = meshFilter.mesh;
+        }
 
         /// <summary>
         /// Recalculates a triangle array for a given list of vertex indices.
