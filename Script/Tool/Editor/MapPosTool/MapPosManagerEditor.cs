@@ -33,6 +33,16 @@ public class MapPosManagerEditor : Editor
         {
             CreatePosGroup();
         }
+
+        if (GUILayout.Button("Fit Areas"))
+        {
+            var passArea = script.GetComponent<FightSceneLogicPassArea>();
+            if (passArea == null)
+                return;
+
+            var areas = script.GetComponentsInChildren<FightSceneAreaBase>();
+            passArea._FightArea = new List<FightSceneAreaBase>(areas);
+        }
     }
 
 

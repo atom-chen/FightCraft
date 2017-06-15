@@ -314,7 +314,10 @@ public class MotionManager : MonoBehaviour
         else if (_MonsterBase != null)
             _RoleAttrManager.InitEnemyAttr(_MonsterBase);
         else
+        {
+            _RoleAttrManager.InitTestAttr();
             Debug.LogError("MonsterBase is Null");
+        }
     }
 
     public void MotionDie()

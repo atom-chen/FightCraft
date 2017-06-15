@@ -74,7 +74,12 @@ public class FightSceneAreaKBossWithFish : FightSceneAreaBase
     private void CreateEngoughEnemy()
     {
         int randomPos = Random.Range(0, _EnemyBornPos.Length);
-        FightManager.Instance.InitEnemy(GetRandomEnmeyID(), _EnemyBornPos[randomPos].position, _EnemyBornPos[randomPos].rotation.eulerAngles);
+        var enemyMotion = FightManager.Instance.InitEnemy(GetRandomEnmeyID(), _EnemyBornPos[randomPos].position, _EnemyBornPos[randomPos].rotation.eulerAngles);
+        AI_CloseAttack ai = enemyMotion.GetComponent<AI_CloseAttack>();
+        if (ai != null)
+        {
+            ai._AlertRange = 1000;
+        }
         ++_LivingEnemyCnt;
     }
 

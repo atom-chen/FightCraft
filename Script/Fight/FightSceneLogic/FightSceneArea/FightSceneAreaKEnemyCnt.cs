@@ -82,7 +82,12 @@ public class FightSceneAreaKEnemyCnt : FightSceneAreaBase
             _InitPosIdx = 0;
         }
 
-        FightManager.Instance.InitEnemy(GetRandomEnmeyID(), _EnemyBornPos[_InitPosIdx].position, _EnemyBornPos[_InitPosIdx].rotation.eulerAngles);
+        var enemyMotion = FightManager.Instance.InitEnemy(GetRandomEnmeyID(), _EnemyBornPos[_InitPosIdx].position, _EnemyBornPos[_InitPosIdx].rotation.eulerAngles);
+        AI_CloseAttack ai = enemyMotion.GetComponent<AI_CloseAttack>();
+        if (ai != null)
+        {
+            ai._AlertRange = 1000;
+        }
         ++_InitPosIdx;
         ++_CurEnemyCnt;
     }

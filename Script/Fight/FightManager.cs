@@ -350,11 +350,11 @@ public class FightManager : SingleClass<FightManager>
         }
     }
 
-    public void InitEnemy(string monsterID, Vector3 pos, Vector3 rot)
+    public MotionManager InitEnemy(string monsterID, Vector3 pos, Vector3 rot)
     {
         var monsterBase = Tables.TableReader.MonsterBase.GetRecord(monsterID);
         if (monsterBase == null)
-            return;
+            return null;
 
         var mainBase = ResourcePool.Instance.GetIdleMotion(monsterBase.Model);
         mainBase.SetPosition(pos);
@@ -369,6 +369,8 @@ public class FightManager : SingleClass<FightManager>
         aiBase.SetCombatLevel(10);
 
         ++_SceneEnemyCnt;
+
+        return mainBase;
     }
 
     public void ObjDie(MotionManager objMotion)

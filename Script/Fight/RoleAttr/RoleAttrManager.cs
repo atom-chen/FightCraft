@@ -200,6 +200,21 @@ public class RoleAttrManager : MonoBehaviour
         InitEvent();
     }
 
+    public void InitTestAttr()
+    {
+        _BaseMoveSpeed = 4;
+        _MoveSpeed = 4;
+        _SkillSpeed = 1;
+        _HPMax = 100;
+        _HP = 100;
+        _Attack = 5;
+        _Defence = 1;
+        _Level = 1;
+        _MonsterValue = 1;
+
+        InitEvent();
+    }
+
     public float GetBaseAttr(BaseAttr attr)
     {
         switch (attr)
