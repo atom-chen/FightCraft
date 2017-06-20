@@ -196,7 +196,24 @@ public class MonsterDrop
 
     public static void PickItem(DropItem dropItem)
     {
-        Debug.Log("PickItem");
+        if (dropItem.DropData._DropGold > 0)
+        {
+            PlayerDataPack.Instance.AddGold(dropItem.DropData._DropGold);
+        }
+        else if (dropItem.DropData._ItemEquip != null)
+        {
+            if (!BackBagPack.Instance.AddEquip(dropItem.DropData._ItemEquip))
+                return;
+        }
+        else if (dropItem.DropData._ItemBase != null)
+        {
+            if (!BackBagPack.Instance.AddItem(dropItem.DropData._ItemBase))
+                return;
+        }
+        else
+        {
+            Debug.Log("Drop Empty");
+        }
         GameBase.ResourceManager.Instance.DestoryObj(dropItem.gameObject);
     }
 }

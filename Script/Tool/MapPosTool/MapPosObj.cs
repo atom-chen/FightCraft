@@ -29,6 +29,7 @@ public class MapPosObj : MonoBehaviour
         obj.transform.localPosition = Vector3.zero;
         obj.transform.localRotation = Quaternion.Euler(Vector3.zero);
         obj.name = "ShowChil";
+        obj.SetActive(true);
     }
 
     public void RemoveShow()

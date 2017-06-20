@@ -12,6 +12,7 @@ namespace NavMeshExtension
     /// Custom Editor for editing vertices and exporting the mesh.
     /// </summary>
     [CustomEditor(typeof(MapPosObj))]
+    [CanEditMultipleObjects]
     public class MapPosObjEditor : Editor
     {
         //navmesh object reference

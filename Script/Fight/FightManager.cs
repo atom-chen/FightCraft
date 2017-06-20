@@ -11,9 +11,9 @@ public class FightManager : SingleClass<FightManager>
     void Start ()
     {
         _Instance = this;
+        InitResourcePool();
         InitScene();
         InitMainRole();
-        InitResourcePool();
         InitCamera();
     }
 	
@@ -373,14 +373,18 @@ public class FightManager : SingleClass<FightManager>
         return mainBase;
     }
 
-    public void ObjDie(MotionManager objMotion)
+    public void ObjDisapear(MotionManager objMotion)
     {
         ResourcePool.Instance.RecvIldeMotion(objMotion);
-        _FightScene.MotionDie(objMotion);
 
         --_SceneEnemyCnt;
+    }
 
+    public void ObjCorpse(MotionManager objMotion)
+    {
+        _FightScene.MotionDie(objMotion);
         MonsterDrop.MonsterDripItems(objMotion);
+        --_SceneEnemyCnt;
     }
 
     #endregion

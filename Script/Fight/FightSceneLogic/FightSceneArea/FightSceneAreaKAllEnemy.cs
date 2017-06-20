@@ -26,6 +26,11 @@ public class FightSceneAreaKAllEnemy : FightSceneAreaBase
 
     }
 
+    public override Transform GetAreaTransform()
+    {
+        return _EnemyBornPos[0]._EnemyTransform;
+    }
+
     #region enemy step
 
     public SerializeEnemyInfo[] _EnemyBornPos;

@@ -31,7 +31,11 @@ public class MotionManager : MonoBehaviour
         if (_NavAgent == null)
         {
             _NavAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+            //_NavAgent.obstacleAvoidanceType = UnityEngine.AI.ObstacleAvoidanceType.NoObstacleAvoidance;
+            //_NavAgent.avoidancePriority = 0;
         }
+
+        TriggerCollider.enabled = true;
 
         InitSkills();
     }
@@ -328,11 +332,17 @@ public class MotionManager : MonoBehaviour
         _EventController.PushEvent(GameBase.EVENT_TYPE.EVENT_MOTION_FLY, this, new Hashtable());
     }
 
+    public void MotionCorpse()
+    {
+        TriggerCollider.enabled = false;
+        FightManager.Instance.ObjCorpse(this);
+    }
+
     public void MotionDisappear()
     {
         if (FightManager.Instance != null)
         {
-            FightManager.Instance.ObjDie(this);
+            FightManager.Instance.ObjDisapear(this);
         }
     }
 
@@ -606,46 +616,46 @@ public class MotionManager : MonoBehaviour
 
     public void SetCorpsePrior()
     {
-        int corpsePrior = 99;
-        switch (RoleAttrManager.MotionType)
-        {
-            case MotionType.Normal:
-                corpsePrior = _NormalCorpsePrior;
-                break;
-            case MotionType.Elite:
-                corpsePrior = _EliteCorpsePrior;
-                break;
-            case MotionType.Hero:
-                corpsePrior = _HeroCorpsePrior;
-                break;
-            case MotionType.MainChar:
-                corpsePrior = _PlayerCorpsePrior;
-                break;
-        }
+        //int corpsePrior = 99;
+        //switch (RoleAttrManager.MotionType)
+        //{
+        //    case MotionType.Normal:
+        //        corpsePrior = _NormalCorpsePrior;
+        //        break;
+        //    case MotionType.Elite:
+        //        corpsePrior = _EliteCorpsePrior;
+        //        break;
+        //    case MotionType.Hero:
+        //        corpsePrior = _HeroCorpsePrior;
+        //        break;
+        //    case MotionType.MainChar:
+        //        corpsePrior = _PlayerCorpsePrior;
+        //        break;
+        //}
 
-        _NavAgent.avoidancePriority = corpsePrior;
+        //_NavAgent.avoidancePriority = corpsePrior;
     }
 
     public void ResumeCorpsePrior()
     {
-        int corpsePrior = 99;
-        switch (RoleAttrManager.MotionType)
-        {
-            case MotionType.Normal:
-                corpsePrior = _NormalNavPrior;
-                break;
-            case MotionType.Elite:
-                corpsePrior = _EliteNavPrior;
-                break;
-            case MotionType.Hero:
-                corpsePrior = _HeroNavPrior;
-                break;
-            case MotionType.MainChar:
-                corpsePrior = _PlayerNavPrior;
-                break;
-        }
+        //int corpsePrior = 99;
+        //switch (RoleAttrManager.MotionType)
+        //{
+        //    case MotionType.Normal:
+        //        corpsePrior = _NormalNavPrior;
+        //        break;
+        //    case MotionType.Elite:
+        //        corpsePrior = _EliteNavPrior;
+        //        break;
+        //    case MotionType.Hero:
+        //        corpsePrior = _HeroNavPrior;
+        //        break;
+        //    case MotionType.MainChar:
+        //        corpsePrior = _PlayerNavPrior;
+        //        break;
+        //}
 
-        _NavAgent.avoidancePriority = corpsePrior;
+        //_NavAgent.avoidancePriority = corpsePrior;
     }
 
     #endregion

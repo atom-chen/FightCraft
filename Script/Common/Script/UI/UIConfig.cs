@@ -11,6 +11,7 @@ namespace GameUI
         MainFunUI,
         PopUI,
         MessageUI,
+        TopUI
     }
 
     public class UIConfig

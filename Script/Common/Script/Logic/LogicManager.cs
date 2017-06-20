@@ -100,12 +100,11 @@ namespace GameLogic
         public void EnterFight(StageInfoRecord enterStage)
         {
             _EnterStageInfo = enterStage;
+
+            GameUI.UILoadingScene.ShowAsyn(_EnterStageInfo.ScenePath);
             var sceneLoader = GameCore.Instance.SceneManager.ChangeFightScene(_EnterStageInfo.ScenePath);
 
             GameCore.Instance.UIManager.HideAllUI();
-
-            GameUI.UILoadingScene.ShowAsyn(GameCore.Instance.SceneManager.GetFightSceneName(), sceneLoader);
-
         }
 
         public void EnterFightFinish()
@@ -121,12 +120,12 @@ namespace GameLogic
 
         public void ExitFight()
         {
-            var sceneLoader = GameCore.Instance.SceneManager.ChangeLogicScene();
+            //var sceneLoader = GameCore.Instance.SceneManager.ChangeLogicScene();
 
+            GameUI.UILoadingScene.ShowAsyn(GameDefine.GAMELOGIC_SCENE_NAME);
 
             GameCore.Instance.UIManager.HideAllUI();
 
-            GameUI.UILoadingScene.ShowAsyn(GameDefine.GAMELOGIC_SCENE_NAME, sceneLoader);
         }
 
         private void InitFightScene()

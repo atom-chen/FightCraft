@@ -7,45 +7,212 @@ using System;
 
 public class UIContainerBase : UIBase
 {
-
-    
-
-    public int _InitShowCnt;
-    public Transform _ContainerObj;
-    public UIItemBase _ContainItemPre;
-
-    protected List<UIItemBase> _ItemPrefabList = new List<UIItemBase>();
-    protected List<object> _ValueList = new List<object>();
-    protected UIItemBase.ItemClick _OnClickItem;
-
-    private int _RealInitShowCnt;
-
-    public virtual void InitContentItem(ICollection valueList, UIItemBase.ItemClick onClick = null, Hashtable exhash = null)
+    public class ContentPos
     {
-        _ValueList.Clear();
-        if (valueList == null)
-            return;
+        public Vector2 Pos;
+        public object Obj;
 
-        foreach (var itemValue in valueList)
+        public UIItemBase ShowItem;
+    }
+
+    void OnDisable()
+    {
+        _ContainerObj.anchoredPosition = Vector2.zero;
+    }
+
+    void OnEnable()
+    {
+        if (!_HasInit)
         {
-            _ValueList.Add(itemValue);
+            StartInitContainer();
+        }
+    }
+
+    #region calculate rect
+
+    protected float _ViewPortWidth = 0;
+    protected float _ViewPortHeight = 0;
+    protected float _ContentCanvasWidth = 0;
+    protected float _ContentCanvasHeight = 0;
+    protected int _ContentRow = 0;
+    protected int _ContentColumn = 0;
+
+    protected int _ShowRowCount = 0;
+    protected int _ShowColumnCount = 0;
+
+    public int _InitItemCount = 0;
+
+    private void CalculateRect(ICollection items)
+    {
+        int itemCount = items.Count;
+
+        _ViewPortWidth = _ScrollTransform.sizeDelta.x;
+        _ViewPortHeight = _ScrollTransform.sizeDelta.y;
+
+        _ContentColumn = 1;
+        _ContentRow = 1;
+        if (_LayoutGroup.constraint == GridLayoutGroup.Constraint.FixedRowCount)
+        {
+            _ContentColumn = _LayoutGroup.constraintCount;
+            _ContentRow = itemCount / _ContentColumn;
+            if (itemCount % _ContentColumn > 0)
+            {
+                ++_ContentRow;
+            }
+        }
+        else if (_LayoutGroup.constraint == GridLayoutGroup.Constraint.FixedColumnCount)
+        {
+            _ContentRow = _LayoutGroup.constraintCount;
+            _ContentColumn = itemCount / _ContentRow;
+            if (itemCount % _ContentRow > 0)
+            {
+                ++_ContentColumn;
+            }
         }
 
-        _RealInitShowCnt = Math.Min(_ValueList.Count, _InitShowCnt);
+        _ValueList.Clear();
+        int i = 0;
+        var enumerator = items.GetEnumerator();
+        enumerator.Reset();
+        while (enumerator.MoveNext())
+        //for (int i = 0; i < itemCount; ++i)
+        {
+            int column = i / _ContentRow;
+            int row = i % _ContentRow;
 
+            var contentPos = new ContentPos();
+            contentPos.Pos = new Vector2(
+                row * (_LayoutGroup.cellSize.x + _LayoutGroup.spacing.x) + _LayoutGroup.cellSize.x * 0.5f,
+                -column * (_LayoutGroup.cellSize.y + _LayoutGroup.spacing.y) - _LayoutGroup.cellSize.y * 0.5f);
+            contentPos.Obj = enumerator.Current;
+            _ValueList.Add(contentPos);
+
+            ++i;
+        }
+
+        
+        _ContentCanvasWidth = _LayoutGroup.cellSize.x * _ContentRow + _LayoutGroup.spacing.x * (_ContentRow - 1);
+        _ContentCanvasHeight = _LayoutGroup.cellSize.y * _ContentColumn + _LayoutGroup.spacing.y * (_ContentColumn - 1);
+
+        if (_BG != null)
+        {
+            _BG.rectTransform.sizeDelta = new Vector2(_ContentCanvasWidth + 20, _ContentCanvasHeight + 20);
+        }
+
+        if (_ContainerBaseLarge)
+        {
+            _ContentCanvasWidth = Math.Max(_ScrollTransform.sizeDelta.x, _ContentCanvasWidth);
+            _ContentCanvasHeight = Math.Max(_ScrollTransform.sizeDelta.y, _ContentCanvasHeight);
+        }
+
+        _ShowRowCount = (int)Math.Ceiling((_ViewPortWidth + _LayoutGroup.spacing.x) / (_LayoutGroup.cellSize.x + _LayoutGroup.spacing.x));
+        _ShowColumnCount = (int)Math.Ceiling((_ViewPortHeight + _LayoutGroup.spacing.y) / (_LayoutGroup.cellSize.y + _LayoutGroup.spacing.y));
+
+        _InitItemCount = _ShowColumnCount * _ShowRowCount;
+        _InitItemCount = Math.Min(_InitItemCount, itemCount);
+
+        _ContainerObj.sizeDelta = new Vector2(_ContentCanvasWidth, _ContentCanvasHeight);
+
+        float containerPosX = 0;
+        float containerPosY = 0;
+        if (_ContainerObj.sizeDelta.x < _ScrollTransform.sizeDelta.x)
+        {
+            containerPosX = (_ScrollTransform.sizeDelta.x - _ContainerObj.sizeDelta.x) * 0.5f;
+        }
+        if (_ContainerObj.sizeDelta.y < _ScrollTransform.sizeDelta.y)
+        {
+            containerPosY = (_ContainerObj.sizeDelta.y - _ScrollTransform.sizeDelta.y) * 0.5f;
+        }
+        _ContainerObj.transform.localPosition = new Vector3(containerPosX, containerPosY, 0);
+
+        //Debug.Log("CalculateRect viewPortWidth:" + _ShowRowCount + "," + _ShowColumnCount + "," + _ContentCanvasWidth + "," + _ContentCanvasHeight);
+
+    }
+
+    #endregion
+
+    #region 
+
+    public Vector3 GetItemPosition(object item)
+    {
+        foreach (UIItemBase uiItem in _ItemPrefabList)
+        {
+            if (uiItem._InitInfo == item)
+            {
+                return uiItem.transform.position;
+            }
+        }
+        return Vector3.zero;
+    }
+
+    #endregion
+
+    public ScrollRect _ScrollRect;
+    public RectTransform _ScrollTransform;
+    public GridLayoutGroup _LayoutGroup;
+    public GameObject _ContainItemPre;
+    public RectTransform _ContainerObj;
+    public Image _BG;
+    public bool _ContainerBaseLarge = false;
+
+    protected List<UIItemBase> _ItemPrefabList = new List<UIItemBase>();
+    protected List<ContentPos> _ValueList = new List<ContentPos>();
+    protected UIItemBase.ItemClick _OnClickItem;
+
+    public int GetItemCount()
+    {
+        return _ValueList.Count;
+    }
+
+    protected Hashtable _ExHash;
+    private bool _HasInit = false;
+
+    public virtual void InitContentItem(IEnumerable valueList, UIItemBase.ItemClick onClick = null, Hashtable exhash = null)
+    {
+        //CalculateRect(valueList);
+        _ValueList.Clear();
+        //ClearPrefab();
+        int i = 0;
+        if (valueList == null)
+        {
+            ClearPrefab();
+            return;
+        }
+        var enumerator = valueList.GetEnumerator();
+        enumerator.Reset();
+        while (enumerator.MoveNext())
+        {
+            var contentPos = new ContentPos();
+            contentPos.Obj = enumerator.Current;
+            _ValueList.Add(contentPos);
+
+            ++i;
+        }
+
+        _HasInit = false;
         _OnClickItem = onClick;
+        _ExHash = exhash;
+        if (isActiveAndEnabled)
+        {
 
+            StartInitContainer();
+        }
+
+        //_LayoutGroup.enabled = false;
+
+    }
+
+    public void StartInitContainer()
+    {
+        _HasInit = true;
         if (_ValueList.Count > 0)
         {
-            StartCoroutine(InitItems(exhash));
+            StartCoroutine(InitItems(_ExHash));
         }
         else
         {
             ClearPrefab();
         }
-
-        //_LayoutGroup.enabled = false;
-
     }
 
     public virtual void ShowItems()
@@ -58,7 +225,16 @@ public class UIContainerBase : UIBase
 
     }
 
-    private void InitItem(object itemValue, UIItemBase preItem, Hashtable exhash)
+
+    private bool IsPosInView(ContentPos pos)
+    {
+        return (_ContainerObj.localPosition.x + pos.Pos.x >= -_LayoutGroup.cellSize.x * 0.5f
+                && _ContainerObj.localPosition.x + pos.Pos.x <= _ViewPortWidth + _LayoutGroup.cellSize.x * 0.5f
+                && -_ContainerObj.localPosition.y - pos.Pos.y >= -_LayoutGroup.cellSize.y * 0.5f
+                && -_ContainerObj.localPosition.y - pos.Pos.y <= _ViewPortHeight + _LayoutGroup.cellSize.y * 0.5f);
+    }
+
+    private void InitItem(ContentPos contentItem, UIItemBase preItem, Hashtable exhash)
     {
         preItem.gameObject.SetActive(true);
         //preItem.transform.localPosition = new Vector3(contentItem.Pos.x, contentItem.Pos.y, 0);
@@ -73,10 +249,11 @@ public class UIContainerBase : UIBase
             {
                 hash = new Hashtable(exhash);
             }
-            hash.Add("InitObj", itemValue);
+            hash.Add("InitObj", contentItem.Obj);
             preItem.Show(hash);
-            preItem._InitInfo = itemValue;
+            preItem._InitInfo = contentItem.Obj;
             preItem._ClickEvent = _OnClickItem;
+            contentItem.ShowItem = preItem;
         }
     }
 
@@ -111,51 +288,59 @@ public class UIContainerBase : UIBase
         }
     }
 
-    private UIItemBase InstantiateItem()
-    {
-        UIItemBase uiItemBase = GameObject.Instantiate<UIItemBase>(_ContainItemPre);
-        uiItemBase.transform.SetParent(_ContainerObj.transform);
-        uiItemBase.transform.localScale = Vector3.one;
-        uiItemBase.transform.localPosition = Vector3.zero;
-
-        _ItemPrefabList.Add(uiItemBase);
-
-        return uiItemBase;
-    }
-
     private IEnumerator InitItems(Hashtable exhash)
     {
-        if (_RealInitShowCnt > _ItemPrefabList.Count)
+        //先初始化可见
+        //var itemPrefabList = _ContainerObj.GetComponentsInChildren<CommonItemBackPackItem>();
+        //_ItemPrefabList = new List<UIItemBase>(itemPrefabList);
+        //ClearPrefab();
+        if (_InitItemCount > _ItemPrefabList.Count)
         {
-            for (int i = _ItemPrefabList.Count; i < _RealInitShowCnt; ++i)
+            for (int i = _ItemPrefabList.Count; i < _InitItemCount; ++i)
             {
-                InstantiateItem();
+                GameObject obj = GameObject.Instantiate<GameObject>(_ContainItemPre);
+                obj.transform.parent = _ContainerObj.transform;
+                obj.transform.localScale = Vector3.one;
+                obj.transform.localPosition = Vector3.zero;
+                
+                var itemScript = obj.GetComponent<UIItemBase>();
+                //itemScript.Hide();
+                _ItemPrefabList.Add(itemScript);
+                //_EmpeyItemPrefab.Enqueue(itemScript);
             }
         }
 
-        for (int i = 0; i < _RealInitShowCnt; ++i)
+        for (int i = 0; i < _InitItemCount; ++i)
         {
             InitItem(_ValueList[i], _ItemPrefabList[i], exhash);
         }
 
-        if (_RealInitShowCnt >= _ValueList.Count)
+        if (_InitItemCount >= _ValueList.Count)
         {
             ShowItemsFinish();
             yield break;
         }
 
+        
         yield return new WaitForFixedUpdate();
 
-        int nextNeedCount = _ValueList.Count - _RealInitShowCnt;
+        int nextNeedCount = _ValueList.Count - _InitItemCount;
         if (nextNeedCount > 0)
         {
-            int needCreateCount = nextNeedCount - (_ItemPrefabList.Count - _RealInitShowCnt);
+            int needCreateCount = nextNeedCount - (_ItemPrefabList.Count - _InitItemCount);
             for (int i = 0; i < needCreateCount; ++i)
             {
-                InstantiateItem();
+                GameObject obj = GameObject.Instantiate<GameObject>(_ContainItemPre);
+                obj.transform.SetParent(_ContainerObj.transform);
+                obj.transform.localScale = Vector3.one;
+                obj.transform.localPosition = Vector3.zero;
+                var itemScript = obj.GetComponent<UIItemBase>();
+                //itemScript.Hide();
+                _ItemPrefabList.Add(itemScript);
+                //_EmpeyItemPrefab.Enqueue(itemScript);
             }
 
-            for (int i = _RealInitShowCnt; i < _ValueList.Count; ++i)
+            for (int i = _InitItemCount; i < _ValueList.Count; ++i)
             {
                 InitItem(_ValueList[i], _ItemPrefabList[i], exhash);
             }

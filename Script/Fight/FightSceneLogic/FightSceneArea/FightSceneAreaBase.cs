@@ -72,4 +72,9 @@ public class FightSceneAreaBase : MonoBehaviour
         }
     }
     #endregion
+
+    public virtual Transform GetAreaTransform()
+    {
+        return null;
+    }
 }

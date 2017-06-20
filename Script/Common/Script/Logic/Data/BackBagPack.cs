@@ -28,9 +28,10 @@ namespace GameLogic
 
         #endregion
 
+        public const int _BAG_PAGE_SLOT_CNT = 25;
+
         [SaveField(1)]
         private List<ItemEquip> _ItemEquips = new List<ItemEquip>();
-
         public List<ItemEquip> ItemEquips
         {
             get
@@ -39,11 +40,39 @@ namespace GameLogic
             }
         }
 
-        public void AddEquip()
+        [SaveField(2)]
+        private List<ItemBase> _ItemBases = new List<ItemBase>();
+        public List<ItemBase> ItemBases
         {
-            var newItem = new ItemEquip();
-            newItem.ItemDataID = _ItemEquips.Count.ToString();
-            _ItemEquips.Add(newItem);
+            get
+            {
+                return _ItemBases;
+            }
+        }
+
+
+        public bool AddEquip(ItemEquip equip)
+        {
+            if (ItemEquips.Count >= _BAG_PAGE_SLOT_CNT)
+            {
+                return false;
+            }
+
+            ItemEquips.Add(equip);
+            LogicManager.Instance.SaveGame();
+            return true;
+        }
+
+        public bool AddItem(ItemBase item)
+        {
+            if (ItemBases.Count >= _BAG_PAGE_SLOT_CNT)
+            {
+                return false;
+            }
+
+            ItemBases.Add(item);
+            LogicManager.Instance.SaveGame();
+            return true;
         }
 
     }

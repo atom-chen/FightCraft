@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class ResourcePool : InstanceBase<ResourcePool>
 {
 
-    void Start()
+    void Awake()
     {
         SetInstance(this);
         InitEffect();

@@ -25,6 +25,15 @@ public class DropItem : MonoBehaviour
         }
     }
 
+    private DropItemData _DropData;
+    public DropItemData DropData
+    {
+        get
+        {
+            return _DropData;
+        }
+    }
+
     void FixedUpdate()
     {
         if(_MoveTime < _DropTime)
@@ -33,6 +42,7 @@ public class DropItem : MonoBehaviour
 
     public void InitDrop(DropItemData dropData)
     {
+        _DropData = dropData;
         if (dropData._DropGold > 0)
         {
             InitGoldModel(dropData._DropGold);

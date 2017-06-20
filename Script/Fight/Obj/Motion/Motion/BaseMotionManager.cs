@@ -421,7 +421,7 @@ public class BaseMotionManager : MonoBehaviour
                     if (_MotionManager.IsMotionDie)
                     {
                         _MotionManager.MotionPrior = DIE_PRIOR;
-                        StartCoroutine(BodyDisappear());
+                        StartCoroutine(MotionCorpse());
                     }
                     else if (_MotionManager.MotionPrior == FLY_PRIOR)
                         MotionRise();
@@ -445,8 +445,10 @@ public class BaseMotionManager : MonoBehaviour
         _MotionManager.EventController.PushEvent(GameBase.EVENT_TYPE.EVENT_MOTION_RISE, this, new Hashtable());
     }
 
-    private IEnumerator BodyDisappear()
+    private IEnumerator MotionCorpse()
     {
+        _MotionManager.MotionCorpse();
+
         yield return new WaitForSeconds(_BodyDisappearTime);
 
         _MotionManager.MotionDisappear();

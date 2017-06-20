@@ -1,6 +1,32 @@
 """ID""","""Name""","""Desc""","""ScenePath""","""FightLogicPath""","""CameraOffset"""
 1,Stage 1,-1,Stage_ShaMo_09,FightLogic_ShaMo_09,0;6;-6
 2,Stage 2,-1,Stage_ShaMo_10,FightLogic_ShaMo_10,0;6;-6
+3,Stage 3,-1,Stage_ShaMo_15,FightLogic_ShaMo_15,0;6;-6
+4,Stage 4,-1,Stage_ShaMo_04,FightLogic_ShaMo_04,0;6;-6
+5,Stage 5,-1,Stage_ShaMo_08,FightLogic_ShaMo_08,0;6;-6
+6,Stage 6,-1,Stage_CaoYuan_07,FightLogic_CaoYuan_07,0;6;-6
+7,Stage 7,-1,Stage_CaoYuan_06,FightLogic_CaoYuan_06,0;6;-6
+8,Stage 8,-1,Stage_CaoYuan_03,FightLogic_CaoYuan_03,0;6;-6
+9,Stage 9,-1,Stage_CaoYuan_01,FightLogic_CaoYuan_01,0;6;-6
+10,Stage 10,-1,Stage_CaoYuan_04,FightLogic_CaoYuan_04,0;6;-6
+11,Stage 11,-1,Stage_BingYuan_01,FightLogic_BingYuan_01,0;6;6
+12,Stage 12,-1,Stage_BingYuan_02,FightLogic_BingYuan_02,-6;6;0
+13,Stage 13,-1,Stage_BingYuan_05,FightLogic_BingYuan_05,0;6;-6
+14,Stage 14,-1,Stage_BingYuan_04,FightLogic_BingYuan_04,0;6;-6
+15,Stage 15,-1,Stage_ShaMo_05,FightLogic_ShaMo_05,0;6;-6
+16,Stage 16,-1,Stage_ShaMo_06,FightLogic_ShaMo_06,0;6;-6
+17,Stage 17,-1,Stage_ShaMo_01,FightLogic_ShaMo_01,0;6;-6
+18,Stage 18,-1,Stage_ShaMo_13,FightLogic_ShaMo_13,0;6;-6
+19,Stage 19,-1,Stage_ShaMo_07,FightLogic_ShaMo_07,0;6;-6
+20,Stage 20,-1,Stage_DiXiaCheng_05,FightLogic_DiXiaCheng_05,0;6;-6
+21,Stage 21,-1,Stage_DiXiaCheng_01,FightLogic_DiXiaCheng_01,0;6;-6
+22,Stage 22,-1,Stage_DiXiaCheng_03,FightLogic_DiXiaCheng_03,0;6;-6
+23,Stage 23,-1,Stage_DiXiaCheng_02,FightLogic_DiXiaCheng_02,0;6;-6
+24,Stage 24,-1,Stage_DiXiaCheng_04,FightLogic_DiXiaCheng_04,0;6;-6
+25,Stage 25,-1,Stage_JingJiChang,FightLogic_JingJiChang,0;6;-6
+26,Stage 26,-1,Stage_01_02,FightLogic_GongDian_02,0;6;-6
+27,Stage 27,-1,Stage_01_03,FightLogic_GongDian_03,0;6;6
+28,Stage 28,-1,Stage_01_01,FightLogic_GongDian_01,0;6;-6
 100,Stage_01_01,-1,Stage_01_01,FightLogic_GongDian_01,0;6;-6
 101,Stage_01_02,-1,Stage_01_02,FightLogic_GongDian_02,0;6;-6
 102,Stage_01_03,-1,Stage_01_03,FightLogic_GongDian_03,0;6;6

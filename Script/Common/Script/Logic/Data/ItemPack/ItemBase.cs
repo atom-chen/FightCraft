@@ -96,6 +96,8 @@ namespace GameLogic
 
             itembase.RefreshItemData();
             RefreshItemData();
+
+            LogicManager.Instance.SaveGame();
         }
 
         #endregion

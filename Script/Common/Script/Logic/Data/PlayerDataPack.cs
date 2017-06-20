@@ -30,7 +30,7 @@ namespace GameLogic
         #endregion
 
         [SaveField(1)]
-        private int _Goin = 0;
+        private int _Gold = 0;
 
         [SaveField(2)]
         private int _Diamond = 0;
@@ -40,6 +40,33 @@ namespace GameLogic
 
         public RoleData _SelectedRole;
 
+        public void AddGold(int value)
+        {
+            _Gold += value;
+        }
+
+        public bool DecGold(int value)
+        {
+            if (_Gold < value)
+                return false;
+
+            _Gold -= value;
+            return true;
+        }
+
+        public void AddDiamond(int value)
+        {
+            _Diamond += value;
+        }
+
+        public bool DecDiamond(int value)
+        {
+            if (_Diamond < value)
+                return false;
+
+            _Diamond -= value;
+            return true;
+        }
         #region 
 
         public void InitPlayerData()

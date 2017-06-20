@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
+using GameUI;
+
 public class FightSceneLogicPassArea : FightSceneLogicBase
 {
 
@@ -68,6 +70,8 @@ public class FightSceneLogicPassArea : FightSceneLogicBase
             {
                 AreaStart(_FightArea[_RunningIdx]);
             }
+
+            UIFightWarning.ShowDirectAsyn(FightManager.Instance.MainChatMotion.transform, _FightArea[_RunningIdx].GetAreaTransform());
         }
         else
         {

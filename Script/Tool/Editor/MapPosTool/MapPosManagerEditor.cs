@@ -55,6 +55,8 @@ public class MapPosManagerEditor : Editor
         GameObject navGO = new GameObject("FightArea");
         navGO.transform.parent = script.transform;
         navGO.AddComponent<MapPosGroup>();
+
+        Selection.activeObject = navGO;
     }
 
     

@@ -71,6 +71,17 @@ public class UIBase : MonoBehaviour
         GameUI.UIManager.Instance.DestoryUI(this);
     }
 
+    public virtual void Destory(float time)
+    {
+        StartCoroutine(DestoryDelay(time));
+    }
+
+    private IEnumerator DestoryDelay(float time)
+    {
+        yield return new WaitForSeconds(time);
+        Destory();
+    }
+
     #endregion
 
 }

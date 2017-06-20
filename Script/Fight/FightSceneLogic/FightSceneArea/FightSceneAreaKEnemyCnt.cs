@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+using GameUI;
+
 [System.Serializable]
 public class SerializeRandomEnemy
 {
@@ -15,6 +17,8 @@ public class FightSceneAreaKEnemyCnt : FightSceneAreaBase
     {
         base.StartArea();
 
+        UIFightWarning.ShowFightAsyn();
+        
         StartStep();
     }
 
@@ -30,6 +34,11 @@ public class FightSceneAreaKEnemyCnt : FightSceneAreaBase
 
         StepMotionDie(motion);
 
+    }
+
+    public override Transform GetAreaTransform()
+    {
+        return _EnemyBornPos[0];
     }
 
     #region enemy step

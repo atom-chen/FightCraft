@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+using GameUI;
+
 public class FightSceneAreaKBossWithFish : FightSceneAreaBase
 {
 
     public override void StartArea()
     {
         base.StartArea();
+
+        UIFightWarning.ShowBossAsyn();
 
         StartStep();
     }
@@ -26,6 +30,11 @@ public class FightSceneAreaKBossWithFish : FightSceneAreaBase
 
         StepMotionDie(motion);
 
+    }
+
+    public override Transform GetAreaTransform()
+    {
+        return _BossBornPos;
     }
 
     #region enemy step
