@@ -9,13 +9,13 @@
 8,Stage 8,-1,Stage_CaoYuan_03,FightLogic_CaoYuan_03,0;6;-6
 9,Stage 9,-1,Stage_CaoYuan_01,FightLogic_CaoYuan_01,0;6;-6
 10,Stage 10,-1,Stage_CaoYuan_04,FightLogic_CaoYuan_04,0;6;-6
-11,Stage 11,-1,Stage_BingYuan_01,FightLogic_BingYuan_01,0;6;6
-12,Stage 12,-1,Stage_BingYuan_02,FightLogic_BingYuan_02,-6;6;0
+11,Stage 12,-1,Stage_BingYuan_02,FightLogic_BingYuan_02,-6;6;0
+12,Stage 11,-1,Stage_BingYuan_01,FightLogic_BingYuan_01,0;6;6
 13,Stage 13,-1,Stage_BingYuan_05,FightLogic_BingYuan_05,0;6;-6
 14,Stage 14,-1,Stage_BingYuan_04,FightLogic_BingYuan_04,0;6;-6
 15,Stage 15,-1,Stage_ShaMo_05,FightLogic_ShaMo_05,0;6;-6
-16,Stage 16,-1,Stage_ShaMo_06,FightLogic_ShaMo_06,0;6;-6
-17,Stage 17,-1,Stage_ShaMo_01,FightLogic_ShaMo_01,0;6;-6
+16,Stage 17,-1,Stage_ShaMo_01,FightLogic_ShaMo_01,0;6;-6
+17,Stage 16,-1,Stage_ShaMo_06,FightLogic_ShaMo_06,0;6;-6
 18,Stage 18,-1,Stage_ShaMo_13,FightLogic_ShaMo_13,0;6;-6
 19,Stage 19,-1,Stage_ShaMo_07,FightLogic_ShaMo_07,0;6;-6
 20,Stage 20,-1,Stage_DiXiaCheng_05,FightLogic_DiXiaCheng_05,0;6;-6

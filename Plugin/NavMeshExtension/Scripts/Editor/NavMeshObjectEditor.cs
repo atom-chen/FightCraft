@@ -17,6 +17,7 @@ namespace NavMeshExtension
     /// Custom Editor for editing vertices and exporting the mesh.
     /// </summary>
     [CustomEditor(typeof(NavMeshObject))]
+    [CanEditMultipleObjects]
     public class NavMeshObjectEditor : Editor
     {
         //navmesh object reference
