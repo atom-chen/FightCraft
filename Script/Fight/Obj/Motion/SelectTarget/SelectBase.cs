@@ -15,6 +15,9 @@ public class SelectBase : MonoBehaviour
         _SkillMotion = gameObject.GetComponentInParent<MotionManager>();
         _ImpactList = gameObject.GetComponents<ImpactBase>();
     }
+
+    public virtual void ResetSkillRange()
+    { }
     
 
     public virtual void ColliderStart()

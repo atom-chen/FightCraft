@@ -143,6 +143,77 @@ public class RoleAttrManager : MonoBehaviour
     public Dictionary<FightAttr.FightAttrType, int> _ExAttrs = new Dictionary<FightAttr.FightAttrType, int>();
     #endregion
 
+    #region skillAttr
+
+    public class SkillAttr
+    {
+        public float SpeedAdd;
+        public float DamageRateAdd;
+        public float RangeAdd;
+        public float RangeLengthAdd;
+        public float BackRangeAdd;
+        public float AccumulateTime;
+        public float AccumulateDamageRate;
+        public int ShadowWarriorCnt;
+        public float ShadowWarriorDamageRate;
+    }
+
+    private Dictionary<string, SkillAttr> _SkillAttrs = new Dictionary<string, SkillAttr>();
+
+    private void InitSkillAttr()
+    {
+        var skillAttr = new SkillAttr();
+        skillAttr.SpeedAdd = 0.5f;
+        skillAttr.DamageRateAdd = 0.5f;
+        skillAttr.RangeAdd = 0.5f;
+        skillAttr.RangeLengthAdd = 0.5f;
+        skillAttr.BackRangeAdd = 0.5f;
+        _SkillAttrs.Add("j", skillAttr);
+
+        skillAttr = new SkillAttr();
+        skillAttr.SpeedAdd = 0.5f;
+        skillAttr.DamageRateAdd = 0.5f;
+        skillAttr.RangeAdd = 0.5f;
+        skillAttr.RangeLengthAdd = 0.5f;
+        skillAttr.BackRangeAdd = 0.5f;
+        skillAttr.ShadowWarriorCnt = 2;
+        skillAttr.ShadowWarriorDamageRate = 0.3f;
+        skillAttr.AccumulateTime = 0.5f;
+        _SkillAttrs.Add("k2", skillAttr);
+
+        skillAttr = new SkillAttr();
+        skillAttr.SpeedAdd = 0.5f;
+        skillAttr.DamageRateAdd = 0.5f;
+        skillAttr.RangeAdd = 0.5f;
+        skillAttr.RangeLengthAdd = 0.5f;
+        skillAttr.BackRangeAdd = 0.5f;
+        skillAttr.ShadowWarriorCnt = 2;
+        skillAttr.ShadowWarriorDamageRate = 0.3f;
+        skillAttr.AccumulateTime = 0.5f;
+        _SkillAttrs.Add("k3", skillAttr);
+
+        skillAttr = new SkillAttr();
+        skillAttr.SpeedAdd = 0.5f;
+        skillAttr.DamageRateAdd = 0.5f;
+        skillAttr.RangeAdd = 0.5f;
+        skillAttr.RangeLengthAdd = 0.5f;
+        skillAttr.BackRangeAdd = 0.5f;
+        skillAttr.ShadowWarriorCnt = 2;
+        skillAttr.ShadowWarriorDamageRate = 0.3f;
+        skillAttr.AccumulateTime = 0.5f;
+        _SkillAttrs.Add("k4", skillAttr);
+    }
+
+    public SkillAttr GetSkillAttr(string actInput)
+    {
+        if (_SkillAttrs.ContainsKey(actInput))
+            return _SkillAttrs[actInput];
+
+        return null;
+    }
+
+    #endregion
+
     #region 
 
     public void InitMainRoleAttr()
@@ -183,6 +254,7 @@ public class RoleAttrManager : MonoBehaviour
         }
 
         InitEvent();
+        InitSkillAttr();
     }
 
     public void InitEnemyAttr(MonsterBaseRecord monsterBase)

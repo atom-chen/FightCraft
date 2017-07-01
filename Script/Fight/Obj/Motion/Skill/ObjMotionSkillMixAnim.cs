@@ -45,6 +45,16 @@ public class ObjMotionSkillMixAnim : ObjMotionSkillBase
         if (_Effect != null)
             _MotionManager.StopSkillEffect(_Effect);
     }
+
+    protected override float GetTotalAnimLength()
+    {
+        float totleTime = 0;
+        foreach (var anim in _NextAnim)
+        {
+            totleTime += GetAnimNextInputLength(anim);
+        }
+        return totleTime;
+    }
     #endregion
 
     public AnimationClip[] _NextAnim;
@@ -54,11 +64,6 @@ public class ObjMotionSkillMixAnim : ObjMotionSkillBase
 
     public override bool ActSkill()
     {
-
-        bool isActSkill = base.ActSkill();
-        if (!isActSkill)
-            return false;
-
         _CurStep = -1;
         PlayerNextAnim();
 
@@ -77,7 +82,7 @@ public class ObjMotionSkillMixAnim : ObjMotionSkillBase
         else
         {
             ++_CurStep;
-            _MotionManager.RePlayAnimation(_NextAnim[_CurStep]);
+            PlayAnimation(_NextAnim[_CurStep]);
 
             if (_CurStep - 1 >= 0 && _NextEffect[_CurStep - 1] != null)
             {

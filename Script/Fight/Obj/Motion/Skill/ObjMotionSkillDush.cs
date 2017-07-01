@@ -108,8 +108,8 @@ public class ObjMotionSkillDush : ObjMotionSkillBase
     {
         _Step = 1;
         _MotionManager.ResetMove();
-        
-        _MotionManager.PlayAnimation(_AttackAnim);
+
+        PlayAnimation(_AttackAnim);
         PlaySkillEffect(_AttackEffect);
         StopSkillEffect(_Effect);
     }

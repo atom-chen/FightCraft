@@ -241,7 +241,7 @@ public class MotionManager : MonoBehaviour
             BaseMotionManager.StopMove();
         }
 
-        skillMotion.ActSkill();
+        skillMotion.StartSkill();
         _ActingSkill = skillMotion;
         MotionPrior = _ActingSkill._SkillMotionPrior;
     }
@@ -419,7 +419,7 @@ public class MotionManager : MonoBehaviour
     private Dictionary<string, Transform> _BindTransform = new Dictionary<string, Transform>();
     private EffectController _PlayingEffect;
 
-    public void PlaySkillEffect(EffectController effect, ElementType elementType = ElementType.None)
+    public void PlaySkillEffect(EffectController effect, float speed = -1, ElementType elementType = ElementType.None)
     {
         if (!_SkillEffects.ContainsKey(effect.name))
         {
@@ -432,7 +432,10 @@ public class MotionManager : MonoBehaviour
         }
         _PlayingEffect = _SkillEffects[effect.name];
         _PlayingEffect.SetEffectColor(elementType);
-        _PlayingEffect.PlayEffect(RoleAttrManager.SkillSpeed);
+        if(speed < 0)
+            _PlayingEffect.PlayEffect(RoleAttrManager.SkillSpeed);
+        else
+            _PlayingEffect.PlayEffect(speed);
     }
 
     public void StopSkillEffect(EffectController effect)

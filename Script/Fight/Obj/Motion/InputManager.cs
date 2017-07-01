@@ -110,12 +110,21 @@ public class InputManager : InstanceBase<InputManager>
 
     public bool IsKeyHold(string key)
     {
-        return Input.GetKey(key);
+        string realKey = key;
+        if (key.Contains("k"))
+        {
+            realKey = "k";
+        }
+#if UNITY_EDITOR
+        return Input.GetKey(realKey);
+#else
+        return UISkillBar.IsKeyDown(key);
+#endif
     }
 
-#endregion
+    #endregion
 
-#region normal skill
+    #region normal skill
 
     private ObjMotionSkillAttack _NormalAttack;
     public void CharSkill()
@@ -123,7 +132,7 @@ public class InputManager : InstanceBase<InputManager>
         if (_NormalAttack == null)
             return;
 
-        if (IsKeyDown("k"))
+        if (IsKeyHold("k"))
         {
             if (_InputMotion.ActingSkill == _NormalAttack && _NormalAttack.CurStep > 0 && _NormalAttack.CurStep < 4 && _NormalAttack.CanNextInput)
             {
@@ -144,7 +153,7 @@ public class InputManager : InstanceBase<InputManager>
             }
         }
 
-        if (IsKeyDown("u"))
+        if (IsKeyHold("u"))
         {
             if (_InputMotion.ActingSkill == _NormalAttack && _NormalAttack.CurStep > 0 && _NormalAttack.CurStep < 4 && _NormalAttack.CanNextInput)
             {

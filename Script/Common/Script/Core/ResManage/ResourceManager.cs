@@ -191,6 +191,17 @@ namespace GameBase
             return resource;
         }
 
+        public AnimationClip GetAnimationClip(string resName)
+        {
+            string resPath = resName;
+            var resource = Resources.Load<AnimationClip>(resPath);
+            if (resource == null)
+            {
+                LogManager.LogError("Resource error:" + resPath);
+            }
+            return resource;
+        }
+
         public void DestoryObj(GameObject obj)
         {
             GameObject.Destroy(obj);
