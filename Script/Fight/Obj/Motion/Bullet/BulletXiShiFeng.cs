@@ -12,9 +12,9 @@ public class BulletXiShiFeng : BulletBase
     private bool _IsMoveBack = false;
     private Vector3 _MoveDirect;
 
-    public override void Init(MotionManager senderMotion)
+    public override void Init(MotionManager senderMotion, BulletEmitterBase emitterBase)
     {
-        base.Init(senderMotion);
+        base.Init(senderMotion, emitterBase);
 
         _InitPos = transform.position;
         _MoveRange = 0;

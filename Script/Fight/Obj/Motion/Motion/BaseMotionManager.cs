@@ -101,6 +101,22 @@ public class BaseMotionManager : MonoBehaviour
         MotionFly(flyHeight, hitEffect, impactSender);
     }
 
+    public void CatchEvent(object go, Hashtable eventArgs)
+    {
+        float flyHeight = 0.6f;
+        if (eventArgs.ContainsKey("CatchTime"))
+        {
+            flyHeight = (float)eventArgs["FlyHeight"];
+        }
+        int hitEffect = 0;
+        if (eventArgs.ContainsKey("HitEffect"))
+        {
+            hitEffect = (int)eventArgs["HitEffect"];
+        }
+        MotionManager impactSender = go as MotionManager;
+        MotionFly(flyHeight, hitEffect, impactSender);
+    }
+
     public void DispatchAnimEvent(string funcName, object param)
     {
         switch (_MotionManager.MotionPrior)
@@ -336,7 +352,10 @@ public class BaseMotionManager : MonoBehaviour
     {
         if (ResourcePool.Instance._CommonHitEffect.Count > effectIdx && effectIdx >= 0)
         {
-            _MotionManager.PlayDynamicEffect(ResourcePool.Instance._CommonHitEffect[effectIdx]);
+            Hashtable hash = new Hashtable();
+            hash.Add("Rotation", Quaternion.LookRotation( impactSender.transform.position - transform.position, Vector3.zero));
+
+            _MotionManager.PlayDynamicEffect(ResourcePool.Instance._CommonHitEffect[effectIdx], hash);
         }
     }
 
@@ -471,4 +490,5 @@ public class BaseMotionManager : MonoBehaviour
         }
     }
     #endregion
+    
 }

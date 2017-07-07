@@ -132,6 +132,11 @@ public class InputManager : InstanceBase<InputManager>
         if (_NormalAttack == null)
             return;
 
+        if (IsKeyHold("j"))
+        {
+            _InputMotion.ActSkill(_InputMotion._SkillMotions["j"]);
+        }
+
         if (IsKeyHold("k"))
         {
             if (_InputMotion.ActingSkill == _NormalAttack && _NormalAttack.CurStep > 0 && _NormalAttack.CurStep < 4 && _NormalAttack.CanNextInput)

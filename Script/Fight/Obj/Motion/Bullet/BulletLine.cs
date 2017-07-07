@@ -5,11 +5,16 @@ public class BulletLine : BulletBase
 {
     public float _LifeTime = 2.0f;
     public float _Speed = 10;
+    public int _HitTimes = 1;
 
-    // Use this for initialization
-    public override void Init(MotionManager senderMotion)
+    private float _AwakeTime = 0;
+    private int _AlreadyHitTimes = 0;
+    public override void Init(MotionManager senderMotion, BulletEmitterBase emitterBase)
     {
-        base.Init(senderMotion);
+        base.Init(senderMotion, emitterBase);
+
+        _AlreadyHitTimes = 0;
+        _AwakeTime = Time.time;
     }
 
     private IEnumerator FinishDelay()
@@ -23,7 +28,12 @@ public class BulletLine : BulletBase
 	void FixedUpdate ()
     {
         transform.position += transform.forward.normalized * _Speed * Time.fixedDeltaTime;
-	}
+
+        if (Time.time - _AwakeTime > _LifeTime)
+        {
+            BulletFinish();
+        }
+    }
 
     void OnTriggerEnter(Collider other)
     {
@@ -33,6 +43,11 @@ public class BulletLine : BulletBase
             return;
 
         BulletHit(targetMotion);
-        BulletFinish();
+        ++_AlreadyHitTimes;
+
+        if (_HitTimes > 0 && _AlreadyHitTimes >= _HitTimes)
+        {
+            BulletFinish();
+        }
     }
 }

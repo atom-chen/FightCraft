@@ -13,9 +13,9 @@ public class BulletDaiJiHeart : BulletBase
     private Vector3 _TargetPosition;
     private Vector3 _TrackSpeed;
 
-    public override void Init(MotionManager senderMotion)
+    public override void Init(MotionManager senderMotion, BulletEmitterBase emitterBase)
     {
-        base.Init(senderMotion);
+        base.Init(senderMotion, emitterBase);
 
         var target = SelectTargetCommon.GetMainPlayer();
         if (target != null)

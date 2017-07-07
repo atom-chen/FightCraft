@@ -6,6 +6,7 @@ public class SelectBase : MonoBehaviour
 {
     public int _ColliderID;
     public bool _IsColliderFinish = false;
+    public bool _IsRemindSelected = false;
     
     protected MotionManager _SkillMotion;
     protected ImpactBase[] _ImpactList;

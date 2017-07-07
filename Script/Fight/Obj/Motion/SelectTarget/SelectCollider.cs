@@ -40,6 +40,11 @@ public class SelectCollider : SelectBase
                     impact.ActImpact(_SkillMotion, motion);
                 }
 
+                if (_IsRemindSelected)
+                {
+                    _SkillMotion.ActingSkill._SkillHitMotions.Add(motion);
+                }
+
                 if (_SkillMotion._IsRoleHit)
                 {
                     GlobalEffect.Instance.Pause(_SkillMotion._RoleHitTime);

@@ -63,8 +63,16 @@ public class ObjMotionSkillBase : MonoBehaviour
         if(_Effect != null)
             PlaySkillEffect(_Effect);
 
-        if(_ShadowEffect != null)
-            PlaySkillEffect(_ShadowEffect);
+        if (_ShadowEffect != null)
+        {
+            _ShadowEffect._EffectLastTime = GetTotalAnimLength();
+            _ShadowEffect._Duration = _ShadowEffect._EffectLastTime;
+            _MotionManager.PlayDynamicEffect(_ShadowEffect);
+            Debug.Log("Shadow time:" + _ShadowEffect._Duration);
+        }
+
+        if (_SkillHitMotions != null)
+            _SkillHitMotions.Clear();
 
         this.enabled = true;
         return true;
@@ -108,14 +116,12 @@ public class ObjMotionSkillBase : MonoBehaviour
 
     #region performance
 
-    private EffectController _ShadowEffect;
-
     protected float _SkillActSpeed = -1;
     protected float SkillActSpeed
     {
         get
         {
-            if (_SkillActSpeed < 0)
+            //if (_SkillActSpeed < 0)
             {
                 _SkillActSpeed = _MotionManager.RoleAttrManager.SkillSpeed;
                 if (_SkillAttr != null)
@@ -144,7 +150,7 @@ public class ObjMotionSkillBase : MonoBehaviour
 
     protected virtual float GetTotalAnimLength()
     {
-        return GetAnimNextInputLength(_Anim);
+        return _Anim.length / SkillActSpeed;
     }
 
     protected float GetAnimNextInputLength(AnimationClip anim)
@@ -159,16 +165,19 @@ public class ObjMotionSkillBase : MonoBehaviour
         return anim.length;
     }
 
-    
 
-    #endregion  
+
+    #endregion
 
     #region collider 
+
+    public List<MotionManager> _SkillHitMotions = new List<MotionManager>();
 
     private Dictionary<int, List<SelectBase>> _ColliderControl = new Dictionary<int, List<SelectBase>>();
 
     private void InitCollider(RoleAttrManager.SkillAttr skillAttr)
     {
+        InitElementBullet();
         var collidercontrollers = gameObject.GetComponentsInChildren<SelectBase>(true);
         foreach (var collider in collidercontrollers)
         {
@@ -259,6 +268,7 @@ public class ObjMotionSkillBase : MonoBehaviour
         }
     }
 
+    private EffectAfterAnim _ShadowEffect;
     private void InitShadowEffect()
     {
         if (_SkillAttr.ShadowWarriorCnt <= 0)
@@ -345,6 +355,44 @@ public class ObjMotionSkillBase : MonoBehaviour
         }
 
         StartCoroutine(SkillAccumulateUpdate());
+    }
+
+    private void InitElementBullet()
+    {
+        if (_SkillAttr == null)
+            return;
+
+        if (_SkillAttr.ExBullets.Count == 0)
+            return;
+
+        var emitterPos = GetComponent<BulletEmitterBasePos>();
+        foreach (var exBullet in _SkillAttr.ExBullets)
+        {
+            var bulletGO = GameBase.ResourceManager.Instance.GetInstanceGameObject(exBullet);
+            if (bulletGO == null)
+            {
+                Debug.LogError("Error bullet:" + exBullet);
+                continue;
+            }
+            bulletGO.transform.SetParent(transform);
+            bulletGO.transform.localPosition = Vector3.zero;
+            bulletGO.transform.localScale = Vector3.one;
+            bulletGO.transform.localRotation = Quaternion.Euler(Vector3.zero);
+
+            if (emitterPos == null)
+                continue;
+
+            var bulletSelect = bulletGO.GetComponent<SelectBase>();
+            if (bulletSelect == null)
+                continue;
+
+            var pos = emitterPos.GetEmitterPos(bulletSelect._ColliderID);
+            var bulletEmitterBase = bulletGO.GetComponent<BulletEmitterBase>();
+            if (bulletEmitterBase != null)
+            {
+                bulletEmitterBase._EmitterOffset += pos;
+            }
+        }
     }
 
     #endregion

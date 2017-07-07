@@ -21,9 +21,9 @@ public class BulletDiaoChanBingCi : BulletBase
 
     private List<MotionManager> _HitMotions = new List<MotionManager>();
 
-    public override void Init(MotionManager senderMotion)
+    public override void Init(MotionManager senderMotion, BulletEmitterBase emitterBase)
     {
-        base.Init(senderMotion);
+        base.Init(senderMotion, emitterBase);
 
         _EffectAlert.SetActive(true);
         _SubEffect.SetActive(false);

@@ -27,6 +27,25 @@ public class ParticleEditor : Editor
         }
     }
 
+    [MenuItem("TyTools/Editor/ShowAllEffect")]
+    public static void TestAllEffect()
+    {
+        string resPathFold = Application.dataPath + "\\FightCraft\\Res\\TianMoEffect";
+        var objPaths = Directory.GetFiles(resPathFold, "*.prefab", SearchOption.AllDirectories);
+
+        int posX = 0;
+        foreach (var resPath in objPaths)
+        {
+            string resAssetPath = "Assets" + resPath.Replace(Application.dataPath, "");
+            var resGO = AssetDatabase.LoadAssetAtPath<GameObject>(resAssetPath);
+            var resGOIntance = GameObject.Instantiate<GameObject>(resGO);
+            resGOIntance.transform.position = new Vector3(posX, 0, 0);
+            posX += 2;
+            //break;
+        }
+            
+    }
+
 
     #region particleTime
 

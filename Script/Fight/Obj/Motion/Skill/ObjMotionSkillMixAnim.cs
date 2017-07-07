@@ -51,7 +51,7 @@ public class ObjMotionSkillMixAnim : ObjMotionSkillBase
         float totleTime = 0;
         foreach (var anim in _NextAnim)
         {
-            totleTime += GetAnimNextInputLength(anim);
+            totleTime += anim.length / SkillActSpeed;
         }
         return totleTime;
     }
@@ -64,6 +64,8 @@ public class ObjMotionSkillMixAnim : ObjMotionSkillBase
 
     public override bool ActSkill()
     {
+        base.ActSkill();
+
         _CurStep = -1;
         PlayerNextAnim();
 

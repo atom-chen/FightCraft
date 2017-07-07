@@ -7,7 +7,8 @@ public class BulletHitInterval : BulletBase
     public GameObject _AlertObj;
     public GameObject _HitObj;
     public float _AlertTime = 0.6f;
-    public float _FirstHitTime = 0f;
+    public float _ShowHitObjDelay = 0f;
+    public float _FirstHitDelay = 0f;
     public float _HitInterval = 0.1f;
     public float _StayTime = 10;
 
@@ -16,30 +17,36 @@ public class BulletHitInterval : BulletBase
     private float _LastHitTime = 0;
     private Collider _Collider;
 
-    public override void Init(MotionManager senderMotion)
+    public override void Init(MotionManager senderMotion, BulletEmitterBase emitterBase)
     {
-        base.Init(senderMotion);
+        base.Init(senderMotion,emitterBase);
 
         _Collider = gameObject.GetComponent<Collider>();
         _LiftTime = _StayTime;
+        _LastHitTime = 0;
 
         StartCoroutine(StartHit());
     }
 
     IEnumerator StartHit()
     {
-        _AlertObj.SetActive(true);
+        if(_AlertObj != null)
+            _AlertObj.SetActive(true);
         _HitObj.SetActive(false);
         _Collider.enabled = false;
         _StartHit = false;
 
         yield return new WaitForSeconds(_AlertTime);
 
-        _AlertObj.SetActive(false);
-        _HitObj.SetActive(true);
+        if (_AlertObj != null)
+            _AlertObj.SetActive(false);
+        
         //_Collider.enabled = true;
 
-        yield return new WaitForSeconds(_FirstHitTime);
+        yield return new WaitForSeconds(_ShowHitObjDelay);
+        _HitObj.SetActive(true);
+
+        yield return new WaitForSeconds(_FirstHitDelay);
         _StartHit = true;
     }
 
@@ -55,6 +62,11 @@ public class BulletHitInterval : BulletBase
                 StartCoroutine(CalculateHit());
                 _LastHitTime = Time.time;
             }
+        }
+        else if(_LastHitTime == 0)
+        {
+            StartCoroutine(CalculateHit());
+            _LastHitTime = Time.time;
         }
 
         _LiftTime -= Time.fixedDeltaTime;

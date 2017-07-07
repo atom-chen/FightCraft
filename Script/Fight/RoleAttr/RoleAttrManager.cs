@@ -156,6 +156,7 @@ public class RoleAttrManager : MonoBehaviour
         public float AccumulateDamageRate;
         public int ShadowWarriorCnt;
         public float ShadowWarriorDamageRate;
+        public List<string> ExBullets = new List<string>();
     }
 
     private Dictionary<string, SkillAttr> _SkillAttrs = new Dictionary<string, SkillAttr>();
@@ -179,6 +180,7 @@ public class RoleAttrManager : MonoBehaviour
         skillAttr.ShadowWarriorCnt = 2;
         skillAttr.ShadowWarriorDamageRate = 0.3f;
         skillAttr.AccumulateTime = 0.5f;
+        skillAttr.ExBullets.Add("Bullet\\Emitter\\Element\\EleTargetBoomFire");
         _SkillAttrs.Add("k2", skillAttr);
 
         skillAttr = new SkillAttr();
@@ -190,6 +192,7 @@ public class RoleAttrManager : MonoBehaviour
         skillAttr.ShadowWarriorCnt = 2;
         skillAttr.ShadowWarriorDamageRate = 0.3f;
         skillAttr.AccumulateTime = 0.5f;
+        skillAttr.ExBullets.Add("Bullet\\Emitter\\Element\\EleTargetBoomFire");
         _SkillAttrs.Add("k3", skillAttr);
 
         skillAttr = new SkillAttr();
@@ -201,6 +204,8 @@ public class RoleAttrManager : MonoBehaviour
         skillAttr.ShadowWarriorCnt = 2;
         skillAttr.ShadowWarriorDamageRate = 0.3f;
         skillAttr.AccumulateTime = 0.5f;
+        //skillAttr.ExBullets.Add("Bullet\\Emitter\\Element\\EleLineBoomFire");
+        skillAttr.ExBullets.Add("Bullet\\Emitter\\Element\\EleTargetBoomFire");
         _SkillAttrs.Add("k4", skillAttr);
     }
 

@@ -6,9 +6,9 @@ public class BulletLiuSha : BulletBase
 {
     public float _LastTime = 10;
 
-    public override void Init(MotionManager senderMotion)
+    public override void Init(MotionManager senderMotion, BulletEmitterBase emitterBase)
     {
-        base.Init(senderMotion);
+        base.Init(senderMotion,emitterBase);
 
         StartCoroutine(StartHit());
     }

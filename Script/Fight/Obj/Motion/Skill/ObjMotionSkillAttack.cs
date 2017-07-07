@@ -61,9 +61,16 @@ public class ObjMotionSkillAttack : ObjMotionSkillBase
 
         if (InputManager.Instance.IsKeyHold(_ActInput))
         {
-            ActSkill();
+            StartCoroutine(ReStartSkill());
+            //ActSkill();
         }
 
+    }
+
+    private IEnumerator ReStartSkill()
+    {
+        yield return new WaitForFixedUpdate();
+        _MotionManager.ActSkill(this);
     }
 
     #endregion

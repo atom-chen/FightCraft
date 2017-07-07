@@ -3,8 +3,9 @@
 	Properties
 	{
 		_MainTex("Texture", 2D) = "white" {}
-		_LightPosXMin("_LightPosXMin", float) = -1.65 
-		_LightPosXMax("_LightPosXMax", float) = -0.3
+		[ToggleOff] _PosX("_PosX", Float) = 1.0
+		_LightPosXMin("_LightPosMin", float) = -1.65 
+		_LightPosXMax("_LightPosMax", float) = -0.3
 		_LightRange("LightRange", float) = 0.5
 		_LightInterval("LightInterval", float) = 0.5
 		_TimeEm("TimeEm", float) = 0.5
@@ -42,6 +43,7 @@
 
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
+			float _PosX;
 			float _LightPosXMin;
 			float _LightPosXMax;
 			float _LightRange;
@@ -66,15 +68,31 @@
 				//float timePos = _Time.y / delta;
 				float timePos = fmod(_Time.y, _LightInterval) / _LightInterval;
 
-				if (/*i.objVertex.x > _LightPosXMin && */i.objVertex.x + _LightPosXMin > timePos * delta - _LightRange
-					&& /*i.objVertex.x < _LightPosXMax && */i.objVertex.x + _LightPosXMin < timePos * delta + _LightRange)
+				if (_PosX == 1)
 				{
-					col = tex2D(_MainTex, i.uv);
-					col.a *= ((_LightRange - abs(i.objVertex.x + _LightPosXMin - timePos * delta)) / _LightRange);
+					if (/*i.objVertex.x > _LightPosXMin && */i.objVertex.x + _LightPosXMin > timePos * delta - _LightRange
+						&& /*i.objVertex.x < _LightPosXMax && */i.objVertex.x + _LightPosXMin < timePos * delta + _LightRange)
+					{
+						col = tex2D(_MainTex, i.uv);
+						col.a *= ((_LightRange - abs(i.objVertex.x + _LightPosXMin - timePos * delta)) / _LightRange);
+					}
+					else
+					{
+						col.a = 0;
+					}
 				}
 				else
 				{
-					col.a = 0;
+					if (/*i.objVertex.x > _LightPosXMin && */i.objVertex.y + _LightPosXMin > timePos * delta - _LightRange
+						&& /*i.objVertex.x < _LightPosXMax && */i.objVertex.y + _LightPosXMin < timePos * delta + _LightRange)
+					{
+						col = tex2D(_MainTex, i.uv);
+						col.a *= ((_LightRange - abs(i.objVertex.y + _LightPosXMin - timePos * delta)) / _LightRange);
+					}
+					else
+					{
+						col.a = 0;
+					}
 				}
 				return col;
 			}

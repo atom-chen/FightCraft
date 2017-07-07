@@ -14,6 +14,8 @@ public class BulletEmitterBase : ImpactBase
     {
         base.ActImpact(senderManager, reciverManager);
         _SenderManager = senderManager;
+
+        HitMotions.Clear();
     }
 
     protected T InitBulletGO<T>() where T:class
@@ -24,7 +26,8 @@ public class BulletEmitterBase : ImpactBase
         bulletObj.transform.position = _SenderManager.transform.position + modifyPos;
         bulletObj.transform.rotation = _SenderManager.transform.rotation;
         bulletObj.gameObject.SetActive(true);
-        bulletObj.Init(_SenderManager);
+        bulletObj.Init(_SenderManager, this);
+        bulletObj.gameObject.layer = FightLayerCommon.GetBulletLayer(_SenderManager);
         return bulletObj as T;
     }
 
@@ -39,4 +42,36 @@ public class BulletEmitterBase : ImpactBase
 
         return bullets;
     }
+
+    #region bullet hit motions
+
+    private Dictionary<MotionManager, int> _HitMotions = new Dictionary<MotionManager, int>();
+    public Dictionary<MotionManager, int> HitMotions
+    {
+        get
+        {
+            return _HitMotions;
+        }
+    }
+
+    public void AddHitTimes(MotionManager targetMotion)
+    {
+        if (!_HitMotions.ContainsKey(targetMotion))
+        {
+            _HitMotions.Add(targetMotion, 0);
+        }
+
+        ++_HitMotions[targetMotion];
+    }
+
+    public int GetMotionHitimes(MotionManager targetMotion)
+    {
+        if (!_HitMotions.ContainsKey(targetMotion))
+        {
+            return 0;
+        }
+
+        return _HitMotions[targetMotion];
+    }
+    #endregion
 }

@@ -497,9 +497,17 @@ public class MotionManager : MonoBehaviour
         idleEffect.transform.SetParent(GetBindTransform(effect._BindPos));
         idleEffect.transform.localPosition = Vector3.zero;
         idleEffect.transform.localRotation = Quaternion.Euler(Vector3.zero);
-        if (hashParam != null && hashParam.ContainsKey("WorldPos"))
+
+        if (hashParam != null)
         {
-            idleEffect.transform.position = (Vector3)hashParam["WorldPos"];
+            if (hashParam.ContainsKey("WorldPos"))
+            {
+                idleEffect.transform.position = (Vector3)hashParam["WorldPos"];
+            }
+            if (hashParam.ContainsKey("Rotation"))
+            {
+                idleEffect.transform.rotation = ((Quaternion)hashParam["Rotation"]);
+            }
         }
         idleEffect._EffectLastTime = effect._EffectLastTime;
         if(hashParam == null)

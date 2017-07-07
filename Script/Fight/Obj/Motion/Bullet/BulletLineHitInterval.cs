@@ -14,9 +14,9 @@ public class BulletLineHitInterval : BulletBase
     private float _LastHitTime = 0;
     private Collider _Collider;
 
-    public override void Init(MotionManager senderMotion)
+    public override void Init(MotionManager senderMotion, BulletEmitterBase emitterBase)
     {
-        base.Init(senderMotion);
+        base.Init(senderMotion, emitterBase);
 
         _Collider = gameObject.GetComponent<Collider>();
         _NextSpeed = _MoveSpeed;
