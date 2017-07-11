@@ -11,9 +11,16 @@ public class BulletEmitterHittedTarget : BulletEmitterBase
     {
         base.ActImpact(senderManager, reciverManager);
 
+        StartCoroutine(SendBulletDelay());
+    }
+
+    private IEnumerator SendBulletDelay()
+    {
+        yield return new WaitForSeconds(_DelayTime);
+
         var skillBase = transform.parent.GetComponent<ObjMotionSkillBase>();
         if (skillBase == null)
-            return;
+            yield break;
 
         foreach (var hitMotion in skillBase._SkillHitMotions)
         {

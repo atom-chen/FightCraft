@@ -35,8 +35,7 @@ public class BulletEmitterRandomLast : BulletEmitterBase
             //    sinAngle = -sinAngle;
             //}
 
-            bullet.transform.position = transform.position + _EmitterOffset + new Vector3(randX, 0, randZ); ;
-            Debug.Log("bullet position:" + bullet.transform.position);
+            bullet.transform.position = transform.position + _EmitterOffset + new Vector3(randX, 0, randZ);
         }
 
         ++_RountIdx;

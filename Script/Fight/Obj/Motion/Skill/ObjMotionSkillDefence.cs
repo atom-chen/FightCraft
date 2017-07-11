@@ -52,7 +52,7 @@ public class ObjMotionSkillDefence : ObjMotionSkillBase
 
     private float _DefenceTime;
 
-    public override bool ActSkill()
+    public override bool ActSkill(Hashtable exhash)
     {
         if (!base.ActSkill())
             return false;

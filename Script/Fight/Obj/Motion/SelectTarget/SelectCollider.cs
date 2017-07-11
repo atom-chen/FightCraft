@@ -42,7 +42,8 @@ public class SelectCollider : SelectBase
 
                 if (_IsRemindSelected)
                 {
-                    _SkillMotion.ActingSkill._SkillHitMotions.Add(motion);
+                    if(!_SkillMotion.ActingSkill._SkillHitMotions.Contains(motion))
+                        _SkillMotion.ActingSkill._SkillHitMotions.Add(motion);
                 }
 
                 if (_SkillMotion._IsRoleHit)

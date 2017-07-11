@@ -42,7 +42,7 @@ public class ObjMotionSkillBase : MonoBehaviour
         return false;
     }
 
-    public bool StartSkill()
+    public bool StartSkill(Hashtable exHash = null)
     {
         if (!IsCanActSkill())
             return false;
@@ -53,10 +53,10 @@ public class ObjMotionSkillBase : MonoBehaviour
             return true;
         }
 
-        return ActSkill();
+        return ActSkill(exHash);
     }
 
-    public virtual bool ActSkill()
+    public virtual bool ActSkill(Hashtable exHash = null)
     {
         if (_Anim != null)
             PlayAnimation(_Anim);
@@ -393,6 +393,14 @@ public class ObjMotionSkillBase : MonoBehaviour
                 bulletEmitterBase._EmitterOffset += pos;
             }
         }
+    }
+
+    public bool CanSkillActAfterDebuff()
+    {
+        if (_SkillAttr == null)
+            return false;
+
+        return (_SkillAttr.CanActAfterDebuff);
     }
 
     #endregion

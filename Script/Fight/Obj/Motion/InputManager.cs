@@ -162,10 +162,13 @@ public class InputManager : InstanceBase<InputManager>
         {
             if (_InputMotion.ActingSkill == _NormalAttack && _NormalAttack.CurStep > 0 && _NormalAttack.CurStep < 4 && _NormalAttack.CanNextInput)
             {
-                string inputKey = "u" + (_NormalAttack.CurStep + 1);
+                string inputKey = "u1"/* + (_NormalAttack.CurStep + 1)*/;
+                Hashtable hash = new Hashtable();
+                hash.Add("AttackStep", _NormalAttack.CurStep);
+
                 if (_InputMotion._SkillMotions.ContainsKey(inputKey))
                 {
-                    _InputMotion.ActSkill(_InputMotion._SkillMotions[inputKey]);
+                    _InputMotion.ActSkill(_InputMotion._SkillMotions[inputKey], hash);
                 }
             }
             else if (_InputMotion.ActingSkill == null)

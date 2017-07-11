@@ -71,7 +71,7 @@ public class ObjMotionSkillDush : ObjMotionSkillBase
     private Vector3 _DushPos;
     private int _Step = 0;
 
-    public override bool ActSkill()
+    public override bool ActSkill(Hashtable exhash)
     {
         if (!base.ActSkill())
             return false;

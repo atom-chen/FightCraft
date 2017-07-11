@@ -97,7 +97,7 @@ public class ObjMotionSkillAttack : ObjMotionSkillBase
         }
     }
 
-    public override bool ActSkill()
+    public override bool ActSkill(Hashtable exhash)
     {
         bool isActSkill = base.ActSkill();
         if (!isActSkill)

@@ -63,7 +63,7 @@ public class ObjMotionSkillMixAnim2 : ObjMotionSkillBase
 
     private int _CurStep;
 
-    public override bool ActSkill()
+    public override bool ActSkill(Hashtable exhash)
     {
 
         bool isActSkill = base.ActSkill();

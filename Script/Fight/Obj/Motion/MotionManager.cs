@@ -228,7 +228,7 @@ public class MotionManager : MonoBehaviour
         }
     }
 
-    public void ActSkill(ObjMotionSkillBase skillMotion)
+    public void ActSkill(ObjMotionSkillBase skillMotion, Hashtable exHash = null)
     {
         if (!skillMotion.IsCanActSkill())
             return;
@@ -241,7 +241,7 @@ public class MotionManager : MonoBehaviour
             BaseMotionManager.StopMove();
         }
 
-        skillMotion.StartSkill();
+        skillMotion.StartSkill(exHash);
         _ActingSkill = skillMotion;
         MotionPrior = _ActingSkill._SkillMotionPrior;
     }
