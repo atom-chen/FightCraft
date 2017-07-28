@@ -192,6 +192,9 @@ public class AI_Base : MonoBehaviour
         if (_CDSkills.Count == 0)
             return false;
 
+        if (!IsRandomActSkill())
+            return false;
+
         float dis = Vector3.Distance(_SelfMotion.transform.position, _TargetMotion.transform.position);
 
         for (int i = _CDSkills.Count - 1; i >= 0; --i)
@@ -203,6 +206,16 @@ public class AI_Base : MonoBehaviour
             }
         }
 
+        return false;
+    }
+
+    protected bool IsRandomActSkill()
+    {
+        var actRandom = Random.Range(0, 10000);
+        if (_SelfMotion.RoleAttrManager.Level * 10 >= actRandom)
+        {
+            return true;
+        }
         return false;
     }
     #endregion

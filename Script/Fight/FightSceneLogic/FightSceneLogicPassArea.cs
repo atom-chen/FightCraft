@@ -44,6 +44,32 @@ public class FightSceneLogicPassArea : FightSceneLogicBase
         }
     }
 
+    public Vector3 GetNextAreaPos()
+    {
+        FightSceneAreaBase nextArea = _RunningArea;
+        if (nextArea == null)
+        {
+            if (_RunningIdx + 1 < _FightArea.Count)
+            {
+                nextArea = _FightArea[_RunningIdx + 1];
+            }
+        }
+
+        if (nextArea is FightSceneAreaKAllEnemy)
+        {
+            return (nextArea as FightSceneAreaKAllEnemy)._EnemyBornPos[0]._EnemyTransform.position;
+        }
+        else if (nextArea is FightSceneAreaKEnemyCnt)
+        {
+            return (nextArea as FightSceneAreaKEnemyCnt)._EnemyBornPos[0].position;
+        }
+        else if (nextArea is FightSceneAreaKBossWithFish)
+        {
+            return (nextArea as FightSceneAreaKBossWithFish)._BossBornPos.position;
+        }
+        return Vector3.zero;
+    }
+
     #region 
 
     public void AreaStart(FightSceneAreaBase startArea)

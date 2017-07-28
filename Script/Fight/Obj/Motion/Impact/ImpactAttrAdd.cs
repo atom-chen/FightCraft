@@ -14,7 +14,7 @@ public class ImpactAttrAdd : ImpactBuff
 
     #endregion
 
-    public BaseAttr _Attr;
+    public RoleAttrEnum _Attr;
     public float _AddValue;
     public ADDTYPE _AddType;
 

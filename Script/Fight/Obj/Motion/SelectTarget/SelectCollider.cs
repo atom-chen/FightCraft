@@ -37,18 +37,18 @@ public class SelectCollider : SelectBase
             {
                 foreach (var impact in _ImpactList)
                 {
-                    impact.ActImpact(_SkillMotion, motion);
+                    impact.ActImpact(_ObjMotion, motion);
                 }
 
                 if (_IsRemindSelected)
                 {
-                    if(!_SkillMotion.ActingSkill._SkillHitMotions.Contains(motion))
-                        _SkillMotion.ActingSkill._SkillHitMotions.Add(motion);
+                    if(!_ObjMotion.ActingSkill._SkillHitMotions.Contains(motion))
+                        _ObjMotion.ActingSkill._SkillHitMotions.Add(motion);
                 }
 
-                if (_SkillMotion._IsRoleHit)
+                if (_ObjMotion._IsRoleHit)
                 {
-                    GlobalEffect.Instance.Pause(_SkillMotion._RoleHitTime);
+                    GlobalEffect.Instance.Pause(_ObjMotion._RoleHitTime);
                 }
             }
         }

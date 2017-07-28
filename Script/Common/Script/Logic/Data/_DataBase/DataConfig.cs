@@ -7,7 +7,7 @@ namespace GameLogic
     public class DataConfig
     {
 
-        public static List<string> _DataPackList = new List<string>() { "PlayerDataPack" };
+        public static List<string> _DataPackList = new List<string>() { "PlayerDataPack", "SkillPack" };
     }
 }
 

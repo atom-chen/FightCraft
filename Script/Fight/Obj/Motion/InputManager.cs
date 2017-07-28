@@ -37,7 +37,11 @@ public class InputManager : InstanceBase<InputManager>
             }
         }
         else
+#if UNITY_EDITOR
+        if (!_EmulateMode)
+#endif
         {
+
             if (_InputMotion.BaseMotionManager.IsMoving())
                 _InputMotion.BaseMotionManager.StopMove();
             if (_InputMotion.BaseMotionManager.CanMotionIdle())
@@ -102,6 +106,10 @@ public class InputManager : InstanceBase<InputManager>
         if (key.Length != 1)
             return false;
 #if UNITY_EDITOR
+        if (_EmulateMode)
+        {
+            return IsEmulateKeyDown(key);
+        }
         return Input.GetKeyDown(key);
 #else
         return UISkillBar.IsKeyDown(key);
@@ -116,10 +124,42 @@ public class InputManager : InstanceBase<InputManager>
             realKey = "k";
         }
 #if UNITY_EDITOR
+        if (_EmulateMode)
+        {
+            return IsEmulateKeyDown(key);
+        }
         return Input.GetKey(realKey);
 #else
         return UISkillBar.IsKeyDown(key);
 #endif
+    }
+
+    #endregion
+
+    #region emulate key
+
+    public bool _EmulateMode = false;
+    private string _EmulatePress = "";
+
+    public void SetEmulatePress(string key)
+    {
+        _EmulateMode = true;
+        _EmulatePress = key;
+    }
+
+    public void ReleasePress()
+    {
+        _EmulatePress = "";
+    }
+
+    public void FinishEmulateMode()
+    {
+        _EmulateMode = false;
+    }
+
+    public bool IsEmulateKeyDown(string key)
+    {
+        return _EmulatePress == key;
     }
 
     #endregion

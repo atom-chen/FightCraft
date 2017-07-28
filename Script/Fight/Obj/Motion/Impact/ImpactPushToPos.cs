@@ -28,12 +28,12 @@ public class ImpactPushToPos : ImpactBase
 
         if (_DestPos != Vector3.zero)
         {
-            reciverManager.SetMove(_DestPos - reciverManager.transform.position, _Time / senderManager.RoleAttrManager.SkillSpeed);
+            reciverManager.SetMove(_DestPos - reciverManager.transform.position, _Time / senderManager.RoleAttrManager.AttackSpeed);
         }
         else
         {
             Vector3 destMove = senderManager.transform.forward.normalized * _Speed * _Time;
-            reciverManager.SetMove(destMove, _Time / senderManager.RoleAttrManager.SkillSpeed);
+            reciverManager.SetMove(destMove, _Time / senderManager.RoleAttrManager.AttackSpeed);
         }
         _DestPos = Vector3.zero;
     }

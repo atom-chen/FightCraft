@@ -205,7 +205,7 @@ public class BaseMotionManager : MonoBehaviour
         _MotionManager.MotionPrior = MOVE_PRIOR;
         Vector3 destPoint = transform.position + derectV3.normalized;
 
-        _MotionManager.PlayAnimation(_MoveAnim, _MotionManager.RoleAttrManager.MoveSpeed / _MotionManager.RoleAttrManager.BaseMoveSpeed);
+        _MotionManager.PlayAnimation(_MoveAnim, _MotionManager.RoleAttrManager.MoveSpeedRate);
         _MotionManager.transform.rotation = Quaternion.LookRotation(derectV3);
         _NavAgent.speed = _MotionManager.RoleAttrManager.MoveSpeed;
         _NavAgent.SetDestination(destPoint);
@@ -223,7 +223,7 @@ public class BaseMotionManager : MonoBehaviour
             return;
 
         _MotionManager.MotionPrior = MOVE_PRIOR;
-        _MotionManager.PlayAnimation(_MoveAnim, _MotionManager.RoleAttrManager.MoveSpeed / _MotionManager.RoleAttrManager.BaseMoveSpeed);
+        _MotionManager.PlayAnimation(_MoveAnim, _MotionManager.RoleAttrManager.MoveSpeedRate);
 
         _NavAgent.speed = _MotionManager.RoleAttrManager.MoveSpeed;
         _NavAgent.SetDestination(targetPos);

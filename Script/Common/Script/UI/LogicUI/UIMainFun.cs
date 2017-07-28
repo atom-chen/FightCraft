@@ -73,7 +73,16 @@ namespace GameUI
         {
             UIEquipResetAttr.ShowAsyn();
         }
-             
+
+        public void BtnSkill()
+        {
+            UISkillLevelUp.ShowAsyn();
+        }
+
+        public void BtnAttr()
+        {
+            UIRoleAttr.ShowAsyn();
+        }
 
         #endregion
     }

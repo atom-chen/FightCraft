@@ -1,0 +1,11 @@
+"""ID""","""Name""","""Desc""","""Profession""","""SkillClass""","""SkillAttr""","""MaxLevel""","""EffectValue1""","""EffectValue2""","""EffectValue3""","""CostStep""","""Pos"""
+10001,NA.Damage,Add Normal Attack Damage,1,1,10001,10,1000,0,0,0,0
+10002,NA.Speed,Add Normal Attack Speed,1,1,10002,10,100,0,0,0,1
+10003,NA.Range,Add Normal Attack Range,1,1,10003,10,200,0,0,0,2
+10100,S.Damage,Add Ex Skill Damage,1,2,10101,10,1000,0,0,0,0
+10101,S.Speed,Add Ex Skill Speed,1,2,10102,100,0,0,0,0,1
+10102,S.Range,Add Ex Skill Range,1,2,10103,10,200,0,0,0,2
+10111,S.Accumulate,Ex Skill Can Accululate by Hold the button,1,2,10111,1,2000,0,0,0,3
+10112,S.Shadow,add shadow to skill,1,2,10112,1,1,0,0,0,4
+10113,S.BackRange,Ex skill back range,1,2,10113,1,100,0,0,0,5
+10114,S.ActBuff,can act skill after buff,1,2,10114,1,1,0,0,0,7

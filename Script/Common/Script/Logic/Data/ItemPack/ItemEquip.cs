@@ -93,7 +93,7 @@ namespace GameLogic
                 {
                     attackValue = CommonDefine.GetQualityColorStr(EquipQuality) + attackValue + "</color>";
                 }
-                attrStr = StrDictionary.GetFormatStr(1, attackValue);
+                attrStr = StrDictionary.GetFormatStr((int)RoleAttrEnum.Attack, attackValue);
             }
             else if (EquipItemRecord.Slot == EQUIP_SLOT.TORSO || EquipItemRecord.Slot == EQUIP_SLOT.LEGS)
             {
@@ -102,14 +102,14 @@ namespace GameLogic
                 {
                     hpValue = CommonDefine.GetQualityColorStr(EquipQuality) + hpValue + "</color>";
                 }
-                attrStr = StrDictionary.GetFormatStr(2, hpValue);
+                attrStr = StrDictionary.GetFormatStr((int)RoleAttrEnum.Defense, hpValue);
 
                 string defenceValue = BaseAttack.ToString();
                 if (BaseAttack > EquipItemRecord.BaseAttrs[0])
                 {
                     defenceValue = CommonDefine.GetQualityColorStr(EquipQuality) + defenceValue + "</color>";
                 }
-                attrStr += "\n" + StrDictionary.GetFormatStr(3, defenceValue);
+                attrStr += "\n" + StrDictionary.GetFormatStr((int)RoleAttrEnum.HPMax, defenceValue);
             }
             return attrStr;
 
@@ -146,6 +146,11 @@ namespace GameLogic
             _DynamicDataVector.Add(attr);
         }
 
+        public void AddExAttr(List<EquipExAttr> attrs)
+        {
+            _DynamicDataVector.AddRange(attrs);
+        }
+
         #endregion
 
         #region equipBase
@@ -161,13 +166,13 @@ namespace GameLogic
                     _BaseAttack = EquipItemRecord.BaseAttrs[0];
                     foreach (var exAttr in _DynamicDataVector)
                     {
-                        if (exAttr.AttrID == FightAttr.FightAttrType.ATTACK)
+                        if (exAttr.AttrID == RoleAttrEnum.Attack)
                         {
                             exValue += exAttr.AttrValue1;
                         }
-                        else if (exAttr.AttrID ==  FightAttr.FightAttrType.ATTACK_PERSENT)
+                        else if (exAttr.AttrID == RoleAttrEnum.AttackPersent)
                         {
-                            exValue += (int)(_BaseAttack * (exAttr.AttrValue1 / 100.0f));
+                            exValue += (int)(_BaseAttack * (exAttr.AttrValue1 / 10000.0f));
                         }
                     }
                     _BaseAttack += exValue;
@@ -187,13 +192,13 @@ namespace GameLogic
                     _BaseHP = EquipItemRecord.BaseAttrs[1];
                     foreach (var exAttr in _DynamicDataVector)
                     {
-                        if (exAttr.AttrID == FightAttr.FightAttrType.HP)
+                        if (exAttr.AttrID == RoleAttrEnum.HPMax)
                         {
                             exValue += exAttr.AttrValue1;
                         }
-                        else if (exAttr.AttrID == FightAttr.FightAttrType.HP_PERSENT)
+                        else if (exAttr.AttrID == RoleAttrEnum.HPMaxPersent)
                         {
-                            exValue += (int)(_BaseHP * (exAttr.AttrValue1 / 100.0f));
+                            exValue += (int)(_BaseHP * (exAttr.AttrValue1 / 10000.0f));
                         }
                     }
                     _BaseHP += exValue;
@@ -213,13 +218,13 @@ namespace GameLogic
                     _BaseDefence = EquipItemRecord.BaseAttrs[0];
                     foreach (var exAttr in _DynamicDataVector)
                     {
-                        if (exAttr.AttrID == FightAttr.FightAttrType.DEFENCE)
+                        if (exAttr.AttrID == RoleAttrEnum.Defense)
                         {
                             exValue += exAttr.AttrValue1;
                         }
-                        else if (exAttr.AttrID == FightAttr.FightAttrType.DEFENCE_PERSENT)
+                        else if (exAttr.AttrID == RoleAttrEnum.DefensePersent)
                         {
-                            exValue += (int)(_BaseDefence * (exAttr.AttrValue1 / 100.0f));
+                            exValue += (int)(_BaseDefence * (exAttr.AttrValue1 / 10000.0f));
                         }
                     }
                     _BaseDefence += exValue;
@@ -237,16 +242,38 @@ namespace GameLogic
                 {
                     int exValue = 0;
                     _RequireLevel = EquipItemRecord.LevelLimit;
-                    foreach (var exAttr in _DynamicDataVector)
-                    {
-                        if (exAttr.AttrID == FightAttr.FightAttrType.LEVEL_REQUIRE)
-                        {
-                            exValue += exAttr.AttrValue1;
-                        }
-                    }
+                    //foreach (var exAttr in _DynamicDataVector)
+                    //{
+                    //    if (exAttr.AttrID == FightAttr.FightAttrType.LEVEL_REQUIRE)
+                    //    {
+                    //        exValue += exAttr.AttrValue1;
+                    //    }
+                    //}
                     _RequireLevel -= exValue;
                 }
                 return _RequireLevel;
+            }
+        }
+
+        public void SetEquipAttr(RoleAttrStruct roleAttr)
+        {
+            if (!IsVolid())
+                return;
+
+            roleAttr.AddValue(RoleAttrEnum.Attack, BaseAttack);
+            roleAttr.AddValue(RoleAttrEnum.HPMax, BaseHP);
+            roleAttr.AddValue(RoleAttrEnum.Defense, BaseDefence);
+
+            foreach (var exAttrs in _DynamicDataVector)
+            {
+                if ((int)exAttrs.AttrID < (int)RoleAttrEnum.BASE_ATTR_MAX)
+                {
+                    roleAttr.AddValue(exAttrs.AttrID, exAttrs.AttrValue1);
+                }
+                else
+                {
+                    roleAttr.AddExAttr(exAttrs);
+                }
             }
         }
         #endregion
@@ -414,7 +441,9 @@ namespace GameLogic
 
         public static ItemEquip CreateEquip(int level, Tables.ITEM_QUALITY quality, int value)
         {
-            var baseEquip = GetRandomItem(level);
+            var equipSlot = GetRandomItemSlot();
+            //EQUIP_SLOT equipSlot = EQUIP_SLOT.TORSO;
+            var baseEquip = GetRandomItem(equipSlot, level);
             if (baseEquip == null)
                 return null;
 
@@ -424,7 +453,8 @@ namespace GameLogic
             itemEquip.EquipQuality = quality;
             itemEquip.EquipValue = value;
 
-            RandomEquipAttr(itemEquip);
+            //RandomEquipAttr(itemEquip);
+            itemEquip.AddExAttr(RandomAttrs.GetRandomEquipExAttrs(baseEquip.Slot, level, value, quality, RoleData.SelectRole.Profession));
 
             return itemEquip;
         }
@@ -470,7 +500,7 @@ namespace GameLogic
         private static EquipExAttr GetRandomAttr(FightAttrRecord attrRecord, int value)
         {
             EquipExAttr attrItem = new EquipExAttr();
-            attrItem.AttrID = (FightAttr.FightAttrType)int.Parse(attrRecord.Id);
+            attrItem.AttrID = (RoleAttrEnum)attrRecord.AttrID;
 
             Vector3 attrValue = new Vector3();
             for (int i = attrRecord.Values.Count - 1; i >= 0; --i)
@@ -509,10 +539,10 @@ namespace GameLogic
             return attrList;
         }
 
-        private static EquipItemRecord GetRandomItem(int level)
+        private static EquipItemRecord GetRandomItem(EQUIP_SLOT equipSlot, int level)
         {
             Dictionary<int, EquipItemRecord> professionEquips = new Dictionary<int, EquipItemRecord>();
-            foreach (var equipRecord in TableReader.EquipItem.ClassedEquips[GetRandomItemSlot(level)])
+            foreach (var equipRecord in TableReader.EquipItem.ClassedEquips[equipSlot])
             {
                 if (!professionEquips.ContainsKey(equipRecord.ProfessionLimit))
                 {
@@ -520,7 +550,7 @@ namespace GameLogic
                     continue;
                 }
 
-                if (equipRecord.LevelLimit < level
+                if (equipRecord.LevelLimit <= level
                     && equipRecord.LevelLimit > professionEquips[equipRecord.ProfessionLimit].LevelLimit)
                 {
                     professionEquips[equipRecord.ProfessionLimit] = equipRecord;
@@ -531,6 +561,7 @@ namespace GameLogic
             if (professionEquips.Count == 1)
             {
                 singleRate = 1;
+
             }
             else
             {
@@ -548,11 +579,11 @@ namespace GameLogic
             float rateTotal = 0;
             foreach (var equipRecord in professionEquips.Values)
             {
-                if (equipRecord.ProfessionLimit == (int)PROFESSION.NONE)
-                {
-                    rateTotal += 0.5f;
-                }
-                else
+                //if (equipRecord.ProfessionLimit == (int)PROFESSION.NONE)
+                //{
+                //    rateTotal += 0.5f;
+                //}
+                //else
                 {
                     rateTotal += singleRate;
                 }
@@ -563,7 +594,7 @@ namespace GameLogic
             return null;
         }
 
-        public static EQUIP_SLOT GetRandomItemSlot(int level)
+        public static EQUIP_SLOT GetRandomItemSlot()
         {
             int slotTypeCnt = Enum.GetValues(typeof(EQUIP_SLOT)).Length;
             int randomSlot = UnityEngine.Random.Range(0, slotTypeCnt);

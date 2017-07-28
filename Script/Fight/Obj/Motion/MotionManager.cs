@@ -111,7 +111,7 @@ public class MotionManager : MonoBehaviour
     public void PlayAnimation(AnimationClip animClip)
     {
         RemoveBuff(typeof(ImpactBlock));
-        _Animaton[animClip.name].speed = RoleAttrManager.SkillSpeed;
+        _Animaton[animClip.name].speed = RoleAttrManager.AttackSpeed;
         _Animaton.Play(animClip.name);
     }
 
@@ -133,7 +133,7 @@ public class MotionManager : MonoBehaviour
     public void RePlayAnimation(AnimationClip animClip)
     {
         RemoveBuff(typeof(ImpactBlock));
-        _Animaton[animClip.name].speed = RoleAttrManager.SkillSpeed;
+        _Animaton[animClip.name].speed = RoleAttrManager.AttackSpeed;
         _Animaton.Stop();
         _Animaton.Play(animClip.name);
     }
@@ -433,7 +433,7 @@ public class MotionManager : MonoBehaviour
         _PlayingEffect = _SkillEffects[effect.name];
         _PlayingEffect.SetEffectColor(elementType);
         if(speed < 0)
-            _PlayingEffect.PlayEffect(RoleAttrManager.SkillSpeed);
+            _PlayingEffect.PlayEffect(RoleAttrManager.AttackSpeed);
         else
             _PlayingEffect.PlayEffect(speed);
     }

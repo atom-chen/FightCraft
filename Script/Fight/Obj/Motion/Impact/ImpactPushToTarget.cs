@@ -20,7 +20,7 @@ public class ImpactPushToTarget : ImpactBase
         moveTime = Mathf.Min(_Time, moveTime);
 
         Vector3 destMove = direct.normalized * _Speed * moveTime;
-        senderManager.SetMove(destMove, moveTime / senderManager.RoleAttrManager.SkillSpeed);
+        senderManager.SetMove(destMove, moveTime / senderManager.RoleAttrManager.AttackSpeed);
     }
 
 }

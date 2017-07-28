@@ -1,50 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <enumColumn>
-    <enumName>
-    </enumName>
+    <enumName>BOY_DEFENCE</enumName>
     <enumCode>BOY_DEFENCE</enumCode>
     <enumValue>0</enumValue>
-    <enumDesc>枚举必须保留0值</enumDesc>
+    <enumDesc>BOY_DEFENCE</enumDesc>
   </enumColumn>
   <enumColumn>
-    <enumName>
-    </enumName>
+    <enumName>GIRL_DOUGE</enumName>
     <enumCode>GIRL_DOUGE</enumCode>
     <enumValue>1</enumValue>
-    <enumDesc>
-    </enumDesc>
+    <enumDesc>GIRL_DOUGE</enumDesc>
   </enumColumn>
   <enumColumn>
-    <enumName>
-    </enumName>
+    <enumName>BOY_DOUGE</enumName>
     <enumCode>BOY_DOUGE</enumCode>
     <enumValue>2</enumValue>
-    <enumDesc>
-    </enumDesc>
+    <enumDesc>BOY_DOUGE</enumDesc>
   </enumColumn>
   <enumColumn>
-    <enumName>
-    </enumName>
+    <enumName>GIRL_DEFENCE</enumName>
     <enumCode>GIRL_DEFENCE</enumCode>
     <enumValue>3</enumValue>
-    <enumDesc>
-    </enumDesc>
+    <enumDesc>GIRL_DEFENCE</enumDesc>
   </enumColumn>
   <enumColumn>
-    <enumName>
-    </enumName>
+    <enumName>MAX</enumName>
     <enumCode>MAX</enumCode>
     <enumValue>4</enumValue>
-    <enumDesc>
-    </enumDesc>
+    <enumDesc>MAX</enumDesc>
   </enumColumn>
   <enumColumn>
-    <enumName>
-    </enumName>
+    <enumName>NONE</enumName>
     <enumCode>NONE</enumCode>
     <enumValue>-1</enumValue>
-    <enumDesc>
-    </enumDesc>
+    <enumDesc>NONE</enumDesc>
   </enumColumn>
 </root>

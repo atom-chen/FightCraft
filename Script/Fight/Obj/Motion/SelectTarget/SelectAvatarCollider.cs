@@ -99,9 +99,9 @@ public class SelectAvatarCollider : SelectBase
         //        impact.ActImpact(_SkillMotion, targetMotion);
         //}
 
-        if (_SkillMotion._IsRoleHit)
+        if (_ObjMotion._IsRoleHit)
         {
-            GlobalEffect.Instance.Pause(_SkillMotion._RoleHitTime);
+            GlobalEffect.Instance.Pause(_ObjMotion._RoleHitTime);
         }
     }
 
@@ -116,14 +116,14 @@ public class SelectAvatarCollider : SelectBase
             {
                 foreach (var impact in _ImpactList)
                 {
-                    impact.ActImpact(_SkillMotion, motion);
+                    impact.ActImpact(_ObjMotion, motion);
                 }
             }
         }
 
-        if (_SkillMotion._IsRoleHit)
+        if (_ObjMotion._IsRoleHit)
         {
-            GlobalEffect.Instance.Pause(_SkillMotion._RoleHitTime);
+            GlobalEffect.Instance.Pause(_ObjMotion._RoleHitTime);
         }
 
         ColliderFinish();

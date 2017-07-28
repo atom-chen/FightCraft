@@ -7,17 +7,17 @@ public class SelectLastHit : SelectBase
     
     public override void ColliderStart()
     {
-        foreach (var skillMotion in _SkillMotion.ActingSkill._SkillHitMotions)
+        foreach (var skillMotion in _ObjMotion.ActingSkill._SkillHitMotions)
         {
 
             foreach (var impact in _ImpactList)
             {
-                impact.ActImpact(_SkillMotion, skillMotion);
+                impact.ActImpact(_ObjMotion, skillMotion);
             }
 
-            if (_SkillMotion._IsRoleHit)
+            if (_ObjMotion._IsRoleHit)
             {
-                GlobalEffect.Instance.Pause(_SkillMotion._RoleHitTime);
+                GlobalEffect.Instance.Pause(_ObjMotion._RoleHitTime);
             }
 
         }
@@ -25,7 +25,7 @@ public class SelectLastHit : SelectBase
 
     public override void ColliderFinish()
     {
-        _SkillMotion.ActingSkill._SkillHitMotions.Clear();
+        _ObjMotion.ActingSkill._SkillHitMotions.Clear();
     }
 
 }

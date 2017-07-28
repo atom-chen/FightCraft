@@ -136,10 +136,16 @@ namespace GameUI
         #region operate
 
         public void OnPutOn()
-        { }
+        {
+            RoleData.SelectRole.PutOnEquip(_ShowItem.EquipItemRecord.Slot, _ShowItem);
+            Hide();
+        }
 
         public void OnPutOff()
-        { }
+        {
+            RoleData.SelectRole.PutOffEquip(_ShowItem.EquipItemRecord.Slot, _ShowItem);
+            Hide();
+        }
 
         public void OnSale()
         {

@@ -9,11 +9,11 @@ public class SelectBulletEmitter : SelectBase
     {
         //base.ColliderStart();
 
-        if (_SkillMotion != null)
+        if (_ObjMotion != null)
         {
             foreach (var impact in _ImpactList)
             {
-                impact.ActImpact(_SkillMotion, _SkillMotion);
+                impact.ActImpact(_ObjMotion, _ObjMotion);
             }
         }
     }

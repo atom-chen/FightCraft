@@ -20,18 +20,7 @@ public enum ElementType
     Fire,
     Cold,
     Lighting,
-    Wind,
-}
-
-public enum BaseAttr
-{
-    MOVE_SPEED,
-    SKILL_SPEED,
-    HIT_SPEED,
-    HP,
-    HP_MAX,
-    ATTACK,
-    DEFENCE,
+    Wind
 }
 
 public class RoleAttrManager : MonoBehaviour
@@ -57,43 +46,7 @@ public class RoleAttrManager : MonoBehaviour
             return _MonsterValue;
         }
     }
-
-    private float _MoveSpeed = 1;
-    public float MoveSpeed
-    {
-        get
-        {
-            return _MoveSpeed;
-        }
-    }
-
-    private float _BaseMoveSpeed;
-    public float BaseMoveSpeed
-    {
-        get
-        {
-            return _BaseMoveSpeed;
-        }
-    }
-
-    private float _SkillSpeed = 1;
-    public float SkillSpeed
-    {
-        get
-        {
-            return _SkillSpeed;
-        }
-    }
-
-    private float _HitSpeed = 1;
-    public float HitSpeed
-    {
-        get
-        {
-            return _HitSpeed;
-        }
-    }
-
+    
     [SerializeField]
     private MotionType _MotionType;
     public MotionType MotionType
@@ -108,18 +61,76 @@ public class RoleAttrManager : MonoBehaviour
         }
     }
 
-    //base
+    private float _BaseMoveSpeed = 4.5f;
+    private float _MoveSpeed = 4.5f;
+    public float MoveSpeed
+    {
+        get
+        {
+            return _MoveSpeed;
+        }
+    }
+    private float _MoveSpeedRate = 1.0f;
+    public float MoveSpeedRate
+    {
+        get
+        {
+            return _MoveSpeedRate;
+        }
+    }
+    public void AddMoveSpeedRate(float rate)
+    {
+        _BaseAttr.AddValue(RoleAttrEnum.MoveSpeed, (int)(rate * 10000));
+        RefreshMoveSpeed();
+    }
+    private void RefreshMoveSpeed()
+    {
+        _MoveSpeedRate = _BaseAttr.GetValue(RoleAttrEnum.MoveSpeed) * 0.0001f + 1;
+        _MoveSpeed = _BaseMoveSpeed * _MoveSpeedRate;
+    }
+
+    private float _BaseAttackSpeed = 1.0f;
+    private float _AttackSpeed = 1.0f;
+    public float AttackSpeed
+    {
+        get
+        {
+            return _AttackSpeed;
+        }
+    }
+    public void AddAttackSpeedRate(float rate)
+    {
+        _BaseAttr.AddValue(RoleAttrEnum.AttackSpeed, (int)(rate * 10000));
+        RefreshAttackSpeed();
+    }
+    private void RefreshAttackSpeed()
+    {
+        var AttackSpeedRate = _BaseAttr.GetValue(RoleAttrEnum.AttackSpeed) * 0.0001f + 1;
+        _AttackSpeed = _BaseAttackSpeed * AttackSpeedRate;
+    }
+
     private int _HP;
-    private int _HPMax;
-    private int _Attack;
-    private int _Defence;
+    public int HP
+    {
+        get
+        {
+            return _HP;
+        }
+    }
 
     public float HPPersent
     {
         get
         {
-            return (_HP / (float)_HPMax);
+            return (_HP / (float)_BaseAttr.GetValue(RoleAttrEnum.HPMax));
         }
+    }
+
+    public void AddHPPersent(float persent)
+    {
+        int hpMax = _BaseAttr.GetValue(RoleAttrEnum.HPMax);
+        _HP += (int)(hpMax * persent);
+        _HP = Mathf.Clamp(_HP, 0, hpMax);
     }
 
     public bool IsLoweringHP
@@ -138,9 +149,10 @@ public class RoleAttrManager : MonoBehaviour
         }
     }
 
-    
+    private RoleAttrStruct _BaseAttr;
 
     public Dictionary<FightAttr.FightAttrType, int> _ExAttrs = new Dictionary<FightAttr.FightAttrType, int>();
+
     #endregion
 
     #region skillAttr
@@ -158,57 +170,148 @@ public class RoleAttrManager : MonoBehaviour
         public float ShadowWarriorDamageRate;
         public List<string> ExBullets = new List<string>();
         public bool CanActAfterDebuff = false;
+
+        public SkillAttr()
+        { }
+
+        public SkillAttr(SkillAttr otherSkillAttr)
+        {
+            SpeedAdd = otherSkillAttr.SpeedAdd;
+            DamageRateAdd = otherSkillAttr.DamageRateAdd;
+            RangeAdd = otherSkillAttr.RangeAdd;
+            RangeLengthAdd = otherSkillAttr.RangeLengthAdd;
+            BackRangeAdd = otherSkillAttr.BackRangeAdd;
+            AccumulateTime = otherSkillAttr.AccumulateTime;
+            AccumulateTime = otherSkillAttr.AccumulateTime;
+            AccumulateDamageRate = otherSkillAttr.AccumulateDamageRate;
+            ShadowWarriorCnt = otherSkillAttr.ShadowWarriorCnt;
+            ShadowWarriorDamageRate = otherSkillAttr.ShadowWarriorDamageRate;
+            CanActAfterDebuff = otherSkillAttr.CanActAfterDebuff;
+            ExBullets = new List<string>(otherSkillAttr.ExBullets);
+        }
+
     }
 
     private Dictionary<string, SkillAttr> _SkillAttrs = new Dictionary<string, SkillAttr>();
 
     private void InitSkillAttr()
     {
+        //var skillAttr = new SkillAttr();
+        //skillAttr.SpeedAdd = 0.5f;
+        //skillAttr.DamageRateAdd = 0.5f;
+        //skillAttr.RangeAdd = 0.5f;
+        //skillAttr.RangeLengthAdd = 0.5f;
+        //skillAttr.BackRangeAdd = 0.5f;
+        //_SkillAttrs.Add("j", skillAttr);
+
+        //skillAttr = new SkillAttr();
+        //skillAttr.SpeedAdd = 0.5f;
+        //skillAttr.DamageRateAdd = 0.5f;
+        //skillAttr.RangeAdd = 0.5f;
+        //skillAttr.RangeLengthAdd = 0.5f;
+        //skillAttr.BackRangeAdd = 0.5f;
+        //skillAttr.ShadowWarriorCnt = 2;
+        //skillAttr.ShadowWarriorDamageRate = 0.3f;
+        //skillAttr.AccumulateTime = 0.5f;
+        //skillAttr.ExBullets.Add("Bullet\\Emitter\\Element\\EleTargetBoomWind");
+        //skillAttr.CanActAfterDebuff = true;
+        //_SkillAttrs.Add("k2", skillAttr);
+
+        //skillAttr = new SkillAttr();
+        //skillAttr.SpeedAdd = 0.5f;
+        //skillAttr.DamageRateAdd = 0.5f;
+        //skillAttr.RangeAdd = 0.5f;
+        //skillAttr.RangeLengthAdd = 0.5f;
+        //skillAttr.BackRangeAdd = 0.5f;
+        //skillAttr.ShadowWarriorCnt = 2;
+        //skillAttr.ShadowWarriorDamageRate = 0.3f;
+        //skillAttr.AccumulateTime = 0.5f;
+        //skillAttr.ExBullets.Add("Bullet\\Emitter\\Element\\EleTargetBoomWind");
+        //_SkillAttrs.Add("k3", skillAttr);
+
+        //skillAttr = new SkillAttr();
+        //skillAttr.SpeedAdd = 0.5f;
+        //skillAttr.DamageRateAdd = 0.5f;
+        //skillAttr.RangeAdd = 0.5f;
+        //skillAttr.RangeLengthAdd = 0.5f;
+        //skillAttr.BackRangeAdd = 0.5f;
+        //skillAttr.ShadowWarriorCnt = 2;
+        //skillAttr.ShadowWarriorDamageRate = 0.3f;
+        //skillAttr.AccumulateTime = 0.5f;
+        ////skillAttr.ExBullets.Add("Bullet\\Emitter\\Element\\EleLineBoomFire");
+        //skillAttr.ExBullets.Add("Bullet\\Emitter\\Element\\EleTargetBoomWind");
+        //_SkillAttrs.Add("k4", skillAttr);
+
         var skillAttr = new SkillAttr();
-        skillAttr.SpeedAdd = 0.5f;
-        skillAttr.DamageRateAdd = 0.5f;
-        skillAttr.RangeAdd = 0.5f;
-        skillAttr.RangeLengthAdd = 0.5f;
-        skillAttr.BackRangeAdd = 0.5f;
         _SkillAttrs.Add("j", skillAttr);
+        foreach (var skillItem in SkillPack.Instance.SkillClassItems[Tables.SKILL_CLASS.NORMAL_ATTACK])
+        {
+            var skillTab = Tables.TableReader.SkillInfo.GetRecord(skillItem._SkillID);
+            if (skillTab == null)
+                continue;
+
+            if (skillItem.SkillActureLevel <= 0)
+                continue;
+
+            switch (skillTab.SkillAttr)
+            {
+                case ATTR_EFFECT.ATTACK_DAMAGE:
+                    skillAttr.DamageRateAdd = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
+                    break;
+                case ATTR_EFFECT.ATTACK_SPEED:
+                    skillAttr.SpeedAdd = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
+                    break;
+                case ATTR_EFFECT.ATTACK_RANGE:
+                    skillAttr.RangeAdd = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
+                    break;
+            }
+        }
 
         skillAttr = new SkillAttr();
-        skillAttr.SpeedAdd = 0.5f;
-        skillAttr.DamageRateAdd = 0.5f;
-        skillAttr.RangeAdd = 0.5f;
-        skillAttr.RangeLengthAdd = 0.5f;
-        skillAttr.BackRangeAdd = 0.5f;
-        skillAttr.ShadowWarriorCnt = 2;
-        skillAttr.ShadowWarriorDamageRate = 0.3f;
-        skillAttr.AccumulateTime = 0.5f;
-        skillAttr.ExBullets.Add("Bullet\\Emitter\\Element\\EleTargetBoomWind");
-        skillAttr.CanActAfterDebuff = true;
         _SkillAttrs.Add("k2", skillAttr);
+        foreach (var skillItem in SkillPack.Instance.SkillClassItems[Tables.SKILL_CLASS.NORMAL_ATTACK])
+        {
+            var skillTab = Tables.TableReader.SkillInfo.GetRecord(skillItem._SkillID);
+            if (skillTab == null)
+                continue;
 
-        skillAttr = new SkillAttr();
-        skillAttr.SpeedAdd = 0.5f;
-        skillAttr.DamageRateAdd = 0.5f;
-        skillAttr.RangeAdd = 0.5f;
-        skillAttr.RangeLengthAdd = 0.5f;
-        skillAttr.BackRangeAdd = 0.5f;
-        skillAttr.ShadowWarriorCnt = 2;
-        skillAttr.ShadowWarriorDamageRate = 0.3f;
-        skillAttr.AccumulateTime = 0.5f;
-        skillAttr.ExBullets.Add("Bullet\\Emitter\\Element\\EleTargetBoomWind");
+            if (skillItem.SkillActureLevel <= 0)
+                continue;
+
+            switch (skillTab.SkillAttr)
+            {
+                case ATTR_EFFECT.SKILL_DAMAGE:
+                    skillAttr.DamageRateAdd = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
+                    break;
+                case ATTR_EFFECT.SKILL_SPEED:
+                    skillAttr.SpeedAdd = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
+                    break;
+                case ATTR_EFFECT.SKILL_RANGE:
+                    skillAttr.RangeAdd = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
+                    break;
+                case ATTR_EFFECT.SKILL_BACKRANGE:
+                    skillAttr.BackRangeAdd = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
+                    skillAttr.RangeLengthAdd = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
+                    break;
+                case ATTR_EFFECT.SKILL_ACCUMULATE:
+                    skillAttr.AccumulateTime = skillTab.EffectValue[1];
+                    skillAttr.AccumulateDamageRate = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
+                    break;
+                case ATTR_EFFECT.SKILL_SHADOWARRIOR:
+                    skillAttr.ShadowWarriorCnt = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
+                    skillAttr.ShadowWarriorDamageRate = skillTab.EffectValue[1] * skillItem.SkillActureLevel;
+                    break;
+                case ATTR_EFFECT.SKILL_ACTBUFF:
+                    skillAttr.CanActAfterDebuff = true;
+                    break;
+            }
+        }
+
+        skillAttr = new SkillAttr(skillAttr);
         _SkillAttrs.Add("k3", skillAttr);
-
-        skillAttr = new SkillAttr();
-        skillAttr.SpeedAdd = 0.5f;
-        skillAttr.DamageRateAdd = 0.5f;
-        skillAttr.RangeAdd = 0.5f;
-        skillAttr.RangeLengthAdd = 0.5f;
-        skillAttr.BackRangeAdd = 0.5f;
-        skillAttr.ShadowWarriorCnt = 2;
-        skillAttr.ShadowWarriorDamageRate = 0.3f;
-        skillAttr.AccumulateTime = 0.5f;
-        //skillAttr.ExBullets.Add("Bullet\\Emitter\\Element\\EleLineBoomFire");
-        skillAttr.ExBullets.Add("Bullet\\Emitter\\Element\\EleTargetBoomWind");
+        skillAttr = new SkillAttr(skillAttr);
         _SkillAttrs.Add("k4", skillAttr);
+        
     }
 
     public SkillAttr GetSkillAttr(string actInput)
@@ -228,38 +331,21 @@ public class RoleAttrManager : MonoBehaviour
         var roleData = PlayerDataPack.Instance._SelectedRole;
         if (roleData != null)
         {
-            _BaseMoveSpeed = roleData.GetBaseMoveSpeed();
-            _MoveSpeed = roleData.GetBaseMoveSpeed();
-            _SkillSpeed = roleData.GetBaseAttackSpeed();
-            _HPMax = roleData.GetBaseHP();
-            _Attack = roleData.GetBaseAttack();
-            _Defence = roleData.GetBaseDefence();
-            _Level = roleData._Level;
-
-            foreach (var equip in roleData._EquipList)
-            {
-                if (!equip.IsVolid())
-                    continue;
-
-                _HPMax += equip.BaseHP;
-                _Attack += equip.BaseAttack;
-                _Defence += equip.BaseDefence;
-            }
-            _HP = _HPMax;
-            _ExAttrs = new Dictionary<FightAttr.FightAttrType, int>(roleData._ExAttrs);
+            _BaseAttr = new RoleAttrStruct(roleData._BaseAttr);
+            //_ExAttrs = new Dictionary<FightAttr.FightAttrType, int>(roleData._ExAttrs);
         }
         else
         {
+            _BaseAttr = new RoleAttrStruct();
+            _BaseAttr.SetValue(RoleAttrEnum.HPMax, 1000);
+            _BaseAttr.SetValue(RoleAttrEnum.Attack, 10);
+            _BaseAttr.SetValue(RoleAttrEnum.Defense, 10);
             _BaseMoveSpeed = 4.5f;
-            _MoveSpeed = 4.5f;
-            _SkillSpeed = 1;
-            _HPMax = 1000;
-            _HP = 1000;
-            _Attack = 5;
-            _Defence = 5;
-            _Level = 1;
         }
 
+        RefreshMoveSpeed();
+        RefreshAttackSpeed();
+        AddHPPersent(1);
         InitEvent();
         InitSkillAttr();
     }
@@ -267,241 +353,260 @@ public class RoleAttrManager : MonoBehaviour
     public void InitEnemyAttr(MonsterBaseRecord monsterBase)
     {
         _BaseMoveSpeed = 4;
-        _MoveSpeed = 4;
-        _SkillSpeed = 1;
-        _HPMax = 100;
-        _HP = 100;
-        _Attack = 5;
-        _Defence = 1;
         _Level = 1;
         _MonsterValue = 1;
 
+        _BaseAttr = GetMonsterAttr(monsterBase, _Level, MotionType.Normal);
+
+        RefreshMoveSpeed();
+        RefreshAttackSpeed();
+        AddHPPersent(1);
         InitEvent();
     }
 
     public void InitTestAttr()
     {
         _BaseMoveSpeed = 4;
-        _MoveSpeed = 4;
-        _SkillSpeed = 1;
-        _HPMax = 100;
-        _HP = 100;
-        _Attack = 5;
-        _Defence = 1;
+
+        _BaseAttr = new RoleAttrStruct();
+        _BaseAttr.SetValue(RoleAttrEnum.HPMax, 1000);
+        _BaseAttr.SetValue(RoleAttrEnum.Attack, 10);
+        _BaseAttr.SetValue(RoleAttrEnum.Defense, 10);
+
         _Level = 1;
         _MonsterValue = 1;
 
+        RefreshMoveSpeed();
+        RefreshAttackSpeed();
+        AddHPPersent(1);
         InitEvent();
     }
 
-    public float GetBaseAttr(BaseAttr attr)
+    private RoleAttrStruct GetMonsterAttr(MonsterBaseRecord monsterBase, int level, MotionType monsterType)
     {
-        switch (attr)
+        var baseAttr = new RoleAttrStruct();
+        int hpStep = 0;
+        int attackStep = 0;
+        int defenceStep = 0;
+        if (level <= 5)
         {
-            case BaseAttr.MOVE_SPEED:
-                return MoveSpeed;
-            case BaseAttr.SKILL_SPEED:
-                return SkillSpeed;
-            case BaseAttr.HP:
-                return _HP;
-            case BaseAttr.HP_MAX:
-                return _HPMax;
-            case BaseAttr.ATTACK:
-                return _Attack;
-            case BaseAttr.DEFENCE:
-                return _Defence;
+            hpStep = 10;
+            attackStep = 1;
+            defenceStep = 1;
         }
+        else if (level <= 20)
+        {
+            hpStep = 20;
+            attackStep = 2;
+            defenceStep = 2;
+        }
+        else if (level <= 50)
+        {
+            hpStep = 100;
+            attackStep = 5;
+            defenceStep = 5;
+        }
+        else if (level <= 100)
+        {
+            hpStep = 200;
+            attackStep = 10;
+            defenceStep = 10;
+        }
+        else
+        {
+            hpStep = 180;
+            attackStep = 10;
+            defenceStep = 8;
+        }
+
+        baseAttr.SetValue(RoleAttrEnum.HPMax, 100 + level * hpStep);
+        baseAttr.SetValue(RoleAttrEnum.Attack, 10 + level * attackStep);
+        baseAttr.SetValue(RoleAttrEnum.Defense, 5 + level * defenceStep);
+
+        return baseAttr;
+    }
+
+    public float GetBaseAttr(RoleAttrEnum attr)
+    {
 
         return 0;
     }
 
-    public void SetBaseAttr(BaseAttr attr, float value)
+    public void SetBaseAttr(RoleAttrEnum attr, float value)
     {
-        switch (attr)
-        {
-            case BaseAttr.MOVE_SPEED:
-                _MoveSpeed = value;
-                break;
-            case BaseAttr.SKILL_SPEED:
-                _SkillSpeed = value;
-                break;
-            case BaseAttr.HP:
-                _HP = (int)value;
-                break;
-            case BaseAttr.HP_MAX:
-                _HPMax = (int)value;
-                break;
-            case BaseAttr.ATTACK:
-                _Attack = (int)value;
-                break;
-            case BaseAttr.DEFENCE:
-                _Defence = (int)value;
-                break;
-        }
+       
     }
 
     #endregion
 
     #region calculate
 
+    public class DamageClass
+    {
+        public int TotalDamageValue;
+        public int AttachDamageValue;
+        public int NormalDamageValue;
+        public bool IsCriticle;
+        public int FireDamage;
+        public int IceDamage;
+        public int LightingDamage;
+        public int WindDamage;
+    }
+
     private void CalculateDamage(RoleAttrManager sender, Hashtable resultHash)
     {
-        //attack
-        int attackValue = CalculateAttack(sender, resultHash);
-
-        //defence
-        int defenceValue = CalculateDefence(sender, resultHash);
-
         //damage
-        int damage = (int)(attackValue * (1 - defenceValue / (defenceValue + 10000.0f)));
+        DamageClass damageClass = new DamageClass();
+        CalculateNormalDamage(sender, resultHash, damageClass) ;
 
-        int finalDamage = CalculateDamage(sender, resultHash, damage);
+        //criticle
+        CaculateCriticleHit(sender, resultHash, damageClass);
 
-        
-        DamageHP(finalDamage);
+        //final
+        CaculateFinalDamage(sender, resultHash, damageClass);
+
+        //attach
+        CaculateAttachDamage(sender, resultHash, damageClass);
+
+        if (MotionType == MotionType.MainChar)
+        {
+            GameUI.UIDamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, GameUI.ShowDamageType.Hurt, 1);
+        }
+        else if (damageClass.IsCriticle)
+        {
+            GameUI.UIDamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, GameUI.ShowDamageType.Critical, 1);
+        }
+        else
+        {
+            GameUI.UIDamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, GameUI.ShowDamageType.Normal, 1);
+        }
+        DamageHP(damageClass.TotalDamageValue + damageClass.AttachDamageValue);
     }
 
-    private int CalculateAttack(RoleAttrManager sender, Hashtable resultHash)
+    private void CalculateNormalDamage(RoleAttrManager sender, Hashtable resultHash, DamageClass damageClass)
     {
-        float skillDamageRate = 1;
-        if (resultHash.ContainsKey("SkillDamageRate"))
-        {
-            skillDamageRate = (float)resultHash["SkillDamageRate"];
-        }
-        int attackValue = (int)(sender._Attack * skillDamageRate);
+        float damageRate = (float)resultHash["SkillDamageRate"];
 
-        return attackValue;
+        int attackValue = sender._BaseAttr.GetValue(RoleAttrEnum.Attack);
+        int defenceValue = _BaseAttr.GetValue(RoleAttrEnum.Defense);
+        damageClass.NormalDamageValue = Mathf.CeilToInt(attackValue * damageRate * (1 - defenceValue / (defenceValue + (Level + 1) * 200.0f)));
+
+        int ignoreDAttack = sender._BaseAttr.GetValue(RoleAttrEnum.IgnoreDefenceAttack);
+        int ignoreDaamge = Mathf.CeilToInt(ignoreDAttack * damageRate);
+        damageClass.NormalDamageValue += ignoreDaamge;
+
+        //element attack
+        int fireAttack = sender._BaseAttr.GetValue(RoleAttrEnum.FireAttackAdd);
+        int fireEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.FireEnhance);
+        int fireResistan= _BaseAttr.GetValue(RoleAttrEnum.FireResistan);
+        int fireDamage = Mathf.CeilToInt(fireAttack * damageRate * ((fireEnhance - fireResistan) / 250.0f));
+        damageClass.FireDamage = fireDamage;
+
+        int coldAttack = sender._BaseAttr.GetValue(RoleAttrEnum.ColdAttackAdd);
+        int coldEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.ColdEnhance);
+        int coldResistan = _BaseAttr.GetValue(RoleAttrEnum.ColdResistan);
+        int coldDamage = Mathf.CeilToInt(coldAttack * damageRate * ((coldEnhance - coldResistan) / 250.0f));
+        damageClass.IceDamage = coldDamage;
+
+        int lightingAttack = sender._BaseAttr.GetValue(RoleAttrEnum.LightingAttackAdd);
+        int lightingEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.LightingEnhance);
+        int lightingResistan = _BaseAttr.GetValue(RoleAttrEnum.LightingResistan);
+        int lightingDamage = Mathf.CeilToInt(lightingAttack * damageRate * ((lightingEnhance - lightingResistan) / 250.0f));
+        damageClass.LightingDamage = lightingDamage;
+
+        int windAttack = sender._BaseAttr.GetValue(RoleAttrEnum.WindAttackAdd);
+        int windEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.WindEnhance);
+        int windResistan = _BaseAttr.GetValue(RoleAttrEnum.WindResistan);
+        int windDamage = Mathf.CeilToInt(windAttack * damageRate * ((windEnhance - windResistan) / 250.0f));
+        damageClass.WindDamage = windDamage;
     }
 
-    private int CalculateDefence(RoleAttrManager sender, Hashtable resultHash)
+    private bool CaculateCriticleHit(RoleAttrManager sender, Hashtable resultHash, DamageClass damageClass)
     {
-        //base
-        int defenceValue = _Defence;
-
-        //to specil enemy
-        if (_ExAttrs.ContainsKey(FightAttr.FightAttrType.INCREASE_DEFENCE_TO_BOSS) && sender.MotionType == MotionType.Hero)
+        var criticleRate = _BaseAttr.GetValue(RoleAttrEnum.CriticalHitChance);
+        var criticleDamage = _BaseAttr.GetValue(RoleAttrEnum.CriticalHitDamge);
+        int randomRate = Random.Range(0, 10001);
+        damageClass.IsCriticle = false;
+        if (randomRate < criticleRate)
         {
-            defenceValue += _ExAttrs[FightAttr.FightAttrType.INCREASE_DEFENCE_TO_BOSS];
+            damageClass.IsCriticle = true;
+            damageClass.NormalDamageValue = Mathf.CeilToInt(((criticleDamage * 0.0001f) + 1) * damageClass.NormalDamageValue);
+            damageClass.FireDamage = Mathf.CeilToInt(((criticleDamage * 0.0001f) + 1) * damageClass.FireDamage);
+            damageClass.IceDamage = Mathf.CeilToInt(((criticleDamage * 0.0001f) + 1) * damageClass.IceDamage);
+            damageClass.LightingDamage = Mathf.CeilToInt(((criticleDamage * 0.0001f) + 1) * damageClass.LightingDamage);
+            damageClass.WindDamage = Mathf.CeilToInt(((criticleDamage * 0.0001f) + 1) * damageClass.WindDamage);
+            return true;
         }
-        else if (_ExAttrs.ContainsKey(FightAttr.FightAttrType.INCREASE_DEFENCE_TO_ELITE) && sender.MotionType == MotionType.Elite)
-        {
-            defenceValue += _ExAttrs[FightAttr.FightAttrType.INCREASE_DEFENCE_TO_ELITE];
-        }
-
-        //lowering hp
-        if (_ExAttrs.ContainsKey(FightAttr.FightAttrType.INCREASE_DEFENCE_WHILE_LOWERING_HP) && IsLoweringHP)
-        {
-            defenceValue += _ExAttrs[FightAttr.FightAttrType.INCREASE_DEFENCE_WHILE_LOWERING_HP];
-        }
-        if (_ExAttrs.ContainsKey(FightAttr.FightAttrType.INCREASE_DEFENCE_WHILE_LOWERING_HP_PERSENT) && IsLoweringHP)
-        {
-            defenceValue += (int)(_ExAttrs[FightAttr.FightAttrType.INCREASE_DEFENCE_WHILE_LOWERING_HP_PERSENT] * 0.01f * _Defence);
-        }
-
-        if (sender._ExAttrs.ContainsKey(FightAttr.FightAttrType.IGNORE_TARGET_COLD_DEFENCE))
-        {
-            defenceValue -= (int)(sender._ExAttrs[FightAttr.FightAttrType.IGNORE_TARGET_COLD_DEFENCE] * 0.01f * _Defence);
-        }
-
-        return defenceValue;
+        return false;
     }
 
-    private int CalculateDamage(RoleAttrManager sender, Hashtable resultHash, int baseDamage)
+    private void CaculateFinalDamage(RoleAttrManager sender, Hashtable resultHash, DamageClass damageClass)
     {
-        int finalDamage = baseDamage;
+        damageClass.TotalDamageValue = damageClass.FireDamage + damageClass.IceDamage + damageClass.LightingDamage + damageClass.WindDamage + damageClass.NormalDamageValue;
+        damageClass.TotalDamageValue -= _BaseAttr.GetValue(RoleAttrEnum.FinalDamageReduse);
+        damageClass.TotalDamageValue = Mathf.Max(damageClass.TotalDamageValue, 0);
+    }
 
-        if (sender._ExAttrs.ContainsKey(FightAttr.FightAttrType.ENHANCE_DAMAGE))
-        {
-            finalDamage += sender._ExAttrs[FightAttr.FightAttrType.ENHANCE_DAMAGE];
-        }
-        if (sender._ExAttrs.ContainsKey(FightAttr.FightAttrType.ENHANCE_DAMAGE_PERSENT))
-        {
-            finalDamage += (int)(sender._ExAttrs[FightAttr.FightAttrType.ENHANCE_DAMAGE_PERSENT] * 0.01f * baseDamage);
-        }
+    private void CaculateAttachDamage(RoleAttrManager sender, Hashtable resultHash, DamageClass damageClass)
+    {
+        if (!resultHash.ContainsKey("SkillMotion"))
+            return;
 
-        if (sender._ExAttrs.ContainsKey(FightAttr.FightAttrType.INCREASE_DAMAGE_TO_BOSS) && MotionType == MotionType.Hero)
-        {
-            finalDamage += sender._ExAttrs[FightAttr.FightAttrType.INCREASE_DAMAGE_TO_BOSS];
-        }
-        if (sender._ExAttrs.ContainsKey(FightAttr.FightAttrType.INCREASE_DAMAGE_TO_BOSS_PERSENT) && MotionType == MotionType.Hero)
-        {
-            finalDamage += (int)(sender._ExAttrs[FightAttr.FightAttrType.INCREASE_DAMAGE_TO_BOSS_PERSENT] * 0.01f * baseDamage);
-        }
+        var skillMotion = (ObjMotionSkillBase)resultHash["SkillMotion"];
+        if (skillMotion == null)
+            return;
 
-        if (sender._ExAttrs.ContainsKey(FightAttr.FightAttrType.INCREASE_DAMAGE_WHEN_ENEMY_SINGLE) && FightManager.Instance.SceneEnemyCnt == 1)
+        int fireAttack = 0;
+        int coldAttack = 0;
+        int lightingAttack = 0;
+        int windAttack = 0;
+        if (skillMotion._ActInput == "k1")
         {
-            finalDamage += sender._ExAttrs[FightAttr.FightAttrType.INCREASE_DAMAGE_WHEN_ENEMY_SINGLE];
+            fireAttack = sender._BaseAttr.GetExAttr(RoleAttrEnum.Skill1FireDamagePersent);
+            coldAttack = sender._BaseAttr.GetExAttr(RoleAttrEnum.Skill1ColdDamagePersent);
+            lightingAttack = sender._BaseAttr.GetExAttr(RoleAttrEnum.Skill1LightingDamagePersent);
+            windAttack = sender._BaseAttr.GetExAttr(RoleAttrEnum.Skill1WindDamagePersent);
         }
-        if (sender._ExAttrs.ContainsKey(FightAttr.FightAttrType.INCREASE_DAMAGE_WHEN_ENEMY_SINGLE_PERSENT) && FightManager.Instance.SceneEnemyCnt == 1)
+        else if (skillMotion._ActInput == "k2")
         {
-            finalDamage += (int)(sender._ExAttrs[FightAttr.FightAttrType.INCREASE_DAMAGE_WHEN_ENEMY_SINGLE_PERSENT] * 0.01f * baseDamage);
+            fireAttack = sender._BaseAttr.GetExAttr(RoleAttrEnum.Skill2FireDamagePersent);
+            coldAttack = sender._BaseAttr.GetExAttr(RoleAttrEnum.Skill2ColdDamagePersent);
+            lightingAttack = sender._BaseAttr.GetExAttr(RoleAttrEnum.Skill2LightingDamagePersent);
+            windAttack = sender._BaseAttr.GetExAttr(RoleAttrEnum.Skill2WindDamagePersent);
         }
-
-        if (sender._ExAttrs.ContainsKey(FightAttr.FightAttrType.INCREASE_DAMAGE_WHEN_ENEMY_MORE_THAN_3) && FightManager.Instance.SceneEnemyCnt > 2)
+        else if (skillMotion._ActInput == "k3")
         {
-            finalDamage += sender._ExAttrs[FightAttr.FightAttrType.INCREASE_DAMAGE_WHEN_ENEMY_MORE_THAN_3];
-        }
-        if (sender._ExAttrs.ContainsKey(FightAttr.FightAttrType.INCREASE_DAMAGE_WHEN_ENEMY_MORE_THAN_3_PERSENT) && FightManager.Instance.SceneEnemyCnt > 2)
-        {
-            finalDamage += (int)(sender._ExAttrs[FightAttr.FightAttrType.INCREASE_DAMAGE_WHEN_ENEMY_MORE_THAN_3_PERSENT] * 0.01f * baseDamage);
-        }
-
-        if (sender._ExAttrs.ContainsKey(FightAttr.FightAttrType.INCREASE_DAMAGE_AS_COMBOS_GO_UP))
-        {
-            if(FightManager.Instance.Combo < 10)
-                finalDamage += sender._ExAttrs[FightAttr.FightAttrType.INCREASE_DAMAGE_AS_COMBOS_GO_UP];
-            else if (FightManager.Instance.Combo < 20)
-                finalDamage += (int)(sender._ExAttrs[FightAttr.FightAttrType.INCREASE_DAMAGE_AS_COMBOS_GO_UP] * 1.5f);
-            else if (FightManager.Instance.Combo >= 20)
-                finalDamage += (int)(sender._ExAttrs[FightAttr.FightAttrType.INCREASE_DAMAGE_AS_COMBOS_GO_UP] * 2.0f);
-        }
-        if (sender._ExAttrs.ContainsKey(FightAttr.FightAttrType.INCREASE_DAMAGE_AS_COMBOS_GO_UP_PERSENT))
-        {
-            if (FightManager.Instance.Combo < 10)
-                finalDamage += (int)(sender._ExAttrs[FightAttr.FightAttrType.INCREASE_DAMAGE_AS_COMBOS_GO_UP_PERSENT] * 0.01f * baseDamage);
-            else if (FightManager.Instance.Combo < 20)
-                finalDamage += (int)(sender._ExAttrs[FightAttr.FightAttrType.INCREASE_DAMAGE_AS_COMBOS_GO_UP_PERSENT] * 0.015f * baseDamage);
-            else if (FightManager.Instance.Combo >= 20)
-                finalDamage += (int)(sender._ExAttrs[FightAttr.FightAttrType.INCREASE_DAMAGE_AS_COMBOS_GO_UP_PERSENT] * 0.02f * baseDamage);
+            fireAttack = sender._BaseAttr.GetExAttr(RoleAttrEnum.Skill3FireDamagePersent);
+            coldAttack = sender._BaseAttr.GetExAttr(RoleAttrEnum.Skill3ColdDamagePersent);
+            lightingAttack = sender._BaseAttr.GetExAttr(RoleAttrEnum.Skill3LightingDamagePersent);
+            windAttack = sender._BaseAttr.GetExAttr(RoleAttrEnum.Skill3WindDamagePersent);
         }
 
-        if (sender._ExAttrs.ContainsKey(FightAttr.FightAttrType.INCREASE_DAMAGE_WHILE_LOWERING_HP) && sender.IsLoweringHP)
-        {
-            finalDamage += sender._ExAttrs[FightAttr.FightAttrType.INCREASE_DAMAGE_WHILE_LOWERING_HP];
-        }
-        if (sender._ExAttrs.ContainsKey(FightAttr.FightAttrType.INCREASE_DAMAGE_WHILE_LOWERING_HP_PERSENT) && sender.IsLoweringHP)
-        {
-            finalDamage += (int)(sender._ExAttrs[FightAttr.FightAttrType.INCREASE_DAMAGE_WHILE_LOWERING_HP_PERSENT] * 0.01f * baseDamage);
-        }
+        int fireEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.FireEnhance);
+        int fireResistan = _BaseAttr.GetValue(RoleAttrEnum.FireResistan);
+        int fireDamage = Mathf.CeilToInt(fireAttack * 0.0001f * damageClass.TotalDamageValue * ((fireEnhance - fireResistan) / 250.0f));
+        damageClass.FireDamage += fireDamage;
+        damageClass.AttachDamageValue += fireDamage;
 
-        if (sender._ExAttrs.ContainsKey(FightAttr.FightAttrType.INCREASE_DAMAGE_TO_TARGET_HP_MORE_THEN_60) && HPPersent > 0.6f)
-        {
-            finalDamage += sender._ExAttrs[FightAttr.FightAttrType.INCREASE_DAMAGE_TO_TARGET_HP_MORE_THEN_60];
-        }
-        if (sender._ExAttrs.ContainsKey(FightAttr.FightAttrType.INCREASE_DAMAGE_TO_TARGET_HP_MORE_THEN_60_PERSENT) && HPPersent > 0.6f)
-        {
-            finalDamage += (int)(sender._ExAttrs[FightAttr.FightAttrType.INCREASE_DAMAGE_TO_TARGET_HP_MORE_THEN_60_PERSENT] * 0.01f * baseDamage);
-        }
+        int coldEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.ColdEnhance);
+        int coldResistan = _BaseAttr.GetValue(RoleAttrEnum.ColdResistan);
+        int coldDamage = Mathf.CeilToInt(coldAttack * 0.0001f * damageClass.TotalDamageValue * ((coldEnhance - coldResistan) / 250.0f));
+        damageClass.IceDamage += coldDamage;
+        damageClass.AttachDamageValue += coldDamage;
 
-        if (sender._ExAttrs.ContainsKey(FightAttr.FightAttrType.INCREASE_DAMAGE_TO_TARGET_HP_LESS_THEN_40) && HPPersent < 0.4f)
-        {
-            finalDamage += sender._ExAttrs[FightAttr.FightAttrType.INCREASE_DAMAGE_TO_TARGET_HP_LESS_THEN_40];
-        }
-        if (sender._ExAttrs.ContainsKey(FightAttr.FightAttrType.INCREASE_DAMAGE_TO_TARGET_HP_LESS_THEN_40_PERSENT) && HPPersent < 0.4f)
-        {
-            finalDamage += (int)(sender._ExAttrs[FightAttr.FightAttrType.INCREASE_DAMAGE_TO_TARGET_HP_LESS_THEN_40_PERSENT] * 0.01f * baseDamage);
-        }
+        int lightingEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.LightingEnhance);
+        int lightingResistan = _BaseAttr.GetValue(RoleAttrEnum.LightingResistan);
+        int lightingDamage = Mathf.CeilToInt(lightingAttack * 0.0001f * damageClass.TotalDamageValue * ((lightingEnhance - lightingResistan) / 250.0f));
+        damageClass.LightingDamage += lightingDamage;
+        damageClass.AttachDamageValue += lightingDamage;
 
-        if (_ExAttrs.ContainsKey(FightAttr.FightAttrType.REDUSE_DAMAGE))
-        {
-            finalDamage -= _ExAttrs[FightAttr.FightAttrType.REDUSE_DAMAGE];
-        }
-        if (_ExAttrs.ContainsKey(FightAttr.FightAttrType.REDUSE_DAMAGE_PERSENT))
-        {
-            finalDamage -= (int)(_ExAttrs[FightAttr.FightAttrType.REDUSE_DAMAGE_PERSENT] * 0.01f * baseDamage);
-        }
+        int windEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.WindEnhance);
+        int windResistan = _BaseAttr.GetValue(RoleAttrEnum.WindResistan);
+        int windDamage = Mathf.CeilToInt(windAttack * 0.0001f * damageClass.TotalDamageValue * ((windEnhance - windResistan) / 250.0f));
+        damageClass.WindDamage += windDamage;
+        damageClass.AttachDamageValue += windDamage;
 
-        return finalDamage;
+        damageClass.AttachDamageValue = Mathf.Max(damageClass.AttachDamageValue, 0);
     }
 
     private void DamageHP(int damageValue)
@@ -527,10 +632,17 @@ public class RoleAttrManager : MonoBehaviour
         _MotionManager.EventController.RegisteEvent(GameBase.EVENT_TYPE.EVENT_FIGHT_ATTR_DAMAGE, DamageEvent);
     }
 
-    public void SendDamageEvent(MotionManager targetMotion, float skillDamageRate)
+    public void SendDamageEvent(MotionManager targetMotion, float skillDamageRate, ObjMotionSkillBase skillMotion)
+    {
+        SendDamageEvent(targetMotion, skillDamageRate, skillMotion, targetMotion.transform.position + new Vector3(0, 1.5f, 0));
+    }
+
+    public void SendDamageEvent(MotionManager targetMotion, float skillDamageRate, ObjMotionSkillBase skillMotion, Vector3 damagePosition)
     {
         Hashtable hash = new Hashtable();
         hash.Add("SkillDamageRate", skillDamageRate);
+        hash.Add("DamagePos", damagePosition);
+        hash.Add("SkillMotion", skillMotion);
 
         targetMotion.EventController.PushEvent(GameBase.EVENT_TYPE.EVENT_FIGHT_ATTR_DAMAGE, this, hash);
     }

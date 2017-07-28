@@ -9,16 +9,16 @@ public class SelectNearTarget : SelectBase
     public override void ColliderStart()
     {
         //base.ColliderStart();
-        if (_SkillMotion == null)
+        if (_ObjMotion == null)
             return;
 
-        var selectTargets = SelectTargetCommon.GetNearMotions(_SkillMotion, _SelectRange);
+        var selectTargets = SelectTargetCommon.GetNearMotions(_ObjMotion, _SelectRange);
 
         if (selectTargets.Count > 0)
         {
             foreach (var impact in _ImpactList)
             {
-                impact.ActImpact(_SkillMotion, selectTargets[0]);
+                impact.ActImpact(_ObjMotion, selectTargets[0]);
             }
         }
     }

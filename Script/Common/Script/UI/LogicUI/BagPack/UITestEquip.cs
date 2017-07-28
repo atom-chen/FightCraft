@@ -55,7 +55,7 @@ namespace GameUI
             var equipItem = ItemEquip.CreateEquip(level, quality, value);
             var newEquip = PlayerDataPack.Instance._SelectedRole.AddNewEquip(equipItem);
             UIEquipTooltips.ShowAsyn(newEquip);
-            Debug.Log("Input :" + level + "," + quality + "," + value);
+            Debug.Log("test equip :" + newEquip.EquipItemRecord.Id);
         }
 
         

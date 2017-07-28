@@ -123,7 +123,7 @@ public class ObjMotionSkillBase : MonoBehaviour
         {
             //if (_SkillActSpeed < 0)
             {
-                _SkillActSpeed = _MotionManager.RoleAttrManager.SkillSpeed;
+                _SkillActSpeed = _MotionManager.RoleAttrManager.AttackSpeed;
                 if (_SkillAttr != null)
                 {
                     _SkillActSpeed += _SkillAttr.SpeedAdd;
@@ -274,7 +274,7 @@ public class ObjMotionSkillBase : MonoBehaviour
         if (_SkillAttr.ShadowWarriorCnt <= 0)
             return;
 
-        float actSpeed = _MotionManager.RoleAttrManager.SkillSpeed;
+        float actSpeed = _MotionManager.RoleAttrManager.AttackSpeed;
         if (_SkillAttr != null)
         {
             actSpeed += _SkillAttr.SpeedAdd;

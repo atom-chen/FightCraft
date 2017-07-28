@@ -21,5 +21,17 @@ namespace GameLogic
             }
             return "<color=#ffffff>";
         }
+
+        public static string GetEnableColorStr(int isEnable)
+        {
+            switch (isEnable)
+            {
+                case 1:
+                    return "<color=#00ff00>";
+                case 0:
+                    return "<color=#ff0000>";
+            }
+            return "<color=#ffffff>";
+        }
     }
 }

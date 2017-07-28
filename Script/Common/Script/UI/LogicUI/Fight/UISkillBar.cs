@@ -43,5 +43,16 @@ namespace GameUI
             }
             return false;
         }
+
+        #region emulate
+
+        public void OnEmulate()
+        {
+            var testFight = FightManager.Instance.MainChatMotion.gameObject.GetComponent<TestFight>();
+            if(testFight == null)
+                FightManager.Instance.MainChatMotion.gameObject.AddComponent<TestFight>();
+        }
+
+        #endregion
     }
 }

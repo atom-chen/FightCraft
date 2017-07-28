@@ -1,6 +1,120 @@
 """ID""","""Name""","""Desc""","""Value"""
-1,,Attr,Attack:{0}
-2,,Attr,HP:{0}
-3,,Attr,Defence:{0}
-4,,Attr,Equip Value:{0}
-5,,Attr,Require Level:{0}
+1,,Attr,Strength +{0}
+2,,Attr,Dexterity +{0}
+3,,Attr,Vitality +{0}
+4,,Attr,HPMax +{0}
+5,,,HPMax +{0}%
+6,,,Attack +{0}
+7,,,Attack +{0}%
+8,,,Defense +{0}
+9,,,Defense +{0}%
+10,,,Move Speed +{0}%
+11,,,Attack Speed +{0}%
+12,,,Critical Chance +{0}%
+13,,,Critical Damge +{0}%
+14,,,Fire Attack +{0}
+15,,,Cold Attack +{0}
+16,,,Lighting Attack +{0}
+17,,,Wind Attack +{0}
+18,,,Fire Defence +{0}
+19,,,Cold Defence +{0}
+20,,,Lighting Defence +{0}
+21,,,Wind Defence +{0}
+22,,,Fire Damage Reduse +{0}
+23,,,Cold Damage Reduse +{0}
+24,,,Lighting Damage Reduse +{0}
+25,,,Wind Damage Reduse +{0}
+26,,,Fire Absorbs +{0}%
+27,,,Cold Absorbs +{0}%
+28,,,Lighting Absorbs +{0}%
+29,,,Wind Absorbs +{0}%
+30,,,Ignore Defence Attack +{0}
+31,,,Final Damage Reduse +{0}
+200,,,Skill1 Fire Damage +{0}%
+201,,,Skill2 Fire Damage +{0}%
+202,,,Skill3 Fire Damage +{0}%
+203,,,Skill1 Cold Damage +{0}%
+204,,,Skill2 Cold Damage +{0}%
+205,,,Skill3 Cold Damage +{0}%
+206,,,Skill1 Lighting Damage +{0}%
+207,,,Skill2 Lighting Damage +{0}%
+208,,,Skill3 Lighting Damage +{0}%
+209,,,Skill1 Wind Damage +{0}%
+210,,,Skill2 Wind Damage +{0}%
+211,,,Skill3 Wind Damage +{0}%
+1000,,,Skill1FireBoom
+1001,,,Skill1FireBall
+1002,,,Skill1FireExplore
+1003,,,Skill1FireRandomBoom
+1004,,,Skill1FireAimTarget
+1005,,,Skill2FireBoom
+1006,,,Skill2FireBall
+1007,,,Skill2FireExplore
+1008,,,Skill2FireRandomBoom
+1009,,,Skill2FireAimTarget
+1010,,,Skill3FireBoom
+1011,,,Skill3FireBall
+1012,,,Skill3FireExplore
+1013,,,Skill3FireRandomBoom
+1014,,,Skill3FireAimTarget
+1015,,,Skill1ColdBoom
+1016,,,Skill1ColdBall
+1017,,,Skill1ColdExplore
+1018,,,Skill1ColdRandomBoom
+1019,,,Skill1ColdAimTarget
+1020,,,Skill2ColdBoom
+1021,,,Skill2ColdBall
+1022,,,Skill2ColdExplore
+1023,,,Skill2ColdRandomBoom
+1024,,,Skill2ColdAimTarget
+1025,,,Skill3ColdBoom
+1026,,,Skill3ColdBall
+1027,,,Skill3ColdExplore
+1028,,,Skill3ColdRandomBoom
+1029,,,Skill3ColdAimTarget
+1030,,,Skill1LightBoom
+1031,,,Skill1LightBall
+1032,,,Skill1LightExplore
+1033,,,Skill1LightRandomBoom
+1034,,,Skill1LightAimTarget
+1035,,,Skill2LightBoom
+1036,,,Skill2LightBall
+1037,,,Skill2LightExplore
+1038,,,Skill2LightRandomBoom
+1039,,,Skill2LightAimTarget
+1040,,,Skill3LightBoom
+1041,,,Skill3LightBall
+1042,,,Skill3LightExplore
+1043,,,Skill3LightRandomBoom
+1044,,,Skill3LightAimTarget
+1045,,,Skill1WindBoom
+1046,,,Skill1WindBall
+1047,,,Skill1WindExplore
+1048,,,Skill1WindRandomBoom
+1049,,,Skill1WindAimTarget
+1050,,,Skill2WindBoom
+1051,,,Skill2WindBall
+1052,,,Skill2WindExplore
+1053,,,Skill2WindRandomBoom
+1054,,,Skill2WindAimTarget
+1055,,,Skill3WindBoom
+1056,,,Skill3WindBall
+1057,,,Skill3WindExplore
+1058,,,Skill3WindRandomBoom
+1059,,,Skill3WindAimTarget
+1060,,,SkillSP1
+1061,,,SkillSP2
+1062,,,SkillSP3
+1063,,,SkillSP4
+1064,,,SkillSP5
+1065,,,SkillSP6
+1066,,,SkillSP7
+1067,,,SkillSP8
+1068,,,SkillSP9
+1069,,,AttackSkillLevel +{0}
+1070,,,ExSkillLevel +{0}
+1071,,,BuffSkillLevel +{0}
+1072,,,DodgeSkillLevel +{0}
+1073,,,DefenceSkillLevel +{0}
+10000,equip,,Level
+10001,equip,,Value

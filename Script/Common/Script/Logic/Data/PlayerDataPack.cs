@@ -120,6 +120,8 @@ namespace GameLogic
             {
                 _SelectedRole = _RoleList[roleIdx];
             }
+
+            _SelectedRole.CalculateAttr();
         }
 
         #endregion

@@ -9,7 +9,7 @@ public class ImpactDamage : ImpactBase
     {
         base.ActImpact(senderManager, reciverManager);
 
-        senderManager.RoleAttrManager.SendDamageEvent(reciverManager, _DamageRate);
+        senderManager.RoleAttrManager.SendDamageEvent(reciverManager, _DamageRate, _SkillMotion);
     }
 
 }

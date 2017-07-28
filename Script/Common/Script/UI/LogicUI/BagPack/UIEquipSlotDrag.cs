@@ -10,7 +10,7 @@ using Tables;
 
 namespace GameUI
 {
-    public class UIEquipSlotDrag : UIEquipItem, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler, IDropHandler
+    public class UIEquipSlotDrag : UIEquipItem/*, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler, IDropHandler*/
     {
 
         #region 

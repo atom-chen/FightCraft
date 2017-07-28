@@ -41,8 +41,7 @@ namespace GameUI
 
             _ShowAttr = attr;
 
-            var attrTab = TableReader.FightAttr.GetRecord(((int)_ShowAttr.AttrID).ToString());
-            string attrStr = string.Format(attrTab.ShowTip, attr.AttrValue1);
+            string attrStr = _ShowAttr.GetAttrStr();
             if (_ItemEquip != null)
             {
                 attrStr = CommonDefine.GetQualityColorStr(_ItemEquip.EquipQuality) + attrStr + "</color>";

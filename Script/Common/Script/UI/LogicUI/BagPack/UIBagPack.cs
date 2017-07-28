@@ -17,7 +17,17 @@ namespace GameUI
             GameCore.Instance.UIManager.ShowUI("LogicUI/BagPack/UIBagPack", UILayer.PopUI, hash);
         }
 
+        public static void RefreshBagItems()
+        {
+            var instance = GameCore.Instance.UIManager.GetUIInstance<UIBagPack>("LogicUI/BagPack/UIBagPack");
+            if (instance == null)
+                return;
 
+            if (!instance.isActiveAndEnabled)
+                return;
+
+            instance.RefreshItems();
+        }
 
         #endregion
 

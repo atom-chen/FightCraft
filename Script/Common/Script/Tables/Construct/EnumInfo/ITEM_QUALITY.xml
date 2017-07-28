@@ -1,31 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <enumColumn>
-    <enumName>
-    </enumName>
+    <enumName>WHITE</enumName>
     <enumCode>WHITE</enumCode>
     <enumValue>0</enumValue>
     <enumDesc>枚举必须保留0值</enumDesc>
   </enumColumn>
   <enumColumn>
-    <enumName>
-    </enumName>
+    <enumName>BLUE</enumName>
     <enumCode>BLUE</enumCode>
     <enumValue>1</enumValue>
     <enumDesc>
     </enumDesc>
   </enumColumn>
   <enumColumn>
-    <enumName>
-    </enumName>
+    <enumName>PURPER</enumName>
     <enumCode>PURPER</enumCode>
     <enumValue>2</enumValue>
     <enumDesc>
     </enumDesc>
   </enumColumn>
   <enumColumn>
-    <enumName>
-    </enumName>
+    <enumName>ORIGIN</enumName>
     <enumCode>ORIGIN</enumCode>
     <enumValue>3</enumValue>
     <enumDesc>

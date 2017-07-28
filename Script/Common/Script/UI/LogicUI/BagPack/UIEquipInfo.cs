@@ -39,8 +39,15 @@ namespace GameUI
 
             _ShowItem = itemEquip;
             _Name.text = _ShowItem.GetEquipNameWithColor();
-            _Level.text = StrDictionary.GetFormatStr(5, _ShowItem.RequireLevel);
-            _Value.text = StrDictionary.GetFormatStr(4, _ShowItem.EquipValue);
+            if (_ShowItem.RequireLevel > RoleData.SelectRole._RoleLevel)
+            {
+                _Level.text = StrDictionary.GetFormatStr(10000) + " " + CommonDefine.GetEnableColorStr(0) + _ShowItem.RequireLevel + "</color>";
+            }
+            else
+            {
+                _Level.text = StrDictionary.GetFormatStr(10000) + " " + _ShowItem.RequireLevel;
+            }
+            _Value.text = StrDictionary.GetFormatStr(10001) + " " + _ShowItem.EquipValue;
             string attrStr = _ShowItem.GetBaseAttrStr();
             if (string.IsNullOrEmpty(attrStr))
             {

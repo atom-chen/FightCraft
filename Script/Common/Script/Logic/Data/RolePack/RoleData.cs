@@ -12,9 +12,6 @@ namespace GameLogic
         public List<ItemEquip> _EquipList;
 
         [SaveField(2)]
-        public int _Level;
-
-        [SaveField(3)]
         public List<ItemEquip> _BackPackItems;
         public const int MAX_BACK_PACK_ITEM_CNT = 25;
 
@@ -24,11 +21,19 @@ namespace GameLogic
         public PROFESSION Profession;
         public string DefaultWeaponModel;
 
+        public static RoleData SelectRole
+        {
+            get
+            {
+                return PlayerDataPack.Instance._SelectedRole;
+            }
+        }
+
         public void InitRoleData()
         {
-            if (_Level < 0)
+            if (_RoleLevel < 0)
             {
-                _Level = 0;
+                _RoleLevel = 0;
             }
 
             if (_EquipList == null || _EquipList.Count == 0)
@@ -70,7 +75,7 @@ namespace GameLogic
             if (equipItem.EquipItemRecord.Slot != equipSlot)
                 return false;
 
-            if (equipItem.EquipItemRecord.LevelLimit > _Level)
+            if (equipItem.EquipItemRecord.LevelLimit > _RoleLevel)
                 return false;
 
             if (equipItem.EquipItemRecord.ProfessionLimit > 0 &&
@@ -83,7 +88,37 @@ namespace GameLogic
         }
 
         public void PutOnEquip(EQUIP_SLOT equipSlot, ItemEquip equipItem)
-        { }
+        {
+            if (!IsCanEquipItem(equipSlot, equipItem))
+                return;
+
+            _EquipList[(int)equipSlot].ExchangeInfo(equipItem);
+            GameUI.UIBagPack.RefreshBagItems();
+
+            CalculateAttr();
+        }
+
+        public void PutOffEquip(EQUIP_SLOT equipSlot, ItemEquip equipItem)
+        {
+            var backPackPos = GetEmptyBackPack();
+            backPackPos.ExchangeInfo(equipItem);
+
+            GameUI.UIBagPack.RefreshBagItems();
+
+            CalculateAttr();
+        }
+
+        private ItemEquip GetEmptyBackPack()
+        {
+            for (int i = 0; i < _BackPackItems.Count; ++i)
+            {
+                if (!_BackPackItems[i].IsVolid())
+                {
+                    return _BackPackItems[i];
+                }
+            }
+            return null;
+        }
 
         public string GetWeaponModelName()
         {
@@ -121,9 +156,6 @@ namespace GameLogic
 
         #region role attr
 
-        [SaveField(4)]
-        public int _CurExp;
-
         public float GetBaseMoveSpeed()
         {
             return 4.5f;
@@ -136,42 +168,204 @@ namespace GameLogic
 
         public int GetBaseAttack()
         {
-            return _Level * 10 + 10;
+            return _RoleLevel * 10 + 10;
         }
 
         public int GetBaseHP()
         {
-            return _Level * 100 + 100;
+            return _RoleLevel * 100 + 100;
         }
 
         public int GetBaseDefence()
         {
-            return _Level * 5 + 5;
+            return _RoleLevel * 5 + 5;
         }
 
-        //exAttr
-        public Dictionary<FightAttr.FightAttrType, int> _ExAttrs = new Dictionary<FightAttr.FightAttrType, int>();
+        //baseAttrs
+        public RoleAttrStruct _BaseAttr = new RoleAttrStruct();
 
-        public void InitExAttrs()
+        public void CalculateAttr()
         {
-            foreach (var equip in _EquipList)
-            {
-                if (!equip.IsVolid())
-                    continue;
+            _BaseAttr.ResetBaseAttr();
+            SetRoleLevelAttr(_BaseAttr);
+            SetEquipAttr(_BaseAttr);
 
-                foreach (var exAttr in equip._DynamicDataVector)
+            CalculateSecondAttr();
+        }
+
+        public void SetRoleLevelAttr(RoleAttrStruct _BaseAttr)
+        {
+            _BaseAttr.SetValue(RoleAttrEnum.Strength, Strength);
+            _BaseAttr.SetValue(RoleAttrEnum.Dexterity, Dexterity);
+            _BaseAttr.SetValue(RoleAttrEnum.Vitality, Vitality);
+            _BaseAttr.SetValue(RoleAttrEnum.Attack, _RoleLevel * 1 + 10);
+            _BaseAttr.SetValue(RoleAttrEnum.HPMax, _RoleLevel * 100 + 50);
+            _BaseAttr.SetValue(RoleAttrEnum.Defense, 10);
+        }
+
+        public void SetEquipAttr(RoleAttrStruct _BaseAttr)
+        {
+            foreach (var equipInfo in _EquipList)
+            {
+                equipInfo.SetEquipAttr(_BaseAttr);
+            }
+        }
+
+        private void CalculateSecondAttr()
+        {
+            var strength = _BaseAttr.GetValue(RoleAttrEnum.Strength);
+            var baseAttack = _BaseAttr.GetValue(RoleAttrEnum.Attack);
+            float attackByStrength = (strength / 1000.0f) * baseAttack + strength * 2;
+            _BaseAttr.AddValue(RoleAttrEnum.Attack, (int)attackByStrength);
+
+            var dexteriry = _BaseAttr.GetValue(RoleAttrEnum.Dexterity);
+            int criticalRate = (int)((dexteriry / 1000.0f) * 2500);
+            int criticalDamage = (int)((dexteriry / 1000.0f) * 10000);
+            int attackSpeed = (int)((dexteriry / 1000.0f) * 1000);
+            int moveSpeed = (int)((dexteriry / 1000.0f) * 1000);
+            int ignoreAttack = (int)(dexteriry * 0.5f);
+            _BaseAttr.AddValue(RoleAttrEnum.CriticalHitChance, criticalRate);
+            _BaseAttr.AddValue(RoleAttrEnum.CriticalHitDamge, criticalDamage);
+            _BaseAttr.AddValue(RoleAttrEnum.AttackSpeed, attackSpeed);
+            _BaseAttr.AddValue(RoleAttrEnum.MoveSpeed, moveSpeed);
+            _BaseAttr.AddValue(RoleAttrEnum.IgnoreDefenceAttack, ignoreAttack);
+
+            var vitality = _BaseAttr.GetValue(RoleAttrEnum.Vitality);
+            int baseHP = _BaseAttr.GetValue(RoleAttrEnum.HPMax);
+            int hpByVitality = (int)((vitality / 500.0f) * baseHP);
+            int finalDamageReduse = (int)(vitality * 0.1f);
+            _BaseAttr.AddValue(RoleAttrEnum.HPMax, hpByVitality);
+            _BaseAttr.AddValue(RoleAttrEnum.FinalDamageReduse, finalDamageReduse);
+        }
+
+        #endregion
+
+        #region attr Points
+
+        public static int MAX_ROLE_LEVEL = 100;
+        public static int POINT_PER_ROLE_LEVEL = 5;
+        public static int POINT_PER_ATTR_LEVEL = 1;
+
+        [SaveField(3)]
+        public int _RoleLevel;
+
+        [SaveField(9)]
+        public int _AttrLevel;
+
+        [SaveField(4)]
+        public int _CurExp;
+
+        [SaveField(5)]
+        private int _AddStrength = 0;
+        public int Strength
+        {
+            get
+            {
+                return _RoleLevel * 1 + _AddStrength;
+            }
+        }
+
+        [SaveField(6)]
+        private int _AddDexterity = 0;
+        public int Dexterity
+        {
+            get
+            {
+                return _RoleLevel * 1 + _AddDexterity;
+            }
+        }
+
+        [SaveField(7)]
+        private int _AddVitality = 0;
+        public int Vitality
+        {
+            get
+            {
+                return _RoleLevel * 1 + _AddVitality;
+            }
+        }
+
+        [SaveField(8)]
+        private int _UnDistrubutePoint = 0;
+        public int UnDistrubutePoint
+        {
+            get
+            {
+                return _UnDistrubutePoint;
+            }
+        }
+
+        public void AddExp(int value)
+        {
+            if (_RoleLevel < value)
+            {
+                _CurExp += value;
+                var expRecord = TableReader.RoleExp.GetRecord((_RoleLevel + 1).ToString());
+                if (_CurExp >= expRecord.ExpValue)
                 {
-                    if (_ExAttrs.ContainsKey(exAttr.AttrID))
-                    {
-                        _ExAttrs[exAttr.AttrID] += exAttr.AttrValue1;
-                    }
-                    else
-                    {
-                        _ExAttrs.Add(exAttr.AttrID, exAttr.AttrValue1);
-                    }
+                    _CurExp -= expRecord.ExpValue;
+                    RoleLevelUp();
                 }
             }
-        } 
+            else
+            {
+                _CurExp += value;
+                var expRecord = TableReader.RoleExp.GetRecord((_AttrLevel + MAX_ROLE_LEVEL + 1).ToString());
+                if (expRecord == null)
+                    return;
+
+                if (_CurExp >= expRecord.ExpValue)
+                {
+                    _CurExp -= expRecord.ExpValue;
+                    AttrLevelUp();
+                }
+            }
+            
+        }
+
+        private void RoleLevelUp()
+        {
+            ++_RoleLevel;
+            _UnDistrubutePoint += 5;
+
+            CalculateAttr();
+        }
+
+        private void AttrLevelUp()
+        {
+            ++_AttrLevel;
+            _UnDistrubutePoint += 1;
+        }
+
+        public void ResetPoints()
+        {
+            _AddStrength = 0;
+            _AddDexterity = 0;
+            _AddVitality = 0;
+            _UnDistrubutePoint = _RoleLevel * POINT_PER_ROLE_LEVEL + _AttrLevel * POINT_PER_ATTR_LEVEL;
+
+            CalculateAttr();
+        }
+
+        public void DistributePoint(int distriAttr)
+        {
+            --_UnDistrubutePoint;
+            switch (distriAttr)
+            {
+                case 1:
+                    ++_AddStrength;
+                    break;
+                case 2:
+                    ++_AddDexterity;
+                    break;
+                case 3:
+                    ++_AddVitality;
+                    break;
+            }
+
+            CalculateAttr();
+        }
+
         #endregion
     }
 }

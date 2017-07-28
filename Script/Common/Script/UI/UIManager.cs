@@ -115,7 +115,7 @@ namespace GameUI
                 _UIObjs.Add(uiPath, script);
             }
 
-            UIShowed(uiPath, uilayer, _UIObjs[uiPath]);
+            //UIShowed(uiPath, uilayer, _UIObjs[uiPath]);
         }
 
         //异步显示
@@ -191,6 +191,14 @@ namespace GameUI
                 uiPair.Value.Destory();
             }
             _UIObjs.Clear();
+        }
+
+        public T GetUIInstance<T>(string uipath)
+        {
+            if (_UIObjs.ContainsKey(uipath))
+                return _UIObjs[uipath].GetComponent<T>();
+
+            return default(T);
         }
 
         #endregion

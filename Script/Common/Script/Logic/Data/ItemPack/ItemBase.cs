@@ -8,11 +8,46 @@ namespace GameLogic
     public class EquipExAttr
     {
         [SaveField(1)]
-        public FightAttr.FightAttrType AttrID;
+        public RoleAttrEnum AttrID;
         [SaveField(2)]
-        public int AttrValue1;
+        public int SubClass;
         [SaveField(3)]
-        public int AttrValue2;
+        public int AttrValue1;
+        
+
+        public EquipExAttr()
+        { }
+
+        public EquipExAttr(RoleAttrEnum attrEnum, int subClass = 0, int value1 = 0)
+        {
+            AttrID = attrEnum;
+            AttrValue1 = value1;
+            SubClass = subClass;
+        }
+
+        public EquipExAttr(EquipExAttr copyInstance)
+        {
+            AttrID = copyInstance.AttrID;
+            SubClass = copyInstance.SubClass;
+            AttrValue1 = copyInstance.AttrValue1;
+        }
+
+        public string GetAttrStr()
+        {
+            return AttrDisplay.GetAttrDisplayStr(AttrID, SubClass, AttrValue1);
+        }
+
+        public bool Add(EquipExAttr d)
+        {
+            if (d.AttrID != AttrID)
+                return false;
+
+            if (d.SubClass != SubClass)
+                return false;
+
+            AttrValue1 += d.AttrValue1;
+            return true;
+        }
     }
 
     public class ItemBase

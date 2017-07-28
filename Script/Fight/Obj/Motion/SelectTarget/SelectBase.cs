@@ -8,13 +8,19 @@ public class SelectBase : MonoBehaviour
     public bool _IsColliderFinish = false;
     public bool _IsRemindSelected = false;
     
-    protected MotionManager _SkillMotion;
+    protected MotionManager _ObjMotion;
+    protected ObjMotionSkillBase _SkillMotion;
     protected ImpactBase[] _ImpactList;
 
     public virtual void Init()
     {
-        _SkillMotion = gameObject.GetComponentInParent<MotionManager>();
+        _SkillMotion = gameObject.GetComponentInParent<ObjMotionSkillBase>();
+        _ObjMotion = gameObject.GetComponentInParent<MotionManager>();
         _ImpactList = gameObject.GetComponents<ImpactBase>();
+        foreach (var impactBase in _ImpactList)
+        {
+            impactBase._SkillMotion = _SkillMotion;
+        }
     }
 
     public virtual void ResetSkillRange()
