@@ -63,7 +63,7 @@ public class ObjMotionSkillDush : ObjMotionSkillBase
 
     public AnimationClip _AttackAnim;
     public EffectController _AttackEffect;
-    public ImpactPushToPos _DushImpact;
+    public ImpactPushToAimTar _DushImpact;
     public float _DushAttackDis;
 
     private ObjMotionSkillAttack _SkillAttack;

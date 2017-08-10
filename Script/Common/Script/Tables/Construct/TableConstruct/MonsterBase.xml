@@ -39,8 +39,19 @@
     <constructRepeat>1</constructRepeat>
   </constructColumn>
   <constructColumn>
-    <constructName>Model</constructName>
-    <constructCode>Model</constructCode>
+    <constructName>MotionPath</constructName>
+    <constructCode>MotionPath</constructCode>
+    <constructType1>基本类型</constructType1>
+    <constructType2>
+      <constructType2>字符串</constructType2>
+    </constructType2>
+    <constructDefault>
+    </constructDefault>
+    <constructRepeat>1</constructRepeat>
+  </constructColumn>
+  <constructColumn>
+    <constructName>ModelPath</constructName>
+    <constructCode>ModelPath</constructCode>
     <constructType1>基本类型</constructType1>
     <constructType2>
       <constructType2>字符串</constructType2>

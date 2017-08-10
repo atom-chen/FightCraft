@@ -193,6 +193,7 @@ public class InputManager : InstanceBase<InputManager>
                 string inputKey = "k0";
                 if (_InputMotion._SkillMotions.ContainsKey(inputKey))
                 {
+                    AutoRotate();
                     _InputMotion.ActSkill(_InputMotion._SkillMotions[inputKey]);
                 }
             }
@@ -224,23 +225,13 @@ public class InputManager : InstanceBase<InputManager>
 
     public void AutoRotate()
     {
-        List<MotionManager> targetMotions;
-        if (InputManager.Instance.Axis != Vector2.zero)
-        {
-            _InputMotion.SetLookRotate(new Vector3(InputManager.Instance.CameraAxis.x, 0, InputManager.Instance.CameraAxis.y));
-            targetMotions = SelectTargetCommon.GetFrontMotions(_InputMotion, 3, 30, true);
-        }
-        else
-        {
-            targetMotions = SelectTargetCommon.GetFrontMotions(_InputMotion, 3, 80, true);
-        }
-        
-        
-        if (targetMotions != null && targetMotions.Count > 0)
-        {
-            _InputMotion.SetLookAt(targetMotions[0].gameObject.transform.position);
-        }
+        if (AimTarget.Instance == null)
+            return;
 
+        if (AimTarget.Instance.LockTarget != null)
+        {
+            _InputMotion.SetLookAt(AimTarget.Instance.LockTarget.transform.position);
+        }
     }
 
 #endregion

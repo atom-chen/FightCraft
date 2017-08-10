@@ -52,7 +52,7 @@ namespace GameUI
 
         private void ShowItem(object sender, Hashtable args)
         {
-            var itemBase = ResourcePool.Instance.GetIdleUIItem<UIDropNameItem>(_UIDropItemPrefab);
+            var itemBase = ResourcePool.Instance.GetIdleUIItem<UIDropNameItem>(_UIDropItemPrefab.gameObject);
             itemBase.Show(args);
             itemBase.transform.SetParent(transform);
             itemBase.transform.localScale = Vector3.one;
@@ -61,7 +61,7 @@ namespace GameUI
         private void HideItem(object sender, Hashtable args)
         {
             UIDropNameItem hideItem = args["HideItem"] as UIDropNameItem;
-            ResourcePool.Instance.RecvIldeUIItem(hideItem);
+            ResourcePool.Instance.RecvIldeUIItem(hideItem.gameObject);
         }
 
         

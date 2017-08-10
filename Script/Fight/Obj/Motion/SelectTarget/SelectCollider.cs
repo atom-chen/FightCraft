@@ -8,6 +8,8 @@ public class SelectCollider : SelectBase
 
     private Collider _SelectCollider;
 
+    public bool _SelectLieObj;
+
     public override void ColliderStart()
     {
         if (_SelectCollider == null)
@@ -33,7 +35,15 @@ public class SelectCollider : SelectBase
             _TrigCollider.Add(other);
             
             var motion = other.gameObject.GetComponentInParent<MotionManager>();
-            if (motion != null && motion._CanBeSelectByEnemy)
+            if (motion == null)
+                return;
+
+            if (motion.MotionPrior == BaseMotionManager.LIE_PRIOR && !_SelectLieObj)
+                return;
+
+            if (!motion._CanBeSelectByEnemy)
+                return;
+
             {
                 foreach (var impact in _ImpactList)
                 {

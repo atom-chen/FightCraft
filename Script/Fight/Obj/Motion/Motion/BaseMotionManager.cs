@@ -7,10 +7,14 @@ public class BaseMotionManager : MonoBehaviour
     public const int MOVE_PRIOR = 10;
     public const int HIT_PRIOR = 1000;
     public const int FLY_PRIOR = 1001;
+    public const int CATCH_PRIOR = 1002;
     public const int RISE_PRIOR = 999;
+    public const int LIE_PRIOR = 998;
     public const int DIE_PRIOR = 2000;
 
     protected MotionManager _MotionManager;
+
+    public bool IsCanHit { get; set; }
 
     public void Init()
     {
@@ -18,6 +22,7 @@ public class BaseMotionManager : MonoBehaviour
         _NavAgent = gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
 
         _MotionManager.AddAnimationEndEvent(_HitAnim);
+        _MotionManager.AddAnimationEndEvent(_FlyAnim);
         _MotionManager.AddAnimationEndEvent(_RiseAnim);
         _FlyBody = _MotionManager.AnimationEvent.gameObject;
 
@@ -26,95 +31,60 @@ public class BaseMotionManager : MonoBehaviour
         _MotionManager.InitAnimation(_HitAnim);
         _MotionManager.InitAnimation(_FlyAnim);
         _MotionManager.InitAnimation(_RiseAnim);
-
-        _MotionManager.EventController.RegisteEvent(GameBase.EVENT_TYPE.EVENT_MOTION_HIT, HitEvent);
-        _MotionManager.EventController.RegisteEvent(GameBase.EVENT_TYPE.EVENT_MOTION_FLY, FlyEvent);
     }
 
-    public void HitEvent(object go, Hashtable eventArgs)
+    public void HitEvent(float hitTime, int hitEffect, MotionManager impactSender)
     {
-        if (_MotionManager.MotionPrior <= HIT_PRIOR)
+        if (!_MotionManager.IsBuffCanHit(impactSender))
         {
-            float hitTime = -1;
-            int hitEffect = 0;
-            if (eventArgs.ContainsKey("HitTime"))
-            {
-                hitTime = (float)eventArgs["HitTime"];
-            }
+            IsCanHit = false;
+            return;
+        }
+        IsCanHit = true;
 
-            if (eventArgs.ContainsKey("HitEffect"))
-            {
-                hitEffect = (int)eventArgs["HitEffect"];
-            }
-            MotionManager impactSender = go as MotionManager;
+        if (_MotionManager.MotionPrior == FLY_PRIOR || _MotionManager.MotionPrior == LIE_PRIOR)
+        {
+            MotionFlyStay(hitTime, hitEffect, impactSender);
+        }
+        else if(_MotionManager.MotionPrior <= HIT_PRIOR)
+        {
             MotionHit(hitTime, hitEffect, impactSender);
         }
-        else if (_MotionManager.MotionPrior == FLY_PRIOR)
-        {
-            if ((GameBase.EVENT_TYPE)eventArgs["EVENT_TYPE"] == GameBase.EVENT_TYPE.EVENT_MOTION_HIT)
-            {
-                eventArgs.Add("StopEvent", true);
-            }
-            //var hitTime = (float)eventArgs["HitTime"];
-            float hitTime = 0.5f;
-            if (eventArgs.ContainsKey("HitTime"))
-            {
-                hitTime = (float)eventArgs["HitTime"];
-            }
-
-            int hitEffect = 0;
-            if (eventArgs.ContainsKey("HitEffect"))
-            {
-                hitEffect = (int)eventArgs["HitEffect"];
-            }
-            bool ifForce = false;
-            if (eventArgs.ContainsKey("HitForce"))
-            {
-                ifForce = (bool)eventArgs["HitForce"];
-            }
-
-            MotionManager impactSender = go as MotionManager;
-            if (!ifForce)
-            {
-                MotionFlyStay(hitTime, hitEffect, impactSender);
-            }
-            else
-            {
-                MotionHit(hitTime, hitEffect, impactSender);
-            }
-        }
+         
     }
 
-    public void FlyEvent(object go, Hashtable eventArgs)
+    public void FlyEvent(float flyHeight, int hitEffect, MotionManager impactSender)
     {
-        float flyHeight = 0.6f;
-        if (eventArgs.ContainsKey("FlyHeight"))
+        if (!_MotionManager.IsBuffCanHit(impactSender))
         {
-            flyHeight = (float)eventArgs["FlyHeight"];
+            IsCanHit = false;
+            return;
         }
-        int hitEffect = 0;
-        if (eventArgs.ContainsKey("HitEffect"))
-        {
-            hitEffect = (int)eventArgs["HitEffect"];
-        }
-        MotionManager impactSender = go as MotionManager;
+        IsCanHit = true;
+
+        if (_MotionManager.MotionPrior > FLY_PRIOR)
+            return;
+
         MotionFly(flyHeight, hitEffect, impactSender);
     }
 
-    public void CatchEvent(object go, Hashtable eventArgs)
+    public bool IsCanBePush()
     {
-        float flyHeight = 0.6f;
-        if (eventArgs.ContainsKey("CatchTime"))
-        {
-            flyHeight = (float)eventArgs["FlyHeight"];
-        }
-        int hitEffect = 0;
-        if (eventArgs.ContainsKey("HitEffect"))
-        {
-            hitEffect = (int)eventArgs["HitEffect"];
-        }
-        MotionManager impactSender = go as MotionManager;
-        MotionFly(flyHeight, hitEffect, impactSender);
+        if (!IsCanHit)
+            return false;
+
+        if (_MotionManager.MotionPrior == CATCH_PRIOR)
+            return false;
+
+        return true;
+    }
+
+    public void CatchEvent(float catchTime, int hitEffect, MotionManager impactSender)
+    {
+        if (_MotionManager.MotionPrior > CATCH_PRIOR)
+            return;
+
+        MotionCatch(catchTime, hitEffect, impactSender);
     }
 
     public void DispatchAnimEvent(string funcName, object param)
@@ -124,8 +94,14 @@ public class BaseMotionManager : MonoBehaviour
             case HIT_PRIOR:
                 DispatchHitEvent(funcName, param);
                 break;
+            case CATCH_PRIOR:
+                DispatchCatchEvent(funcName, param);
+                break;
             case RISE_PRIOR:
                 DispatchRiseEvent(funcName, param);
+                break;
+            case FLY_PRIOR:
+                DispatchFlyEvent(funcName, param);
                 break;
         }
     }
@@ -324,7 +300,7 @@ public class BaseMotionManager : MonoBehaviour
         _MotionManager.MotionPrior = HIT_PRIOR;
         StopAllCoroutines();
         _MotionManager.RePlayAnimation(_HitAnim, 1);
-
+        _MotionManager.SetLookAt(impactSender.transform.position);
     }
 
     public void HitKeyframe(object param)
@@ -353,7 +329,8 @@ public class BaseMotionManager : MonoBehaviour
         if (ResourcePool.Instance._CommonHitEffect.Count > effectIdx && effectIdx >= 0)
         {
             Hashtable hash = new Hashtable();
-            hash.Add("Rotation", Quaternion.LookRotation( impactSender.transform.position - transform.position, Vector3.zero));
+            if(impactSender != null)
+                hash.Add("Rotation", Quaternion.LookRotation( impactSender.transform.position - transform.position, Vector3.zero));
 
             _MotionManager.PlayDynamicEffect(ResourcePool.Instance._CommonHitEffect[effectIdx], hash);
         }
@@ -365,18 +342,39 @@ public class BaseMotionManager : MonoBehaviour
 
     private const float _UpSpeed = 20;
     private const float _DownSpeed = 15;
-    private const float _LieTimeStatic = 1.5f;
+    private const float _LieTimeStatic = 0.6f;
+    private const float _CorpseTimeStatic = 0.5f;
 
     public AnimationClip _FlyAnim;
 
     private GameObject _FlyBody;
     private float _FlyHeight = 0;
     private float _StayTime = 0;
-    private float _LieTime = 1;
+    private float _LieTime = 0;
+
+    private bool IsFlyEnd = false;
+
+    private void DispatchFlyEvent(string funcName, object param)
+    {
+        switch (funcName)
+        {
+            case AnimEventManager.ANIMATION_END:
+                FlyEnd();
+                break;
+        }
+    }
+
+    private void FlyEnd()
+    {
+        IsFlyEnd = true;
+    }
 
     public void MotionFly(float flyHeight, int effectID, MotionManager impactSender)
     {
         PlayHitEffect(impactSender, effectID);
+
+        if (_MotionManager.ActingSkill != null)
+            _MotionManager.ActingSkill.FinishSkill();
 
         if (_MotionManager.MotionPrior == MOVE_PRIOR)
             StopMove();
@@ -386,7 +384,10 @@ public class BaseMotionManager : MonoBehaviour
 
         _FlyHeight = flyHeight;
 
+        IsFlyEnd = false;
         _MotionManager.SetCorpsePrior();
+        //if(impactSender != null)
+        //    _MotionManager.SetLookAt(impactSender.transform.position);
     }
 
     public void MotionFlyStay(float time, int effectID, MotionManager impactSender)
@@ -421,33 +422,42 @@ public class BaseMotionManager : MonoBehaviour
             if (_FlyBody.transform.localPosition.y < 0)
             {
                 _FlyBody.transform.localPosition = Vector3.zero;
-                _LieTime = _LieTimeStatic;
+                if (_MotionManager.IsMotionDie)
+                {
+                    Debug.Log("MotionLieTime:" + Time.time);
+                    _LieTime = _CorpseTimeStatic;
+                }
+                else
+                {
+                    _LieTime = _LieTimeStatic;
+                }
             }
+
+        }
+        else if (!IsFlyEnd)
+        {
             
         }
         else if (_LieTime > 0)
         {
-            //if (_MotionManager.IsMotionDie)
-            //{
-            //    _MotionManager.MotionPrior = DIE_PRIOR;
-            //    StartCoroutine(BodyDisappear());
-            //}
-            //else
+            _MotionManager.MotionPrior = LIE_PRIOR;
+            _LieTime -= Time.fixedDeltaTime;
+            if (_LieTime <= 0)
             {
-                _LieTime -= Time.fixedDeltaTime;
-                if (_LieTime <= 0)
+                if (_MotionManager.IsMotionDie)
                 {
-                    if (_MotionManager.IsMotionDie)
-                    {
-                        _MotionManager.MotionPrior = DIE_PRIOR;
-                        StartCoroutine(MotionCorpse());
-                    }
-                    else if (_MotionManager.MotionPrior == FLY_PRIOR)
-                        MotionRise();
-
+                    Debug.Log("MotionDie:" + Time.time);
+                    _MotionManager.MotionPrior = DIE_PRIOR;
+                    StartCoroutine(MotionCorpse());
+                }
+                else
+                {
+                    Debug.Log("Motion rise");
+                    MotionRise();
                 }
             }
         }
+        
     }
 
     #endregion
@@ -455,7 +465,9 @@ public class BaseMotionManager : MonoBehaviour
     #region rise
 
     public AnimationClip _RiseAnim;
-    public float _BodyDisappearTime = 0f;
+    public float _BodyDisappearTime = 1f;
+    
+
 
     private void MotionRise()
     {
@@ -471,6 +483,20 @@ public class BaseMotionManager : MonoBehaviour
         yield return new WaitForSeconds(_BodyDisappearTime);
 
         _MotionManager.MotionDisappear();
+    }
+
+    private void MotionFall()
+    {
+        if (_MotionManager.IsMotionDie)
+        {
+            _MotionManager.MotionPrior = DIE_PRIOR;
+            StartCoroutine(MotionCorpse());
+        }
+        else if(_MotionManager.MotionPrior == FLY_PRIOR)
+        {
+            MotionRise();
+        }
+        
     }
 
     private void RiseEnd()
@@ -490,5 +516,75 @@ public class BaseMotionManager : MonoBehaviour
         }
     }
     #endregion
-    
+
+    #region catch
+
+    private float _StopCatchTime = 0;
+
+    public void MotionCatch(float hitTime, int hitEffect, MotionManager impactSender)
+    {
+        PlayHitEffect(impactSender, hitEffect);
+        if (hitTime <= 0)
+            return;
+
+        if (_MotionManager.ActingSkill != null)
+            _MotionManager.ActingSkill.FinishSkill();
+
+        if (_MotionManager.MotionPrior == MOVE_PRIOR)
+            StopMove();
+
+        if (hitTime > _HitAnim.length)
+        {
+            _StopCatchTime = hitTime - _HitAnim.length;
+        }
+        else
+        {
+            _StopCatchTime = 0;
+        }
+        _MotionManager.ResetMove();
+        _MotionManager.MotionPrior = CATCH_PRIOR;
+        StopAllCoroutines();
+        //StartCoroutine(StopCatch(hitTime));
+        _MotionManager.RePlayAnimation(_HitAnim, 1);
+
+    }
+
+    private void DispatchCatchEvent(string funcName, object param)
+    {
+        switch (funcName)
+        {
+            case AnimEventManager.KEY_FRAME:
+                CatchKeyframe(param);
+                break;
+            case AnimEventManager.ANIMATION_END:
+                HitEnd();
+                break;
+        }
+    }
+
+    public void CatchKeyframe(object param)
+    {
+        if (_StopCatchTime > 0)
+        {
+            _MotionManager.PauseAnimation(_HitAnim);
+            StartCoroutine(StopCatch(_StopCatchTime));
+        }
+    }
+
+    private IEnumerator StopCatch(float catchTime)
+    {
+        yield return new WaitForSeconds(catchTime);
+        MotionFly(0.1f, 0, null);
+    }
+
+    public void FinishCatch()
+    {
+        if (_MotionManager.MotionPrior == CATCH_PRIOR)
+        {
+            _MotionManager.MotionPrior = HIT_PRIOR;
+            StopAllCoroutines();
+        }
+    }
+
+    #endregion
 }

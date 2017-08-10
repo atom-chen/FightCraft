@@ -3,7 +3,19 @@ using System.Collections;
 
 public class ImpactBase : MonoBehaviour
 {
-    public ObjMotionSkillBase _SkillMotion;
+    private ObjMotionSkillBase _SkillMotion;
+    public ObjMotionSkillBase SkillMotion
+    {
+        get
+        {
+            return _SkillMotion;
+        }  
+        set
+        {
+            _SkillMotion = value;
+        }
+    }
+
 
     public virtual void ActImpact(MotionManager senderManager, MotionManager reciverManager)
     {

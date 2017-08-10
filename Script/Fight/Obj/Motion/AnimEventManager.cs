@@ -63,13 +63,15 @@ public class AnimEventManager : MonoBehaviour
 
     public void AddEvent(AnimationClip animClip, float animTime, Action callBack)
     {
+        string funcName = callBack.Method.ToString();
         AnimationEvent animEvent = new AnimationEvent();
         animEvent.time = animTime;
         animEvent.functionName = "SpecilEventCallBack";
-        animEvent.stringParameter = callBack.Method.ToString();
+        animEvent.stringParameter = funcName;
         animClip.AddEvent(animEvent);
 
-        _AnimCallBack.Add(callBack.Method.ToString(), callBack);
+        if(!_AnimCallBack.ContainsKey(funcName))
+            _AnimCallBack.Add(funcName, callBack);
     }
 
     public float GetAnimFirstColliderEventTime(AnimationClip animClip)

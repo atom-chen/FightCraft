@@ -52,7 +52,7 @@ CGINCLUDE
 		Pass {
 			Name "OUTLINE"
 			Tags { "LightMode" = "Always" }
-			Cull Front
+			Cull Off
 			ZWrite On
 			ColorMask RGB
 			Blend SrcAlpha OneMinusSrcAlpha

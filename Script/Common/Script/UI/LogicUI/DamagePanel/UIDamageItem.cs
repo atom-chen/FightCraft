@@ -27,6 +27,8 @@ namespace GameUI
         private const string _HurtColor = "<color=#FF0000dd>";
         private const string _HealColor = "<color=#00FF00dd>";
 
+        private Vector3 _InitPos = Vector3.zero;
+
         public void Show(Vector3 showWorldPos, int showValue1, int showValue2, ShowDamageType showType, int baseSize)
         {
             gameObject.SetActive(true);
@@ -55,9 +57,53 @@ namespace GameUI
                 DamageValue2.text = "";
             }
 
-            _RootTransform.anchoredPosition = UIManager.Instance.WorldToScreenPoint(showWorldPos);
+            _InitPos = UIManager.Instance.WorldToScreenPoint(showWorldPos);
+            _RootTransform.anchoredPosition = _InitPos;
+            _RootTransform.localScale = Vector3.one;
             _TextTransform.localScale = new Vector3(baseSize, baseSize, baseSize);
+
+            _PosDelta = Vector3.zero;
+            _SizeDelta = Vector3.one;
+            _StartAnimTime = Time.time;
         }
+
+        #region animation
+
+        public float _ShowTime = 0.9f;
+        public float _LargeTime = 0.15f;
+        public float _LargeSize = 0.2f;
+        public float _SmallTime = 0.1f;
+        public float _SmallSize = -0.1f;
+
+        public Vector3 _PosDelta;
+        public Vector3 _SizeDelta;
+
+        private float _StartAnimTime;
+
+        public void Update()
+        {
+            var itemPos = _InitPos + _PosDelta;
+            _PosDelta += new Vector3(0, 40 * Time.deltaTime, 0);
+            _RootTransform.anchoredPosition = itemPos;
+
+
+            _RootTransform.localScale = _SizeDelta;
+            if (Time.time - _StartAnimTime < _LargeTime)
+            {
+                _SizeDelta = Vector3.one + Vector3.one * _LargeSize * ((_LargeTime - (Time.time - _StartAnimTime)) / _LargeTime);
+            }
+            else if (Time.time - _StartAnimTime < _LargeTime + _SmallTime)
+            {
+                _SizeDelta = Vector3.one + Vector3.one * _SmallSize * ((_SmallTime - (Time.time - _StartAnimTime - _LargeTime)) / (_SmallTime));
+            }
+            else
+            {
+                UIDamagePanel.HideItem(this);
+            }
+
+        }
+
+        #endregion
 
 
     }

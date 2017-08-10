@@ -17,6 +17,7 @@ public class TestScene : MonoBehaviour {
 
     private void StartMotion()
     {
+        Tables.TableReader.ReadTables();
         var motions = GameObject.FindObjectsOfType<MotionManager>();
         foreach (var motion in motions)
         {

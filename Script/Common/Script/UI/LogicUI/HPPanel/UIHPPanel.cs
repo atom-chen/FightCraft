@@ -55,7 +55,7 @@ namespace GameUI
 
         private void ShowItem(object sender, Hashtable args)
         {
-            var itemBase = ResourcePool.Instance.GetIdleUIItem<UIHPItem>(_UIHPItemPrefab);
+            var itemBase = ResourcePool.Instance.GetIdleUIItem<UIHPItem>(_UIHPItemPrefab.gameObject);
             itemBase.Show(args);
             itemBase.transform.SetParent(transform);
             itemBase.transform.localScale = Vector3.one;
@@ -64,7 +64,7 @@ namespace GameUI
         private void HideItem(object sender, Hashtable args)
         {
             UIHPItem hideItem = args["HideItem"] as UIHPItem;
-            ResourcePool.Instance.RecvIldeUIItem(hideItem);
+            ResourcePool.Instance.RecvIldeUIItem(hideItem.gameObject);
         }
 
         

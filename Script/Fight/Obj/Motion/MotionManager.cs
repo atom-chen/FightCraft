@@ -36,6 +36,7 @@ public class MotionManager : MonoBehaviour
         }
 
         TriggerCollider.enabled = true;
+        _CanBeSelectByEnemy = true;
 
         InitSkills();
     }
@@ -43,7 +44,7 @@ public class MotionManager : MonoBehaviour
     void FixedUpdate()
     {
         UpdateMove();
-        
+
     }
 
     public void Reset()
@@ -165,7 +166,7 @@ public class MotionManager : MonoBehaviour
                 PauseAnimation(state.clip);
             }
         }
-        
+
     }
 
     public void ResumeAnimation(AnimationClip animClip)
@@ -327,15 +328,24 @@ public class MotionManager : MonoBehaviour
     public void MotionDie()
     {
         _IsMotionDie = true;
-        Hashtable hash = new Hashtable();
-        hash.Add("HitEffect", -1);
-        _EventController.PushEvent(GameBase.EVENT_TYPE.EVENT_MOTION_FLY, this, new Hashtable());
+        //Hashtable hash = new Hashtable();
+        //hash.Add("HitEffect", -1);
+
+        //_EventController.PushEvent(GameBase.EVENT_TYPE.EVENT_MOTION_FLY, this, new Hashtable());
+        _BaseMotionManager.FlyEvent(0.1f, -1, this);
+        
     }
 
     public void MotionCorpse()
     {
         TriggerCollider.enabled = false;
+        _CanBeSelectByEnemy = false;
+        NavAgent.enabled = false;
         FightManager.Instance.ObjCorpse(this);
+
+        Debug.Log("MotionDrop:" + Time.time);
+        MonsterDrop.MonsterDripItems(this);
+        Debug.Log("Motion corpse");
     }
 
     public void MotionDisappear()
@@ -354,7 +364,7 @@ public class MotionManager : MonoBehaviour
     private GameObject _BuffBindPos;
     private List<ImpactBuff> _RemoveTemp = new List<ImpactBuff>();
 
-    public ImpactBuff AddBuff(ImpactBuff buff)
+    public ImpactBuff AddBuff(ImpactBuff buff, float lastTime = -1)
     {
         if (_BuffBindPos == null)
         {
@@ -371,6 +381,10 @@ public class MotionManager : MonoBehaviour
 
         var newBuff = buffGO.AddComponent(buff.GetType()) as ImpactBuff;
         CopyComponent(buff, newBuff);
+        if (lastTime > 0)
+        {
+            newBuff._LastTime = lastTime;
+        }
         _ImpactBuffs.Add(newBuff);
         newBuff.ActBuff(this);
 
@@ -409,6 +423,16 @@ public class MotionManager : MonoBehaviour
         {
             field.SetValue(destination, field.GetValue(original));
         }
+    }
+
+    public bool IsBuffCanHit(MotionManager impactSender)
+    {
+        for (int i = 0; i < _ImpactBuffs.Count; ++i)
+        {
+            if (!_ImpactBuffs[i].IsBuffCanHit())
+                return false;
+        }
+        return true;
     }
 
     #endregion
@@ -524,11 +548,15 @@ public class MotionManager : MonoBehaviour
     public IEnumerator StopDynamicEffect(EffectController effct)
     {
         yield return new WaitForSeconds( effct._EffectLastTime);
+        
         StopDynamicEffectImmediately(effct);
     }
 
     public void StopDynamicEffectImmediately(EffectController effct)
     {
+        if (ResourcePool.Instance.IsEffectInRecvl(effct))
+            return;
+
         effct.HideEffect();
         ResourcePool.Instance.RecvIldeEffect(effct);
     }
@@ -536,15 +564,6 @@ public class MotionManager : MonoBehaviour
     #endregion
 
     #region move
-
-    private static int _NormalNavPrior = 50;
-    private static int _NormalCorpsePrior = 49;
-    private static int _EliteNavPrior = 40;
-    private static int _EliteCorpsePrior = 39;
-    private static int _PlayerNavPrior = 30;
-    private static int _PlayerCorpsePrior = 29;
-    private static int _HeroNavPrior = 20;
-    private static int _HeroCorpsePrior = 19;
 
     private UnityEngine.AI.NavMeshAgent _NavAgent;
     public UnityEngine.AI.NavMeshAgent NavAgent
@@ -736,6 +755,8 @@ public class MotionManager : MonoBehaviour
 
     #region collider
 
+    public Vector3 _ColliderInfo = new Vector3(0.4f, 1.8f, 0);
+
     private Collider _TriggerCollider;
     public Collider TriggerCollider
     {
@@ -744,6 +765,20 @@ public class MotionManager : MonoBehaviour
             if (_TriggerCollider == null)
             {
                 _TriggerCollider = AnimationEvent.GetComponentInChildren<Collider>();
+                if (_TriggerCollider == null)
+                {
+                    var sole = AnimationEvent.transform.FindChild("center/sole");
+                    var collider = sole.gameObject.AddComponent<CapsuleCollider>();
+                    collider.radius = _ColliderInfo.x;
+                    collider.height = _ColliderInfo.y;
+                    collider.direction = 2;
+                    collider.center = new Vector3(0, 0, collider.height * 0.5f);
+                    collider.isTrigger = true;
+                    var rigidbody = sole.gameObject.AddComponent<Rigidbody>();
+                    rigidbody.isKinematic = true;
+                    rigidbody.useGravity = false;
+                    _TriggerCollider = collider;
+                }
             }
             return _TriggerCollider;
         }

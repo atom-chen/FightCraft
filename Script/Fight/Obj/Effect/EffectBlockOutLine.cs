@@ -39,18 +39,21 @@ public class EffectBlockOutLine : EffectController
 
     void Update()
     {
-        if (_IsPlayingEffect)
+        if (_LastTime > 0)
         {
-            var deltaTime = Time.time - _StartPlayTime;
-            if (_LastTime > deltaTime)
+            if (_IsPlayingEffect)
             {
-                var deltaRate = (_LastTime - deltaTime) / _LastTime;
-                _OutLineMaterial.SetColor("_OutlineColor", new Color() { r = 1, g = 1.0f * deltaRate, b = 1.0f * deltaRate, a = 1 });
-                _OutLineMaterial.SetFloat("_Outline", 0.03f * deltaRate);
-            }
-            else
-            {
-                HideEffect();
+                var deltaTime = Time.time - _StartPlayTime;
+                if (_LastTime > deltaTime)
+                {
+                    var deltaRate = (_LastTime - deltaTime) / _LastTime;
+                    _OutLineMaterial.SetColor("_OutlineColor", new Color() { r = 1, g = 1.0f * deltaRate, b = 1.0f * deltaRate, a = 1 });
+                    _OutLineMaterial.SetFloat("_Outline", 0.03f * deltaRate);
+                }
+                else
+                {
+                    HideEffect();
+                }
             }
         }
     }
@@ -89,8 +92,8 @@ public class EffectBlockOutLine : EffectController
 
     private void RemoveMaterial()
     {
-        var motion = gameObject.GetComponentInParent<MotionManager>();
-        _SkinnedMesh = motion.GetComponentInChildren<SkinnedMeshRenderer>();
+        if (_SkinnedMesh == null)
+            return;
         //foreach (SkinnedMeshRenderer curMeshRender in meshes)
         {
             int newMaterialArrayCount = 0;

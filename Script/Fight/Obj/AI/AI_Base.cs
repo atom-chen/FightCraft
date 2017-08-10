@@ -47,7 +47,7 @@ public class AI_Base : MonoBehaviour
         }
 
         ModifyInitSkill();
-        InitSkills();
+        InitSkillInfos();
     }
 
     protected virtual void AIUpdate()
@@ -72,36 +72,8 @@ public class AI_Base : MonoBehaviour
         if (_CombatLevel == 1)
             return;
 
-        if (_SelfMotion.RoleAttrManager.MotionType == MotionType.Normal || _SelfMotion.RoleAttrManager.MotionType == MotionType.Elite)
-        {
-        //    int randomLockTime = Random.Range((int)(_AISkills[0].SkillInterval * _CombatLevel * 0.5f), (int)(_AISkills[0].SkillInterval * _CombatLevel * 2));
-        //    StartCoroutine(StartLockSkill(_AISkills[0], randomLockTime));
-        //    _AISkills[0].SkillInterval = _AISkills[0].SkillInterval * _CombatLevel;
-        //    _AISkills[0].StartCD = false;
-        //}
-        //else if (_SelfMotion.RoleAttrManager.MotionType == MotionType.Elite)
-        //{
-            _AISkills[0].SkillInterval = _AISkills[0].SkillInterval * _CombatLevel * 0.5f;
-            _AISkills[0].StartCD = true;
 
-            for (int i = 1; i < _AISkills.Count; ++i)
-            {   
-                int randomLockTime = Random.Range((int)(_AISkills[i].SkillInterval * _CombatLevel * 0.5f), (int)(_AISkills[i].SkillInterval * _CombatLevel * 2));
-                StartCoroutine(StartLockSkill(_AISkills[i], randomLockTime));
-                _AISkills[i].SkillInterval = _AISkills[i].SkillInterval * _CombatLevel * 0.5f;
-                _AISkills[i].StartCD = false;
-            }
-        }
     }
-
-    protected IEnumerator StartLockSkill(AI_Skill_Info lockSkill, float lockTime)
-    {
-        lockSkill.StartLock = true;
-        yield return new WaitForSeconds(lockTime);
-        lockSkill.StartLock = false;
-        UnLockSkill(lockSkill);
-    }
-
 
     #endregion
 
@@ -113,68 +85,38 @@ public class AI_Base : MonoBehaviour
         public ObjMotionSkillBase SkillBase;
         public float SkillRange;
         public float SkillInterval;
-        public bool StartCD = false;
-        public bool StartLock = false;
 
         public float LastUseSkillTime { get; set; }
+
+        public bool IsSkillCD()
+        {
+            return (Time.time - LastUseSkillTime > SkillInterval);
+        }
     }
     public List<AI_Skill_Info> _AISkills;
-    private List<AI_Skill_Info> _CDSkills = new List<AI_Skill_Info>();
 
-    protected void InitSkills()
+    public void InitSkillGoes(MotionManager mainMotion)
     {
-        _CDSkills.Clear();
+        GameObject motionObj = new GameObject("Motion");
+        motionObj.transform.SetParent(mainMotion.transform);
+        motionObj.transform.localPosition = Vector3.zero;
+        motionObj.transform.localRotation = Quaternion.Euler(Vector3.zero);
         foreach (var skillInfo in _AISkills)
         {
-            if (skillInfo.StartLock)
-            {
-                continue;
-            }
-            _CDSkills.Add(skillInfo);
-            if (skillInfo.StartCD)
-            {
-                SetSkillCD(skillInfo, skillInfo.SkillInterval);
-            }
+            var skillBase = GameObject.Instantiate(skillInfo.SkillBase);
+            skillBase.transform.SetParent(motionObj.transform);
+            skillInfo.SkillBase = skillBase;
         }
+    }
+
+    protected void InitSkillInfos()
+    {
+
     }
 
     protected void SetSkillCD(AI_Skill_Info skillInfo, float cdTime)
     {
-        if (skillInfo.SkillInterval <= 0)
-            return;
-
-        _CDSkills.Remove(skillInfo);
-        StartCoroutine(SkillCD(skillInfo));
-    }
-
-    protected IEnumerator SkillCD(AI_Skill_Info skillInfo)
-    {
-        yield return new WaitForSeconds(skillInfo.SkillInterval);
-
-        UnLockSkill(skillInfo);
-    }
-
-    protected void UnLockSkill(AI_Skill_Info skillInfo)
-    {
-        int skillPrior = _AISkills.IndexOf(skillInfo);
-        int insertIdx = -1;
-        for (int i = 0; i < _CDSkills.Count; ++i)
-        {
-            int cdSkillPrior = _AISkills.IndexOf(_CDSkills[i]);
-            if (skillPrior < cdSkillPrior)
-            {
-                insertIdx = i;
-                break;
-            }
-        }
-        if (insertIdx >= 0)
-        {
-            _CDSkills.Insert(insertIdx, skillInfo);
-        }
-        else
-        {
-            _CDSkills.Add(skillInfo);
-        }
+        skillInfo.LastUseSkillTime = Time.time;
     }
 
     protected void StartSkill(AI_Skill_Info skillInfo, bool isIgnoreCD = false)
@@ -187,23 +129,24 @@ public class AI_Base : MonoBehaviour
         SetSkillCD(skillInfo, skillInfo.SkillInterval);
     }
 
-    protected bool StartSkill()
+    protected virtual bool StartSkill()
     {
-        if (_CDSkills.Count == 0)
-            return false;
-
         if (!IsRandomActSkill())
             return false;
 
         float dis = Vector3.Distance(_SelfMotion.transform.position, _TargetMotion.transform.position);
 
-        for (int i = _CDSkills.Count - 1; i >= 0; --i)
+        for (int i = _AISkills.Count - 1; i >= 0; --i)
         {
-            if (_CDSkills[i].SkillRange > dis)
-            {
-                StartSkill(_CDSkills[i]);
-                return true;
-            }
+            if (!_AISkills[i].IsSkillCD())
+                continue;
+
+            if (_AISkills[i].SkillRange < dis)
+                continue;
+
+            StartSkill(_AISkills[i]);
+            return true;
+
         }
 
         return false;

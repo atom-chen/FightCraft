@@ -7,7 +7,8 @@ namespace GameUI
 {
     public enum UILayer
     {
-        BaseUI = 0,
+        ControlUI,
+        BaseUI,
         MainFunUI,
         PopUI,
         MessageUI,
