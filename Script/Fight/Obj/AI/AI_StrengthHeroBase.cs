@@ -10,8 +10,6 @@ public class AI_StrengthHeroBase : AI_HeroBase
         InitAttackBlock();
     }
 
-
-
     #region super armor
 
     private void InitAttackBlock()
@@ -46,7 +44,7 @@ public class AI_StrengthHeroBase : AI_HeroBase
             return;
 
         _Stage2Started = true;
-        _SuperArmorPrefab.ActBuffInstance(_SelfMotion, _SelfMotion, Stage2SuperTime);
+        SuperArmorPrefab.ActBuffInstance(_SelfMotion, _SelfMotion, Stage2SuperTime);
     }
 
     #endregion

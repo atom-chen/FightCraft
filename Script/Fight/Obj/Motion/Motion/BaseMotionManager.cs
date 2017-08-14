@@ -42,12 +42,16 @@ public class BaseMotionManager : MonoBehaviour
         }
         IsCanHit = true;
 
+        Hashtable eventHash = new Hashtable();
+        eventHash.Add("Sender", impactSender);
         if (_MotionManager.MotionPrior == FLY_PRIOR || _MotionManager.MotionPrior == LIE_PRIOR)
         {
+            _MotionManager.EventController.PushEvent(GameBase.EVENT_TYPE.EVENT_MOTION_FLY, this, eventHash);
             MotionFlyStay(hitTime, hitEffect, impactSender);
         }
         else if(_MotionManager.MotionPrior <= HIT_PRIOR)
         {
+            _MotionManager.EventController.PushEvent(GameBase.EVENT_TYPE.EVENT_MOTION_HIT, this, eventHash);
             MotionHit(hitTime, hitEffect, impactSender);
         }
          
@@ -65,6 +69,9 @@ public class BaseMotionManager : MonoBehaviour
         if (_MotionManager.MotionPrior > FLY_PRIOR)
             return;
 
+        Hashtable eventHash = new Hashtable();
+        eventHash.Add("Sender", impactSender);
+        _MotionManager.EventController.PushEvent(GameBase.EVENT_TYPE.EVENT_MOTION_FLY, this, eventHash);
         MotionFly(flyHeight, hitEffect, impactSender);
     }
 

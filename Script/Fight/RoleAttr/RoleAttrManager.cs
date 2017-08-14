@@ -426,15 +426,24 @@ public class RoleAttrManager : MonoBehaviour
         return baseAttr;
     }
 
-    public float GetBaseAttr(RoleAttrEnum attr)
+    public int GetBaseAttr(RoleAttrEnum attr)
     {
 
-        return 0;
+        return _BaseAttr.GetValue(attr);
     }
 
-    public void SetBaseAttr(RoleAttrEnum attr, float value)
+    public void SetBaseAttr(RoleAttrEnum attr, int value)
     {
-       
+        _BaseAttr.SetValue(attr, value);
+
+        if (attr == RoleAttrEnum.AttackSpeed)
+        {
+            RefreshAttackSpeed();
+        }
+        else if (attr == RoleAttrEnum.MoveSpeed)
+        {
+            RefreshMoveSpeed();
+        }
     }
 
     #endregion

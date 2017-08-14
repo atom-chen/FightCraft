@@ -183,7 +183,7 @@ public class ObjMotionSkillBase : MonoBehaviour
 
     private Dictionary<int, List<SelectBase>> _ColliderControl = new Dictionary<int, List<SelectBase>>();
 
-    private void InitCollider(RoleAttrManager.SkillAttr skillAttr)
+    protected void InitCollider(RoleAttrManager.SkillAttr skillAttr)
     {
         InitElementBullet();
         var collidercontrollers = gameObject.GetComponentsInChildren<SelectBase>(true);

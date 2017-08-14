@@ -20,6 +20,7 @@ public class AI_HeroDianWei : AI_StrengthHeroBase
     public float _CloseInterval = 1;
 
     private float _CloseWait;
+    private int _NextForceSkill;
 
     protected override void AIUpdate()
     {
@@ -66,6 +67,12 @@ public class AI_HeroDianWei : AI_StrengthHeroBase
 
     protected override bool StartSkill()
     {
+        if (_NextForceSkill > 0)
+        {
+            StartSkill(_AISkills[_NextForceSkill]);
+            _NextForceSkill = 0;
+        }
+
         if (!IsRandomActSkill())
             return false;
 
@@ -90,6 +97,10 @@ public class AI_HeroDianWei : AI_StrengthHeroBase
                 continue;
 
             {
+                if(skillIdxs[i] == 2)
+                {
+                    _NextForceSkill = 3;
+                }
                 StartSkill(_AISkills[skillIdxs[i]]);
                 return true;
             }

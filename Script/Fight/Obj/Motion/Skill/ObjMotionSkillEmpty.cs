@@ -7,7 +7,7 @@ public class ObjMotionSkillEmpty : ObjMotionSkillBase
 
     public float[] _StartColliderTime;
 
-    private int _ActingColliderIdx = 0;
+    protected int _ActingColliderIdx = 0;
 
     public override bool ActSkill(Hashtable exHash = null)
     {
@@ -23,7 +23,7 @@ public class ObjMotionSkillEmpty : ObjMotionSkillBase
         return true;
     }
 
-    private IEnumerator StartCollider()
+    protected IEnumerator StartCollider()
     {
         yield return new WaitForSeconds(_StartColliderTime[_ActingColliderIdx]);
         ColliderStart(_ActingColliderIdx);

@@ -46,7 +46,19 @@ public class AI_HeroBase : AI_Base
 
     #region super armor
 
-    public ImpactBuff _SuperArmorPrefab;
+    private ImpactBuff _SuperArmorPrefab;
+    public ImpactBuff SuperArmorPrefab
+    {
+        get
+        {
+            if (_SuperArmorPrefab == null)
+            {
+                var buffGO = GameBase.ResourceManager.Instance.GetGameObject("SkillMotion/SuperArmor");
+                _SuperArmorPrefab = buffGO.GetComponent<ImpactBuff>();
+            }
+            return _SuperArmorPrefab;
+        }
+    }
 
     private ImpactBuffSuperArmor _BuffInstance;
 
@@ -64,7 +76,7 @@ public class AI_HeroBase : AI_Base
 
     private void AttackStart()
     {
-        _BuffInstance = _SuperArmorPrefab.ActBuffInstance(_SelfMotion, _SelfMotion) as ImpactBuffSuperArmor;
+        _BuffInstance = SuperArmorPrefab.ActBuffInstance(_SelfMotion, _SelfMotion) as ImpactBuffSuperArmor;
 
     }
 
