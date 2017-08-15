@@ -88,6 +88,11 @@ public class BaseMotionManager : MonoBehaviour
 
     public void CatchEvent(float catchTime, int hitEffect, MotionManager impactSender)
     {
+        if (!_MotionManager.IsBuffCanHit(impactSender))
+        {
+            return;
+        }
+
         if (_MotionManager.MotionPrior > CATCH_PRIOR)
             return;
 
@@ -564,7 +569,7 @@ public class BaseMotionManager : MonoBehaviour
                 CatchKeyframe(param);
                 break;
             case AnimEventManager.ANIMATION_END:
-                HitEnd();
+                FinishCatch();
                 break;
         }
     }
@@ -588,7 +593,7 @@ public class BaseMotionManager : MonoBehaviour
     {
         if (_MotionManager.MotionPrior == CATCH_PRIOR)
         {
-            _MotionManager.MotionPrior = HIT_PRIOR;
+            MotionIdle();
             StopAllCoroutines();
         }
     }

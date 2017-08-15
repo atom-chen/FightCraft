@@ -77,4 +77,14 @@ public class ImpactBuff : ImpactBase
     {
         return true;
     }
+
+    public virtual bool IsBuffCanCatch()
+    {
+        return true;
+    }
+
+    public virtual int DamageModify(int orgDamage)
+    {
+        return orgDamage;
+    }
 }

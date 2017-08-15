@@ -477,6 +477,10 @@ public class RoleAttrManager : MonoBehaviour
         //attach
         CaculateAttachDamage(sender, resultHash, damageClass);
 
+        //skill
+        damageClass.TotalDamageValue = _MotionManager.BuffModifyDamage(damageClass.TotalDamageValue);
+        damageClass.AttachDamageValue = _MotionManager.BuffModifyDamage(damageClass.AttachDamageValue);
+
         if (MotionType == MotionType.MainChar)
         {
             //GameUI.UIDamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, GameUI.ShowDamageType.Hurt, 1);
@@ -492,6 +496,7 @@ public class RoleAttrManager : MonoBehaviour
             //GameUI.UIDamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, GameUI.ShowDamageType.Normal, 1);
             GameUI.DamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, GameUI.ShowDamageType.Normal, 1);
         }
+
         DamageHP(damageClass.TotalDamageValue + damageClass.AttachDamageValue);
     }
 

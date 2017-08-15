@@ -8,6 +8,8 @@ public class MotionManager : MonoBehaviour
 {
     public void InitMotion()
     {
+        gameObject.SetActive(true);
+
         _EventController = GetComponent<GameBase.EventController>();
         if (_EventController == null)
         {
@@ -433,6 +435,26 @@ public class MotionManager : MonoBehaviour
                 return false;
         }
         return true;
+    }
+
+    public bool IsBuffCanCatch(MotionManager impactSender)
+    {
+        for (int i = 0; i < _ImpactBuffs.Count; ++i)
+        {
+            if (!_ImpactBuffs[i].IsBuffCanCatch())
+                return false;
+        }
+        return true;
+    }
+
+    public int BuffModifyDamage(int damageValue)
+    {
+        int modifiedValue = damageValue;
+        for (int i = 0; i < _ImpactBuffs.Count; ++i)
+        {
+            modifiedValue = _ImpactBuffs[i].DamageModify(modifiedValue);
+        }
+        return modifiedValue;
     }
 
     #endregion
