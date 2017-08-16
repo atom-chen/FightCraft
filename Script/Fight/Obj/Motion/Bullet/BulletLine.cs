@@ -42,7 +42,7 @@ public class BulletLine : BulletBase
         if (targetMotion == null)
             return;
 
-        if (!_IsBulletHitLie && targetMotion.MotionPrior == BaseMotionManager.LIE_PRIOR)
+        if (!_IsBulletHitLie && (targetMotion.MotionPrior == BaseMotionManager.LIE_PRIOR || targetMotion.MotionPrior == BaseMotionManager.RISE_PRIOR))
             return;
 
         BulletHit(targetMotion);

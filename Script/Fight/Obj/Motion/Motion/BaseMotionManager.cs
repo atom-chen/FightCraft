@@ -355,7 +355,7 @@ public class BaseMotionManager : MonoBehaviour
     private const float _UpSpeed = 20;
     private const float _DownSpeed = 15;
     private const float _LieTimeStatic = 0.6f;
-    private const float _CorpseTimeStatic = 0f;
+    private const float _CorpseTimeStatic = 0.01f;
 
     public AnimationClip _FlyAnim;
 

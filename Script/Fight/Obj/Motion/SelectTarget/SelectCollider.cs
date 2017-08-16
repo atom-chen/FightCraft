@@ -50,7 +50,7 @@ public class SelectCollider : SelectBase
                     impact.ActImpact(_ObjMotion, motion);
                 }
 
-                if (_IsRemindSelected)
+                if (_IsRemindSelected && _ObjMotion.ActingSkill != null)
                 {
                     if(!_ObjMotion.ActingSkill._SkillHitMotions.Contains(motion))
                         _ObjMotion.ActingSkill._SkillHitMotions.Add(motion);
