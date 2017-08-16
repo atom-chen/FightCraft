@@ -78,6 +78,20 @@ public class SelectTargetCommon
     }
     public static List<SelectedInfo> GetFrontMotions(MotionManager selfMotion, float length, float angle, SelectSortType sortType)
     {
+        return GetDirectMotions(selfMotion, selfMotion.transform.forward, length, angle, sortType);
+    }
+
+    public static List<SelectedInfo> GetFrontMotions(MotionManager selfMotion, float length)
+    {
+        var motions = GameObject.FindObjectsOfType<MotionManager>();
+
+        List<SelectedInfo> nearMotions = GetFrontMotions(selfMotion, length, 30, SelectSortType.None);
+
+        return nearMotions;
+    }
+
+    public static List<SelectedInfo> GetDirectMotions(MotionManager selfMotion, Vector3 direct, float length, float angle, SelectSortType sortType)
+    {
         var motions = GameObject.FindObjectsOfType<MotionManager>();
 
         List<SelectedInfo> nearMotions = new List<SelectedInfo>();
@@ -93,7 +107,7 @@ public class SelectTargetCommon
             if (distance > length)
                 continue;
 
-            float targetAngle = Mathf.Abs( Vector3.Angle(motion.transform.position - selfMotion.transform.position, selfMotion.transform.forward));
+            float targetAngle = Mathf.Abs(Vector3.Angle(motion.transform.position - selfMotion.transform.position, direct));
             if (targetAngle > angle)
                 continue;
 
@@ -141,15 +155,6 @@ public class SelectTargetCommon
                     return 0;
             });
         }
-
-        return nearMotions;
-    }
-
-    public static List<SelectedInfo> GetFrontMotions(MotionManager selfMotion, float length)
-    {
-        var motions = GameObject.FindObjectsOfType<MotionManager>();
-
-        List<SelectedInfo> nearMotions = GetFrontMotions(selfMotion, length, 30, SelectSortType.None);
 
         return nearMotions;
     }

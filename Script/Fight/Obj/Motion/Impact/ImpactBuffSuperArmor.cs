@@ -5,8 +5,6 @@ public class ImpactBuffSuperArmor : ImpactBuff
 {
     public EffectController _HitEffect;
 
-    
-
     public override void ActBuff(MotionManager senderManager, MotionManager reciverManager)
     {
         base.ActBuff(senderManager, reciverManager);
@@ -17,7 +15,7 @@ public class ImpactBuffSuperArmor : ImpactBuff
         base.RemoveBuff(reciverManager);
     }
 
-    public override bool IsBuffCanHit()
+    public override bool IsBuffCanHit(ImpactHit impactHit)
     {
         //GlobalEffect.Instance.Pause(0.1f);
         _BuffOwner.ResetMove();

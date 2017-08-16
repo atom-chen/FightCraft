@@ -20,17 +20,17 @@ public class ImpactBuffShield : ImpactBuff
         base.RemoveBuff(reciverManager);
     }
 
-    public override bool IsBuffCanHit()
+    public override bool IsBuffCanHit(ImpactHit damageImpact)
     {
         return false;
     }
 
-    public override bool IsBuffCanCatch()
+    public override bool IsBuffCanCatch(ImpactCatch damageImpact)
     {
         return false;
     }
 
-    public override int DamageModify(int orgDamage)
+    public override int DamageModify(int orgDamage, ImpactBase damageImpact)
     {
         _ShieldValue -= orgDamage;
         Debug.Log("_ShieldValue:" + _ShieldValue);

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class BulletBase : MonoBehaviour
 {
+    public bool _IsBulletHitLie;
     protected ImpactBase[] _ImpactList;
     protected MotionManager _SkillMotion;
     protected BulletEmitterBase _EmitterBase;

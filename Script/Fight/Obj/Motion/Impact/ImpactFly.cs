@@ -1,16 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ImpactFly : ImpactBase
+public class ImpactFly : ImpactHit
 {
     public float _FlyHeight = 0.6f;
-    public int _HitEffect = 0;
 
     public override void ActImpact(MotionManager senderManager, MotionManager reciverManager)
     {
-        base.ActImpact(senderManager, reciverManager);
+        reciverManager.BaseMotionManager.FlyEvent(_FlyHeight, _HitEffect, senderManager, this);
 
-        reciverManager.BaseMotionManager.FlyEvent(_FlyHeight, _HitEffect, senderManager);
+        ProcessDamge(senderManager, reciverManager);
     }
 
 }

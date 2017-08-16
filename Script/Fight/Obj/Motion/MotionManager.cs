@@ -334,7 +334,7 @@ public class MotionManager : MonoBehaviour
         //hash.Add("HitEffect", -1);
 
         //_EventController.PushEvent(GameBase.EVENT_TYPE.EVENT_MOTION_FLY, this, new Hashtable());
-        _BaseMotionManager.FlyEvent(0.1f, -1, this);
+        _BaseMotionManager.FlyEvent(0.1f, -1, this, null);
         
     }
 
@@ -345,9 +345,7 @@ public class MotionManager : MonoBehaviour
         NavAgent.enabled = false;
         FightManager.Instance.ObjCorpse(this);
 
-        Debug.Log("MotionDrop:" + Time.time);
         MonsterDrop.MonsterDripItems(this);
-        Debug.Log("Motion corpse");
     }
 
     public void MotionDisappear()
@@ -427,32 +425,32 @@ public class MotionManager : MonoBehaviour
         }
     }
 
-    public bool IsBuffCanHit(MotionManager impactSender)
+    public bool IsBuffCanHit(MotionManager impactSender, ImpactHit impactHit)
     {
         for (int i = 0; i < _ImpactBuffs.Count; ++i)
         {
-            if (!_ImpactBuffs[i].IsBuffCanHit())
+            if (!_ImpactBuffs[i].IsBuffCanHit(impactHit))
                 return false;
         }
         return true;
     }
 
-    public bool IsBuffCanCatch(MotionManager impactSender)
+    public bool IsBuffCanCatch(MotionManager impactSender, ImpactCatch impactCatch)
     {
         for (int i = 0; i < _ImpactBuffs.Count; ++i)
         {
-            if (!_ImpactBuffs[i].IsBuffCanCatch())
+            if (!_ImpactBuffs[i].IsBuffCanCatch(impactCatch))
                 return false;
         }
         return true;
     }
 
-    public int BuffModifyDamage(int damageValue)
+    public int BuffModifyDamage(int damageValue, ImpactBase impactBase)
     {
         int modifiedValue = damageValue;
         for (int i = 0; i < _ImpactBuffs.Count; ++i)
         {
-            modifiedValue = _ImpactBuffs[i].DamageModify(modifiedValue);
+            modifiedValue = _ImpactBuffs[i].DamageModify(modifiedValue, impactBase);
         }
         return modifiedValue;
     }

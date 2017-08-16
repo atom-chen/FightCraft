@@ -18,6 +18,6 @@ public class ImpactDamageDelay : ImpactBase
     {
         yield return new WaitForSeconds(_DelayTime);
 
-        senderManager.RoleAttrManager.SendDamageEvent(reciverManager, _DamageRate, SkillMotion);
+        senderManager.RoleAttrManager.SendDamageEvent(reciverManager, _DamageRate, this);
     }
 }

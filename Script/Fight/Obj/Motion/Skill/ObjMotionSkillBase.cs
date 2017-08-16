@@ -148,7 +148,7 @@ public class ObjMotionSkillBase : MonoBehaviour
 
     protected void PlaySkillEffect(EffectController effect)
     {
-        _MotionManager.PlaySkillEffect(effect, SkillActSpeed, _EffectElement);
+        _MotionManager.PlaySkillEffect(effect, (SkillActSpeed) * _SkillBaseSpeed, _EffectElement);
     }
 
     protected void StopSkillEffect(EffectController effect)

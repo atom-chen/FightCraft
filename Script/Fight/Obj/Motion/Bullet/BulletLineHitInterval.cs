@@ -56,6 +56,9 @@ public class BulletLineHitInterval : BulletBase
         if (targetMotion == null)
             return;
 
+        if (!_IsBulletHitLie && targetMotion.MotionPrior == BaseMotionManager.LIE_PRIOR)
+            return;
+
         _NextSpeed = 0;
         BulletHit(targetMotion);
     }

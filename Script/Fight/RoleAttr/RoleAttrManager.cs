@@ -478,8 +478,9 @@ public class RoleAttrManager : MonoBehaviour
         CaculateAttachDamage(sender, resultHash, damageClass);
 
         //skill
-        damageClass.TotalDamageValue = _MotionManager.BuffModifyDamage(damageClass.TotalDamageValue);
-        damageClass.AttachDamageValue = _MotionManager.BuffModifyDamage(damageClass.AttachDamageValue);
+        var impactBase = (ImpactBase)resultHash["ImpactBase"];
+        damageClass.TotalDamageValue = _MotionManager.BuffModifyDamage(damageClass.TotalDamageValue, impactBase);
+        damageClass.AttachDamageValue = _MotionManager.BuffModifyDamage(damageClass.AttachDamageValue, impactBase);
 
         if (MotionType == MotionType.MainChar)
         {
@@ -566,32 +567,32 @@ public class RoleAttrManager : MonoBehaviour
 
     private void CaculateAttachDamage(RoleAttrManager sender, Hashtable resultHash, DamageClass damageClass)
     {
-        if (!resultHash.ContainsKey("SkillMotion"))
+        if (!resultHash.ContainsKey("ImpactBase"))
             return;
 
-        var skillMotion = (ObjMotionSkillBase)resultHash["SkillMotion"];
-        if (skillMotion == null)
+        var impactBase = (ImpactBase)resultHash["ImpactBase"];
+        if (impactBase == null || impactBase.SkillMotion == null)
             return;
 
         int fireAttack = 0;
         int coldAttack = 0;
         int lightingAttack = 0;
         int windAttack = 0;
-        if (skillMotion._ActInput == "k1")
+        if (impactBase.SkillMotion._ActInput == "k1")
         {
             fireAttack = sender._BaseAttr.GetExAttr(RoleAttrEnum.Skill1FireDamagePersent);
             coldAttack = sender._BaseAttr.GetExAttr(RoleAttrEnum.Skill1ColdDamagePersent);
             lightingAttack = sender._BaseAttr.GetExAttr(RoleAttrEnum.Skill1LightingDamagePersent);
             windAttack = sender._BaseAttr.GetExAttr(RoleAttrEnum.Skill1WindDamagePersent);
         }
-        else if (skillMotion._ActInput == "k2")
+        else if (impactBase.SkillMotion._ActInput == "k2")
         {
             fireAttack = sender._BaseAttr.GetExAttr(RoleAttrEnum.Skill2FireDamagePersent);
             coldAttack = sender._BaseAttr.GetExAttr(RoleAttrEnum.Skill2ColdDamagePersent);
             lightingAttack = sender._BaseAttr.GetExAttr(RoleAttrEnum.Skill2LightingDamagePersent);
             windAttack = sender._BaseAttr.GetExAttr(RoleAttrEnum.Skill2WindDamagePersent);
         }
-        else if (skillMotion._ActInput == "k3")
+        else if (impactBase.SkillMotion._ActInput == "k3")
         {
             fireAttack = sender._BaseAttr.GetExAttr(RoleAttrEnum.Skill3FireDamagePersent);
             coldAttack = sender._BaseAttr.GetExAttr(RoleAttrEnum.Skill3ColdDamagePersent);
@@ -651,17 +652,17 @@ public class RoleAttrManager : MonoBehaviour
         _MotionManager.EventController.RegisteEvent(GameBase.EVENT_TYPE.EVENT_FIGHT_ATTR_DAMAGE, DamageEvent);
     }
 
-    public void SendDamageEvent(MotionManager targetMotion, float skillDamageRate, ObjMotionSkillBase skillMotion)
+    public void SendDamageEvent(MotionManager targetMotion, float skillDamageRate, ImpactBase impactBase)
     {
-        SendDamageEvent(targetMotion, skillDamageRate, skillMotion, targetMotion.transform.position + new Vector3(0, 1.5f, 0));
+        SendDamageEvent(targetMotion, skillDamageRate, impactBase, targetMotion.transform.position + new Vector3(0, 1.5f, 0));
     }
 
-    public void SendDamageEvent(MotionManager targetMotion, float skillDamageRate, ObjMotionSkillBase skillMotion, Vector3 damagePosition)
+    public void SendDamageEvent(MotionManager targetMotion, float skillDamageRate, ImpactBase impactBase, Vector3 damagePosition)
     {
         Hashtable hash = new Hashtable();
         hash.Add("SkillDamageRate", skillDamageRate);
         hash.Add("DamagePos", damagePosition);
-        hash.Add("SkillMotion", skillMotion);
+        hash.Add("ImpactBase", impactBase);
 
         targetMotion.EventController.PushEvent(GameBase.EVENT_TYPE.EVENT_FIGHT_ATTR_DAMAGE, this, hash);
     }

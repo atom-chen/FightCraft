@@ -33,6 +33,10 @@ public class AI_CloseAttack : AI_Base
         if (_SelfMotion.ActingSkill != null)
             return;
 
+        //specil:do not attack when target lie on floor
+        if (_TargetMotion.MotionPrior == BaseMotionManager.LIE_PRIOR)
+            return;
+
         if (StartSkill())
             return;
 

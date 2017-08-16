@@ -33,9 +33,9 @@ public class BaseMotionManager : MonoBehaviour
         _MotionManager.InitAnimation(_RiseAnim);
     }
 
-    public void HitEvent(float hitTime, int hitEffect, MotionManager impactSender)
+    public void HitEvent(float hitTime, int hitEffect, MotionManager impactSender, ImpactHit hitImpact)
     {
-        if (!_MotionManager.IsBuffCanHit(impactSender))
+        if (!_MotionManager.IsBuffCanHit(impactSender, hitImpact))
         {
             IsCanHit = false;
             return;
@@ -57,9 +57,9 @@ public class BaseMotionManager : MonoBehaviour
          
     }
 
-    public void FlyEvent(float flyHeight, int hitEffect, MotionManager impactSender)
+    public void FlyEvent(float flyHeight, int hitEffect, MotionManager impactSender, ImpactHit hitImpact)
     {
-        if (!_MotionManager.IsBuffCanHit(impactSender))
+        if (!_MotionManager.IsBuffCanHit(impactSender, hitImpact))
         {
             IsCanHit = false;
             return;
@@ -86,9 +86,9 @@ public class BaseMotionManager : MonoBehaviour
         return true;
     }
 
-    public void CatchEvent(float catchTime, int hitEffect, MotionManager impactSender)
+    public void CatchEvent(float catchTime, int hitEffect, MotionManager impactSender, ImpactCatch impactCatch)
     {
-        if (!_MotionManager.IsBuffCanHit(impactSender))
+        if (!_MotionManager.IsBuffCanCatch(impactSender, impactCatch))
         {
             return;
         }
@@ -355,7 +355,7 @@ public class BaseMotionManager : MonoBehaviour
     private const float _UpSpeed = 20;
     private const float _DownSpeed = 15;
     private const float _LieTimeStatic = 0.6f;
-    private const float _CorpseTimeStatic = 0.5f;
+    private const float _CorpseTimeStatic = 0f;
 
     public AnimationClip _FlyAnim;
 
@@ -436,7 +436,6 @@ public class BaseMotionManager : MonoBehaviour
                 _FlyBody.transform.localPosition = Vector3.zero;
                 if (_MotionManager.IsMotionDie)
                 {
-                    Debug.Log("MotionLieTime:" + Time.time);
                     _LieTime = _CorpseTimeStatic;
                 }
                 else

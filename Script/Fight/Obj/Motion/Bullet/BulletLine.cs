@@ -42,6 +42,9 @@ public class BulletLine : BulletBase
         if (targetMotion == null)
             return;
 
+        if (!_IsBulletHitLie && targetMotion.MotionPrior == BaseMotionManager.LIE_PRIOR)
+            return;
+
         BulletHit(targetMotion);
         ++_AlreadyHitTimes;
 

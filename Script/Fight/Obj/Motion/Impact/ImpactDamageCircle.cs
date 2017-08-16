@@ -55,6 +55,6 @@ public class ImpactDamageCircle : ImpactBuff
         if (targetMotion == null)
             return;
 
-        _BuffSender.RoleAttrManager.SendDamageEvent(targetMotion, _DamageRate, SkillMotion);
+        _BuffSender.RoleAttrManager.SendDamageEvent(targetMotion, _DamageRate, this);
     }
 }

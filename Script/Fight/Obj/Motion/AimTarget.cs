@@ -87,7 +87,12 @@ public class AimTarget : InstanceBase<AimTarget>
         if (_AimType != AimTargetType.Free)
             return;
 
-        var selecteds = SelectTargetCommon.GetFrontMotions(FightManager.Instance.MainChatMotion, 5, 60, SelectTargetCommon.SelectSortType.Angel);
+        Vector3 derectV3 = new Vector3(InputManager.Instance.Axis.x, 0, InputManager.Instance.Axis.y);
+        if (derectV3 == Vector3.zero)
+        {
+            derectV3 = FightManager.Instance.MainChatMotion.transform.forward;
+        }
+        var selecteds = SelectTargetCommon.GetDirectMotions(FightManager.Instance.MainChatMotion, derectV3, 5, 30, SelectTargetCommon.SelectSortType.Distance);
         if (selecteds.Count > 0)
         {
             _LockTarget = selecteds[0]._SelectedMotion;

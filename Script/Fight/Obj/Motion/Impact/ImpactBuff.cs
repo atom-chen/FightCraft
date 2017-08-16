@@ -73,17 +73,17 @@ public class ImpactBuff : ImpactBase
         ownerManager.RemoveBuff(this);
     }
 
-    public virtual bool IsBuffCanHit()
+    public virtual bool IsBuffCanHit(ImpactHit damageImpact)
     {
         return true;
     }
 
-    public virtual bool IsBuffCanCatch()
+    public virtual bool IsBuffCanCatch(ImpactCatch damageImpact)
     {
         return true;
     }
 
-    public virtual int DamageModify(int orgDamage)
+    public virtual int DamageModify(int orgDamage, ImpactBase damageImpact)
     {
         return orgDamage;
     }
