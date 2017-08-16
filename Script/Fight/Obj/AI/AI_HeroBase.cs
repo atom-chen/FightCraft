@@ -1,170 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class AI_HeroBase : AI_Base
 {
-    public float _CloseRange = 2;
-    public float _CloseInterval = 1;
-    public int _NormalAttackIdx = 0;
-    public int _RiseSkillIdx = 1;
-    public int _GlobalSkillIdx = 2;
-
-    private float _SkillWait;
-    private float _CloseWait;
-
     protected override void Init()
     {
         base.Init();
-
-        if (_TargetMotion == null)
-        {
-            _TargetMotion = SelectTargetCommon.GetMainPlayer();
-        }
-
-        InitAttackBlock();
         InitRise();
     }
 
-    protected override void AIUpdate()
-    {
-        base.AIUpdate();
-
-        if (_TargetMotion == null)
-            return;
-
-        CloseUpdate();
-    }
-
-    private void CloseUpdate()
-    {
-        if (!_SelfMotion.BaseMotionManager.IsMoving() && !_SelfMotion.BaseMotionManager.IsMotionIdle())
-            return;
-
-        if (StartSkill())
-        {
-            return;
-        }
-
-        float distance = Vector3.Distance(transform.position, _TargetMotion.transform.position);
-        if (distance > _CloseRange)
-        {
-            if (_CloseWait > 0)
-            {
-                _CloseWait -= Time.fixedDeltaTime;
-                return;
-            }
-            _SelfMotion.BaseMotionManager.MoveTarget(_TargetMotion.transform.position);
-        }
-        else
-        {
-            if (_SelfMotion.BaseMotionManager.IsMoving())
-            {
-                _SelfMotion.BaseMotionManager.StopMove();
-            }
-            CloseEnough();
-            _CloseWait = _CloseInterval;
-        }
-    }
-
-    protected virtual void CloseEnough()
-    {
-        StartSkill();
-    }
-
-    #region combatLevel
-
-    protected override void ModifyInitSkill()
-    {
-        if (_AISkills.Count == 0)
-            return;
-
-        if (_CombatLevel == 1)
-            return;
-
-        float cdValue = _AISkills[_NormalAttackIdx].SkillInterval * _CombatLevel * 0.3f;
-        _AISkills[_NormalAttackIdx].SkillInterval = Mathf.Max(_AISkills[_NormalAttackIdx].SkillInterval, cdValue);
-        _AISkills[_NormalAttackIdx].StartCD = true;
-
-        if (_AISkills.Count > _RiseSkillIdx)
-        {
-            cdValue = _AISkills[_RiseSkillIdx].SkillInterval * _CombatLevel * 0.5f;
-            _AISkills[_RiseSkillIdx].SkillInterval = Mathf.Max(_AISkills[_NormalAttackIdx].SkillInterval, cdValue);
-            _AISkills[_RiseSkillIdx].StartCD = true;
-        }
-
-        if (_AISkills.Count > _GlobalSkillIdx)
-        {
-            cdValue = _AISkills[_GlobalSkillIdx].SkillInterval * _CombatLevel * 0.5f;
-            _AISkills[_GlobalSkillIdx].SkillInterval = Mathf.Max(_AISkills[_GlobalSkillIdx].SkillInterval, cdValue);
-            _AISkills[_GlobalSkillIdx].StartCD = false;
-            _AISkills[_GlobalSkillIdx].StartLock = true;
-        }
-    }
-
-    protected virtual void UpdateSkillLock()
-    {
-        if (_SelfMotion.RoleAttrManager.HPPersent < 0.6f)
-        {
-            if (_AISkills.Count > _GlobalSkillIdx)
-            {
-                UnLockSkill(_AISkills[_GlobalSkillIdx]);
-            }
-        }
-    }
-
-    #endregion
-
-    #region attackBlock
-
-    private EffectController _HitEffect;
-
-    private void InitAttackBlock()
-    {
-        float attackConlliderTime = _SelfMotion.AnimationEvent.GetAnimFirstColliderEventTime(_AISkills[_NormalAttackIdx].SkillBase._Anim);
-        if (attackConlliderTime < 0)
-            return;
-
-        var effectObj = GameBase.ResourceManager.Instance.GetGameObject("Effect/Hit/Effect_Char_OutLineBlock");
-        _HitEffect = effectObj.GetComponent<EffectController>();
-
-        _SelfMotion.AnimationEvent.AddEvent(_AISkills[_NormalAttackIdx].SkillBase._Anim, 0, AttackStart);
-        _SelfMotion.AnimationEvent.AddEvent(_AISkills[_NormalAttackIdx].SkillBase._Anim, attackConlliderTime + 0.05f, AttackCollider);
-    }
-
-    private void AttackStart()
-    {
-        _SelfMotion.EventController.RegisteEvent(GameBase.EVENT_TYPE.EVENT_MOTION_HIT, HitEvent, 99);
-        _SelfMotion.EventController.RegisteEvent(GameBase.EVENT_TYPE.EVENT_MOTION_FLY, FlyEvent, 99);
-    }
-
-    private void AttackCollider()
-    {
-        _SelfMotion.EventController.UnRegisteEvent(GameBase.EVENT_TYPE.EVENT_MOTION_HIT, HitEvent);
-        _SelfMotion.EventController.UnRegisteEvent(GameBase.EVENT_TYPE.EVENT_MOTION_FLY, FlyEvent);
-    }
-
-    private void HitEvent(object sender, Hashtable eventArgs)
-    {
-        eventArgs.Add("StopEvent", true);
-        //GlobalEffect.Instance.Pause(0.1f);
-        _SelfMotion.ResetMove();
-        _SelfMotion.SkillPause(0.1f);
-        _SelfMotion.PlaySkillEffect(_HitEffect);
-    }
-
-    private void FlyEvent(object sender, Hashtable eventArgs)
-    {
-        eventArgs.Add("StopEvent", true);
-        //GlobalEffect.Instance.Pause(0.1f);
-        _SelfMotion.ResetMove();
-        _SelfMotion.SkillPause(0.1f);
-        _SelfMotion.PlaySkillEffect(_HitEffect);
-
-    }
-
-    #endregion
-
     #region rise
+
+    private ObjMotionSkillBase _RiseBoom;
 
     private float _RiseTime = 1f;
 
@@ -172,36 +20,70 @@ public class AI_HeroBase : AI_Base
     {
         _SelfMotion.EventController.RegisteEvent(GameBase.EVENT_TYPE.EVENT_MOTION_RISE, RiseEvent);
         _SelfMotion.EventController.RegisteEvent(GameBase.EVENT_TYPE.EVENT_MOTION_RISE_FINISH, RiseFinishEvent);
+
+        var riseBoom = GameBase.ResourceManager.Instance.GetInstanceGameObject("SkillMotion/RiseBoomSkill");
+        var motionTrans = transform.FindChild("Motion");
+        riseBoom.transform.SetParent(motionTrans);
+        riseBoom.transform.localPosition = Vector3.zero;
+        riseBoom.transform.localRotation = Quaternion.Euler(Vector3.zero);
+        
+        _RiseBoom = riseBoom.GetComponent<ObjMotionSkillBase>();
+        _RiseBoom.Init();
     }
 
     public void RiseEvent(object sender, Hashtable eventArgs)
     {
-        _SelfMotion._CanBeSelectByEnemy = false;
-        StartCoroutine(RiseFinish());
-        _SkillWait = _RiseTime;
-    }
-
-    public IEnumerator RiseFinish()
-    {
-        yield return new WaitForSeconds(_RiseTime);
-
-        _SelfMotion._CanBeSelectByEnemy = true;
+        Debug.Log("RiseEvent");
+        _RiseBoom.ActSkill();
     }
 
     public void RiseFinishEvent(object sender, Hashtable eventArgs)
     {
-        if (_RiseSkillIdx < 0)
-            return;
-
-        float distance = Vector3.Distance(transform.position, _TargetMotion.transform.position);
-        if (distance < _CloseRange)
-        {
-            _SelfMotion.transform.LookAt(_TargetMotion.transform.position);
-            Debug.Log("use rise skill " + Time.time);
-            _SelfMotion.ActSkill(_AISkills[_RiseSkillIdx].SkillBase);
-        }
+        
     }
 
     #endregion
 
+    #region super armor
+
+    private ImpactBuff _SuperArmorPrefab;
+    public ImpactBuff SuperArmorPrefab
+    {
+        get
+        {
+            if (_SuperArmorPrefab == null)
+            {
+                var buffGO = GameBase.ResourceManager.Instance.GetGameObject("SkillMotion/SuperArmor");
+                _SuperArmorPrefab = buffGO.GetComponent<ImpactBuff>();
+            }
+            return _SuperArmorPrefab;
+        }
+    }
+
+    private ImpactBuffSuperArmor _BuffInstance;
+
+    protected void InitSuperArmorSkill(ObjMotionSkillBase objMotionSkill)
+    {
+        float attackConlliderTime = _SelfMotion.AnimationEvent.GetAnimFirstColliderEventTime(objMotionSkill._Anim);
+        if (attackConlliderTime < 0)
+            return;
+
+
+        _SelfMotion.AnimationEvent.AddEvent(objMotionSkill._Anim, 0, AttackStart);
+        _SelfMotion.AnimationEvent.AddEvent(objMotionSkill._Anim, attackConlliderTime + 0.05f, AttackCollider);
+        _SelfMotion.AnimationEvent.AddEvent(objMotionSkill._Anim, objMotionSkill._Anim.length, AttackCollider);
+    }
+
+    private void AttackStart()
+    {
+        _BuffInstance = SuperArmorPrefab.ActBuffInstance(_SelfMotion, _SelfMotion) as ImpactBuffSuperArmor;
+
+    }
+
+    private void AttackCollider()
+    {
+        _BuffInstance.RemoveBuff(_SelfMotion);
+    }
+
+    #endregion
 }

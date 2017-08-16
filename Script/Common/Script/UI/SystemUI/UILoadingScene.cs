@@ -82,17 +82,18 @@ namespace GameUI
                 if (_LoadSceneName == GameDefine.GAMELOGIC_SCENE_NAME)
                 {
                     LogicManager.Instance.StartLogic();
-                    base.Destory(0.2f);
+                    //base.Destory(0.2f);
                 }
                 else if (LogicSceneManager.Instance.IsFightScene( _LoadSceneName))
                 {
                     LogicManager.Instance.EnterFightFinish();
-                    base.Destory(0.2f);
+                    //base.Destory(0.2f);
                 }
                 else
                 {
-                    base.Destory(0.2f);
+                    //base.Destory(0.2f);
                 }
+                base.Destory();
             }
         }
 

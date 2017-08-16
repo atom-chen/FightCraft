@@ -13,6 +13,7 @@ namespace GameUI
         public static void ShowAsyn()
         {
             Hashtable hash = new Hashtable();
+            hash.Add("IndependCanvas", true);
             GameCore.Instance.UIManager.ShowUI("LogicUI/DamagePanel/UIDamagePanel", UILayer.BaseUI, hash);
         }
 
@@ -31,7 +32,7 @@ namespace GameUI
 
         public static void HideItem(UIDamageItem item)
         {
-            ResourcePool.Instance.RecvIldeUIItem(item);
+            ResourcePool.Instance.RecvIldeUIItem(item.gameObject);
         }
 
         #endregion
@@ -52,7 +53,7 @@ namespace GameUI
 
         private void ShowItemInner(Vector3 showWorldPos, int showValue1, int showValue2, ShowDamageType showType, int baseSize)
         {
-            var itemBase = ResourcePool.Instance.GetIdleUIItem<UIDamageItem>(_UIHPItemPrefab);
+            var itemBase = ResourcePool.Instance.GetIdleUIItem<UIDamageItem>(_UIHPItemPrefab.gameObject);
             itemBase.transform.SetParent(transform);
             itemBase.Show(showWorldPos, showValue1, showValue2, showType, baseSize);
         }
@@ -60,7 +61,7 @@ namespace GameUI
         private void HideItem(object sender, Hashtable args)
         {
             UIHPItem hideItem = args["HideItem"] as UIHPItem;
-            ResourcePool.Instance.RecvIldeUIItem(hideItem);
+            ResourcePool.Instance.RecvIldeUIItem(hideItem.gameObject);
         }
 
         

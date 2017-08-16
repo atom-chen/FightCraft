@@ -18,21 +18,21 @@ public class ImpactAttrAdd : ImpactBuff
     public float _AddValue;
     public ADDTYPE _AddType;
 
-    private float _RealAddValue;
+    private int _RealAddValue;
 
     public override void ActBuff(MotionManager senderManager, MotionManager reciverManager)
     {
         base.ActBuff(senderManager, reciverManager);
 
-        float originValue = reciverManager.RoleAttrManager.GetBaseAttr(_Attr);
-        float value = 0;
+        int originValue = reciverManager.RoleAttrManager.GetBaseAttr(_Attr);
+        int value = 0;
         if (_AddType == ADDTYPE.Value)
         {
-            value = originValue + _AddValue;
+            value = (int)(originValue + _AddValue);
         }
         else if (_AddType == ADDTYPE.Persent)
         {
-            value = originValue * (1 +_AddValue);
+            value = (int)(originValue * (1 +_AddValue));
         }
 
         reciverManager.RoleAttrManager.SetBaseAttr(_Attr, value);

@@ -33,13 +33,13 @@ namespace Tables
 //
         public static MonsterBase MonsterBase { get; internal set; }
 //
+        public static RoleExp RoleExp { get; internal set; }
+//
         public static SkillInfo SkillInfo { get; internal set; }
 //
         public static StageInfo StageInfo { get; internal set; }
 //
         public static StrDictionary StrDictionary { get; internal set; }
-//
-        public static RoleExp RoleExp { get; internal set; }
 
         public static void ReadTables()
         {
@@ -48,20 +48,20 @@ namespace Tables
             EquipItem = new EquipItem(TableReadBase.GetTableText("EquipItem"), false);
             FightAttr = new FightAttr(TableReadBase.GetTableText("FightAttr"), false);
             MonsterBase = new MonsterBase(TableReadBase.GetTableText("MonsterBase"), false);
+            RoleExp = new RoleExp(TableReadBase.GetTableText("RoleExp"), false);
             SkillInfo = new SkillInfo(TableReadBase.GetTableText("SkillInfo"), false);
             StageInfo = new StageInfo(TableReadBase.GetTableText("StageInfo"), false);
             StrDictionary = new StrDictionary(TableReadBase.GetTableText("StrDictionary"), false);
-            RoleExp = new RoleExp(TableReadBase.GetTableText("RoleExp"), false);
 
             //初始化所有表
             CommonItem.CoverTableContent();
             EquipItem.CoverTableContent();
             FightAttr.CoverTableContent();
             MonsterBase.CoverTableContent();
+            RoleExp.CoverTableContent();
             SkillInfo.CoverTableContent();
             StageInfo.CoverTableContent();
             StrDictionary.CoverTableContent();
-            RoleExp.CoverTableContent();
         }
 
         #endregion

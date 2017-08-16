@@ -199,7 +199,7 @@ namespace GameLogic
             _BaseAttr.SetValue(RoleAttrEnum.Dexterity, Dexterity);
             _BaseAttr.SetValue(RoleAttrEnum.Vitality, Vitality);
             _BaseAttr.SetValue(RoleAttrEnum.Attack, _RoleLevel * 1 + 10);
-            _BaseAttr.SetValue(RoleAttrEnum.HPMax, _RoleLevel * 100 + 50);
+            _BaseAttr.SetValue(RoleAttrEnum.HPMax, _RoleLevel * 100 + 5000);
             _BaseAttr.SetValue(RoleAttrEnum.Defense, 10);
         }
 

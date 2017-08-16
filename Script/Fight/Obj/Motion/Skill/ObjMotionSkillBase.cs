@@ -31,6 +31,14 @@ public class ObjMotionSkillBase : MonoBehaviour
     public float _SkillBaseSpeed = 1;
 
     protected MotionManager _MotionManager;
+    public MotionManager MotionManager
+    {
+        get
+        {
+            return _MotionManager;
+        }
+    }
+
     protected float _SkillLastTime;
     protected RoleAttrManager.SkillAttr _SkillAttr;
 
@@ -175,7 +183,7 @@ public class ObjMotionSkillBase : MonoBehaviour
 
     private Dictionary<int, List<SelectBase>> _ColliderControl = new Dictionary<int, List<SelectBase>>();
 
-    private void InitCollider(RoleAttrManager.SkillAttr skillAttr)
+    protected void InitCollider(RoleAttrManager.SkillAttr skillAttr)
     {
         InitElementBullet();
         var collidercontrollers = gameObject.GetComponentsInChildren<SelectBase>(true);
@@ -214,9 +222,9 @@ public class ObjMotionSkillBase : MonoBehaviour
 
         if (_ColliderControl != null && _ColliderControl.ContainsKey(index))
         {
-            foreach (var collider in _ColliderControl[index])
+            for (int i = 0; i< _ColliderControl[index].Count; ++i)
             {
-                collider.ColliderStart();
+                _ColliderControl[index][i].ColliderStart();
             }
         }
 
@@ -227,10 +235,11 @@ public class ObjMotionSkillBase : MonoBehaviour
         int index = (int)param;
         if (_ColliderControl != null && _ColliderControl.ContainsKey(index))
         {
-            foreach (var collider in _ColliderControl[index])
+            for (int i = 0; i < _ColliderControl[index].Count; ++i)
             {
-                collider.ColliderFinish();
+                _ColliderControl[index][i].ColliderFinish();
             }
+            
         }
     }
 
@@ -243,19 +252,27 @@ public class ObjMotionSkillBase : MonoBehaviour
         var capsuleCollider = select.GetComponent<CapsuleCollider>();
         if (capsuleCollider != null)
         {
-            capsuleCollider.transform.localPosition = Vector3.zero;
-            capsuleCollider.transform.localRotation = Quaternion.Euler(Vector3.zero);
+            //capsuleCollider.radius = capsuleCollider.radius * (1 + _SkillAttr.RangeAdd);
+            //capsuleCollider.height = capsuleCollider.height * (1 + _SkillAttr.RangeLengthAdd) + _SkillAttr.BackRangeAdd;
+            //capsuleCollider.direction = 2;
+            //float centerZ = capsuleCollider.height * 0.5f;
+            //if (_SkillAttr.BackRangeAdd > 0)
+            //{
+            //    centerZ = capsuleCollider.height * 0.5f - _SkillAttr.BackRangeAdd;
+            //}
+
+            //capsuleCollider.center = new Vector3(0, capsuleCollider.radius * 0.5f, centerZ);
 
             capsuleCollider.radius = capsuleCollider.radius * (1 + _SkillAttr.RangeAdd);
             capsuleCollider.height = capsuleCollider.height * (1 + _SkillAttr.RangeLengthAdd) + _SkillAttr.BackRangeAdd;
-            capsuleCollider.direction = 2;
-            float centerZ = capsuleCollider.height * 0.5f;
-            if (_SkillAttr.BackRangeAdd > 0)
+            if (capsuleCollider.direction == 1)
             {
-                centerZ = capsuleCollider.height * 0.5f - _SkillAttr.BackRangeAdd;
+                capsuleCollider.center = new Vector3(0, capsuleCollider.height * 0.5f, capsuleCollider.center.z);
             }
-
-            capsuleCollider.center = new Vector3(0, capsuleCollider.radius * 0.5f, centerZ);
+            else if (capsuleCollider.direction == 2)
+            {
+                capsuleCollider.center = new Vector3(0, capsuleCollider.radius * 0.5f, capsuleCollider.center.z * (1 + _SkillAttr.RangeAdd));
+            }
         }
     }
 

@@ -13,6 +13,8 @@ public class SelectTargetCommon
         else
         {
             var player = GameObject.FindGameObjectWithTag("Player");
+            if (player == null)
+                return null;
             return player.GetComponent<MotionManager>();
         }
 
@@ -61,35 +63,80 @@ public class SelectTargetCommon
         return nearMotions;
     }
 
-    public static List<MotionManager> GetFrontMotions(MotionManager selfMotion, float length, float angle, bool isSortByType)
+    public enum SelectSortType
+    {
+        None,
+        MonsterType,
+        Distance,
+        Angel,
+    }
+    public class SelectedInfo
+    {
+        public float _Distance;
+        public float _Angle;
+        public MotionManager _SelectedMotion;
+    }
+    public static List<SelectedInfo> GetFrontMotions(MotionManager selfMotion, float length, float angle, SelectSortType sortType)
     {
         var motions = GameObject.FindObjectsOfType<MotionManager>();
 
-        List<MotionManager> nearMotions = new List<MotionManager>();
+        List<SelectedInfo> nearMotions = new List<SelectedInfo>();
         foreach (var motion in motions)
         {
             if (motion == selfMotion)
+                continue;
+
+            if (motion.IsMotionDie)
                 continue;
 
             float distance = Vector3.Distance(selfMotion.transform.position, motion.transform.position);
             if (distance > length)
                 continue;
 
-            float targetAngle = Vector3.Angle(motion.transform.position - selfMotion.transform.position, selfMotion.transform.forward);
+            float targetAngle = Mathf.Abs( Vector3.Angle(motion.transform.position - selfMotion.transform.position, selfMotion.transform.forward));
             if (targetAngle > angle)
                 continue;
 
-            nearMotions.Add(motion);
+            SelectedInfo selectedInfo = new SelectedInfo();
+            selectedInfo._Distance = distance;
+            selectedInfo._Angle = targetAngle;
+            selectedInfo._SelectedMotion = motion;
+
+            nearMotions.Add(selectedInfo);
         }
 
-        if (isSortByType)
+        if (sortType == SelectSortType.MonsterType)
         {
             nearMotions.Sort((motion1, motion2) =>
             {
-                if ((int)motion1.RoleAttrManager.MotionType < (int)motion2.RoleAttrManager.MotionType)
+                if ((int)motion1._SelectedMotion.RoleAttrManager.MotionType < (int)motion2._SelectedMotion.RoleAttrManager.MotionType)
                     return 1;
-                else if ((int)motion1.RoleAttrManager.MotionType > (int)motion2.RoleAttrManager.MotionType)
+                else if ((int)motion1._SelectedMotion.RoleAttrManager.MotionType > (int)motion2._SelectedMotion.RoleAttrManager.MotionType)
                     return -1;
+                else
+                    return 0;
+            });
+        }
+        else if (sortType == SelectSortType.Distance)
+        {
+            nearMotions.Sort((motion1, motion2) =>
+            {
+                if (motion1._Distance < motion2._Distance)
+                    return -1;
+                else if (motion1._Distance > motion2._Distance)
+                    return 1;
+                else
+                    return 0;
+            });
+        }
+        else if (sortType == SelectSortType.Angel)
+        {
+            nearMotions.Sort((motion1, motion2) =>
+            {
+                if (motion1._Angle < motion2._Angle)
+                    return -1;
+                else if (motion1._Angle > motion2._Angle)
+                    return 1;
                 else
                     return 0;
             });
@@ -98,11 +145,11 @@ public class SelectTargetCommon
         return nearMotions;
     }
 
-    public static List<MotionManager> GetFrontMotions(MotionManager selfMotion, float length)
+    public static List<SelectedInfo> GetFrontMotions(MotionManager selfMotion, float length)
     {
         var motions = GameObject.FindObjectsOfType<MotionManager>();
 
-        List<MotionManager> nearMotions = GetFrontMotions(selfMotion, length, 30, false);
+        List<SelectedInfo> nearMotions = GetFrontMotions(selfMotion, length, 30, SelectSortType.None);
 
         return nearMotions;
     }

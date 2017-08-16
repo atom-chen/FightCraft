@@ -65,6 +65,17 @@ public class ResourcePool : InstanceBase<ResourcePool>
         _IdleEffects[effectName].Push(effct);
     }
 
+    public bool IsEffectInRecvl(EffectController effct)
+    {
+        string effectName = effct.name.Replace("(Clone)", "");
+        if (!_IdleEffects.ContainsKey(effectName))
+        {
+            return false;
+        }
+        return (_IdleEffects[effectName].Contains(effct));
+    }
+
+
     public void ClearEffects()
     {
         _IdleEffects = new Dictionary<string, Stack<EffectController>>();
@@ -124,55 +135,91 @@ public class ResourcePool : InstanceBase<ResourcePool>
 
     #region motion object
 
-    private Dictionary<string, Stack<MotionManager>> _IdleObject = new Dictionary<string, Stack<MotionManager>>();
+    private Dictionary<string, Stack<GameObject>> _IdleModel = new Dictionary<string, Stack<GameObject>>();
 
-    public MotionManager GetIdleMotion(string motionName)
+    public MotionManager GetIdleMotion(Tables.MonsterBaseRecord monsterTab)
     {
-        MotionManager idle = null;
-        if (_IdleBullets.ContainsKey(motionName))
+        if (monsterTab == null)
+            return null;
+
+        var motion = GameBase.ResourceManager.Instance.GetInstanceGameObject("ModelBase/" + monsterTab.MotionPath);
+        var motionScript = motion.GetComponent<MotionManager>();
+        var aiScript = motion.GetComponent<AI_Base>();
+        aiScript.InitSkillGoes(motionScript);
+
+        GameObject modelObj = null;
+        if (_IdleBullets.ContainsKey(monsterTab.ModelPath))
         {
-            if (_IdleBullets[motionName].Count > 0)
+            if (_IdleBullets[monsterTab.ModelPath].Count > 0)
             {
-                idle = _IdleObject[motionName].Pop();
-                idle.Reset();
+                modelObj = _IdleModel[monsterTab.ModelPath].Pop();
             }
         }
-
-        if (idle == null)
+        if (modelObj == null)
         {
-            var obj = GameBase.ResourceManager.Instance.GetInstanceGameObject("ModelBase/" + motionName);
-            idle = obj.GetComponent<MotionManager>();
+            modelObj = GameBase.ResourceManager.Instance.GetInstanceGameObject("Model/" + monsterTab.ModelPath);
+            var animation = modelObj.GetComponent<Animation>();
+            if (animation == null)
+            {
+                modelObj.AddComponent<Animation>();
+            }
+
+            var animEvent = modelObj.GetComponent<AnimationEventManager>();
+            if (animEvent == null)
+            {
+                modelObj.AddComponent<AnimationEventManager>();
+            }
+
+            //var sole = modelObj.transform.FindChild("center/sole");
+            //var collider = sole.gameObject.AddComponent<CapsuleCollider>();
+            //collider.radius = motionScript._ColliderInfo.x;
+            //collider.height = motionScript._ColliderInfo.y;
+            //collider.direction = 2;
+            //collider.center = new Vector3(0, 0, collider.height * 0.5f);
+            //collider.isTrigger = true;
+            //var rigidbody = sole.gameObject.AddComponent<Rigidbody>();
+            //rigidbody.isKinematic = true;
+
         }
-        idle.gameObject.SetActive(true);
-        return idle;
+        //modelObj.gameObject.SetActive(true);
+        modelObj.transform.SetParent(motion.transform);
+        modelObj.transform.localPosition = Vector3.zero;
+        modelObj.transform.localRotation = Quaternion.Euler(Vector3.zero);
+
+        return motion.GetComponent<MotionManager>();
     }
 
     public void RecvIldeMotion(MotionManager objMotion)
     {
-        string objName = objMotion.name.Replace("(Clone)", "");
-        if (!_IdleObject.ContainsKey(objName))
+        var model = objMotion.AnimationEvent.gameObject;
+        string objName = model.name.Replace("(Clone)", "");
+        if (!_IdleModel.ContainsKey(objName))
         {
-            _IdleObject.Add(objName, new Stack<MotionManager>());
+            _IdleModel.Add(objName, new Stack<GameObject>());
         }
-        objMotion.gameObject.SetActive(false);
-        objMotion.transform.SetParent(transform);
-        _IdleObject[objName].Push(objMotion);
+        //objMotion.gameObject.SetActive(false);
+        model.transform.SetParent(transform);
+        model.transform.localPosition = Vector3.zero;
+        model.transform.localRotation = Quaternion.Euler(Vector3.zero);
+        _IdleModel[objName].Push(model);
+
+        GameObject.Destroy(objMotion);
     }
 
     public void ClearObjs()
     {
-        _IdleObject = new Dictionary<string, Stack<MotionManager>>();
+        _IdleModel = new Dictionary<string, Stack<GameObject>>();
     }
 
     #endregion
 
     #region ui
 
-    private Dictionary<string, Stack<UIItemBase>> _IdleUIItems = new Dictionary<string, Stack<UIItemBase>>();
+    private Dictionary<string, Stack<GameObject>> _IdleUIItems = new Dictionary<string, Stack<GameObject>>();
 
-    public T GetIdleUIItem<T>(UIItemBase itemPrefab)
+    public T GetIdleUIItem<T>(GameObject itemPrefab)
     {
-        UIItemBase idleItem = null;
+        GameObject idleItem = null;
         if (_IdleUIItems.ContainsKey(itemPrefab.name))
         {
             if (_IdleUIItems[itemPrefab.name].Count > 0)
@@ -183,27 +230,30 @@ public class ResourcePool : InstanceBase<ResourcePool>
 
         if (idleItem == null)
         {
-            idleItem = GameObject.Instantiate<UIItemBase>(itemPrefab);
+            idleItem = GameObject.Instantiate<GameObject>(itemPrefab);
         }
 
         return idleItem.GetComponent<T>();
     }
 
-    public void RecvIldeUIItem(UIItemBase itemBase)
+    public void RecvIldeUIItem(GameObject itemBase)
     {
         string itemName = itemBase.name.Replace("(Clone)", "");
         if (!_IdleUIItems.ContainsKey(itemName))
         {
-            _IdleUIItems.Add(itemName, new Stack<UIItemBase>());
+            _IdleUIItems.Add(itemName, new Stack<GameObject>());
         }
         itemBase.gameObject.SetActive(false);
-        //itemBase.transform.SetParent(transform);
-        _IdleUIItems[itemName].Push(itemBase);
+        itemBase.transform.SetParent(transform);
+        if (!_IdleUIItems[itemName].Contains(itemBase))
+        {
+            _IdleUIItems[itemName].Push(itemBase);
+        }
     }
 
     public void ClearUIItems()
     {
-        _IdleUIItems = new Dictionary<string, Stack<UIItemBase>>();
+        _IdleUIItems = new Dictionary<string, Stack<GameObject>>();
     }
 
     #endregion

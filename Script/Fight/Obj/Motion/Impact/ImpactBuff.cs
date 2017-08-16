@@ -8,6 +8,7 @@ public class ImpactBuff : ImpactBase
     public EffectController _BuffEffect;
 
     protected MotionManager _BuffSender;
+    protected MotionManager _BuffOwner;
     protected EffectController _DynamicEffect;
 
     protected Dictionary<MotionManager, List<ImpactBuff>> _ReciverDict = new Dictionary<MotionManager, List<ImpactBuff>>();
@@ -22,8 +23,18 @@ public class ImpactBuff : ImpactBase
         base.ActImpact(senderManager, reciverManager);
 
         _BuffSender = senderManager;
+        _BuffOwner = reciverManager;
         var dynamicBuff = reciverManager.AddBuff(this);
+    }
 
+    public ImpactBuff ActBuffInstance(MotionManager senderManager, MotionManager reciverManager, float lastTime = -1)
+    {
+        base.ActImpact(senderManager, reciverManager);
+
+        _BuffSender = senderManager;
+        _BuffOwner = reciverManager;
+        var dynamicBuff = reciverManager.AddBuff(this, lastTime);
+        return dynamicBuff;
     }
 
     public override void RemoveImpact(MotionManager reciverManager)
@@ -60,5 +71,20 @@ public class ImpactBuff : ImpactBase
     {
         yield return new WaitForSeconds(_LastTime);
         ownerManager.RemoveBuff(this);
+    }
+
+    public virtual bool IsBuffCanHit()
+    {
+        return true;
+    }
+
+    public virtual bool IsBuffCanCatch()
+    {
+        return true;
+    }
+
+    public virtual int DamageModify(int orgDamage)
+    {
+        return orgDamage;
     }
 }

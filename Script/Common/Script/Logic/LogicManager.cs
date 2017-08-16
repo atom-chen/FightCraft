@@ -111,12 +111,18 @@ namespace GameLogic
         {
             GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_FIGHT_START, this, new Hashtable());
 
+            GameUI.UIControlPanel.ShowAsyn();
+
             InitFightScene();
+            
             GameUI.UIJoyStick.ShowAsyn();
             GameUI.UISkillBar.ShowAsyn();
-            GameUI.UIHPPanel.ShowAsyn();
             GameUI.UIDropNamePanel.ShowAsyn();
-            GameUI.UIDamagePanel.ShowAsyn();
+            GameUI.UIHPPanel.ShowAsyn();
+            
+            //GameUI.UIDamagePanel.ShowAsyn();
+            GameUI.DamagePanel.ShowAsyn();
+            GameUI.AimTargetPanel.ShowAsyn();
         }
 
         public void ExitFight()

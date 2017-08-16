@@ -10,10 +10,12 @@ public class ImpactHit : ImpactBase
     {
         base.ActImpact(senderManager, reciverManager);
 
-        Hashtable hash = new Hashtable();
-        hash.Add("HitTime", _HitTime);
-        hash.Add("HitEffect", _HitEffect);
-        reciverManager.EventController.PushEvent(GameBase.EVENT_TYPE.EVENT_MOTION_HIT, senderManager, hash);
+        HitMotion(senderManager, reciverManager);
+    }
+
+    protected virtual void HitMotion(MotionManager senderManager, MotionManager reciverManager)
+    {
+        reciverManager.BaseMotionManager.HitEvent(_HitTime, _HitEffect, senderManager);
     }
 
 }

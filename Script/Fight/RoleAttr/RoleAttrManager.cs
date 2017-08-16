@@ -347,7 +347,7 @@ public class RoleAttrManager : MonoBehaviour
         RefreshAttackSpeed();
         AddHPPersent(1);
         InitEvent();
-        InitSkillAttr();
+        //InitSkillAttr();
     }
 
     public void InitEnemyAttr(MonsterBaseRecord monsterBase)
@@ -419,22 +419,31 @@ public class RoleAttrManager : MonoBehaviour
             defenceStep = 8;
         }
 
-        baseAttr.SetValue(RoleAttrEnum.HPMax, 100 + level * hpStep);
-        baseAttr.SetValue(RoleAttrEnum.Attack, 10 + level * attackStep);
-        baseAttr.SetValue(RoleAttrEnum.Defense, 5 + level * defenceStep);
+        baseAttr.SetValue(RoleAttrEnum.HPMax, 100 + level * hpStep * monsterBase.BaseAttr[0]);
+        baseAttr.SetValue(RoleAttrEnum.Attack, 10 + level * attackStep * monsterBase.BaseAttr[1]);
+        baseAttr.SetValue(RoleAttrEnum.Defense, 5 + level * defenceStep * monsterBase.BaseAttr[2]);
 
         return baseAttr;
     }
 
-    public float GetBaseAttr(RoleAttrEnum attr)
+    public int GetBaseAttr(RoleAttrEnum attr)
     {
 
-        return 0;
+        return _BaseAttr.GetValue(attr);
     }
 
-    public void SetBaseAttr(RoleAttrEnum attr, float value)
+    public void SetBaseAttr(RoleAttrEnum attr, int value)
     {
-       
+        _BaseAttr.SetValue(attr, value);
+
+        if (attr == RoleAttrEnum.AttackSpeed)
+        {
+            RefreshAttackSpeed();
+        }
+        else if (attr == RoleAttrEnum.MoveSpeed)
+        {
+            RefreshMoveSpeed();
+        }
     }
 
     #endregion
@@ -468,18 +477,26 @@ public class RoleAttrManager : MonoBehaviour
         //attach
         CaculateAttachDamage(sender, resultHash, damageClass);
 
+        //skill
+        damageClass.TotalDamageValue = _MotionManager.BuffModifyDamage(damageClass.TotalDamageValue);
+        damageClass.AttachDamageValue = _MotionManager.BuffModifyDamage(damageClass.AttachDamageValue);
+
         if (MotionType == MotionType.MainChar)
         {
-            GameUI.UIDamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, GameUI.ShowDamageType.Hurt, 1);
+            //GameUI.UIDamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, GameUI.ShowDamageType.Hurt, 1);
+            GameUI.DamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, GameUI.ShowDamageType.Hurt, 1);
         }
         else if (damageClass.IsCriticle)
         {
-            GameUI.UIDamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, GameUI.ShowDamageType.Critical, 1);
+            //GameUI.UIDamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, GameUI.ShowDamageType.Critical, 1);
+            GameUI.DamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, GameUI.ShowDamageType.Critical, 1);
         }
         else
         {
-            GameUI.UIDamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, GameUI.ShowDamageType.Normal, 1);
+            //GameUI.UIDamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, GameUI.ShowDamageType.Normal, 1);
+            GameUI.DamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, GameUI.ShowDamageType.Normal, 1);
         }
+
         DamageHP(damageClass.TotalDamageValue + damageClass.AttachDamageValue);
     }
 
@@ -611,8 +628,10 @@ public class RoleAttrManager : MonoBehaviour
 
     private void DamageHP(int damageValue)
     {
+        int orgHP = _HP;
         _HP -= damageValue;
-        if (_HP <= 0)
+
+        if (orgHP > 0 && _HP <= 0)
         {
             Die();
         }

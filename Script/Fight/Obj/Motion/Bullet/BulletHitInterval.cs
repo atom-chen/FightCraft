@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 public class BulletHitInterval : BulletBase
 {
-    public GameObject _AlertObj;
     public GameObject _HitObj;
     public float _AlertTime = 0.6f;
+    public float _AlertSize = 0.6f;
     public float _ShowHitObjDelay = 0f;
     public float _FirstHitDelay = 0f;
     public float _HitInterval = 0.1f;
@@ -30,16 +30,16 @@ public class BulletHitInterval : BulletBase
 
     IEnumerator StartHit()
     {
-        if(_AlertObj != null)
-            _AlertObj.SetActive(true);
         _HitObj.SetActive(false);
         _Collider.enabled = false;
         _StartHit = false;
+        if (_AlertTime > 0)
+        {
+            Debug.Log("Pos:" + transform.position);
+            BulletAlert.ShowAlert(transform, _AlertTime, _AlertSize);
+        }
 
         yield return new WaitForSeconds(_AlertTime);
-
-        if (_AlertObj != null)
-            _AlertObj.SetActive(false);
         
         //_Collider.enabled = true;
 

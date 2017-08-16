@@ -33,13 +33,21 @@ public class FightManager : SingleClass<FightManager>
         Camera.main.transform.SetParent(cameraRoot.transform);
         Camera.main.transform.localPosition = Vector3.zero;
         Camera.main.transform.localRotation = Quaternion.Euler(Vector3.zero);
-        
+        Camera.main.cullingMask &= ~(1 << LayerMask.NameToLayer("UI"));
+
+        var subUICamera = GameBase.ResourceManager.Instance.GetInstanceGameObject("Common/SubUICamera");
+        subUICamera.transform.SetParent(Camera.main.transform);
+        subUICamera.transform.localPosition = Vector3.zero;
+        subUICamera.transform.localRotation = Quaternion.Euler(Vector3.zero);
+
+
         var cameraFollow = cameraRoot.AddComponent<CameraFollow>();
         cameraFollow._FollowObj = _MainChatMotion.gameObject;
         cameraFollow._Distance = LogicManager.Instance.EnterStageInfo.CameraOffset;
 
         var globalEffect = cameraRoot.AddComponent<GlobalEffect>();
         var inputManager = cameraRoot.AddComponent<InputManager>();
+        var aimManager = cameraRoot.AddComponent<AimTarget>();
         inputManager._InputMotion = _MainChatMotion;
     }
 
@@ -153,7 +161,7 @@ public class FightManager : SingleClass<FightManager>
         if (monsterBase == null)
             return null;
 
-        var mainBase = ResourcePool.Instance.GetIdleMotion(monsterBase.Model);
+        var mainBase = ResourcePool.Instance.GetIdleMotion(monsterBase);
         mainBase.SetPosition(pos);
         mainBase.SetRotate(rot);
 
@@ -180,7 +188,7 @@ public class FightManager : SingleClass<FightManager>
     public void ObjCorpse(MotionManager objMotion)
     {
         _FightScene.MotionDie(objMotion);
-        MonsterDrop.MonsterDripItems(objMotion);
+        
         --_SceneEnemyCnt;
     }
 

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ImpactPushForwardFixed : ImpactPushForward
+public class ImpactHitForwardFixed : ImpactHitForward
 {
     public Vector3 _Offset;
 

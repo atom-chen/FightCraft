@@ -19,7 +19,7 @@ public class SelectBase : MonoBehaviour
         _ImpactList = gameObject.GetComponents<ImpactBase>();
         foreach (var impactBase in _ImpactList)
         {
-            impactBase._SkillMotion = _SkillMotion;
+            impactBase.SkillMotion = _SkillMotion;
         }
     }
 

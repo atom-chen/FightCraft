@@ -25,6 +25,8 @@ namespace GameUI
         public void Start()
         {
             InitUIEvents();
+
+            InitUILayers();
         }
 
         #endregion
@@ -56,23 +58,35 @@ namespace GameUI
         [SerializeField]
         private EventSystem _InputEventSystem;
 
+        private void InitUILayers()
+        {
+            foreach(var layerEnum in Enum.GetValues(typeof(UILayer)))
+            {
+                Transform layerTrans = transform.FindChild(((UILayer)layerEnum).ToString());
+                if (layerTrans != null)
+                {
+                    _UILayers.Add((UILayer)layerEnum, layerTrans.GetComponent<RectTransform>());
+                }
+            }
+        }
+
         private GameObject InitUI(string path)
         {
             var tempGO = ResourceManager.Instance.GetUI(path);
             if (tempGO != null)
             {
-                var uiGO =  GameObject.Instantiate(tempGO);
-                if (_ScreenCanvas != null)
-                {
-                    uiGO.transform.parent = _ScreenCanvas.transform;
-                }
-                else
-                {
-                    var canvas = GameObject.Find("Canvas");
-                    if (canvas == null)
-                        return null;
-                    uiGO.transform.parent = canvas.transform;
-                }
+                var uiGO = GameObject.Instantiate(tempGO);
+                //if (_ScreenCanvas != null)
+                //{
+                //    uiGO.transform.parent = _ScreenCanvas.transform;
+                //}
+                //else
+                //{
+                //    var canvas = GameObject.Find("Canvas");
+                //    if (canvas == null)
+                //        return null;
+                //    uiGO.transform.parent = canvas.transform;
+                //}
                 uiGO.transform.position = Vector3.zero;
                 var trans = uiGO.GetComponent<RectTransform>();
                 trans.anchoredPosition = Vector2.zero;
@@ -103,11 +117,28 @@ namespace GameUI
                     rectTransform.anchorMax = Vector2.one;
                     rectTransform.pivot = new Vector2(0.5f, 0.5f);
                     rectTransform.localScale = Vector3.one;
+                    rectTransform.sizeDelta = Vector2.zero;
                     _UILayers.Add(uilayer, rectTransform);
                 }
                 var obj = InitUI(uiPath);
                 obj.transform.localScale = new Vector3(1,1,1);
-                obj.transform.SetParent(_UILayers[uilayer]);
+                if (!hashtable.ContainsKey("IndependCanvas"))
+                {
+                    obj.transform.SetParent(_UILayers[uilayer]);
+                }
+                var trans = obj.GetComponent<RectTransform>();
+                if (trans != null)
+                {
+                    trans.anchoredPosition = Vector2.zero;
+                    trans.sizeDelta = Vector2.zero;
+                    trans.localScale = Vector3.one;
+                }
+                else
+                {
+                    obj.transform.position = Vector3.zero;
+                    obj.transform.localScale = Vector3.one;
+                }
+
                 var script = obj.GetComponent<UIBase>();
                 obj.name = script.GetType().Name;
                 script.Show(hashtable);
