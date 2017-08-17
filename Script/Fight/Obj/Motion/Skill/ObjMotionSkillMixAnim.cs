@@ -77,6 +77,7 @@ public class ObjMotionSkillMixAnim : ObjMotionSkillBase
 
     public void PlayerNextAnim()
     {
+        Debug.Log("PlayerNextAnim:" + _CurStep);
         if (_CurStep + 1 == _NextAnim.Length)
         {
             FinishSkill();

@@ -143,7 +143,7 @@ public class ObjMotionSkillBase : MonoBehaviour
 
     protected void PlayAnimation(AnimationClip anim)
     {
-        _MotionManager.PlayAnimation(anim, (SkillActSpeed) * _SkillBaseSpeed);
+        _MotionManager.RePlayAnimation(anim, (SkillActSpeed) * _SkillBaseSpeed);
     }
 
     protected void PlaySkillEffect(EffectController effect)
