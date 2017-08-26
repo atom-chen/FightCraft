@@ -13,7 +13,7 @@ public class ImpactFlyForward : ImpactFly
         if (reciverManager.BaseMotionManager.IsCanBePush() && _Time > 0)
         {
             Vector3 destMove = senderManager.transform.forward.normalized * _Speed * _Time;
-            reciverManager.SetMove(destMove, _Time / senderManager.RoleAttrManager.AttackSpeed);
+            reciverManager.SetMove(destMove, _Time / SkillMotion.SkillBaseSpeed);
         }
     }
 

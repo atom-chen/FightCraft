@@ -29,7 +29,15 @@ public class ObjMotionSkillAttack : ObjMotionSkillBase
             }
         }
     }
-    
+
+    protected override void SetEffectSize(float size)
+    {
+        foreach (var effect in _NextEffect)
+        {
+            effect._EffectSizeRate = (size);
+        }
+    }
+
     public override void AnimEvent(string function, object param)
     {
         base.AnimEvent(function, param);

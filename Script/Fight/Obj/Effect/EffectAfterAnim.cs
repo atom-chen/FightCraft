@@ -108,6 +108,7 @@ public class EffectAfterAnim : EffectController
             {
                 mesh = mesh,
                 subMeshIndex = 0,
+                transform = t.localToWorldMatrix,
             };
         }
 
@@ -157,6 +158,7 @@ public class EffectAfterAnim : EffectController
             //}
 
             Graphics.DrawMesh(item.mesh, item.matrix, item.material, gameObject.layer);
+            //Graphics.DrawMesh(item.mesh, Matrix4x4.identity, item.material, gameObject.layer);
         }
 
         if (hasRemove)

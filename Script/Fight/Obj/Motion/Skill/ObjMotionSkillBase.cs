@@ -17,6 +17,7 @@ public class ObjMotionSkillBase : MonoBehaviour
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.Euler(Vector3.zero);
         _SkillAttr = _MotionManager.RoleAttrManager.GetSkillAttr(_ActInput);
+        InitExAttack();
         InitCollider(_SkillAttr);
         if (_SkillAttr != null)
         {
@@ -29,6 +30,13 @@ public class ObjMotionSkillBase : MonoBehaviour
     public string _ActInput;
     public int _SkillMotionPrior = 100;
     public float _SkillBaseSpeed = 1;
+    public float SkillBaseSpeed
+    {
+        get
+        {
+            return (SkillActSpeed) * _SkillBaseSpeed;
+        }
+    }
 
     protected MotionManager _MotionManager;
     public MotionManager MotionManager
@@ -76,7 +84,6 @@ public class ObjMotionSkillBase : MonoBehaviour
             _ShadowEffect._EffectLastTime = GetTotalAnimLength();
             _ShadowEffect._Duration = _ShadowEffect._EffectLastTime;
             _MotionManager.PlayDynamicEffect(_ShadowEffect);
-            Debug.Log("Shadow time:" + _ShadowEffect._Duration);
         }
 
         if (_SkillHitMotions != null)
@@ -138,6 +145,14 @@ public class ObjMotionSkillBase : MonoBehaviour
                 }
             }
             return _SkillActSpeed;
+        }
+    }
+
+    protected virtual void SetEffectSize(float size)
+    {
+        if (_Effect != null)
+        {
+            _Effect._EffectSizeRate = (size);
         }
     }
 
@@ -265,6 +280,7 @@ public class ObjMotionSkillBase : MonoBehaviour
 
             capsuleCollider.radius = capsuleCollider.radius * (1 + _SkillAttr.RangeAdd);
             capsuleCollider.height = capsuleCollider.height * (1 + _SkillAttr.RangeLengthAdd) + _SkillAttr.BackRangeAdd;
+            SetEffectSize(1 + _SkillAttr.RangeAdd);
             if (capsuleCollider.direction == 1)
             {
                 capsuleCollider.center = new Vector3(0, capsuleCollider.height * 0.5f, capsuleCollider.center.z);
@@ -328,9 +344,11 @@ public class ObjMotionSkillBase : MonoBehaviour
 
         if (_AccumulateAnim == null)
         {
-            //if (GameLogic.PlayerDataPack.Instance._SelectedRole.Profession == Tables.PROFESSION.GIRL_DEFENCE
-            //    || GameLogic.PlayerDataPack.Instance._SelectedRole.Profession == Tables.PROFESSION.GIRL_DOUGE)
+            if (MotionManager.gameObject.name.Contains("Girl"))
                 _AccumulateAnim = GameBase.ResourceManager.Instance.GetAnimationClip("Animation/Girl/Act_S_Skill_Accumulate");
+            else
+                _AccumulateAnim = GameBase.ResourceManager.Instance.GetAnimationClip("Animation/Boy/Act_HW_Skill_Accumulate");
+
             _MotionManager.InitAnimation(_AccumulateAnim);
         }
         if (_AccumulateAnim == null)
@@ -345,6 +363,28 @@ public class ObjMotionSkillBase : MonoBehaviour
         }
         return false;
     }
+
+    private static ImpactBase _ExAttackSkill;
+    protected void InitExAttack()
+    {
+        if (_SkillAttr == null)
+            return;
+
+        if (!_SkillAttr.ExAttack)
+            return;
+
+        GameObject attackImpact = null;
+        if (GameLogic.PlayerDataPack.Instance._SelectedRole.Profession == Tables.PROFESSION.GIRL_DEFENCE
+            || GameLogic.PlayerDataPack.Instance._SelectedRole.Profession == Tables.PROFESSION.GIRL_DOUGE)
+            attackImpact = GameBase.ResourceManager.Instance.GetInstanceGameObject("SkillMotion/MainCharGirl/ExAttackImpact");
+        else
+            attackImpact = GameBase.ResourceManager.Instance.GetInstanceGameObject("SkillMotion/MainCharBoy/ExAttackImpact");
+
+        attackImpact.transform.SetParent(transform);
+
+    }
+
+
 
     private float _AccumulateTime;
     private void StartSkillAccumulate()

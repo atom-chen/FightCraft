@@ -12,6 +12,7 @@ public class SelectCollider : SelectBase
 
     public override void ColliderStart()
     {
+        Debug.Log("ColliderStart:" + _ColliderID);
         if (_SelectCollider == null)
         {
             _SelectCollider = gameObject.GetComponent<Collider>();

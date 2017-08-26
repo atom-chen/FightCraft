@@ -92,6 +92,20 @@ public class EffectController : MonoBehaviour
 
     #endregion
 
+    #region modify
+
+    public float _EffectSizeRate = 1;
+
+    public void SetEffectSize(float sizeRate)
+    {
+        foreach (var particle in Particles)
+        {
+            particle.startSize *= sizeRate;
+        }
+    }
+
+    #endregion
+
     #region element color
 
     private ParticleSystem[] _EffectElements;

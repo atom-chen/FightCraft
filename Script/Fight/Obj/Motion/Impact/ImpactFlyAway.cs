@@ -12,7 +12,7 @@ public class ImpactFlyAway : ImpactFly
 
         Vector3 destMove = (reciverManager.transform.position - senderManager.transform.position).normalized * _Speed * _Time;
         Debug.Log("DestMove:" + destMove);
-        reciverManager.SetMove(destMove, _Time / senderManager.RoleAttrManager.AttackSpeed);
+        reciverManager.SetMove(destMove, _Time / SkillMotion.SkillBaseSpeed);
     }
 
 }

@@ -18,7 +18,15 @@ public class ObjMotionSkillMixAnim2 : ObjMotionSkillBase
             }
         }
     }
-    
+
+    protected override void SetEffectSize(float size)
+    {
+        foreach (var effect in _NextEffect)
+        {
+            effect._EffectSizeRate = (size);
+        }
+    }
+
     public override void AnimEvent(string function, object param)
     {
         switch (function)

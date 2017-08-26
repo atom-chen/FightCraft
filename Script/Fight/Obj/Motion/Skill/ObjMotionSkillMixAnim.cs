@@ -18,7 +18,18 @@ public class ObjMotionSkillMixAnim : ObjMotionSkillBase
             }
         }
     }
-    
+
+    protected override void SetEffectSize(float size)
+    {
+        foreach (var effect in _NextEffect)
+        {
+            if (effect == null)
+                continue;
+
+            effect._EffectSizeRate = (size);
+        }
+    }
+
     public override void AnimEvent(string function, object param)
     {
         switch (function)
@@ -77,7 +88,6 @@ public class ObjMotionSkillMixAnim : ObjMotionSkillBase
 
     public void PlayerNextAnim()
     {
-        Debug.Log("PlayerNextAnim:" + _CurStep);
         if (_CurStep + 1 == _NextAnim.Length)
         {
             FinishSkill();

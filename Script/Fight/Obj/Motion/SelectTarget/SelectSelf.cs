@@ -17,4 +17,17 @@ public class SelectSelf : SelectBase
             }
         }
     }
+
+    public override void ColliderFinish()
+    {
+        base.ColliderFinish();
+
+        if (_ObjMotion != null)
+        {
+            foreach (var impact in _ImpactList)
+            {
+                impact.RemoveImpact(_ObjMotion);
+            }
+        }
+    }
 }

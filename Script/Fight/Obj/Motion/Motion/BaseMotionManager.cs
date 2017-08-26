@@ -312,7 +312,7 @@ public class BaseMotionManager : MonoBehaviour
         _MotionManager.MotionPrior = HIT_PRIOR;
         StopAllCoroutines();
         _MotionManager.RePlayAnimation(_HitAnim, 1);
-        _MotionManager.SetLookAt(impactSender.transform.position);
+        //_MotionManager.SetLookAt(impactSender.transform.position);
     }
 
     public void HitKeyframe(object param)
@@ -352,8 +352,8 @@ public class BaseMotionManager : MonoBehaviour
 
     #region fly
 
-    private const float _UpSpeed = 20;
-    private const float _DownSpeed = 15;
+    private const float _UpSpeed = 15;
+    private const float _DownSpeed = 10;
     private const float _LieTimeStatic = 0.6f;
     private const float _CorpseTimeStatic = 0.01f;
 
@@ -383,6 +383,7 @@ public class BaseMotionManager : MonoBehaviour
 
     public void MotionFly(float flyHeight, int effectID, MotionManager impactSender)
     {
+        Debug.Log("MotionFly");
         PlayHitEffect(impactSender, effectID);
 
         if (_MotionManager.ActingSkill != null)
@@ -404,6 +405,7 @@ public class BaseMotionManager : MonoBehaviour
 
     public void MotionFlyStay(float time, int effectID, MotionManager impactSender)
     {
+        Debug.Log("MotionFlyStay");
         PlayHitEffect(impactSender, effectID);
 
         _MotionManager.MotionPrior = FLY_PRIOR;

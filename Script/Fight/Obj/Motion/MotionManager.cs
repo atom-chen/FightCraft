@@ -468,6 +468,7 @@ public class MotionManager : MonoBehaviour
         if (!_SkillEffects.ContainsKey(effect.name))
         {
             var idleEffect = GameObject.Instantiate(effect);
+            idleEffect.GetComponent<EffectController>().SetEffectSize(effect._EffectSizeRate);
             idleEffect.transform.SetParent(GetBindTransform(effect._BindPos));
             idleEffect.transform.localPosition = Vector3.zero;
             idleEffect.transform.localRotation = Quaternion.Euler(Vector3.zero);
@@ -598,6 +599,7 @@ public class MotionManager : MonoBehaviour
         }
     }
     private Vector3 _TargetVec;
+    private Vector3 _TargetPos;
     private float _LastTime;
     private float _Speed;
 
@@ -638,6 +640,15 @@ public class MotionManager : MonoBehaviour
         _TargetVec = moveVec;
         _LastTime = lastTime;
         _Speed = _TargetVec.magnitude / _LastTime;
+        _TargetPos = Vector3.zero;
+    }
+
+    public void SetMove(Vector3 moveVec, float lastTime, Vector3 targetPos)
+    {
+        _TargetVec = moveVec;
+        _LastTime = lastTime;
+        _Speed = _TargetVec.magnitude / _LastTime;
+        _TargetPos = targetPos;
     }
 
     public void UpdateMove()
@@ -656,6 +667,15 @@ public class MotionManager : MonoBehaviour
         }
 
         var destPoint = transform.position + moveVec;
+        if (_TargetPos != Vector3.zero)
+        {
+            var delta = transform.position - _TargetPos;
+            if (delta.magnitude < moveVec.magnitude)
+            {
+                destPoint = _TargetPos;
+                _LastTime = 0;
+            }
+        }
         UnityEngine.AI.NavMeshHit navHit = new UnityEngine.AI.NavMeshHit();
         if (!UnityEngine.AI.NavMesh.SamplePosition(destPoint, out navHit, 5, UnityEngine.AI.NavMesh.AllAreas))
         {
