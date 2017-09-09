@@ -23,6 +23,6 @@ public class UIBackRayBehind : MonoBehaviour, IPointerClickHandler
         if (_BackClick != null)
             _BackClick.Invoke();
 
-        GameUI.UIManager.Instance.RayCastBebind(eventData);
+        UIManager.Instance.RayCastBebind(eventData);
     }
 }

@@ -4,12 +4,12 @@ using System.Reflection;
 using System;
 using UnityEngine;
 
-using GameBase;
+ 
 using Tables;
-using GameUI;
+ 
 
-namespace GameLogic
-{
+ 
+
     public class SaveRoot
     {
         public List<SaveNode> _ChildNode = new List<SaveNode>();
@@ -46,415 +46,450 @@ namespace GameLogic
         }
     }
 
-    public class DataPackSave
+public class DataPackSave
+{
+    public static char[] SaveSplitChars = new char[] { ';', ',', '~', '!', '@', '#', '$', '%', '^', '&', '*', '|' };
+
+    #region save
+    public static void SaveData(SaveItemBase dataObj, bool isSaveChild = true)
     {
-        public static char[] SaveSplitChars = new char[] { ';', ',', '~', '!', '@', '#', '$', '%', '^', '&', '*', '|' };
-        #region save
-        public static void SaveData(object dataObj)
+        var dataType = dataObj.GetType();
+
+        List<SaveItemBase> saveChildItems = new List<SaveItemBase>();
+
+        SaveRoot saveRoot = new SaveRoot();
+        saveRoot._SaveKey = dataObj._SaveFileName;
+        saveRoot._ChildNode = GetNodesForSave(dataObj, saveChildItems);
+        SaveRoot(saveRoot);
+
+        while (saveChildItems.Count > 0)
         {
-            var dataType = dataObj.GetType();
+            var childItem = saveChildItems[0];
+            saveChildItems.RemoveAt(0);
 
-            SaveRoot saveRoot = new SaveRoot();
-            saveRoot._SaveKey = dataType.Name;
-
-            saveRoot._ChildNode = GetNodesForSave(dataObj);
-
-            SaveRoot(saveRoot);
-
+            SaveRoot saveChild = new SaveRoot();
+            saveChild._SaveKey = childItem._SaveFileName;
+            saveChild._ChildNode = GetNodesForSave(childItem, saveChildItems);
+            SaveRoot(saveChild);
         }
 
-        public static List<SaveNode> GetNodesForSave(object dataObj, List<string> fieldNames = null)
+    }
+
+    public static List<SaveNode> GetNodesForSave(object dataObj, List<SaveItemBase> saveChilds = null)
+    {
+        var dataType = dataObj.GetType();
+        List<SaveNode> saveNodes = new List<SaveNode>();
+
+        List<FieldInfo> fieldList = new List<FieldInfo>();
+
+        var fields = dataType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy);
+        fieldList.AddRange(fields);
+
+
+        foreach (var fieldInfo in fieldList)
         {
-            var dataType = dataObj.GetType();
-            List<SaveNode> saveNodes = new List<SaveNode>();
+            SaveField[] attributes = (SaveField[])fieldInfo.GetCustomAttributes(typeof(SaveField), false);
+            if (attributes != null && attributes.Length > 0)
+            {
+                SaveNode baseNode = new SaveNode();
+                baseNode._SaveIDX = attributes[0]._SaveIDX;
+                saveNodes.Add(baseNode);
 
-            List<FieldInfo> fieldList = new List<FieldInfo>();
-            if (fieldNames == null || fieldNames.Count == 0)
-            {
-                var fields = dataType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy);
-                fieldList.AddRange(fields);
-            }
-            else
-            {
-                foreach (var fieldName in fieldNames)
+                if (IsBaseType(fieldInfo.FieldType))
                 {
-                    var fieldInfo = dataType.GetField(fieldName);
-                    fieldList.Add(fieldInfo);
+                    baseNode._SaveType = fieldInfo.FieldType.Name;
+                    baseNode._SaveValue = fieldInfo.GetValue(dataObj).ToString();
                 }
-            }
-
-            foreach (var fieldInfo in fieldList)
-            {
-                SaveField[] attributes = (SaveField[])fieldInfo.GetCustomAttributes(typeof(SaveField), false);
-                if (attributes != null && attributes.Length > 0)
+                else if (fieldInfo.FieldType.Name.Contains("List"))
                 {
-                    SaveNode baseNode = new SaveNode();
-                    baseNode._SaveIDX = attributes[0]._SaveIDX;
-                    saveNodes.Add(baseNode);
+                    baseNode._SaveType = fieldInfo.FieldType.ToString();
+                    var valueList = fieldInfo.GetValue(dataObj) as IList;
 
-                    if (IsBaseType(fieldInfo.FieldType))
-                    {
-                        baseNode._SaveType = fieldInfo.FieldType.Name;
-                        baseNode._SaveValue = fieldInfo.GetValue(dataObj).ToString();
-                    }
-                    else if (fieldInfo.FieldType.Name.Contains("List"))
-                    {
-                        baseNode._SaveType = fieldInfo.FieldType.ToString();
-                        var valueList = fieldInfo.GetValue(dataObj) as IList;
+                    int idx1 = baseNode._SaveType.IndexOf('[');
+                    int idx2 = baseNode._SaveType.IndexOf(']');
+                    string childTypeName = baseNode._SaveType.Substring(idx1 + 1, idx2 - idx1 - 1);
 
-                        int idx1 = baseNode._SaveType.IndexOf('[');
-                        int idx2 = baseNode._SaveType.IndexOf(']');
-                        string childTypeName = baseNode._SaveType.Substring(idx1 + 1, idx2 - idx1 - 1);
-
-                        Type childType = null;
-                        if (valueList == null)
-                            continue;
-
-                        //Debug.Log("SaveList cnt:" + valueList.Count);
-                        for (int j = 0; j < valueList.Count; ++j)
-                        {
-                            if (childType == null)
-                            {
-                                childType = Type.GetType(childTypeName);
-                            }
-
-                            SaveNode childNode = new SaveNode();
-                            childNode._SaveIDX = j;
-                            childNode._SaveType = childType.Name;
-                            
-                            baseNode._ChildNode.Add(childNode);
-
-                            if (IsBaseType(childType))
-                            {
-                                childNode._SaveValue = valueList[j].ToString();
-                            }
-                            else
-                            {
-                                childNode._ChildNode = GetNodesForSave(valueList[j]);
-                            }
-                        }
-                        int test = 1 + 1;
-
-                    }
-                    else if (fieldInfo.FieldType.IsEnum)
-                    {
-                        baseNode._SaveType = fieldInfo.FieldType.Name;
-                        baseNode._SaveValue = ((int)fieldInfo.GetValue(dataObj)).ToString();
-                    }
-                    else if (attributes[0]._SaveFieldNames.Count > 0)
-                    {
-                        baseNode._SaveType = fieldInfo.FieldType.Name;
-                        baseNode._ChildNode = GetNodesForSave(fieldInfo.GetValue(dataObj), attributes[0]._SaveFieldNames);
-                    }
-                    else if(fieldInfo.FieldType.BaseType == typeof(Tables.TableRecordBase))
-                    {
-                        var record = fieldInfo.GetValue(dataObj) as TableRecordBase;
-
-                        if (record != null)
-                        {
-                            baseNode._SaveType = typeof(string).Name;
-                            baseNode._SaveValue = record.Id;
-                        }
-                    }
-                    else
-                    {
-                        baseNode._SaveType = fieldInfo.FieldType.Name;
-                        var dataValue = fieldInfo.GetValue(dataObj);
-                        if(dataValue != null)
-                            baseNode._ChildNode = GetNodesForSave(dataValue);
-                    }
-                }
-            }
-            saveNodes.Sort((node1, node2) =>
-            {
-                if (node1._SaveIDX > node2._SaveIDX)
-                    return 1;
-                else if (node1._SaveIDX < node2._SaveIDX)
-                    return -1;
-                return 0;
-            });
-            return saveNodes;
-        }
-
-        public static void SaveRoot(SaveRoot root)
-        {
-            string saveStr = "";
-
-            foreach (var child in root._ChildNode)
-            {
-                saveStr += DataPackSave.SaveSplitChars[0] + child.ToSaveString(1);
-            }
-            saveStr = saveStr.Substring(1);
-            Debug.Log("SaveRoot:" + saveStr);
-            LocalSave.Save(root._SaveKey, saveStr);
-
-        }
-
-        #endregion
-
-        #region load
-
-        public static void LoadData(object dataObj)
-        {
-            var dataType = dataObj.GetType();
-
-            string loadStr = LocalSave.Load(dataType.Name);
-
-            LoadNodes(dataObj, 0, loadStr);
-        }
-
-        public static void LoadNodes(object dataObj, int depth, string dataStr)
-        {
-            var dataType = dataObj.GetType();
-            List<SaveNode> saveNodes = new List<SaveNode>();
-
-            List<FieldInfo> fieldList = new List<FieldInfo>();
-            //if (fieldNames == null || fieldNames.Count == 0)
-            {
-                var fields = dataType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                fieldList.AddRange(fields);
-            }
-
-
-            Dictionary<int, FieldInfo> loadFields = new Dictionary<int, FieldInfo>();
-            List<FieldInfo> sortedFields = new List<FieldInfo>();
-            foreach (var fieldInfo in fieldList)
-            {
-                SaveField[] attributes = (SaveField[])fieldInfo.GetCustomAttributes(typeof(SaveField), false);
-                if (attributes != null && attributes.Length > 0)
-                {
-                    loadFields.Add(attributes[0]._SaveIDX - 1, fieldInfo);
-                }
-            }
-            for (int i = 0; i < loadFields.Count; ++i)
-            {
-                sortedFields.Add(loadFields[i]);
-            }
-
-            string[] valueStrs = dataStr.Split(SaveSplitChars[depth]);
-            if (valueStrs.Length != sortedFields.Count)
-                return;
-
-            for (int i = 0; i< sortedFields.Count; ++i)
-            {
-                if (IsBaseType(sortedFields[i].FieldType))
-                {
-                    SetBaseField(dataObj, sortedFields[i], valueStrs[i]);
-                }
-                else if (sortedFields[i].FieldType.Name.Contains("List"))
-                {
-                    string typeStr = sortedFields[i].FieldType.ToString();
-                    var valueList =  Activator.CreateInstance(sortedFields[i].FieldType) as IList;
-
-                    int idx1 = typeStr.IndexOf('[');
-                    int idx2 = typeStr.IndexOf(']');
-                    string childTypeName = typeStr.Substring(idx1 + 1, idx2 - idx1 - 1);
-                    string[] listValues = valueStrs[i].Split(SaveSplitChars[depth + 1]);
-                    List<string> notEmptyList = new List<string>(listValues);
-                    ListTool.ExcludeEmptyStr(notEmptyList);
-                    //Debug.Log("LoadLise cnt:" + notEmptyList.Count);
                     Type childType = null;
-                    for (int j = 0; j < notEmptyList.Count; ++j)
+                    if (valueList == null)
+                        continue;
+
+                    //Debug.Log("SaveList cnt:" + valueList.Count);
+                    for (int j = 0; j < valueList.Count; ++j)
                     {
                         if (childType == null)
                         {
                             childType = Type.GetType(childTypeName);
                         }
+
+                        SaveNode childNode = new SaveNode();
+                        childNode._SaveIDX = j;
+                        childNode._SaveType = childType.Name;
+
+                        baseNode._ChildNode.Add(childNode);
+
                         if (IsBaseType(childType))
                         {
-                            var hash = GetBaseFieldValue(childType, notEmptyList[j]);
-                            valueList.Add(hash[childType.Name.ToString()]);
+                            childNode._SaveValue = valueList[j].ToString();
+                        }
+                        else if (valueList[j] is SaveItemBase)
+                        {
+                            var saveItem = (SaveItemBase)valueList[j];
+                            saveChilds.Add(saveItem);
+                            childNode._SaveValue = saveItem._SaveFileName;
                         }
                         else
                         {
-                            var listItem = Activator.CreateInstance(Type.GetType(childTypeName));
-                            LoadNodes(listItem, depth + 2, notEmptyList[j]);
-                            valueList.Add(listItem);
+                            childNode._ChildNode = GetNodesForSave(valueList[j]);
                         }
                     }
 
-                    sortedFields[i].SetValue(dataObj, valueList);
                 }
-                else if (sortedFields[i].FieldType.IsEnum)
+                else if (fieldInfo.FieldType.IsEnum)
                 {
-                    sortedFields[i].SetValue(dataObj, int.Parse(valueStrs[i]));
+                    baseNode._SaveType = fieldInfo.FieldType.Name;
+                    baseNode._SaveValue = ((int)fieldInfo.GetValue(dataObj)).ToString();
                 }
-                else if (sortedFields[i].FieldType.BaseType == typeof(Tables.TableRecordBase))
+                else if (fieldInfo.FieldType.BaseType == typeof(Tables.TableRecordBase))
                 {
-                    string recordID = valueStrs[i];
+                    var record = fieldInfo.GetValue(dataObj) as TableRecordBase;
 
-                    var record = TableReadEx.GetTableRecord(sortedFields[i].FieldType.Name.Replace("Record", ""), recordID);
-                    if (record == null)
+                    if (record != null)
                     {
-                        //Debug.LogError("Load Record error:" + sortedFields[i].FieldType.Name + "," + recordID);
+                        baseNode._SaveType = typeof(string).Name;
+                        baseNode._SaveValue = record.Id;
+                    }
+                }
+                else if (fieldInfo.GetValue(dataObj) is SaveItemBase)
+                {
+                    baseNode._SaveType = fieldInfo.FieldType.Name;
+                    var saveItem = (SaveItemBase)fieldInfo.GetValue(dataObj);
+                    saveChilds.Add(saveItem);
+                    baseNode._SaveValue = saveItem._SaveFileName;
+                }
+                else
+                {
+                    baseNode._SaveType = fieldInfo.FieldType.Name;
+                    var dataValue = fieldInfo.GetValue(dataObj);
+                    if (dataValue != null)
+                        baseNode._ChildNode = GetNodesForSave(dataValue);
+                }
+            }
+        }
+        saveNodes.Sort((node1, node2) =>
+        {
+            if (node1._SaveIDX > node2._SaveIDX)
+                return 1;
+            else if (node1._SaveIDX < node2._SaveIDX)
+                return -1;
+            return 0;
+        });
+        return saveNodes;
+    }
+
+    public static void SaveRoot(SaveRoot root)
+    {
+        string saveStr = "";
+
+        foreach (var child in root._ChildNode)
+        {
+            saveStr += DataPackSave.SaveSplitChars[0] + child.ToSaveString(1);
+        }
+        saveStr = saveStr.Substring(1);
+        Debug.Log("SaveRoot:" + saveStr);
+        LocalSave.Save(root._SaveKey, saveStr);
+
+    }
+
+    #endregion
+
+    #region load
+
+    public static void LoadData(SaveItemBase dataObj, bool isLoadChild)
+    {
+        var dataType = dataObj.GetType();
+
+        string loadStr = LocalSave.Load(dataObj._SaveFileName);
+
+        LoadNodes(dataObj, 0, loadStr, isLoadChild);
+    }
+
+    public static void LoadNodes(object dataObj, int depth, string dataStr, bool isLoadChild)
+    {
+        var dataType = dataObj.GetType();
+        List<SaveNode> saveNodes = new List<SaveNode>();
+
+        List<FieldInfo> fieldList = new List<FieldInfo>();
+        //if (fieldNames == null || fieldNames.Count == 0)
+        {
+            var fields = dataType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            fieldList.AddRange(fields);
+        }
+
+
+        Dictionary<int, FieldInfo> loadFields = new Dictionary<int, FieldInfo>();
+        List<FieldInfo> sortedFields = new List<FieldInfo>();
+        foreach (var fieldInfo in fieldList)
+        {
+            SaveField[] attributes = (SaveField[])fieldInfo.GetCustomAttributes(typeof(SaveField), false);
+            if (attributes != null && attributes.Length > 0)
+            {
+                loadFields.Add(attributes[0]._SaveIDX - 1, fieldInfo);
+            }
+        }
+        for (int i = 0; i < loadFields.Count; ++i)
+        {
+            sortedFields.Add(loadFields[i]);
+        }
+
+        string[] valueStrs = dataStr.Split(SaveSplitChars[depth]);
+        if (valueStrs.Length != sortedFields.Count)
+            return;
+
+        for (int i = 0; i < sortedFields.Count; ++i)
+        {
+            if (IsBaseType(sortedFields[i].FieldType))
+            {
+                SetBaseField(dataObj, sortedFields[i], valueStrs[i]);
+            }
+            else if (sortedFields[i].FieldType.Name.Contains("List"))
+            {
+                string typeStr = sortedFields[i].FieldType.ToString();
+                var valueList = Activator.CreateInstance(sortedFields[i].FieldType) as IList;
+
+                int idx1 = typeStr.IndexOf('[');
+                int idx2 = typeStr.IndexOf(']');
+                string childTypeName = typeStr.Substring(idx1 + 1, idx2 - idx1 - 1);
+                string[] listValues = valueStrs[i].Split(SaveSplitChars[depth + 1]);
+                List<string> notEmptyList = new List<string>(listValues);
+                ListTool.ExcludeEmptyStr(notEmptyList);
+                //Debug.Log("LoadLise cnt:" + notEmptyList.Count);
+                Type childType = null;
+                for (int j = 0; j < notEmptyList.Count; ++j)
+                {
+                    if (childType == null)
+                    {
+                        childType = Type.GetType(childTypeName);
+                    }
+
+                    if (IsBaseType(childType))
+                    {
+                        var hash = GetBaseFieldValue(childType, notEmptyList[j]);
+                        valueList.Add(hash[childType.Name.ToString()]);
                     }
                     else
                     {
-                        sortedFields[i].SetValue(dataObj, record);
+                        var listItem = Activator.CreateInstance(childType);
+                        if (listItem is SaveItemBase)
+                        {
+                            string saveFileName = notEmptyList[j];
+                            ((SaveItemBase)listItem)._SaveFileName = saveFileName;
+                            if (isLoadChild)
+                            {
+                                string loadStr = LocalSave.Load(saveFileName);
+                                LoadNodes(listItem, 0, loadStr, isLoadChild);
+                            }
+                            valueList.Add(listItem);
+                        }
+                        else
+                        {
+                            LoadNodes(listItem, depth + 2, notEmptyList[j], true);
+                            valueList.Add(listItem);
+                        }
                     }
+                }
+
+                sortedFields[i].SetValue(dataObj, valueList);
+            }
+            else if (sortedFields[i].FieldType.IsEnum)
+            {
+                sortedFields[i].SetValue(dataObj, int.Parse(valueStrs[i]));
+            }
+            else if (sortedFields[i].FieldType.BaseType == typeof(Tables.TableRecordBase))
+            {
+                string recordID = valueStrs[i];
+
+                var record = TableReadEx.GetTableRecord(sortedFields[i].FieldType.Name.Replace("Record", ""), recordID);
+                if (record == null)
+                {
+                    //Debug.LogError("Load Record error:" + sortedFields[i].FieldType.Name + "," + recordID);
                 }
                 else
                 {
-                    if (!string.IsNullOrEmpty(valueStrs[i]))
-                    {
-                        var constumValue = Activator.CreateInstance(sortedFields[i].FieldType);
-                        LoadNodes(constumValue, depth + 1, valueStrs[i]);
-                        sortedFields[i].SetValue(dataObj, constumValue);
-                    }
+                    sortedFields[i].SetValue(dataObj, record);
                 }
-
             }
-
-            var iniMethod = dataType.GetMethod("InitFromLoad");
-            if (iniMethod != null)
+            else if (sortedFields[i].FieldType.BaseType == typeof(SaveItemBase))
             {
-                iniMethod.Invoke(dataObj, new object[] { });
-            }
-            
-        }
-
-        #endregion
-
-
-        public static bool IsBaseType(Type fieldType)
-        {
-            return fieldType == typeof(int) ||
-                   fieldType == typeof(short) ||
-                   fieldType == typeof(string) ||
-                   fieldType == typeof(byte) ||
-                   fieldType == typeof(long) ||
-                   fieldType == typeof(float) ||
-                   fieldType == typeof(double) ||
-                   fieldType == typeof(bool) ||
-                   fieldType == typeof(decimal) ||
-                   fieldType == typeof(DateTime) ||
-                   fieldType == typeof(TimeSpan) ||
-                   fieldType == typeof(ulong) ||
-                   fieldType == typeof(uint) ||
-                   fieldType == typeof(ushort);
-        }
-
-        public static void SetBaseField(object obj, FieldInfo field, string valueStr)
-        {
-            if (field.FieldType == typeof(int))
-            {
-                field.SetValue(obj, int.Parse(valueStr));
-            }
-            else if (field.FieldType == typeof(short))
-            {
-                field.SetValue(obj, short.Parse(valueStr));
-            }
-            else if (field.FieldType == typeof(string))
-            {
-                field.SetValue(obj, (valueStr));
-            }
-            else if (field.FieldType == typeof(byte))
-            {
-                field.SetValue(obj, byte.Parse(valueStr));
-            }
-            else if (field.FieldType == typeof(long))
-            {
-                field.SetValue(obj, long.Parse(valueStr));
-            }
-            else if (field.FieldType == typeof(double))
-            {
-                field.SetValue(obj, double.Parse(valueStr));
-            }
-            else if (field.FieldType == typeof(bool))
-            {
-                field.SetValue(obj, bool.Parse(valueStr));
-            }
-            else if (field.FieldType == typeof(decimal))
-            {
-                field.SetValue(obj, decimal.Parse(valueStr));
-            }
-            else if (field.FieldType == typeof(DateTime))
-            {
-                field.SetValue(obj, DateTime.Parse(valueStr));
-            }
-            else if (field.FieldType == typeof(TimeSpan))
-            {
-                field.SetValue(obj, TimeSpan.Parse(valueStr));
-            }
-            else if (field.FieldType == typeof(ulong))
-            {
-                field.SetValue(obj, ulong.Parse(valueStr));
-            }
-            else if (field.FieldType == typeof(uint))
-            {
-                field.SetValue(obj, uint.Parse(valueStr));
-            }
-            else if (field.FieldType == typeof(ushort))
-            {
-                field.SetValue(obj, ushort.Parse(valueStr));
-            }
-        }
-
-        public static Hashtable GetBaseFieldValue(Type valueType, string valueStr)
-        {
-            Hashtable hash = new Hashtable();
-            if (valueType == typeof(int))
-            {
-                if (string.IsNullOrEmpty(valueStr))
+                string saveFileName = valueStrs[i];
+                var constumValue = Activator.CreateInstance(sortedFields[i].FieldType);
+                ((SaveItemBase)constumValue)._SaveFileName = saveFileName;
+                if (isLoadChild)
                 {
-                    hash.Add(valueType.Name.ToString(), 0);
+                    string loadStr = LocalSave.Load(saveFileName);
+                    LoadNodes(constumValue, 0, loadStr, isLoadChild);
                 }
-                else
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(valueStrs[i]))
                 {
-                    hash.Add(valueType.Name.ToString(), int.Parse(valueStr));
+                    var constumValue = Activator.CreateInstance(sortedFields[i].FieldType);
+                    LoadNodes(constumValue, depth + 1, valueStrs[i], true);
+                    sortedFields[i].SetValue(dataObj, constumValue);
                 }
-            }
-            else if (valueType == typeof(short))
-            {
-                hash.Add(valueType.Name.ToString(), short.Parse(valueStr));
-            }
-            else if (valueType == typeof(string))
-            {
-                hash.Add(valueType.Name.ToString(), (valueStr));
-            }
-            else if (valueType == typeof(byte))
-            {
-                hash.Add(valueType.Name.ToString(), byte.Parse(valueStr));
-            }
-            else if (valueType == typeof(long))
-            {
-                hash.Add(valueType.Name.ToString(), long.Parse(valueStr));
-            }
-            else if (valueType == typeof(double))
-            {
-                hash.Add(valueType.Name.ToString(), double.Parse(valueStr));
-            }
-            else if (valueType == typeof(bool))
-            {
-                hash.Add(valueType.Name.ToString(), bool.Parse(valueStr));
-            }
-            else if (valueType == typeof(decimal))
-            {
-                hash.Add(valueType.Name.ToString(), decimal.Parse(valueStr));
-            }
-            else if (valueType == typeof(DateTime))
-            {
-                hash.Add(valueType.Name.ToString(), DateTime.Parse(valueStr));
-            }
-            else if (valueType == typeof(TimeSpan))
-            {
-                hash.Add(valueType.Name.ToString(), TimeSpan.Parse(valueStr));
-            }
-            else if (valueType == typeof(ulong))
-            {
-                hash.Add(valueType.Name.ToString(), ulong.Parse(valueStr));
-            }
-            else if (valueType == typeof(uint))
-            {
-                hash.Add(valueType.Name.ToString(), uint.Parse(valueStr));
-            }
-            else if (valueType == typeof(ushort))
-            {
-                hash.Add(valueType.Name.ToString(), ushort.Parse(valueStr));
             }
 
-            return hash;
+        }
+
+        var iniMethod = dataType.GetMethod("InitFromLoad");
+        if (iniMethod != null)
+        {
+            iniMethod.Invoke(dataObj, new object[] { });
         }
 
     }
+
+    #endregion
+
+
+    public static bool IsBaseType(Type fieldType)
+    {
+        return fieldType == typeof(int) ||
+               fieldType == typeof(short) ||
+               fieldType == typeof(string) ||
+               fieldType == typeof(byte) ||
+               fieldType == typeof(long) ||
+               fieldType == typeof(float) ||
+               fieldType == typeof(double) ||
+               fieldType == typeof(bool) ||
+               fieldType == typeof(decimal) ||
+               fieldType == typeof(DateTime) ||
+               fieldType == typeof(TimeSpan) ||
+               fieldType == typeof(ulong) ||
+               fieldType == typeof(uint) ||
+               fieldType == typeof(ushort);
+    }
+
+    public static void SetBaseField(object obj, FieldInfo field, string valueStr)
+    {
+        if (field.FieldType == typeof(int))
+        {
+            field.SetValue(obj, int.Parse(valueStr));
+        }
+        else if (field.FieldType == typeof(short))
+        {
+            field.SetValue(obj, short.Parse(valueStr));
+        }
+        else if (field.FieldType == typeof(string))
+        {
+            field.SetValue(obj, (valueStr));
+        }
+        else if (field.FieldType == typeof(byte))
+        {
+            field.SetValue(obj, byte.Parse(valueStr));
+        }
+        else if (field.FieldType == typeof(long))
+        {
+            field.SetValue(obj, long.Parse(valueStr));
+        }
+        else if (field.FieldType == typeof(double))
+        {
+            field.SetValue(obj, double.Parse(valueStr));
+        }
+        else if (field.FieldType == typeof(bool))
+        {
+            field.SetValue(obj, bool.Parse(valueStr));
+        }
+        else if (field.FieldType == typeof(decimal))
+        {
+            field.SetValue(obj, decimal.Parse(valueStr));
+        }
+        else if (field.FieldType == typeof(DateTime))
+        {
+            field.SetValue(obj, DateTime.Parse(valueStr));
+        }
+        else if (field.FieldType == typeof(TimeSpan))
+        {
+            field.SetValue(obj, TimeSpan.Parse(valueStr));
+        }
+        else if (field.FieldType == typeof(ulong))
+        {
+            field.SetValue(obj, ulong.Parse(valueStr));
+        }
+        else if (field.FieldType == typeof(uint))
+        {
+            field.SetValue(obj, uint.Parse(valueStr));
+        }
+        else if (field.FieldType == typeof(ushort))
+        {
+            field.SetValue(obj, ushort.Parse(valueStr));
+        }
+    }
+
+    public static Hashtable GetBaseFieldValue(Type valueType, string valueStr)
+    {
+        Hashtable hash = new Hashtable();
+        if (valueType == typeof(int))
+        {
+            if (string.IsNullOrEmpty(valueStr))
+            {
+                hash.Add(valueType.Name.ToString(), 0);
+            }
+            else
+            {
+                hash.Add(valueType.Name.ToString(), int.Parse(valueStr));
+            }
+        }
+        else if (valueType == typeof(short))
+        {
+            hash.Add(valueType.Name.ToString(), short.Parse(valueStr));
+        }
+        else if (valueType == typeof(string))
+        {
+            hash.Add(valueType.Name.ToString(), (valueStr));
+        }
+        else if (valueType == typeof(byte))
+        {
+            hash.Add(valueType.Name.ToString(), byte.Parse(valueStr));
+        }
+        else if (valueType == typeof(long))
+        {
+            hash.Add(valueType.Name.ToString(), long.Parse(valueStr));
+        }
+        else if (valueType == typeof(double))
+        {
+            hash.Add(valueType.Name.ToString(), double.Parse(valueStr));
+        }
+        else if (valueType == typeof(bool))
+        {
+            hash.Add(valueType.Name.ToString(), bool.Parse(valueStr));
+        }
+        else if (valueType == typeof(decimal))
+        {
+            hash.Add(valueType.Name.ToString(), decimal.Parse(valueStr));
+        }
+        else if (valueType == typeof(DateTime))
+        {
+            hash.Add(valueType.Name.ToString(), DateTime.Parse(valueStr));
+        }
+        else if (valueType == typeof(TimeSpan))
+        {
+            hash.Add(valueType.Name.ToString(), TimeSpan.Parse(valueStr));
+        }
+        else if (valueType == typeof(ulong))
+        {
+            hash.Add(valueType.Name.ToString(), ulong.Parse(valueStr));
+        }
+        else if (valueType == typeof(uint))
+        {
+            hash.Add(valueType.Name.ToString(), uint.Parse(valueStr));
+        }
+        else if (valueType == typeof(ushort))
+        {
+            hash.Add(valueType.Name.ToString(), ushort.Parse(valueStr));
+        }
+
+        return hash;
+    }
+
 }

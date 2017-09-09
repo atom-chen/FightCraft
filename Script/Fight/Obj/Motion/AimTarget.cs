@@ -9,8 +9,8 @@ public class AimTarget : InstanceBase<AimTarget>
     void Start()
     {
         SetInstance(this);
-        GameUI.UIControlPanel.AddClickEvent(OnTargetPointClick);
-        GameUI.UISkillBar.SetAimTypeStatic(_AimType);
+        UIControlPanel.AddClickEvent(OnTargetPointClick);
+        UISkillBar.SetAimTypeStatic(_AimType);
     }
 
     void OnDestory()
@@ -37,7 +37,7 @@ public class AimTarget : InstanceBase<AimTarget>
         _AimType = (AimTargetType)aimType;
         if (_AimType == AimTargetType.None)
         {
-            GameUI.AimTargetPanel.HideAimTarget();
+            AimTargetPanel.HideAimTarget();
         }
     }
 
@@ -73,8 +73,8 @@ public class AimTarget : InstanceBase<AimTarget>
         if (_LockTarget == null)
             return;
 
-        GameUI.UISkillBar.SetAimTypeStatic(_AimType);
-        GameUI.AimTargetPanel.ShowAimTarget(_LockTarget, AimType.Lock);
+        UISkillBar.SetAimTypeStatic(_AimType);
+        AimTargetPanel.ShowAimTarget(_LockTarget, AimType.Lock);
 
     }
 
@@ -104,11 +104,11 @@ public class AimTarget : InstanceBase<AimTarget>
 
         if (_LockTarget == null)
         {
-            GameUI.AimTargetPanel.HideAimTarget();
+            AimTargetPanel.HideAimTarget();
             return;
         }
 
-        GameUI.AimTargetPanel.ShowAimTarget(_LockTarget, AimType.Free);
+        AimTargetPanel.ShowAimTarget(_LockTarget, AimType.Free);
     }
 
     #endregion

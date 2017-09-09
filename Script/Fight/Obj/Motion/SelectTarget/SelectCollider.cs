@@ -12,7 +12,6 @@ public class SelectCollider : SelectBase
 
     public override void ColliderStart()
     {
-        Debug.Log("ColliderStart:" + _ColliderID);
         if (_SelectCollider == null)
         {
             _SelectCollider = gameObject.GetComponent<Collider>();
@@ -39,7 +38,7 @@ public class SelectCollider : SelectBase
             if (motion == null)
                 return;
 
-            if (motion.MotionPrior == BaseMotionManager.LIE_PRIOR && !_SelectLieObj)
+            if (motion._StateLie == motion._ActionState && !_SelectLieObj)
                 return;
 
             if (!motion._CanBeSelectByEnemy)

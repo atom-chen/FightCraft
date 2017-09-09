@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-using GameUI;
+ 
 
 public class FightSceneLogicPassArea : FightSceneLogicBase
 {

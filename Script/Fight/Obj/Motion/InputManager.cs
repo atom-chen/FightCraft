@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-using GameUI;
+ 
 
 public class InputManager : InstanceBase<InputManager>
 {
@@ -29,41 +29,32 @@ public class InputManager : InstanceBase<InputManager>
 #if UNITY_EDITOR
         Axis = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 #endif
-        if (Axis != Vector2.zero)
-        {
-            if (_InputMotion.BaseMotionManager.CanMotionMove())
-            {
-                _InputMotion.BaseMotionManager.MoveDirect(CameraAxis);
-            }
-        }
-        else
+
 #if UNITY_EDITOR
         if (!_EmulateMode)
 #endif
         {
-
-            if (_InputMotion.BaseMotionManager.IsMoving())
-                _InputMotion.BaseMotionManager.StopMove();
-            if (_InputMotion.BaseMotionManager.CanMotionIdle())
-                _InputMotion.BaseMotionManager.MotionIdle();
+            _InputMotion.InputDirect(CameraAxis);
         }
 
         //if (_InputMotion.ActingSkill == null)
         {
-            foreach (var skill in _InputMotion._SkillMotions)
+            foreach (var skill in _InputMotion._StateSkill._SkillMotions)
             {
-                if (IsKeyDown(skill.Key))
+                if (IsKeyHold(skill.Key))
                 {
-                    _InputMotion.ActSkill(skill.Value);
+                    //_InputMotion.ActSkill(skill.Value);
+                    _InputMotion.InputSkill(skill.Key);
                 }
             }
         }
-        CharSkill();
+        //CharSkill();
     }
 
     public MotionManager _InputMotion;
 
     #region input 
+    private Vector2 _LastAxis;
     private Vector2 _Axis;
     public Vector2 Axis
     {
@@ -74,6 +65,7 @@ public class InputManager : InstanceBase<InputManager>
 
         set
         {
+            _LastAxis = _Axis;
             _Axis = value;
         }
     }
@@ -122,6 +114,10 @@ public class InputManager : InstanceBase<InputManager>
         if (key.Contains("k"))
         {
             realKey = "k";
+        }
+        if (key.Contains("u"))
+        {
+            realKey = "u";
         }
 #if UNITY_EDITOR
         if (_EmulateMode)
@@ -174,50 +170,50 @@ public class InputManager : InstanceBase<InputManager>
 
         if (IsKeyHold("j"))
         {
-            _InputMotion.ActSkill(_InputMotion._SkillMotions["j"]);
+            _InputMotion.ActSkill(_InputMotion._StateSkill._SkillMotions["j"]);
         }
 
         if (IsKeyHold("k"))
         {
-            if (_InputMotion.ActingSkill == _NormalAttack && _NormalAttack.CurStep > 0 && _NormalAttack.CurStep < 4 && _NormalAttack.CanNextInput)
+            if (_InputMotion.ActingSkill== _NormalAttack && _NormalAttack.CurStep > 0 && _NormalAttack.CurStep < 4 && _NormalAttack.CanNextInput)
             {
                 string inputKey = "k" + (_NormalAttack.CurStep + 1);
-                if (_InputMotion._SkillMotions.ContainsKey(inputKey))
+                if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
                 {
                     AutoRotate();
-                    _InputMotion.ActSkill(_InputMotion._SkillMotions[inputKey]);
+                    _InputMotion.ActSkill(_InputMotion._StateSkill._SkillMotions[inputKey]);
                 }
             }
-            else if(_InputMotion.ActingSkill == null)
+            else if(_InputMotion.ActingSkill== null)
             {
                 string inputKey = "k0";
-                if (_InputMotion._SkillMotions.ContainsKey(inputKey))
+                if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
                 {
                     AutoRotate();
-                    _InputMotion.ActSkill(_InputMotion._SkillMotions[inputKey]);
+                    _InputMotion.ActSkill(_InputMotion._StateSkill._SkillMotions[inputKey]);
                 }
             }
         }
 
         if (IsKeyHold("u"))
         {
-            if (_InputMotion.ActingSkill == _NormalAttack && _NormalAttack.CurStep > 0 && _NormalAttack.CurStep < 4 && _NormalAttack.CanNextInput)
+            if (_InputMotion.ActingSkill== _NormalAttack && _NormalAttack.CurStep > 0 && _NormalAttack.CurStep < 4 && _NormalAttack.CanNextInput)
             {
                 string inputKey = "u1"/* + (_NormalAttack.CurStep + 1)*/;
                 Hashtable hash = new Hashtable();
                 hash.Add("AttackStep", _NormalAttack.CurStep);
 
-                if (_InputMotion._SkillMotions.ContainsKey(inputKey))
+                if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
                 {
-                    _InputMotion.ActSkill(_InputMotion._SkillMotions[inputKey], hash);
+                    _InputMotion.ActSkill(_InputMotion._StateSkill._SkillMotions[inputKey], hash);
                 }
             }
-            else if (_InputMotion.ActingSkill == null)
+            else if (_InputMotion.ActingSkill== null)
             {
                 string inputKey = "u0";
-                if (_InputMotion._SkillMotions.ContainsKey(inputKey))
+                if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
                 {
-                    _InputMotion.ActSkill(_InputMotion._SkillMotions[inputKey]);
+                    _InputMotion.ActSkill(_InputMotion._StateSkill._SkillMotions[inputKey]);
                 }
             }
         }

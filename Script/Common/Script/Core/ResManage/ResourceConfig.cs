@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-using GameBase;
-
 public class ResourceConfig : MonoBehaviour
 {
 
@@ -16,7 +14,7 @@ public class ResourceConfig : MonoBehaviour
         {
             if (_Instance == null)
             {
-                var obj = GameBase.ResourceManager.Instance.GetInstanceGameObject("ResourceConfig");
+                var obj = ResourceManager.Instance.GetInstanceGameObject("ResourceConfig");
                 _Instance = obj.GetComponent<ResourceConfig>();
             }
             return _Instance;

@@ -2,10 +2,46 @@
 10001,NA.Damage,Add Normal Attack Damage,1,1,10001,10,1000,0,0,0,0
 10002,NA.Speed,Add Normal Attack Speed,1,1,10002,10,100,0,0,0,1
 10003,NA.Range,Add Normal Attack Range,1,1,10003,10,200,0,0,0,2
-10100,S.Damage,Add Ex Skill Damage,1,2,10101,10,1000,0,0,0,0
-10101,S.Speed,Add Ex Skill Speed,1,2,10102,100,0,0,0,0,1
-10102,S.Range,Add Ex Skill Range,1,2,10103,10,200,0,0,0,2
-10111,S.Accumulate,Ex Skill Can Accululate by Hold the button,1,2,10111,1,2000,0,0,0,3
-10112,S.Shadow,add shadow to skill,1,2,10112,1,1,0,0,0,4
-10113,S.BackRange,Ex skill back range,1,2,10113,1,100,0,0,0,5
-10114,S.ActBuff,can act skill after buff,1,2,10114,1,1,0,0,0,7
+10100,S.Damage,Add Ex Skill Damage,1,10,10001,10,1000,0,0,0,0
+10101,S.Speed,Add Ex Skill Speed,1,10,10002,100,0,0,0,0,1
+10102,S.Range,Add Ex Skill Range,1,10,10003,10,200,0,0,0,2
+10111,S.ExAttack,After Skill ex Attack,1,10,10103,1,2000,0,0,0,3
+10112,S.Shadow,add shadow to skill,1,10,10102,1,1,0,0,0,4
+10113,S.SpSkill,Ex skill back range,1,10,10106,1,100,0,0,0,5
+10200,S.Damage,Add Ex Skill Damage,1,11,10001,10,1000,0,0,0,0
+10201,S.Speed,Add Ex Skill Speed,1,11,10002,100,0,0,0,0,1
+10202,S.Range,Add Ex Skill Range,1,11,10003,10,200,0,0,0,2
+10203,S.ExAttack,Ex Skill Can Accululate by Hold the button,1,11,10103,1,2000,0,0,0,3
+10204,S.Shadow,add shadow to skill,1,11,10102,1,1,0,0,0,4
+10205,S.SpSkill,Ex skill back range,1,11,10106,1,100,0,0,0,5
+10300,S.Damage,Add Ex Skill Damage,1,12,10001,10,1000,0,0,0,0
+10301,S.Speed,Add Ex Skill Speed,1,12,10002,100,0,0,0,0,1
+10302,S.Range,Add Ex Skill Range,1,12,10003,10,200,0,0,0,2
+10303,S.AnotherUse,Ex Skill Can Accululate by Hold the button,1,12,10104,1,2000,0,0,0,3
+10304,S.Shadow,add shadow to skill,1,12,10102,1,1,0,0,0,4
+10305,S.SpSkill,Ex skill back range,1,12,10106,1,100,0,0,0,5
+10306,S.AttackLow,Attack lie enemy,1,12,10107,1,100,0,0,0,5
+10114,S.ActBuff,can act skill after buff,1,3,10201,1,1,0,0,0,7
+20001,NA.Damage,Add Normal Attack Damage,3,1,10001,10,1000,0,0,0,0
+20002,NA.Speed,Add Normal Attack Speed,3,1,10002,10,100,0,0,0,1
+20003,NA.Range,Add Normal Attack Range,3,1,10003,10,200,0,0,0,2
+20100,S.Damage,Add Ex Skill Damage,3,10,10001,10,1000,0,0,0,0
+20101,S.Speed,Add Ex Skill Speed,3,10,10002,100,0,0,0,0,1
+20102,S.Range,Add Ex Skill Range,3,10,10003,10,200,0,0,0,2
+20111,S.ExAttack,After Skill ex Attack,3,10,10103,1,2000,0,0,0,3
+20112,S.Shadow,add shadow to skill,3,10,10102,1,1,0,0,0,4
+20113,S.SpSkill,Ex skill back range,3,10,10106,1,100,0,0,0,5
+20200,S.Damage,Add Ex Skill Damage,3,11,10001,10,1000,0,0,0,0
+20201,S.Speed,Add Ex Skill Speed,3,11,10002,100,0,0,0,0,1
+20202,S.Range,Add Ex Skill Range,3,11,10003,10,200,0,0,0,2
+20203,S.ExAttack,Ex Skill Can Accululate by Hold the button,3,11,10103,1,2000,0,0,0,3
+20204,S.Shadow,add shadow to skill,3,11,10102,1,1,0,0,0,4
+20205,S.SpSkill,Ex skill back range,3,11,10106,1,100,0,0,0,5
+20300,S.Damage,Add Ex Skill Damage,3,12,10001,10,1000,0,0,0,0
+20301,S.Speed,Add Ex Skill Speed,3,12,10002,100,0,0,0,0,1
+20302,S.Range,Add Ex Skill Range,3,12,10003,10,200,0,0,0,2
+20303,S.AnotherUse,Ex Skill Can Accululate by Hold the button,3,12,10104,1,2000,0,0,0,3
+20304,S.Shadow,add shadow to skill,3,12,10102,1,1,0,0,0,4
+20305,S.SpSkill,Ex skill back range,3,12,10106,1,100,0,0,0,5
+20306,S.AttackLow,Attack lie enemy,3,12,10107,1,100,0,0,0,5
+20114,S.ActBuff,can act skill after buff,3,3,10201,1,1,0,0,0,7

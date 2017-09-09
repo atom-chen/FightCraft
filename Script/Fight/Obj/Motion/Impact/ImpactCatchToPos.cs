@@ -9,7 +9,7 @@ public class ImpactCatchToPos : ImpactCatch
 
     public override void ActImpact(MotionManager senderManager, MotionManager reciverManager)
     {
-        base.ActImpact(senderManager, reciverManager);
+        //base.ActImpact(senderManager, reciverManager);
 
         //if (reciverManager.BaseMotionManager.IsCanBePush())
         {
@@ -24,10 +24,9 @@ public class ImpactCatchToPos : ImpactCatch
                 moveTime = targetTime;
             }
 
-            if (moveTime > 0.01f)
-            {
-                reciverManager.SetMove(destMove, moveTime / SkillMotion.SkillBaseSpeed, hitPos);
-            }
+            CatchMotion(senderManager, reciverManager, destMove, moveTime > 0.01f? moveTime:0);
+
+            ProcessDamge(senderManager, reciverManager);
         }
     }
     

@@ -50,11 +50,10 @@ public class ObjMotionSkillMixAnim : ObjMotionSkillBase
     {
         base.FinishSkillImmediately();
 
-        if (_NextEffect[_NextEffect.Length - 1] != null)
-            _MotionManager.StopSkillEffect(_NextEffect[_NextEffect.Length - 1]);
-
-        if (_Effect != null)
-            _MotionManager.StopSkillEffect(_Effect);
+        foreach (var effect in _NextEffect)
+        {
+            _MotionManager.StopSkillEffect(effect);
+        }
     }
 
     protected override float GetTotalAnimLength()

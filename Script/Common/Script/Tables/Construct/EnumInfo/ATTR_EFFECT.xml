@@ -8,62 +8,62 @@
   </enumColumn>
   <enumColumn>
     <enumName>ATTACK_DAMAGE</enumName>
-    <enumCode>ATTACK_DAMAGE</enumCode>
+    <enumCode>DAMAGE</enumCode>
     <enumValue>10001</enumValue>
     <enumDesc>ATTACK_DAMAGE</enumDesc>
   </enumColumn>
   <enumColumn>
     <enumName>ATTACK_SPEED</enumName>
-    <enumCode>ATTACK_SPEED</enumCode>
+    <enumCode>SPEED</enumCode>
     <enumValue>10002</enumValue>
     <enumDesc>ATTACK_SPEED</enumDesc>
   </enumColumn>
   <enumColumn>
     <enumName>ATTACK_RANGE</enumName>
-    <enumCode>ATTACK_RANGE</enumCode>
+    <enumCode>RANGE</enumCode>
     <enumValue>10003</enumValue>
     <enumDesc>ATTACK_RANGE</enumDesc>
   </enumColumn>
   <enumColumn>
-    <enumName>SKILL_DAMAGE</enumName>
-    <enumCode>SKILL_DAMAGE</enumCode>
-    <enumValue>10101</enumValue>
-    <enumDesc>SKILL_DAMAGE</enumDesc>
-  </enumColumn>
-  <enumColumn>
-    <enumName>SKILL_SPEED</enumName>
-    <enumCode>SKILL_SPEED</enumCode>
-    <enumValue>10102</enumValue>
-    <enumDesc>SKILL_SPEED</enumDesc>
-  </enumColumn>
-  <enumColumn>
-    <enumName>SKILL_RANGE</enumName>
-    <enumCode>SKILL_RANGE</enumCode>
-    <enumValue>10103</enumValue>
-    <enumDesc>SKILL_RANGE</enumDesc>
-  </enumColumn>
-  <enumColumn>
     <enumName>SKILL_ACCUMULATE</enumName>
     <enumCode>SKILL_ACCUMULATE</enumCode>
-    <enumValue>10111</enumValue>
+    <enumValue>10101</enumValue>
     <enumDesc>SKILL_ACCUMULATE</enumDesc>
   </enumColumn>
   <enumColumn>
     <enumName>SKILL_SHADOWARRIOR</enumName>
     <enumCode>SKILL_SHADOWARRIOR</enumCode>
-    <enumValue>10112</enumValue>
+    <enumValue>10102</enumValue>
     <enumDesc>SKILL_SHADOWARRIOR</enumDesc>
   </enumColumn>
   <enumColumn>
-    <enumName>SKILL_BACKRANGE</enumName>
-    <enumCode>SKILL_BACKRANGE</enumCode>
-    <enumValue>10113</enumValue>
-    <enumDesc>SKILL_BACKRANGE</enumDesc>
+    <enumName>SKILL_EXATTACK</enumName>
+    <enumCode>SKILL_EXATTACK</enumCode>
+    <enumValue>10103</enumValue>
+    <enumDesc>SKILL_EXATTACK</enumDesc>
+  </enumColumn>
+  <enumColumn>
+    <enumName>SKILL_ACCUMULATE</enumName>
+    <enumCode>SKILL_ANOTHERUSE</enumCode>
+    <enumValue>10104</enumValue>
+    <enumDesc>SKILL_ACCUMULATE</enumDesc>
+  </enumColumn>
+  <enumColumn>
+    <enumName>SKILL_HW</enumName>
+    <enumCode>SKILL_HW</enumCode>
+    <enumValue>10105</enumValue>
+    <enumDesc>SKILL_HW</enumDesc>
+  </enumColumn>
+  <enumColumn>
+    <enumName>SKILL_SPCEILSKILL</enumName>
+    <enumCode>SKILL_SPCEILSKILL</enumCode>
+    <enumValue>10106</enumValue>
+    <enumDesc>SKILL_SPCEILSKILL</enumDesc>
   </enumColumn>
   <enumColumn>
     <enumName>SKILL_ACTBUFF</enumName>
     <enumCode>SKILL_ACTBUFF</enumCode>
-    <enumValue>10114</enumValue>
+    <enumValue>10201</enumValue>
     <enumDesc>SKILL_ACTBUFF</enumDesc>
   </enumColumn>
 </root>

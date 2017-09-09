@@ -25,13 +25,13 @@ public class ResourcePool : InstanceBase<ResourcePool>
     private void InitEffect()
     {
         _CommonHitEffect = new List<EffectController>();
-        var effect1 = GameBase.ResourceManager.Instance.GetGameObject("Effect/Hit/Effect_Dead_A_Hit");
+        var effect1 = ResourceManager.Instance.GetGameObject("Effect/Hit/Effect_Dead_A_Hit");
         _CommonHitEffect.Add(effect1.GetComponent<EffectController>());
 
-        var effect2 = GameBase.ResourceManager.Instance.GetGameObject("Effect/Hit/Effect_Dead_B_Hit");
+        var effect2 = ResourceManager.Instance.GetGameObject("Effect/Hit/Effect_Dead_B_Hit");
         _CommonHitEffect.Add(effect2.GetComponent<EffectController>());
 
-        var effect3 = GameBase.ResourceManager.Instance.GetGameObject("Effect/Hit/Effect_Blade_Red");
+        var effect3 = ResourceManager.Instance.GetGameObject("Effect/Hit/Effect_Blade_Red");
         _CommonHitEffect.Add(effect3.GetComponent<EffectController>());
     }
 
@@ -142,7 +142,7 @@ public class ResourcePool : InstanceBase<ResourcePool>
         if (monsterTab == null)
             return null;
 
-        var motion = GameBase.ResourceManager.Instance.GetInstanceGameObject("ModelBase/" + monsterTab.MotionPath);
+        var motion = ResourceManager.Instance.GetInstanceGameObject("ModelBase/" + monsterTab.MotionPath);
         var motionScript = motion.GetComponent<MotionManager>();
         var aiScript = motion.GetComponent<AI_Base>();
         aiScript.InitSkillGoes(motionScript);
@@ -157,7 +157,7 @@ public class ResourcePool : InstanceBase<ResourcePool>
         }
         if (modelObj == null)
         {
-            modelObj = GameBase.ResourceManager.Instance.GetInstanceGameObject("Model/" + monsterTab.ModelPath);
+            modelObj = ResourceManager.Instance.GetInstanceGameObject("Model/" + monsterTab.ModelPath);
             var animation = modelObj.GetComponent<Animation>();
             if (animation == null)
             {

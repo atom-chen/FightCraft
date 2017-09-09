@@ -8,16 +8,16 @@ public class ImpactHitForward : ImpactHit
 
     public override void ActImpact(MotionManager senderManager, MotionManager reciverManager)
     {
-        base.ActImpact(senderManager, reciverManager);
+        //base.ActImpact(senderManager, reciverManager);
 
         //HitMotion(senderManager, reciverManager);
 
-        if (reciverManager.BaseMotionManager.IsCanBePush())
-        {
-            Vector3 destMove = senderManager.transform.forward.normalized * _Speed * _Time;
+        Vector3 destMove = senderManager.transform.forward.normalized * _Speed * _Time;
 
-            reciverManager.SetMove(destMove, _Time / SkillMotion.SkillBaseSpeed);
-        }
+        //reciverManager.SetMove(destMove, _Time / SkillMotion.SkillBaseSpeed);
+        HitMotion(senderManager, reciverManager, destMove, _Time);
+
+        ProcessDamge(senderManager, reciverManager);
     }
 
 }

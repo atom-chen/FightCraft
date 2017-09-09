@@ -2,27 +2,21 @@
 using System.Collections;
 using System.Collections.Generic;
 
-using GameLogic;
+ 
 
-public class FightManager : SingleClass<FightManager>
+public class FightManager : InstanceBase<FightManager>
 {
 
     // Use this for initialization
     void Start ()
     {
-        _Instance = this;
+        SetInstance(this);
         InitResourcePool();
         InitScene();
         InitMainRole();
         InitCamera();
     }
 	
-	// Update is called once per frame
-	void FixedUpdate()
-    {
-        //LogicUpdate();
-    }
-
     #region Init
 
     private void InitCamera()
@@ -35,7 +29,7 @@ public class FightManager : SingleClass<FightManager>
         Camera.main.transform.localRotation = Quaternion.Euler(Vector3.zero);
         Camera.main.cullingMask &= ~(1 << LayerMask.NameToLayer("UI"));
 
-        var subUICamera = GameBase.ResourceManager.Instance.GetInstanceGameObject("Common/SubUICamera");
+        var subUICamera = ResourceManager.Instance.GetInstanceGameObject("Common/SubUICamera");
         subUICamera.transform.SetParent(Camera.main.transform);
         subUICamera.transform.localPosition = Vector3.zero;
         subUICamera.transform.localRotation = Quaternion.Euler(Vector3.zero);
@@ -75,7 +69,7 @@ public class FightManager : SingleClass<FightManager>
         string modelName = PlayerDataPack.Instance._SelectedRole.ModelName;
         string weaponName = PlayerDataPack.Instance._SelectedRole.GetWeaponModelName();
 
-        var mainBase = GameBase.ResourceManager.Instance.GetInstanceGameObject("ModelBase/" + mainBaseName);
+        var mainBase = ResourceManager.Instance.GetInstanceGameObject("ModelBase/" + mainBaseName);
         _MainChatMotion = mainBase.GetComponent<MotionManager>();
 
         _MainChatMotion.SetPosition(_FightScene._MainCharBornPos.position);
@@ -83,12 +77,12 @@ public class FightManager : SingleClass<FightManager>
         mainBase.tag = "Player";
         _MainChatMotion.InitRoleAttr(null);
 
-        var model = GameBase.ResourceManager.Instance.GetInstanceGameObject("Model/" + modelName);
+        var model = ResourceManager.Instance.GetInstanceGameObject("Model/" + modelName);
         model.transform.SetParent(mainBase.transform);
         model.transform.localPosition = Vector3.zero;
         model.transform.localRotation = Quaternion.Euler(Vector3.zero);
 
-        var weapon = GameBase.ResourceManager.Instance.GetInstanceGameObject("Model/" + weaponName);
+        var weapon = ResourceManager.Instance.GetInstanceGameObject("Model/" + weaponName);
         var weaponTrans = model.transform.FindChild("center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon");
         var weaponTransChild = weaponTrans.GetComponentsInChildren<Transform>();
         for (int i = weapon.transform.childCount - 1; i >= 0; --i)
@@ -103,21 +97,12 @@ public class FightManager : SingleClass<FightManager>
 
         //PlayerDataPack.Instance._SelectedRole.InitExAttrs();
         var motionTran = mainBase.transform.FindChild("Motion");
-        List<string> skillMotions = new List<string>() { "Attack", "Buff1", "Buff2", "Skill1", "Skill2", "Skill3", "Dush" };
-        if (PlayerDataPack.Instance._SelectedRole.Profession == Tables.PROFESSION.BOY_DEFENCE
-            || PlayerDataPack.Instance._SelectedRole.Profession == Tables.PROFESSION.GIRL_DEFENCE)
-        {
-            skillMotions.Add("Defence");
-        }
-        if (PlayerDataPack.Instance._SelectedRole.Profession == Tables.PROFESSION.GIRL_DOUGE
-            || PlayerDataPack.Instance._SelectedRole.Profession == Tables.PROFESSION.BOY_DOUGE)
-        {
-            skillMotions.Add("Roll");
-        }
+
+        List<string> skillMotions = RoleData.SelectRole.GetRoleSkills();
 
         foreach (var skillMotion in skillMotions)
         {
-            var motionObj = GameBase.ResourceManager.Instance.GetInstanceGameObject("SkillMotion/" + mainBaseName + "/" + skillMotion);
+            var motionObj = ResourceManager.Instance.GetInstanceGameObject("SkillMotion/" + PlayerDataPack.Instance._SelectedRole.MotionFold + "/" + skillMotion);
             if (motionObj != null)
             {
                 motionObj.transform.SetParent(motionTran);
@@ -133,7 +118,7 @@ public class FightManager : SingleClass<FightManager>
 
         _MainChatMotion.InitMotion();
         FightLayerCommon.SetPlayerLayer(_MainChatMotion);
-        GameUI.UIHPPanel.ShowHPItem(_MainChatMotion);
+        UIHPPanel.ShowHPItem(_MainChatMotion);
     }
 
     private void SetSkillElement(string skillName, ObjMotionSkillBase skillBase)
@@ -169,7 +154,7 @@ public class FightManager : SingleClass<FightManager>
         mainBase.InitMotion();
         FightLayerCommon.SetEnemyLayer(mainBase);
 
-        GameUI.UIHPPanel.ShowHPItem(mainBase);
+        UIHPPanel.ShowHPItem(mainBase);
         AI_Base aiBase = mainBase.GetComponent<AI_Base>();
         aiBase.SetCombatLevel(10);
 
@@ -200,7 +185,7 @@ public class FightManager : SingleClass<FightManager>
 
     private void InitScene()
     {
-        var sceneGO = GameBase.ResourceManager.Instance.GetInstanceGameObject("FightSceneLogic/" + LogicManager.Instance.EnterStageInfo.FightLogicPath);
+        var sceneGO = ResourceManager.Instance.GetInstanceGameObject("FightSceneLogic/" + LogicManager.Instance.EnterStageInfo.FightLogicPath);
         sceneGO.SetActive(true);
         _FightScene = sceneGO.GetComponent<FightSceneLogicBase>();
         StartCoroutine(StartSceneLogic());
@@ -220,7 +205,7 @@ public class FightManager : SingleClass<FightManager>
     public void LogicFinish(bool isWin)
     {
         Debug.Log("LogicFinish");
-        GameLogic.LogicManager.Instance.ExitFight();
+        LogicManager.Instance.ExitFight();
     }
 
     #endregion

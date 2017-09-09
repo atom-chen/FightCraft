@@ -2,28 +2,28 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace GameLogic
+
+
+public class GlobalValPack : DataPackBase
 {
-    public class GlobalValPack : DataPackBase
+    #region 单例
+
+    private static GlobalValPack _Instance;
+    public static GlobalValPack Instance
     {
-        #region 单例
-
-        private static GlobalValPack _Instance;
-        public static GlobalValPack Instance
+        get
         {
-            get
+            if (_Instance == null)
             {
-                if (_Instance == null)
-                {
-                    _Instance = new GlobalValPack();
-                }
-                return _Instance;
+                _Instance = new GlobalValPack();
             }
+            return _Instance;
         }
-
-        private GlobalValPack() { }
-
-        #endregion
-
     }
+
+    private GlobalValPack() { }
+
+    #endregion
+
 }
+

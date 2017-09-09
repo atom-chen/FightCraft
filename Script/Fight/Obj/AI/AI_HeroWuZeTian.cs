@@ -28,7 +28,7 @@ public class AI_HeroWuZeTian : AI_IntHeroBase
 
     private void CloseUpdate()
     {
-        if (_SelfMotion.ActingSkill != null)
+        if (_SelfMotion.ActingSkill!= null)
             return;
 
         if (StartSkill())
@@ -42,14 +42,11 @@ public class AI_HeroWuZeTian : AI_IntHeroBase
                 _CloseWait -= Time.fixedDeltaTime;
                 return;
             }
-            _SelfMotion.BaseMotionManager.MoveTarget(_TargetMotion.transform.position);
+            _SelfMotion.StartMoveState(_TargetMotion.transform.position);
         }
         else
         {
-            if (_SelfMotion.BaseMotionManager.IsMoving())
-            {
-                _SelfMotion.BaseMotionManager.StopMove();
-            }
+            _SelfMotion.StopMoveState();
             StartSkill();
             _CloseWait = _CloseInterval;
         }

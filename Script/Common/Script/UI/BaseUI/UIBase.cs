@@ -6,7 +6,8 @@ using System.Collections.Generic;
 public class UIBase : MonoBehaviour
 {
     
-    public string UIPath;
+    public string UIPath { get; set; }
+    public UILayer UILayer { get; set; }
 
     #region fiex fun
 
@@ -68,7 +69,7 @@ public class UIBase : MonoBehaviour
 
     public virtual void Destory()
     {
-        GameUI.UIManager.Instance.DestoryUI(this);
+        UIManager.Instance.DestoryUI(this);
     }
 
     public virtual void Destory(float time)

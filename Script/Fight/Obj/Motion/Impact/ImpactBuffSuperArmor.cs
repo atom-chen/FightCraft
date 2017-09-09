@@ -19,7 +19,8 @@ public class ImpactBuffSuperArmor : ImpactBuff
     {
         //GlobalEffect.Instance.Pause(0.1f);
         _BuffOwner.ResetMove();
-        _BuffOwner.SkillPause(0.1f);
+        _BuffOwner.ActionPause(0.1f);
+
         if(_HitEffect != null)
             _BuffOwner.PlaySkillEffect(_HitEffect);
         ((EffectOutLine)_DynamicEffect).PlayHitted();

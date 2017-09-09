@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-using GameUI;
+ 
 
 [System.Serializable]
 public class SerializeRandomEnemy

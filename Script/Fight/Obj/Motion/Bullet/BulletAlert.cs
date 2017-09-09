@@ -13,7 +13,7 @@ public class BulletAlert : BulletBase
     {
         if (_AlertPrefab == null)
         {
-            _AlertPrefab = GameBase.ResourceManager.Instance.GetInstanceGameObject("Bullet/Bullets/AlertBase");
+            _AlertPrefab = ResourceManager.Instance.GetInstanceGameObject("Bullet/Bullets/AlertBase");
         }
         var alertGO = ResourcePool.Instance.GetIdleUIItem<BulletAlert>(_AlertPrefab);
         alertGO.transform.SetParent(bullet);

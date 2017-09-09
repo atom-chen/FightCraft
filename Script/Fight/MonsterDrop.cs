@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-using GameLogic;
+ 
 
 public class DropItemData
 {
@@ -31,7 +31,7 @@ public class MonsterDrop
         Debug.Log("MonsterDripItems:" + monsterMotion.name);
 
         var drops = GetMonsterDrops(monsterMotion);
-        var randomPoses = GameBase.GameRandom.GetIndependentRandoms(0, 16, drops.Count);
+        var randomPoses = GameRandom.GetIndependentRandoms(0, 16, drops.Count);
         int posIdx = 0;
         foreach (var drop in drops)
         {
@@ -39,7 +39,7 @@ public class MonsterDrop
             ++posIdx;
             drop._DropPos = pos;
             drop._MonsterPos = monsterMotion.transform.position;
-            var obj = GameBase.ResourceManager.Instance.GetInstanceGameObject("Drop/DropItem");
+            var obj = ResourceManager.Instance.GetInstanceGameObject("Drop/DropItem");
             DropItem dropItem = obj.GetComponent<DropItem>();
             dropItem.InitDrop(drop);
         }
@@ -81,7 +81,7 @@ public class MonsterDrop
         if (dropEquip < 1000)
         {
             DropItemData drop = new DropItemData();
-            int quality = GameBase.GameRandom.GetRandomLevel(8000, 1900, 99, 1);
+            int quality = GameRandom.GetRandomLevel(8000, 1900, 99, 1);
             var dropItem = ItemEquip.CreateEquip(monsterMotion.RoleAttrManager.Level, (Tables.ITEM_QUALITY)quality, monsterMotion.RoleAttrManager.MonsterValue);
             drop._ItemEquip = dropItem;
             dropList.Add(drop);
@@ -104,7 +104,7 @@ public class MonsterDrop
 
         {
             DropItemData drop = new DropItemData();
-            int quality = GameBase.GameRandom.GetRandomLevel(8000, 1800, 195, 5);
+            int quality = GameRandom.GetRandomLevel(8000, 1800, 195, 5);
             var dropItem = ItemEquip.CreateEquip(monsterMotion.RoleAttrManager.Level, (Tables.ITEM_QUALITY)quality, monsterMotion.RoleAttrManager.MonsterValue);
             drop._ItemEquip = dropItem;
             dropList.Add(drop);
@@ -128,7 +128,7 @@ public class MonsterDrop
         for (int i = 0; i < dropEquipCnt; ++i)
         {
             DropItemData drop = new DropItemData();
-            int quality = GameBase.GameRandom.GetRandomLevel(4000, 5500, 450, 50);
+            int quality = GameRandom.GetRandomLevel(4000, 5500, 450, 50);
             var dropItem = ItemEquip.CreateEquip(monsterMotion.RoleAttrManager.Level, (Tables.ITEM_QUALITY)quality, monsterMotion.RoleAttrManager.MonsterValue);
             drop._ItemEquip = dropItem;
             dropList.Add(drop);
@@ -214,6 +214,6 @@ public class MonsterDrop
         {
             Debug.Log("Drop Empty");
         }
-        GameBase.ResourceManager.Instance.DestoryObj(dropItem.gameObject);
+        ResourceManager.Instance.DestoryObj(dropItem.gameObject);
     }
 }

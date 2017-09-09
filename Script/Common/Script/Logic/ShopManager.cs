@@ -1,28 +1,28 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace GameLogic
+
+
+public class ShopManager
 {
-    public class ShopManager
+    #region 单例
+
+    private static ShopManager _Instance;
+    public static ShopManager Instance
     {
-        #region 单例
-
-        private static ShopManager _Instance;
-        public static ShopManager Instance
+        get
         {
-            get
+            if (_Instance == null)
             {
-                if (_Instance == null)
-                {
-                    _Instance = new ShopManager();
-                }
-                return _Instance;
+                _Instance = new ShopManager();
             }
+            return _Instance;
         }
-
-        private ShopManager() { }
-
-        #endregion
-
     }
+
+    private ShopManager() { }
+
+    #endregion
+
 }
+

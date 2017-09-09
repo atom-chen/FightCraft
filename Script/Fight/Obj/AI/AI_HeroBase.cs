@@ -10,18 +10,23 @@ public class AI_HeroBase : AI_Base
         InitRise();
     }
 
+    protected override void AIUpdate()
+    {
+        base.AIUpdate();
+
+        RiseUpdate();
+    }
+
     #region rise
 
     private ObjMotionSkillBase _RiseBoom;
 
     private float _RiseTime = 1f;
+    private bool _IsRiseEvent = false;
 
     private void InitRise()
     {
-        _SelfMotion.EventController.RegisteEvent(GameBase.EVENT_TYPE.EVENT_MOTION_RISE, RiseEvent);
-        _SelfMotion.EventController.RegisteEvent(GameBase.EVENT_TYPE.EVENT_MOTION_RISE_FINISH, RiseFinishEvent);
-
-        var riseBoom = GameBase.ResourceManager.Instance.GetInstanceGameObject("SkillMotion/RiseBoomSkill");
+        var riseBoom = ResourceManager.Instance.GetInstanceGameObject("SkillMotion/RiseBoomSkill");
         var motionTrans = transform.FindChild("Motion");
         riseBoom.transform.SetParent(motionTrans);
         riseBoom.transform.localPosition = Vector3.zero;
@@ -31,15 +36,23 @@ public class AI_HeroBase : AI_Base
         _RiseBoom.Init();
     }
 
-    public void RiseEvent(object sender, Hashtable eventArgs)
+    private void RiseUpdate()
     {
-        Debug.Log("RiseEvent");
-        _RiseBoom.ActSkill();
-    }
-
-    public void RiseFinishEvent(object sender, Hashtable eventArgs)
-    {
-        
+        if (_SelfMotion._ActionState == _SelfMotion._StateRise)
+        {
+            if (!_IsRiseEvent)
+            {
+                _IsRiseEvent = true;
+                _RiseBoom.ActSkill();
+            }
+        }
+        else
+        {
+            if (_IsRiseEvent)
+            {
+                _IsRiseEvent = false;
+            }
+        }
     }
 
     #endregion
@@ -53,7 +66,7 @@ public class AI_HeroBase : AI_Base
         {
             if (_SuperArmorPrefab == null)
             {
-                var buffGO = GameBase.ResourceManager.Instance.GetGameObject("SkillMotion/SuperArmor");
+                var buffGO = ResourceManager.Instance.GetGameObject("SkillMotion/SuperArmor");
                 _SuperArmorPrefab = buffGO.GetComponent<ImpactBuff>();
             }
             return _SuperArmorPrefab;

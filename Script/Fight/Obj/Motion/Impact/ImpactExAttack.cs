@@ -6,7 +6,7 @@ public class ImpactExAttack : ImpactBase
 
     void Update()
     {
-        if (SkillMotion.MotionManager.ActingSkill != SkillMotion)
+        if (SkillMotion.MotionManager.ActingSkill!= SkillMotion)
         {
             RemoveImpact(SkillMotion.MotionManager);
             return;
@@ -33,7 +33,7 @@ public class ImpactExAttack : ImpactBase
     {
         if (InputManager.Instance.IsKeyHold("k"))
         {
-            SkillMotion.MotionManager.ActSkill(SkillMotion.MotionManager._SkillMotions["e"]);
+            SkillMotion.MotionManager.ActSkill(SkillMotion.MotionManager._StateSkill._SkillMotions["e"]);
         }
     }
 

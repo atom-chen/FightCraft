@@ -11,24 +11,21 @@ public class ImpactFlyToPos : ImpactFly
     {
         base.ActImpact(senderManager, reciverManager);
 
-        if (reciverManager.BaseMotionManager.IsCanBePush())
-        {
-            Vector3 hitPos = senderManager.transform.position + senderManager.transform.forward * _Offset.x + reciverManager.transform.right * _Offset.y;
-            Vector3 distance = hitPos - reciverManager.transform.position;
-            Vector3 destMove = (hitPos - reciverManager.transform.position).normalized * _Speed * _Time;
+        Vector3 hitPos = senderManager.transform.position + senderManager.transform.forward * _Offset.x + reciverManager.transform.right * _Offset.y;
+        Vector3 distance = hitPos - reciverManager.transform.position;
+        Vector3 destMove = (hitPos - reciverManager.transform.position).normalized * _Speed * _Time;
 
-            float moveTime = _Time;
-            float targetTime = distance.magnitude / _Speed;
-            if (targetTime < _Time)
-            {
-                moveTime = targetTime;
-            }
-            Debug.Log("FlyTime:" + moveTime);
-            if (moveTime > 0.01f)
-            {
-                reciverManager.SetMove(destMove, moveTime / SkillMotion.SkillBaseSpeed, hitPos);
-            }
+        float moveTime = _Time;
+        float targetTime = distance.magnitude / _Speed;
+        if (targetTime < _Time)
+        {
+            moveTime = targetTime;
         }
+
+        HitFlyMotion(senderManager, reciverManager, destMove, moveTime > 0.01 ? moveTime : 0);
+
+        ProcessDamge(senderManager, reciverManager);
+
     }
 
 }

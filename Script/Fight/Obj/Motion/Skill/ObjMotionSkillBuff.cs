@@ -11,11 +11,11 @@ public class ObjMotionSkillBuff : ObjMotionSkillBase
 
         if (InputManager.Instance.IsKeyHold("k"))
         {
-            if (_MotionManager._SkillMotions.ContainsKey(_ActSkillInput))
+            if (_MotionManager._StateSkill._SkillMotions.ContainsKey(_ActSkillInput))
             {
-                if (_MotionManager._SkillMotions[_ActSkillInput].CanSkillActAfterDebuff())
+                if (_MotionManager._StateSkill._SkillMotions[_ActSkillInput].CanSkillActAfterDebuff())
                 {
-                    _MotionManager.ActSkill(_MotionManager._SkillMotions[_ActSkillInput]);
+                    _MotionManager.ActSkill(_MotionManager._StateSkill._SkillMotions[_ActSkillInput]);
                 }
             }
         }

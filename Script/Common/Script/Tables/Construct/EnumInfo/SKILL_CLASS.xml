@@ -42,4 +42,22 @@
     <enumValue>6</enumValue>
     <enumDesc>BASE_ATTRS</enumDesc>
   </enumColumn>
+  <enumColumn>
+    <enumName>SKILL1</enumName>
+    <enumCode>SKILL1</enumCode>
+    <enumValue>10</enumValue>
+    <enumDesc>SKILL1</enumDesc>
+  </enumColumn>
+  <enumColumn>
+    <enumName>SKILL2</enumName>
+    <enumCode>SKILL2</enumCode>
+    <enumValue>11</enumValue>
+    <enumDesc>SKILL2</enumDesc>
+  </enumColumn>
+  <enumColumn>
+    <enumName>SKILL3</enumName>
+    <enumCode>SKILL3</enumCode>
+    <enumValue>12</enumValue>
+    <enumDesc>SKILL3</enumDesc>
+  </enumColumn>
 </root>

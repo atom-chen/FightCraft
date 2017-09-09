@@ -24,7 +24,7 @@ public class MapPosObj : MonoBehaviour
             return;
         }
 
-        var obj = GameBase.ResourceManager.Instance.GetInstanceGameObject("ModelBase/" + monsterBase.Name);
+        var obj = ResourceManager.Instance.GetInstanceGameObject("ModelBase/" + monsterBase.Name);
         obj.transform.SetParent(transform);
         obj.transform.localPosition = Vector3.zero;
         obj.transform.localRotation = Quaternion.Euler(Vector3.zero);

@@ -3,12 +3,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-using GameLogic;
+ 
 using UnityEngine.EventSystems;
 using System;
 
-namespace GameUI
-{
+ 
+
     public class AttrPair
     {
         public string AttrName;
@@ -21,28 +21,28 @@ namespace GameUI
         }
     }
 
-    public class RoleAttrItem : UIItemBase
+public class RoleAttrItem : UIItemBase
+{
+
+    public Text _AttrName;
+    public Text _AttrValue;
+
+    public override void Show(Hashtable hash)
     {
+        base.Show();
 
-        public Text _AttrName;
-        public Text _AttrValue;
+        var attrPair = (AttrPair)hash["InitObj"];
+        if (attrPair == null)
+            return;
 
-        public override void Show(Hashtable hash)
-        {
-            base.Show();
+        _AttrName.text = attrPair.AttrName;
+        _AttrValue.text = attrPair.AttrValue;
+    }
 
-            var attrPair = (AttrPair)hash["InitObj"];
-            if (attrPair == null)
-                return;
-
-            _AttrName.text = attrPair.AttrName;
-            _AttrValue.text = attrPair.AttrValue;
-        }
-
-        public void Show(string attrName, int value)
-        {
-            _AttrName.text = attrName.ToString();
-            _AttrValue.text = value.ToString();
-        }
+    public void Show(string attrName, int value)
+    {
+        _AttrName.text = attrName.ToString();
+        _AttrValue.text = value.ToString();
     }
 }
+

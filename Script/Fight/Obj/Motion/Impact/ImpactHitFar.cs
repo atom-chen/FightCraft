@@ -12,13 +12,11 @@ public class ImpactHitFar : ImpactHitForward
         if (length > 0)
             return;
 
-        HitMotion(senderManager, reciverManager);
-        if (reciverManager.BaseMotionManager.IsCanBePush())
-        {
-            Vector3 destMove = senderManager.transform.forward.normalized * _Speed * _Time;
+        Vector3 destMove = senderManager.transform.forward.normalized * _Speed * _Time;
 
-            reciverManager.SetMove(destMove, _Time / senderManager.RoleAttrManager.AttackSpeed);
-        }
+        HitMotion(senderManager, reciverManager, destMove, _Time);
+
+        ProcessDamge(senderManager, reciverManager);
     }
 
 }

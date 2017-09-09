@@ -9,14 +9,27 @@ public class ImpactHit : ImpactDamage
 
     public override void ActImpact(MotionManager senderManager, MotionManager reciverManager)
     {
-        base.ActImpact(senderManager, reciverManager);
+        //base.ActImpact(senderManager, reciverManager);
 
         HitMotion(senderManager, reciverManager);
     }
 
     protected virtual void HitMotion(MotionManager senderManager, MotionManager reciverManager)
     {
-        reciverManager.BaseMotionManager.HitEvent(_HitTime, _HitEffect, senderManager, this);
+        //reciverManager.BaseMotionManager.HitEvent(_HitTime, _HitEffect, senderManager, this);
+        reciverManager.HitEvent(_HitTime, _HitEffect, senderManager, this, Vector3.zero, 0);
     }
 
+    protected virtual void HitMotion(MotionManager senderManager, MotionManager reciverManager, Vector3 moveDirect, float moveTime)
+    {
+        //reciverManager.BaseMotionManager.HitEvent(_HitTime, _HitEffect, senderManager, this);
+        if (senderManager.ActingSkill != null)
+        {
+            reciverManager.HitEvent(_HitTime, _HitEffect, senderManager, this, moveDirect, moveTime / senderManager.ActingSkill.SkillBaseSpeed);
+        }
+        else
+        {
+            reciverManager.HitEvent(_HitTime, _HitEffect, senderManager, this, moveDirect, moveTime);
+        }
+    }
 }

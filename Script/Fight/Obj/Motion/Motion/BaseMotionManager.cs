@@ -46,12 +46,12 @@ public class BaseMotionManager : MonoBehaviour
         eventHash.Add("Sender", impactSender);
         if (_MotionManager.MotionPrior == FLY_PRIOR || _MotionManager.MotionPrior == LIE_PRIOR)
         {
-            _MotionManager.EventController.PushEvent(GameBase.EVENT_TYPE.EVENT_MOTION_FLY, this, eventHash);
+            _MotionManager.EventController.PushEvent(EVENT_TYPE.EVENT_MOTION_FLY, this, eventHash);
             MotionFlyStay(hitTime, hitEffect, impactSender);
         }
         else if(_MotionManager.MotionPrior <= HIT_PRIOR)
         {
-            _MotionManager.EventController.PushEvent(GameBase.EVENT_TYPE.EVENT_MOTION_HIT, this, eventHash);
+            _MotionManager.EventController.PushEvent(EVENT_TYPE.EVENT_MOTION_HIT, this, eventHash);
             MotionHit(hitTime, hitEffect, impactSender);
         }
          
@@ -71,7 +71,7 @@ public class BaseMotionManager : MonoBehaviour
 
         Hashtable eventHash = new Hashtable();
         eventHash.Add("Sender", impactSender);
-        _MotionManager.EventController.PushEvent(GameBase.EVENT_TYPE.EVENT_MOTION_FLY, this, eventHash);
+        _MotionManager.EventController.PushEvent(EVENT_TYPE.EVENT_MOTION_FLY, this, eventHash);
         MotionFly(flyHeight, hitEffect, impactSender);
     }
 
@@ -144,7 +144,7 @@ public class BaseMotionManager : MonoBehaviour
         if (_MotionManager.MotionPrior != MOVE_PRIOR && _MotionManager.MotionPrior > IDLE_PRIOR)
             return false;
 
-        if (_MotionManager.ActingSkill != null)
+        if (_MotionManager.ActingSkill!= null)
             return false;
 
         return true;
@@ -174,7 +174,7 @@ public class BaseMotionManager : MonoBehaviour
         if (_MotionManager.MotionPrior > MOVE_PRIOR)
             return false;
 
-        if (_MotionManager.ActingSkill != null)
+        if (_MotionManager.ActingSkill!= null)
             return false;
 
         return true;
@@ -295,7 +295,7 @@ public class BaseMotionManager : MonoBehaviour
         if (hitTime <= 0)
             return;
 
-        if (_MotionManager.ActingSkill != null)
+        if (_MotionManager.ActingSkill!= null)
             _MotionManager.ActingSkill.FinishSkill();
 
         if(_MotionManager.MotionPrior == MOVE_PRIOR)
@@ -319,7 +319,7 @@ public class BaseMotionManager : MonoBehaviour
     {
         if (_StopKeyFrameTime > 0)
         {
-            _MotionManager.PauseAnimation(_HitAnim);
+            _MotionManager.PauseAnimation(_HitAnim, -1);
             StartCoroutine(ComsumeAnim());
         }
     }
@@ -386,7 +386,7 @@ public class BaseMotionManager : MonoBehaviour
         Debug.Log("MotionFly");
         PlayHitEffect(impactSender, effectID);
 
-        if (_MotionManager.ActingSkill != null)
+        if (_MotionManager.ActingSkill!= null)
             _MotionManager.ActingSkill.FinishSkill();
 
         if (_MotionManager.MotionPrior == MOVE_PRIOR)
@@ -486,7 +486,7 @@ public class BaseMotionManager : MonoBehaviour
     {
         _MotionManager.MotionPrior = RISE_PRIOR;
         _MotionManager.PlayAnimation(_RiseAnim);
-        _MotionManager.EventController.PushEvent(GameBase.EVENT_TYPE.EVENT_MOTION_RISE, this, new Hashtable());
+        _MotionManager.EventController.PushEvent(EVENT_TYPE.EVENT_MOTION_RISE, this, new Hashtable());
     }
 
     private IEnumerator MotionCorpse()
@@ -516,7 +516,7 @@ public class BaseMotionManager : MonoBehaviour
     {
         MotionIdle();
         _MotionManager.ResumeCorpsePrior();
-        _MotionManager.EventController.PushEvent(GameBase.EVENT_TYPE.EVENT_MOTION_RISE_FINISH, this, new Hashtable());
+        _MotionManager.EventController.PushEvent(EVENT_TYPE.EVENT_MOTION_RISE_FINISH, this, new Hashtable());
     }
 
     private void DispatchRiseEvent(string funcName, object param)
@@ -540,7 +540,7 @@ public class BaseMotionManager : MonoBehaviour
         if (hitTime <= 0)
             return;
 
-        if (_MotionManager.ActingSkill != null)
+        if (_MotionManager.ActingSkill!= null)
             _MotionManager.ActingSkill.FinishSkill();
 
         if (_MotionManager.MotionPrior == MOVE_PRIOR)
@@ -579,7 +579,7 @@ public class BaseMotionManager : MonoBehaviour
     {
         if (_StopCatchTime > 0)
         {
-            _MotionManager.PauseAnimation(_HitAnim);
+            _MotionManager.PauseAnimation(_HitAnim, -1);
             StartCoroutine(StopCatch(_StopCatchTime));
         }
     }

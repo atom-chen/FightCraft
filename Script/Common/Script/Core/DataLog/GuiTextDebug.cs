@@ -25,7 +25,7 @@ public class GuiTextDebug : MonoBehaviour
         debugBoxStyle = new GUIStyle();
         debugBoxStyle.alignment = TextAnchor.UpperLeft;
         leftSide = 120;
-
+        Debug.Log("path:" + Application.persistentDataPath);
         DontDestroyOnLoad(gameObject);
     }
 

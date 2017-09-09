@@ -73,6 +73,20 @@ public class ImpactBuff : ImpactBase
         ownerManager.RemoveBuff(this);
     }
 
+    #region 
+
+    public enum BuffModifyType
+    {
+        IsCanHit = 1,
+        IsCanCatch,
+        DamageValue,
+    }
+
+    public virtual void BuffModify(BuffModifyType type, params object[] args)
+    {
+
+    }
+
     public virtual bool IsBuffCanHit(ImpactHit damageImpact)
     {
         return true;
@@ -87,4 +101,6 @@ public class ImpactBuff : ImpactBase
     {
         return orgDamage;
     }
+
+    #endregion
 }

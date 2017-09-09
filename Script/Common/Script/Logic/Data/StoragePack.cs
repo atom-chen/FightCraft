@@ -2,30 +2,30 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace GameLogic
+
+
+public class StoragePack : DataPackBase
 {
-    public class StoragePack : DataPackBase
+    #region 单例
+
+    private static StoragePack _Instance;
+    public static StoragePack Instance
     {
-        #region 单例
-
-        private static StoragePack _Instance;
-        public static StoragePack Instance
+        get
         {
-            get
+            if (_Instance == null)
             {
-                if (_Instance == null)
-                {
-                    _Instance = new StoragePack();
-                }
-                return _Instance;
+                _Instance = new StoragePack();
             }
+            return _Instance;
         }
-
-        private StoragePack() { }
-
-        #endregion
-
-        [SaveField(1)]
-        private List<ItemBase> _ItemBase;
     }
+
+    private StoragePack() { }
+
+    #endregion
+
+    [SaveField(1)]
+    private List<ItemBase> _ItemBase;
 }
+

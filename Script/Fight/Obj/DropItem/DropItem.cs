@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using GameLogic;
+ 
 
 public class DropItem : MonoBehaviour
 {
@@ -70,12 +70,12 @@ public class DropItem : MonoBehaviour
         _DropSpeed = (dropData._DropPos - dropData._MonsterPos) / _DropTime;
         _MoveTime = 0;
 
-        GameUI.UIDropNamePanel.ShowDropItem(this);
+        UIDropNamePanel.ShowDropItem(this);
     }
 
     private void InitGoldModel(int gold)
     {
-        var obj = GameBase.ResourceManager.Instance.GetInstanceGameObject("Drop/Drop_055/Drop_055");
+        var obj = ResourceManager.Instance.GetInstanceGameObject("Drop/Drop_055/Drop_055");
         obj.transform.SetParent(transform);
         obj.transform.localPosition = Vector3.zero;
 
@@ -85,7 +85,7 @@ public class DropItem : MonoBehaviour
 
     private void InitItemModel(ItemBase itembase)
     {
-        var obj = GameBase.ResourceManager.Instance.GetInstanceGameObject(itembase.CommonItemRecord.DropItem);
+        var obj = ResourceManager.Instance.GetInstanceGameObject(itembase.CommonItemRecord.DropItem);
         obj.transform.SetParent(transform);
         obj.transform.localPosition = Vector3.zero;
 

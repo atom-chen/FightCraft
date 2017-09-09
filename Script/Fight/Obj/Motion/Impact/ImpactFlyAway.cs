@@ -8,11 +8,11 @@ public class ImpactFlyAway : ImpactFly
 
     public override void ActImpact(MotionManager senderManager, MotionManager reciverManager)
     {
-        base.ActImpact(senderManager, reciverManager);
-
         Vector3 destMove = (reciverManager.transform.position - senderManager.transform.position).normalized * _Speed * _Time;
-        Debug.Log("DestMove:" + destMove);
-        reciverManager.SetMove(destMove, _Time / SkillMotion.SkillBaseSpeed);
+
+        HitFlyMotion(senderManager, reciverManager, destMove, _Time);
+
+        ProcessDamge(senderManager, reciverManager);
     }
 
 }

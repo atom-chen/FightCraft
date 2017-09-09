@@ -8,13 +8,13 @@ public class ImpactFlyForward : ImpactFly
 
     public override void ActImpact(MotionManager senderManager, MotionManager reciverManager)
     {
-        base.ActImpact(senderManager, reciverManager);
 
-        if (reciverManager.BaseMotionManager.IsCanBePush() && _Time > 0)
-        {
-            Vector3 destMove = senderManager.transform.forward.normalized * _Speed * _Time;
-            reciverManager.SetMove(destMove, _Time / SkillMotion.SkillBaseSpeed);
-        }
+        Vector3 destMove = senderManager.transform.forward.normalized * _Speed * _Time;
+
+        HitFlyMotion(senderManager, reciverManager, destMove, _Time);
+
+        ProcessDamge(senderManager, reciverManager);
+
     }
 
 }

@@ -16,6 +16,7 @@ public class ObjMotionSkillBase : MonoBehaviour
 
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.Euler(Vector3.zero);
+
         _SkillAttr = _MotionManager.RoleAttrManager.GetSkillAttr(_ActInput);
         InitExAttack();
         InitCollider(_SkillAttr);
@@ -47,13 +48,21 @@ public class ObjMotionSkillBase : MonoBehaviour
         }
     }
 
-    protected float _SkillLastTime;
     protected RoleAttrManager.SkillAttr _SkillAttr;
 
     public virtual bool IsCanActSkill()
     {
-        if (_MotionManager.MotionPrior < _SkillMotionPrior)
+        if (_MotionManager._ActionState == _MotionManager._StateIdle)
             return true;
+
+        if (_MotionManager._ActionState == _MotionManager._StateMove)
+            return true;
+
+        if (_MotionManager._ActionState == _MotionManager._StateSkill)
+        {
+            if (_MotionManager.ActingSkill._SkillMotionPrior < _SkillMotionPrior)
+                return true;
+        }
 
         return false;
     }
@@ -312,7 +321,7 @@ public class ObjMotionSkillBase : MonoBehaviour
         {
             actSpeed += _SkillAttr.SpeedAdd;
         }
-        var shadowEffect = GameBase.ResourceManager.Instance.GetInstanceGameObject("Effect/Skill/Effect_Char_AfterAnim");
+        var shadowEffect = ResourceManager.Instance.GetInstanceGameObject("Effect/Skill/Effect_Char_AfterAnim");
         var shadowScript = shadowEffect.GetComponent<EffectAfterAnim>();
         shadowScript._Duration = GetTotalAnimLength();
         shadowScript._Interval = 0.1f;
@@ -324,11 +333,12 @@ public class ObjMotionSkillBase : MonoBehaviour
         {
             for (int i = 0; i < _SkillAttr.ShadowWarriorCnt; ++i)
             {
-                var damageDelay = damageImpact.gameObject.AddComponent<ImpactDamageDelay>();
-                damageDelay._DamageRate = damageImpact._DamageRate * _SkillAttr.ShadowWarriorDamageRate;
-                damageDelay._DelayTime = 0.1f * (1 + i);
+                //var damageDelay = damageImpact.gameObject.AddComponent<ImpactDamageDelay>();
+                //damageDelay._DamageRate = damageImpact._DamageRate * _SkillAttr.ShadowWarriorDamageRate;
+                //damageDelay._DelayTime = 0.1f * (1 + i);
 
                 var hitDelay = damageImpact.gameObject.AddComponent<ImpactHitDelay>();
+                hitDelay._DamageRate = damageImpact._DamageRate * _SkillAttr.ShadowWarriorDamageRate;
                 hitDelay._HitTime = 0.1f;
                 hitDelay._HitEffect = -1;
                 hitDelay._DelayTime = 0.1f * (1 + i);
@@ -345,9 +355,9 @@ public class ObjMotionSkillBase : MonoBehaviour
         if (_AccumulateAnim == null)
         {
             if (MotionManager.gameObject.name.Contains("Girl"))
-                _AccumulateAnim = GameBase.ResourceManager.Instance.GetAnimationClip("Animation/Girl/Act_S_Skill_Accumulate");
+                _AccumulateAnim = ResourceManager.Instance.GetAnimationClip("Animation/MainCharGirl/Act_S_Skill_Accumulate");
             else
-                _AccumulateAnim = GameBase.ResourceManager.Instance.GetAnimationClip("Animation/Boy/Act_HW_Skill_Accumulate");
+                _AccumulateAnim = ResourceManager.Instance.GetAnimationClip("Animation/MainCharBoy/Act_HW_Skill_Accumulate");
 
             _MotionManager.InitAnimation(_AccumulateAnim);
         }
@@ -374,11 +384,11 @@ public class ObjMotionSkillBase : MonoBehaviour
             return;
 
         GameObject attackImpact = null;
-        if (GameLogic.PlayerDataPack.Instance._SelectedRole.Profession == Tables.PROFESSION.GIRL_DEFENCE
-            || GameLogic.PlayerDataPack.Instance._SelectedRole.Profession == Tables.PROFESSION.GIRL_DOUGE)
-            attackImpact = GameBase.ResourceManager.Instance.GetInstanceGameObject("SkillMotion/MainCharGirl/ExAttackImpact");
+        if (PlayerDataPack.Instance._SelectedRole.Profession == Tables.PROFESSION.GIRL_DEFENCE
+            || PlayerDataPack.Instance._SelectedRole.Profession == Tables.PROFESSION.GIRL_DOUGE)
+            attackImpact = ResourceManager.Instance.GetInstanceGameObject("SkillMotion/MainCharGirl/ExAttackImpact");
         else
-            attackImpact = GameBase.ResourceManager.Instance.GetInstanceGameObject("SkillMotion/MainCharBoy/ExAttackImpact");
+            attackImpact = ResourceManager.Instance.GetInstanceGameObject("SkillMotion/MainCharBoy/ExAttackImpact");
 
         attackImpact.transform.SetParent(transform);
 
@@ -425,7 +435,7 @@ public class ObjMotionSkillBase : MonoBehaviour
         var emitterPos = GetComponent<BulletEmitterBasePos>();
         foreach (var exBullet in _SkillAttr.ExBullets)
         {
-            var bulletGO = GameBase.ResourceManager.Instance.GetInstanceGameObject(exBullet);
+            var bulletGO = ResourceManager.Instance.GetInstanceGameObject(exBullet);
             if (bulletGO == null)
             {
                 Debug.LogError("Error bullet:" + exBullet);

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-using GameUI;
+ 
 
 public class FightSceneAreaKBossWithFish : FightSceneAreaBase
 {

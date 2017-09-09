@@ -2,20 +2,20 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace GameBase
+
+
+public class ListTool
 {
-    public class ListTool
+
+    public static void ExcludeEmpty(IList list)
     {
+        list.Remove(null);
+    }
 
-        public static void ExcludeEmpty(IList list)
-        {
-            list.Remove(null);
-        }
-
-        public static void ExcludeEmptyStr(IList list)
-        {
-            list.Remove("");
-            list.Remove(null);
-        }
+    public static void ExcludeEmptyStr(IList list)
+    {
+        list.Remove("");
+        list.Remove(null);
     }
 }
+

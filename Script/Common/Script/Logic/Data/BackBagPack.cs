@@ -2,78 +2,142 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace GameLogic
+
+
+public class BackBagPack : DataPackBase
 {
-    public class BackBagPack : DataPackBase
+    #region 单例
+
+    private static BackBagPack _Instance;
+    public static BackBagPack Instance
     {
-        #region 单例
-
-        private static BackBagPack _Instance;
-        public static BackBagPack Instance
+        get
         {
-            get
+            if (_Instance == null)
             {
-                if (_Instance == null)
-                {
-                    _Instance = new BackBagPack();
-                }
-                return _Instance;
+                _Instance = new BackBagPack();
+            }
+            return _Instance;
+        }
+    }
+
+    private BackBagPack()
+    {
+        GuiTextDebug.debug("BackBagPack init");
+    }
+
+    #endregion
+
+    public const int _BAG_PAGE_SLOT_CNT = 25;
+
+    [SaveField(1)]
+    private List<ItemEquip> _PageEquips = new List<ItemEquip>();
+    public List<ItemEquip> PageEquips
+    {
+        get
+        {
+            return _PageEquips;
+        }
+    }
+
+    [SaveField(2)]
+    private List<ItemBase> _PageItems = new List<ItemBase>();
+    public List<ItemBase> PageItems
+    {
+        get
+        {
+            return _PageItems;
+        }
+    }
+
+    public void InitBackPack()
+    {
+        if (_PageEquips == null || _PageEquips.Count == 0)
+        {
+            int equipSlotCnt = _BAG_PAGE_SLOT_CNT;
+            _PageEquips = new List<ItemEquip>();
+            for (int i = 0; i < equipSlotCnt; ++i)
+            {
+                ItemEquip newItemEquip = new ItemEquip();
+                newItemEquip.ItemDataID = "-1";
+                newItemEquip._SaveFileName = "BackPack.Equip" + i;
+                _PageEquips.Add(newItemEquip);
             }
         }
 
-        private BackBagPack()
+        if (_PageItems == null || _PageItems.Count == 0)
         {
-            GuiTextDebug.debug("BackBagPack init");
-        }
-
-        #endregion
-
-        public const int _BAG_PAGE_SLOT_CNT = 25;
-
-        [SaveField(1)]
-        private List<ItemEquip> _ItemEquips = new List<ItemEquip>();
-        public List<ItemEquip> ItemEquips
-        {
-            get
+            int equipSlotCnt = _BAG_PAGE_SLOT_CNT;
+            _PageItems = new List<ItemBase>();
+            for (int i = 0; i < equipSlotCnt; ++i)
             {
-                return _ItemEquips;
+                ItemBase newItemEquip = new ItemBase();
+                newItemEquip.ItemDataID = "-1";
+                newItemEquip._SaveFileName = "BackPack.Item" + i;
+                _PageItems.Add(newItemEquip);
             }
         }
+    }
 
-        [SaveField(2)]
-        private List<ItemBase> _ItemBases = new List<ItemBase>();
-        public List<ItemBase> ItemBases
+    public bool AddEquip(ItemEquip equip)
+    {
+        if (PageEquips.Count >= _BAG_PAGE_SLOT_CNT)
         {
-            get
-            {
-                return _ItemBases;
-            }
+            return false;
         }
 
+        PageEquips.Add(equip);
+        LogicManager.Instance.SaveGame();
+        return true;
+    }
 
-        public bool AddEquip(ItemEquip equip)
+    public bool AddItem(ItemBase item)
+    {
+        if (PageItems.Count >= _BAG_PAGE_SLOT_CNT)
         {
-            if (ItemEquips.Count >= _BAG_PAGE_SLOT_CNT)
-            {
-                return false;
-            }
-
-            ItemEquips.Add(equip);
-            LogicManager.Instance.SaveGame();
-            return true;
+            return false;
         }
 
-        public bool AddItem(ItemBase item)
+        PageItems.Add(item);
+        LogicManager.Instance.SaveGame();
+        return true;
+    }
+
+    public ItemEquip GetEmptyPageEquip()
+    {
+        for (int i = 0; i < PageEquips.Count; ++i)
         {
-            if (ItemBases.Count >= _BAG_PAGE_SLOT_CNT)
+            if (!PageEquips[i].IsVolid())
             {
-                return false;
+                return PageEquips[i];
             }
-
-            ItemBases.Add(item);
-            LogicManager.Instance.SaveGame();
-            return true;
         }
+        return null;
+    }
 
+    public ItemBase GetEmptyPageItem()
+    {
+        for (int i = 0; i < PageItems.Count; ++i)
+        {
+            if (!PageItems[i].IsVolid())
+            {
+                return PageItems[i];
+            }
+        }
+        return null;
+    }
+
+    public ItemEquip AddNewEquip(ItemEquip itemEquip)
+    {
+        for (int i = 0; i < PageEquips.Count; ++i)
+        {
+            if (string.IsNullOrEmpty(PageEquips[i].ItemDataID) || PageEquips[i].ItemDataID == "-1")
+            {
+                PageEquips[i].ExchangeInfo(itemEquip);
+                return PageEquips[i];
+            }
+        }
+        return null;
     }
 }
+

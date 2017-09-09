@@ -16,7 +16,7 @@ public class ObjMotionDefence : ObjMotionSkillBase
     public void PlayMotionHit(object go, Hashtable eventArgs)
     {
 
-        if ((GameBase.EVENT_TYPE)eventArgs["EVENT_TYPE"] == GameBase.EVENT_TYPE.EVENT_MOTION_HIT)
+        if ((EVENT_TYPE)eventArgs["EVENT_TYPE"] == EVENT_TYPE.EVENT_MOTION_HIT)
         {
             eventArgs.Add("StopEvent", true);
         }

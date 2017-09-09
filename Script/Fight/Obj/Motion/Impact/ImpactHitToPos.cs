@@ -9,28 +9,23 @@ public class ImpactHitToPos : ImpactHit
 
     public override void ActImpact(MotionManager senderManager, MotionManager reciverManager)
     {
-        base.ActImpact(senderManager, reciverManager);
 
-        //HitMotion(senderManager, reciverManager);
+        Vector3 hitPos = senderManager.transform.position + senderManager.transform.forward * _Offset.x + reciverManager.transform.right * _Offset.y;
+        Vector3 distance = hitPos - reciverManager.transform.position;
+        Vector3 destMove = (hitPos - reciverManager.transform.position).normalized * _Speed * _Time;
 
-        if (reciverManager.BaseMotionManager.IsCanBePush())
+        float moveTime = _Time;
+        float targetTime = distance.magnitude / _Speed;
+        if (targetTime < _Time)
         {
-            Vector3 hitPos = senderManager.transform.position + senderManager.transform.forward * _Offset.x + reciverManager.transform.right * _Offset.y;
-            Vector3 distance = hitPos - reciverManager.transform.position;
-            Vector3 destMove = (hitPos - reciverManager.transform.position).normalized * _Speed * _Time;
-
-            float moveTime = _Time;
-            float targetTime = distance.magnitude / _Speed;
-            if (targetTime < _Time)
-            {
-                moveTime = targetTime;
-            }
-
-            if (moveTime > 0.01f)
-            {
-                reciverManager.SetMove(destMove, moveTime / SkillMotion.SkillBaseSpeed, hitPos);
-            }
+            moveTime = targetTime;
         }
+
+
+        HitMotion(senderManager, reciverManager, destMove, moveTime > 0.01 ? moveTime : 0);
+
+        ProcessDamge(senderManager, reciverManager);
+
     }
 
 }

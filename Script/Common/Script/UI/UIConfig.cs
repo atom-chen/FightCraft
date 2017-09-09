@@ -3,21 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-namespace GameUI
+
+
+public enum UILayer
 {
-    public enum UILayer
-    {
-        ControlUI,
-        BaseUI,
-        MainFunUI,
-        PopUI,
-        MessageUI,
-        TopUI
-    }
+    ControlUI,
+    BaseUI,
+    MainFunUI,
+    PopUI,
+    MessageUI,
+    TopUI
+}
 
-    public class UIConfig
-    {
+public class UIConfig
+{
 
-        
-    }
+
 }

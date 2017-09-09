@@ -4,18 +4,17 @@ using System.Reflection;
 using System;
 using UnityEngine;
 
-using GameBase;
+ 
 using Tables;
-using GameUI;
 
-namespace GameLogic
+
+
+
+public class DataPackBase : SaveItemBase
 {
-    public class DataPackBase
-    {
-        #region 
+    #region 
 
-        public virtual void InitEvents() { }
+    
 
-        #endregion
-    }
+    #endregion
 }

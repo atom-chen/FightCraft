@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-using GameLogic;
+ 
 using Tables;
 
 public enum MotionType
@@ -486,17 +486,17 @@ public class RoleAttrManager : MonoBehaviour
         if (MotionType == MotionType.MainChar)
         {
             //GameUI.UIDamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, GameUI.ShowDamageType.Hurt, 1);
-            GameUI.DamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, GameUI.ShowDamageType.Hurt, 1);
+            DamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, ShowDamageType.Hurt, 1);
         }
         else if (damageClass.IsCriticle)
         {
             //GameUI.UIDamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, GameUI.ShowDamageType.Critical, 1);
-            GameUI.DamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, GameUI.ShowDamageType.Critical, 1);
+            DamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, ShowDamageType.Critical, 1);
         }
         else
         {
             //GameUI.UIDamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, GameUI.ShowDamageType.Normal, 1);
-            GameUI.DamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, GameUI.ShowDamageType.Normal, 1);
+            DamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, ShowDamageType.Normal, 1);
         }
 
         DamageHP(damageClass.TotalDamageValue + damageClass.AttachDamageValue);
@@ -650,7 +650,7 @@ public class RoleAttrManager : MonoBehaviour
 
     private void InitEvent()
     {
-        _MotionManager.EventController.RegisteEvent(GameBase.EVENT_TYPE.EVENT_FIGHT_ATTR_DAMAGE, DamageEvent);
+        //_MotionManager.EventController.RegisteEvent(EVENT_TYPE.EVENT_FIGHT_ATTR_DAMAGE, DamageEvent);
     }
 
     public void SendDamageEvent(MotionManager targetMotion, float skillDamageRate, ImpactBase impactBase)
@@ -665,7 +665,7 @@ public class RoleAttrManager : MonoBehaviour
         hash.Add("DamagePos", damagePosition);
         hash.Add("ImpactBase", impactBase);
 
-        targetMotion.EventController.PushEvent(GameBase.EVENT_TYPE.EVENT_FIGHT_ATTR_DAMAGE, this, hash);
+        targetMotion.RoleAttrManager.CalculateDamage(this, hash);
     }
 
     public void DamageEvent(object go, Hashtable eventArgs)

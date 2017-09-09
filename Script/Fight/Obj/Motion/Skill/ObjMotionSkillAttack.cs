@@ -138,7 +138,6 @@ public class ObjMotionSkillAttack : ObjMotionSkillBase
             //}
             InputManager.Instance.AutoRotate();
             PlayAnimation(_NextAnim[_CurStep]);
-            _SkillLastTime = _NextAnim[_CurStep].length;
             if (_NextEffect.Length > _CurStep && _NextEffect[_CurStep] != null)
             {
                 PlaySkillEffect(_NextEffect[_CurStep]);

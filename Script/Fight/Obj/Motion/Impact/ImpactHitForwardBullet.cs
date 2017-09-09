@@ -8,16 +8,13 @@ public class ImpactHitForwardBullet : ImpactHit
 
     public override void ActImpact(MotionManager senderManager, MotionManager reciverManager)
     {
-        base.ActImpact(senderManager, reciverManager);
 
-        //HitMotion(senderManager, reciverManager);
+        Vector3 destMove = transform.forward.normalized * _Speed * _Time;
 
-        if (reciverManager.BaseMotionManager.IsCanBePush())
-        {
-            Vector3 destMove = transform.forward.normalized * _Speed * _Time;
+        HitMotion(senderManager, reciverManager, destMove, _Time);
 
-            reciverManager.SetMove(destMove, _Time);
-        }
+        ProcessDamge(senderManager, reciverManager);
+
     }
 
 }

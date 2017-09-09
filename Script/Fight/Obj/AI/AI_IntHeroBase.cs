@@ -35,7 +35,7 @@ public class AI_IntHeroBase : AI_HeroBase
         {
             if (_IntStage2Buff == null)
             {
-                var buffGO = GameBase.ResourceManager.Instance.GetGameObject("SkillMotion/IntShieldBuff");
+                var buffGO = ResourceManager.Instance.GetGameObject("SkillMotion/IntShieldBuff");
                 _IntStage2Buff = buffGO.GetComponents<ImpactBuff>();
             }
             return _IntStage2Buff;

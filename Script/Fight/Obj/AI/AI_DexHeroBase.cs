@@ -36,7 +36,7 @@ public class AI_DexHeroBase : AI_HeroBase
         {
             if (_DexStage2Buff == null)
             {
-                var buffGO = GameBase.ResourceManager.Instance.GetGameObject("SkillMotion/DexAccelateBuff");
+                var buffGO = ResourceManager.Instance.GetGameObject("SkillMotion/DexAccelateBuff");
                 _DexStage2Buff = buffGO.GetComponents<ImpactBuff>();
             }
             return _DexStage2Buff;
@@ -79,7 +79,7 @@ public class AI_DexHeroBase : AI_HeroBase
 
     private void InitBlockSkill()
     {
-        var blockSkill = GameBase.ResourceManager.Instance.GetInstanceGameObject("SkillMotion/BlockSkill");
+        var blockSkill = ResourceManager.Instance.GetInstanceGameObject("SkillMotion/BlockSkill");
         var motionTrans = _SelfMotion.transform.FindChild("Motion");
         blockSkill.transform.SetParent(motionTrans);
         _SkillBlock = blockSkill.GetComponent<ObjMotionSkillBlock>();
@@ -87,7 +87,7 @@ public class AI_DexHeroBase : AI_HeroBase
         _SkillBlock.Init();
 
         _LastBlockTime = -_BlockCD;
-        _SelfMotion.EventController.RegisteEvent(GameBase.EVENT_TYPE.EVENT_MOTION_HIT, HitEvent);
+        _SelfMotion.EventController.RegisteEvent(EVENT_TYPE.EVENT_MOTION_HIT, HitEvent);
     }
 
     private void HitEvent(object sender, Hashtable eventArgs)

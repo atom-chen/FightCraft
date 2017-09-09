@@ -10,11 +10,11 @@ public class MotionManager : MonoBehaviour
     {
         gameObject.SetActive(true);
 
-        _EventController = GetComponent<GameBase.EventController>();
-        if (_EventController == null)
-        {
-            _EventController = gameObject.AddComponent<GameBase.EventController>();
-        }
+        //_EventController = GetComponent<EventController>();
+        //if (_EventController == null)
+        //{
+        //    _EventController = gameObject.AddComponent<EventController>();
+        //}
 
         InitRoleAttr();
 
@@ -26,9 +26,9 @@ public class MotionManager : MonoBehaviour
         }
         _AnimationEvent.Init();
 
-        _BaseMotionManager = GetComponent<BaseMotionManager>();
-        _BaseMotionManager.Init();
-        _BaseMotionManager.MotionIdle();
+        //_BaseMotionManager = GetComponent<BaseMotionManager>();
+        //_BaseMotionManager.Init();
+        //_BaseMotionManager.MotionIdle();
 
         if (_NavAgent == null)
         {
@@ -40,13 +40,19 @@ public class MotionManager : MonoBehaviour
         TriggerCollider.enabled = true;
         _CanBeSelectByEnemy = true;
 
-        InitSkills();
+        //InitSkills();
+
+        InitState();
     }
 
     void FixedUpdate()
     {
         UpdateMove();
 
+        if (_ActionState != null)
+        {
+            _ActionState.StateUpdate();
+        }
     }
 
     public void Reset()
@@ -72,26 +78,26 @@ public class MotionManager : MonoBehaviour
         }
     }
 
-    private BaseMotionManager _BaseMotionManager;
-    public BaseMotionManager BaseMotionManager
-    {
-        get
-        {
-            return _BaseMotionManager;
-        }
-    }
+    //private BaseMotionManager _BaseMotionManager;
+    //public BaseMotionManager BaseMotionManager
+    //{
+    //    get
+    //    {
+    //        return _BaseMotionManager;
+    //    }
+    //}
 
-    public void NotifyAnimEvent(string function, object param)
-    {
-        if (_ActingSkill != null)
-        {
-            _ActingSkill.AnimEvent(function, param);
-        }
-        else
-        {
-            _BaseMotionManager.DispatchAnimEvent(function, param);
-        }
-    }
+    //public void NotifyAnimEvent(string function, object param)
+    //{
+    //    if (ActingSkill != null)
+    //    {
+    //        ActingSkill.AnimEvent(function, param);
+    //    }
+    //    else
+    //    {
+    //        _BaseMotionManager.DispatchAnimEvent(function, param);
+    //    }
+    //}
     #endregion
 
     #region Animation
@@ -143,7 +149,7 @@ public class MotionManager : MonoBehaviour
 
     float _OrgSpeed = 1;
     int _PauseCnt = 0;
-    public void PauseAnimation(AnimationClip animClip)
+    public void PauseAnimation(AnimationClip animClip, float lastTime)
     {
         if (_Animaton[animClip.name].speed == 0)
         {
@@ -157,6 +163,9 @@ public class MotionManager : MonoBehaviour
 
         _OrgSpeed = _Animaton[animClip.name].speed;
         _Animaton[animClip.name].speed = 0;
+
+        if(lastTime > 0)
+            StartCoroutine(ResumeAnimationLater(animClip, lastTime));
     }
 
     public void PauseAnimation()
@@ -165,7 +174,7 @@ public class MotionManager : MonoBehaviour
         {
             if (_Animaton.IsPlaying(state.name))
             {
-                PauseAnimation(state.clip);
+                PauseAnimation(state.clip, -1);
             }
         }
 
@@ -194,6 +203,19 @@ public class MotionManager : MonoBehaviour
         }
     }
 
+    private IEnumerator ResumeAnimationLater(AnimationClip animClip, float lasterTime)
+    {
+        yield return new WaitForSeconds(lasterTime);
+        if (animClip == null)
+        {
+            ResumeAnimation();
+        }
+        else
+        {
+            ResumeAnimation(animClip);
+        }
+    }
+
     public void AddAnimationEndEvent(AnimationClip animClip)
     {
         if (animClip == null)
@@ -209,59 +231,59 @@ public class MotionManager : MonoBehaviour
 
     #region skill
 
-    public Dictionary<string, ObjMotionSkillBase> _SkillMotions = new Dictionary<string, ObjMotionSkillBase>();
+    //public Dictionary<string, ObjMotionSkillBase> _SkillMotions = new Dictionary<string, ObjMotionSkillBase>();
 
-    private ObjMotionSkillBase _ActingSkill;
-    public ObjMotionSkillBase ActingSkill
-    {
-        get
-        {
-            return _ActingSkill;
-        }
-    }
+    //private ObjMotionSkillBase _ActingSkill;
+    //public ObjMotionSkillBase ActingSkill
+    //{
+    //    get
+    //    {
+    //        return _ActingSkill;
+    //    }
+    //}
 
-    private void InitSkills()
-    {
-        var skillList = gameObject.GetComponentsInChildren<ObjMotionSkillBase>();
-        foreach (var skill in skillList)
-        {
-            _SkillMotions.Add(skill._ActInput, skill);
-            //skill.SetImpactElement(ElementType.Cold);
-            skill.Init();
-        }
-    }
+    //private void InitSkills()
+    //{
+    //    var skillList = gameObject.GetComponentsInChildren<ObjMotionSkillBase>();
+    //    foreach (var skill in skillList)
+    //    {
+    //        _SkillMotions.Add(skill._ActInput, skill);
+    //        //skill.SetImpactElement(ElementType.Cold);
+    //        skill.Init();
+    //    }
+    //}
 
-    public void ActSkill(ObjMotionSkillBase skillMotion, Hashtable exHash = null)
-    {
-        if (!skillMotion.IsCanActSkill())
-            return;
+    //public void ActSkill(ObjMotionSkillBase skillMotion, Hashtable exHash = null)
+    //{
+    //    if (!skillMotion.IsCanActSkill())
+    //        return;
 
-        if (_ActingSkill != null)
-            _ActingSkill.FinishSkill();
+    //    if (_ActingSkill != null)
+    //        _ActingSkill.FinishSkill();
 
-        if (BaseMotionManager.IsMoving())
-        {
-            BaseMotionManager.StopMove();
-        }
+    //    if (BaseMotionManager.IsMoving())
+    //    {
+    //        BaseMotionManager.StopMove();
+    //    }
 
-        skillMotion.StartSkill(exHash);
-        _ActingSkill = skillMotion;
-        MotionPrior = _ActingSkill._SkillMotionPrior;
-    }
+    //    skillMotion.StartSkill(exHash);
+    //    _ActingSkill = skillMotion;
+    //    MotionPrior = _ActingSkill._SkillMotionPrior;
+    //}
 
-    public void FinishSkill(ObjMotionSkillBase skillMotion)
-    {
-        _ActingSkill = null;
-        skillMotion.FinishSkillImmediately();
-        BaseMotionManager.MotionIdle();
-    }
+    //public void FinishSkill(ObjMotionSkillBase skillMotion)
+    //{
+    //    _ActingSkill = null;
+    //    skillMotion.FinishSkillImmediately();
+    //    BaseMotionManager.MotionIdle();
+    //}
 
     #endregion
 
     #region event
 
-    private GameBase.EventController _EventController;
-    public GameBase.EventController EventController
+    private EventController _EventController;
+    public EventController EventController
     {
         get
         {
@@ -317,9 +339,15 @@ public class MotionManager : MonoBehaviour
         _RoleAttrManager._MotionManager = this;
 
         if (_RoleAttrManager.MotionType == MotionType.MainChar)
+        {
             _RoleAttrManager.InitMainRoleAttr();
+            _MotionAnimPath = RoleData.SelectRole.MotionFold;
+        }
         else if (_MonsterBase != null)
+        {
             _RoleAttrManager.InitEnemyAttr(_MonsterBase);
+            _MotionAnimPath = _MonsterBase.MotionPath;
+        }
         else
         {
             _RoleAttrManager.InitTestAttr();
@@ -333,8 +361,9 @@ public class MotionManager : MonoBehaviour
         //Hashtable hash = new Hashtable();
         //hash.Add("HitEffect", -1);
 
+        FlyEvent(0.1f, -1, this, null, Vector3.zero, 0);
         //_EventController.PushEvent(GameBase.EVENT_TYPE.EVENT_MOTION_FLY, this, new Hashtable());
-        _BaseMotionManager.FlyEvent(0.1f, -1, this, null);
+        //_BaseMotionManager.FlyEvent(0.1f, -1, this, null);
         
     }
 
@@ -422,6 +451,14 @@ public class MotionManager : MonoBehaviour
         foreach (System.Reflection.FieldInfo field in fields)
         {
             field.SetValue(destination, field.GetValue(original));
+        }
+    }
+
+    public void ForeachBuffModify(ImpactBuff.BuffModifyType type, Hashtable result, params object[] args)
+    {
+        for (int i = 0; i < _ImpactBuffs.Count; ++i)
+        {
+            _ImpactBuffs[i].BuffModify(type, args);
         }
     }
 
@@ -582,6 +619,18 @@ public class MotionManager : MonoBehaviour
         ResourcePool.Instance.RecvIldeEffect(effct);
     }
 
+    public void PlayHitEffect(MotionManager impactSender, int effectIdx)
+    {
+        if (ResourcePool.Instance._CommonHitEffect.Count > effectIdx && effectIdx >= 0)
+        {
+            Hashtable hash = new Hashtable();
+            if (impactSender != null)
+                hash.Add("Rotation", Quaternion.LookRotation(impactSender.transform.position - transform.position, Vector3.zero));
+
+            PlayDynamicEffect(ResourcePool.Instance._CommonHitEffect[effectIdx], hash);
+        }
+    }
+
     #endregion
 
     #region move
@@ -684,6 +733,35 @@ public class MotionManager : MonoBehaviour
         _NavAgent.Warp(navHit.position);
     }
 
+    public void MoveDirect(Vector2 direct)
+    {
+
+        Vector3 derectV3 = new Vector3(direct.x, 0, direct.y);
+
+        MoveDirect(derectV3);
+    }
+
+    public void MoveDirect(Vector3 derectV3)
+    {
+        Vector3 destPoint = transform.position + derectV3.normalized;
+
+        transform.rotation = Quaternion.LookRotation(derectV3);
+        _NavAgent.speed = RoleAttrManager.MoveSpeed;
+        _NavAgent.SetDestination(destPoint);
+    }
+
+    public void MoveTarget(Vector3 targetPos)
+    {
+        _NavAgent.speed = RoleAttrManager.MoveSpeed;
+        _NavAgent.SetDestination(targetPos);
+    }
+
+    public void StopMove()
+    {
+        _NavAgent.isStopped = true;
+        _NavAgent.ResetPath();
+    }
+
     public void SetCorpsePrior()
     {
         //int corpsePrior = 99;
@@ -732,37 +810,37 @@ public class MotionManager : MonoBehaviour
 
     #region motion pause
 
-    public void SkillPause()
-    {
-        if (ActingSkill != null)
-        {
-            ActingSkill.PauseSkill();
-            PauseAnimation();
-            PauseSkillEffect();
-        }
-    }
+    //public void SkillPause()
+    //{
+    //    if (ActingSkill != null)
+    //    {
+    //        ActingSkill.PauseSkill();
+    //        PauseAnimation();
+    //        PauseSkillEffect();
+    //    }
+    //}
 
-    public void SkillPause(float time)
-    {
-        SkillPause();
-        StartCoroutine(SkillResumeLater(time));
-    }
+    //public void SkillPause(float time)
+    //{
+    //    SkillPause();
+    //    StartCoroutine(SkillResumeLater(time));
+    //}
 
-    public void SkillResume()
-    {
-        if (ActingSkill != null)
-        {
-            ActingSkill.ResumeSkill();
-            ResumeAnimation();
-            ResumeSkillEffect();
-        }
-    }
+    //public void SkillResume()
+    //{
+    //    if (ActingSkill != null)
+    //    {
+    //        ActingSkill.ResumeSkill();
+    //        ResumeAnimation();
+    //        ResumeSkillEffect();
+    //    }
+    //}
 
-    public IEnumerator SkillResumeLater(float time)
-    {
-        yield return new WaitForSeconds(time);
-        SkillResume();
-    }
+    //public IEnumerator SkillResumeLater(float time)
+    //{
+    //    yield return new WaitForSeconds(time);
+    //    SkillResume();
+    //}
 
     #endregion
 
@@ -822,6 +900,157 @@ public class MotionManager : MonoBehaviour
             }
             return _TriggerCollider;
         }
+    }
+
+    #endregion
+
+    #region state mechine
+
+    public string _MotionAnimPath = "";
+
+    public StateIdle _StateIdle;
+    public StateMove _StateMove;
+    public StateHit _StateHit;
+    public StateFly _StateFly;
+    public StateCatch _StateCatch;
+    public StateRise _StateRise;
+    public StateLie _StateLie;
+    public StateDie _StateDie;
+    public StateSkill _StateSkill;
+
+    public StateBase _ActionState;
+
+    private void InitState()
+    {
+        _StateIdle = new StateIdle();
+        _StateIdle.InitState(this);
+
+        _StateMove = new StateMove();
+        _StateMove.InitState(this);
+
+        _StateHit = new StateHit();
+        _StateHit.InitState(this);
+
+        _StateFly = new StateFly();
+        _StateFly.InitState(this);
+
+        _StateCatch = new StateCatch();
+        _StateCatch.InitState(this);
+
+        _StateRise = new StateRise();
+        _StateRise.InitState(this);
+
+        _StateLie = new StateLie();
+        _StateLie.InitState(this);
+
+        _StateDie = new StateDie();
+        _StateDie.InitState(this);
+
+        _StateSkill = new StateSkill();
+        _StateSkill.InitState(this);
+
+
+        TryEnterState(_StateIdle, null);
+    }
+
+    public void TryEnterState(StateBase state, params object[] args)
+    {
+        if (!state.CanStartState(args))
+            return;
+
+        if (_ActionState != null)
+        {
+            _ActionState.FinishState();
+        }
+
+        state.StartState(args);
+        _ActionState = state;
+    }
+
+    public void StateOpt(StateBase.MotionOpt opt, params object[] args)
+    {
+        if (_ActionState == null)
+            return;
+
+        _ActionState.StateOpt(opt, args);
+    }
+
+    #endregion
+
+    #region state opt
+
+    public ObjMotionSkillBase ActingSkill
+    {
+        get
+        {
+            if (_ActionState == _StateSkill)
+            {
+                return _StateSkill.ActingSkill;
+            }
+            return null;
+        }
+    }
+
+    public void InputDirect(Vector2 direct)
+    {
+        StateOpt(StateBase.MotionOpt.Input_Direct, direct);
+    }
+
+    public void ActSkill(ObjMotionSkillBase skillMotion, Hashtable hash = null)
+    {
+        StateOpt(StateBase.MotionOpt.Act_Skill, skillMotion, hash);
+    }
+
+    public void InputSkill(string key)
+    {
+        StateOpt(StateBase.MotionOpt.Input_Skill, key);
+    }
+
+    public void FinishSkill(ObjMotionSkillBase skillMotion)
+    {
+        StateOpt(StateBase.MotionOpt.Stop_Skill, skillMotion);
+    }
+
+    public void ActionPause(float time)
+    {
+        StateOpt(StateBase.MotionOpt.Pause_State, time);
+    }
+
+    public void NotifyAnimEvent(string function, object param)
+    {
+        StateOpt(StateBase.MotionOpt.Anim_Event, function, param);
+    }
+
+    public void HitEvent(float hitTime, int hitEffect, MotionManager impactSender, ImpactHit hitImpact, Vector3 moveDirect, float moveTime)
+    {
+        StateOpt(StateBase.MotionOpt.Hit, hitTime, hitEffect, impactSender, hitImpact, moveDirect, moveTime);
+    }
+
+    public void FlyEvent(float flyHeight, int hitEffect, MotionManager impactSender, ImpactHit hitImpact, Vector3 moveDirect, float moveTime)
+    {
+        Debug.Log("FlyEvent");
+        StateOpt(StateBase.MotionOpt.Fly, flyHeight, hitEffect, impactSender, hitImpact, moveDirect, moveTime);
+    }
+
+    public void CatchEvent(float catchTime, int hitEffect, MotionManager impactSender, ImpactHit hitImpact, Vector3 moveDirect, float moveTime)
+    {
+        StateOpt(StateBase.MotionOpt.Catch, catchTime, hitEffect, impactSender, hitImpact, moveDirect, moveTime);
+    }
+
+    public void StopCatch()
+    {
+        Debug.Log("StopCatch");
+        StateOpt(StateBase.MotionOpt.Stop_Catch);
+    }
+
+    public void StartMoveState(Vector3 target)
+    {
+        StateOpt(StateBase.MotionOpt.Move_Target, target);
+    }
+
+    public void StopMoveState()
+    {
+        StateOpt(StateBase.MotionOpt.Stop_Move);
     }
 
     #endregion

@@ -103,15 +103,13 @@ public class TestFight : MonoBehaviour
         float distance = Vector3.Distance(transform.position, destPos);
         if (distance > _CloseRange)
         {
-            FightManager.Instance.MainChatMotion.BaseMotionManager.MoveTarget(destPos);
+            FightManager.Instance.MainChatMotion.StartMoveState(destPos);
             ReleaseSkill();
         }
         else
         {
-            if (FightManager.Instance.MainChatMotion.BaseMotionManager.IsMoving())
-            {
-                FightManager.Instance.MainChatMotion.BaseMotionManager.StopMove();
-            }
+            FightManager.Instance.MainChatMotion.StopMoveState();
+            
             StartSkill();
         }
     }
