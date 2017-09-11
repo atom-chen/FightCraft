@@ -29,4 +29,11 @@ public class ImpactFly : ImpactHit
         }
     }
 
+    protected virtual void HitFlyMotionWithoutSpeed(MotionManager senderManager, MotionManager reciverManager, Vector3 moveDirect, float moveTime)
+    {
+        {
+            reciverManager.FlyEvent(_FlyHeight, _HitEffect, senderManager, this, moveDirect, moveTime);
+        }
+    }
+
 }

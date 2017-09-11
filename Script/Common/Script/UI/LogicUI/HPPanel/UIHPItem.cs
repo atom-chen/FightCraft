@@ -23,7 +23,7 @@ public class UIHPItem : UIItemBase
         _ObjMotion = hash["InitObj"] as MotionManager;
         _RectTransform = GetComponent<RectTransform>();
         _FollowTransform = _ObjMotion.AnimationEvent.transform;
-        var transform = _FollowTransform.FindChild("center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/head/Bip001 HeadNub");
+        var transform = _FollowTransform.FindChild("center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck");
 
         _HeightDelta = transform.position - _FollowTransform.position;
         _HeightDelta.x = 0;

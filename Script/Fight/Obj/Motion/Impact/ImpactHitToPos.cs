@@ -12,7 +12,6 @@ public class ImpactHitToPos : ImpactHit
 
         Vector3 hitPos = senderManager.transform.position + senderManager.transform.forward * _Offset.x + reciverManager.transform.right * _Offset.y;
         Vector3 distance = hitPos - reciverManager.transform.position;
-        Vector3 destMove = (hitPos - reciverManager.transform.position).normalized * _Speed * _Time;
 
         float moveTime = _Time;
         float targetTime = distance.magnitude / _Speed;
@@ -21,8 +20,11 @@ public class ImpactHitToPos : ImpactHit
             moveTime = targetTime;
         }
 
-
-        HitMotion(senderManager, reciverManager, destMove, moveTime > 0.01 ? moveTime : 0);
+        if (moveTime > 0.01)
+        {
+            Vector3 destMove = (hitPos - reciverManager.transform.position).normalized * _Speed * moveTime;
+            HitMotionWithoutSpeed(senderManager, reciverManager, destMove, moveTime);
+        }
 
         ProcessDamge(senderManager, reciverManager);
 

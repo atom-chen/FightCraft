@@ -33,7 +33,10 @@ public class ImpactExAttack : ImpactBase
     {
         if (InputManager.Instance.IsKeyHold("k"))
         {
-            SkillMotion.MotionManager.ActSkill(SkillMotion.MotionManager._StateSkill._SkillMotions["e"]);
+            if (SkillMotion.MotionManager._StateSkill._SkillMotions.ContainsKey("e"))
+            {
+                SkillMotion.MotionManager.ActSkill(SkillMotion.MotionManager._StateSkill._SkillMotions["e"]);
+            }
         }
     }
 

@@ -144,7 +144,7 @@ public class StateSkill : StateBase
             return;
 
         if (_ActingSkill != null)
-            _ActingSkill.FinishSkill();
+            _ActingSkill.FinishSkillImmediately();
 
         skillMotion.StartSkill(exHash);
         _ActingSkill = skillMotion;

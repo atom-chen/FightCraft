@@ -28,13 +28,13 @@
 20100,S.Damage,Add Ex Skill Damage,3,10,10001,10,1000,0,0,0,0
 20101,S.Speed,Add Ex Skill Speed,3,10,10002,100,0,0,0,0,1
 20102,S.Range,Add Ex Skill Range,3,10,10003,10,200,0,0,0,2
-20111,S.ExAttack,After Skill ex Attack,3,10,10103,1,2000,0,0,0,3
+20111,S.Accumulate,After Skill ex Attack,3,10,10101,1,2000,5000,0,0,3
 20112,S.Shadow,add shadow to skill,3,10,10102,1,1,0,0,0,4
 20113,S.SpSkill,Ex skill back range,3,10,10106,1,100,0,0,0,5
 20200,S.Damage,Add Ex Skill Damage,3,11,10001,10,1000,0,0,0,0
 20201,S.Speed,Add Ex Skill Speed,3,11,10002,100,0,0,0,0,1
 20202,S.Range,Add Ex Skill Range,3,11,10003,10,200,0,0,0,2
-20203,S.ExAttack,Ex Skill Can Accululate by Hold the button,3,11,10103,1,2000,0,0,0,3
+20203,S.Accumulate,Ex Skill Can Accululate by Hold the button,3,11,10101,1,2000,5000,0,0,3
 20204,S.Shadow,add shadow to skill,3,11,10102,1,1,0,0,0,4
 20205,S.SpSkill,Ex skill back range,3,11,10106,1,100,0,0,0,5
 20300,S.Damage,Add Ex Skill Damage,3,12,10001,10,1000,0,0,0,0
@@ -45,3 +45,49 @@
 20305,S.SpSkill,Ex skill back range,3,12,10106,1,100,0,0,0,5
 20306,S.AttackLow,Attack lie enemy,3,12,10107,1,100,0,0,0,5
 20114,S.ActBuff,can act skill after buff,3,3,10201,1,1,0,0,0,7
+30001,NA.Damage,Add Normal Attack Damage,0,1,10001,10,1000,0,0,0,0
+30002,NA.Speed,Add Normal Attack Speed,0,1,10002,10,100,0,0,0,1
+30003,NA.Range,Add Normal Attack Range,0,1,10003,10,200,0,0,0,2
+30100,S.Damage,Add Ex Skill Damage,0,10,10001,10,1000,0,0,0,0
+30101,S.Speed,Add Ex Skill Speed,0,10,10002,100,0,0,0,0,1
+30102,S.Range,Add Ex Skill Range,0,10,10003,10,200,0,0,0,2
+30111,S.Accumulate,After Skill ex Attack,0,10,10101,1,2000,5000,0,0,3
+30112,S.Shadow,add shadow to skill,0,10,10102,1,1,0,0,0,4
+30113,S.SpSkill,Ex skill back range,0,10,10106,1,100,0,0,0,5
+30200,S.Damage,Add Ex Skill Damage,0,11,10001,10,1000,0,0,0,0
+30201,S.Speed,Add Ex Skill Speed,0,11,10002,100,0,0,0,0,1
+30202,S.Range,Add Ex Skill Range,0,11,10003,10,200,0,0,0,2
+30203,S.Accumulate,Ex Skill Can Accululate by Hold the button,0,11,10101,1,2000,5000,0,0,3
+30204,S.Shadow,add shadow to skill,0,11,10102,1,1,0,0,0,4
+30205,S.SpSkill,Ex skill back range,0,11,10106,1,100,0,0,0,5
+30300,S.Damage,Add Ex Skill Damage,0,12,10001,10,1000,0,0,0,0
+30301,S.Speed,Add Ex Skill Speed,0,12,10002,100,0,0,0,0,1
+30302,S.Range,Add Ex Skill Range,0,12,10003,10,200,0,0,0,2
+30303,S.AnotherUse,Ex Skill Can Accululate by Hold the button,0,12,10104,1,2000,0,0,0,3
+30304,S.Shadow,add shadow to skill,0,12,10102,1,1,0,0,0,4
+30305,S.SpSkill,Ex skill back range,0,12,10106,1,100,0,0,0,5
+30306,S.AttackLow,Attack lie enemy,0,12,10107,1,100,0,0,0,5
+30114,S.ActBuff,can act skill after buff,0,3,10201,1,1,0,0,0,7
+40001,NA.Damage,Add Normal Attack Damage,2,1,10001,10,1000,0,0,0,0
+40002,NA.Speed,Add Normal Attack Speed,2,1,10002,10,100,0,0,0,1
+40003,NA.Range,Add Normal Attack Range,2,1,10003,10,200,0,0,0,2
+40100,S.Damage,Add Ex Skill Damage,2,10,10001,10,1000,0,0,0,0
+40101,S.Speed,Add Ex Skill Speed,2,10,10002,100,0,0,0,0,1
+40102,S.Range,Add Ex Skill Range,2,10,10003,10,200,0,0,0,2
+40111,S.ExAttack,After Skill ex Attack,2,10,10103,1,2000,0,0,0,3
+40112,S.Shadow,add shadow to skill,2,10,10102,1,1,0,0,0,4
+40113,S.SpSkill,Ex skill back range,2,10,10106,1,100,0,0,0,5
+40200,S.Damage,Add Ex Skill Damage,2,11,10001,10,1000,0,0,0,0
+40201,S.Speed,Add Ex Skill Speed,2,11,10002,100,0,0,0,0,1
+40202,S.Range,Add Ex Skill Range,2,11,10003,10,200,0,0,0,2
+40203,S.ExAttack,Ex Skill Can Accululate by Hold the button,2,11,10103,1,2000,0,0,0,3
+40204,S.Shadow,add shadow to skill,2,11,10102,1,1,0,0,0,4
+40205,S.SpSkill,Ex skill back range,2,11,10106,1,100,0,0,0,5
+40300,S.Damage,Add Ex Skill Damage,2,12,10001,10,1000,0,0,0,0
+40301,S.Speed,Add Ex Skill Speed,2,12,10002,100,0,0,0,0,1
+40302,S.Range,Add Ex Skill Range,2,12,10003,10,200,0,0,0,2
+40303,S.AnotherUse,Ex Skill Can Accululate by Hold the button,2,12,10104,1,2000,0,0,0,3
+40304,S.Shadow,add shadow to skill,2,12,10102,1,1,0,0,0,4
+40305,S.SpSkill,Ex skill back range,2,12,10106,1,100,0,0,0,5
+40306,S.AttackLow,Attack lie enemy,2,12,10107,1,100,0,0,0,5
+40114,S.ActBuff,can act skill after buff,2,3,10201,1,1,0,0,0,7

@@ -15,8 +15,7 @@ public class ImpactCatchToPos : ImpactCatch
         {
             Vector3 hitPos = senderManager.transform.position + senderManager.transform.forward * _Offset.x + reciverManager.transform.right * _Offset.y;
             Vector3 distance = hitPos - reciverManager.transform.position;
-            Vector3 destMove = (hitPos - reciverManager.transform.position).normalized * _Speed * _Time;
-
+            
             float moveTime = _Time;
             float targetTime = distance.magnitude / _Speed;
             if (targetTime < _Time)
@@ -24,7 +23,11 @@ public class ImpactCatchToPos : ImpactCatch
                 moveTime = targetTime;
             }
 
-            CatchMotion(senderManager, reciverManager, destMove, moveTime > 0.01f? moveTime:0);
+            if (moveTime > 0.01f)
+            {
+                Vector3 destMove = (hitPos - reciverManager.transform.position).normalized * _Speed * moveTime;
+                CatchMotion(senderManager, reciverManager, destMove, moveTime);
+            }
 
             ProcessDamge(senderManager, reciverManager);
         }

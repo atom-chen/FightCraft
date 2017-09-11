@@ -30,6 +30,10 @@ public class StateCatch : StateBase
             case MotionOpt.Anim_Event:
                 DispatchHitEvent(args[0] as string, args[1]);
                 break;
+            case MotionOpt.Catch:
+                MotionHit((float)args[0], (int)args[1], (MotionManager)args[2]);
+                SetHitMove((Vector3)args[4], (float)args[5]);
+                break;
             case MotionOpt.Stop_Catch:
                 _MotionManager.TryEnterState(_MotionManager._StateIdle);
                 break;

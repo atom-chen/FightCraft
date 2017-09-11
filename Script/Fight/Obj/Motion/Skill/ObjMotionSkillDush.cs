@@ -116,7 +116,7 @@ public class ObjMotionSkillDush : ObjMotionSkillBase
 
     private void AttackNext()
     {
-        _MotionManager.FinishSkill(this);
+        //_MotionManager.FinishSkill(this);
         _MotionManager.ActSkill(_SkillAttack);
         _SkillAttack.DushAttack();
     }

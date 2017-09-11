@@ -32,4 +32,12 @@ public class ImpactHit : ImpactDamage
             reciverManager.HitEvent(_HitTime, _HitEffect, senderManager, this, moveDirect, moveTime);
         }
     }
+
+    protected virtual void HitMotionWithoutSpeed(MotionManager senderManager, MotionManager reciverManager, Vector3 moveDirect, float moveTime)
+    {
+
+        {
+            reciverManager.HitEvent(_HitTime, _HitEffect, senderManager, this, moveDirect, moveTime);
+        }
+    }
 }

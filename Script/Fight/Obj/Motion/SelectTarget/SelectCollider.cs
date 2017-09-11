@@ -4,39 +4,54 @@ using System.Collections.Generic;
 
 public class SelectCollider : SelectBase
 {
-    private List<Collider> _TrigCollider = new List<Collider>();
+    protected List<MotionManager> _TrigMotions= new List<MotionManager>();
+    public List<MotionManager> TrigMotions
+    {
+        get
+        {
+            return _TrigMotions;
+        }
+    }
 
-    private Collider _SelectCollider;
+    protected Collider _Collider;
+    public Collider Collider
+    {
+        get
+        {
+            return _Collider;
+        }
+    }
 
     public bool _SelectLieObj;
 
     public override void ColliderStart()
     {
-        if (_SelectCollider == null)
+        if (_Collider == null)
         {
-            _SelectCollider = gameObject.GetComponent<Collider>();
+            _Collider = gameObject.GetComponent<Collider>();
         }
-        _SelectCollider.enabled = true;
+        _Collider.enabled = true;
         base.ColliderStart();
     }
 
     public override void ColliderFinish()
     {
         base.ColliderFinish();
-        _SelectCollider.enabled = false;
-        _TrigCollider.Clear();
+        _Collider.enabled = false;
+        _TrigMotions.Clear();
     }
 
     void OnTriggerStay(Collider other)
     {
-        
-        if (!_TrigCollider.Contains(other))
+        var motion = other.gameObject.GetComponentInParent<MotionManager>();
+        if (motion == null)
+            return;
+
+        if (!_TrigMotions.Contains(motion))
         {
-            _TrigCollider.Add(other);
+            _TrigMotions.Add(motion);
             
-            var motion = other.gameObject.GetComponentInParent<MotionManager>();
-            if (motion == null)
-                return;
+            
 
             if (motion._StateLie == motion._ActionState && !_SelectLieObj)
                 return;

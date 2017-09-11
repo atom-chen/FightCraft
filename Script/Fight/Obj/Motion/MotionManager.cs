@@ -341,7 +341,8 @@ public class MotionManager : MonoBehaviour
         if (_RoleAttrManager.MotionType == MotionType.MainChar)
         {
             _RoleAttrManager.InitMainRoleAttr();
-            _MotionAnimPath = RoleData.SelectRole.MotionFold;
+            if(RoleData.SelectRole != null)
+                _MotionAnimPath = RoleData.SelectRole.MotionFold;
         }
         else if (_MonsterBase != null)
         {
@@ -522,6 +523,9 @@ public class MotionManager : MonoBehaviour
 
     public void StopSkillEffect(EffectController effect)
     {
+        if (effect == null)
+            return;
+
         if (_SkillEffects.ContainsKey(effect.name))
         {
             _SkillEffects[effect.name].HideEffect();

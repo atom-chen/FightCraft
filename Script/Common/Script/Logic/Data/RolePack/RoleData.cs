@@ -380,7 +380,7 @@ public class RoleData : SaveItemBase
 
     public List<string> GetRoleSkills()
     {
-        List<string> skillMotions = new List<string>() { "Attack", "Buff1", "Buff2", "Dush" };
+        List<string> skillMotions = new List<string>() { "Attack", "Buff1", "Buff2", "Dush", "AttackEx" };
         if (Profession == PROFESSION.BOY_DEFENCE || Profession == PROFESSION.GIRL_DEFENCE)
         {
             skillMotions.Add("Defence");
@@ -407,7 +407,7 @@ public class RoleData : SaveItemBase
                 }
                 if (skillInfo.SkillRecord.SkillClass == SKILL_CLASS.SKILL3)
                 {
-                    spSkill2 = true;
+                    spSkill3 = true;
                 }
             }
         }
