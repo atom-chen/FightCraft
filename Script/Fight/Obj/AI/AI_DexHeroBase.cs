@@ -82,8 +82,8 @@ public class AI_DexHeroBase : AI_HeroBase
         var blockSkill = ResourceManager.Instance.GetInstanceGameObject("SkillMotion/BlockSkill");
         var motionTrans = _SelfMotion.transform.FindChild("Motion");
         blockSkill.transform.SetParent(motionTrans);
-        _SkillBlock = blockSkill.GetComponent<ObjMotionSkillBlock>();
-        _SkillBlock._Anim = _BlockAnim;
+        _SkillBlock = blockSkill.GetComponent<ObjMotionSkillBase>();
+        _SkillBlock._NextAnim[0] = _BlockAnim;
         _SkillBlock.Init();
 
         _LastBlockTime = -_BlockCD;
@@ -97,7 +97,7 @@ public class AI_DexHeroBase : AI_HeroBase
         {
             _LastBlockTime = Time.time;
 
-            _SkillBlock.ActSkill();
+            _SkillBlock.ActSkill(null);
 
             _NextSkillIdx = _AfterBlockSkill;
         }

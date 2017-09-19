@@ -43,7 +43,7 @@ public class AI_HeroBase : AI_Base
             if (!_IsRiseEvent)
             {
                 _IsRiseEvent = true;
-                _RiseBoom.ActSkill();
+                _RiseBoom.ActSkill(null);
             }
         }
         else
@@ -77,14 +77,14 @@ public class AI_HeroBase : AI_Base
 
     protected void InitSuperArmorSkill(ObjMotionSkillBase objMotionSkill)
     {
-        float attackConlliderTime = _SelfMotion.AnimationEvent.GetAnimFirstColliderEventTime(objMotionSkill._Anim);
+        float attackConlliderTime = _SelfMotion.AnimationEvent.GetAnimFirstColliderEventTime(objMotionSkill._NextAnim[0]);
         if (attackConlliderTime < 0)
             return;
 
 
-        _SelfMotion.AnimationEvent.AddEvent(objMotionSkill._Anim, 0, AttackStart);
-        _SelfMotion.AnimationEvent.AddEvent(objMotionSkill._Anim, attackConlliderTime + 0.05f, AttackCollider);
-        _SelfMotion.AnimationEvent.AddEvent(objMotionSkill._Anim, objMotionSkill._Anim.length, AttackCollider);
+        _SelfMotion.AnimationEvent.AddEvent(objMotionSkill._NextAnim[0], 0, AttackStart);
+        _SelfMotion.AnimationEvent.AddEvent(objMotionSkill._NextAnim[0], attackConlliderTime + 0.05f, AttackCollider);
+        _SelfMotion.AnimationEvent.AddEvent(objMotionSkill._NextAnim[0], objMotionSkill._NextAnim[0].length, AttackCollider);
     }
 
     private void AttackStart()

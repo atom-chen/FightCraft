@@ -7,9 +7,6 @@ public class ImpactRotBack : ImpactBase
     {
         base.ActImpact(senderManager, reciverManager);
 
-        if (reciverManager.ActingSkill is ObjMotionSkillDefence)
-            return;
-
         reciverManager.SetRotate(reciverManager.transform.rotation.eulerAngles + new Vector3(0, 180, 0));
         
     }

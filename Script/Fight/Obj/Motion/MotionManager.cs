@@ -103,6 +103,14 @@ public class MotionManager : MonoBehaviour
     #region Animation
 
     private Animation _Animaton;
+    public Animation Animation
+    {
+        get
+        {
+            return _Animaton;
+        }  
+    }
+
     private AnimEventManager _AnimationEvent;
     public AnimEventManager AnimationEvent
     {

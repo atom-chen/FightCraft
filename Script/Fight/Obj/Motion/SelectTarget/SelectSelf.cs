@@ -26,7 +26,7 @@ public class SelectSelf : SelectBase
         {
             foreach (var impact in _ImpactList)
             {
-                impact.RemoveImpact(_ObjMotion);
+                impact.FinishImpact(_ObjMotion);
             }
         }
     }

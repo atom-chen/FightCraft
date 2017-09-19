@@ -395,6 +395,12 @@ public class RoleData : SaveItemBase
         bool spSkill3 = false;
         foreach (var skillInfo in _SkillItems)
         {
+            if (skillInfo.SkillRecord.Profession != Profession)
+                continue;
+
+            if (skillInfo._SkillLevel == 0)
+                continue;
+
             if (skillInfo.SkillRecord.SkillAttr == ATTR_EFFECT.SKILL_SPCEILSKILL)
             {
                 if (skillInfo.SkillRecord.SkillClass == SKILL_CLASS.SKILL1)

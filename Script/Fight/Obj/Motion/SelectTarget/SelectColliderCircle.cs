@@ -16,9 +16,23 @@ public class SelectColliderCircle : SelectCollider
         transform.localRotation = Quaternion.Euler(new Vector3(0, _AngleSpeed * Time.deltaTime, 0) + transform.localRotation.eulerAngles);
     }
 
+    public override void Init(RoleAttrManager.SkillAttr skillAttr)
+    {
+        base.Init(skillAttr);
+
+        if (skillAttr == null)
+            return;
+
+        if (_Collider is BoxCollider)
+        {
+            var boxCollider = _Collider as BoxCollider;
+            boxCollider.size = boxCollider.size * (1 + skillAttr.RangeAdd);
+        }
+    }
+
     public override void ColliderStart()
     {
-        _AngleSpeed = -(360 / _CircleTime) * _SkillMotion.SkillBaseSpeed;
+        _AngleSpeed = -(360 / _CircleTime) * _SkillMotion.SkillSpeed;
         Debug.Log("_AngleSpeed:" + _AngleSpeed);
         base.ColliderStart();
         transform.localRotation = Quaternion.Euler(Vector3.zero);

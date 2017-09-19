@@ -8,30 +8,33 @@ public class ObjMotionSkillBase : MonoBehaviour
     {
         _MotionManager = gameObject.GetComponentInParent<MotionManager>();
 
-        if (_Anim != null)
-        {
-            _MotionManager.InitAnimation(_Anim);
-            _MotionManager.AddAnimationEndEvent(_Anim);
-        }
-
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.Euler(Vector3.zero);
 
         _SkillAttr = _MotionManager.RoleAttrManager.GetSkillAttr(_ActInput);
-        InitExAttack();
         InitCollider(_SkillAttr);
         if (_SkillAttr != null)
         {
-            InitShadowEffect();
+            SetEffectSize(1 + _SkillAttr.RangeAdd);
+        }
+
+        foreach (var anim in _NextAnim)
+        {
+            if (anim != null)
+            {
+                _MotionManager.InitAnimation(anim);
+                _MotionManager.AddAnimationEndEvent(anim);
+            }
         }
     }
 
-    public AnimationClip _Anim;
-    public EffectController _Effect;
+    private int _CurStep;
+    public List<AnimationClip> _NextAnim;
+    public List<EffectController> _NextEffect;
     public string _ActInput;
     public int _SkillMotionPrior = 100;
     public float _SkillBaseSpeed = 1;
-    public float SkillBaseSpeed
+    public float SkillSpeed
     {
         get
         {
@@ -72,35 +75,9 @@ public class ObjMotionSkillBase : MonoBehaviour
         if (!IsCanActSkill())
             return false;
 
-        if (IsAccumulateSkill())
-        {
-            StartSkillAccumulate();
-            return true;
-        }
-
         return ActSkill(exHash);
     }
 
-    public virtual bool ActSkill(Hashtable exHash = null)
-    {
-        if (_Anim != null)
-            PlayAnimation(_Anim);
-        if(_Effect != null)
-            PlaySkillEffect(_Effect);
-
-        if (_ShadowEffect != null)
-        {
-            _ShadowEffect._EffectLastTime = GetTotalAnimLength();
-            _ShadowEffect._Duration = _ShadowEffect._EffectLastTime;
-            _MotionManager.PlayDynamicEffect(_ShadowEffect);
-        }
-
-        if (_SkillHitMotions != null)
-            _SkillHitMotions.Clear();
-
-        this.enabled = true;
-        return true;
-    }
 
     public virtual void PauseSkill()
     { }
@@ -115,11 +92,14 @@ public class ObjMotionSkillBase : MonoBehaviour
 
     public virtual void FinishSkillImmediately()
     {
-        if (_Effect != null)
-            _MotionManager.StopSkillEffect(_Effect);
+        foreach (var effect in _NextEffect)
+        {
+            _MotionManager.StopSkillEffect(effect);
+        }
 
         this.enabled = false;
         _MotionManager.ResetMove();
+        ColliderStop();
     }
 
     public virtual void AnimEvent(string function, object param)
@@ -127,7 +107,7 @@ public class ObjMotionSkillBase : MonoBehaviour
         switch (function)
         {
             case AnimEventManager.ANIMATION_END:
-                FinishSkill();
+                PlayerNextAnim();
                 break;
             case AnimEventManager.COLLIDER_START:
                 ColliderStart(param);
@@ -135,6 +115,40 @@ public class ObjMotionSkillBase : MonoBehaviour
             case AnimEventManager.COLLIDER_END:
                 ColliderEnd(param);
                 break;
+        }
+    }
+
+    public virtual bool ActSkill(Hashtable exhash)
+    {
+        this.enabled = true;
+
+        _CurStep = -1;
+        PlayerNextAnim();
+
+        return true;
+    }
+
+    public void PlayerNextAnim()
+    {
+        if (_CurStep + 1 == _NextAnim.Count)
+        {
+            FinishSkill();
+        }
+        else
+        {
+            ++_CurStep;
+            PlayAnimation(_NextAnim[_CurStep]);
+
+            if (_CurStep - 1 >= 0 && _NextEffect[_CurStep - 1] != null)
+            {
+                StopSkillEffect(_NextEffect[_CurStep - 1]);
+            }
+
+            if (_NextEffect.Count > _CurStep && _NextEffect[_CurStep] != null)
+            {
+                PlaySkillEffect(_NextEffect[_CurStep]);
+            }
+
         }
     }
 
@@ -159,9 +173,12 @@ public class ObjMotionSkillBase : MonoBehaviour
 
     protected virtual void SetEffectSize(float size)
     {
-        if (_Effect != null)
+        foreach (var effect in _NextEffect)
         {
-            _Effect._EffectSizeRate = (size);
+            if (effect == null)
+                continue;
+
+            effect._EffectSizeRate = (size);
         }
     }
 
@@ -172,7 +189,7 @@ public class ObjMotionSkillBase : MonoBehaviour
 
     protected void PlaySkillEffect(EffectController effect)
     {
-        _MotionManager.PlaySkillEffect(effect, (SkillActSpeed) * _SkillBaseSpeed, _EffectElement);
+        _MotionManager.PlaySkillEffect(effect, (SkillActSpeed) * _SkillBaseSpeed);
     }
 
     protected void StopSkillEffect(EffectController effect)
@@ -180,9 +197,14 @@ public class ObjMotionSkillBase : MonoBehaviour
         _MotionManager.StopSkillEffect(effect);
     }
 
-    protected virtual float GetTotalAnimLength()
+    public virtual float GetTotalAnimLength()
     {
-        return _Anim.length / SkillActSpeed;
+        float totleTime = 0;
+        foreach (var anim in _NextAnim)
+        {
+            totleTime += anim.length / SkillActSpeed;
+        }
+        return totleTime;
     }
 
     protected float GetAnimNextInputLength(AnimationClip anim)
@@ -209,14 +231,10 @@ public class ObjMotionSkillBase : MonoBehaviour
 
     protected void InitCollider(RoleAttrManager.SkillAttr skillAttr)
     {
-        InitElementBullet();
         var collidercontrollers = gameObject.GetComponentsInChildren<SelectBase>(true);
         foreach (var collider in collidercontrollers)
         {
-            //if (!IsColliderCanAct(collider.gameObject.name))
-            //    continue;
-
-            collider.Init();
+            collider.Init(skillAttr);
             if (_ColliderControl.ContainsKey(collider._ColliderID))
             {
                 _ColliderControl[collider._ColliderID].Add(collider);
@@ -226,17 +244,11 @@ public class ObjMotionSkillBase : MonoBehaviour
                 _ColliderControl.Add(collider._ColliderID, new List<SelectBase>());
                 _ColliderControl[collider._ColliderID].Add(collider);
             }
+        }
 
-            if (skillAttr != null)
-            {
-                if (collider is SelectCollider)
-                {
-                    InitColliderRange(collider);
-                }
-
-                InitColliderDamage(collider);
-
-            }
+        foreach (var collider in collidercontrollers)
+        {
+            collider.RegisterEvent();
         }
     }
 
@@ -267,270 +279,15 @@ public class ObjMotionSkillBase : MonoBehaviour
         }
     }
 
-    #endregion
-
-    #region skill enhance
-
-    private void InitColliderRange(SelectBase select)
+    protected virtual void ColliderStop()
     {
-        var capsuleCollider = select.GetComponent<CapsuleCollider>();
-        if (capsuleCollider != null)
+        foreach(var colliderPair in _ColliderControl)
         {
-            //capsuleCollider.radius = capsuleCollider.radius * (1 + _SkillAttr.RangeAdd);
-            //capsuleCollider.height = capsuleCollider.height * (1 + _SkillAttr.RangeLengthAdd) + _SkillAttr.BackRangeAdd;
-            //capsuleCollider.direction = 2;
-            //float centerZ = capsuleCollider.height * 0.5f;
-            //if (_SkillAttr.BackRangeAdd > 0)
-            //{
-            //    centerZ = capsuleCollider.height * 0.5f - _SkillAttr.BackRangeAdd;
-            //}
-
-            //capsuleCollider.center = new Vector3(0, capsuleCollider.radius * 0.5f, centerZ);
-
-            capsuleCollider.radius = capsuleCollider.radius * (1 + _SkillAttr.RangeAdd);
-            capsuleCollider.height = capsuleCollider.height * (1 + _SkillAttr.RangeLengthAdd) + _SkillAttr.BackRangeAdd;
-            SetEffectSize(1 + _SkillAttr.RangeAdd);
-            if (capsuleCollider.direction == 1)
+            for (int i = 0; i < colliderPair.Value.Count; ++i)
             {
-                capsuleCollider.center = new Vector3(0, capsuleCollider.height * 0.5f, capsuleCollider.center.z);
+                colliderPair.Value[i].ColliderStop();
             }
-            else if (capsuleCollider.direction == 2)
-            {
-                capsuleCollider.center = new Vector3(0, capsuleCollider.radius * 0.5f, capsuleCollider.center.z * (1 + _SkillAttr.RangeAdd));
-            }
-        }
-    }
 
-    private void InitColliderDamage(SelectBase select)
-    {
-        var damages = select.GetComponentsInChildren<ImpactDamage>();
-        foreach (var damageImpact in damages)
-        {
-            damageImpact._DamageRate = damageImpact._DamageRate * (1 + _SkillAttr.DamageRateAdd);
-        }
-    }
-
-    private EffectAfterAnim _ShadowEffect;
-    private void InitShadowEffect()
-    {
-        if (_SkillAttr.ShadowWarriorCnt <= 0)
-            return;
-
-        float actSpeed = _MotionManager.RoleAttrManager.AttackSpeed;
-        if (_SkillAttr != null)
-        {
-            actSpeed += _SkillAttr.SpeedAdd;
-        }
-        var shadowEffect = ResourceManager.Instance.GetInstanceGameObject("Effect/Skill/Effect_Char_AfterAnim");
-        var shadowScript = shadowEffect.GetComponent<EffectAfterAnim>();
-        shadowScript._Duration = GetTotalAnimLength();
-        shadowScript._Interval = 0.1f;
-        shadowScript._FadeOut = 0.1f * _SkillAttr.ShadowWarriorCnt;
-        _ShadowEffect = shadowScript;
-
-        var damages = GetComponentsInChildren<ImpactDamage>();
-        foreach (var damageImpact in damages)
-        {
-            for (int i = 0; i < _SkillAttr.ShadowWarriorCnt; ++i)
-            {
-                //var damageDelay = damageImpact.gameObject.AddComponent<ImpactDamageDelay>();
-                //damageDelay._DamageRate = damageImpact._DamageRate * _SkillAttr.ShadowWarriorDamageRate;
-                //damageDelay._DelayTime = 0.1f * (1 + i);
-
-                var hitDelay = damageImpact.gameObject.AddComponent<ImpactHitDelay>();
-                hitDelay._DamageRate = damageImpact._DamageRate * _SkillAttr.ShadowWarriorDamageRate;
-                hitDelay._HitTime = 0.1f;
-                hitDelay._HitEffect = -1;
-                hitDelay._DelayTime = 0.1f * (1 + i);
-            }
-        }
-    }
-
-    private static AnimationClip _AccumulateAnim;
-    protected bool IsAccumulateSkill()
-    {
-        if (_SkillAttr == null)
-            return false;
-
-        if (_AccumulateAnim == null)
-        {
-            if (MotionManager.gameObject.name.Contains("Girl"))
-                _AccumulateAnim = ResourceManager.Instance.GetAnimationClip("Animation/MainCharGirl/Act_S_Skill_Accumulate");
-            else
-                _AccumulateAnim = ResourceManager.Instance.GetAnimationClip("Animation/MainCharBoy/Act_HW_Skill_Accumulate");
-
-            _MotionManager.InitAnimation(_AccumulateAnim);
-        }
-        if (_AccumulateAnim == null)
-        {
-            Debug.LogError("Load AccumulateAnim error!!!");
-            return false;
-        }
-
-        if (_SkillAttr.AccumulateTime > 0 && InputManager.Instance.IsKeyHold(_ActInput))
-        {
-            return true;
-        }
-        return false;
-    }
-
-    private static ImpactBase _ExAttackSkill;
-    protected void InitExAttack()
-    {
-        if (_SkillAttr == null)
-            return;
-
-        if (!_SkillAttr.ExAttack)
-            return;
-
-        GameObject attackImpact = null;
-        if (PlayerDataPack.Instance._SelectedRole.Profession == Tables.PROFESSION.GIRL_DEFENCE
-            || PlayerDataPack.Instance._SelectedRole.Profession == Tables.PROFESSION.GIRL_DOUGE)
-            attackImpact = ResourceManager.Instance.GetInstanceGameObject("SkillMotion/MainCharGirl/ExAttackImpact");
-        else
-            attackImpact = ResourceManager.Instance.GetInstanceGameObject("SkillMotion/MainCharBoy/ExAttackImpact");
-
-        attackImpact.transform.SetParent(transform);
-
-    }
-
-
-
-    private float _AccumulateTime;
-    private void StartSkillAccumulate()
-    {
-        PlayAnimation(_AccumulateAnim);
-        
-        _AccumulateTime = Time.time;
-
-        StartCoroutine(SkillAccumulateUpdate());
-    }
-
-    private IEnumerator SkillAccumulateUpdate()
-    {
-        yield return new WaitForSeconds(0.05f);
-        if (!InputManager.Instance.IsKeyHold(_ActInput))
-        {
-            ActSkill();
-            yield break;
-        }
-
-        if (Time.time - _AccumulateTime > _SkillAttr.AccumulateTime)
-        {
-            ActSkill();
-            yield break;
-        }
-
-        StartCoroutine(SkillAccumulateUpdate());
-    }
-
-    private void InitElementBullet()
-    {
-        if (_SkillAttr == null)
-            return;
-
-        if (_SkillAttr.ExBullets.Count == 0)
-            return;
-
-        var emitterPos = GetComponent<BulletEmitterBasePos>();
-        foreach (var exBullet in _SkillAttr.ExBullets)
-        {
-            var bulletGO = ResourceManager.Instance.GetInstanceGameObject(exBullet);
-            if (bulletGO == null)
-            {
-                Debug.LogError("Error bullet:" + exBullet);
-                continue;
-            }
-            bulletGO.transform.SetParent(transform);
-            bulletGO.transform.localPosition = Vector3.zero;
-            bulletGO.transform.localScale = Vector3.one;
-            bulletGO.transform.localRotation = Quaternion.Euler(Vector3.zero);
-
-            if (emitterPos == null)
-                continue;
-
-            var bulletSelect = bulletGO.GetComponent<SelectBase>();
-            if (bulletSelect == null)
-                continue;
-
-            var pos = emitterPos.GetEmitterPos(bulletSelect._ColliderID);
-            var bulletEmitterBase = bulletGO.GetComponent<BulletEmitterBase>();
-            if (bulletEmitterBase != null)
-            {
-                bulletEmitterBase._EmitterOffset += pos;
-            }
-        }
-    }
-
-    public bool CanSkillActAfterDebuff()
-    {
-        if (_SkillAttr == null)
-            return false;
-
-        return (_SkillAttr.CanActAfterDebuff);
-    }
-
-    #endregion
-
-    #region element
-
-    private static string _EleImpactBaseStr = "EleImpact";
-    private static string _EleImpactFireStr = "EleImpactFire";
-    private static string _EleImpactColdStr = "EleImpactCold";
-    private static string _EleImpactLightingStr = "EleImpactLighting";
-    private static string _EleImpactWindStr = "EleImpactWind";
-
-    private string _CurEleImpact = "";
-    private ElementType _ImpactElement;
-    private ElementType _EffectElement;
-    private ElementType _HitElement;
-
-    public void SetImpactElement(ElementType eleType)
-    {
-        _ImpactElement = eleType;
-        _CurEleImpact = "";
-        switch (eleType)
-        {
-            case ElementType.Fire:
-                _CurEleImpact = _EleImpactFireStr;
-                break;
-            case ElementType.Cold:
-                _CurEleImpact = _EleImpactColdStr;
-                break;
-            case ElementType.Lighting:
-                _CurEleImpact = _EleImpactLightingStr;
-                break;
-            case ElementType.Wind:
-                _CurEleImpact = _EleImpactWindStr;
-                break;
-        }
-    }
-
-    public void SetEffectElement(ElementType eleType)
-    {
-        _EffectElement = eleType;
-    }
-
-    public void SetHitEffectElement(ElementType eleType)
-    {
-        _HitElement = eleType;
-    }
-
-    private bool IsColliderCanAct(string colliderName)
-    {
-        if (colliderName.Contains(_EleImpactBaseStr))
-        {
-            if (string.IsNullOrEmpty(_CurEleImpact))
-                return false;
-
-            if (colliderName == _CurEleImpact)
-                return true;
-
-            return false;
-        }
-        else
-        {
-            return true;
         }
     }
 

@@ -37,7 +37,7 @@ public class BulletLiuSha : BulletBase
 
         foreach (var impact in _ImpactList)
         {
-            impact.RemoveImpact(targetMotion);
+            impact.FinishImpact(targetMotion);
         }
     }
 

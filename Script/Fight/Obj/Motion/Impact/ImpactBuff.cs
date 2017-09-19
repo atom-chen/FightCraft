@@ -37,9 +37,9 @@ public class ImpactBuff : ImpactBase
         return dynamicBuff;
     }
 
-    public override void RemoveImpact(MotionManager reciverManager)
+    public override void FinishImpact(MotionManager reciverManager)
     {
-        base.RemoveImpact(reciverManager);
+        base.FinishImpact(reciverManager);
 
         reciverManager.RemoveBuff(GetType());
     }

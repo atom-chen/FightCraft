@@ -83,8 +83,6 @@ public class ObjMotionSkillAttack : ObjMotionSkillBase
 
     #endregion
 
-    public AnimationClip[] _NextAnim;
-    public EffectController[] _NextEffect;
     public SelectBase[] _Collider;
 
     private bool _CanNextInput = false;
@@ -107,7 +105,7 @@ public class ObjMotionSkillAttack : ObjMotionSkillBase
 
     public override bool ActSkill(Hashtable exhash)
     {
-        bool isActSkill = base.ActSkill();
+        bool isActSkill = base.ActSkill(exhash);
         if (!isActSkill)
             return false;
 
@@ -129,7 +127,7 @@ public class ObjMotionSkillAttack : ObjMotionSkillBase
 
     public void ContinueAttack()
     {
-        if (_CurStep + 1 < _NextAnim.Length)
+        if (_CurStep + 1 < _NextAnim.Count)
         {
             ++_CurStep;
             //if (InputManager.Instance._Axis != Vector2.zero)
@@ -138,7 +136,7 @@ public class ObjMotionSkillAttack : ObjMotionSkillBase
             //}
             InputManager.Instance.AutoRotate();
             PlayAnimation(_NextAnim[_CurStep]);
-            if (_NextEffect.Length > _CurStep && _NextEffect[_CurStep] != null)
+            if (_NextEffect.Count > _CurStep && _NextEffect[_CurStep] != null)
             {
                 PlaySkillEffect(_NextEffect[_CurStep]);
             }

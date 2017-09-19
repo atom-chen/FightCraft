@@ -130,6 +130,15 @@ public class InputManager : InstanceBase<InputManager>
 #endif
     }
 
+    public bool IsAnyHold()
+    {
+#if UNITY_EDITOR
+        return Input.anyKey;
+#else
+        return UISkillBar.IsKeyDown(key);
+#endif
+    }
+
     #endregion
 
     #region emulate key

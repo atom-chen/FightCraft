@@ -24,6 +24,31 @@ public class SelectCollider : SelectBase
 
     public bool _SelectLieObj;
 
+    public override void Init(RoleAttrManager.SkillAttr skillAttr)
+    {
+        base.Init(skillAttr);
+
+        if (skillAttr == null)
+            return;
+
+        _Collider = gameObject.GetComponent<Collider>();
+        if (_Collider is CapsuleCollider)
+        {
+            var capsuleCollider = _Collider as CapsuleCollider;
+            capsuleCollider.radius = capsuleCollider.radius * (1 + skillAttr.RangeAdd);
+            capsuleCollider.height = capsuleCollider.height * (1 + skillAttr.RangeLengthAdd) + skillAttr.BackRangeAdd;
+            if (capsuleCollider.direction == 1)
+            {
+                capsuleCollider.center = new Vector3(0, capsuleCollider.height * 0.5f, capsuleCollider.center.z);
+            }
+            else if (capsuleCollider.direction == 2)
+            {
+                capsuleCollider.center = new Vector3(0, capsuleCollider.radius * 0.5f, capsuleCollider.center.z * (1 + skillAttr.RangeAdd));
+            }
+        }
+    }
+
+
     public override void ColliderStart()
     {
         if (_Collider == null)
@@ -39,6 +64,11 @@ public class SelectCollider : SelectBase
         base.ColliderFinish();
         _Collider.enabled = false;
         _TrigMotions.Clear();
+    }
+
+    public override void ColliderStop()
+    {
+        ColliderFinish();
     }
 
     void OnTriggerStay(Collider other)

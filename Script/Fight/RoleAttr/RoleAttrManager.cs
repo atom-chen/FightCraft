@@ -197,193 +197,193 @@ public class RoleAttrManager : MonoBehaviour
 
     private void InitSkillAttr()
     {
-        //var skillAttr = new SkillAttr();
-        //skillAttr.SpeedAdd = 0.5f;
-        //skillAttr.DamageRateAdd = 0.5f;
-        ////skillAttr.RangeAdd = 0.5f;
-        //skillAttr.RangeLengthAdd = 0.5f;
-        //skillAttr.BackRangeAdd = 0.5f;
-        //_SkillAttrs.Add("j", skillAttr);
-
-        //skillAttr = new SkillAttr();
-        ////skillAttr.SpeedAdd = 0.5f;
-        //skillAttr.DamageRateAdd = 0.5f;
-        ////skillAttr.RangeAdd = 0.5f;
-        ////skillAttr.RangeLengthAdd = 0.5f;
-        ////skillAttr.BackRangeAdd = 0.5f;
-        //skillAttr.ShadowWarriorCnt = 2;
-        //skillAttr.ShadowWarriorDamageRate = 0.3f;
-        //skillAttr.AccumulateTime = 0.5f;
-        ////skillAttr.ExBullets.Add("Bullet\\Emitter\\Element\\EleTargetBoomWind");
-        //skillAttr.CanActAfterDebuff = true;
-        //_SkillAttrs.Add("1", skillAttr);
-
-        //skillAttr = new SkillAttr();
-        ////skillAttr.SpeedAdd = 0.5f;
-        //skillAttr.DamageRateAdd = 0.5f;
-        ////skillAttr.RangeAdd = 0.5f;
-        ////skillAttr.RangeLengthAdd = 0.5f;
-        //skillAttr.BackRangeAdd = 0.5f;
-        //skillAttr.ShadowWarriorCnt = 2;
-        //skillAttr.ShadowWarriorDamageRate = 0.3f;
-        //skillAttr.AccumulateTime = 0.5f;
-        ////skillAttr.ExBullets.Add("Bullet\\Emitter\\Element\\EleTargetBoomWind");
-        //_SkillAttrs.Add("2", skillAttr);
-
-        //skillAttr = new SkillAttr();
-        ////skillAttr.SpeedAdd = 0.5f;
-        //skillAttr.DamageRateAdd = 0.5f;
-        ////skillAttr.RangeAdd = 0.5f;
-        ////skillAttr.RangeLengthAdd = 0.5f;
-        //skillAttr.BackRangeAdd = 0.5f;
-        //skillAttr.ShadowWarriorCnt = 2;
-        //skillAttr.ShadowWarriorDamageRate = 0.3f;
-        //skillAttr.AccumulateTime = 0.5f;
-        ////skillAttr.ExBullets.Add("Bullet\\Emitter\\Element\\EleLineBoomFire");
-        ////skillAttr.ExBullets.Add("Bullet\\Emitter\\Element\\EleTargetBoomWind");
-        //_SkillAttrs.Add("3", skillAttr);
-
         var skillAttr = new SkillAttr();
+        skillAttr.SpeedAdd = 0.5f;
+        skillAttr.DamageRateAdd = 0.5f;
+        //skillAttr.RangeAdd = 0.5f;
+        skillAttr.RangeLengthAdd = 0.5f;
+        skillAttr.BackRangeAdd = 0.5f;
         _SkillAttrs.Add("j", skillAttr);
-        foreach (var skillItem in RoleData.SelectRole.SkillClassItems[Tables.SKILL_CLASS.NORMAL_ATTACK])
-        {
-            var skillTab = Tables.TableReader.SkillInfo.GetRecord(skillItem._SkillID);
-            if (skillTab == null)
-                continue;
-
-            if (skillItem.SkillActureLevel <= 0)
-                continue;
-
-            switch (skillTab.SkillAttr)
-            {
-                case ATTR_EFFECT.DAMAGE:
-                    skillAttr.DamageRateAdd = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
-                    break;
-                case ATTR_EFFECT.SPEED:
-                    skillAttr.SpeedAdd = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
-                    break;
-                case ATTR_EFFECT.RANGE:
-                    skillAttr.RangeAdd = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
-                    break;
-            }
-        }
 
         skillAttr = new SkillAttr();
+        //skillAttr.SpeedAdd = 0.5f;
+        skillAttr.DamageRateAdd = 0.5f;
+        //skillAttr.RangeAdd = 0.5f;
+        //skillAttr.RangeLengthAdd = 0.5f;
+        //skillAttr.BackRangeAdd = 0.5f;
+        skillAttr.ShadowWarriorCnt = 2;
+        skillAttr.ShadowWarriorDamageRate = 0.3f;
+        skillAttr.AccumulateTime = 0.5f;
+        //skillAttr.ExBullets.Add("Bullet\\Emitter\\Element\\EleTargetBoomWind");
+        skillAttr.CanActAfterDebuff = true;
         _SkillAttrs.Add("1", skillAttr);
-        foreach (var skillItem in RoleData.SelectRole.SkillClassItems[Tables.SKILL_CLASS.SKILL1])
-        {
-            var skillTab = Tables.TableReader.SkillInfo.GetRecord(skillItem._SkillID);
-            if (skillTab == null)
-                continue;
 
-            if (skillItem.SkillActureLevel <= 0)
-                continue;
-
-            switch (skillTab.SkillAttr)
-            {
-                case ATTR_EFFECT.DAMAGE:
-                    skillAttr.DamageRateAdd = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
-                    break;
-                case ATTR_EFFECT.SPEED:
-                    skillAttr.SpeedAdd = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
-                    break;
-                case ATTR_EFFECT.RANGE:
-                    skillAttr.RangeAdd = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
-                    break;
-                case ATTR_EFFECT.SKILL_ACCUMULATE:
-                    skillAttr.AccumulateTime = skillTab.EffectValue[1] * 0.0001f;
-                    skillAttr.AccumulateDamageRate = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
-                    break;
-                case ATTR_EFFECT.SKILL_SHADOWARRIOR:
-                    skillAttr.ShadowWarriorCnt = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
-                    skillAttr.ShadowWarriorDamageRate = skillTab.EffectValue[1] * skillItem.SkillActureLevel;
-                    break;
-                case ATTR_EFFECT.SKILL_ACTBUFF:
-                    skillAttr.CanActAfterDebuff = true;
-                    break;
-                case ATTR_EFFECT.SKILL_EXATTACK:
-                    skillAttr.ExAttack = true;
-                    break;
-            }
-        }
-
-        skillAttr = new SkillAttr(skillAttr);
+        skillAttr = new SkillAttr();
+        //skillAttr.SpeedAdd = 0.5f;
+        skillAttr.DamageRateAdd = 0.5f;
+        //skillAttr.RangeAdd = 0.5f;
+        //skillAttr.RangeLengthAdd = 0.5f;
+        skillAttr.BackRangeAdd = 0.5f;
+        skillAttr.ShadowWarriorCnt = 2;
+        skillAttr.ShadowWarriorDamageRate = 0.3f;
+        skillAttr.AccumulateTime = 0.5f;
+        //skillAttr.ExBullets.Add("Bullet\\Emitter\\Element\\EleTargetBoomWind");
         _SkillAttrs.Add("2", skillAttr);
-        foreach (var skillItem in RoleData.SelectRole.SkillClassItems[Tables.SKILL_CLASS.SKILL2])
-        {
-            var skillTab = Tables.TableReader.SkillInfo.GetRecord(skillItem._SkillID);
-            if (skillTab == null)
-                continue;
 
-            if (skillItem.SkillActureLevel <= 0)
-                continue;
-
-            switch (skillTab.SkillAttr)
-            {
-                case ATTR_EFFECT.DAMAGE:
-                    skillAttr.DamageRateAdd = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
-                    break;
-                case ATTR_EFFECT.SPEED:
-                    skillAttr.SpeedAdd = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
-                    break;
-                case ATTR_EFFECT.RANGE:
-                    skillAttr.RangeAdd = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
-                    break;
-                case ATTR_EFFECT.SKILL_ACCUMULATE:
-                    skillAttr.AccumulateTime = skillTab.EffectValue[1] * 0.0001f;
-                    skillAttr.AccumulateDamageRate = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
-                    break;
-                case ATTR_EFFECT.SKILL_SHADOWARRIOR:
-                    skillAttr.ShadowWarriorCnt = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
-                    skillAttr.ShadowWarriorDamageRate = skillTab.EffectValue[1] * skillItem.SkillActureLevel;
-                    break;
-                case ATTR_EFFECT.SKILL_ACTBUFF:
-                    skillAttr.CanActAfterDebuff = true;
-                    break;
-                case ATTR_EFFECT.SKILL_EXATTACK:
-                    skillAttr.ExAttack = true;
-                    break;
-            }
-        }
-
-        skillAttr = new SkillAttr(skillAttr);
+        skillAttr = new SkillAttr();
+        //skillAttr.SpeedAdd = 0.5f;
+        skillAttr.DamageRateAdd = 0.5f;
+        //skillAttr.RangeAdd = 0.5f;
+        //skillAttr.RangeLengthAdd = 0.5f;
+        skillAttr.BackRangeAdd = 0.5f;
+        skillAttr.ShadowWarriorCnt = 2;
+        skillAttr.ShadowWarriorDamageRate = 0.3f;
+        skillAttr.AccumulateTime = 0.5f;
+        //skillAttr.ExBullets.Add("Bullet\\Emitter\\Element\\EleLineBoomFire");
+        //skillAttr.ExBullets.Add("Bullet\\Emitter\\Element\\EleTargetBoomWind");
         _SkillAttrs.Add("3", skillAttr);
-        foreach (var skillItem in RoleData.SelectRole.SkillClassItems[Tables.SKILL_CLASS.SKILL3])
-        {
-            var skillTab = Tables.TableReader.SkillInfo.GetRecord(skillItem._SkillID);
-            if (skillTab == null)
-                continue;
 
-            if (skillItem.SkillActureLevel <= 0)
-                continue;
+        //var skillAttr = new SkillAttr();
+        //_SkillAttrs.Add("j", skillAttr);
+        //foreach (var skillItem in RoleData.SelectRole.SkillClassItems[Tables.SKILL_CLASS.NORMAL_ATTACK])
+        //{
+        //    var skillTab = Tables.TableReader.SkillInfo.GetRecord(skillItem._SkillID);
+        //    if (skillTab == null)
+        //        continue;
 
-            switch (skillTab.SkillAttr)
-            {
-                case ATTR_EFFECT.DAMAGE:
-                    skillAttr.DamageRateAdd = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
-                    break;
-                case ATTR_EFFECT.SPEED:
-                    skillAttr.SpeedAdd = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
-                    break;
-                case ATTR_EFFECT.RANGE:
-                    skillAttr.RangeAdd = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
-                    break;
-                case ATTR_EFFECT.SKILL_ACCUMULATE:
-                    skillAttr.AccumulateTime = skillTab.EffectValue[1] * 0.0001f;
-                    skillAttr.AccumulateDamageRate = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
-                    break;
-                case ATTR_EFFECT.SKILL_SHADOWARRIOR:
-                    skillAttr.ShadowWarriorCnt = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
-                    skillAttr.ShadowWarriorDamageRate = skillTab.EffectValue[1] * skillItem.SkillActureLevel;
-                    break;
-                case ATTR_EFFECT.SKILL_ACTBUFF:
-                    skillAttr.CanActAfterDebuff = true;
-                    break;
-                case ATTR_EFFECT.SKILL_EXATTACK:
-                    skillAttr.ExAttack = true;
-                    break;
-            }
-        }
+        //    if (skillItem.SkillActureLevel <= 0)
+        //        continue;
+
+        //    switch (skillTab.SkillAttr)
+        //    {
+        //        case ATTR_EFFECT.DAMAGE:
+        //            skillAttr.DamageRateAdd = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
+        //            break;
+        //        case ATTR_EFFECT.SPEED:
+        //            skillAttr.SpeedAdd = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
+        //            break;
+        //        case ATTR_EFFECT.RANGE:
+        //            skillAttr.RangeAdd = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
+        //            break;
+        //    }
+        //}
+
+        //skillAttr = new SkillAttr();
+        //_SkillAttrs.Add("1", skillAttr);
+        //foreach (var skillItem in RoleData.SelectRole.SkillClassItems[Tables.SKILL_CLASS.SKILL1])
+        //{
+        //    var skillTab = Tables.TableReader.SkillInfo.GetRecord(skillItem._SkillID);
+        //    if (skillTab == null)
+        //        continue;
+
+        //    if (skillItem.SkillActureLevel <= 0)
+        //        continue;
+
+        //    switch (skillTab.SkillAttr)
+        //    {
+        //        case ATTR_EFFECT.DAMAGE:
+        //            skillAttr.DamageRateAdd = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
+        //            break;
+        //        case ATTR_EFFECT.SPEED:
+        //            skillAttr.SpeedAdd = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
+        //            break;
+        //        case ATTR_EFFECT.RANGE:
+        //            skillAttr.RangeAdd = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
+        //            break;
+        //        case ATTR_EFFECT.SKILL_ACCUMULATE:
+        //            skillAttr.AccumulateTime = skillTab.EffectValue[1] * 0.0001f;
+        //            skillAttr.AccumulateDamageRate = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
+        //            break;
+        //        case ATTR_EFFECT.SKILL_SHADOWARRIOR:
+        //            skillAttr.ShadowWarriorCnt = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
+        //            skillAttr.ShadowWarriorDamageRate = skillTab.EffectValue[1] * skillItem.SkillActureLevel;
+        //            break;
+        //        case ATTR_EFFECT.SKILL_ACTBUFF:
+        //            skillAttr.CanActAfterDebuff = true;
+        //            break;
+        //        case ATTR_EFFECT.SKILL_EXATTACK:
+        //            skillAttr.ExAttack = true;
+        //            break;
+        //    }
+        //}
+
+        //skillAttr = new SkillAttr(skillAttr);
+        //_SkillAttrs.Add("2", skillAttr);
+        //foreach (var skillItem in RoleData.SelectRole.SkillClassItems[Tables.SKILL_CLASS.SKILL2])
+        //{
+        //    var skillTab = Tables.TableReader.SkillInfo.GetRecord(skillItem._SkillID);
+        //    if (skillTab == null)
+        //        continue;
+
+        //    if (skillItem.SkillActureLevel <= 0)
+        //        continue;
+
+        //    switch (skillTab.SkillAttr)
+        //    {
+        //        case ATTR_EFFECT.DAMAGE:
+        //            skillAttr.DamageRateAdd = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
+        //            break;
+        //        case ATTR_EFFECT.SPEED:
+        //            skillAttr.SpeedAdd = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
+        //            break;
+        //        case ATTR_EFFECT.RANGE:
+        //            skillAttr.RangeAdd = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
+        //            break;
+        //        case ATTR_EFFECT.SKILL_ACCUMULATE:
+        //            skillAttr.AccumulateTime = skillTab.EffectValue[1] * 0.0001f;
+        //            skillAttr.AccumulateDamageRate = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
+        //            break;
+        //        case ATTR_EFFECT.SKILL_SHADOWARRIOR:
+        //            skillAttr.ShadowWarriorCnt = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
+        //            skillAttr.ShadowWarriorDamageRate = skillTab.EffectValue[1] * skillItem.SkillActureLevel;
+        //            break;
+        //        case ATTR_EFFECT.SKILL_ACTBUFF:
+        //            skillAttr.CanActAfterDebuff = true;
+        //            break;
+        //        case ATTR_EFFECT.SKILL_EXATTACK:
+        //            skillAttr.ExAttack = true;
+        //            break;
+        //    }
+        //}
+
+        //skillAttr = new SkillAttr(skillAttr);
+        //_SkillAttrs.Add("3", skillAttr);
+        //foreach (var skillItem in RoleData.SelectRole.SkillClassItems[Tables.SKILL_CLASS.SKILL3])
+        //{
+        //    var skillTab = Tables.TableReader.SkillInfo.GetRecord(skillItem._SkillID);
+        //    if (skillTab == null)
+        //        continue;
+
+        //    if (skillItem.SkillActureLevel <= 0)
+        //        continue;
+
+        //    switch (skillTab.SkillAttr)
+        //    {
+        //        case ATTR_EFFECT.DAMAGE:
+        //            skillAttr.DamageRateAdd = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
+        //            break;
+        //        case ATTR_EFFECT.SPEED:
+        //            skillAttr.SpeedAdd = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
+        //            break;
+        //        case ATTR_EFFECT.RANGE:
+        //            skillAttr.RangeAdd = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
+        //            break;
+        //        case ATTR_EFFECT.SKILL_ACCUMULATE:
+        //            skillAttr.AccumulateTime = skillTab.EffectValue[1] * 0.0001f;
+        //            skillAttr.AccumulateDamageRate = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
+        //            break;
+        //        case ATTR_EFFECT.SKILL_SHADOWARRIOR:
+        //            skillAttr.ShadowWarriorCnt = skillTab.EffectValue[0] * skillItem.SkillActureLevel;
+        //            skillAttr.ShadowWarriorDamageRate = skillTab.EffectValue[1] * skillItem.SkillActureLevel;
+        //            break;
+        //        case ATTR_EFFECT.SKILL_ACTBUFF:
+        //            skillAttr.CanActAfterDebuff = true;
+        //            break;
+        //        case ATTR_EFFECT.SKILL_EXATTACK:
+        //            skillAttr.ExAttack = true;
+        //            break;
+        //    }
+        //}
 
     }
 

@@ -7,24 +7,37 @@ public class SelectBase : MonoBehaviour
     public int _ColliderID;
     public bool _IsColliderFinish = false;
     public bool _IsRemindSelected = false;
+    public AnimationClip _EventAnim;
+    public List<int> _EventFrame;
     
     protected MotionManager _ObjMotion;
     protected ObjMotionSkillBase _SkillMotion;
     protected ImpactBase[] _ImpactList;
 
-    public virtual void Init()
+    public virtual void Init(RoleAttrManager.SkillAttr skillAttr)
     {
         _SkillMotion = gameObject.GetComponentInParent<ObjMotionSkillBase>();
         _ObjMotion = gameObject.GetComponentInParent<MotionManager>();
         _ImpactList = gameObject.GetComponents<ImpactBase>();
         foreach (var impactBase in _ImpactList)
         {
-            impactBase.SkillMotion = _SkillMotion;
+            impactBase.Init(skillAttr, _SkillMotion, this);
         }
     }
 
-    public virtual void ResetSkillRange()
-    { }
+    public virtual void RegisterEvent()
+    {
+        for (int i = 0; i < _EventFrame.Count; ++i)
+        {
+            var anim = _ObjMotion.Animation.GetClip(_EventAnim.name);
+            _ObjMotion.AnimationEvent.AddSelectorEvent(anim, _EventFrame[i], _ColliderID);
+        }
+    }
+
+    public virtual void ResetSelector()
+    {
+        _ObjMotion.AnimationEvent.RemoveSelectorEvent(_EventAnim, _ColliderID);
+    }
     
 
     public virtual void ColliderStart()
@@ -48,6 +61,14 @@ public class SelectBase : MonoBehaviour
     public virtual void ColliderFinish()
     {
         //gameObject.SetActive(false);
+    }
+
+    public virtual void ColliderStop()
+    {
+        foreach (var impact in _ImpactList)
+        {
+            impact.StopImpact();
+        }
     }
 
 }

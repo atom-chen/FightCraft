@@ -74,6 +74,45 @@ public class AnimEventManager : MonoBehaviour
             _AnimCallBack.Add(funcName, callBack);
     }
 
+    public void AddSelectorEvent(AnimationClip animClip, int frame, int selectorID)
+    {
+        AnimationEvent animEvent = new AnimationEvent();
+        animEvent.time = frame / animClip.frameRate;
+        animEvent.functionName = "ColliderStart";
+        animEvent.intParameter = selectorID;
+        animClip.AddEvent(animEvent);
+    }
+
+    public void AddSelectorFinishEvent(AnimationClip animClip, int frame, int selectorID)
+    {
+        AnimationEvent animEvent = new AnimationEvent();
+        animEvent.time = frame / animClip.frameRate;
+        animEvent.functionName = "ColliderFinish";
+        animEvent.intParameter = selectorID;
+        animClip.AddEvent(animEvent);
+    }
+
+    public void AddSelectorFinishEvent(AnimationClip animClip, float time, int selectorID)
+    {
+        AnimationEvent animEvent = new AnimationEvent();
+        animEvent.time = time;
+        animEvent.functionName = "ColliderFinish";
+        animEvent.intParameter = selectorID;
+        animClip.AddEvent(animEvent);
+    }
+
+    public void RemoveSelectorEvent(AnimationClip animClip, int selectorID)
+    {
+        List<AnimationEvent> removeEvents = new List<AnimationEvent>();
+        foreach (var animEvent in animClip.events)
+        {
+            if (animEvent.functionName == "ColliderStart"
+                && selectorID == animEvent.intParameter)
+                animEvent.functionName = ""; ;
+        }
+
+    }
+
     public float GetAnimFirstColliderEventTime(AnimationClip animClip)
     {
         foreach (var animEvent in animClip.events)

@@ -17,7 +17,7 @@ public class ImpactPushInputDirect : ImpactBase
         }
         Vector3 destMove = moveDirect * _Speed * _Time;
         reciverManager.SetLookAt(moveDirect);
-        reciverManager.SetMove(destMove, _Time / SkillMotion.SkillBaseSpeed);
+        reciverManager.SetMove(destMove, _Time / SkillMotion.SkillSpeed);
     }
 
 }
