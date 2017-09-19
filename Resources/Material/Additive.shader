@@ -18,7 +18,7 @@ SubShader {
   Fog {
    Color (0,0,0,0)
   }
-  Blend OneMinusSrcAlpha One
+  Blend SrcAlpha OneMinusSrcAlpha
   SetTexture [_MainTex] { combine texture * primary }
  }
 }

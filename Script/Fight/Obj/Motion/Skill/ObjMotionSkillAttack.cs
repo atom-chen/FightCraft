@@ -40,7 +40,7 @@ public class ObjMotionSkillAttack : ObjMotionSkillBase
 
     public override void AnimEvent(string function, object param)
     {
-        base.AnimEvent(function, param);
+        //base.AnimEvent(function, param);
 
         switch (function)
         {
@@ -50,6 +50,16 @@ public class ObjMotionSkillAttack : ObjMotionSkillBase
                 break;
             case AnimEventManager.NEXT_INPUT_END:
                 _CanNextInput = false;
+                break;
+            case AnimEventManager.ANIMATION_END:
+                //PlayerNextAnim();
+                FinishSkill();
+                break;
+            case AnimEventManager.COLLIDER_START:
+                ColliderStart(param);
+                break;
+            case AnimEventManager.COLLIDER_END:
+                ColliderEnd(param);
                 break;
         }
     }
