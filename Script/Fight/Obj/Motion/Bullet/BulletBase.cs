@@ -7,7 +7,16 @@ public class BulletBase : MonoBehaviour
     public bool _IsBulletHitLie;
     protected ImpactBase[] _ImpactList;
     protected MotionManager _SkillMotion;
+    public MotionManager SkillMotion
+    {
+        get
+        {
+            return _SkillMotion;
+        }
+    }
+
     protected BulletEmitterBase _EmitterBase;
+
 
     public virtual void Init(MotionManager senderMotion, BulletEmitterBase emitterBase)
     {

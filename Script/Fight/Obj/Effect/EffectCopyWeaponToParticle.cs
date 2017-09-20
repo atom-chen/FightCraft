@@ -26,7 +26,7 @@ public class EffectCopyWeaponToParticle : MonoBehaviour
     {
         if (WeaponMesh == null)
         {
-            var motion = gameObject.GetComponentInParent<MotionManager>();
+            var motion = gameObject.GetComponentInParent<BulletBase>().SkillMotion;
             var skinnedMeshes = motion.GetComponentsInChildren<SkinnedMeshRenderer>();
             foreach (var skinnedMesh in skinnedMeshes)
             {
