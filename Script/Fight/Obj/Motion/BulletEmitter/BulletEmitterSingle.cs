@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-public class BulletEmitterSingle : BulletEmitterBase
+public class BulletEmitterSingle : BulletEmitterElement
 {
 
     public override void ActImpact(MotionManager senderManager, MotionManager reciverManager)

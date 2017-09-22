@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-public class BulletEmitterLineForward : BulletEmitterBase
+public class BulletEmitterLineForward : BulletEmitterElement
 {
 
     public float _EmitterTime;

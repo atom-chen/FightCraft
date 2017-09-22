@@ -26,6 +26,8 @@ public class ObjMotionSkillBase : MonoBehaviour
                 _MotionManager.AddAnimationEndEvent(anim);
             }
         }
+
+        RegisterColliderEvent();
     }
 
     private int _CurStep;
@@ -246,9 +248,14 @@ public class ObjMotionSkillBase : MonoBehaviour
             }
         }
 
-        foreach (var collider in collidercontrollers)
+    }
+
+    protected void RegisterColliderEvent()
+    {
+        foreach (var colliderKeyValue in _ColliderControl)
         {
-            collider.RegisterEvent();
+            foreach(var collider in colliderKeyValue.Value)
+                collider.RegisterEvent();
         }
     }
 

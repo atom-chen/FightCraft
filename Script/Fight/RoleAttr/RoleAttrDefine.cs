@@ -47,8 +47,6 @@ public enum RoleAttrEnum
     IgnoreDefenceAttack,
     FinalDamageReduse,
 
-    BASE_ATTR_MAX = 99,
-
     Skill1FireDamagePersent = 200,
     Skill2FireDamagePersent,
     Skill3FireDamagePersent,
@@ -61,6 +59,8 @@ public enum RoleAttrEnum
     Skill1WindDamagePersent,
     Skill2WindDamagePersent,
     Skill3WindDamagePersent,
+
+    BASE_ATTR_MAX = 999,
 
     Skill1FireBoom = 1000,
     Skill1FireBall,
@@ -77,21 +77,21 @@ public enum RoleAttrEnum
     Skill3FireExplore,
     Skill3FireRandomBoom,
     Skill3FireAimTarget,
-    Skill1ColdBoom,
-    Skill1ColdBall,
-    Skill1ColdExplore,
-    Skill1ColdRandomBoom,
-    Skill1ColdAimTarget,
-    Skill2ColdBoom,
-    Skill2ColdBall,
-    Skill2ColdExplore,
-    Skill2ColdRandomBoom,
-    Skill2ColdAimTarget,
-    Skill3ColdBoom,
-    Skill3ColdBall,
-    Skill3ColdExplore,
-    Skill3ColdRandomBoom,
-    Skill3ColdAimTarget,
+    Skill1IceBoom,
+    Skill1IceBall,
+    Skill1IceExplore,
+    Skill1IceRandomBoom,
+    Skill1IceAimTarget,
+    Skill2IceBoom,
+    Skill2IceBall,
+    Skill2IceExplore,
+    Skill2IceRandomBoom,
+    Skill2IceAimTarget,
+    Skill3IceBoom,
+    Skill3IceBall,
+    Skill3IceExplore,
+    Skill3IceRandomBoom,
+    Skill3IceAimTarget,
     Skill1LightBoom,
     Skill1LightBall,
     Skill1LightExplore,
@@ -310,8 +310,9 @@ public class RandomAttrs
             //if (exAttrCnt == 4)
             {
                 defaultCnt += 2;
-                int attrIDX = Random.Range((int)RoleAttrEnum.Skill1FireBoom, (int)RoleAttrEnum.Skill3WindAimTarget + 1);
-                defaultEx = new EquipExAttr((RoleAttrEnum)attrIDX, 1, 1);
+                //int attrIDX = Random.Range((int)RoleAttrEnum.Skill1FireBoom, (int)RoleAttrEnum.Skill3WindAimTarget + 1);
+                //defaultEx = new EquipExAttr((RoleAttrEnum)attrIDX, 1, 1);
+                defaultEx = RoleAttrImpactEleBullet.GetRandomExAttr(level, equipValue, quality);
             }
             if (exAttrCnt == 5)
             {
@@ -632,7 +633,7 @@ public class RandomAttrs
 public class RoleAttrStruct
 {
     public List<int> _BaseAttrValues;
-    public Dictionary<RoleAttrEnum, EquipExAttr> _ExAttr;
+    public Dictionary<string, RoleAttrImpactBase> _ExAttr;
 
     public RoleAttrStruct()
     {
@@ -641,16 +642,16 @@ public class RoleAttrStruct
         {
             _BaseAttrValues.Add(0);
         }
-        _ExAttr = new Dictionary<RoleAttrEnum, EquipExAttr>();
+        _ExAttr = new Dictionary<string, RoleAttrImpactBase>();
     }
 
     public RoleAttrStruct(RoleAttrStruct copyStruct)
     {
         _BaseAttrValues = new List<int>(copyStruct._BaseAttrValues);
-        _ExAttr = new Dictionary<RoleAttrEnum, EquipExAttr>();
+        _ExAttr = new Dictionary<string, RoleAttrImpactBase>();
         foreach (var equipAttr in copyStruct._ExAttr)
         {
-            _ExAttr.Add(equipAttr.Key, new EquipExAttr(equipAttr.Value));
+            _ExAttr.Add(equipAttr.Key, equipAttr.Value);
         }
     }
 
@@ -678,20 +679,23 @@ public class RoleAttrStruct
         return _BaseAttrValues[(int)attrEnum];
     }
 
-    public int GetExAttr(RoleAttrEnum attrEnum)
-    {
-        if (_ExAttr.ContainsKey(attrEnum))
-            return _ExAttr[attrEnum].AttrValue1;
+    //public int GetExAttr(RoleAttrEnum attrEnum)
+    //{
+    //    if (_ExAttr.ContainsKey(attrEnum))
+    //        return _ExAttr[attrEnum].AttrValue1;
 
-        return 0;
-    }
+    //    return 0;
+    //}
 
-    public void AddExAttr(EquipExAttr exAttr)
+    public void AddExAttr(RoleAttrImpactBase exAttr)
     {
-        if (_ExAttr.ContainsKey(exAttr.AttrID))
+        if (_ExAttr.ContainsKey(exAttr.ToString()))
         {
-            _ExAttr[exAttr.AttrID].Add(exAttr);
+            _ExAttr[exAttr.ToString()].AddData(exAttr);
         }
-        _ExAttr.Add(exAttr.AttrID, exAttr);
+        else
+        {
+            _ExAttr.Add(exAttr.ToString(), exAttr);
+        }
     }
 }

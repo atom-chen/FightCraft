@@ -30,6 +30,7 @@ public class UITestEquip : UIBase
     public InputField _InputLevel;
     public InputField _InputQuality;
     public InputField _InputValue;
+    public InputField _InputType;
 
     #endregion
 

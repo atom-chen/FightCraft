@@ -270,7 +270,7 @@ public class ItemEquip : ItemBase
             }
             else
             {
-                roleAttr.AddExAttr(exAttrs);
+                roleAttr.AddExAttr(RoleAttrImpactManager.GetAttrImpact(exAttrs));
             }
         }
     }

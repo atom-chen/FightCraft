@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BulletEmitterRandomLast : BulletEmitterBase
+public class BulletEmitterRandomLast : BulletEmitterElement
 {
     public int _RoundBulletCnt = 5;
     public int _RoundCount = 1;

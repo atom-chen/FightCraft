@@ -153,7 +153,7 @@ public class UIEquipTooltips : UIBase
         {
             _ShowItem.ResetItem();
         }
-        
+        Hide();
     }
 
     public void OnBuy()

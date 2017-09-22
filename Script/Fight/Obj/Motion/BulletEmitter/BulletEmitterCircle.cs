@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BulletEmitterCircle : BulletEmitterBase
+public class BulletEmitterCircle : BulletEmitterElement
 {
     public int _BulletCnt = 8;
     public float _Interval = 0.1f;

@@ -134,6 +134,14 @@ public class StateSkill : StateBase
         {
             _SkillMotions.Add(skill._ActInput, skill);
             //skill.SetImpactElement(ElementType.Cold);
+        }
+        foreach (var attrImpact in _MotionManager.RoleAttrManager.GetAttrImpacts().Values)
+        {
+            attrImpact.FightCreateImpact(_MotionManager);
+        }
+
+        foreach (var skill in _SkillMotions.Values)
+        {
             skill.Init();
         }
     }

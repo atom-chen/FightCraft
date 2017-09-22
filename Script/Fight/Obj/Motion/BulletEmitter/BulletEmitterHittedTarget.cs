@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-public class BulletEmitterHittedTarget : BulletEmitterBase
+public class BulletEmitterHittedTarget : BulletEmitterElement
 {
     public float _DelayTime;
 

@@ -132,7 +132,7 @@ public class ItemBase : SaveItemBase
         itembase.RefreshItemData();
         RefreshItemData();
 
-        LogicManager.Instance.SaveGame();
+        //LogicManager.Instance.SaveGame();
     }
 
     #endregion

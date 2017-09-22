@@ -150,8 +150,11 @@ public class RoleAttrManager : MonoBehaviour
     }
 
     private RoleAttrStruct _BaseAttr;
-
-    public Dictionary<FightAttr.FightAttrType, int> _ExAttrs = new Dictionary<FightAttr.FightAttrType, int>();
+    public Dictionary<string, RoleAttrImpactBase> GetAttrImpacts()
+    {
+        return _BaseAttr._ExAttr;
+    }
+    
 
     #endregion
 
@@ -653,24 +656,24 @@ public class RoleAttrManager : MonoBehaviour
         int windAttack = 0;
         if (impactBase.SkillMotion._ActInput == "k1")
         {
-            fireAttack = sender._BaseAttr.GetExAttr(RoleAttrEnum.Skill1FireDamagePersent);
-            coldAttack = sender._BaseAttr.GetExAttr(RoleAttrEnum.Skill1ColdDamagePersent);
-            lightingAttack = sender._BaseAttr.GetExAttr(RoleAttrEnum.Skill1LightingDamagePersent);
-            windAttack = sender._BaseAttr.GetExAttr(RoleAttrEnum.Skill1WindDamagePersent);
+            fireAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill1FireDamagePersent);
+            coldAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill1ColdDamagePersent);
+            lightingAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill1LightingDamagePersent);
+            windAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill1WindDamagePersent);
         }
         else if (impactBase.SkillMotion._ActInput == "k2")
         {
-            fireAttack = sender._BaseAttr.GetExAttr(RoleAttrEnum.Skill2FireDamagePersent);
-            coldAttack = sender._BaseAttr.GetExAttr(RoleAttrEnum.Skill2ColdDamagePersent);
-            lightingAttack = sender._BaseAttr.GetExAttr(RoleAttrEnum.Skill2LightingDamagePersent);
-            windAttack = sender._BaseAttr.GetExAttr(RoleAttrEnum.Skill2WindDamagePersent);
+            fireAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill2FireDamagePersent);
+            coldAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill2ColdDamagePersent);
+            lightingAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill2LightingDamagePersent);
+            windAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill2WindDamagePersent);
         }
         else if (impactBase.SkillMotion._ActInput == "k3")
         {
-            fireAttack = sender._BaseAttr.GetExAttr(RoleAttrEnum.Skill3FireDamagePersent);
-            coldAttack = sender._BaseAttr.GetExAttr(RoleAttrEnum.Skill3ColdDamagePersent);
-            lightingAttack = sender._BaseAttr.GetExAttr(RoleAttrEnum.Skill3LightingDamagePersent);
-            windAttack = sender._BaseAttr.GetExAttr(RoleAttrEnum.Skill3WindDamagePersent);
+            fireAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill3FireDamagePersent);
+            coldAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill3ColdDamagePersent);
+            lightingAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill3LightingDamagePersent);
+            windAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill3WindDamagePersent);
         }
 
         int fireEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.FireEnhance);
