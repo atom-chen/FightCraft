@@ -154,6 +154,7 @@ public class RoleData : SaveItemBase
     {
         _BaseAttr.ResetBaseAttr();
         SetRoleLevelAttr(_BaseAttr);
+        SetSkillAttr(_BaseAttr);
         SetEquipAttr(_BaseAttr);
 
         CalculateSecondAttr();
@@ -528,6 +529,26 @@ public class RoleData : SaveItemBase
                 ++findSkill._SkillLevel;
             }
 
+        }
+    }
+
+    public void SetSkillAttr(RoleAttrStruct _BaseAttr)
+    {
+        foreach (var skillItem in _SkillItems)
+        {
+            switch (skillItem.SkillRecord.SkillAttr)
+            {
+                case ATTR_EFFECT.SKILL_ACCUMULATE:
+                    RoleAttrImpactAccumulate impactAccumulate = new RoleAttrImpactAccumulate();
+                    impactAccumulate.InitImpact((float)skillItem.SkillRecord.SkillClass, 0.5f, 0.4f);
+                    _BaseAttr.AddExAttr(impactAccumulate);
+                    break;
+                case ATTR_EFFECT.SKILL_EXATTACK:
+                    RoleAttrImpactExAttack attrImpact = new RoleAttrImpactExAttack();
+                    attrImpact.InitImpact((float)skillItem.SkillRecord.SkillClass, 1, 0.4f);
+                    _BaseAttr.AddExAttr(attrImpact);
+                    break;
+            }
         }
     }
 

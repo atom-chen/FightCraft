@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ImpactAttrAdd : ImpactBuff
+public class ImpactBuffAttrAdd : ImpactBuff
 {
     #region 
 

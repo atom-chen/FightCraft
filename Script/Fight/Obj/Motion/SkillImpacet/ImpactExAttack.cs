@@ -17,6 +17,8 @@ public class ImpactExAttack : ImpactBase
 
 
     private ObjMotionSkillBase _ExAttackSkill;
+    public int _AttackTimes;
+    public float _Damage;
 
     public override void Init(RoleAttrManager.SkillAttr skillAttr, ObjMotionSkillBase skillMotion, SelectBase selector)
     {

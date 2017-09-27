@@ -404,6 +404,9 @@ public class MotionManager : MonoBehaviour
 
     public ImpactBuff AddBuff(ImpactBuff buff, float lastTime = -1)
     {
+        if (!IsCanAddBuff(buff))
+            return null;
+
         if (_BuffBindPos == null)
         {
             _BuffBindPos = new GameObject("BuffBind");
@@ -427,6 +430,18 @@ public class MotionManager : MonoBehaviour
         newBuff.ActBuff(this);
 
         return newBuff;
+    }
+
+    public bool IsCanAddBuff(ImpactBuff newBuff)
+    {
+        foreach (var buff in _ImpactBuffs)
+        {
+            if (!buff.IsCanAddBuff(newBuff))
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void RemoveBuff(ImpactBuff buff)

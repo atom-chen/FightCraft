@@ -10,12 +10,21 @@ public class ImpactBuff : ImpactBase
     protected MotionManager _BuffSender;
     protected MotionManager _BuffOwner;
     protected EffectController _DynamicEffect;
+    protected bool _IsActingBuff = false;
 
     protected Dictionary<MotionManager, List<ImpactBuff>> _ReciverDict = new Dictionary<MotionManager, List<ImpactBuff>>();
 
     public void Awake()
     {
         enabled = false;
+    }
+
+    public void Update()
+    {
+        if (_IsActingBuff)
+        {
+            UpdateBuff();
+        }
     }
 
     public override sealed void ActImpact(MotionManager senderManager, MotionManager reciverManager)
@@ -57,6 +66,15 @@ public class ImpactBuff : ImpactBase
         }
         if(_LastTime > 0)
             StartCoroutine(TimeOut(ownerManager));
+
+        this.enabled = true;
+
+        _IsActingBuff = true;
+    }
+
+    public virtual bool IsCanAddBuff(ImpactBuff newBuff)
+    {
+        return true;
     }
 
     public virtual void RemoveBuff(MotionManager ownerManager)
@@ -65,6 +83,17 @@ public class ImpactBuff : ImpactBase
         {
             ownerManager.StopDynamicEffectImmediately(_DynamicEffect);
         }
+    }
+
+    public virtual void UpdateBuff()
+    {
+
+    }
+
+    public void RefreshLastTime()
+    {
+        StopCoroutine("TimeOut");
+        StartCoroutine(TimeOut(_BuffOwner));
     }
 
     public IEnumerator TimeOut(MotionManager ownerManager)

@@ -54,7 +54,9 @@ public class ParticleEditor : Editor
         var particleSys = particleObj.GetComponentsInChildren<ParticleSystem>();
         foreach (var particle in particleSys)
         {
+            var particleMain = particle.main;
             float delayTime = particle.startDelay;
+            particleMain.duration = particle.startDelay + particle.main.duration;
             ParticleSystem.Burst[] bursts = new ParticleSystem.Burst[particle.emission.burstCount];
             particle.emission.GetBursts(bursts);
             if (bursts.Length > 0)
@@ -63,7 +65,7 @@ public class ParticleEditor : Editor
             }
             particle.emission.SetBursts(bursts);
 
-
+            particle.startDelay = 0;
         }
     }
 

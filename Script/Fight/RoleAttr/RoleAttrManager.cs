@@ -200,51 +200,81 @@ public class RoleAttrManager : MonoBehaviour
 
     private void InitSkillAttr()
     {
-        var skillAttr = new SkillAttr();
-        skillAttr.SpeedAdd = 0.5f;
-        skillAttr.DamageRateAdd = 0.5f;
-        //skillAttr.RangeAdd = 0.5f;
-        skillAttr.RangeLengthAdd = 0.5f;
-        skillAttr.BackRangeAdd = 0.5f;
-        _SkillAttrs.Add("j", skillAttr);
-
-        skillAttr = new SkillAttr();
+        //var skillAttr = new SkillAttr();
         //skillAttr.SpeedAdd = 0.5f;
-        skillAttr.DamageRateAdd = 0.5f;
-        //skillAttr.RangeAdd = 0.5f;
+        //skillAttr.DamageRateAdd = 0.5f;
+        ////skillAttr.RangeAdd = 0.5f;
         //skillAttr.RangeLengthAdd = 0.5f;
         //skillAttr.BackRangeAdd = 0.5f;
-        skillAttr.ShadowWarriorCnt = 2;
-        skillAttr.ShadowWarriorDamageRate = 0.3f;
-        skillAttr.AccumulateTime = 0.5f;
-        //skillAttr.ExBullets.Add("Bullet\\Emitter\\Element\\EleTargetBoomWind");
-        skillAttr.CanActAfterDebuff = true;
-        _SkillAttrs.Add("1", skillAttr);
+        //_SkillAttrs.Add("j", skillAttr);
 
-        skillAttr = new SkillAttr();
-        //skillAttr.SpeedAdd = 0.5f;
-        skillAttr.DamageRateAdd = 0.5f;
-        //skillAttr.RangeAdd = 0.5f;
-        //skillAttr.RangeLengthAdd = 0.5f;
-        skillAttr.BackRangeAdd = 0.5f;
-        skillAttr.ShadowWarriorCnt = 2;
-        skillAttr.ShadowWarriorDamageRate = 0.3f;
-        skillAttr.AccumulateTime = 0.5f;
-        //skillAttr.ExBullets.Add("Bullet\\Emitter\\Element\\EleTargetBoomWind");
-        _SkillAttrs.Add("2", skillAttr);
+        //skillAttr = new SkillAttr();
+        ////skillAttr.SpeedAdd = 0.5f;
+        //skillAttr.DamageRateAdd = 0.5f;
+        ////skillAttr.RangeAdd = 0.5f;
+        ////skillAttr.RangeLengthAdd = 0.5f;
+        ////skillAttr.BackRangeAdd = 0.5f;
+        //skillAttr.ShadowWarriorCnt = 2;
+        //skillAttr.ShadowWarriorDamageRate = 0.3f;
+        //skillAttr.AccumulateTime = 0.5f;
+        ////skillAttr.ExBullets.Add("Bullet\\Emitter\\Element\\EleTargetBoomWind");
+        //skillAttr.CanActAfterDebuff = true;
+        //_SkillAttrs.Add("1", skillAttr);
 
-        skillAttr = new SkillAttr();
-        //skillAttr.SpeedAdd = 0.5f;
-        skillAttr.DamageRateAdd = 0.5f;
-        //skillAttr.RangeAdd = 0.5f;
-        //skillAttr.RangeLengthAdd = 0.5f;
-        skillAttr.BackRangeAdd = 0.5f;
-        skillAttr.ShadowWarriorCnt = 2;
-        skillAttr.ShadowWarriorDamageRate = 0.3f;
-        skillAttr.AccumulateTime = 0.5f;
-        //skillAttr.ExBullets.Add("Bullet\\Emitter\\Element\\EleLineBoomFire");
-        //skillAttr.ExBullets.Add("Bullet\\Emitter\\Element\\EleTargetBoomWind");
-        _SkillAttrs.Add("3", skillAttr);
+        //skillAttr = new SkillAttr();
+        ////skillAttr.SpeedAdd = 0.5f;
+        //skillAttr.DamageRateAdd = 0.5f;
+        ////skillAttr.RangeAdd = 0.5f;
+        ////skillAttr.RangeLengthAdd = 0.5f;
+        //skillAttr.BackRangeAdd = 0.5f;
+        //skillAttr.ShadowWarriorCnt = 2;
+        //skillAttr.ShadowWarriorDamageRate = 0.3f;
+        //skillAttr.AccumulateTime = 0.5f;
+        ////skillAttr.ExBullets.Add("Bullet\\Emitter\\Element\\EleTargetBoomWind");
+        //_SkillAttrs.Add("2", skillAttr);
+
+        //skillAttr = new SkillAttr();
+        ////skillAttr.SpeedAdd = 0.5f;
+        //skillAttr.DamageRateAdd = 0.5f;
+        ////skillAttr.RangeAdd = 0.5f;
+        ////skillAttr.RangeLengthAdd = 0.5f;
+        //skillAttr.BackRangeAdd = 0.5f;
+        //skillAttr.ShadowWarriorCnt = 2;
+        //skillAttr.ShadowWarriorDamageRate = 0.3f;
+        //skillAttr.AccumulateTime = 0.5f;
+        ////skillAttr.ExBullets.Add("Bullet\\Emitter\\Element\\EleLineBoomFire");
+        ////skillAttr.ExBullets.Add("Bullet\\Emitter\\Element\\EleTargetBoomWind");
+        //_SkillAttrs.Add("3", skillAttr);
+
+        if (RoleData.SelectRole == null)
+            return;
+
+        foreach (var skillClass in RoleData.SelectRole.SkillClassItems)
+        {
+            string skillInput = SkillInfo.GetSkillInputByClass(skillClass.Key);
+            if (!_SkillAttrs.ContainsKey(skillInput))
+            {
+                _SkillAttrs.Add(skillInput, new SkillAttr());
+            }
+
+            foreach (var skillItem in skillClass.Value)
+            {
+                var skillAttr = _SkillAttrs[skillInput];
+                switch (skillItem.SkillRecord.SkillAttr)
+                {
+                    case ATTR_EFFECT.DAMAGE:
+                        skillAttr.DamageRateAdd = skillItem.SkillRecord.EffectValue[0] * skillItem.SkillActureLevel;
+                        break;
+                    case ATTR_EFFECT.SPEED:
+                        skillAttr.SpeedAdd = skillItem.SkillRecord.EffectValue[0] * skillItem.SkillActureLevel;
+                        break;
+                    case ATTR_EFFECT.RANGE:
+                        skillAttr.RangeAdd = skillItem.SkillRecord.EffectValue[0] * skillItem.SkillActureLevel;
+                        break;
+                }
+            }
+            
+        }
 
         //var skillAttr = new SkillAttr();
         //_SkillAttrs.Add("j", skillAttr);

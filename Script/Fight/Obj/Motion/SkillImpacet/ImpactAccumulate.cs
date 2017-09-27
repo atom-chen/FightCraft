@@ -21,8 +21,8 @@ public class ImpactAccumulate : ImpactBase
     }
 
     private AnimationClip _AccumulateAnim;
-    private float _AccumulateTime;
-    private float _AccumulateDamage;
+    public float _AccumulateTime;
+    public float _AccumulateDamage;
 
     private float _HoldTime;
 

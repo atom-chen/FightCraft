@@ -23,11 +23,8 @@ public class ImpactCatchToPos : ImpactCatch
                 moveTime = targetTime;
             }
 
-            if (moveTime > 0.01f)
-            {
-                Vector3 destMove = (hitPos - reciverManager.transform.position).normalized * _Speed * moveTime;
-                CatchMotion(senderManager, reciverManager, destMove, moveTime);
-            }
+            Vector3 destMove = (hitPos - reciverManager.transform.position).normalized * _Speed * moveTime;
+            CatchMotion(senderManager, reciverManager, destMove, moveTime);
 
             ProcessDamge(senderManager, reciverManager);
         }

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class SelectCollider : SelectBase
 {
+    public List<int> _ColliderFinishFrame;
+
     protected List<MotionManager> _TrigMotions= new List<MotionManager>();
     public List<MotionManager> TrigMotions
     {
@@ -48,6 +50,16 @@ public class SelectCollider : SelectBase
         }
     }
 
+    public override void RegisterEvent()
+    {
+        base.RegisterEvent();
+
+        for (int i = 0; i < _ColliderFinishFrame.Count; ++i)
+        {
+            var anim = _ObjMotion.Animation.GetClip(_EventAnim.name);
+            _ObjMotion.AnimationEvent.AddSelectorFinishEvent(anim, _ColliderFinishFrame[i], _ColliderID);
+        }
+    }
 
     public override void ColliderStart()
     {
@@ -57,6 +69,8 @@ public class SelectCollider : SelectBase
         }
         _Collider.enabled = true;
         base.ColliderStart();
+
+        Debug.Log("ColliderStart:" + _ColliderID);
     }
 
     public override void ColliderFinish()

@@ -87,7 +87,7 @@ public class AnimEventManager : MonoBehaviour
     {
         AnimationEvent animEvent = new AnimationEvent();
         animEvent.time = frame / animClip.frameRate;
-        animEvent.functionName = "ColliderFinish";
+        animEvent.functionName = "CollidertEnd";
         animEvent.intParameter = selectorID;
         animClip.AddEvent(animEvent);
     }
@@ -96,7 +96,7 @@ public class AnimEventManager : MonoBehaviour
     {
         AnimationEvent animEvent = new AnimationEvent();
         animEvent.time = time;
-        animEvent.functionName = "ColliderFinish";
+        animEvent.functionName = "CollidertEnd";
         animEvent.intParameter = selectorID;
         animClip.AddEvent(animEvent);
     }

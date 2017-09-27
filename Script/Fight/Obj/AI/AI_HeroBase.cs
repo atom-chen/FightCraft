@@ -95,7 +95,10 @@ public class AI_HeroBase : AI_Base
 
     private void AttackCollider()
     {
-        _BuffInstance.RemoveBuff(_SelfMotion);
+        if (_BuffInstance != null)
+        {
+            _BuffInstance.RemoveBuff(_SelfMotion);
+        }
     }
 
     #endregion
