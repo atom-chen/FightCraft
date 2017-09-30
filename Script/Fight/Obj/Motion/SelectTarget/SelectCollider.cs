@@ -91,11 +91,16 @@ public class SelectCollider : SelectBase
         if (motion == null)
             return;
 
+        TriggerMotion(motion);
+    }
+
+    protected virtual void TriggerMotion(MotionManager motion)
+    {
         if (!_TrigMotions.Contains(motion))
         {
             _TrigMotions.Add(motion);
-            
-            
+
+
 
             if (motion._StateLie == motion._ActionState && !_SelectLieObj)
                 return;
@@ -111,7 +116,7 @@ public class SelectCollider : SelectBase
 
                 if (_IsRemindSelected && _ObjMotion.ActingSkill != null)
                 {
-                    if(!_ObjMotion.ActingSkill._SkillHitMotions.Contains(motion))
+                    if (!_ObjMotion.ActingSkill._SkillHitMotions.Contains(motion))
                         _ObjMotion.ActingSkill._SkillHitMotions.Add(motion);
                 }
 

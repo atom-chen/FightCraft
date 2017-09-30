@@ -33,6 +33,18 @@ public class ResourcePool : InstanceBase<ResourcePool>
 
         var effect3 = ResourceManager.Instance.GetGameObject("Effect/Hit/Effect_Blade_Red");
         _CommonHitEffect.Add(effect3.GetComponent<EffectController>());
+
+        var hitFire = ResourceManager.Instance.GetGameObject("Effect/Hit/Hit_Fire");
+        _CommonHitEffect.Add(hitFire.GetComponent<EffectController>());
+
+        var hitIce = ResourceManager.Instance.GetGameObject("Effect/Hit/Hit_Ice");
+        _CommonHitEffect.Add(hitIce.GetComponent<EffectController>());
+
+        var hitLight = ResourceManager.Instance.GetGameObject("Effect/Hit/Hit_Light");
+        _CommonHitEffect.Add(hitLight.GetComponent<EffectController>());
+
+        var hitWind = ResourceManager.Instance.GetGameObject("Effect/Hit/Hit_Wind");
+        _CommonHitEffect.Add(hitWind.GetComponent<EffectController>());
     }
 
     public EffectController GetIdleEffect(EffectController effct)

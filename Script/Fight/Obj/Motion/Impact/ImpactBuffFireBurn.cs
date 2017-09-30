@@ -42,11 +42,12 @@ public class ImpactBuffFireBurn : ImpactBuff
 
     private IEnumerator FireBurn()
     {
+        yield return new WaitForSeconds(_Interval);
         Debug.Log("FireBurn");
         _Collider.enabled = true;
         yield return new WaitForFixedUpdate();
         _Collider.enabled = false;
-        yield return new WaitForSeconds(_Interval);
+        
         StartCoroutine(FireBurn());
     }
 
@@ -57,6 +58,7 @@ public class ImpactBuffFireBurn : ImpactBuff
             return;
 
         _BuffSender.RoleAttrManager.SendDamageEvent(targetMotion, _Damage, this);
+        targetMotion.PlayHitEffect(_BuffSender, 3);
         Debug.Log("OnTriggerStay:" + targetMotion.name);
     }
 

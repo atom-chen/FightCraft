@@ -25,8 +25,8 @@ Shader "TYImage/Particles/Additive" {
 		 /*SetTexture[_MainTex]{
 			constantColor[_TintColor]
 			combine constant * primary
-		 }*/
-		 /*SetTexture[_MainTex]{
+		 }
+		 SetTexture[_MainTex]{
 			combine texture * previous DOUBLE
 		 }*/
 	   }

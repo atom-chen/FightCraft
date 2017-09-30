@@ -20,11 +20,11 @@ public class BulletEmitterBase : ImpactBase
 
     protected T InitBulletGO<T>() where T:class
     {
-        Vector3 modifyPos = _SenderManager.transform.forward * _EmitterOffset.x + _SenderManager.transform.right * _EmitterOffset.z + _SenderManager.transform.up * _EmitterOffset.y;
+        Vector3 modifyPos = transform.forward * _EmitterOffset.x + transform.right * _EmitterOffset.z + transform.up * _EmitterOffset.y;
         var bulletObj = ResourcePool.Instance.GetIdleBullet(_BulletPrefab);
         bulletObj.transform.SetParent(ResourcePool.Instance.transform);
-        bulletObj.transform.position = _SenderManager.transform.position + modifyPos;
-        bulletObj.transform.rotation = _SenderManager.transform.rotation;
+        bulletObj.transform.position = transform.position + modifyPos;
+        bulletObj.transform.rotation = transform.rotation;
         bulletObj.gameObject.SetActive(true);
         bulletObj.Init(_SenderManager, this);
         bulletObj.gameObject.layer = FightLayerCommon.GetBulletLayer(_SenderManager);
