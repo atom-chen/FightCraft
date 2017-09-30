@@ -76,7 +76,8 @@ public class SelectCollider : SelectBase
     public override void ColliderFinish()
     {
         base.ColliderFinish();
-        _Collider.enabled = false;
+        if(_Collider != null)
+            _Collider.enabled = false;
         _TrigMotions.Clear();
     }
 
