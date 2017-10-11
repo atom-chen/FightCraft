@@ -3,6 +3,7 @@ using System.Collections;
 
 public class BulletEmitterCircle : BulletEmitterElement
 {
+    public Vector3 _BulletPosOffset;
     public int _BulletCnt = 8;
     public float _Interval = 0.1f;
 
@@ -33,5 +34,6 @@ public class BulletEmitterCircle : BulletEmitterElement
         float angle = idx * (360.0f / _BulletCnt);
 
         bullet.transform.rotation = Quaternion.Euler(0, angle, 0);
+        bullet.transform.position += bullet.transform.forward * _BulletPosOffset.x + bullet.transform.up * _BulletPosOffset.y + bullet.transform.right * _BulletPosOffset.z;
     }
 }
