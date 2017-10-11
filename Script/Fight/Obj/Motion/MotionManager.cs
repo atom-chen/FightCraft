@@ -913,6 +913,10 @@ public class MotionManager : MonoBehaviour
                 if (_TriggerCollider == null)
                 {
                     var sole = AnimationEvent.transform.FindChild("center/sole");
+                    if (sole == null)
+                    {
+                        sole = AnimationEvent.transform.FindChild("Bip001/sole");
+                    }
                     var collider = sole.gameObject.AddComponent<CapsuleCollider>();
                     collider.radius = _ColliderInfo.x;
                     collider.height = _ColliderInfo.y;
