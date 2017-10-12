@@ -24,8 +24,18 @@ public class StateHit : StateBase
     public override void StartState(params object[] args)
     {
         //base.StartState(args);
-        MotionHit((float)args[0], (int)args[1], (MotionManager)args[2]);
-        SetHitMove((Vector3)args[4], (float)args[5]);
+        if (args.Length > 6)
+        {
+            if ((bool)args[6])
+            {
+                _MotionManager.PauseAnimation();
+            }
+        }
+        else
+        {
+            MotionHit((float)args[0], (int)args[1], (MotionManager)args[2]);
+            SetHitMove((Vector3)args[4], (float)args[5]);
+        }
     }
 
     public override void StateOpt(MotionOpt opt, params object[] args)

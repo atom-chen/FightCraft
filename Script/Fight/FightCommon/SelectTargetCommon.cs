@@ -2,6 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 
+public enum SelectTargetType
+{
+    Enemy,
+    Friend,
+}
+
 public class SelectTargetCommon
 {
     public static MotionManager GetMainPlayer()
@@ -21,7 +27,25 @@ public class SelectTargetCommon
         return null;
     }
 
-    public static MotionManager GetNearMotion(Vector3 startPosition, List<MotionManager> excludeMotions)
+    private static bool IsTargetEnemy(MotionManager selfMotion, MotionManager targetMotion)
+    {
+        return selfMotion.gameObject.layer != targetMotion.gameObject.layer;
+    }
+
+    private static bool IsTargetInType(MotionManager selfMotion, MotionManager targetMotion, SelectTargetType selectType)
+    {
+        if (selectType == SelectTargetType.Enemy)
+        {
+            return IsTargetEnemy(selfMotion, targetMotion);
+        }
+        else if (selectType == SelectTargetType.Friend)
+        {
+            return !IsTargetEnemy(selfMotion, targetMotion);
+        }
+        return false;
+    }
+
+    public static MotionManager GetNearMotion(MotionManager selfMotion, Vector3 startPosition, List<MotionManager> excludeMotions, SelectTargetType selectType = SelectTargetType.Enemy)
     {
         var motions = GameObject.FindObjectsOfType<MotionManager>();
 
@@ -29,8 +53,13 @@ public class SelectTargetCommon
         MotionManager nearMotion = null;
         foreach (var motion in motions)
         {
-            if (excludeMotions.Contains(motion))
+            if (excludeMotions != null && excludeMotions.Contains(motion))
                 continue;
+
+            if (!IsTargetInType(selfMotion, motion, selectType))
+            {
+                continue;
+            }
 
             float distance = Vector3.Distance(startPosition, motion.transform.position);
             if (nearMotion == null || distance < minDistance)

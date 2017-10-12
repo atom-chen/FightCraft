@@ -28,7 +28,7 @@ public class ImpactLightChain : ImpactBase
 
     private void SendImpactNext(MotionManager senderManager, Vector3 startPos)
     {
-        var nearTarget = SelectTargetCommon.GetNearMotion(startPos, _ExcludeMotions);
+        var nearTarget = SelectTargetCommon.GetNearMotion(senderManager, startPos, _ExcludeMotions);
         
         if (nearTarget != null)
         {

@@ -17,7 +17,7 @@ public class BulletDaiJiHeart : BulletBase
     {
         base.Init(senderMotion, emitterBase);
 
-        var target = SelectTargetCommon.GetMainPlayer();
+        var target = SelectTargetCommon.GetNearMotion(senderMotion, senderMotion.transform.position, null);
         if (target != null)
         {
             _TargetMotion = target.GetComponent<MotionManager>();

@@ -27,6 +27,16 @@ public class ParticleEditor : Editor
         }
     }
 
+    [MenuItem("TyTools/Editor/ChangeShaders")]
+    public static void ChangeShanders()
+    {
+        var selects = Selection.GetFiltered(typeof(GameObject), SelectionMode.TopLevel);
+        foreach (var selectGO in selects)
+        {
+            ParticleChangeShadersInner(selectGO as GameObject);
+        }
+    }
+
     [MenuItem("TyTools/Editor/ShowAllEffect")]
     public static void TestAllEffect()
     {
@@ -81,6 +91,22 @@ public class ParticleEditor : Editor
             particle.playOnAwake = true;
 
 
+        }
+    }
+
+    #endregion
+
+    #region particle shaders
+
+    private static void ParticleChangeShadersInner(GameObject particleObj)
+    {
+        var renders = particleObj.GetComponentsInChildren<Renderer>();
+        foreach (var render in renders)
+        {
+            if (render.sharedMaterial.shader.name.Contains("TDGame"))
+            {
+                render.sharedMaterial.shader = Shader.Find("Mobile/Particles/Additive");
+            }
         }
     }
 

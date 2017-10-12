@@ -496,6 +496,15 @@ public class MotionManager : MonoBehaviour
         return true;
     }
 
+    public bool BuffBeHit(MotionManager impactSender, ImpactHit impactHit)
+    {
+        for (int i = 0; i < _ImpactBuffs.Count; ++i)
+        {
+            _ImpactBuffs[i].BeHit(impactSender, impactHit);
+        }
+        return true;
+    }
+
     public bool IsBuffCanCatch(MotionManager impactSender, ImpactCatch impactCatch)
     {
         for (int i = 0; i < _ImpactBuffs.Count; ++i)
@@ -1054,17 +1063,25 @@ public class MotionManager : MonoBehaviour
 
     public void HitEvent(float hitTime, int hitEffect, MotionManager impactSender, ImpactHit hitImpact, Vector3 moveDirect, float moveTime)
     {
+        BuffBeHit(impactSender, hitImpact);
         StateOpt(StateBase.MotionOpt.Hit, hitTime, hitEffect, impactSender, hitImpact, moveDirect, moveTime);
+    }
+
+    public void FrozenEvent()
+    {
+
     }
 
     public void FlyEvent(float flyHeight, int hitEffect, MotionManager impactSender, ImpactHit hitImpact, Vector3 moveDirect, float moveTime)
     {
         Debug.Log("FlyEvent");
+        BuffBeHit(impactSender, hitImpact);
         StateOpt(StateBase.MotionOpt.Fly, flyHeight, hitEffect, impactSender, hitImpact, moveDirect, moveTime);
     }
 
     public void CatchEvent(float catchTime, int hitEffect, MotionManager impactSender, ImpactHit hitImpact, Vector3 moveDirect, float moveTime)
     {
+        BuffBeHit(impactSender, hitImpact);
         StateOpt(StateBase.MotionOpt.Catch, catchTime, hitEffect, impactSender, hitImpact, moveDirect, moveTime);
     }
 
