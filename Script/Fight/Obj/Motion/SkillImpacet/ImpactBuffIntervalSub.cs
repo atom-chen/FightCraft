@@ -8,8 +8,8 @@ public class ImpactBuffIntervalSub : ImpactBuff
     public GameObject _SubImpactGO;
     public float _Interval = 1;
 
-    private CapsuleCollider _Collider;
-    private List<ImpactBase> _SubImpacts;
+    protected CapsuleCollider _Collider;
+    protected List<ImpactBase> _SubImpacts;
 
     public override void ActBuff(MotionManager senderManager, MotionManager reciverManager)
     {
@@ -22,12 +22,18 @@ public class ImpactBuffIntervalSub : ImpactBuff
     private IEnumerator Interval()
     {
         yield return new WaitForSeconds(_Interval);
+
+        SendImpactInterval();
+
+        StartCoroutine(Interval());
+    }
+
+    protected virtual void SendImpactInterval()
+    {
         foreach (var subImpact in _SubImpacts)
         {
             subImpact.ActImpact(_BuffSender, _BuffOwner);
         }
-        
-        StartCoroutine(Interval());
     }
     
 }
