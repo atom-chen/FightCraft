@@ -110,6 +110,7 @@ public class StateHit : StateBase
         if (hitTime <= 0)
             return;
 
+        float speed = 1;
         if (hitTime > _Animation.length)
         {
             _StopKeyFrameTime = hitTime - _Animation.length;
@@ -117,10 +118,11 @@ public class StateHit : StateBase
         else
         {
             _StopKeyFrameTime = 0;
+            speed = (_Animation.length / hitTime);
         }
 
         _MotionManager.StopCoroutine("ComsumeAnim");
-        _MotionManager.RePlayAnimation(_Animation, 1);
+        _MotionManager.RePlayAnimation(_Animation, speed);
         //_MotionManager.SetLookAt(impactSender.transform.position);
     }
 
