@@ -26,8 +26,8 @@ public class BulletEmitterBase : ImpactBase
         bulletObj.transform.position = transform.position + modifyPos;
         bulletObj.transform.rotation = transform.rotation;
         bulletObj.gameObject.SetActive(true);
-        bulletObj.Init(_SenderManager, this);
         bulletObj.gameObject.layer = FightLayerCommon.GetBulletLayer(_SenderManager);
+        bulletObj.Init(_SenderManager, this);
         return bulletObj as T;
     }
 

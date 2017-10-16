@@ -9,6 +9,7 @@ public class FightLayerCommon
     public const int CAMP_BULLET_1 = 12;
     public const int CAMP_BULLET_2 = 13;
     public const int DROP = 14;
+    public const int EVIL = 17;
 
     public static void SetPlayerLayer(MotionManager playerMotion)
     {

@@ -55,6 +55,9 @@ public class AI_Base : MonoBehaviour
 
     }
 
+    public virtual void OnStateChange(StateBase orgState, StateBase newState)
+    { }
+
     #region combatLevel
 
     protected int _CombatLevel = 1;

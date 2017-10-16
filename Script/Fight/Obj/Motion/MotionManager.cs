@@ -960,6 +960,8 @@ public class MotionManager : MonoBehaviour
 
     public StateBase _ActionState;
 
+    private List<AI_Base> _AIBases;
+
     private void InitState()
     {
         _StateIdle = new StateIdle();
@@ -989,6 +991,7 @@ public class MotionManager : MonoBehaviour
         _StateSkill = new StateSkill();
         _StateSkill.InitState(this);
 
+        _AIBases = new List<AI_Base>( gameObject.GetComponents<AI_Base>());
 
         TryEnterState(_StateIdle, null);
     }
@@ -998,6 +1001,7 @@ public class MotionManager : MonoBehaviour
         if (!state.CanStartState(args))
             return;
 
+        var orgState = _ActionState;
         if (_ActionState != null)
         {
             _ActionState.FinishState();
@@ -1005,6 +1009,11 @@ public class MotionManager : MonoBehaviour
 
         state.StartState(args);
         _ActionState = state;
+
+        foreach (var aiBase in _AIBases)
+        {
+            aiBase.OnStateChange(orgState, _ActionState);
+        }
     }
 
     public void StateOpt(StateBase.MotionOpt opt, params object[] args)
