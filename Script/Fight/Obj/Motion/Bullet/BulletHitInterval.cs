@@ -35,7 +35,6 @@ public class BulletHitInterval : BulletBase
         _StartHit = false;
         if (_AlertTime > 0)
         {
-            Debug.Log("Pos:" + transform.position);
             BulletAlert.ShowAlert(transform, _AlertTime, _AlertSize);
         }
 

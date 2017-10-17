@@ -7,22 +7,25 @@ public class BulletEmitterRandomSplit : BulletEmitterBase
     public int _MaxRange = 8;
     public float _SplitRange = 0.5f;
 
+    private int _SplitCnt;
     public override void ActImpact(MotionManager senderManager, MotionManager reciverManager)
     {
         base.ActImpact(senderManager, reciverManager);
 
-        for (int i = 0; i < _BulletCnt; ++i)
+        _SplitCnt = (int)(_MaxRange / _SplitRange);
+        var bulletPoses = GameRandom.GetIndependentRandoms(0, _SplitCnt * _SplitCnt * 4, _BulletCnt);
+        for (int i = 0; i < bulletPoses.Count; ++i)
         {
-            EmitBullet();
+            EmitBullet(bulletPoses[i]);
         }
     }
 
-    private void EmitBullet()
+    private void EmitBullet(int bulletPos)
     {
         var bullet = InitBulletGO<BulletBase>();
-        int splitCnt = (int)(_MaxRange / _SplitRange);
-        var randomX = Random.Range(-splitCnt, splitCnt);
-        var randomY = Random.Range(-splitCnt, splitCnt);
+
+        var randomX = bulletPos / (_SplitCnt * 2) - _SplitCnt;
+        var randomY = bulletPos % (_SplitCnt * 2) - _SplitCnt;
 
         Vector3 destPos = new Vector3(randomX * _SplitRange, 0, randomY * _SplitRange);
         bullet.transform.position = _SenderManager.transform.position + destPos;

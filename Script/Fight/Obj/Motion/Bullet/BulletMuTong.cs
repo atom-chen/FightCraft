@@ -36,5 +36,6 @@ public class BulletMuTong : BulletSummon
         }
 
         _SubBulletEmitter.ActImpact(_SkillMotion, _SkillMotion);
+        Invoke("BulletFinish", 1.5f);
     }
 }
