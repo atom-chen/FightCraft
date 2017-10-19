@@ -26,12 +26,9 @@ public class ImpactAccumulate : ImpactBase
 
     private float _HoldTime;
 
-    public override void Init(RoleAttrManager.SkillAttr skillAttr, ObjMotionSkillBase skillMotion, SelectBase selector)
+    public override void Init(ObjMotionSkillBase skillMotion, SelectBase selector)
     {
-        base.Init(skillAttr, skillMotion, selector);
-
-        if (skillAttr == null)
-            return;
+        base.Init(skillMotion, selector);
 
         string animPath = "Animation/" + SkillMotion.MotionManager._MotionAnimPath + "/Act_Skill_Accumulate";
         _AccumulateAnim = ResourceManager.Instance.GetAnimationClip(animPath);
@@ -43,8 +40,6 @@ public class ImpactAccumulate : ImpactBase
 
         SkillMotion._NextAnim.Insert(0, _AccumulateAnim);
         SkillMotion._NextEffect.Insert(0, null);
-        _AccumulateTime = skillAttr.AccumulateTime;
-        _AccumulateDamage = skillAttr.AccumulateDamageRate;
         SkillMotion.MotionManager.AnimationEvent.AddSelectorEvent(_AccumulateAnim, 0, selector._ColliderID);
         SkillMotion.MotionManager.AnimationEvent.AddSelectorFinishEvent(_AccumulateAnim, 2.0f, selector._ColliderID);
     }

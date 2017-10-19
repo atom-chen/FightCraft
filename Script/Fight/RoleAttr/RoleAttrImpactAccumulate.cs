@@ -6,15 +6,24 @@ using Tables;
 public class RoleAttrImpactAccumulate : RoleAttrImpactBase
 {
 
-    public override void InitImpact(params float[] args)
+    public override void InitImpact(string skillInput, List<float> args)
     {
-        _SkillInput = SkillInfo.GetSkillInputByClass((SKILL_CLASS)args[0]); ;
-        _AccumulateTime = args[1];
-        _DamageEnhance = args[2];
+        _SkillInput = skillInput;
+        _AccumulateTime = args[0];
+        _DamageEnhance = args[1];
         _ImpactName = "Accumulate";
     }
 
-    public override void FightCreateImpact(MotionManager roleMotion)
+    public override List<float> GetSkillImpactVal(SkillInfoItem skillInfo)
+    {
+        var valList = new List<float>();
+        valList.Add(0.5f);
+        valList.Add(skillInfo.SkillActureLevel * skillInfo.SkillRecord.EffectValue[0]);
+
+        return valList;
+    }
+
+    public override void ModifySkillBeforeInit(MotionManager roleMotion)
     {
         if (!roleMotion._StateSkill._SkillMotions.ContainsKey(_SkillInput))
             return;
@@ -30,7 +39,6 @@ public class RoleAttrImpactAccumulate : RoleAttrImpactBase
 
     #region 
 
-    public string _SkillInput;
     public float _AccumulateTime;
     public float _DamageEnhance;
     public string _ImpactName;

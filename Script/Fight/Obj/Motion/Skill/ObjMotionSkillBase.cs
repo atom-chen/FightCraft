@@ -11,12 +11,12 @@ public class ObjMotionSkillBase : MonoBehaviour
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.Euler(Vector3.zero);
 
-        _SkillAttr = _MotionManager.RoleAttrManager.GetSkillAttr(_ActInput);
-        InitCollider(_SkillAttr);
-        if (_SkillAttr != null)
-        {
-            SetEffectSize(1 + _SkillAttr.RangeAdd);
-        }
+        //_SkillAttr = _MotionManager.RoleAttrManager.GetSkillAttr(_ActInput);
+        InitCollider();
+        //if (_SkillAttr != null)
+        //{
+        //    SetEffectSize(1 + _SkillAttr.RangeAdd);
+        //}
 
         foreach (var anim in _NextAnim)
         {
@@ -28,6 +28,8 @@ public class ObjMotionSkillBase : MonoBehaviour
         }
 
         RegisterColliderEvent();
+
+        this.enabled = false;
     }
 
     private int _CurStep;
@@ -52,8 +54,6 @@ public class ObjMotionSkillBase : MonoBehaviour
             return _MotionManager;
         }
     }
-
-    protected RoleAttrManager.SkillAttr _SkillAttr;
 
     public virtual bool IsCanActSkill()
     {
@@ -156,24 +156,34 @@ public class ObjMotionSkillBase : MonoBehaviour
 
     #region performance
 
+    protected float _SkillAddSpeed = 0;
+    public float SkillAddSpeed
+    {
+        get
+        {
+            return _SkillAddSpeed;
+        }
+        set
+        {
+            _SkillAddSpeed = value;
+        }
+    }
+
     protected float _SkillActSpeed = -1;
     protected float SkillActSpeed
     {
         get
         {
-            //if (_SkillActSpeed < 0)
+            if (_SkillActSpeed < 0)
             {
                 _SkillActSpeed = _MotionManager.RoleAttrManager.AttackSpeed;
-                if (_SkillAttr != null)
-                {
-                    _SkillActSpeed += _SkillAttr.SpeedAdd;
-                }
+                _SkillActSpeed += _SkillAddSpeed;
             }
             return _SkillActSpeed;
         }
     }
 
-    protected virtual void SetEffectSize(float size)
+    public virtual void SetEffectSize(float size)
     {
         foreach (var effect in _NextEffect)
         {
@@ -231,12 +241,12 @@ public class ObjMotionSkillBase : MonoBehaviour
 
     private Dictionary<int, List<SelectBase>> _ColliderControl = new Dictionary<int, List<SelectBase>>();
 
-    protected void InitCollider(RoleAttrManager.SkillAttr skillAttr)
+    protected void InitCollider()
     {
         var collidercontrollers = gameObject.GetComponentsInChildren<SelectBase>(true);
         foreach (var collider in collidercontrollers)
         {
-            collider.Init(skillAttr);
+            collider.Init();
             if (_ColliderControl.ContainsKey(collider._ColliderID))
             {
                 _ColliderControl[collider._ColliderID].Add(collider);
@@ -247,7 +257,17 @@ public class ObjMotionSkillBase : MonoBehaviour
                 _ColliderControl[collider._ColliderID].Add(collider);
             }
         }
+    }
 
+    public void ModifyColliderRange(float rangeModify)
+    {
+        foreach (var colliderKeyValue in _ColliderControl)
+        {
+            foreach (var collider in colliderKeyValue.Value)
+            {
+                collider.ModifyColliderRange(rangeModify);
+            }
+        }
     }
 
     protected void RegisterColliderEvent()

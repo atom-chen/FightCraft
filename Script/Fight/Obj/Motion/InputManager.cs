@@ -48,7 +48,7 @@ public class InputManager : InstanceBase<InputManager>
                 }
             }
         }
-        //CharSkill();
+        CharSkill();
     }
 
     public MotionManager _InputMotion;
@@ -186,29 +186,29 @@ public class InputManager : InstanceBase<InputManager>
         {
             if (_InputMotion.ActingSkill== _NormalAttack && _NormalAttack.CurStep > 0 && _NormalAttack.CurStep < 4 && _NormalAttack.CanNextInput)
             {
-                string inputKey = "k" + (_NormalAttack.CurStep + 1);
+                string inputKey = (_NormalAttack.CurStep).ToString();
                 if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
                 {
                     AutoRotate();
                     _InputMotion.ActSkill(_InputMotion._StateSkill._SkillMotions[inputKey]);
                 }
             }
-            else if(_InputMotion.ActingSkill== null)
-            {
-                string inputKey = "k0";
-                if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
-                {
-                    AutoRotate();
-                    _InputMotion.ActSkill(_InputMotion._StateSkill._SkillMotions[inputKey]);
-                }
-            }
+            //else if(_InputMotion.ActingSkill== null)
+            //{
+            //    string inputKey = "k0";
+            //    if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
+            //    {
+            //        AutoRotate();
+            //        _InputMotion.ActSkill(_InputMotion._StateSkill._SkillMotions[inputKey]);
+            //    }
+            //}
         }
 
         if (IsKeyHold("u"))
         {
             if (_InputMotion.ActingSkill== _NormalAttack && _NormalAttack.CurStep > 0 && _NormalAttack.CurStep < 4 && _NormalAttack.CanNextInput)
             {
-                string inputKey = "u1"/* + (_NormalAttack.CurStep + 1)*/;
+                string inputKey = "6";
                 Hashtable hash = new Hashtable();
                 hash.Add("AttackStep", _NormalAttack.CurStep);
 
@@ -219,11 +219,20 @@ public class InputManager : InstanceBase<InputManager>
             }
             else if (_InputMotion.ActingSkill== null)
             {
-                string inputKey = "u0";
+                string inputKey = "5";
                 if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
                 {
                     _InputMotion.ActSkill(_InputMotion._StateSkill._SkillMotions[inputKey]);
                 }
+            }
+        }
+
+        if (IsKeyHold("l"))
+        {
+            string inputKey = "4";
+            if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
+            {
+                _InputMotion.ActSkill(_InputMotion._StateSkill._SkillMotions[inputKey]);
             }
         }
     }

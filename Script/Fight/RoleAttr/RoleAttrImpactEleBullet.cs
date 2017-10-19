@@ -5,12 +5,12 @@ using UnityEngine;
 public class RoleAttrImpactEleBullet: RoleAttrImpactBase
 {
 
-    public override void InitImpact(params float[] args)
+    public override void InitImpact(string skillInput, List<float> args)
     {
-
+        _SkillInput = skillInput;
     }
 
-    public override void FightCreateImpact(MotionManager roleMotion)
+    public override void ModifySkillBeforeInit(MotionManager roleMotion)
     {
         if (!roleMotion._StateSkill._SkillMotions.ContainsKey(_SkillInput))
             return;
@@ -26,7 +26,6 @@ public class RoleAttrImpactEleBullet: RoleAttrImpactBase
 
     #region 
 
-    public string _SkillInput;
     public int _Rate;
     public int _Damage;
     public string _ImpactName;

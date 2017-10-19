@@ -6,15 +6,24 @@ using Tables;
 public class RoleAttrImpactExAttack : RoleAttrImpactBase
 {
 
-    public override void InitImpact(params float[] args)
+    public override void InitImpact(string skillInput, List<float> args)
     {
-        _SkillInput = SkillInfo.GetSkillInputByClass((SKILL_CLASS)args[0]); ;
-        _AttackTimes = (int)args[1];
-        _Damage = args[2];
+        _SkillInput = skillInput;
+        _AttackTimes = (int)args[0];
+        _Damage = args[1];
         _ImpactName = "ExAttack";
     }
 
-    public override void FightCreateImpact(MotionManager roleMotion)
+    public override List<float> GetSkillImpactVal(SkillInfoItem skillInfo)
+    {
+        var valList = new List<float>();
+        valList.Add(1.0f);
+        valList.Add(skillInfo.SkillActureLevel * skillInfo.SkillRecord.EffectValue[0]);
+
+        return valList;
+    }
+
+    public override void ModifySkillBeforeInit(MotionManager roleMotion)
     {
         if (!roleMotion._StateSkill._SkillMotions.ContainsKey(_SkillInput))
             return;
@@ -30,7 +39,6 @@ public class RoleAttrImpactExAttack : RoleAttrImpactBase
 
     #region 
 
-    public string _SkillInput;
     public int _AttackTimes;
     public float _Damage;
     public string _ImpactName;

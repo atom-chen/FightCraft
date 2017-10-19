@@ -16,17 +16,19 @@ public class SelectColliderCircle : SelectCollider
         transform.localRotation = Quaternion.Euler(new Vector3(0, _AngleSpeed * Time.deltaTime, 0) + transform.localRotation.eulerAngles);
     }
 
-    public override void Init(RoleAttrManager.SkillAttr skillAttr)
+    public override void Init()
     {
-        base.Init(skillAttr);
+        base.Init();
+    }
 
-        if (skillAttr == null)
-            return;
+    public override void ModifyColliderRange(float rangeModify)
+    {
+        base.ModifyColliderRange(rangeModify);
 
         if (_Collider is BoxCollider)
         {
             var boxCollider = _Collider as BoxCollider;
-            boxCollider.size = boxCollider.size * (1 + skillAttr.RangeAdd);
+            boxCollider.size = boxCollider.size * (1 + rangeModify);
         }
     }
 

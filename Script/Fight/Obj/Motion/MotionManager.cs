@@ -239,52 +239,7 @@ public class MotionManager : MonoBehaviour
 
     #region skill
 
-    //public Dictionary<string, ObjMotionSkillBase> _SkillMotions = new Dictionary<string, ObjMotionSkillBase>();
-
-    //private ObjMotionSkillBase _ActingSkill;
-    //public ObjMotionSkillBase ActingSkill
-    //{
-    //    get
-    //    {
-    //        return _ActingSkill;
-    //    }
-    //}
-
-    //private void InitSkills()
-    //{
-    //    var skillList = gameObject.GetComponentsInChildren<ObjMotionSkillBase>();
-    //    foreach (var skill in skillList)
-    //    {
-    //        _SkillMotions.Add(skill._ActInput, skill);
-    //        //skill.SetImpactElement(ElementType.Cold);
-    //        skill.Init();
-    //    }
-    //}
-
-    //public void ActSkill(ObjMotionSkillBase skillMotion, Hashtable exHash = null)
-    //{
-    //    if (!skillMotion.IsCanActSkill())
-    //        return;
-
-    //    if (_ActingSkill != null)
-    //        _ActingSkill.FinishSkill();
-
-    //    if (BaseMotionManager.IsMoving())
-    //    {
-    //        BaseMotionManager.StopMove();
-    //    }
-
-    //    skillMotion.StartSkill(exHash);
-    //    _ActingSkill = skillMotion;
-    //    MotionPrior = _ActingSkill._SkillMotionPrior;
-    //}
-
-    //public void FinishSkill(ObjMotionSkillBase skillMotion)
-    //{
-    //    _ActingSkill = null;
-    //    skillMotion.FinishSkillImmediately();
-    //    BaseMotionManager.MotionIdle();
-    //}
+    public float _SkillProcessing;
 
     #endregion
 

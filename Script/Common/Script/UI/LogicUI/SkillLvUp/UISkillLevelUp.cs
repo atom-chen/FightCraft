@@ -44,11 +44,11 @@ public class UISkillLevelUp : UIBase
 
     private void SelectSkillClass(object selectGO)
     {
-        var skillClass = (Tables.SKILL_CLASS)selectGO;
+        var skillClass = (string)selectGO;
         InitSkillItems(skillClass);
     }
 
-    private void InitSkillItems(Tables.SKILL_CLASS skillClass)
+    private void InitSkillItems(string skillClass)
     {
         _SkillInfos.InitSelectContent(RoleData.SelectRole.SkillClassItems[skillClass], null, SelectSkillItem);
     }

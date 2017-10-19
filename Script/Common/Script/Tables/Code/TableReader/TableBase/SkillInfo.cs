@@ -15,8 +15,8 @@ namespace Tables
         public override string Id { get; set; }        public string Name { get; set; }
         public string Desc { get; set; }
         public PROFESSION Profession { get; set; }
-        public SKILL_CLASS SkillClass { get; set; }
-        public ATTR_EFFECT SkillAttr { get; set; }
+        public string SkillClass { get; set; }
+        public string SkillAttr { get; set; }
         public int MaxLevel { get; set; }
         public List<int> EffectValue { get; set; }
         public float CostStep { get; set; }
@@ -38,8 +38,8 @@ namespace Tables
             recordStrList.Add(TableWriteBase.GetWriteStr(Name));
             recordStrList.Add(TableWriteBase.GetWriteStr(Desc));
             recordStrList.Add(((int)Profession).ToString());
-            recordStrList.Add(((int)SkillClass).ToString());
-            recordStrList.Add(((int)SkillAttr).ToString());
+            recordStrList.Add(TableWriteBase.GetWriteStr(SkillClass));
+            recordStrList.Add(TableWriteBase.GetWriteStr(SkillAttr));
             recordStrList.Add(TableWriteBase.GetWriteStr(MaxLevel));
             foreach (var testTableItem in EffectValue)
             {
@@ -113,8 +113,8 @@ namespace Tables
                 pair.Value.Name = TableReadBase.ParseString(pair.Value.ValueStr[1]);
                 pair.Value.Desc = TableReadBase.ParseString(pair.Value.ValueStr[2]);
                 pair.Value.Profession =  (PROFESSION)TableReadBase.ParseInt(pair.Value.ValueStr[3]);
-                pair.Value.SkillClass =  (SKILL_CLASS)TableReadBase.ParseInt(pair.Value.ValueStr[4]);
-                pair.Value.SkillAttr =  (ATTR_EFFECT)TableReadBase.ParseInt(pair.Value.ValueStr[5]);
+                pair.Value.SkillClass = TableReadBase.ParseString(pair.Value.ValueStr[4]);
+                pair.Value.SkillAttr = TableReadBase.ParseString(pair.Value.ValueStr[5]);
                 pair.Value.MaxLevel = TableReadBase.ParseInt(pair.Value.ValueStr[6]);
                 pair.Value.EffectValue.Add(TableReadBase.ParseInt(pair.Value.ValueStr[7]));
                 pair.Value.EffectValue.Add(TableReadBase.ParseInt(pair.Value.ValueStr[8]));

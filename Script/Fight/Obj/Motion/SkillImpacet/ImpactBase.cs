@@ -23,7 +23,7 @@ public class ImpactBase : MonoBehaviour
 
     protected bool _IsActingImpact = false;
 
-    public virtual void Init(RoleAttrManager.SkillAttr skillAttr, ObjMotionSkillBase skillMotion, SelectBase selector)
+    public virtual void Init(ObjMotionSkillBase skillMotion, SelectBase selector)
     {
         _IsActingImpact = false;
         _SkillMotion = skillMotion;

@@ -4,7 +4,42 @@ using System.Collections.Generic;
 
 public class ImpactBuff : ImpactBase
 {
+    #region buff critic
+
+    public static int _StaticBuffID = 0;
+    public static int GetBuffID()
+    {
+        return ++_StaticBuffID;
+    }
+
+    protected int _BuffID;
+    public int BuffID
+    {
+        get
+        {
+            return _BuffID;
+        }
+    }
+
+    public bool _IsBuffCriticID = false;
+    public bool _IsBuffCriticClass = false;
+    #endregion
+
     public float _LastTime;
+
+    protected float _ExLastTime = 0;
+    public float ExLastTime
+    {
+        get
+        {
+            return _ExLastTime;
+        }
+        set
+        {
+            _ExLastTime = value;
+        }
+    }
+
     public EffectController _BuffEffect;
 
     protected MotionManager _BuffSender;
@@ -27,6 +62,13 @@ public class ImpactBuff : ImpactBase
         }
     }
 
+    public override void Init(ObjMotionSkillBase skillMotion, SelectBase selector)
+    {
+        base.Init(skillMotion, selector);
+
+        _BuffID = GetBuffID();
+    }
+
     public override sealed void ActImpact(MotionManager senderManager, MotionManager reciverManager)
     {
         base.ActImpact(senderManager, reciverManager);
@@ -42,7 +84,7 @@ public class ImpactBuff : ImpactBase
 
         _BuffSender = senderManager;
         _BuffOwner = reciverManager;
-        var dynamicBuff = reciverManager.AddBuff(this, lastTime);
+        var dynamicBuff = reciverManager.AddBuff(this, lastTime + ExLastTime);
         return dynamicBuff;
     }
 
@@ -74,7 +116,17 @@ public class ImpactBuff : ImpactBase
 
     public virtual bool IsCanAddBuff(ImpactBuff newBuff)
     {
-        return true;
+        bool canAdd = true;
+        if (_IsBuffCriticID)
+        {
+            return canAdd & (BuffID != newBuff.BuffID);
+        }
+
+        if (_IsBuffCriticClass)
+        {
+            return canAdd & (newBuff.GetType() != this.GetType());
+        }
+        return canAdd;
     }
 
     public virtual void RemoveBuff(MotionManager ownerManager)
@@ -98,7 +150,8 @@ public class ImpactBuff : ImpactBase
 
     public IEnumerator TimeOut(MotionManager ownerManager)
     {
-        yield return new WaitForSeconds(_LastTime);
+        Debug.Log("buff time:" + _LastTime + ", exTime:" + ExLastTime);
+        yield return new WaitForSeconds(_LastTime + ExLastTime);
         ownerManager.RemoveBuff(this);
     }
 

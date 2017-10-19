@@ -4,23 +4,37 @@ using System.Collections.Generic;
 
 public class ObjMotionSkillBuff : ObjMotionSkillBase
 {
+
     void Update()
     {
-        if (!_CanNextInput)
-            return;
-
-        if (InputManager.Instance.IsKeyHold("k"))
+        if (_CanNextInput && _IsCanActAfterBuff)
         {
-            if (_MotionManager._StateSkill._SkillMotions.ContainsKey(_ActSkillInput))
+            if (InputManager.Instance.IsKeyHold("k") || InputManager.Instance.IsKeyHold(_ActSkillInput))
             {
-                if (_MotionManager._StateSkill._SkillMotions[_ActSkillInput].CanSkillActAfterDebuff())
-                {
-                    _MotionManager.ActSkill(_MotionManager._StateSkill._SkillMotions[_ActSkillInput]);
-                }
+                _SkillProcess = 1.1f;
+                InputManager.Instance.AutoRotate();
+                MotionManager.FinishSkill(this);
+                MotionManager.ActSkill(MotionManager._StateSkill._SkillMotions[_ActSkillInput]);
             }
         }
 
+        _SkillProcess += Time.deltaTime;
+        MotionManager._SkillProcessing = _SkillProcess / GetTotalAnimLength();
     }
+
+    private bool _IsCanActAfterBuff = true;
+    public bool IsCanActAfterBuff
+    {
+        get
+        {
+            return _IsCanActAfterBuff;
+        }
+        set
+        {
+            _IsCanActAfterBuff = value;
+        }
+    }
+    private float _SkillProcess = 0;
 
     private int _AttackStep = 0;
     private string _ActSkillInput = "";
@@ -41,6 +55,11 @@ public class ObjMotionSkillBuff : ObjMotionSkillBase
         }
     }
 
+    public override bool IsCanActSkill()
+    {
+        return base.IsCanActSkill();
+    }
+
     public override bool ActSkill(Hashtable exHash = null)
     {
         base.ActSkill(exHash);
@@ -51,8 +70,9 @@ public class ObjMotionSkillBuff : ObjMotionSkillBase
         if (exHash != null && exHash.ContainsKey("AttackStep"))
         {
             _AttackStep = (int)exHash["AttackStep"];
-            _ActSkillInput = "k" + (_AttackStep + 1);
+            _ActSkillInput = _AttackStep.ToString();
         }
+        _SkillProcess = 0;
         return true;
     }
 }

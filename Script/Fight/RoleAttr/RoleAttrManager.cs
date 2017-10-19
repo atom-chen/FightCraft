@@ -150,7 +150,7 @@ public class RoleAttrManager : MonoBehaviour
     }
 
     private RoleAttrStruct _BaseAttr;
-    public Dictionary<string, RoleAttrImpactBase> GetAttrImpacts()
+    public List<RoleAttrImpactBase> GetAttrImpacts()
     {
         return _BaseAttr._ExAttr;
     }
@@ -246,35 +246,35 @@ public class RoleAttrManager : MonoBehaviour
         ////skillAttr.ExBullets.Add("Bullet\\Emitter\\Element\\EleTargetBoomWind");
         //_SkillAttrs.Add("3", skillAttr);
 
-        if (RoleData.SelectRole == null)
-            return;
+        //if (RoleData.SelectRole == null)
+        //    return;
 
-        foreach (var skillClass in RoleData.SelectRole.SkillClassItems)
-        {
-            string skillInput = SkillInfo.GetSkillInputByClass(skillClass.Key);
-            if (!_SkillAttrs.ContainsKey(skillInput))
-            {
-                _SkillAttrs.Add(skillInput, new SkillAttr());
-            }
+        //foreach (var skillClass in RoleData.SelectRole.SkillClassItems)
+        //{
+        //    string skillInput = SkillInfo.GetSkillInputByClass(skillClass.Key);
+        //    if (!_SkillAttrs.ContainsKey(skillInput))
+        //    {
+        //        _SkillAttrs.Add(skillInput, new SkillAttr());
+        //    }
 
-            foreach (var skillItem in skillClass.Value)
-            {
-                var skillAttr = _SkillAttrs[skillInput];
-                switch (skillItem.SkillRecord.SkillAttr)
-                {
-                    case ATTR_EFFECT.DAMAGE:
-                        skillAttr.DamageRateAdd = skillItem.SkillRecord.EffectValue[0] * skillItem.SkillActureLevel;
-                        break;
-                    case ATTR_EFFECT.SPEED:
-                        skillAttr.SpeedAdd = skillItem.SkillRecord.EffectValue[0] * skillItem.SkillActureLevel;
-                        break;
-                    case ATTR_EFFECT.RANGE:
-                        skillAttr.RangeAdd = skillItem.SkillRecord.EffectValue[0] * skillItem.SkillActureLevel;
-                        break;
-                }
-            }
+        //    foreach (var skillItem in skillClass.Value)
+        //    {
+        //        var skillAttr = _SkillAttrs[skillInput];
+        //        switch (skillItem.SkillRecord.SkillAttr)
+        //        {
+        //            case ATTR_EFFECT.DAMAGE:
+        //                skillAttr.DamageRateAdd = skillItem.SkillRecord.EffectValue[0] * skillItem.SkillActureLevel;
+        //                break;
+        //            case ATTR_EFFECT.SPEED:
+        //                skillAttr.SpeedAdd = skillItem.SkillRecord.EffectValue[0] * skillItem.SkillActureLevel;
+        //                break;
+        //            case ATTR_EFFECT.RANGE:
+        //                skillAttr.RangeAdd = skillItem.SkillRecord.EffectValue[0] * skillItem.SkillActureLevel;
+        //                break;
+        //        }
+        //    }
             
-        }
+        //}
 
         //var skillAttr = new SkillAttr();
         //_SkillAttrs.Add("j", skillAttr);

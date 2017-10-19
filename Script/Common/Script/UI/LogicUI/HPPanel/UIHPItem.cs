@@ -10,6 +10,7 @@ using System.Collections.Generic;
 public class UIHPItem : UIItemBase
 {
     public Slider _HPProcess;
+    public Slider _MPProcess;
 
     private RectTransform _RectTransform;
     private MotionManager _ObjMotion;
@@ -42,6 +43,17 @@ public class UIHPItem : UIItemBase
         }
 
         _HPProcess.value = _ObjMotion.RoleAttrManager.HPPersent;
+
+        if (_ObjMotion._SkillProcessing > 0 && _ObjMotion._SkillProcessing < 1)
+        {
+            _MPProcess.gameObject.SetActive(true);
+            _MPProcess.value = _ObjMotion._SkillProcessing;
+        }
+        else
+        {
+            _MPProcess.gameObject.SetActive(false);
+        }
+
         _RectTransform.anchoredPosition = UIManager.Instance.WorldToScreenPoint(_FollowTransform.position + _HeightDelta);
     }
 

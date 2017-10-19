@@ -5,6 +5,7 @@ using UnityEngine;
 
 public enum RoleAttrEnum
 {
+    None,
     Strength = 1,
     Dexterity,
     Vitality,
@@ -633,7 +634,7 @@ public class RandomAttrs
 public class RoleAttrStruct
 {
     public List<int> _BaseAttrValues;
-    public Dictionary<string, RoleAttrImpactBase> _ExAttr;
+    public List<RoleAttrImpactBase> _ExAttr;
 
     public RoleAttrStruct()
     {
@@ -642,17 +643,13 @@ public class RoleAttrStruct
         {
             _BaseAttrValues.Add(0);
         }
-        _ExAttr = new Dictionary<string, RoleAttrImpactBase>();
+        _ExAttr = new List<RoleAttrImpactBase>();
     }
 
     public RoleAttrStruct(RoleAttrStruct copyStruct)
     {
         _BaseAttrValues = new List<int>(copyStruct._BaseAttrValues);
-        _ExAttr = new Dictionary<string, RoleAttrImpactBase>();
-        foreach (var equipAttr in copyStruct._ExAttr)
-        {
-            _ExAttr.Add(equipAttr.Key, equipAttr.Value);
-        }
+        _ExAttr = new List<RoleAttrImpactBase>(copyStruct._ExAttr);
     }
 
     public void ResetBaseAttr()
@@ -689,13 +686,23 @@ public class RoleAttrStruct
 
     public void AddExAttr(RoleAttrImpactBase exAttr)
     {
-        if (_ExAttr.ContainsKey(exAttr.ToString()))
+        RoleAttrImpactBase existAttr = null;
+        for (int i = 0; i < _ExAttr.Count; ++i)
         {
-            _ExAttr[exAttr.ToString()].AddData(exAttr);
+            if (_ExAttr[i].ToString() == exAttr.ToString() && _ExAttr[i]._SkillInput == exAttr._SkillInput)
+            {
+                existAttr = _ExAttr[i];
+            }
+        }
+
+        if (existAttr == null)
+        {
+            _ExAttr.Add(exAttr);
         }
         else
         {
-            _ExAttr.Add(exAttr.ToString(), exAttr);
+            existAttr.AddData(exAttr);
         }
+        
     }
 }

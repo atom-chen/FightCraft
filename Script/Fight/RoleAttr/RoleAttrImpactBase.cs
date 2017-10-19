@@ -4,15 +4,27 @@ using UnityEngine;
 
 public class RoleAttrImpactBase
 {
-    public virtual void InitImpact(params float[] args)
+    public string _SkillInput;
+
+    public virtual void InitImpact(string skillInput, List<float> args)
     {
 
+    }
+
+    public virtual List<float> GetSkillImpactVal(SkillInfoItem skillInfo)
+    {
+        return new List<float>();
     }
 
     public virtual void AddData(RoleAttrImpactBase otherImpact)
     { }
 
-    public virtual void FightCreateImpact(MotionManager roleMotion)
+    public virtual void ModifySkillBeforeInit(MotionManager roleMotion)
+    {
+
+    }
+
+    public virtual void ModifySkillAfterInit(MotionManager roleMotion)
     {
 
     }

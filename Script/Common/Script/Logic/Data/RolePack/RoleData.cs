@@ -340,8 +340,8 @@ public class RoleData : SaveItemBase
     [SaveField(9)]
     private List<SkillInfoItem> _SkillItems = new List<SkillInfoItem>();
 
-    private Dictionary<Tables.SKILL_CLASS, List<SkillInfoItem>> _SkillClassItems;
-    public Dictionary<Tables.SKILL_CLASS, List<SkillInfoItem>> SkillClassItems
+    private Dictionary<string, List<SkillInfoItem>> _SkillClassItems;
+    public Dictionary<string, List<SkillInfoItem>> SkillClassItems
     {
         get
         {
@@ -355,7 +355,7 @@ public class RoleData : SaveItemBase
 
     private void InitSkill()
     {
-        _SkillClassItems = new Dictionary<Tables.SKILL_CLASS, List<SkillInfoItem>>();
+        _SkillClassItems = new Dictionary<string, List<SkillInfoItem>>();
         foreach (var skillPair in Tables.TableReader.SkillInfo.Records)
         {
             if (skillPair.Value.Profession == Profession)
@@ -402,17 +402,17 @@ public class RoleData : SaveItemBase
             if (skillInfo._SkillLevel == 0)
                 continue;
 
-            if (skillInfo.SkillRecord.SkillAttr == ATTR_EFFECT.SKILL_SPCEILSKILL)
+            if (skillInfo.SkillRecord.SkillAttr == "RoleAttrImpactSP")
             {
-                if (skillInfo.SkillRecord.SkillClass == SKILL_CLASS.SKILL1)
+                if (skillInfo.SkillRecord.SkillClass == "1")
                 {
                     spSkill1 = true;
                 }
-                if (skillInfo.SkillRecord.SkillClass == SKILL_CLASS.SKILL2)
+                if (skillInfo.SkillRecord.SkillClass == "2")
                 {
                     spSkill2 = true;
                 }
-                if (skillInfo.SkillRecord.SkillClass == SKILL_CLASS.SKILL3)
+                if (skillInfo.SkillRecord.SkillClass == "3")
                 {
                     spSkill3 = true;
                 }
@@ -536,19 +536,29 @@ public class RoleData : SaveItemBase
     {
         foreach (var skillItem in _SkillItems)
         {
-            switch (skillItem.SkillRecord.SkillAttr)
+            if (skillItem.SkillActureLevel == 0)
+                continue;
+
+            var attrImpact = RoleAttrImpactManager.GetAttrImpact(skillItem);
+            if (attrImpact != null)
             {
-                case ATTR_EFFECT.SKILL_ACCUMULATE:
-                    RoleAttrImpactAccumulate impactAccumulate = new RoleAttrImpactAccumulate();
-                    impactAccumulate.InitImpact((float)skillItem.SkillRecord.SkillClass, 0.5f, 0.4f);
-                    _BaseAttr.AddExAttr(impactAccumulate);
-                    break;
-                case ATTR_EFFECT.SKILL_EXATTACK:
-                    RoleAttrImpactExAttack attrImpact = new RoleAttrImpactExAttack();
-                    attrImpact.InitImpact((float)skillItem.SkillRecord.SkillClass, 1, 0.4f);
-                    _BaseAttr.AddExAttr(attrImpact);
-                    break;
+                _BaseAttr.AddExAttr(attrImpact);
             }
+            //switch (skillItem.SkillRecord.SkillAttr)
+            //{
+            //    case "RoleAttrImpactAccumulate":
+            //        RoleAttrImpactAccumulate impactAccumulate = new RoleAttrImpactAccumulate();
+            //        impactAccumulate.InitImpact(skillItem.SkillRecord.SkillClass, 0.5f, 0.4f);
+            //        _BaseAttr.AddExAttr(impactAccumulate);
+            //        break;
+            //    case "RoleAttrImpactExAttack":
+            //        RoleAttrImpactExAttack attrImpact = new RoleAttrImpactExAttack();
+            //        attrImpact.InitImpact(skillItem.SkillRecord.SkillClass, 1, 0.4f);
+            //        _BaseAttr.AddExAttr(attrImpact);
+            //        break;
+            //    case "RoleAttrImpactSkillSpeed":
+            //        break;
+            //}
         }
     }
 

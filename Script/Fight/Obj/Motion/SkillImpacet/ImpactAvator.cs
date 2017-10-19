@@ -6,17 +6,15 @@ public class ImpactAvator : ImpactBase
 {
     private EffectAfterAnim _AvatorEffect;
 
-    private int _AvatorCnt;
-    private float _AvatorDamage;
+    public int _AvatorCnt;
+    public float _AvatorDamage;
 
-    public override void Init(RoleAttrManager.SkillAttr skillAttr, ObjMotionSkillBase skillMotion, SelectBase selector)
+    public override void Init(ObjMotionSkillBase skillMotion, SelectBase selector)
     {
-        base.Init(skillAttr, skillMotion, selector);
+        base.Init(skillMotion, selector);
 
         var avatorEffectGO = ResourceManager.Instance.GetEffect("Skill/Effect_Char_AfterAnim");
         _AvatorEffect = avatorEffectGO.GetComponent<EffectAfterAnim>();
-        _AvatorCnt = skillAttr.ShadowWarriorCnt;
-        _AvatorDamage = skillAttr.ShadowWarriorDamageRate;
 
         selector._EventAnim = skillMotion._NextAnim[0];
         selector._EventFrame.Add(0);

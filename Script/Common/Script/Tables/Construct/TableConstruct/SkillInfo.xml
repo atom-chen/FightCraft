@@ -51,21 +51,23 @@
   <constructColumn>
     <constructName>SkillClass</constructName>
     <constructCode>SkillClass</constructCode>
-    <constructType1>自定义枚举</constructType1>
+    <constructType1>基本类型</constructType1>
     <constructType2>
-      <constructType2>SKILL_CLASS</constructType2>
+      <constructType2>字符串</constructType2>
     </constructType2>
-    <constructDefault>0</constructDefault>
+    <constructDefault>
+    </constructDefault>
     <constructRepeat>1</constructRepeat>
   </constructColumn>
   <constructColumn>
     <constructName>SkillAttr</constructName>
     <constructCode>SkillAttr</constructCode>
-    <constructType1>自定义枚举</constructType1>
+    <constructType1>基本类型</constructType1>
     <constructType2>
-      <constructType2>ATTR_EFFECT</constructType2>
+      <constructType2>字符串</constructType2>
     </constructType2>
-    <constructDefault>0</constructDefault>
+    <constructDefault>
+    </constructDefault>
     <constructRepeat>1</constructRepeat>
   </constructColumn>
   <constructColumn>

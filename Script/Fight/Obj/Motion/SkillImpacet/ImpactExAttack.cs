@@ -20,9 +20,9 @@ public class ImpactExAttack : ImpactBase
     public int _AttackTimes;
     public float _Damage;
 
-    public override void Init(RoleAttrManager.SkillAttr skillAttr, ObjMotionSkillBase skillMotion, SelectBase selector)
+    public override void Init(ObjMotionSkillBase skillMotion, SelectBase selector)
     {
-        base.Init(skillAttr, skillMotion, selector);
+        base.Init(skillMotion, selector);
 
         string skillPath = "SkillMotion/" + skillMotion.MotionManager._MotionAnimPath + "/AttackEx";
         var skillObj = ResourceManager.Instance.GetInstanceGameObject(skillPath);

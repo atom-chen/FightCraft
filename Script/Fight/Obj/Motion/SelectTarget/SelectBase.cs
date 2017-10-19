@@ -14,15 +14,20 @@ public class SelectBase : MonoBehaviour
     protected ObjMotionSkillBase _SkillMotion;
     protected ImpactBase[] _ImpactList;
 
-    public virtual void Init(RoleAttrManager.SkillAttr skillAttr)
+    public virtual void Init()
     {
         _SkillMotion = gameObject.GetComponentInParent<ObjMotionSkillBase>();
         _ObjMotion = gameObject.GetComponentInParent<MotionManager>();
         _ImpactList = gameObject.GetComponents<ImpactBase>();
         foreach (var impactBase in _ImpactList)
         {
-            impactBase.Init(skillAttr, _SkillMotion, this);
+            impactBase.Init(_SkillMotion, this);
         }
+    }
+
+    public virtual void ModifyColliderRange(float rangeModify)
+    {
+
     }
 
     public virtual void RegisterEvent()

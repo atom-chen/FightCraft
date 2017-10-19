@@ -17,7 +17,7 @@ public class UISkillLevelClassItem : UIItemSelect
     {
         base.Show();
 
-        var skillClass = (Tables.SKILL_CLASS)hash["InitObj"];
+        var skillClass = (string)hash["InitObj"];
         _SkillClassName.text = skillClass.ToString();
     }
 

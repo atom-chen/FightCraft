@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,8 +16,17 @@ public class RoleAttrImpactManager
         return null;
     }
 
-    public static void GetAttrImpact(string dataID)
+    public static RoleAttrImpactBase GetAttrImpact(SkillInfoItem skillInfo)
     {
+        var impactType = Type.GetType(skillInfo.SkillRecord.SkillAttr);
+        if (impactType == null)
+            return null;
 
+        var impactBase = Activator.CreateInstance(impactType) as RoleAttrImpactBase;
+        if (impactBase == null)
+            return null;
+
+        impactBase.InitImpact(skillInfo.SkillRecord.SkillClass, impactBase.GetSkillImpactVal(skillInfo));
+        return impactBase;
     }
 }

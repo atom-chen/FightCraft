@@ -30,7 +30,7 @@ public class ObjMotionSkillAttack : ObjMotionSkillBase
         }
     }
 
-    protected override void SetEffectSize(float size)
+    public override void SetEffectSize(float size)
     {
         foreach (var effect in _NextEffect)
         {
