@@ -3,17 +3,17 @@
 10002,NA.Speed,Add Normal Attack Speed,1,j,RoleAttrImpactSkillSpeed,10,100,0,0,0,1
 10003,NA.Range,Add Normal Attack Range,1,j,RoleAttrImpactSkillRange,10,200,0,0,0,2
 10100,S.Damage,Add Ex Skill Damage,1,1,RoleAttrImpactSkillDamage,200,1000,0,0,0,0
-10101,S.Speed,Add Ex Skill Speed,1,1,RoleAttrImpactSkillSpeed,10,0,0,0,0,1
+10101,S.Speed,Add Ex Skill Speed,1,1,RoleAttrImpactSkillSpeed,10,100,0,0,0,1
 10102,S.Range,Add Ex Skill Range,1,1,RoleAttrImpactSkillRange,10,200,0,0,0,2
 10111,S.ExAttack,After Skill ex Attack,1,1,RoleAttrImpactExAttack,1,2000,0,0,0,3
 10113,S.SpSkill,Ex skill back range,1,1,RoleAttrImpactSP,1,100,0,0,0,5
 10200,S.Damage,Add Ex Skill Damage,1,2,RoleAttrImpactSkillDamage,200,1000,0,0,0,0
-10201,S.Speed,Add Ex Skill Speed,1,2,RoleAttrImpactSkillSpeed,100,0,0,0,0,1
+10201,S.Speed,Add Ex Skill Speed,1,2,RoleAttrImpactSkillSpeed,10,100,0,0,0,1
 10202,S.Range,Add Ex Skill Range,1,2,RoleAttrImpactSkillRange,10,200,0,0,0,2
 10203,S.ExAttack,Ex Skill Can Accululate by Hold the button,1,2,RoleAttrImpactExAttack,1,2000,0,0,0,3
 10205,S.SpSkill,Ex skill back range,1,2,RoleAttrImpactSP,1,100,0,0,0,5
 10300,S.Damage,Add Ex Skill Damage,1,3,RoleAttrImpactSkillDamage,200,1000,0,0,0,0
-10301,S.Speed,Add Ex Skill Speed,1,3,RoleAttrImpactSkillSpeed,100,0,0,0,0,1
+10301,S.Speed,Add Ex Skill Speed,1,3,RoleAttrImpactSkillSpeed,10,100,0,0,0,1
 10302,S.Range,Add Ex Skill Range,1,3,RoleAttrImpactSkillRange,10,200,0,0,0,2
 10303,S.AnotherUse,Ex Skill Can Accululate by Hold the button,1,3,10101,1,2000,0,0,0,3
 10305,S.SpSkill,Ex skill back range,1,3,RoleAttrImpactSP,1,100,0,0,0,5
@@ -29,6 +29,10 @@
 10604,S.DebuffStack,add debuff stact,1,6,RoleAttrImpactBuffStack,1,1000,0,0,0,3
 10605,S.ActBuff,can act skill after buff,1,6,RoleAttrImpactBuffActSkill,1,1,0,0,0,4
 10606,S.BuffHit,use buff skill can hit around enemy,1,6,RoleAttrImpactBuffHit,1,1000,0,0,0,5
+10401,D.Speed,Add Dodge Distance,1,4,RoleAttrImpactDodgeDistance,10,100,0,0,0,1
+10402,D.CD,Dec Dodge CD,1,4,RoleAttrImpactSkillSpeed,10,100,0,0,0,1
+10403,D.StoreTimes,Add Dodge Use Times,2,5,RoleAttrImpactSkillSpeed,11,101,1,1,1,2
+10404,D.NoDamage,NoDamage When using dodge,3,6,RoleAttrImpactDodgeNoDamage,12,102,2,2,2,3
 20001,NA.Damage,Add Normal Attack Damage,3,j,RoleAttrImpactSkillDamage,200,1000,0,0,0,0
 20002,NA.Speed,Add Normal Attack Speed,3,j,RoleAttrImpactSkillSpeed,10,100,0,0,0,1
 20003,NA.Range,Add Normal Attack Range,3,j,RoleAttrImpactSkillRange,10,200,0,0,0,2
@@ -59,6 +63,10 @@
 20604,S.DebuffStack,add debuff stact,3,6,RoleAttrImpactBuffStack,1,1000,0,0,0,3
 20605,S.ActBuff,can act skill after buff,3,6,RoleAttrImpactBuffActSkill,1,1,0,0,0,4
 20606,S.BuffHit,use buff skill can hit around enemy,3,6,RoleAttrImpactBuffHit,1,1000,0,0,0,5
+20701,D.DefenceRate,reduse damage when defence,3,7,RoleAttrImpactDefenceRate,2,2500,0,0,0,5
+20607,D.DefenceBack,can defence damage from back,3,7,RoleAttrImpactDefenceAngle,1,600000,1,1,1,6
+20608,D.DefenceDebuff,defence debuff,3,7,RoleAttrImpactDefenceDebuff,1,1002,2,2,2,7
+20609,D.DefenceCD,reduse defence cd,3,7,,4,1003,3,3,3,8
 30001,NA.Damage,Add Normal Attack Damage,0,j,RoleAttrImpactSkillDamage,200,1000,0,0,0,0
 30002,NA.Speed,Add Normal Attack Speed,0,j,RoleAttrImpactSkillSpeed,10,100,0,0,0,1
 30003,NA.Range,Add Normal Attack Range,0,j,RoleAttrImpactSkillRange,10,200,0,0,0,2

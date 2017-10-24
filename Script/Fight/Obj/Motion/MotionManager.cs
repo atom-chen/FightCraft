@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System;
+using UnityEngine.AI;
 
 public class MotionManager : MonoBehaviour
 {
@@ -838,6 +839,31 @@ public class MotionManager : MonoBehaviour
     #region target
 
     public bool _CanBeSelectByEnemy = true;
+
+    private ObstacleAvoidanceType _OrgAvoidType;
+    private int _NoDamageTimes = 0;
+    public void SetMotionNoDamage()
+    {
+        ++_NoDamageTimes;
+        if (_NoDamageTimes > 0)
+        {
+            TriggerCollider.enabled = false;
+            _CanBeSelectByEnemy = false;
+            _OrgAvoidType = NavAgent.obstacleAvoidanceType;
+            NavAgent.obstacleAvoidanceType = UnityEngine.AI.ObstacleAvoidanceType.NoObstacleAvoidance;
+        }
+    }
+
+    public void ResetMotionNoDamage()
+    {
+        --_NoDamageTimes;
+        if (_NoDamageTimes == 0)
+        {
+            TriggerCollider.enabled = true;
+            _CanBeSelectByEnemy = true;
+            NavAgent.obstacleAvoidanceType = _OrgAvoidType;
+        }
+    }
 
     #endregion
 

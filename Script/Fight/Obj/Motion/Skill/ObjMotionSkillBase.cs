@@ -170,13 +170,20 @@ public class ObjMotionSkillBase : MonoBehaviour
     }
 
     protected float _SkillActSpeed = -1;
-    protected float SkillActSpeed
+    public float SkillActSpeed
     {
         get
         {
             if (_SkillActSpeed < 0)
             {
-                _SkillActSpeed = _MotionManager.RoleAttrManager.AttackSpeed;
+                if (_MotionManager.RoleAttrManager == null)
+                {
+                    _SkillActSpeed = 0;
+                }
+                else
+                {
+                    _SkillActSpeed = _MotionManager.RoleAttrManager.AttackSpeed;
+                }
                 _SkillActSpeed += _SkillAddSpeed;
             }
             return _SkillActSpeed;

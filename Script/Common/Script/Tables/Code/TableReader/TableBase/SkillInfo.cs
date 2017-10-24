@@ -101,6 +101,10 @@ namespace Tables
                         continue;
 
                     SkillInfoRecord record = new SkillInfoRecord(data);
+                    if (Records.ContainsKey(record.Id))
+                    {
+                        Debug.LogError("Already contains key:" + record.Id);
+                    }
                     Records.Add(record.Id, record);
                 }
             }

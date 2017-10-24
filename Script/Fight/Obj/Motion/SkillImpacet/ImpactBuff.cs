@@ -25,6 +25,18 @@ public class ImpactBuff : ImpactBase
     public bool _IsBuffCriticClass = false;
     #endregion
 
+    #region buff type
+
+    public enum BuffType
+    {
+        Buff,
+        Debuff
+    }
+
+    public BuffType _BuffType = BuffType.Buff;
+
+    #endregion
+
     public float _LastTime;
 
     protected float _ExLastTime = 0;
