@@ -6,9 +6,9 @@ public class ImpactExAttack : ImpactBase
 
     void Update()
     {
-        if (SkillMotion.MotionManager.ActingSkill!= SkillMotion)
+        if (SenderMotion.ActingSkill!= SkillMotion)
         {
-            FinishImpact(SkillMotion.MotionManager);
+            FinishImpact(SenderMotion);
             return;
         }
 
@@ -49,7 +49,7 @@ public class ImpactExAttack : ImpactBase
     {
         if (InputManager.Instance.IsKeyHold("k"))
         {
-            SkillMotion.MotionManager.ActSkill(_ExAttackSkill);
+            SenderMotion.ActSkill(_ExAttackSkill);
         }
     }
 

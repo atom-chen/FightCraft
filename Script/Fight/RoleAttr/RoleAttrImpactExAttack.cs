@@ -6,18 +6,18 @@ using Tables;
 public class RoleAttrImpactExAttack : RoleAttrImpactBase
 {
 
-    public override void InitImpact(string skillInput, List<float> args)
+    public override void InitImpact(string skillInput, List<int> args)
     {
         _SkillInput = skillInput;
         _AttackTimes = (int)args[0];
-        _Damage = args[1];
+        _Damage = args[1] * 0.0001f;
         _ImpactName = "ExAttack";
     }
 
-    public override List<float> GetSkillImpactVal(SkillInfoItem skillInfo)
+    public override List<int> GetSkillImpactVal(SkillInfoItem skillInfo)
     {
-        var valList = new List<float>();
-        valList.Add(1.0f);
+        var valList = new List<int>();
+        valList.Add(1);
         valList.Add(skillInfo.SkillActureLevel * skillInfo.SkillRecord.EffectValue[0]);
 
         return valList;

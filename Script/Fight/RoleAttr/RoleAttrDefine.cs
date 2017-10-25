@@ -63,6 +63,67 @@ public enum RoleAttrEnum
 
     BASE_ATTR_MAX = 999,
 
+    //Skill1FireBoom = 1000,
+    //Skill1FireBall,
+    //Skill1FireExplore,
+    //Skill1FireRandomBoom,
+    //Skill1FireAimTarget,
+    //Skill2FireBoom,
+    //Skill2FireBall,
+    //Skill2FireExplore,
+    //Skill2FireRandomBoom,
+    //Skill2FireAimTarget,
+    //Skill3FireBoom,
+    //Skill3FireBall,
+    //Skill3FireExplore,
+    //Skill3FireRandomBoom,
+    //Skill3FireAimTarget,
+    //Skill1IceBoom,
+    //Skill1IceBall,
+    //Skill1IceExplore,
+    //Skill1IceRandomBoom,
+    //Skill1IceAimTarget,
+    //Skill2IceBoom,
+    //Skill2IceBall,
+    //Skill2IceExplore,
+    //Skill2IceRandomBoom,
+    //Skill2IceAimTarget,
+    //Skill3IceBoom,
+    //Skill3IceBall,
+    //Skill3IceExplore,
+    //Skill3IceRandomBoom,
+    //Skill3IceAimTarget,
+    //Skill1LightBoom,
+    //Skill1LightBall,
+    //Skill1LightExplore,
+    //Skill1LightRandomBoom,
+    //Skill1LightAimTarget,
+    //Skill2LightBoom,
+    //Skill2LightBall,
+    //Skill2LightExplore,
+    //Skill2LightRandomBoom,
+    //Skill2LightAimTarget,
+    //Skill3LightBoom,
+    //Skill3LightBall,
+    //Skill3LightExplore,
+    //Skill3LightRandomBoom,
+    //Skill3LightAimTarget,
+    //Skill1WindBoom,
+    //Skill1WindBall,
+    //Skill1WindExplore,
+    //Skill1WindRandomBoom,
+    //Skill1WindAimTarget,
+    //Skill2WindBoom,
+    //Skill2WindBall,
+    //Skill2WindExplore,
+    //Skill2WindRandomBoom,
+    //Skill2WindAimTarget,
+    //Skill3WindBoom,
+    //Skill3WindBall,
+    //Skill3WindExplore,
+    //Skill3WindRandomBoom,
+    //Skill3WindAimTarget,
+
     Skill1FireBoom = 1000,
     Skill1FireBall,
     Skill1FireExplore,
@@ -143,13 +204,13 @@ public enum RoleAttrEnum
 
 public class AttrDisplay
 {
-    public static string GetAttrDisplayStr(RoleAttrEnum attrEnum, int subClass, int value1)
+    public static string GetAttrDisplayStr(RoleAttrEnum attrEnum, params int[] attrValues)
     {
         string attrStr = "";
         if ((int)attrEnum >= (int)RoleAttrEnum.Skill1FireDamagePersent
             && (int)attrEnum <= (int)RoleAttrEnum.Skill3WindDamagePersent)
         {
-            attrStr = Tables.StrDictionary.GetFormatStr((int)attrEnum, value1 / 100.0f);
+            attrStr = Tables.StrDictionary.GetFormatStr((int)attrEnum, attrValues[0] / 100.0f);
             return attrStr;
         }
 
@@ -173,10 +234,10 @@ public class AttrDisplay
             case RoleAttrEnum.ColdAbsorbsPersent:
             case RoleAttrEnum.LightingAbsorbsPersent:
             case RoleAttrEnum.WindAbsorbsPersent:
-                attrStr = Tables.StrDictionary.GetFormatStr((int)attrEnum, value1 / 100.0f);
+                attrStr = Tables.StrDictionary.GetFormatStr((int)attrEnum, attrValues[0] / 100.0f);
                 break;
             default:
-                attrStr = Tables.StrDictionary.GetFormatStr((int)attrEnum, value1);
+                attrStr = Tables.StrDictionary.GetFormatStr((int)attrEnum, attrValues[0]);
                 break;
         }
 
@@ -210,10 +271,10 @@ public class RandomAttrs
         public EquipExAttr GetAttrRandom(int value)
         {
             EquipExAttr exAttr = new EquipExAttr();
-            exAttr.AttrID = AttrID;
-            float randomValue = (value * Random.Range(0.85f, 1.15f));
-            int attrValue = BaseValue + (int)(randomValue * Step);
-            exAttr.AttrValue1 = attrValue;
+            //exAttr.AttrID = AttrID;
+            //float randomValue = (value * Random.Range(0.85f, 1.15f));
+            //int attrValue = BaseValue + (int)(randomValue * Step);
+            //exAttr.AttrValues[0] = attrValue;
             return exAttr;
         }
     }
@@ -319,7 +380,7 @@ public class RandomAttrs
             {
                 defaultCnt += 1;
                 int attrIDX = Random.Range((int)RoleAttrEnum.SkillSP1, (int)RoleAttrEnum.SkillSP9 + 1);
-                defaultSp = new EquipExAttr((RoleAttrEnum)attrIDX, 1, 1);
+                //defaultSp = new EquipExAttr((RoleAttrEnum)attrIDX, 1, 1);
             }
         }
 
@@ -701,7 +762,7 @@ public class RoleAttrStruct
         }
         else
         {
-            existAttr.AddData(exAttr);
+            //existAttr.AddData(exAttr);
         }
         
     }

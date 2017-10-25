@@ -2,22 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using Tables;
-public class RoleAttrImpactBuffExEffect : RoleAttrImpactBase
+public class RoleAttrImpactBaseAttr : RoleAttrImpactBase
 {
 
     public override void InitImpact(string skillInput, List<int> args)
     {
         _SkillInput = skillInput;
-        _ImpactName = "ExBuffImpact";
-    }
-
-    public override List<int> GetSkillImpactVal(SkillInfoItem skillInfo)
-    {
-        var valList = new List<int>();
-        valList.Add(skillInfo.SkillActureLevel * skillInfo.SkillRecord.EffectValue[0]);
-
-        return valList;
     }
 
     public override void ModifySkillBeforeInit(MotionManager roleMotion)
@@ -26,14 +16,30 @@ public class RoleAttrImpactBuffExEffect : RoleAttrImpactBase
             return;
 
         var skillMotion = roleMotion._StateSkill._SkillMotions[_SkillInput];
-        var impactGO = ResourceManager.Instance.GetInstanceGameObject("SkillMotion\\" + roleMotion._MotionAnimPath + "\\" + _ImpactName);
+        var impactGO = ResourceManager.Instance.GetInstanceGameObject("Bullet\\Emitter\\Element\\" + _ImpactName);
         impactGO.transform.SetParent(skillMotion.transform);
 
+        var bulletEmitterEle = impactGO.GetComponent<BulletEmitterElement>();
+        bulletEmitterEle._Rate = _Rate;
+        bulletEmitterEle._Damage = _Damage;
+    }
+
+    public override bool AddData(List<int> attrParam)
+    {
+        return true;
+    }
+
+    public static string GetAttrDesc(List<int> attrParams)
+    {
+        return "";
     }
 
     #region 
 
+    public int _Rate;
+    public int _Damage;
     public string _ImpactName;
 
+    
     #endregion
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class RoleAttrImpactEleBullet: RoleAttrImpactBase
 {
 
-    public override void InitImpact(string skillInput, List<float> args)
+    public override void InitImpact(string skillInput, List<int> args)
     {
         _SkillInput = skillInput;
     }
@@ -40,7 +40,7 @@ public class RoleAttrImpactEleBullet: RoleAttrImpactBase
 
         int attrIDX = Random.Range((int)RoleAttrEnum.Skill1FireBoom, (int)RoleAttrEnum.Skill3WindAimTarget + 1);
 
-        EquipExAttr exAttr = new EquipExAttr((RoleAttrEnum)attrIDX, rate, damage);
+        EquipExAttr exAttr = new EquipExAttr("RoleAttrImpactEleBullet", attrIDX, rate, damage);
 
         return exAttr;
     }

@@ -20,14 +20,14 @@ public class ImpactBuffDefence : ImpactBuff
 
     public override bool IsBuffCanHit(ImpactHit damageImpact)
     {
-        float targetAngle = Mathf.Abs(Vector3.Angle(damageImpact.SkillMotion.MotionManager.transform.position - _BuffOwner.transform.position, _BuffOwner.transform.forward));
+        float targetAngle = Mathf.Abs(Vector3.Angle(damageImpact.SenderMotion.transform.position - _BuffOwner.transform.position, _BuffOwner.transform.forward));
         if (targetAngle > _DefenceAngle)
         {
             return true;
         }
         if (targetAngle > 60)
         {
-            _BuffOwner.SetLookAt(damageImpact.SkillMotion.MotionManager.transform.position);
+            _BuffOwner.SetLookAt(damageImpact.SenderMotion.transform.position);
         }
         _BuffOwner.SetMove(-_BuffOwner.transform.forward * _DefenceHitSpeed, _DefenceHitTime);
         return false;

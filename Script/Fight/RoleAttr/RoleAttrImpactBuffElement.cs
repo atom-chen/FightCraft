@@ -6,16 +6,16 @@ using Tables;
 public class RoleAttrImpactBuffElement : RoleAttrImpactBase
 {
 
-    public override void InitImpact(string skillInput, List<float> args)
+    public override void InitImpact(string skillInput, List<int> args)
     {
         _SkillInput = skillInput;
-        _ElementType = (int)args[0];
+        _ElementType = args[0];
     }
 
-    public override List<float> GetSkillImpactVal(SkillInfoItem skillInfo)
+    public override List<int> GetSkillImpactVal(SkillInfoItem skillInfo)
     {
-        var valList = new List<float>();
-        valList.Add(skillInfo.SkillActureLevel * skillInfo.SkillRecord.EffectValue[0] * 0.0001f);
+        var valList = new List<int>();
+        valList.Add(skillInfo.SkillActureLevel * skillInfo.SkillRecord.EffectValue[0]);
 
         return valList;
     }

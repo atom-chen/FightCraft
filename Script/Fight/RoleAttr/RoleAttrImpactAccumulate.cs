@@ -6,18 +6,18 @@ using Tables;
 public class RoleAttrImpactAccumulate : RoleAttrImpactBase
 {
 
-    public override void InitImpact(string skillInput, List<float> args)
+    public override void InitImpact(string skillInput, List<int> args)
     {
         _SkillInput = skillInput;
         _AccumulateTime = args[0];
-        _DamageEnhance = args[1];
+        _DamageEnhance = args[1] * 0.0001f;
         _ImpactName = "Accumulate";
     }
 
-    public override List<float> GetSkillImpactVal(SkillInfoItem skillInfo)
+    public override List<int> GetSkillImpactVal(SkillInfoItem skillInfo)
     {
-        var valList = new List<float>();
-        valList.Add(0.5f);
+        var valList = new List<int>();
+        valList.Add(5);
         valList.Add(skillInfo.SkillActureLevel * skillInfo.SkillRecord.EffectValue[0]);
 
         return valList;

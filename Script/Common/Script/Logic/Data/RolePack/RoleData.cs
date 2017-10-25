@@ -530,6 +530,8 @@ public class RoleData : SaveItemBase
             }
 
         }
+
+        CalculateAttr();
     }
 
     public void SetSkillAttr(RoleAttrStruct _BaseAttr)

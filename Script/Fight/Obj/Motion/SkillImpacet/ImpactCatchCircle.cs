@@ -41,7 +41,7 @@ public class ImpactCatchCircle : ImpactCatch
             if (moveTime > 0.01f)
             {
                 Vector3 destMove = (hitPos - trigMotion.transform.position).normalized * _Speed * moveTime;
-                CatchMotion(SkillMotion.MotionManager, trigMotion, destMove, moveTime);
+                CatchMotion(SenderMotion, trigMotion, destMove, moveTime);
             }
         }
     }

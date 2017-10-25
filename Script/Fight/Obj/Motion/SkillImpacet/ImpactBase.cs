@@ -12,6 +12,24 @@ public class ImpactBase : MonoBehaviour
         }  
     }
 
+    protected MotionManager _SenderMotion;
+    public MotionManager SenderMotion
+    {
+        get
+        {
+            return _SenderMotion;
+        }
+    }
+
+    protected MotionManager _ReciveMotion;
+    public MotionManager ReciveMotion
+    {
+        get
+        {
+            return _ReciveMotion;
+        }
+    }
+
     protected SelectBase _Selector;
     public SelectBase Selector
     {
@@ -32,6 +50,8 @@ public class ImpactBase : MonoBehaviour
 
     public virtual void ActImpact(MotionManager senderManager, MotionManager reciverManager)
     {
+        _SenderMotion = senderManager;
+        _ReciveMotion = reciverManager;
         _IsActingImpact = true;
     }
 

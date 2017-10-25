@@ -36,8 +36,6 @@ public class UIEquipAttrItem : UIItemBase
 
     public void ShowAttr(EquipExAttr attr)
     {
-        if (attr.AttrID <= 0)
-            return;
 
         _ShowAttr = attr;
 

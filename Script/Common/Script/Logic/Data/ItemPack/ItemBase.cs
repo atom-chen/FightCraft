@@ -2,51 +2,62 @@
 using System.Collections;
 using System.Collections.Generic;
 using Tables;
-
-
+using System;
 
 public class EquipExAttr
 {
     [SaveField(1)]
-    public RoleAttrEnum AttrID;
+    public string AttrType;
     [SaveField(2)]
-    public int SubClass;
-    [SaveField(3)]
-    public int AttrValue1;
+    public List<int> AttrValues;
 
 
     public EquipExAttr()
-    { }
-
-    public EquipExAttr(RoleAttrEnum attrEnum, int subClass = 0, int value1 = 0)
     {
-        AttrID = attrEnum;
-        AttrValue1 = value1;
-        SubClass = subClass;
+        AttrValues = new List<int>();
+        AttrValues.Add(0);
+    }
+
+    public EquipExAttr(string attrType, params int[] attrValues)
+    {
+        AttrType = attrType;
+        AttrValues = new List<int>(attrValues);
     }
 
     public EquipExAttr(EquipExAttr copyInstance)
     {
-        AttrID = copyInstance.AttrID;
-        SubClass = copyInstance.SubClass;
-        AttrValue1 = copyInstance.AttrValue1;
+        AttrType = copyInstance.AttrType;
+        AttrValues = copyInstance.AttrValues;
     }
 
     public string GetAttrStr()
     {
-        return AttrDisplay.GetAttrDisplayStr(AttrID, SubClass, AttrValue1);
+        var impactType = Type.GetType(AttrType);
+        if (impactType == null)
+            return "";
+
+        var method = impactType.GetMethod("GetAttrDesc");
+        if (method == null)
+            return "";
+
+        return method.Invoke(null, new object[] { AttrValues }) as string;
     }
 
     public bool Add(EquipExAttr d)
     {
-        if (d.AttrID != AttrID)
+        if (d.AttrType != AttrType)
             return false;
 
-        if (d.SubClass != SubClass)
-            return false;
+        if (AttrType == "RoleAttrImpactBaseAttr")
+        {
+            for (int i = 0; i < AttrValues.Count; ++i)
+            {
+                AttrValues[i] += d.AttrValues[i];
+            }
+            return true;
+        }
 
-        AttrValue1 += d.AttrValue1;
-        return true;
+        return false;
     }
 }
 

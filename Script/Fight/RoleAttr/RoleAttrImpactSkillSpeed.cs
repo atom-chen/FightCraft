@@ -6,16 +6,16 @@ using Tables;
 public class RoleAttrImpactSkillSpeed : RoleAttrImpactBase
 {
 
-    public override void InitImpact(string skillInput, List<float> args)
+    public override void InitImpact(string skillInput, List<int> args)
     {
         _SkillInput = skillInput;
-        _SpeedModify = (float)args[0];
+        _SpeedModify = (int)args[0] * 0.0001f;
     }
 
-    public override List<float> GetSkillImpactVal(SkillInfoItem skillInfo)
+    public override List<int> GetSkillImpactVal(SkillInfoItem skillInfo)
     {
-        var valList = new List<float>();
-        valList.Add(skillInfo.SkillActureLevel * skillInfo.SkillRecord.EffectValue[0] * 0.0001f);
+        var valList = new List<int>();
+        valList.Add(skillInfo.SkillActureLevel * skillInfo.SkillRecord.EffectValue[0]);
 
         return valList;
     }

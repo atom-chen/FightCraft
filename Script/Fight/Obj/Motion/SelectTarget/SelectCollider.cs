@@ -4,6 +4,51 @@ using System.Collections.Generic;
 
 public class SelectCollider : SelectBase
 {
+    #region exImpacts
+
+    protected List<ExImpactBase> _ExHitEnemyImpacts = new List<ExImpactBase>();
+    public List<ExImpactBase> ExHitEnemyImpacts
+    {
+        get
+        {
+            return _ExHitEnemyImpacts;
+        }
+        set
+        {
+            _ExHitEnemyImpacts = value;
+        }
+    }
+    public void ActExHitEnemyImpacts(MotionManager targetMotion)
+    {
+        foreach (var hitImpact in _ExHitEnemyImpacts)
+        {
+            hitImpact.ActExImpact(_ObjMotion, targetMotion);
+        }
+    }
+
+    protected List<ExImpactBase> _ExHitSelfImpacts = new List<ExImpactBase>();
+    public List<ExImpactBase> ExHitSelfImpacts
+    {
+        get
+        {
+            return _ExHitSelfImpacts;
+        }
+        set
+        {
+            _ExHitSelfImpacts = value;
+        }
+    }
+
+    public void ActExHitSelfImpacts()
+    {
+        foreach (var hitImpact in _ExHitEnemyImpacts)
+        {
+            hitImpact.ActExImpact(_ObjMotion, _ObjMotion);
+        }
+    }
+
+    #endregion
+
     public List<int> _ColliderFinishFrame;
 
     protected List<MotionManager> _TrigMotions= new List<MotionManager>();
@@ -104,8 +149,6 @@ public class SelectCollider : SelectBase
         {
             _TrigMotions.Add(motion);
 
-
-
             if (motion._StateLie == motion._ActionState && !_SelectLieObj)
                 return;
 
@@ -117,6 +160,8 @@ public class SelectCollider : SelectBase
                 {
                     impact.ActImpact(_ObjMotion, motion);
                 }
+                ActExHitSelfImpacts();
+                ActExHitEnemyImpacts(motion);
 
                 if (_IsRemindSelected && _ObjMotion.ActingSkill != null)
                 {

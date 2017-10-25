@@ -162,17 +162,17 @@ public class ItemEquip : ItemBase
             {
                 int exValue = 0;
                 _BaseAttack = EquipItemRecord.BaseAttrs[0];
-                foreach (var exAttr in _DynamicDataVector)
-                {
-                    if (exAttr.AttrID == RoleAttrEnum.Attack)
-                    {
-                        exValue += exAttr.AttrValue1;
-                    }
-                    else if (exAttr.AttrID == RoleAttrEnum.AttackPersent)
-                    {
-                        exValue += (int)(_BaseAttack * (exAttr.AttrValue1 / 10000.0f));
-                    }
-                }
+                //foreach (var exAttr in _DynamicDataVector)
+                //{
+                //    if (exAttr.AttrID == RoleAttrEnum.Attack)
+                //    {
+                //        exValue += exAttr.AttrValues[0];
+                //    }
+                //    else if (exAttr.AttrID == RoleAttrEnum.AttackPersent)
+                //    {
+                //        exValue += (int)(_BaseAttack * (exAttr.AttrValues[0] / 10000.0f));
+                //    }
+                //}
                 _BaseAttack += exValue;
             }
             return _BaseAttack;
@@ -188,17 +188,17 @@ public class ItemEquip : ItemBase
             {
                 int exValue = 0;
                 _BaseHP = EquipItemRecord.BaseAttrs[1];
-                foreach (var exAttr in _DynamicDataVector)
-                {
-                    if (exAttr.AttrID == RoleAttrEnum.HPMax)
-                    {
-                        exValue += exAttr.AttrValue1;
-                    }
-                    else if (exAttr.AttrID == RoleAttrEnum.HPMaxPersent)
-                    {
-                        exValue += (int)(_BaseHP * (exAttr.AttrValue1 / 10000.0f));
-                    }
-                }
+                //foreach (var exAttr in _DynamicDataVector)
+                //{
+                //    if (exAttr.AttrID == RoleAttrEnum.HPMax)
+                //    {
+                //        exValue += exAttr.AttrValues[0];
+                //    }
+                //    else if (exAttr.AttrID == RoleAttrEnum.HPMaxPersent)
+                //    {
+                //        exValue += (int)(_BaseHP * (exAttr.AttrValues[0] / 10000.0f));
+                //    }
+                //}
                 _BaseHP += exValue;
             }
             return _BaseHP;
@@ -214,17 +214,17 @@ public class ItemEquip : ItemBase
             {
                 int exValue = 0;
                 _BaseDefence = EquipItemRecord.BaseAttrs[0];
-                foreach (var exAttr in _DynamicDataVector)
-                {
-                    if (exAttr.AttrID == RoleAttrEnum.Defense)
-                    {
-                        exValue += exAttr.AttrValue1;
-                    }
-                    else if (exAttr.AttrID == RoleAttrEnum.DefensePersent)
-                    {
-                        exValue += (int)(_BaseDefence * (exAttr.AttrValue1 / 10000.0f));
-                    }
-                }
+                //foreach (var exAttr in _DynamicDataVector)
+                //{
+                //    if (exAttr.AttrID == RoleAttrEnum.Defense)
+                //    {
+                //        exValue += exAttr.AttrValues[0];
+                //    }
+                //    else if (exAttr.AttrID == RoleAttrEnum.DefensePersent)
+                //    {
+                //        exValue += (int)(_BaseDefence * (exAttr.AttrValues[0] / 10000.0f));
+                //    }
+                //}
                 _BaseDefence += exValue;
             }
             return _BaseDefence;
@@ -264,9 +264,9 @@ public class ItemEquip : ItemBase
 
         foreach (var exAttrs in _DynamicDataVector)
         {
-            if ((int)exAttrs.AttrID < (int)RoleAttrEnum.BASE_ATTR_MAX)
+            if (exAttrs.AttrType == "RoleAttrImpactBaseAttr")
             {
-                roleAttr.AddValue(exAttrs.AttrID, exAttrs.AttrValue1);
+                roleAttr.AddValue((RoleAttrEnum)exAttrs.AttrValues[0], exAttrs.AttrValues[1]);
             }
             else
             {
@@ -498,19 +498,19 @@ public class ItemEquip : ItemBase
     private static EquipExAttr GetRandomAttr(FightAttrRecord attrRecord, int value)
     {
         EquipExAttr attrItem = new EquipExAttr();
-        attrItem.AttrID = (RoleAttrEnum)attrRecord.AttrID;
+        //attrItem.AttrID = (RoleAttrEnum)attrRecord.AttrID;
 
-        Vector3 attrValue = new Vector3();
-        for (int i = attrRecord.Values.Count - 1; i >= 0; --i)
-        {
-            if (attrRecord.Values[i].z > 0 && value > attrRecord.Values[i].z)
-            {
-                attrValue = attrRecord.Values[i];
-                break;
-            }
-        }
+        //Vector3 attrValue = new Vector3();
+        //for (int i = attrRecord.Values.Count - 1; i >= 0; --i)
+        //{
+        //    if (attrRecord.Values[i].z > 0 && value > attrRecord.Values[i].z)
+        //    {
+        //        attrValue = attrRecord.Values[i];
+        //        break;
+        //    }
+        //}
 
-        attrItem.AttrValue1 = UnityEngine.Random.Range((int)attrValue.x, (int)attrValue.y + 1);
+        //attrItem.AttrValues[0] = UnityEngine.Random.Range((int)attrValue.x, (int)attrValue.y + 1);
         return attrItem;
     }
 

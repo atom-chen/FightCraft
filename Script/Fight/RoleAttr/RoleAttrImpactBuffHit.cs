@@ -6,7 +6,7 @@ using Tables;
 public class RoleAttrImpactBuffHit : RoleAttrImpactBase
 {
 
-    public override void InitImpact(string skillInput, List<float> args)
+    public override void InitImpact(string skillInput, List<int> args)
     {
         _SkillInput = skillInput;
         if (skillInput == "5")
@@ -21,10 +21,10 @@ public class RoleAttrImpactBuffHit : RoleAttrImpactBase
         }
     }
 
-    public override List<float> GetSkillImpactVal(SkillInfoItem skillInfo)
+    public override List<int> GetSkillImpactVal(SkillInfoItem skillInfo)
     {
-        var valList = new List<float>();
-        valList.Add(skillInfo.SkillActureLevel * skillInfo.SkillRecord.EffectValue[0] * 0.0001f);
+        var valList = new List<int>();
+        valList.Add(skillInfo.SkillActureLevel * skillInfo.SkillRecord.EffectValue[0]);
 
         return valList;
     }

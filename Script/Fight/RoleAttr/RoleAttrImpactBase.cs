@@ -6,18 +6,20 @@ public class RoleAttrImpactBase
 {
     public string _SkillInput;
 
-    public virtual void InitImpact(string skillInput, List<float> args)
+    public virtual void InitImpact(string skillInput, List<int> args)
     {
 
     }
 
-    public virtual List<float> GetSkillImpactVal(SkillInfoItem skillInfo)
+    public virtual List<int> GetSkillImpactVal(SkillInfoItem skillInfo)
     {
-        return new List<float>();
+        return new List<int>();
     }
 
-    public virtual void AddData(RoleAttrImpactBase otherImpact)
-    { }
+    public virtual bool AddData(List<int> attrParam)
+    {
+        return false;
+    }
 
     public virtual void ModifySkillBeforeInit(MotionManager roleMotion)
     {
@@ -28,4 +30,7 @@ public class RoleAttrImpactBase
     {
 
     }
+
+    
+
 }
