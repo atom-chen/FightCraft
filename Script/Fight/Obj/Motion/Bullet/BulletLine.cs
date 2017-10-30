@@ -7,8 +7,8 @@ public class BulletLine : BulletBase
     public float _Speed = 10;
     public int _HitTimes = 1;
 
-    private float _AwakeTime = 0;
-    private int _AlreadyHitTimes = 0;
+    protected float _AwakeTime = 0;
+    protected int _AlreadyHitTimes = 0;
     public override void Init(MotionManager senderMotion, BulletEmitterBase emitterBase)
     {
         base.Init(senderMotion, emitterBase);
@@ -27,6 +27,11 @@ public class BulletLine : BulletBase
 	// Update is called once per frame
 	void FixedUpdate ()
     {
+        MoveUpdate();
+    }
+
+    protected void MoveUpdate()
+    {
         transform.position += transform.forward.normalized * _Speed * Time.fixedDeltaTime;
 
         if (Time.time - _AwakeTime > _LifeTime)
@@ -42,6 +47,11 @@ public class BulletLine : BulletBase
         if (targetMotion == null)
             return;
 
+        TriggetMotion(targetMotion);
+    }
+
+    protected void TriggetMotion(MotionManager targetMotion)
+    {
         if (!_IsBulletHitLie && (targetMotion.MotionPrior == BaseMotionManager.LIE_PRIOR || targetMotion.MotionPrior == BaseMotionManager.RISE_PRIOR))
             return;
 
