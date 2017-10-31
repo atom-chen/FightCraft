@@ -1,20 +1,23 @@
 ,G,B,C,S,A,R
 baiqi fire wind ,G1:stone boom,B3:stone boom,,,,
-caocao wind,G2:wind blade,B2:whirlwind,,,,
-daji ice,G2:heart bullet,,,,enemy stop attack,
-dianwei light,,B2:whirl weapon,,,,
-diaocan ice,G2:ice boom,B1:ice boom,,,"ice area,slow down move speed",
+caocao wind,G2:wind blade,B2:whirlwind,,,,wind blade when hit
+daji ice,G2:heart bullet,,damage reduse,,enemy stop attack,
+dianwei light,,B2:whirl weapon,hp low strong AI,,,add attack when hp low
+diaocan ice,G1:ice boom,B1:ice boom,,,"ice area,slow down move speed",
 direnjie light ,G1:skill enhance,B1:fire boom,,,,
-jiangziya light,G2:lightening hit,B2:lighting hit,,,revenge lightening,
-jingke wind,G0:blink,B1:wind damage,,,,
+jiangziya light,G2:lightening hit,B2:lighting hit,,,revenge lightening,lightening when hit
+jingke wind,G0:blink,B1:wind damage,,add move speed when be hit,,
 leizhenzi light,G3:lightening 3,B3:lighting 3,,,,lightening circle
 lianpo fire wind,G1:fire sprit,B3:stone boom,,,,
-luban fire ice,,,resist one hit,,,time boom
-nazha fire,,,alive,ex move speed,,
+luban fire ice,,,resist one hit,ignore low move speed buff,,time boom
+nazha fire,,,alive,ex move speed,add attack when hp full,fire boom when hit
 wuzetian fire,G3:fire bird,,,,,
-wenzhong fire ice wind,G1:fire bullet,B1:ice bullet,,,element enhance,
+wenzhong fire ice wind,G2:fire bullet,B1:ice bullet,,,element enhance,
 xishi wind,G3:big whirlwind,B3:whirlwind,,,,
-yangguifei wind,,,,add move speed when hp low,,poison enemy(wind)
-yangjian fire light,,B2:eye light,,,,
-zhaoyun ice,G1:ice boom,B2:ice circle,,,,
+yangguifei wind,,,hp low intelligence AI,add move speed when hp low,,blood enemy
+yangjian fire light,,B2:eye light,hp low dexterous  AI,,remove debuff ,fire light element
+zhaoyun ice,G2:ice sprit,B2:ice circle,,,ice circle when be hit,ice boom when hit
 zouwang fire,G3:fire bullet,B3:fire split,,,,
+,,,add ex hp/defence,add money/exp,base attr add persent ,base attr add persent 
+,,,resume hp,element resist,,hit fly
+,,,thorns,,,

@@ -25,7 +25,8 @@ public class BulletEmitterLineForward : BulletEmitterElement
         _BulletDistance = _EmitterLength / (_EmitterNum + 1);
         _SendedCnt = 0;
 
-        _OriginPos = senderManager.transform.position;
+        Vector3 modifyPos = transform.forward * _EmitterOffset.x + transform.right * _EmitterOffset.z + transform.up * _EmitterOffset.y;
+        _OriginPos = senderManager.transform.position + modifyPos;
         _OriginDirect = senderManager.transform.forward;
         //var bullet = InitBulletGO<BulletBase>();
         StartCoroutine(InitBullet());
