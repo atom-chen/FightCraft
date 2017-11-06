@@ -15,7 +15,7 @@ public class EquipExAttr
     public EquipExAttr()
     {
         AttrValues = new List<int>();
-        AttrValues.Add(0);
+        //AttrValues.Add(0);
     }
 
     public EquipExAttr(string attrType, params int[] attrValues)
@@ -33,6 +33,7 @@ public class EquipExAttr
     public string GetAttrStr()
     {
         var impactType = Type.GetType(AttrType);
+        Debug.Log("AttrType:" + AttrType);
         if (impactType == null)
             return "";
 

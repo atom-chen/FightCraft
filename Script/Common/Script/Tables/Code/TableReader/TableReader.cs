@@ -31,6 +31,8 @@ namespace Tables
 //
         public static FightAttr FightAttr { get; internal set; }
 //
+        public static LegendaryEquip LegendaryEquip { get; internal set; }
+//
         public static MonsterBase MonsterBase { get; internal set; }
 //
         public static RoleExp RoleExp { get; internal set; }
@@ -47,6 +49,7 @@ namespace Tables
             CommonItem = new CommonItem(TableReadBase.GetTableText("CommonItem"), false);
             EquipItem = new EquipItem(TableReadBase.GetTableText("EquipItem"), false);
             FightAttr = new FightAttr(TableReadBase.GetTableText("FightAttr"), false);
+            LegendaryEquip = new LegendaryEquip(TableReadBase.GetTableText("LegendaryEquip"), false);
             MonsterBase = new MonsterBase(TableReadBase.GetTableText("MonsterBase"), false);
             RoleExp = new RoleExp(TableReadBase.GetTableText("RoleExp"), false);
             SkillInfo = new SkillInfo(TableReadBase.GetTableText("SkillInfo"), false);
@@ -57,6 +60,7 @@ namespace Tables
             CommonItem.CoverTableContent();
             EquipItem.CoverTableContent();
             FightAttr.CoverTableContent();
+            LegendaryEquip.CoverTableContent();
             MonsterBase.CoverTableContent();
             RoleExp.CoverTableContent();
             SkillInfo.CoverTableContent();

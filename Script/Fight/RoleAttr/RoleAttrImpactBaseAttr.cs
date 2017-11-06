@@ -7,7 +7,9 @@ public class RoleAttrImpactBaseAttr : RoleAttrImpactBase
 
     public override void InitImpact(string skillInput, List<int> args)
     {
-        _SkillInput = skillInput;
+        var legendaryEquip = Tables.TableReader.LegendaryEquip.GetRecord( args[0].ToString());
+        _ImpactName = legendaryEquip.BulletName;
+        _SkillInput = legendaryEquip.SkillInput;
     }
 
     public override void ModifySkillBeforeInit(MotionManager roleMotion)
@@ -20,7 +22,6 @@ public class RoleAttrImpactBaseAttr : RoleAttrImpactBase
         impactGO.transform.SetParent(skillMotion.transform);
 
         var bulletEmitterEle = impactGO.GetComponent<BulletEmitterElement>();
-        bulletEmitterEle._Rate = _Rate;
         bulletEmitterEle._Damage = _Damage;
     }
 
@@ -31,12 +32,14 @@ public class RoleAttrImpactBaseAttr : RoleAttrImpactBase
 
     public static string GetAttrDesc(List<int> attrParams)
     {
-        return "";
+        Debug.Log("attrParams:" + attrParams[0]);
+        var attrTab = Tables.TableReader.FightAttr.GetRecord(attrParams[0].ToString());
+
+        return string.Format(attrTab.ShowTip, attrParams[1]);
     }
 
     #region 
 
-    public int _Rate;
     public int _Damage;
     public string _ImpactName;
 

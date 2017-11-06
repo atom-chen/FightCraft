@@ -123,9 +123,11 @@ public class LogicManager
         UISkillBar.ShowAsyn();
         UIDropNamePanel.ShowAsyn();
         UIHPPanel.ShowAsyn();
+        UIPlayerFrame.ShowAsyn();
+        UITargetFrame.ShowAsyn();
 
-        //GameUI.UIDamagePanel.ShowAsyn();
-        DamagePanel.ShowAsyn();
+        UIDamagePanel.ShowAsyn();
+        //DamagePanel.ShowAsyn();
         AimTargetPanel.ShowAsyn();
     }
 

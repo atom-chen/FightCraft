@@ -437,22 +437,48 @@ public class ItemEquip : ItemBase
         return null;
     }
 
-    public static ItemEquip CreateEquip(int level, Tables.ITEM_QUALITY quality, int value)
+    public static ItemEquip CreateEquip(int level, Tables.ITEM_QUALITY quality, int value, int legencyEquipID = -1)
     {
-        var equipSlot = GetRandomItemSlot();
-        //EQUIP_SLOT equipSlot = EQUIP_SLOT.TORSO;
-        var baseEquip = GetRandomItem(equipSlot, level);
-        if (baseEquip == null)
-            return null;
+        Tables.ITEM_QUALITY equipQuality = quality;
+        LegendaryEquipRecord legencyEquip = null;
+        if (legencyEquipID > 0)
+        {
+            legencyEquip = TableReader.LegendaryEquip.GetRecord(legencyEquipID.ToString());
+        }
+        if (legencyEquip != null)
+        {
+            equipQuality = ITEM_QUALITY.ORIGIN;
+        }
+
+        EquipItemRecord baseEquip = null;
+        if (legencyEquip != null)
+        {
+            baseEquip = legencyEquip.EquipItem;
+        }
+        else
+        {
+            var equipSlot = GetRandomItemSlot();
+            //EQUIP_SLOT equipSlot = EQUIP_SLOT.TORSO;
+            baseEquip = GetRandomItem(equipSlot, level);
+            if (baseEquip == null)
+                return null;
+        }
 
         ItemEquip itemEquip = new ItemEquip();
         itemEquip.ItemDataID = baseEquip.Id;
         itemEquip.EquipLevel = level;
-        itemEquip.EquipQuality = quality;
+        itemEquip.EquipQuality = equipQuality;
         itemEquip.EquipValue = value;
 
         //RandomEquipAttr(itemEquip);
-        itemEquip.AddExAttr(RandomAttrs.GetRandomEquipExAttrs(baseEquip.Slot, level, value, quality, RoleData.SelectRole.Profession));
+        itemEquip.AddExAttr(RandomAttrs.GetRandomEquipExAttrs(baseEquip.Slot, level, value, equipQuality, RoleData.SelectRole.Profession));
+        if (legencyEquip != null)
+        {
+            EquipExAttr legencyAttr = new EquipExAttr();
+            legencyAttr.AttrType = legencyEquip.AttrImpact;
+            legencyAttr.AttrValues.Add(legencyEquipID);
+            itemEquip.AddExAttr(legencyAttr);
+        }
 
         return itemEquip;
     }

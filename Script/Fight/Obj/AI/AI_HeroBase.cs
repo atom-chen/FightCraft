@@ -26,14 +26,14 @@ public class AI_HeroBase : AI_Base
 
     private void InitRise()
     {
-        var riseBoom = ResourceManager.Instance.GetInstanceGameObject("SkillMotion/RiseBoomSkill");
-        var motionTrans = transform.FindChild("Motion");
-        riseBoom.transform.SetParent(motionTrans);
-        riseBoom.transform.localPosition = Vector3.zero;
-        riseBoom.transform.localRotation = Quaternion.Euler(Vector3.zero);
+        //var riseBoom = ResourceManager.Instance.GetInstanceGameObject("SkillMotion/RiseBoomSkill");
+        //var motionTrans = transform.FindChild("Motion");
+        //riseBoom.transform.SetParent(motionTrans);
+        //riseBoom.transform.localPosition = Vector3.zero;
+        //riseBoom.transform.localRotation = Quaternion.Euler(Vector3.zero);
         
-        _RiseBoom = riseBoom.GetComponent<ObjMotionSkillBase>();
-        _RiseBoom.Init();
+        //_RiseBoom = riseBoom.GetComponent<ObjMotionSkillBase>();
+        //_RiseBoom.Init();
     }
 
     private void RiseUpdate()
@@ -77,14 +77,14 @@ public class AI_HeroBase : AI_Base
 
     protected void InitSuperArmorSkill(ObjMotionSkillBase objMotionSkill)
     {
-        float attackConlliderTime = _SelfMotion.AnimationEvent.GetAnimFirstColliderEventTime(objMotionSkill._NextAnim[0]);
-        if (attackConlliderTime < 0)
-            return;
+        //float attackConlliderTime = _SelfMotion.AnimationEvent.GetAnimFirstColliderEventTime(objMotionSkill._NextAnim[0]);
+        //if (attackConlliderTime < 0)
+        //    return;
 
 
-        _SelfMotion.AnimationEvent.AddEvent(objMotionSkill._NextAnim[0], 0, AttackStart);
-        _SelfMotion.AnimationEvent.AddEvent(objMotionSkill._NextAnim[0], attackConlliderTime + 0.05f, AttackCollider);
-        _SelfMotion.AnimationEvent.AddEvent(objMotionSkill._NextAnim[0], objMotionSkill._NextAnim[0].length, AttackCollider);
+        //_SelfMotion.AnimationEvent.AddEvent(objMotionSkill._NextAnim[0], 0, AttackStart);
+        //_SelfMotion.AnimationEvent.AddEvent(objMotionSkill._NextAnim[0], attackConlliderTime + 0.05f, AttackCollider);
+        //_SelfMotion.AnimationEvent.AddEvent(objMotionSkill._NextAnim[0], objMotionSkill._NextAnim[0].length, AttackCollider);
     }
 
     private void AttackStart()

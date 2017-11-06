@@ -23,7 +23,7 @@ public class BulletEmitterBase : ImpactBase
         Vector3 modifyPos = transform.forward * _EmitterOffset.x + transform.right * _EmitterOffset.z + transform.up * _EmitterOffset.y;
         var bulletObj = ResourcePool.Instance.GetIdleBullet(_BulletPrefab);
         bulletObj.transform.SetParent(ResourcePool.Instance.transform);
-        bulletObj.transform.position = transform.position + modifyPos;
+        bulletObj.transform.position = SenderMotion.transform.position + modifyPos;
         bulletObj.transform.rotation = transform.rotation;
         bulletObj.gameObject.SetActive(true);
         bulletObj.gameObject.layer = FightLayerCommon.GetBulletLayer(_SenderManager);

@@ -27,10 +27,11 @@ public class UITestEquip : UIBase
 
     #region 
 
+    public InputField _LegencyID;
     public InputField _InputLevel;
     public InputField _InputQuality;
     public InputField _InputValue;
-    public InputField _InputType;
+    
 
     #endregion
 
@@ -53,7 +54,8 @@ public class UITestEquip : UIBase
         int level = int.Parse(_InputLevel.text);
         ITEM_QUALITY quality = (ITEM_QUALITY)(int.Parse(_InputQuality.text));
         int value = int.Parse(_InputValue.text);
-        var equipItem = ItemEquip.CreateEquip(level, quality, value);
+        int legencyID = int.Parse(_LegencyID.text);
+        var equipItem = ItemEquip.CreateEquip(level, quality, value, legencyID);
         var newEquip = BackBagPack.Instance.AddNewEquip(equipItem);
         UIEquipTooltips.ShowAsyn(newEquip);
         Debug.Log("test equip :" + newEquip.EquipItemRecord.Id);

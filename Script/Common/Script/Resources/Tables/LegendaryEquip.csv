@@ -1,0 +1,31 @@
+"""ID""","""Name""","""Desc""","""EquipItem""","""AttrImpact""","""BulletName""","""SkillInput""","""ImpactValues1""","""ImpactValues2""","""ImpactValues3""","""ImpactValueIncs1""","""ImpactValueIncs2""","""ImpactValueIncs3""",
+1,BaiQiStone,element damage {0},1001,RoleAttrImpactElementBullet,ImpactAttr1_G1_Stone,1,0,0,0,0,0,0,0
+2,BaiQiStone,element damage {0},1,RoleAttrImpactElementBullet,ImpactAttr2_B3_Stone,3,0,0,0,0,0,0,0
+3,CaoCaoWindBlade,element damage {0},1002,RoleAttrImpactElementBullet,ImpactAttr3_G2_WindBlade,2,0,0,0,0,0,0,0
+4,CaoCaowhirlwind,element damage {0},2,RoleAttrImpactElementBullet,ImpactAttr4_B3_WhirlWind,3,0,0,0,0,0,0,0
+5,DaJi,element damage {0},1003,RoleAttrImpactElementBullet,ImpactAttr5_G2_HeartBoom,2,0,0,0,0,0,0,0
+6,DianWei,element damage {0},3,RoleAttrImpactElementBullet,ImpactAttr6_B2_Weapon,2,0,0,0,0,0,0,0
+7,DiaoCan,element damage {0},1004,RoleAttrImpactElementBullet,ImpactAttr7_G2_Ice,2,0,0,0,0,0,0,0
+8,DiaoCan,element damage {0},4,RoleAttrImpactElementBullet,ImpactAttr8_B1_Ice,1,0,0,0,0,0,0,0
+9,DiRenJie,element damage {0},1005,RoleAttrImpactElementBullet,ImpactAttr9_G2_EnhanceFire,2,0,0,0,0,0,0,0
+10,DiRenJie,element damage {0},5,RoleAttrImpactElementBullet,ImpactAttr10_B1_FireBoom3,1,0,0,0,0,0,0,0
+11,JiangZiYa,element damage {0},1006,RoleAttrImpactElementBullet,ImpactAttr11_G2_LighteningHit,2,0,0,0,0,0,0,0
+12,JiangZiYa,element damage {0},6,RoleAttrImpactElementBullet,ImpactAttr12_B2_LighteningHit,2,0,0,0,0,0,0,0
+13,JingKe,element damage {0},1007,RoleAttrImpactElementBullet,ImpactAttr13_G0_Blink,0,0,0,0,0,0,0,0
+14,JingKe,element damage {0},7,RoleAttrImpactElementBullet,ImpactAttr14_B1_WindEnhance,1,0,0,0,0,0,0,0
+15,LeiZhenZi,element damage {0},1008,RoleAttrImpactElementBullet,ImpactAttr15_G3_Lightening3,3,0,0,0,0,0,0,0
+16,LeiZhenZi,element damage {0},8,RoleAttrImpactElementBullet,ImpactAttr16_B3_Lightening3,3,0,0,0,0,0,0,0
+17,LianPo,element damage {0},1009,RoleAttrImpactElementBullet,ImpactAttr17_G1_FireSprite,1,0,0,0,0,0,0,0
+18,LianPo,element damage {0},9,RoleAttrImpactElementBullet,ImpactAttr18_B3_StoneBoom,3,0,0,0,0,0,0,0
+19,WuZheTian,element damage {0},1010,RoleAttrImpactElementBullet,ImpactAttr19_G3_FireBird,3,0,0,0,0,0,0,0
+20,WenZhong,element damage {0},1011,RoleAttrImpactElementBullet,ImpactAttr20_G2_FireLoong,2,0,0,0,0,0,0,0
+21,WenZhong,element damage {0},10,RoleAttrImpactElementBullet,ImpactAttr21_B1_IceLoong,1,0,0,0,0,0,0,0
+22,XiShi,element damage {0},1012,RoleAttrImpactElementBullet,ImpactAttr22_G3_WhirlWind,3,0,0,0,0,0,0,0
+23,XiShi,element damage {0},11,RoleAttrImpactElementBullet,ImpactAttr23_B2_WhirlWind,2,0,0,0,0,0,0,0
+24,YangJian,element damage {0},12,RoleAttrImpactElementBullet,ImpactAttr24_B2_LightEye,2,0,0,0,0,0,0,0
+25,ZhaoYun,element damage {0},1010,RoleAttrImpactElementBullet,ImpactAttr25_G2_IceSprit,2,0,0,0,0,0,0,0
+26,ZhaoYun,element damage {0},10,RoleAttrImpactElementBullet,ImpactAttr26_B2_IceCircle,2,0,0,0,0,0,0,0
+27,ZhouWang,element damage {0},1011,RoleAttrImpactElementBullet,ImpactAttr27_G3_FireLoong,3,0,0,0,0,0,0,0
+28,ZhouWang,element damage {0},11,RoleAttrImpactElementBullet,ImpactAttr28_B3_FireSprit,3,0,0,0,0,0,0,0
+10001,DaJi,Limit Damage {0},10001,RoleAttrImpactPassive,PassiveDamageLimit,3,0,0,0,0,0,0,0
+10002,DianWei,HP Low Iron {0},10001,RoleAttrImpactPassive,PassiveDamageHPLowIron,3,0,0,0,0,0,0,0

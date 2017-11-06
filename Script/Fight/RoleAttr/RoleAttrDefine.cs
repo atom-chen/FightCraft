@@ -271,10 +271,11 @@ public class RandomAttrs
         public EquipExAttr GetAttrRandom(int value)
         {
             EquipExAttr exAttr = new EquipExAttr();
-            //exAttr.AttrID = AttrID;
-            //float randomValue = (value * Random.Range(0.85f, 1.15f));
-            //int attrValue = BaseValue + (int)(randomValue * Step);
-            //exAttr.AttrValues[0] = attrValue;
+            exAttr.AttrType = "RoleAttrImpactBaseAttr";
+            float randomValue = (value * Random.Range(0.85f, 1.15f));
+            int attrValue = BaseValue + (int)(randomValue * Step);
+            exAttr.AttrValues.Add((int)AttrID);
+            exAttr.AttrValues.Add(attrValue);
             return exAttr;
         }
     }
@@ -358,7 +359,7 @@ public class RandomAttrs
         }
         else if (quality == Tables.ITEM_QUALITY.ORIGIN)
         {
-            exAttrCnt = 5;
+            exAttrCnt = 4;
         }
 
         EquipExAttr defaultBase = null;
@@ -366,23 +367,23 @@ public class RandomAttrs
         EquipExAttr defaultSp = null;
 
         int defaultCnt = 0;
-        if (exAttrCnt > 3)
-        {
-            defaultBase = GetRandomAttr(_WeaponRandomBase, 1, equipValue)[0];
-            //if (exAttrCnt == 4)
-            {
-                defaultCnt += 2;
-                //int attrIDX = Random.Range((int)RoleAttrEnum.Skill1FireBoom, (int)RoleAttrEnum.Skill3WindAimTarget + 1);
-                //defaultEx = new EquipExAttr((RoleAttrEnum)attrIDX, 1, 1);
-                defaultEx = RoleAttrImpactEleBullet.GetRandomExAttr(level, equipValue, quality);
-            }
-            if (exAttrCnt == 5)
-            {
-                defaultCnt += 1;
-                int attrIDX = Random.Range((int)RoleAttrEnum.SkillSP1, (int)RoleAttrEnum.SkillSP9 + 1);
-                //defaultSp = new EquipExAttr((RoleAttrEnum)attrIDX, 1, 1);
-            }
-        }
+        //if (exAttrCnt > 3)
+        //{
+        //    defaultBase = GetRandomAttr(_WeaponRandomBase, 1, equipValue)[0];
+        //    //if (exAttrCnt == 4)
+        //    {
+        //        defaultCnt += 2;
+        //        //int attrIDX = Random.Range((int)RoleAttrEnum.Skill1FireBoom, (int)RoleAttrEnum.Skill3WindAimTarget + 1);
+        //        //defaultEx = new EquipExAttr((RoleAttrEnum)attrIDX, 1, 1);
+        //        defaultEx = RoleAttrImpactEleBullet.GetRandomExAttr(level, equipValue, quality);
+        //    }
+        //    if (exAttrCnt == 5)
+        //    {
+        //        defaultCnt += 1;
+        //        int attrIDX = Random.Range((int)RoleAttrEnum.SkillSP1, (int)RoleAttrEnum.SkillSP9 + 1);
+        //        //defaultSp = new EquipExAttr((RoleAttrEnum)attrIDX, 1, 1);
+        //    }
+        //}
 
         var baseRandoms = GetRandomAttr(_WeaponRandomEx, exAttrCnt - defaultCnt, equipValue);
 

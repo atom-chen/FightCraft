@@ -19,9 +19,12 @@ public class ImpactFrozen : ImpactBuff
     private IEnumerator StopAnimation(MotionManager reciverManager)
     {
         yield return new WaitForSeconds(_HitAfter);
-        if(reciverManager._ActionState == reciverManager._StateHit
+        if (reciverManager._ActionState == reciverManager._StateHit
             || reciverManager._ActionState == reciverManager._StateFly)
+        {
+            reciverManager.ResetMove();
             reciverManager.PauseAnimation();
+        }
     }
 
     public override void RemoveBuff(MotionManager reciverManager)
