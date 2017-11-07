@@ -19,6 +19,8 @@ public class UIDamagePanel : UIBase
 
     public static void ShowItem(Vector3 showWorldPos, int showValue1, int showValue2, ShowDamageType showType, int baseSize)
     {
+        if (!GameCore.Instance)
+            return;
 
         var instance = GameCore.Instance.UIManager.GetUIInstance<UIDamagePanel>("LogicUI/DamagePanel/UIDamagePanel");
         if (instance == null)

@@ -322,13 +322,20 @@ public class MotionManager : MonoBehaviour
 
     public void MotionDie()
     {
-        _IsMotionDie = true;
-        //Hashtable hash = new Hashtable();
-        //hash.Add("HitEffect", -1);
+        if (IsBuffCanDie())
+        {
+            _IsMotionDie = true;
+            //Hashtable hash = new Hashtable();
+            //hash.Add("HitEffect", -1);
 
-        FlyEvent(0.1f, -1, this, null, Vector3.zero, 0);
-        //_EventController.PushEvent(GameBase.EVENT_TYPE.EVENT_MOTION_FLY, this, new Hashtable());
-        //_BaseMotionManager.FlyEvent(0.1f, -1, this, null);
+            FlyEvent(0.1f, -1, this, null, Vector3.zero, 0);
+            //_EventController.PushEvent(GameBase.EVENT_TYPE.EVENT_MOTION_FLY, this, new Hashtable());
+            //_BaseMotionManager.FlyEvent(0.1f, -1, this, null);
+        }
+        else
+        {
+            _RoleAttrManager.AddHP(1);
+        }
         
     }
 
@@ -466,6 +473,16 @@ public class MotionManager : MonoBehaviour
         for (int i = 0; i < _ImpactBuffs.Count; ++i)
         {
             if (!_ImpactBuffs[i].IsBuffCanCatch(impactCatch))
+                return false;
+        }
+        return true;
+    }
+
+    public bool IsBuffCanDie()
+    {
+        for (int i = 0; i < _ImpactBuffs.Count; ++i)
+        {
+            if (!_ImpactBuffs[i].IsBuffCanDie())
                 return false;
         }
         return true;

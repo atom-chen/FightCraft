@@ -196,6 +196,11 @@ public class ImpactBuff : ImpactBase
         return true;
     }
 
+    public virtual bool IsBuffCanDie()
+    {
+        return true;
+    }
+
     public virtual int DamageModify(int orgDamage, ImpactBase damageImpact)
     {
         return orgDamage;

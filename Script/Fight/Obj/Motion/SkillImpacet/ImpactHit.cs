@@ -12,6 +12,8 @@ public class ImpactHit : ImpactDamage
         //base.ActImpact(senderManager, reciverManager);
 
         HitMotion(senderManager, reciverManager);
+
+        ProcessDamge(senderManager, reciverManager);
     }
 
     protected virtual void HitMotion(MotionManager senderManager, MotionManager reciverManager)

@@ -2,14 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class ImpactBuffIntervalSub : ImpactBuff
+public class ImpactBuffIntervalSub : ImpactBuffSub
 {
-
-    public GameObject _SubImpactGO;
     public float _Interval = 1;
 
     protected CapsuleCollider _Collider;
-    protected List<ImpactBase> _SubImpacts;
 
     public override void ActBuff(MotionManager senderManager, MotionManager reciverManager)
     {
@@ -30,10 +27,7 @@ public class ImpactBuffIntervalSub : ImpactBuff
 
     protected virtual void SendImpactInterval()
     {
-        foreach (var subImpact in _SubImpacts)
-        {
-            subImpact.ActImpact(_BuffSender, _BuffOwner);
-        }
+        ActSubImpacts();
     }
     
 }

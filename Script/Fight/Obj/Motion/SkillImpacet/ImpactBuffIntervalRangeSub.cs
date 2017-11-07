@@ -2,13 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class ImpactBuffIntervalRangeSub : ImpactBuff
+public class ImpactBuffIntervalRangeSub : ImpactBuffSub
 {
-    public GameObject _SubImpactGO;
     public float _Interval = 1;
 
     protected CapsuleCollider _Collider;
-    protected List<ImpactBase> _SubImpacts;
     public float _Range = 1.5f;
 
     public override void ActBuff(MotionManager senderManager, MotionManager reciverManager)
@@ -45,10 +43,8 @@ public class ImpactBuffIntervalRangeSub : ImpactBuff
         if (targetMotion.IsMotionDie)
             return;
 
-        foreach (var subImpact in _SubImpacts)
-        {
-            subImpact.ActImpact(_BuffSender, targetMotion);
-        }
+        ActSubImpacts(_BuffSender, targetMotion);
+
         Debug.Log("OnTriggerStay:" + targetMotion.name);
     }
 

@@ -126,6 +126,13 @@ public class RoleAttrManager : MonoBehaviour
         }
     }
 
+    public void AddHP(int hpValue)
+    {
+        int hpMax = _BaseAttr.GetValue(RoleAttrEnum.HPMax);
+        _HP += hpValue;
+        _HP = Mathf.Clamp(_HP, 0, hpMax);
+    }
+
     public void AddHPPersent(float persent)
     {
         int hpMax = _BaseAttr.GetValue(RoleAttrEnum.HPMax);
@@ -739,6 +746,7 @@ public class RoleAttrManager : MonoBehaviour
         _HP -= damageValue;
         _HP = Mathf.Max(_HP, 0);
 
+        Debug.Log("Damage Value:" + damageValue);
         if (orgHP > 0 && _HP == 0)
         {
             Die();

@@ -2,14 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class ImpactBuffHpLowSub : ImpactBuffCD
+public class ImpactBuffHpLowSub : ImpactBuffSub
 {
-    public override void ActBuff(MotionManager senderManager, MotionManager reciverManager)
-    {
-        base.ActBuff(senderManager, reciverManager);
-
-        _SubImpacts = new List<ImpactBase>(_SubImpactGO.GetComponentsInChildren<ImpactBase>());
-    }
 
     public override void UpdateBuff()
     {
@@ -17,6 +11,7 @@ public class ImpactBuffHpLowSub : ImpactBuffCD
 
         if (_BuffOwner.RoleAttrManager.HPPersent <= _HPRate && !IsInCD())
         {
+            SetCD();
             ActSubImpacts();
         }
     }
@@ -27,18 +22,4 @@ public class ImpactBuffHpLowSub : ImpactBuffCD
 
     #endregion
 
-    #region sub impact
-
-    public GameObject _SubImpactGO;
-
-    protected List<ImpactBase> _SubImpacts;
-
-    private void ActSubImpacts()
-    {
-        foreach (var subImpact in _SubImpacts)
-        {
-            subImpact.ActImpact(_BuffSender, _BuffOwner);
-        }
-    }
-    #endregion
 }
