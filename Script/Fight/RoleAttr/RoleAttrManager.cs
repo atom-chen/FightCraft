@@ -20,7 +20,8 @@ public enum ElementType
     Fire,
     Cold,
     Lighting,
-    Wind
+    Wind,
+    Physic
 }
 
 public class RoleAttrManager : MonoBehaviour
@@ -617,6 +618,7 @@ public class RoleAttrManager : MonoBehaviour
     private void CalculateNormalDamage(RoleAttrManager sender, Hashtable resultHash, DamageClass damageClass)
     {
         float damageRate = (float)resultHash["SkillDamageRate"];
+        ElementType damageType = (ElementType)resultHash["DamageType"];
 
         int attackValue = sender._BaseAttr.GetValue(RoleAttrEnum.Attack);
         int defenceValue = _BaseAttr.GetValue(RoleAttrEnum.Defense);
@@ -628,28 +630,68 @@ public class RoleAttrManager : MonoBehaviour
 
         //element attack
         int fireAttack = sender._BaseAttr.GetValue(RoleAttrEnum.FireAttackAdd);
-        int fireEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.FireEnhance);
-        int fireResistan= _BaseAttr.GetValue(RoleAttrEnum.FireResistan);
-        int fireDamage = Mathf.CeilToInt(fireAttack * damageRate * ((fireEnhance - fireResistan) / 250.0f));
-        damageClass.FireDamage = fireDamage;
+        if (damageType == ElementType.Fire)
+        {
+            fireAttack += damageClass.NormalDamageValue;
+            damageClass.NormalDamageValue = 0;
+        }
+        if (fireAttack > 0)
+        {
+            int fireEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.FireEnhance);
+            int fireResistan = _BaseAttr.GetValue(RoleAttrEnum.FireResistan);
+            int fireReduse = _BaseAttr.GetValue(RoleAttrEnum.FireDamageReduse);
+            int fireRedusePersent = _BaseAttr.GetValue(RoleAttrEnum.FireDamageRedusePersent);
+            int fireDamage = Mathf.CeilToInt(fireAttack * damageRate * (1 + (fireEnhance - fireResistan) / 250.0f) * (1 - fireRedusePersent) - fireReduse);
+            damageClass.FireDamage = Mathf.Max(fireDamage, 0);
+        }
 
         int coldAttack = sender._BaseAttr.GetValue(RoleAttrEnum.ColdAttackAdd);
-        int coldEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.ColdEnhance);
-        int coldResistan = _BaseAttr.GetValue(RoleAttrEnum.ColdResistan);
-        int coldDamage = Mathf.CeilToInt(coldAttack * damageRate * ((coldEnhance - coldResistan) / 250.0f));
-        damageClass.IceDamage = coldDamage;
+        if (damageType == ElementType.Cold)
+        {
+            coldAttack += damageClass.NormalDamageValue;
+            damageClass.NormalDamageValue = 0;
+        }
+        if (coldAttack > 0)
+        {
+            int coldEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.ColdEnhance);
+            int coldResistan = _BaseAttr.GetValue(RoleAttrEnum.ColdResistan);
+            int coldReduse = _BaseAttr.GetValue(RoleAttrEnum.ColdDamageReduse);
+            int coldRedusePersent = _BaseAttr.GetValue(RoleAttrEnum.ColdDamageRedusePersent);
+            int coldDamage = Mathf.CeilToInt(coldAttack * damageRate * (1 + (coldEnhance - coldResistan) / 250.0f) * (1 - coldRedusePersent) - coldReduse);
+            damageClass.IceDamage = Mathf.Max(coldDamage, 0);
+        }
 
         int lightingAttack = sender._BaseAttr.GetValue(RoleAttrEnum.LightingAttackAdd);
-        int lightingEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.LightingEnhance);
-        int lightingResistan = _BaseAttr.GetValue(RoleAttrEnum.LightingResistan);
-        int lightingDamage = Mathf.CeilToInt(lightingAttack * damageRate * ((lightingEnhance - lightingResistan) / 250.0f));
-        damageClass.LightingDamage = lightingDamage;
+        if (damageType == ElementType.Lighting)
+        {
+            lightingAttack += damageClass.NormalDamageValue;
+            damageClass.NormalDamageValue = 0;
+        }
+        if (lightingAttack > 0)
+        {
+            int lightingEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.LightingEnhance);
+            int lightingResistan = _BaseAttr.GetValue(RoleAttrEnum.LightingResistan);
+            int lightingReduse = _BaseAttr.GetValue(RoleAttrEnum.LightingDamageReduse);
+            int lightingRedusePersent = _BaseAttr.GetValue(RoleAttrEnum.LightingDamageRedusePersent);
+            int lightingDamage = Mathf.CeilToInt(lightingAttack * damageRate * (1 + (lightingEnhance - lightingResistan) / 250.0f) * (1 - lightingRedusePersent) - lightingReduse);
+            damageClass.IceDamage = Mathf.Max(lightingDamage, 0);
+        }
 
         int windAttack = sender._BaseAttr.GetValue(RoleAttrEnum.WindAttackAdd);
-        int windEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.WindEnhance);
-        int windResistan = _BaseAttr.GetValue(RoleAttrEnum.WindResistan);
-        int windDamage = Mathf.CeilToInt(windAttack * damageRate * ((windEnhance - windResistan) / 250.0f));
-        damageClass.WindDamage = windDamage;
+        if (damageType == ElementType.Wind)
+        {
+            windAttack += damageClass.NormalDamageValue;
+            damageClass.NormalDamageValue = 0;
+        }
+        if (windAttack > 0)
+        {
+            int windEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.WindEnhance);
+            int windResistan = _BaseAttr.GetValue(RoleAttrEnum.WindResistan);
+            int windReduse = _BaseAttr.GetValue(RoleAttrEnum.WindDamageReduse);
+            int windRedusePersent = _BaseAttr.GetValue(RoleAttrEnum.WindDamageRedusePersent);
+            int windDamage = Mathf.CeilToInt(windAttack * damageRate * (1 + (windEnhance - windResistan) / 250.0f) * (1 - windRedusePersent) - windReduse);
+            damageClass.IceDamage = Mathf.Max(windDamage, 0);
+        }
     }
 
     private bool CaculateCriticleHit(RoleAttrManager sender, Hashtable resultHash, DamageClass damageClass)
@@ -661,11 +703,26 @@ public class RoleAttrManager : MonoBehaviour
         if (randomRate < criticleRate)
         {
             damageClass.IsCriticle = true;
-            damageClass.NormalDamageValue = Mathf.CeilToInt(((criticleDamage * 0.0001f) + 1) * damageClass.NormalDamageValue);
-            damageClass.FireDamage = Mathf.CeilToInt(((criticleDamage * 0.0001f) + 1) * damageClass.FireDamage);
-            damageClass.IceDamage = Mathf.CeilToInt(((criticleDamage * 0.0001f) + 1) * damageClass.IceDamage);
-            damageClass.LightingDamage = Mathf.CeilToInt(((criticleDamage * 0.0001f) + 1) * damageClass.LightingDamage);
-            damageClass.WindDamage = Mathf.CeilToInt(((criticleDamage * 0.0001f) + 1) * damageClass.WindDamage);
+            if (damageClass.NormalDamageValue > 0)
+            {
+                damageClass.NormalDamageValue = Mathf.CeilToInt(((criticleDamage * 0.0001f) + 1) * damageClass.NormalDamageValue);
+            }
+            if (damageClass.FireDamage > 0)
+            {
+                damageClass.FireDamage = Mathf.CeilToInt(((criticleDamage * 0.0001f) + 1) * damageClass.FireDamage);
+            }
+            if (damageClass.IceDamage > 0)
+            {
+                damageClass.IceDamage = Mathf.CeilToInt(((criticleDamage * 0.0001f) + 1) * damageClass.IceDamage);
+            }
+            if (damageClass.LightingDamage > 0)
+            {
+                damageClass.LightingDamage = Mathf.CeilToInt(((criticleDamage * 0.0001f) + 1) * damageClass.LightingDamage);
+            }
+            if (damageClass.WindDamage > 0)
+            {
+                damageClass.WindDamage = Mathf.CeilToInt(((criticleDamage * 0.0001f) + 1) * damageClass.WindDamage);
+            }
             return true;
         }
         return false;
@@ -767,17 +824,18 @@ public class RoleAttrManager : MonoBehaviour
         //_MotionManager.EventController.RegisteEvent(EVENT_TYPE.EVENT_FIGHT_ATTR_DAMAGE, DamageEvent);
     }
 
-    public void SendDamageEvent(MotionManager targetMotion, float skillDamageRate, ImpactBase impactBase)
+    public void SendDamageEvent(MotionManager targetMotion, float skillDamageRate, ElementType damageType, ImpactBase impactBase)
     {
-        SendDamageEvent(targetMotion, skillDamageRate, impactBase, targetMotion.transform.position + new Vector3(0, 1.5f, 0));
+        SendDamageEvent(targetMotion, skillDamageRate, damageType, impactBase, targetMotion.transform.position + new Vector3(0, 1.5f, 0));
     }
 
-    public void SendDamageEvent(MotionManager targetMotion, float skillDamageRate, ImpactBase impactBase, Vector3 damagePosition)
+    public void SendDamageEvent(MotionManager targetMotion, float skillDamageRate, ElementType damageType, ImpactBase impactBase, Vector3 damagePosition)
     {
         Hashtable hash = new Hashtable();
         hash.Add("SkillDamageRate", skillDamageRate);
         hash.Add("DamagePos", damagePosition);
         hash.Add("ImpactBase", impactBase);
+        hash.Add("DamageType", impactBase);
 
         targetMotion.RoleAttrManager.CalculateDamage(this, hash);
     }

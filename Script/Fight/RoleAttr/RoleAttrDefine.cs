@@ -40,10 +40,14 @@ public enum RoleAttrEnum
     ColdDamageReduse,
     LightingDamageReduse,
     WindDamageReduse,
-    FireAbsorbsPersent,
-    ColdAbsorbsPersent,
-    LightingAbsorbsPersent,
-    WindAbsorbsPersent,
+    FireDamageRedusePersent,
+    ColdDamageRedusePersent,
+    LightingDamageRedusePersent,
+    WindDamageRedusePersent,
+    //FireAbsorbsPersent,
+    //ColdAbsorbsPersent,
+    //LightingAbsorbsPersent,
+    //WindAbsorbsPersent,
 
     IgnoreDefenceAttack,
     FinalDamageReduse,
@@ -230,10 +234,6 @@ public class AttrDisplay
             case RoleAttrEnum.AttackSpeed:
             case RoleAttrEnum.CriticalHitChance:
             case RoleAttrEnum.CriticalHitDamge:
-            case RoleAttrEnum.FireAbsorbsPersent:
-            case RoleAttrEnum.ColdAbsorbsPersent:
-            case RoleAttrEnum.LightingAbsorbsPersent:
-            case RoleAttrEnum.WindAbsorbsPersent:
                 attrStr = Tables.StrDictionary.GetFormatStr((int)attrEnum, attrValues[0] / 100.0f);
                 break;
             default:

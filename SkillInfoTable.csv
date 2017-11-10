@@ -1,9 +1,9 @@
 ,G,B,C,S,A,R
 baiqi fire wind ,G1:stone boom,B3:stone boom,add 20% MAXHP in battle,,,
 caocao wind,G2:wind blade,B2:whirlwind,add 20% defence in battle,,,wind blade when hit
-daji ice,G2:heart bullet,,damage reduse single hit,,enemy stop attack,
+daji ice,G2:heart bullet,,damage reduse single hit,ice resist,"ice area,slow down attack speed",
 dianwei light,,B2:whirl weapon,hp low strong AI,,add 20% strong in battle,add attack when hp low
-diaocan ice,G1:ice boom,B1:ice boom,,ice resist,"ice area,slow down move speed",add 20% ice damage
+diaocan ice,G1:ice boom,B1:ice boom,,,"ice area,slow down move speed",add 20% ice damage
 direnjie light ,G1:skill enhance,B1:fire boom,,,,add 20% light damage
 jiangziya light,G2:lightening hit,B2:lighting hit,,light resist,revenge lightening,lightening when hit
 jingke wind,G0:blink,B1:wind damage,,add move speed when be hit,add 20% inc in battle,

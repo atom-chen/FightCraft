@@ -57,7 +57,7 @@ public class ImpactBuffFireBurn : ImpactBuff
         if (targetMotion.IsMotionDie)
             return;
 
-        _BuffSender.RoleAttrManager.SendDamageEvent(targetMotion, _Damage, this);
+        _BuffSender.RoleAttrManager.SendDamageEvent(targetMotion, _Damage, ElementType.Fire, this);
         targetMotion.PlayHitEffect(_BuffSender, 3);
         Debug.Log("OnTriggerStay:" + targetMotion.name);
     }
