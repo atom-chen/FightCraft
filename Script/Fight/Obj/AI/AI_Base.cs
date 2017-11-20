@@ -56,7 +56,9 @@ public class AI_Base : MonoBehaviour
     }
 
     public virtual void OnStateChange(StateBase orgState, StateBase newState)
-    { }
+    {
+        MoveState(orgState, newState);
+    }
 
     #region combatLevel
 
@@ -164,6 +166,38 @@ public class AI_Base : MonoBehaviour
         }
         return false;
     }
+    #endregion
+
+    #region Move radius
+
+    public float _MoveRadius = 0;
+    public float _NormalRadius = 0;
+
+    protected void MoveState(StateBase orgState, StateBase newState)
+    {
+
+        if (_MoveRadius <= 0 || _NormalRadius <= 0)
+            return;
+
+        if (_MoveRadius == _NormalRadius)
+            return;
+
+        if (_SelfMotion == null)
+            return;
+
+        if (_SelfMotion.NavAgent == null)
+            return;
+
+        if (newState is StateMove)
+        {
+            _SelfMotion.NavAgent.radius = _MoveRadius;
+        }
+        else
+        {
+            _SelfMotion.NavAgent.radius = _NormalRadius;
+        }
+    }
+
     #endregion
 
 }

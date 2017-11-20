@@ -618,7 +618,11 @@ public class RoleAttrManager : MonoBehaviour
     private void CalculateNormalDamage(RoleAttrManager sender, Hashtable resultHash, DamageClass damageClass)
     {
         float damageRate = (float)resultHash["SkillDamageRate"];
-        ElementType damageType = (ElementType)resultHash["DamageType"];
+        ElementType damageType = ElementType.Physic;
+        if (resultHash.ContainsKey("DamageType"))
+        {
+            damageType = (ElementType)resultHash["DamageType"];
+        }
 
         int attackValue = sender._BaseAttr.GetValue(RoleAttrEnum.Attack);
         int defenceValue = _BaseAttr.GetValue(RoleAttrEnum.Defense);
@@ -835,7 +839,7 @@ public class RoleAttrManager : MonoBehaviour
         hash.Add("SkillDamageRate", skillDamageRate);
         hash.Add("DamagePos", damagePosition);
         hash.Add("ImpactBase", impactBase);
-        hash.Add("DamageType", impactBase);
+        hash.Add("DamageType", damageType);
 
         targetMotion.RoleAttrManager.CalculateDamage(this, hash);
     }

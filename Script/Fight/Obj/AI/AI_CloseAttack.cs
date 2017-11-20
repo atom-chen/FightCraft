@@ -8,7 +8,7 @@ public class AI_CloseAttack : AI_Base
     public float _CloseInterval = 1;
 
     private float _CloseWait;
-    
+
     protected override void Init()
     {
         base.Init();
@@ -30,7 +30,7 @@ public class AI_CloseAttack : AI_Base
 
     private void CloseUpdate()
     {
-        if (_SelfMotion.ActingSkill!= null)
+        if (_SelfMotion.ActingSkill != null)
             return;
 
         //specil:do not attack when target lie on floor
@@ -56,9 +56,36 @@ public class AI_CloseAttack : AI_Base
         else
         {
             _SelfMotion.StopMoveState();
-            
+
             StartSkill();
             _CloseWait = _CloseInterval;
         }
     }
+
+    public override void OnStateChange(StateBase orgState, StateBase newState)
+    {
+        base.OnStateChange(orgState, newState);
+
+        MoveState(orgState, newState);
+    }
+
+    #region done attack lie
+
+    protected override bool StartSkill()
+    {
+        if (_TargetMotion == null)
+            return false;
+
+        if (_TargetMotion._ActionState is StateCatch
+            || _TargetMotion._ActionState is StateFly
+            || _TargetMotion._ActionState is StateHit
+            || _TargetMotion._ActionState is StateLie)
+        {
+            return false;
+        }
+
+            return base.StartSkill();
+    }
+
+    #endregion
 }

@@ -135,7 +135,7 @@ public class InputManager : InstanceBase<InputManager>
 #if UNITY_EDITOR
         return Input.anyKey;
 #else
-        return UISkillBar.IsKeyDown(key);
+        return UISkillBar.IsKeyDown();
 #endif
     }
 

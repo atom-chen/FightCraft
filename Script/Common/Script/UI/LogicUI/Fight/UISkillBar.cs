@@ -57,6 +57,16 @@ public class UISkillBar : UIBase
         return false;
     }
 
+    public bool IsKeyDown()
+    {
+        foreach (var btn in _Buttons)
+        {
+            if (btn.Value.IsPress)
+                return true;
+        }
+        return false;
+    }
+
     #region emulate
 
     public void OnEmulate()
