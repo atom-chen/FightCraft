@@ -1,1 +1,3 @@
-motion anim path set error
+create equip level error
+impact hp iron error
+monster AI
