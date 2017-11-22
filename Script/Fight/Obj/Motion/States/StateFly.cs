@@ -115,7 +115,7 @@ public class StateFly : StateBase
 
     public void MotionFly(float flyHeight, int effectID, MotionManager impactSender)
     {
-        Debug.Log("MotionFly");
+        //Debug.Log("MotionFly");
         _MotionManager.PlayHitEffect(impactSender, effectID);
         _MotionManager.SetLookAt(impactSender.transform.position);
         _FlyHeight = flyHeight;
@@ -128,7 +128,7 @@ public class StateFly : StateBase
 
     public void MotionFlyStay(float time, int effectID, MotionManager impactSender)
     {
-        Debug.Log("MotionFlyStay");
+        //Debug.Log("MotionFlyStay");
         _MotionManager.PlayHitEffect(impactSender, effectID);
 
         _MotionManager.RePlayAnimation(_Animation, 1);

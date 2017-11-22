@@ -45,13 +45,13 @@
 11006,DianWei,ex move speed,11006,RoleAttrImpactPassiveExMove,PassiveResistExMove,3,0,0,0,0,0,0,0
 11007,DianWei,wind resist,11007,RoleAttrImpactPassiveEleResist,PassiveResistWind,3,0,0,0,0,0,0,0
 11008,DianWei,add move speed when hp low,11008,RoleAttrImpactPassiveHPLowMove,PassiveHPLowMove,3,0,0,0,0,0,0,0
-12001,DianWei,enemy stop attack,12001,RoleAttrImpactPassiveHPLowMove,PassiveHPLowMove,3,0,0,0,0,0,0,0
-12002,DianWei,add 20% strong in battle,12002,RoleAttrImpactPassiveHPLowMove,PassiveHPLowMove,3,0,0,0,0,0,0,0
-12003,DianWei,"ice area,slow down move speed",12003,RoleAttrImpactPassiveHPLowMove,PassiveHPLowMove,3,0,0,0,0,0,0,0
-12004,DianWei,revenge lightening,12004,RoleAttrImpactPassiveHPLowMove,PassiveHPLowMove,3,0,0,0,0,0,0,0
-12005,DianWei,add 20% inc in battle,12005,RoleAttrImpactPassiveHPLowMove,PassiveHPLowMove,3,0,0,0,0,0,0,0
-12006,DianWei,add attack when hp full,12006,RoleAttrImpactPassiveHPLowMove,PassiveHPLowMove,3,0,0,0,0,0,0,0
-12007,DianWei,add 20% int in battle,12007,RoleAttrImpactPassiveHPLowMove,PassiveHPLowMove,3,0,0,0,0,0,0,0
-12008,DianWei,element enhance,12008,RoleAttrImpactPassiveHPLowMove,PassiveHPLowMove,3,0,0,0,0,0,0,0
-12009,DianWei,remove debuff ,12009,RoleAttrImpactPassiveHPLowMove,PassiveHPLowMove,3,0,0,0,0,0,0,0
+12001,DianWei,enemy stop attack,12001,,,3,0,0,0,0,0,0,0
+12002,DianWei,add 20% strong in battle,12002,RoleAttrImpactPassiveAttrPersent,PassiveAttrStr,3,0,0,0,0,0,0,0
+12003,DianWei,"ice area,slow down move speed",12003,RoleAttrImpactPassiveIceArea,PassiveIceArea,3,0,0,0,0,0,0,0
+12004,DianWei,revenge lightening,12004,RoleAttrImpactPassiveEleResist,PassiveResistLighting,3,0,0,0,0,0,0,0
+12005,DianWei,add 20% inc in battle,12005,RoleAttrImpactPassiveAttrPersent,PassiveAttrDec,3,0,0,0,0,0,0,0
+12006,DianWei,add attack when hp full,12006,RoleAttrImpactPassiveHPLowMove,PassiveHPHeightAttack,3,0,0,0,0,0,0,0
+12007,DianWei,add 20% int in battle,12007,RoleAttrImpactPassiveAttrPersent,PassiveAttrInt,3,0,0,0,0,0,0,0
+12008,DianWei,element enhance,12008,,,3,0,0,0,0,0,0,0
+12009,DianWei,remove debuff ,12009,,,3,0,0,0,0,0,0,0
 12010,DianWei,ice circle when be hit,12010,RoleAttrImpactPassiveHPLowMove,PassiveHPLowMove,3,0,0,0,0,0,0,0

@@ -1081,7 +1081,7 @@ public class MotionManager : MonoBehaviour
 
     public void FlyEvent(float flyHeight, int hitEffect, MotionManager impactSender, ImpactHit hitImpact, Vector3 moveDirect, float moveTime)
     {
-        Debug.Log("FlyEvent");
+        //Debug.Log("FlyEvent");
         BuffBeHit(impactSender, hitImpact);
         StateOpt(StateBase.MotionOpt.Fly, flyHeight, hitEffect, impactSender, hitImpact, moveDirect, moveTime);
     }
@@ -1094,7 +1094,7 @@ public class MotionManager : MonoBehaviour
 
     public void StopCatch()
     {
-        Debug.Log("StopCatch");
+        //Debug.Log("StopCatch");
         StateOpt(StateBase.MotionOpt.Stop_Catch);
     }
 

@@ -16,7 +16,7 @@ public class ImpactBuffIntervalRangeSub : ImpactBuffSub
         _Collider = gameObject.AddComponent<CapsuleCollider>();
         _Collider.direction = 1;
         _Collider.radius = _Range;
-        _Collider.height = 2;
+        _Collider.height = 20;
         _Collider.center = new Vector3(0, 1, 0);
         _Collider.enabled = false;
         _Collider.isTrigger = true;

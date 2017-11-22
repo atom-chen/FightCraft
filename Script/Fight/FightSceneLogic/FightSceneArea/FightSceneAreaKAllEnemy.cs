@@ -18,7 +18,7 @@ public class FightSceneAreaKAllEnemy : FightSceneAreaBase
 
     public override void MotionDie(MotionManager motion)
     {
-        Debug.Log("MotionDie motion " + motion.name);
+        //Debug.Log("MotionDie motion " + motion.name);
 
         base.MotionDie(motion);
 

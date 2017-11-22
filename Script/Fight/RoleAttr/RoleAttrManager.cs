@@ -807,7 +807,7 @@ public class RoleAttrManager : MonoBehaviour
         _HP -= damageValue;
         _HP = Mathf.Max(_HP, 0);
 
-        Debug.Log("Damage Value:" + damageValue);
+        //Debug.Log("Damage Value:" + damageValue);
         if (orgHP > 0 && _HP == 0)
         {
             Die();

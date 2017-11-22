@@ -11,7 +11,7 @@ public class ImpactHitForward : ImpactHit
         //base.ActImpact(senderManager, reciverManager);
 
         //HitMotion(senderManager, reciverManager);
-        Debug.Log("ActImpact ImpactHitForward");
+        //Debug.Log("ActImpact ImpactHitForward");
         Vector3 destMove = senderManager.transform.forward.normalized * _Speed * _Time;
 
         //reciverManager.SetMove(destMove, _Time / SkillMotion.SkillBaseSpeed);

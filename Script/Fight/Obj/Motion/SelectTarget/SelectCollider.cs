@@ -118,7 +118,7 @@ public class SelectCollider : SelectBase
         _Collider.enabled = true;
         base.ColliderStart();
 
-        Debug.Log("ColliderStart:" + _ColliderID);
+        //Debug.Log("ColliderStart:" + _ColliderID);
     }
 
     public override void ColliderFinish()

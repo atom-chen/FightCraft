@@ -19,6 +19,7 @@ public class UIDamageItem : UIItemBase
 {
     public Text DamageValue1;
     public Text DamageValue2;
+    public UIImgAnimText _AnimText;
     public RectTransform _RootTransform;
     public RectTransform _TextTransform;
 
@@ -47,6 +48,8 @@ public class UIDamageItem : UIItemBase
                 DamageValue1.text = _HealColor + showValue1.ToString() + "</color>";
                 break;
         }
+        _AnimText.text = showValue1.ToString();
+        _AnimText.PlayAnim();
 
         if (showValue2 > 0)
         {
