@@ -67,6 +67,11 @@ public class UIImgText : MonoBehaviour
         for (int i = 0; i < text.Length; ++i)
         {
             var image = PopIdleImage();
+            if (!_ImgFont._DictImgChars.ContainsKey(text[i]))
+            {
+                Debug.LogError("No Img Char:" + text[i]);
+                continue;
+            }
             var charImg = _ImgFont._DictImgChars[text[i]];
             image.sprite = charImg._Image;
             image.rectTransform.sizeDelta = new Vector2(charImg._CharWidth, charImg._CharHeight);
