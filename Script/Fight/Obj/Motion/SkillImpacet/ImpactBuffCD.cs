@@ -5,7 +5,7 @@ public class ImpactBuffCD : ImpactBuff
 {
     public float _ActCD = 5;
 
-    private float _StartTime;
+    private float _StartTime = -1;
 
     public void SetCD()
     {
@@ -14,6 +14,9 @@ public class ImpactBuffCD : ImpactBuff
 
     public bool IsInCD()
     {
+        if (_StartTime < 0)
+            return false;
+
         var cdTime = Time.time - _StartTime;
         return _ActCD > cdTime;
     }

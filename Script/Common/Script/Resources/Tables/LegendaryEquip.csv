@@ -28,7 +28,7 @@
 27,ZhouWang,element damage {0},1011,RoleAttrImpactElementBullet,ImpactAttr27_G3_FireLoong,3,0,0,0,0,0,0,0
 28,ZhouWang,element damage {0},11,RoleAttrImpactElementBullet,ImpactAttr28_B3_FireSprit,3,0,0,0,0,0,0,0
 10001,DaJi,Limit Damage {0},10001,RoleAttrImpactPassive,PassiveDamageLimit,3,0,0,0,0,0,0,0
-10002,DianWei,HP Low Iron {0},10002,RoleAttrImpactPassiveHPIron,PassiveDamageHPLowIron,3,0,0,0,0,0,0,0
+10002,DianWei,HP Low Iron {0},10002,RoleAttrImpactPassiveHPIron,PassiveHPLowIron,3,0,0,0,0,0,0,0
 10003,DaJi,add {0} MAXHP in battle,10003,RoleAttrImpactPassiveAddMaxHP,PassiveAddHP,3,0,0,0,0,0,0,0
 10004,DianWei,add {0} defence in battle,10004,RoleAttrImpactPassiveAddDefence,PassiveAddDefence,3,0,0,0,0,0,0,0
 10005,DaJi,resist one hit,10005,RoleAttrImpactPassiveBlockOne,PassiveBlockOne,3,0,0,0,0,0,0,0

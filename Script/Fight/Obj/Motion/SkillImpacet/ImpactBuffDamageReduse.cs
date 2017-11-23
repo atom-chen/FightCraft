@@ -10,7 +10,7 @@ public class ImpactBuffDamageReduse : ImpactBuff
     public override int DamageModify(int orgDamage, ImpactBase damageImpact)
     {
         float damageRate = Mathf.Min(1 - _ReduseRate, 1);
-        return (int)(orgDamage * orgDamage);
+        return (int)(orgDamage * damageRate);
     }
 
 }
