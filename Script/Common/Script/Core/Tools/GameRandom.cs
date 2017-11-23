@@ -78,5 +78,14 @@ public class GameRandom
 
         return levelRates.Length - 1;
     }
+
+    public static bool IsInRate(int rate)
+    {
+        var random = Random.Range(0, 10001);
+        if (random > rate)
+            return false;
+
+        return true;
+    }
 }
 

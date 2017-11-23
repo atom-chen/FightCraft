@@ -468,6 +468,22 @@ public class MotionManager : MonoBehaviour
         return true;
     }
 
+    public void BuffAttack()
+    {
+        for (int i = 0; i < _ImpactBuffs.Count; ++i)
+        {
+            _ImpactBuffs[i].Attack();
+        }
+    }
+
+    public void BuffHitEnemy()
+    {
+        for (int i = 0; i < _ImpactBuffs.Count; ++i)
+        {
+            _ImpactBuffs[i].HitEnemy();
+        }
+    }
+
     public bool IsBuffCanCatch(MotionManager impactSender, ImpactCatch impactCatch)
     {
         for (int i = 0; i < _ImpactBuffs.Count; ++i)

@@ -127,6 +127,7 @@ public class ObjMotionSkillBase : MonoBehaviour
         _CurStep = -1;
         PlayerNextAnim();
 
+        MotionManager.BuffAttack();
         return true;
     }
 

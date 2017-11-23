@@ -191,6 +191,16 @@ public class ImpactBuff : ImpactBase
 
     }
 
+    public virtual void HitEnemy()
+    {
+
+    }
+
+    public virtual void Attack()
+    {
+
+    }
+
     public virtual bool IsBuffCanCatch(ImpactCatch damageImpact)
     {
         return true;
