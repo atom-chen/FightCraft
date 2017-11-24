@@ -558,6 +558,10 @@ public class RoleAttrManager : MonoBehaviour
         {
             RefreshMoveSpeed();
         }
+        else if (attr == RoleAttrEnum.HPMax || attr == RoleAttrEnum.HPMaxPersent)
+        {
+            AddHPPersent(1);
+        }
     }
 
     #endregion

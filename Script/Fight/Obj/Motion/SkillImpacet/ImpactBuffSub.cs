@@ -8,7 +8,10 @@ public class ImpactBuffSub : ImpactBuffCD
     {
         base.ActBuff(senderManager, reciverManager);
 
-        _SubImpacts = new List<ImpactBase>(_SubImpactGO.GetComponentsInChildren<ImpactBase>());
+        if (_SubImpactGO != null)
+        {
+            _SubImpacts = new List<ImpactBase>(_SubImpactGO.GetComponentsInChildren<ImpactBase>());
+        }
     }
 
     #region sub impact

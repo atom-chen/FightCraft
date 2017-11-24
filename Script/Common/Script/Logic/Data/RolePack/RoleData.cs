@@ -69,7 +69,7 @@ public class RoleData : SaveItemBase
         if (equipItem.EquipItemRecord.Slot != equipSlot)
             return false;
 
-        if (equipItem.EquipItemRecord.LevelLimit > _RoleLevel)
+        if (equipItem.RequireLevel > _RoleLevel)
             return false;
 
         if (equipItem.EquipItemRecord.ProfessionLimit > 0 &&

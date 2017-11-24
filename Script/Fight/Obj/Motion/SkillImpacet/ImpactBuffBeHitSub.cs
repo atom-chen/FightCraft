@@ -12,7 +12,10 @@ public class ImpactBuffBeHitSub : ImpactBuffSub
     {
         base.Init(skillMotion, selector);
 
-        _SubImpactsToSender = new List<ImpactBase>(_SubToSender.GetComponentsInChildren<ImpactBase>());
+        if (_SubToSender != null)
+        {
+            _SubImpactsToSender = new List<ImpactBase>(_SubToSender.GetComponentsInChildren<ImpactBase>());
+        }
     }
 
     public override void BeHit(MotionManager hitSender, ImpactHit hitImpact)

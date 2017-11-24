@@ -236,20 +236,24 @@ public class ItemEquip : ItemBase
     {
         get
         {
-            if (_RequireLevel < 0)
-            {
-                int exValue = 0;
-                _RequireLevel = EquipItemRecord.LevelLimit;
-                //foreach (var exAttr in _DynamicDataVector)
-                //{
-                //    if (exAttr.AttrID == FightAttr.FightAttrType.LEVEL_REQUIRE)
-                //    {
-                //        exValue += exAttr.AttrValue1;
-                //    }
-                //}
-                _RequireLevel -= exValue;
-            }
+            //if (_RequireLevel < 0)
+            //{
+            //    int exValue = 0;
+            //    _RequireLevel = EquipItemRecord.LevelLimit;
+            //    //foreach (var exAttr in _DynamicDataVector)
+            //    //{
+            //    //    if (exAttr.AttrID == FightAttr.FightAttrType.LEVEL_REQUIRE)
+            //    //    {
+            //    //        exValue += exAttr.AttrValue1;
+            //    //    }
+            //    //}
+            //    _RequireLevel -= exValue;
+            //}
             return _RequireLevel;
+        }
+        set
+        {
+            _RequireLevel = value;
         }
     }
 
@@ -469,6 +473,7 @@ public class ItemEquip : ItemBase
         itemEquip.EquipLevel = level;
         itemEquip.EquipQuality = equipQuality;
         itemEquip.EquipValue = value;
+        itemEquip.RequireLevel = level;
 
         //RandomEquipAttr(itemEquip);
         itemEquip.AddExAttr(RandomAttrs.GetRandomEquipExAttrs(baseEquip.Slot, level, value, equipQuality, RoleData.SelectRole.Profession));
