@@ -10,6 +10,7 @@ public class RoleAttrImpactElementBullet : RoleAttrImpactBase
         var legendaryEquip = Tables.TableReader.LegendaryEquip.GetRecord( args[0].ToString());
         _ImpactName = legendaryEquip.BulletName;
         _SkillInput = legendaryEquip.SkillInput;
+        _Damage = GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValues[0]) + GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValueIncs[0] * args[1]);
     }
 
     public override void ModifySkillBeforeInit(MotionManager roleMotion)
@@ -21,8 +22,11 @@ public class RoleAttrImpactElementBullet : RoleAttrImpactBase
         var impactGO = ResourceManager.Instance.GetInstanceGameObject("Bullet\\Emitter\\Element\\" + _ImpactName);
         impactGO.transform.SetParent(skillMotion.transform);
 
-        var bulletEmitterEle = impactGO.GetComponent<BulletEmitterElement>();
-        bulletEmitterEle._Damage = _Damage;
+        var bulletEmitterEle = impactGO.GetComponentsInChildren<BulletEmitterElement>();
+        foreach (var bulletEmitter in bulletEmitterEle)
+        {
+            bulletEmitter._Damage = _Damage;
+        }
     }
 
     public override bool AddData(List<int> attrParam)
@@ -38,7 +42,7 @@ public class RoleAttrImpactElementBullet : RoleAttrImpactBase
 
     #region 
 
-    public int _Damage;
+    public float _Damage;
     public string _ImpactName;
 
     

@@ -482,6 +482,7 @@ public class ItemEquip : ItemBase
             EquipExAttr legencyAttr = new EquipExAttr();
             legencyAttr.AttrType = legencyEquip.AttrImpact;
             legencyAttr.AttrValues.Add(legencyEquipID);
+            legencyAttr.AttrValues.Add(itemEquip.EquipLevel);
             itemEquip.AddExAttr(legencyAttr);
         }
 

@@ -5,5 +5,5 @@ using UnityEngine;
 public class BulletEmitterElement : BulletEmitterBase
 {
     public int _Rate;
-    public int _Damage;
+    
 }

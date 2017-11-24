@@ -4,6 +4,20 @@ using UnityEngine;
 
 public class RoleAttrImpactPassiveRelive : RoleAttrImpactPassive
 {
+    public override void InitImpact(string skillInput, List<int> args)
+    {
+        base.InitImpact(skillInput, args);
+
+        var legendaryEquip = Tables.TableReader.LegendaryEquip.GetRecord(args[0].ToString());
+        _ConcealTime = GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValues[0]) - GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValueIncs[0] * args[1]);
+        if (legendaryEquip.ImpactValues[1] > 0)
+        {
+            _ConcealTime = Mathf.Min(_ConcealTime, legendaryEquip.ImpactValues[1]);
+        }
+
+        _ResumeHP = GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValues[2]) - GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValueIncs[1] * args[1]);
+        _ResumeHP = Mathf.Min(_ResumeHP, 1);
+    }
 
     public override void ModifySkillAfterInit(MotionManager roleMotion)
     {
@@ -11,9 +25,17 @@ public class RoleAttrImpactPassiveRelive : RoleAttrImpactPassive
             return;
 
         var buffGO = ResourceManager.Instance.GetInstanceGameObject("Bullet\\Passive\\" + _ImpactName);
-        var buffs = buffGO.GetComponents<ImpactBuff>();
+        var buffs = buffGO.GetComponents<ImpactBuffConceal>();
         foreach (var buff in buffs)
         {
+            buff._LastTime = _ConcealTime;
+            buff.ActImpact(roleMotion, roleMotion);
+        }
+
+        var hpBuffs = buffGO.GetComponents<ImpactResumeHP>();
+        foreach (var buff in hpBuffs)
+        {
+            buff._HPPersent = _ResumeHP;
             buff.ActImpact(roleMotion, roleMotion);
         }
     }
@@ -21,6 +43,8 @@ public class RoleAttrImpactPassiveRelive : RoleAttrImpactPassive
 
     #region 
 
+    private float _ConcealTime;
+    private float _ResumeHP;
     
     #endregion
 }

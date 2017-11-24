@@ -11,6 +11,9 @@ public class RoleAttrImpactBase
 
     }
 
+    public virtual void InitImpact(ItemEquip equip)
+    { }
+
     public virtual List<int> GetSkillImpactVal(SkillInfoItem skillInfo)
     {
         return new List<int>();

@@ -38,7 +38,6 @@ public class RoleAttrImpactPassive : RoleAttrImpactBase
 
     #region 
 
-    public int _Damage;
     public string _ImpactName;
     
     #endregion

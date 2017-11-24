@@ -7,6 +7,7 @@ public class BulletEmitterBase : ImpactBase
 {
     public BulletBase _BulletPrefab;
     public Vector3 _EmitterOffset;
+    public float _Damage;
 
     protected MotionManager _SenderManager;
 
@@ -28,6 +29,12 @@ public class BulletEmitterBase : ImpactBase
         bulletObj.gameObject.SetActive(true);
         bulletObj.gameObject.layer = FightLayerCommon.GetBulletLayer(_SenderManager);
         bulletObj.Init(_SenderManager, this);
+        var bulletHits= bulletObj.GetComponentsInChildren<ImpactHit>();
+        foreach (var impactHit in bulletHits)
+        {
+            impactHit._DamageRate = _Damage;
+            impactHit._IsBulletHit = true;
+        }
         return bulletObj as T;
     }
 
