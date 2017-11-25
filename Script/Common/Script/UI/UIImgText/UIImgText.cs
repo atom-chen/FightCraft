@@ -23,17 +23,40 @@ public class UIImgText : MonoBehaviour
         }
     }
 
+    protected Transform _CharRoot;
+    protected void InitCharRoot()
+    {
+        if (_CharRoot != null)
+            return;
+
+        var charRoot = new GameObject("CharRoot");
+        
+        var horizon = charRoot.AddComponent<HorizontalLayoutGroup>();
+        horizon.childAlignment = TextAnchor.UpperLeft;
+        horizon.childForceExpandHeight = false;
+        horizon.childForceExpandWidth = false;
+        var layoutElement = charRoot.AddComponent<LayoutElement>();
+        layoutElement.ignoreLayout = true;
+
+        _CharRoot = charRoot.transform;
+        _CharRoot.SetParent(transform);
+        _CharRoot.localPosition = Vector3.zero;
+        _CharRoot.localRotation = Quaternion.Euler(Vector3.zero);
+        _CharRoot.localScale = Vector3.one;
+    }
+
     #region
 
     protected Stack<Image> _IdleImgs = new Stack<Image>();
 
     protected Image PopIdleImage()
     {
+        InitCharRoot();
         if (_IdleImgs == null || _IdleImgs.Count == 0)
         {
             var imageGO = new GameObject("charImg");
             var image = imageGO.AddComponent<Image>();
-            imageGO.transform.SetParent(transform);
+            imageGO.transform.SetParent(_CharRoot);
             imageGO.transform.localPosition = Vector2.zero;
             imageGO.transform.localRotation = Quaternion.Euler(Vector3.zero);
             imageGO.transform.localScale = Vector3.one;
