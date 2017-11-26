@@ -30,6 +30,9 @@ public class ImpactBuffSub : ImpactBuffCD
 
     protected void ActSubImpacts(MotionManager sender, MotionManager reciver)
     {
+        if (_SubImpacts == null)
+            return;
+
         foreach (var subImpact in _SubImpacts)
         {
             subImpact.ActImpact(sender, reciver);

@@ -10,12 +10,17 @@ public class RoleAttrImpactPassiveArea : RoleAttrImpactPassive
 
         var legendaryEquip = Tables.TableReader.LegendaryEquip.GetRecord(args[0].ToString());
         _Range = GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValues[0]) + GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValueIncs[0] * args[1]);
-        if (legendaryEquip.ImpactValues[1] > 0)
-        {
-            _Range = Mathf.Max(_Range, legendaryEquip.ImpactValues[1]);
-        }
+        
 
-        _DefenceValue = GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValues[2]) + GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValueIncs[1] * args[1]);
+        _DefenceValue = GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValues[1]) + GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValueIncs[1] * args[1]);
+        if (legendaryEquip.ImpactValues[2] < 0)
+        {
+            _Range = Mathf.Max(_Range, GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValues[2]));
+        }
+        else if (legendaryEquip.ImpactValues[2] > 0)
+        {
+            _Range = Mathf.Min(_Range, GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValues[2]));
+        }
     }
 
     public override void ModifySkillAfterInit(MotionManager roleMotion)
@@ -24,17 +29,19 @@ public class RoleAttrImpactPassiveArea : RoleAttrImpactPassive
             return;
 
         var buffGO = ResourceManager.Instance.GetInstanceGameObject("Bullet\\Passive\\" + _ImpactName);
+        buffGO.transform.SetParent(roleMotion.BuffBindPos.transform);
         var buffs = buffGO.GetComponents<ImpactBuffIntervalRangeSub>();
         foreach (var buff in buffs)
         {
-            buff._Range = _Range;
-            buff.ActImpact(roleMotion, roleMotion);
-        }
+            var subBuffs2 = buffGO.GetComponentsInChildren<ImpactBuffAttrAdd>();
+            foreach (var subBuff in subBuffs2)
+            {
+                if (subBuff.gameObject == buffGO)
+                    continue;
+                subBuff._AddValue = _DefenceValue;
+            }
 
-        var attrBuffs = buffGO.GetComponents<ImpactBuffAttrAdd>();
-        foreach (var buff in attrBuffs)
-        {
-            buff._AddValue = _DefenceValue;
+            buff._Range = _Range;
             buff.ActImpact(roleMotion, roleMotion);
         }
     }

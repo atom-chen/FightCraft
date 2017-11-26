@@ -19,10 +19,18 @@ public class RoleAttrImpactPassiveThorn : RoleAttrImpactPassive
             return;
 
         var buffGO = ResourceManager.Instance.GetInstanceGameObject("Bullet\\Passive\\" + _ImpactName);
-        var buffs = buffGO.GetComponents<ImpactDamage>();
+        buffGO.transform.SetParent(roleMotion.BuffBindPos.transform);
+        var buffs = buffGO.GetComponents<ImpactBuff>();
         foreach (var buff in buffs)
         {
-            buff._DamageRate = _Damage;
+            var subBuffs = buffGO.GetComponentsInChildren<ImpactDamage>();
+            foreach (var subBuff in subBuffs)
+            {
+                if (subBuff.gameObject == buffGO)
+                    continue;
+                subBuff._DamageRate = _Damage;
+            }
+
             buff.ActImpact(roleMotion, roleMotion);
         }
     }

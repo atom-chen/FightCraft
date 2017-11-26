@@ -45,13 +45,21 @@ public class EffectOutLine : EffectController
         if (_SkinnedMesh == null)
         {
             var motion = gameObject.GetComponentInParent<MotionManager>();
-            _SkinnedMesh = motion.GetComponentInChildren<SkinnedMeshRenderer>();
+            var objMeshes = motion.GetComponentsInChildren<SkinnedMeshRenderer>();
+            foreach (var objMesh in objMeshes)
+            {
+                if (objMesh.name.Contains("Weapon"))
+                    continue;
+
+                _SkinnedMesh = objMesh;
+            }
+            //_SkinnedMesh = motion.GetComponentInChildren<SkinnedMeshRenderer>();
         }
 
         var matCnt = AddMatCnt();
         if (matCnt > 1)
             return;
-        //foreach (SkinnedMeshRenderer curMeshRender in meshes)
+        //foreach(SkinnedMeshRenderer curMeshRender in meshes)
         {
 
             _MatInstance = GameObject.Instantiate<Material>(_OutLineMaterial);

@@ -325,6 +325,7 @@ public class MotionManager : MonoBehaviour
         if (IsBuffCanDie())
         {
             _IsMotionDie = true;
+            RemoveAllBuff();
             //Hashtable hash = new Hashtable();
             //hash.Add("HitEffect", -1);
 
@@ -363,6 +364,20 @@ public class MotionManager : MonoBehaviour
 
     private List<ImpactBuff> _ImpactBuffs = new List<ImpactBuff>();
     private GameObject _BuffBindPos;
+    public GameObject BuffBindPos
+    {
+        get
+        {
+            if (_BuffBindPos == null)
+            {
+                _BuffBindPos = new GameObject("BuffBind");
+                _BuffBindPos.transform.SetParent(transform);
+                _BuffBindPos.transform.localPosition = Vector3.zero;
+                _BuffBindPos.transform.localRotation = Quaternion.Euler(Vector3.zero);
+            }
+            return _BuffBindPos;
+        }
+    }
     private List<ImpactBuff> _RemoveTemp = new List<ImpactBuff>();
 
     public ImpactBuff AddBuff(ImpactBuff buff, float lastTime = -1)
@@ -370,16 +385,8 @@ public class MotionManager : MonoBehaviour
         if (!IsCanAddBuff(buff))
             return null;
 
-        if (_BuffBindPos == null)
-        {
-            _BuffBindPos = new GameObject("BuffBind");
-            _BuffBindPos.transform.SetParent(transform);
-            _BuffBindPos.transform.localPosition = Vector3.zero;
-            _BuffBindPos.transform.localRotation = Quaternion.Euler(Vector3.zero);
-        }
-
         var buffGO = new GameObject("Buff-" + buff.ToString());
-        buffGO.transform.SetParent(_BuffBindPos.transform);
+        buffGO.transform.SetParent(BuffBindPos.transform);
         buffGO.transform.localPosition = Vector3.zero;
         buffGO.transform.localRotation = Quaternion.Euler(Vector3.zero);
 
@@ -409,9 +416,12 @@ public class MotionManager : MonoBehaviour
 
     public void RemoveBuff(ImpactBuff buff)
     {
-        buff.RemoveBuff(this);
-        _ImpactBuffs.Remove(buff);
-        GameObject.Destroy(buff.gameObject);
+        if (_ImpactBuffs.Contains(buff))
+        {
+            buff.RemoveBuff(this);
+            _ImpactBuffs.Remove(buff);
+            GameObject.Destroy(buff.gameObject);
+        }
     }
 
     public void RemoveBuff(Type buffType)
@@ -429,6 +439,17 @@ public class MotionManager : MonoBehaviour
         {
             RemoveBuff(buff);
         }
+    }
+
+    public void RemoveAllBuff()
+    {
+        foreach (var buff in _ImpactBuffs)
+        {
+            buff.RemoveBuff(this);
+            GameObject.Destroy(buff.gameObject);
+        }
+
+        _ImpactBuffs.Clear();
     }
 
     void CopyComponent(object original, object destination)
@@ -451,6 +472,9 @@ public class MotionManager : MonoBehaviour
 
     public bool IsBuffCanHit(MotionManager impactSender, ImpactHit impactHit)
     {
+        if (IsMotionDie)
+            return true;
+
         for (int i = 0; i < _ImpactBuffs.Count; ++i)
         {
             if (!_ImpactBuffs[i].IsBuffCanHit(impactHit))
@@ -486,6 +510,9 @@ public class MotionManager : MonoBehaviour
 
     public bool IsBuffCanCatch(MotionManager impactSender, ImpactCatch impactCatch)
     {
+        if (IsMotionDie)
+            return true;
+
         for (int i = 0; i < _ImpactBuffs.Count; ++i)
         {
             if (!_ImpactBuffs[i].IsBuffCanCatch(impactCatch))
@@ -1086,6 +1113,10 @@ public class MotionManager : MonoBehaviour
 
     public void HitEvent(float hitTime, int hitEffect, MotionManager impactSender, ImpactHit hitImpact, Vector3 moveDirect, float moveTime)
     {
+        if (!IsBuffCanHit(impactSender, hitImpact))
+        {
+            return;
+        }
         BuffBeHit(impactSender, hitImpact);
         StateOpt(StateBase.MotionOpt.Hit, hitTime, hitEffect, impactSender, hitImpact, moveDirect, moveTime);
     }
@@ -1098,12 +1129,20 @@ public class MotionManager : MonoBehaviour
     public void FlyEvent(float flyHeight, int hitEffect, MotionManager impactSender, ImpactHit hitImpact, Vector3 moveDirect, float moveTime)
     {
         //Debug.Log("FlyEvent");
+        if (!IsBuffCanHit(impactSender, hitImpact))
+        {
+            return;
+        }
         BuffBeHit(impactSender, hitImpact);
         StateOpt(StateBase.MotionOpt.Fly, flyHeight, hitEffect, impactSender, hitImpact, moveDirect, moveTime);
     }
 
     public void CatchEvent(float catchTime, int hitEffect, MotionManager impactSender, ImpactHit hitImpact, Vector3 moveDirect, float moveTime)
     {
+        if (!IsBuffCanCatch(impactSender, hitImpact as ImpactCatch))
+        {
+            return;
+        }
         BuffBeHit(impactSender, hitImpact);
         StateOpt(StateBase.MotionOpt.Catch, catchTime, hitEffect, impactSender, hitImpact, moveDirect, moveTime);
     }

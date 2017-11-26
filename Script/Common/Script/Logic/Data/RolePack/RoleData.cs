@@ -157,52 +157,52 @@ public class RoleData : SaveItemBase
         SetSkillAttr(_BaseAttr);
         SetEquipAttr(_BaseAttr);
 
-        CalculateSecondAttr();
+        CalculateSecondAttr(_BaseAttr);
     }
 
-    public void SetRoleLevelAttr(RoleAttrStruct _BaseAttr)
+    public void SetRoleLevelAttr(RoleAttrStruct roleAttr)
     {
-        _BaseAttr.SetValue(RoleAttrEnum.Strength, Strength);
-        _BaseAttr.SetValue(RoleAttrEnum.Dexterity, Dexterity);
-        _BaseAttr.SetValue(RoleAttrEnum.Vitality, Vitality);
-        _BaseAttr.SetValue(RoleAttrEnum.Attack, _RoleLevel * 1 + 10);
-        _BaseAttr.SetValue(RoleAttrEnum.HPMax, _RoleLevel * 100 + 5000);
-        _BaseAttr.SetValue(RoleAttrEnum.Defense, 10);
+        roleAttr.SetValue(RoleAttrEnum.Strength, Strength);
+        roleAttr.SetValue(RoleAttrEnum.Dexterity, Dexterity);
+        roleAttr.SetValue(RoleAttrEnum.Vitality, Vitality);
+        roleAttr.SetValue(RoleAttrEnum.Attack, _RoleLevel * 1 + 10);
+        roleAttr.SetValue(RoleAttrEnum.HPMax, _RoleLevel * 100 + 5000);
+        roleAttr.SetValue(RoleAttrEnum.Defense, 10);
     }
 
-    public void SetEquipAttr(RoleAttrStruct _BaseAttr)
+    public void SetEquipAttr(RoleAttrStruct roleAttr)
     {
         foreach (var equipInfo in _EquipList)
         {
-            equipInfo.SetEquipAttr(_BaseAttr);
+            equipInfo.SetEquipAttr(roleAttr);
         }
     }
 
-    private void CalculateSecondAttr()
+    public void CalculateSecondAttr(RoleAttrStruct roleAttr)
     {
-        var strength = _BaseAttr.GetValue(RoleAttrEnum.Strength);
-        var baseAttack = _BaseAttr.GetValue(RoleAttrEnum.Attack);
+        var strength = roleAttr.GetValue(RoleAttrEnum.Strength);
+        var baseAttack = roleAttr.GetValue(RoleAttrEnum.Attack);
         float attackByStrength = (strength / 1000.0f) * baseAttack + strength * 2;
-        _BaseAttr.AddValue(RoleAttrEnum.Attack, (int)attackByStrength);
+        roleAttr.AddValue(RoleAttrEnum.Attack, (int)attackByStrength);
 
-        var dexteriry = _BaseAttr.GetValue(RoleAttrEnum.Dexterity);
+        var dexteriry = roleAttr.GetValue(RoleAttrEnum.Dexterity);
         int criticalRate = (int)((dexteriry / 1000.0f) * 2500);
         int criticalDamage = (int)((dexteriry / 1000.0f) * 10000);
         int attackSpeed = (int)((dexteriry / 1000.0f) * 1000);
         int moveSpeed = (int)((dexteriry / 1000.0f) * 1000);
         int ignoreAttack = (int)(dexteriry * 0.5f);
-        _BaseAttr.AddValue(RoleAttrEnum.CriticalHitChance, criticalRate);
-        _BaseAttr.AddValue(RoleAttrEnum.CriticalHitDamge, criticalDamage);
-        _BaseAttr.AddValue(RoleAttrEnum.AttackSpeed, attackSpeed);
-        _BaseAttr.AddValue(RoleAttrEnum.MoveSpeed, moveSpeed);
-        _BaseAttr.AddValue(RoleAttrEnum.IgnoreDefenceAttack, ignoreAttack);
+        roleAttr.AddValue(RoleAttrEnum.CriticalHitChance, criticalRate);
+        roleAttr.AddValue(RoleAttrEnum.CriticalHitDamge, criticalDamage);
+        roleAttr.AddValue(RoleAttrEnum.AttackSpeed, attackSpeed);
+        roleAttr.AddValue(RoleAttrEnum.MoveSpeed, moveSpeed);
+        roleAttr.AddValue(RoleAttrEnum.IgnoreDefenceAttack, ignoreAttack);
 
-        var vitality = _BaseAttr.GetValue(RoleAttrEnum.Vitality);
-        int baseHP = _BaseAttr.GetValue(RoleAttrEnum.HPMax);
+        var vitality = roleAttr.GetValue(RoleAttrEnum.Vitality);
+        int baseHP = roleAttr.GetValue(RoleAttrEnum.HPMax);
         int hpByVitality = (int)((vitality / 500.0f) * baseHP);
         int finalDamageReduse = (int)(vitality * 0.1f);
-        _BaseAttr.AddValue(RoleAttrEnum.HPMax, hpByVitality);
-        _BaseAttr.AddValue(RoleAttrEnum.FinalDamageReduse, finalDamageReduse);
+        roleAttr.AddValue(RoleAttrEnum.HPMax, hpByVitality);
+        roleAttr.AddValue(RoleAttrEnum.FinalDamageReduse, finalDamageReduse);
     }
 
     #endregion

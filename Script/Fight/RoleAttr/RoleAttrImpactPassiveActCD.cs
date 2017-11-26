@@ -12,7 +12,7 @@ public class RoleAttrImpactPassiveActCD : RoleAttrImpactPassive
         _ActCD = GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValues[0]) - GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValueIncs[0] * args[1]);
         if (legendaryEquip.ImpactValues[1] > 0)
         {
-            _ActCD = Mathf.Max(_ActCD, legendaryEquip.ImpactValues[1]);
+            _ActCD = Mathf.Max(_ActCD, GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValues[1]));
         }
     }
 

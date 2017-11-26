@@ -25,19 +25,28 @@ public class RoleAttrImpactPassiveHPResume : RoleAttrImpactPassive
             return;
 
         var buffGO = ResourceManager.Instance.GetInstanceGameObject("Bullet\\Passive\\" + _ImpactName);
-        var buffs = buffGO.GetComponents<ImpactBuffCD>();
+        buffGO.transform.SetParent(roleMotion.BuffBindPos.transform);
+        var buffs = buffGO.GetComponents<ImpactBuff>();
         foreach (var buff in buffs)
         {
-            buff._ActCD = _ActCD;
+            var subBuffs = buffGO.GetComponentsInChildren<ImpactBuffCD>();
+            foreach (var subBuff in subBuffs)
+            {
+                if (subBuff.gameObject == buffGO)
+                    continue;
+                subBuff._ActCD = _ActCD;
+            }
+
+            var subBuffs2 = buffGO.GetComponentsInChildren<ImpactResumeHP>();
+            foreach (var subBuff in subBuffs2)
+            {
+                if (subBuff.gameObject == buffGO)
+                    continue;
+                subBuff._HPPersent = _ResumeHP;
+            }
             buff.ActImpact(roleMotion, roleMotion);
         }
 
-        var hpBuffs = buffGO.GetComponents<ImpactResumeHP>();
-        foreach (var buff in hpBuffs)
-        {
-            buff._HPPersent = _ResumeHP;
-            buff.ActImpact(roleMotion, roleMotion);
-        }
     }
 
 

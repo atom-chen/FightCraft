@@ -109,6 +109,9 @@ public class ImpactBuff : ImpactBase
 
     public void ActBuff(MotionManager reciverManager)
     {
+        if (reciverManager.IsMotionDie)
+            return;
+
         ActBuff(_BuffSender, reciverManager);
     }
 

@@ -11,6 +11,9 @@ public class ImpactResumeHP: ImpactBase
     {
         base.ActImpact(senderManager, reciverManager);
 
+        if (reciverManager.IsMotionDie)
+            return;
+
         reciverManager.RoleAttrManager.AddHP(_HPValue);
         reciverManager.RoleAttrManager.AddHPPersent(_HPPersent);
     }

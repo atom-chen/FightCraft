@@ -12,7 +12,7 @@ public class RoleAttrImpactPassiveHPLowMove : RoleAttrImpactPassive
         _MoveSpeed = GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValues[0]) - GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValueIncs[0] * args[1]);
         if (legendaryEquip.ImpactValues[1] > 0)
         {
-            _MoveSpeed = Mathf.Max(_MoveSpeed, legendaryEquip.ImpactValues[1]);
+            _MoveSpeed = Mathf.Min(_MoveSpeed, GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValues[1]));
         }
     }
 
@@ -22,10 +22,18 @@ public class RoleAttrImpactPassiveHPLowMove : RoleAttrImpactPassive
             return;
 
         var buffGO = ResourceManager.Instance.GetInstanceGameObject("Bullet\\Passive\\" + _ImpactName);
-        var buffs = buffGO.GetComponents<ImpactBuffAttrAdd>();
+        buffGO.transform.SetParent(roleMotion.BuffBindPos.transform);
+        var buffs = buffGO.GetComponents<ImpactBuff>();
         foreach (var buff in buffs)
         {
-            buff._AddValue = _MoveSpeed;
+            var subBuffs = buffGO.GetComponentsInChildren<ImpactBuffAttrAdd>();
+            foreach (var subBuff in subBuffs)
+            {
+                if (subBuff.gameObject == buffGO)
+                    continue;
+                subBuff._AddValue = _MoveSpeed;
+            }
+
             buff.ActImpact(roleMotion, roleMotion);
         }
     }

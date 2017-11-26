@@ -27,31 +27,31 @@
 26,ZhaoYun,element damage {0},10,RoleAttrImpactElementBullet,ImpactAttr26_B2_IceCircle,2,10000,0,0,100,0,0,0,1
 27,ZhouWang,element damage {0},1011,RoleAttrImpactElementBullet,ImpactAttr27_G3_FireLoong,3,10000,0,0,100,0,0,0,1
 28,ZhouWang,element damage {0},11,RoleAttrImpactElementBullet,ImpactAttr28_B3_FireSprit,3,10000,0,0,100,0,0,0,1
-10001,DaJi,Limit Damage {0},10001,RoleAttrImpactPassive,PassiveDamageLimit,3,10000,0,0,100,0,0,0,1
-10002,DianWei,HP Low Iron {0},10002,RoleAttrImpactPassiveSubLastTime,PassiveHPLowIron,3,50000,150000,0,500,0,0,0,1
-10003,DaJi,add {0} MAXHP in battle,10003,RoleAttrImpactPassiveAddAttr,PassiveAddHP,3,10000,0,0,100,0,0,0,1
-10004,DianWei,add {0} defence in battle,10004,RoleAttrImpactPassiveAddAttr,PassiveAddDefence,3,10000,0,0,100,0,0,0,1
-10005,DaJi,resist one hit,10005,RoleAttrImpactPassiveActCD,PassiveBlockOne,3,300000,100000,0,5000,0,0,0,1
-10006,DianWei,relive,10006,RoleAttrImpactPassiveRelive,PassiveRelive,3,30000,80000,1000,200,15,0,0,
-10007,DaJi,hp low resume hp,10007,RoleAttrImpactPassiveHPResume,PassiveHPLowResumeHP,3,900000,300000,500,500,5,0,0,
-10008,DianWei,hp low intelligence AI,10008,RoleAttrImpactPassiveSubLastTime,PassiveHPLowInt,3,50000,150000,0,500,0,0,0,
-10009,DaJi,hp low dexterous  AI,10009,RoleAttrImpactPassiveSubLastTime,PassiveHPLowDex,3,50000,150000,0,500,0,0,0,
-10010,DianWei,thorns,10001,RoleAttrImpactPassiveThorn,PassiveThorn,3,10000,0,0,100,0,0,0,
-11001,DianWei,ice resist,11001,RoleAttrImpactPassiveAddAttr,PassiveResistCold,3,10000,10000,0,100,0,0,0,
-11002,DianWei,light resist,11002,RoleAttrImpactPassiveAddAttr,PassiveResistLighting,3,10000,10000,0,100,0,0,0,
-11003,DianWei,add move speed when be hit,11003,RoleAttrImpactPassiveHitMove,PassiveHitMove,3,50000,20000000,30000000,100,100000,0,0,
-11004,DianWei,ignore low move speed buff,11004,RoleAttrImpactPassive,PassiveResistIgnoreMove,3,10000,0,0,100,0,0,0,
-11005,DianWei,fire resist,11005,RoleAttrImpactPassiveAddAttr,PassiveResistFire,3,10000,10000,0,100,0,0,0,
-11006,DianWei,ex move speed,11006,RoleAttrImpactPassiveAddAttr,PassiveResistExMove,3,5000000,15000000,0,500000,0,0,0,
-11007,DianWei,wind resist,11007,RoleAttrImpactPassiveAddAttr,PassiveResistWind,3,10000,10000,0,100,0,0,0,
-11008,DianWei,add move speed when hp low,11008,RoleAttrImpactPassiveHPLowMove,PassiveHPLowMove,3,20000000,50000000,0,1500000,0,0,0,
-12001,DianWei,low defence circle,12001,RoleAttrImpactPassiveArea,RoleAttrImpactPassiveLowDefenceArea,3,20000,40000,-2000000,1000,-200000,0,0,
-12002,DianWei,add 20% strong in battle,12002,RoleAttrImpactPassiveAddAttr,PassiveAttrStr,3,500,1500,0,100,0,0,0,
-12003,DianWei,"ice area,slow down move speed",12003,RoleAttrImpactPassiveArea,PassiveIceArea,3,20000,40000,-20000000,1000,-200000,0,0,
+10001,DaJi,Limit Damage {0},10001,RoleAttrImpactPassive,PassiveDamageLimit,3,10000,0,0,100,0,0,0,ok
+10002,DianWei,HP Low Iron {0},10002,RoleAttrImpactPassiveSubLastTime,PassiveHPLowIron,3,50000,150000,0,500,0,0,0,ok
+10003,DaJi,add {0} MAXHP in battle,10003,RoleAttrImpactPassiveAddAttr,PassiveAddHP,3,10000,0,0,100,0,0,0,ok
+10004,DianWei,add {0} defence in battle,10004,RoleAttrImpactPassiveAddAttr,PassiveAddDefence,3,10000,0,0,100,0,0,0,ok
+10005,DaJi,resist one hit,10005,RoleAttrImpactPassiveActCD,PassiveBlockOne,3,300000,100000,0,5000,0,0,0,defence effect
+10006,DianWei,relive,10006,RoleAttrImpactPassiveRelive,PassiveRelive,3,30000,80000,1000,200,15,0,0,relive effect/conseal effect
+10007,DaJi,hp low resume hp,10007,RoleAttrImpactPassiveHPResume,PassiveHPLowResumeHP,3,900000,300000,2000,500,5,0,0,resume hp effect
+10008,DianWei,hp low intelligence AI,10008,RoleAttrImpactPassiveSubLastTime,PassiveHPLowInt,3,50000,150000,0,500,0,0,0,ok
+10009,DaJi,hp low dexterous  AI,10009,RoleAttrImpactPassiveSubLastTime,PassiveHPLowDex,3,50000,150000,0,500,0,0,0,conseal effect
+10010,DianWei,thorns,10001,RoleAttrImpactPassiveThorn,PassiveThorn,3,10000,0,0,100,0,0,0,ok
+11001,DianWei,ice resist,11001,RoleAttrImpactPassiveAddAttr,PassiveResistCold,3,10000,10000,0,100,0,0,0,-
+11002,DianWei,light resist,11002,RoleAttrImpactPassiveAddAttr,PassiveResistLighting,3,10000,10000,0,100,0,0,0,-
+11003,DianWei,add move speed when be hit,11003,RoleAttrImpactPassiveHitMove,PassiveHitMove,3,100000,20000000,30000000,100,100000,0,0,buff effect
+11004,DianWei,ignore low move speed buff,11004,RoleAttrImpactPassive,PassiveResistIgnoreMove,3,10000,0,0,100,0,0,0,/
+11005,DianWei,fire resist,11005,RoleAttrImpactPassiveAddAttr,PassiveResistFire,3,10000,10000,0,100,0,0,0,-
+11006,DianWei,ex move speed,11006,RoleAttrImpactPassiveAddAttr,PassiveResistExMove,3,5000000,15000000,0,500000,0,0,0,ok
+11007,DianWei,wind resist,11007,RoleAttrImpactPassiveAddAttr,PassiveResistWind,3,10000,10000,0,100,0,0,0,-
+11008,DianWei,add move speed when hp low,11008,RoleAttrImpactPassiveHPLowMove,PassiveHPLowMove,3,20000000,50000000,0,1500000,0,0,0,ok
+12001,DianWei,low defence circle,12001,RoleAttrImpactPassiveArea,RoleAttrImpactPassiveLowDefenceArea,3,40000,-2000000,-4000000,1000,-200000,0,0,-
+12002,DianWei,add 20% strong in battle,12002,RoleAttrImpactPassiveAddAttr,PassiveAttrStr,3,500,1500,0,100,0,0,0,.base attr
+12003,DianWei,"ice area,slow down move speed",12003,RoleAttrImpactPassiveArea,PassiveIceArea,3,50000,-50000000,-85000000,500,-200000,0,0,ok
 12004,DianWei,revenge lightening,12004,RoleAttrImpactLightRevange,PassiveHitLightRevange,3,10000,0,0,100,0,0,0,
-12005,DianWei,add 20% inc in battle,12005,RoleAttrImpactPassiveAddAttr,PassiveAttrDec,3,500,1500,0,100,0,0,0,
+12005,DianWei,add 20% inc in battle,12005,RoleAttrImpactPassiveAddAttr,PassiveAttrDec,3,500,1500,0,100,0,0,0,.base attr
 12006,DianWei,add attack when hp full,12006,RoleAttrImpactPassiveAddAttr,PassiveHPHeightAttack,3,10000,0,0,100,0,0,0,
-12007,DianWei,add 20% int in battle,12007,RoleAttrImpactPassiveAddAttr,PassiveAttrInt,3,500,1500,0,100,0,0,0,
+12007,DianWei,add 20% int in battle,12007,RoleAttrImpactPassiveAddAttr,PassiveAttrInt,3,500,1500,0,100,0,0,0,.base attr
 12008,DianWei,element enhance,12008,RoleAttrImpactPassiveHitCircle,RoleAttrImpactPassiveHitCircle,3,10000,0,0,100,0,0,0,
 12009,DianWei,remove debuff ,12009,RoleAttrImpactPassiveDamageArea,RoleAttrImpactPassiveDamageArea,3,10000,0,0,100,0,0,0,
 12010,DianWei,ice circle when be hit,12010,RoleAttrImpactPassiveIceCircle,PassiveIceCircle,3,10000,0,0,100,0,0,0,

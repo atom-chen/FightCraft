@@ -8,9 +8,9 @@ public class ImpactBuffBeHitSub : ImpactBuffSub
 
     private CapsuleCollider _Collider;
 
-    public override void Init(ObjMotionSkillBase skillMotion, SelectBase selector)
+    public override void ActBuff(MotionManager senderManager, MotionManager reciverManager)
     {
-        base.Init(skillMotion, selector);
+        base.ActBuff(senderManager, reciverManager);
 
         if (_SubToSender != null)
         {
@@ -26,9 +26,12 @@ public class ImpactBuffBeHitSub : ImpactBuffSub
         SetCD();
         ActSubImpacts(_BuffSender, _BuffOwner);
 
-        foreach (var subImpact in _SubImpactsToSender)
+        if (_SubImpactsToSender != null)
         {
-            subImpact.ActImpact(_BuffOwner, hitSender);
+            foreach (var subImpact in _SubImpactsToSender)
+            {
+                subImpact.ActImpact(_BuffOwner, hitSender);
+            }
         }
     }
 

@@ -25,19 +25,30 @@ public class RoleAttrImpactPassiveRelive : RoleAttrImpactPassive
             return;
 
         var buffGO = ResourceManager.Instance.GetInstanceGameObject("Bullet\\Passive\\" + _ImpactName);
-        var buffs = buffGO.GetComponents<ImpactBuffConceal>();
+        buffGO.transform.SetParent(roleMotion.BuffBindPos.transform);
+        var buffs = buffGO.GetComponents<ImpactBuff>(); 
         foreach (var buff in buffs)
         {
-            buff._LastTime = _ConcealTime;
+            var subBuffs = buffGO.GetComponentsInChildren<ImpactBuffConceal>();
+            foreach (var subBuff in subBuffs)
+            {
+                if (subBuff.gameObject == buffGO)
+                    continue;
+                subBuff._LastTime = _ConcealTime;
+            }
+
+            var subBuffs2 = buffGO.GetComponentsInChildren<ImpactResumeHP>();
+            foreach (var subBuff in subBuffs2)
+            {
+                if (subBuff.gameObject == buffGO)
+                    continue;
+                subBuff._HPPersent = _ResumeHP;
+            }
+
+
             buff.ActImpact(roleMotion, roleMotion);
         }
 
-        var hpBuffs = buffGO.GetComponents<ImpactResumeHP>();
-        foreach (var buff in hpBuffs)
-        {
-            buff._HPPersent = _ResumeHP;
-            buff.ActImpact(roleMotion, roleMotion);
-        }
     }
 
 

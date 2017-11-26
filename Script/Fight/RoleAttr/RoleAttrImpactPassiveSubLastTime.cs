@@ -19,11 +19,21 @@ public class RoleAttrImpactPassiveSubLastTime : RoleAttrImpactPassive
             return;
 
         var buffGO = ResourceManager.Instance.GetInstanceGameObject("Bullet\\Passive\\" + _ImpactName);
+        buffGO.transform.SetParent(roleMotion.BuffBindPos.transform);
         var buffs = buffGO.GetComponents<ImpactBuff>();
         foreach (var buff in buffs)
         {
+            var subBuffs = buffGO.GetComponentsInChildren<ImpactBuff>();
+            foreach (var subBuff in subBuffs)
+            {
+                if (subBuff.gameObject == buffGO)
+                    continue;
+                subBuff._LastTime = _SubBuffLastTime;
+            }
             buff.ActImpact(roleMotion, roleMotion);
         }
+
+
     }
 
 
