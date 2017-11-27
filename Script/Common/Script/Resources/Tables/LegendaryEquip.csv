@@ -51,8 +51,8 @@
 12004,DianWei,revenge lightening,12004,RoleAttrImpactLightRevange,PassiveHitLightRevange,3,10000,0,0,100,0,0,0,
 12005,DianWei,add 20% inc in battle,12005,RoleAttrImpactPassiveAddAttr,PassiveAttrDec,3,500,1500,0,100,0,0,0,.base attr
 12006,DianWei,add attack when hp full,12006,RoleAttrImpactPassiveAddAttr,PassiveHPHeightAttack,3,10000,0,0,100,0,0,0,
-12007,DianWei,add 20% int in battle,12007,RoleAttrImpactPassiveAddAttr,PassiveAttrInt,3,500,1500,0,100,0,0,0,.base attr
-12008,DianWei,element enhance,12008,RoleAttrImpactPassiveHitCircle,RoleAttrImpactPassiveHitCircle,3,10000,0,0,100,0,0,0,
+12007,DianWei,add 20% int in battle,12007,RoleAttrImpactPassiveAddAttr,PassiveAttrInt,3,30000,10000,0,100,0,0,0,.base attr
+12008,DianWei,element enhance,12008,RoleAttrImpactPassiveHitCircle,PassiveHitCircle,3,30000,10000,0,100,0,0,0,ok
 12009,DianWei,remove debuff ,12009,RoleAttrImpactPassiveDamageArea,RoleAttrImpactPassiveDamageArea,3,10000,0,0,100,0,0,0,
 12010,DianWei,ice circle when be hit,12010,RoleAttrImpactPassiveIceCircle,PassiveIceCircle,3,10000,0,0,100,0,0,0,
 13001,DianWei,wind blade when hit,13001,RoleAttrImpactPassiveHitEnemy,RoleAttrImpactPassiveHitEnemy,3,10000,0,0,100,0,0,0,
