@@ -4,6 +4,24 @@ using UnityEngine;
 
 public class RoleAttrImpactPassiveDamageArea : RoleAttrImpactPassive
 {
+    public override void InitImpact(string skillInput, List<int> args)
+    {
+        base.InitImpact(skillInput, args);
+
+        var legendaryEquip = Tables.TableReader.LegendaryEquip.GetRecord(args[0].ToString());
+        _Range = GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValues[0]) + GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValueIncs[0] * args[1]);
+
+
+        _Damage = GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValues[1]) + GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValueIncs[1] * args[1]);
+        if (legendaryEquip.ImpactValues[2] < 0)
+        {
+            _Damage = Mathf.Max(_Range, GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValues[2]));
+        }
+        else if (legendaryEquip.ImpactValues[2] > 0)
+        {
+            _Damage = Mathf.Min(_Range, GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValues[2]));
+        }
+    }
 
     public override void ModifySkillAfterInit(MotionManager roleMotion)
     {
@@ -11,9 +29,19 @@ public class RoleAttrImpactPassiveDamageArea : RoleAttrImpactPassive
             return;
 
         var buffGO = ResourceManager.Instance.GetInstanceGameObject("Bullet\\Passive\\" + _ImpactName);
-        var buffs = buffGO.GetComponents<ImpactBuff>();
+        buffGO.transform.SetParent(roleMotion.BuffBindPos.transform);
+        var buffs = buffGO.GetComponents<ImpactBuffIntervalRangeSub>();
         foreach (var buff in buffs)
         {
+            var subBuffs2 = buffGO.GetComponentsInChildren<ImpactDamage>();
+            foreach (var subBuff in subBuffs2)
+            {
+                if (subBuff.gameObject == buffGO)
+                    continue;
+                subBuff._DamageRate = _Damage;
+            }
+
+            buff._Range = _Range;
             buff.ActImpact(roleMotion, roleMotion);
         }
     }
@@ -21,6 +49,8 @@ public class RoleAttrImpactPassiveDamageArea : RoleAttrImpactPassive
 
     #region 
 
+    private float _Range;
+    private float _Damage;
     
     #endregion
 }

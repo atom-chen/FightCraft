@@ -15,11 +15,11 @@ public class RoleAttrImpactPassiveArea : RoleAttrImpactPassive
         _DefenceValue = GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValues[1]) + GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValueIncs[1] * args[1]);
         if (legendaryEquip.ImpactValues[2] < 0)
         {
-            _Range = Mathf.Max(_Range, GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValues[2]));
+            _DefenceValue = Mathf.Max(_DefenceValue, GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValues[2]));
         }
         else if (legendaryEquip.ImpactValues[2] > 0)
         {
-            _Range = Mathf.Min(_Range, GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValues[2]));
+            _DefenceValue = Mathf.Min(_DefenceValue, GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValues[2]));
         }
     }
 

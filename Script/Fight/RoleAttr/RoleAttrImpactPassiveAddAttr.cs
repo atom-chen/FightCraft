@@ -12,7 +12,7 @@ public class RoleAttrImpactPassiveAddAttr : RoleAttrImpactPassive
         _AddValue = GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValues[0]) + GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValueIncs[0] * args[1]);
         if (legendaryEquip.ImpactValues[1] > 0)
         {
-            _AddValue = Mathf.Min(_AddValue, legendaryEquip.ImpactValues[1]);
+            _AddValue = Mathf.Min(_AddValue, GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValues[1]));
         }
     }
 
@@ -22,6 +22,7 @@ public class RoleAttrImpactPassiveAddAttr : RoleAttrImpactPassive
             return;
 
         var buffGO = ResourceManager.Instance.GetInstanceGameObject("Bullet\\Passive\\" + _ImpactName);
+        buffGO.transform.SetParent(roleMotion.BuffBindPos.transform);
         var buffs = buffGO.GetComponents<ImpactBuffAttrAdd>();
         foreach (var buff in buffs)
         {

@@ -19,10 +19,19 @@ public class RoleAttrImpactLightRevange : RoleAttrImpactPassive
             return;
 
         var buffGO = ResourceManager.Instance.GetInstanceGameObject("Bullet\\Passive\\" + _ImpactName);
-        var bulletScripts = buffGO.GetComponentsInChildren<BulletEmitterElement>();
-        foreach (var bulletScript in bulletScripts)
+        buffGO.transform.SetParent(roleMotion.BuffBindPos.transform);
+        var bulletScripts = buffGO.GetComponentsInChildren<ImpactBuff>();
+        foreach (var buff in bulletScripts)
         {
-            bulletScript._Damage = _Damage;
+            var subBuffs2 = buffGO.GetComponentsInChildren<BulletEmitterBase>();
+            foreach (var subBuff in subBuffs2)
+            {
+                if (subBuff.gameObject == buffGO)
+                    continue;
+                subBuff._Damage = _Damage;
+            }
+
+            buff.ActImpact(roleMotion, roleMotion);
         }
     }
 

@@ -50,19 +50,19 @@
 12003,DianWei,"ice area,slow down move speed",12003,RoleAttrImpactPassiveArea,PassiveIceArea,3,50000,-50000000,-85000000,500,-200000,0,0,ok
 12004,DianWei,revenge lightening,12004,RoleAttrImpactLightRevange,PassiveHitLightRevange,3,10000,0,0,100,0,0,0,
 12005,DianWei,add 20% inc in battle,12005,RoleAttrImpactPassiveAddAttr,PassiveAttrDec,3,500,1500,0,100,0,0,0,.base attr
-12006,DianWei,add attack when hp full,12006,RoleAttrImpactPassiveAddAttr,PassiveHPHeightAttack,3,10000,0,0,100,0,0,0,
+12006,DianWei,add attack when hp full,12006,RoleAttrImpactPassiveHPHeightAttack,PassiveHPHeightAttack,3,10000,0,0,100,0,0,0,
 12007,DianWei,add 20% int in battle,12007,RoleAttrImpactPassiveAddAttr,PassiveAttrInt,3,30000,10000,0,100,0,0,0,.base attr
-12008,DianWei,element enhance,12008,RoleAttrImpactPassiveHitCircle,PassiveHitCircle,3,30000,10000,0,100,0,0,0,ok
-12009,DianWei,remove debuff ,12009,RoleAttrImpactPassiveDamageArea,RoleAttrImpactPassiveDamageArea,3,10000,0,0,100,0,0,0,
-12010,DianWei,ice circle when be hit,12010,RoleAttrImpactPassiveIceCircle,PassiveIceCircle,3,10000,0,0,100,0,0,0,
-13001,DianWei,wind blade when hit,13001,RoleAttrImpactPassiveHitEnemy,RoleAttrImpactPassiveHitEnemy,3,10000,0,0,100,0,0,0,
+12008,DianWei,element enhance,12008,RoleAttrImpactPassiveBeHitBullet,PassiveHitCircle,3,100000,30000,10000,1000,1000,0,0,
+12009,DianWei,remove debuff ,12009,RoleAttrImpactPassiveDamageArea,PassiveDamageArea,3,30000,10000,0,100,0,0,0,
+12010,DianWei,ice circle when be hit,12010,RoleAttrImpactPassiveBeHitBullet,PassiveIceCircle,3,10000,0,0,100,0,0,0,
+13001,DianWei,wind blade when hit,13001,RoleAttrImpactPassiveHitEnemy,PassiveHitWindBullet,3,10000,500,10000,-100,50,500,0,
 13002,DianWei,add attack when hp low,13002,RoleAttrImpactPassiveHPHeightAttack,PassiveHPLowAttack,3,10000,0,0,100,0,0,0,
 13003,DianWei,add 20% ice damage,13003,RoleAttrImpactPassiveAddAttr,PassiveAttrIce,3,5000,10000,0,200,0,0,0,
 13004,DianWei,add 20% light damage,13004,RoleAttrImpactPassiveAddAttr,PassiveAttrLighting,3,5000,10000,0,200,0,0,0,
 13005,DianWei,lightening when hit,13005,RoleAttrImpactPassiveHitEnemy,PassiveHitLightingBullet,3,10000,0,0,100,0,0,0,
-13006,DianWei,lightening circle,13006,RoleAttrImpactPassiveLightCircleBuff,PassiveLightingBuff,3,10000,0,0,100,0,0,0,
+13006,DianWei,lightening circle,13006,RoleAttrImpactPassiveLightCircleBuff,PassiveLightingBuff,3,50000,150000,10000,1000,1000,0,0,
 13007,DianWei,add 20% fire damage,13007,RoleAttrImpactPassiveAddAttr,PassiveAttrFire,3,5000,10000,0,200,0,0,0,
 13008,DianWei,fire boom when hit,13008,RoleAttrImpactPassiveHitEnemy,PassiveHitFireBullet,3,10000,0,0,100,0,0,0,
 13009,DianWei,add 20% wind damage,13009,RoleAttrImpactPassiveAddAttr,PassiveAttrWind,3,5000,10000,0,200,0,0,0,
-13010,DianWei,blad self,13010,RoleAttrImpactPassiveAttackBlad,PassiveBladSelf,3,10000,0,0,100,0,0,0,
+13010,DianWei,blad self,13010,RoleAttrImpactPassiveAttackBless,PassiveBlessSelf,3,50000,150000,10000,1000,1000,0,0,
 13011,DianWei,ice boom when hit,13010,RoleAttrImpactPassiveHitEnemy,PassiveHitIceBullet,3,10000,0,0,100,0,0,0,
