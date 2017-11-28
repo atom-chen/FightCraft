@@ -8,7 +8,6 @@ public class ImpactBuffHitEnemySub : ImpactBuffSub
     
     public override void HitEnemy()
     {
-        GameRandom.IsInRate(_Rate);
         if (!IsInCD())
         {
             if (!GameRandom.IsInRate(_Rate))
