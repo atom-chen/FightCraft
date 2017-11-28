@@ -23,7 +23,7 @@ namespace Tables
             {
                 return "StrDictionary Error:" + idx;
             }
-            return string.Format(strRecord.Value, param);
+            return string.Format(strRecord.Value[GameCore.Instance._StrVersion], param);
         }
     }
 

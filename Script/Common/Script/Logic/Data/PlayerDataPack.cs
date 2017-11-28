@@ -44,7 +44,10 @@ public class PlayerDataPack : DataPackBase
     public bool DecGold(int value)
     {
         if (_Gold < value)
+        {
+            UIMessageTip.ShowMessageTip(20000);
             return false;
+        }
 
         _Gold -= value;
         return true;
@@ -58,7 +61,10 @@ public class PlayerDataPack : DataPackBase
     public bool DecDiamond(int value)
     {
         if (_Diamond < value)
+        {
+            UIMessageTip.ShowMessageTip(20001);
             return false;
+        }
 
         _Diamond -= value;
         return true;

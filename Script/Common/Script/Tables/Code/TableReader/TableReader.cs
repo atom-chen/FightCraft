@@ -42,6 +42,8 @@ namespace Tables
         public static StageInfo StageInfo { get; internal set; }
 //
         public static StrDictionary StrDictionary { get; internal set; }
+//
+        public static StrTable StrTable { get; internal set; }
 
         public static void ReadTables()
         {
@@ -55,6 +57,7 @@ namespace Tables
             SkillInfo = new SkillInfo(TableReadBase.GetTableText("SkillInfo"), false);
             StageInfo = new StageInfo(TableReadBase.GetTableText("StageInfo"), false);
             StrDictionary = new StrDictionary(TableReadBase.GetTableText("StrDictionary"), false);
+            StrTable = new StrTable(TableReadBase.GetTableText("StrTable"), false);
 
             //初始化所有表
             CommonItem.CoverTableContent();
@@ -66,6 +69,7 @@ namespace Tables
             SkillInfo.CoverTableContent();
             StageInfo.CoverTableContent();
             StrDictionary.CoverTableContent();
+            StrTable.CoverTableContent();
         }
 
         #endregion

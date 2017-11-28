@@ -72,6 +72,11 @@ public class GameCore : MonoBehaviour
 
     #endregion
 
+    #region 
+
+    public int _StrVersion = 0;
+
+    #endregion
 
 }
 

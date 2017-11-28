@@ -112,6 +112,7 @@ public class BackBagPack : DataPackBase
                 return PageEquips[i];
             }
         }
+        UIMessageTip.ShowMessageTip(10002);
         return null;
     }
 

@@ -14,7 +14,7 @@ namespace Tables
 
         public override string Id { get; set; }        public string Name { get; set; }
         public string Desc { get; set; }
-        public string Value { get; set; }
+        public List<string> Value { get; set; }
         public StrDictionaryRecord(DataRecord dataRecord)
         {
             if (dataRecord != null)
@@ -23,6 +23,7 @@ namespace Tables
                 Id = ValueStr[0];
 
             }
+            Value = new List<string>();
         }
         public override string[] GetRecordStr()
         {
@@ -30,7 +31,10 @@ namespace Tables
             recordStrList.Add(TableWriteBase.GetWriteStr(Id));
             recordStrList.Add(TableWriteBase.GetWriteStr(Name));
             recordStrList.Add(TableWriteBase.GetWriteStr(Desc));
-            recordStrList.Add(TableWriteBase.GetWriteStr(Value));
+            foreach (var testTableItem in Value)
+            {
+                recordStrList.Add(TableWriteBase.GetWriteStr(testTableItem));
+            }
 
             return recordStrList.ToArray();
         }
@@ -96,7 +100,9 @@ namespace Tables
             {
                 pair.Value.Name = TableReadBase.ParseString(pair.Value.ValueStr[1]);
                 pair.Value.Desc = TableReadBase.ParseString(pair.Value.ValueStr[2]);
-                pair.Value.Value = TableReadBase.ParseString(pair.Value.ValueStr[3]);
+                pair.Value.Value.Add(TableReadBase.ParseString(pair.Value.ValueStr[3]));
+                pair.Value.Value.Add(TableReadBase.ParseString(pair.Value.ValueStr[4]));
+                pair.Value.Value.Add(TableReadBase.ParseString(pair.Value.ValueStr[5]));
             }
         }
     }
