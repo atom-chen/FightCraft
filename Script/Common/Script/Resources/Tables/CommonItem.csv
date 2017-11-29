@@ -79,3 +79,7 @@
 40003,EquipResetJwalryLv4,,FB_003,FB_003,1,Drop/Gem/Gem6
 40004,EquipResetJwalryLv5,,FB_004,FB_004,1,Drop/Gem/Gem6
 50000,Identification,,FB_005,FB_005,1,Drop/Gem/Gem6
+60000,GamblingDiamond,,FB_005,FB_005,1,Drop/Gem/Gem6
+60001,GamblingWeapon,,FB_005,FB_005,2,Drop/Gem/Gem7
+60002,GamblingDefence,,FB_005,FB_005,3,Drop/Gem/Gem8
+60003,GamblingJwalry,,FB_005,FB_005,4,Drop/Gem/Gem9

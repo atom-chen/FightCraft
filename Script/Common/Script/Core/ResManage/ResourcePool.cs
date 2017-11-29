@@ -229,7 +229,7 @@ public class ResourcePool : InstanceBase<ResourcePool>
 
     private Dictionary<string, Stack<GameObject>> _IdleUIItems = new Dictionary<string, Stack<GameObject>>();
 
-    public T GetIdleUIItem<T>(GameObject itemPrefab)
+    public T GetIdleUIItem<T>(GameObject itemPrefab, Transform parentTrans = null)
     {
         GameObject idleItem = null;
         if (_IdleUIItems.ContainsKey(itemPrefab.name))
@@ -244,7 +244,14 @@ public class ResourcePool : InstanceBase<ResourcePool>
         {
             idleItem = GameObject.Instantiate<GameObject>(itemPrefab);
         }
-
+        idleItem.gameObject.SetActive(true);
+        if (parentTrans != null)
+        {
+            idleItem.transform.SetParent(parentTrans);
+            idleItem.transform.localPosition = Vector3.zero;
+            idleItem.transform.localRotation = Quaternion.Euler(Vector3.zero);
+            idleItem.transform.localScale = Vector3.one;
+        }
         return idleItem.GetComponent<T>();
     }
 

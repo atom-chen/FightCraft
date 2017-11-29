@@ -13,11 +13,18 @@ public class UIMessageTipItem : UIItemBase
     public void SetMessage(string tip)
     {
         ShowText.text = tip;
+        StartCoroutine(HideItem());
     }
 
     public IEnumerator HideItem()
     {
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(2.0f);
+        ResourcePool.Instance.RecvIldeUIItem(gameObject);
+    }
+
+    public void RecvImmediate()
+    {
+        StopAllCoroutines();
         ResourcePool.Instance.RecvIldeUIItem(gameObject);
     }
 

@@ -107,6 +107,26 @@ public class ItemBase : SaveItemBase
     [SaveField(2)]
     public List<int> _DynamicDataInt = new List<int>();
 
+    public int ItemStackNum
+    {
+        get
+        {
+            if (_DynamicDataInt.Count == 0)
+            {
+                _DynamicDataInt.Add(0);
+            }
+            return _DynamicDataInt[0];
+        }
+        set
+        {
+            if (_DynamicDataInt.Count == 0)
+            {
+                _DynamicDataInt.Add(0);
+            }
+            _DynamicDataInt[0] = value;
+        }
+    }
+
     [SaveField(3)]
     public List<EquipExAttr> _DynamicDataVector = new List<EquipExAttr>();
 

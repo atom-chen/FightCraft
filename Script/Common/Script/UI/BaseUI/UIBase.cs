@@ -2,12 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 
-
 public class UIBase : MonoBehaviour
 {
-    
-    public string UIPath { get; set; }
-    public UILayer UILayer { get; set; }
+    public string UIPath;
+    public UILayer UILayer;
 
     #region fiex fun
 
@@ -23,11 +21,6 @@ public class UIBase : MonoBehaviour
     #endregion
 
     #region show
-
-    public bool IsShowing()
-    {
-        return gameObject.activeInHierarchy;
-    }
 
     public virtual void PreLoad()
     {
@@ -69,19 +62,9 @@ public class UIBase : MonoBehaviour
 
     public virtual void Destory()
     {
-        UIManager.Instance.DestoryUI(this);
+        UIManager.Instance.DestoryUI(UIPath);
     }
 
-    public virtual void Destory(float time)
-    {
-        StartCoroutine(DestoryDelay(time));
-    }
-
-    private IEnumerator DestoryDelay(float time)
-    {
-        yield return new WaitForSeconds(time);
-        Destory();
-    }
 
     #endregion
 

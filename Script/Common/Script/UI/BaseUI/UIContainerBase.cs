@@ -302,7 +302,8 @@ public class UIContainerBase : UIBase
                 obj.transform.parent = _ContainerObj.transform;
                 obj.transform.localScale = Vector3.one;
                 obj.transform.localPosition = Vector3.zero;
-                
+
+                obj.name = _ContainItemPre.name + _ItemPrefabList.Count;
                 var itemScript = obj.GetComponent<UIItemBase>();
                 //itemScript.Hide();
                 _ItemPrefabList.Add(itemScript);
@@ -368,7 +369,11 @@ public class UIContainerBase : UIBase
         {
             if (_ItemPrefabList[i].gameObject.activeSelf)
             {
-                action((_ItemPrefabList[i].gameObject.GetComponent<T>()));
+                var component = _ItemPrefabList[i].gameObject.GetComponent<T>();
+                if (component == null)
+                    continue;
+
+                action(component);
             }
         }
     }

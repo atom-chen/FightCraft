@@ -21,7 +21,10 @@ public class GlobalValPack : DataPackBase
         }
     }
 
-    private GlobalValPack() { }
+    private GlobalValPack()
+    {
+        _SaveFileName = "GlobalValPack";
+    }
 
     #endregion
 

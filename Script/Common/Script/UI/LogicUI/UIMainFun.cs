@@ -1,12 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
- 
- 
 using System;
-
-
 
 public class UIMainFun : UIBase
 {
@@ -61,7 +56,7 @@ public class UIMainFun : UIBase
 
     public void BtnBagPack()
     {
-        UIBagPack.ShowAsyn();
+        UIEquipPack.ShowAsyn();
     }
 
     public void BtnTestPanel()
@@ -84,6 +79,10 @@ public class UIMainFun : UIBase
         UIRoleAttr.ShowAsyn();
     }
 
+    public void BtnTest()
+    {
+        UIMessageTip.ShowMessageTip("test message");
+    }
     #endregion
 }
 

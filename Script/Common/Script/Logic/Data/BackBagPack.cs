@@ -24,6 +24,7 @@ public class BackBagPack : DataPackBase
     private BackBagPack()
     {
         GuiTextDebug.debug("BackBagPack init");
+        _SaveFileName = "BackBagPack";
     }
 
     #endregion
@@ -103,6 +104,24 @@ public class BackBagPack : DataPackBase
         return true;
     }
 
+    public bool AddItem(string itemID, int itemCnt)
+    {
+        var itemPos = GetItemPos(itemID);
+        if (itemPos == null)
+            return false;
+
+        if (!itemPos.IsVolid())
+        {
+            itemPos.ItemDataID = itemID;
+            itemPos.ItemStackNum = itemCnt;
+        }
+        else
+        {
+            itemPos.ItemStackNum += (itemCnt);
+        }
+        return true;
+    }
+
     public ItemEquip GetEmptyPageEquip()
     {
         for (int i = 0; i < PageEquips.Count; ++i)
@@ -115,6 +134,20 @@ public class BackBagPack : DataPackBase
         UIMessageTip.ShowMessageTip(10002);
         return null;
     }
+
+    public ItemBase GetItemPos(string itemID)
+    {
+        for (int i = 0; i < PageItems.Count; ++i)
+        {
+            if (PageItems[0].IsVolid() && PageItems[0].ItemDataID == itemID)
+            {
+                return PageItems[0];
+            }
+        }
+        return GetEmptyPageItem();
+    }
+
+    
 
     public ItemBase GetEmptyPageItem()
     {

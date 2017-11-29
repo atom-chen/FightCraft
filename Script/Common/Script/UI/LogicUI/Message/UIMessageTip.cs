@@ -34,6 +34,7 @@ public class UIMessageTip : UIBase
     #region 
 
     public UIMessageTipItem _ItemPrefab;
+    public int _KeepItemCnt;
 
     public override void Show(Hashtable hash)
     {
@@ -45,7 +46,7 @@ public class UIMessageTip : UIBase
 
     public void ShowMessage(string message)
     {
-        var idleItem = ResourcePool.Instance.GetIdleUIItem<UIMessageTipItem>(_ItemPrefab.gameObject);
+        var idleItem = ResourcePool.Instance.GetIdleUIItem<UIMessageTipItem>(_ItemPrefab.gameObject, transform);
         idleItem.SetMessage(message);
     }
 

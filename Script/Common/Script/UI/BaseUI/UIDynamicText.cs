@@ -20,10 +20,10 @@ public class UIDynamicText : UIBase
     public void SetText(string text)
     {
         _Text.text = text;
-        _Text.CalculateLayoutInputHorizontal();
-        _Text.CalculateLayoutInputVertical();
+        //_Text.CalculateLayoutInputHorizontal();
+        //_Text.CalculateLayoutInputVertical();
 
-        _ContainerTrans.sizeDelta = new Vector2(_ScollTrans.sizeDelta.x, _Text.preferredHeight);
+        //_ContainerTrans.sizeDelta = new Vector2(_ScollTrans.sizeDelta.x, _Text.preferredHeight);
     }
 }
 

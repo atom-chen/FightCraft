@@ -19,6 +19,15 @@ public class UIContainerSelect : UIContainerBase
         return default(T);
     }
 
+    public UIItemBase GetSelectedItem()
+    {
+        if (!_IsMultiSelect && _Selecteds.Count > 0)
+        {
+            return _Selecteds[0].ShowItem;
+        }
+        return null;
+    }
+
     public List<T> GetSelecteds<T>()
     {
         List<T> selectedObjs = new List<T>();

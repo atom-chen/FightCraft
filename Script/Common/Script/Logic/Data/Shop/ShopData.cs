@@ -116,12 +116,83 @@ public class ShopData : SaveItemBase
 
     #region item shop
 
-    [SaveField(2)]
+    [SaveField(3)]
     public List<ItemBase> _ItemList;
+
+    public void RefreshShopItem()
+    {
+        _ItemList.Clear();
+        foreach (var shopItem in TableReader.ShopItem.Records.Values)
+        {
+            var item = new ItemBase();
+            item.ItemDataID = shopItem.Id;
+            item._DynamicDataInt.Add(3);
+            _ItemList.Add(item);
+        }
+    }
+
+    public void BuyItem(int itemIdx)
+    {
+        if (_ItemList.Count < itemIdx)
+            return;
+
+        if (!_ItemList[itemIdx].IsVolid())
+            return;
+
+        var emptyPos = BackBagPack.Instance.GetItemPos(_ItemList[itemIdx].ItemDataID);
+        if (emptyPos == null)
+            return;
+
+        int buyPrice = TableReader.ShopItem.GetRecord(_ItemList[itemIdx].ItemDataID).PriceBuy * _ItemList[itemIdx].ItemStackNum;
+        if (!PlayerDataPack.Instance.DecGold(buyPrice))
+            return;
+
+        BackBagPack.Instance.AddItem(_EquipList[itemIdx].ItemDataID, _ItemList[itemIdx].ItemStackNum);
+        _ItemList[itemIdx].ItemDataID = "";
+    }
 
     #endregion
 
     #region gambling
+
+    [SaveField(4)]
+    public List<ItemBase> _GamblingItems;
+
+    public void RefreshGamblingItem()
+    {
+        _GamblingItems.Clear();
+
+        ItemBase gamblingItem = new ItemBase();
+        gamblingItem.ItemDataID = "60000";
+        gamblingItem.ItemStackNum = 1;
+        _GamblingItems.Add(gamblingItem);
+
+        gamblingItem = new ItemBase();
+        gamblingItem.ItemDataID = "60001";
+        gamblingItem.ItemStackNum = 1;
+        _GamblingItems.Add(gamblingItem);
+
+        gamblingItem = new ItemBase();
+        gamblingItem.ItemDataID = "60002";
+        gamblingItem.ItemStackNum = 1;
+        _GamblingItems.Add(gamblingItem);
+
+        gamblingItem = new ItemBase();
+        gamblingItem.ItemDataID = "60003";
+        gamblingItem.ItemStackNum = 1;
+        _GamblingItems.Add(gamblingItem);
+    }
+
+    public void Gambling(int itemIdx)
+    {
+        if (_GamblingItems.Count < itemIdx)
+            return;
+
+        if (itemIdx == 0)
+        {
+
+        }
+    }
 
     #endregion
 

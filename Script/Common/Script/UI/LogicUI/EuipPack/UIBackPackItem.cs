@@ -9,11 +9,12 @@ using System;
 
 
 
-public class UIEquipItem : UIItemSelect
+public class UIBackPackItem : UIItemSelect
 {
     public Image _BG;
     public Image _Icon;
     public Image _Quality;
+    public Text _Num;
     public GameObject _DisableGO;
     public GameObject _DropEnable;
     public GameObject _DropDisable;
@@ -27,45 +28,61 @@ public class UIEquipItem : UIItemSelect
         }
     }
 
-    protected UIBagPack _BagPack;
-
     public override void Show(Hashtable hash)
     {
         base.Show();
 
         var showItem = (ItemBase)hash["InitObj"];
-        if (hash.ContainsKey("UIBagPack"))
-        {
-            _BagPack = (UIBagPack)hash["UIBagPack"];
-        }
-        ShowEquip(showItem as ItemEquip);
+        ShowEquip(showItem);
     }
 
     public override void Refresh()
     {
         base.Refresh();
 
-        ShowEquip(_ShowItem as ItemEquip);
+        ShowEquip(_ShowItem);
     }
 
-    public void ShowEquip(ItemEquip showItem)
+    public void ShowEquip(ItemBase showItem)
     {
         if (_DropEnable != null)
             _DropEnable.gameObject.SetActive(false);
 
         if (showItem == null)
+        {
+            ClearItem();
             return;
+        }
 
         _ShowItem = showItem;
         if (!showItem.IsVolid())
         {
-            _Icon.gameObject.SetActive(false);
-            _Quality.gameObject.SetActive(false);
-            _DisableGO.gameObject.SetActive(false);
+            ClearItem();
             return;
         }
 
+        if (_Num != null)
+        {
+            if (showItem is ItemEquip)
+            {
+                _Num.text = "";
+            }
+            else
+            {
+                if (_ShowItem.ItemStackNum > 1)
+                    _Num.text = _ShowItem.ItemStackNum.ToString();
+                else
+                    _Num.text = "";
+            }
+        }
         _Icon.gameObject.SetActive(true);
+    }
+
+    private void ClearItem()
+    {
+        _Icon.gameObject.SetActive(false);
+        _Quality.gameObject.SetActive(false);
+        _DisableGO.gameObject.SetActive(false);
     }
 
     #region 

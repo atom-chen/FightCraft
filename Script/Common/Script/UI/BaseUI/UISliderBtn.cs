@@ -11,11 +11,24 @@ public class UISliderBtn : MonoBehaviour, IEventSystemHandler, IDragHandler, IBe
 {
     #region 
 
-    public delegate void SliderDelegate(Vector2 delta);
-    public delegate void SliderVoidDelegate();
+    [Serializable]
+    public class SliderDelegate : UnityEvent<Vector2>
+    {
+        public SliderDelegate() { }
+    }
 
+    [SerializeField]
     public SliderDelegate _DragAction;
+
+    [Serializable]
+    public class SliderVoidDelegate : UnityEvent
+    {
+        public SliderVoidDelegate() { }
+    }
+
+    [SerializeField]
     public SliderVoidDelegate _DragBeginAction;
+    [SerializeField]
     public SliderVoidDelegate _DragEndAction;
 
     public float _ActionTime = 0.2f;
@@ -32,7 +45,7 @@ public class UISliderBtn : MonoBehaviour, IEventSystemHandler, IDragHandler, IBe
             if (_DragAction != null && (Time.time - _LastActionTime) > _ActionTime)
             {
                 _LastActionTime = Time.time;
-                _DragAction(eventData.delta);
+                _DragAction.Invoke(eventData.delta);
             }
         }
         //throw new NotImplementedException();
@@ -42,7 +55,7 @@ public class UISliderBtn : MonoBehaviour, IEventSystemHandler, IDragHandler, IBe
     {
         if (_DragBeginAction != null)
         {
-            _DragBeginAction();
+            _DragBeginAction.Invoke();
         }
         //throw new NotImplementedException();
     }
@@ -51,7 +64,7 @@ public class UISliderBtn : MonoBehaviour, IEventSystemHandler, IDragHandler, IBe
     {
         if (_DragEndAction != null)
         {
-            _DragEndAction();
+            _DragEndAction.Invoke();
         }
         //throw new NotImplementedException();
     }

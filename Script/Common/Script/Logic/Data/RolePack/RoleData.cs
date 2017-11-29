@@ -88,7 +88,7 @@ public class RoleData : SaveItemBase
 
         _EquipList[(int)equipSlot].ExchangeInfo(equipItem);
         
-        UIBagPack.RefreshBagItems();
+        UIEquipPack.RefreshBagItems();
 
         CalculateAttr();
     }
@@ -98,7 +98,7 @@ public class RoleData : SaveItemBase
         var backPackPos = BackBagPack.Instance.GetEmptyPageEquip();
         backPackPos.ExchangeInfo(equipItem);
 
-        UIBagPack.RefreshBagItems();
+        UIEquipPack.RefreshBagItems();
 
         CalculateAttr();
     }
