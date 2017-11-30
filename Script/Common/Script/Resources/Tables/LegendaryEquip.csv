@@ -59,7 +59,7 @@
 13002,DianWei,add attack when hp low,13002,RoleAttrImpactPassiveHPHeightAttack,PassiveHPLowAttack,3,10000,0,0,100,0,0
 13003,DianWei,add 20% ice damage,13003,RoleAttrImpactPassiveAddAttr,PassiveAttrIce,3,5000,10000,0,200,0,0
 13004,DianWei,add 20% light damage,13004,RoleAttrImpactPassiveAddAttr,PassiveAttrLighting,3,5000,10000,0,200,0,0
-13005,DianWei,lightening when hit,13005,RoleAttrImpactPassiveHitEnemy,PassiveHitLightingBullet,3,10000,0,0,100,0,0
+13005,DianWei,lightening when hit,13005,RoleAttrImpactPassiveHitEnemy,PassiveHitLightingBullet,3,1000,500,10000,-100,50,500
 13006,DianWei,lightening circle,13006,RoleAttrImpactPassiveLightCircleBuff,PassiveLightingBuff,3,50000,150000,10000,1000,1000,0
 13007,DianWei,add 20% fire damage,13007,RoleAttrImpactPassiveAddAttr,PassiveAttrFire,3,5000,10000,0,200,0,0
 13008,DianWei,fire boom when hit,13008,RoleAttrImpactPassiveHitEnemy,PassiveHitFireBullet,3,10000,0,0,100,0,0

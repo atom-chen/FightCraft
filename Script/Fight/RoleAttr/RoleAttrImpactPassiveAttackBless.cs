@@ -24,7 +24,7 @@ public class RoleAttrImpactPassiveAttackBless : RoleAttrImpactPassive
 
         var buffGO = ResourceManager.Instance.GetInstanceGameObject("Bullet\\Passive\\" + _ImpactName);
         buffGO.transform.SetParent(roleMotion.BuffBindPos.transform);
-        var buffs = buffGO.GetComponents<ImpactBuffHitEnemySub>();
+        var buffs = buffGO.GetComponents<ImpactBuffAttackSub>();
         foreach (var buff in buffs)
         {
             var subBuffs2 = buffGO.GetComponentsInChildren<ImpactBuffAttrAdd>();
