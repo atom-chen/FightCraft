@@ -9,10 +9,28 @@ public class AI_Base : MonoBehaviour
     bool _Init = false;
 
     protected MotionManager _SelfMotion;
+    protected bool _AIAwake = false;
+    public bool AIWake
+    {
+        get
+        {
+            return _AIAwake;
+        }
+        set
+        {
+            _AIAwake = value;
+        }
+    }
 
     void Start()
     {
         StartCoroutine(InitDelay());
+        AIManager.Instance.RegistAI(this);
+    }
+
+    void OnDisable()
+    {
+        AIManager.Instance.RemoveAI(this);
     }
 
     void FixedUpdate()
@@ -48,6 +66,7 @@ public class AI_Base : MonoBehaviour
 
         ModifyInitSkill();
         InitSkillInfos();
+        _AIAwake = false;
     }
 
     protected virtual void AIUpdate()

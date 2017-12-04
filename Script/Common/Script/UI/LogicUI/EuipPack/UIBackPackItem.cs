@@ -83,6 +83,10 @@ public class UIBackPackItem : UIItemSelect
         _Icon.gameObject.SetActive(false);
         _Quality.gameObject.SetActive(false);
         _DisableGO.gameObject.SetActive(false);
+        if (_Num != null)
+        {
+            _Num.text = "";
+        }
     }
 
     #region 

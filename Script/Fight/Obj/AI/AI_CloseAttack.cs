@@ -21,9 +21,15 @@ public class AI_CloseAttack : AI_Base
         if (_TargetMotion == null)
             return;
 
-        float distance = Vector3.Distance(transform.position, _TargetMotion.transform.position);
-        if (distance > _AlertRange)
-            return;
+        if (!_AIAwake)
+        {
+            float distance = Vector3.Distance(transform.position, _TargetMotion.transform.position);
+            if (distance > _AlertRange)
+                return;
+
+            _AIAwake = true;
+            AIManager.Instance.GroupAwake();
+        }
 
         CloseUpdate();
     }

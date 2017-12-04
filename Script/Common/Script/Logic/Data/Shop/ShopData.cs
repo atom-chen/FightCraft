@@ -6,6 +6,25 @@ using Tables;
 
 public class ShopData : SaveItemBase
 {
+    #region 唯一
+
+    private static ShopData _Instance = null;
+    public static ShopData Instance
+    {
+        get
+        {
+            if (_Instance == null)
+            {
+                _Instance = new ShopData();
+            }
+            return _Instance;
+        }
+    }
+
+    private ShopData() { }
+
+    #endregion
+
     #region shop refresh
 
     [SaveField(1)]
