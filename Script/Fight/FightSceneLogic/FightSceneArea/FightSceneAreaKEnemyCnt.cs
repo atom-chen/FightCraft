@@ -81,7 +81,7 @@ public class FightSceneAreaKEnemyCnt : FightSceneAreaBase
 
     private void CreateEngoughEnemy()
     {
-        if (_DeadEnemyCnt >= _KillEnemyCnt)
+        if (_DeadEnemyCnt + _CurEnemyCnt >= _KillEnemyCnt)
         {
             return;
         }

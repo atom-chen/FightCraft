@@ -162,7 +162,7 @@ public class ResourcePool : InstanceBase<ResourcePool>
         GameObject modelObj = null;
         if (_IdleBullets.ContainsKey(monsterTab.ModelPath))
         {
-            if (_IdleBullets[monsterTab.ModelPath].Count > 0)
+            if (_IdleModel[monsterTab.ModelPath].Count > 0)
             {
                 modelObj = _IdleModel[monsterTab.ModelPath].Pop();
             }
@@ -197,6 +197,7 @@ public class ResourcePool : InstanceBase<ResourcePool>
         modelObj.transform.SetParent(motion.transform);
         modelObj.transform.localPosition = Vector3.zero;
         modelObj.transform.localRotation = Quaternion.Euler(Vector3.zero);
+        
 
         return motion.GetComponent<MotionManager>();
     }
