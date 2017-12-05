@@ -41,6 +41,8 @@ public class LogicManager
         PlayerDataPack.Instance.SelectRole(idx);
         BackBagPack.Instance.LoadClass(true);
         BackBagPack.Instance.InitBackPack();
+        ShopData.Instance.LoadClass(true);
+        ShopData.Instance.RefreshShop();
 
         UIMainFun.ShowAsyn();
     }

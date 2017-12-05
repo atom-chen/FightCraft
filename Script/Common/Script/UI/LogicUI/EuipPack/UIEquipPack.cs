@@ -71,9 +71,9 @@ public class UIEquipPack : UIBase
         {
             UIEquipTooltips.ShowAsyn(equipItem, ToolTipsShowType.ShowInBackPack);
         }
-        else
+        else if (itemObj.IsVolid())
         {
-
+            UIItemTooltips.ShowAsyn(itemObj, ToolTipsShowType.ShowInBackPack);
         }
     }
 

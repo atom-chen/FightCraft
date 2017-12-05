@@ -55,6 +55,9 @@ public class ShopData : SaveItemBase
         if (timeDelay.TotalMinutes > _RefreshMinutes)
         {
             //do refresh
+            RefreshEquip();
+            RefreshShopItem();
+            RefreshGamblingItem();
 
             LastRefreshTime = DateTime.Now;
         }
@@ -86,7 +89,7 @@ public class ShopData : SaveItemBase
             }
         }
 
-        _EquipList.Clear();
+        _EquipList = new List<ItemEquip>();
         for (int i = 0; i < _MaxRefreshEquipCnt; ++i)
         {
             var equip = RandomEquip(maxRoleLv, maxRoleLv + maxRoleAttrLv);
@@ -140,7 +143,7 @@ public class ShopData : SaveItemBase
 
     public void RefreshShopItem()
     {
-        _ItemList.Clear();
+        _ItemList = new List<ItemBase>();
         foreach (var shopItem in TableReader.ShopItem.Records.Values)
         {
             var item = new ItemBase();
@@ -179,8 +182,7 @@ public class ShopData : SaveItemBase
 
     public void RefreshGamblingItem()
     {
-        _GamblingItems.Clear();
-
+        _GamblingItems = new List<ItemBase>();
         ItemBase gamblingItem = new ItemBase();
         gamblingItem.ItemDataID = "60000";
         gamblingItem.ItemStackNum = 1;

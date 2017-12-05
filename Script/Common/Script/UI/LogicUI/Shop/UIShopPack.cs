@@ -11,12 +11,12 @@ public class UIShopPack : UIBase
     public static void ShowAsyn()
     {
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("LogicUI/BagPack/UIShopPack", UILayer.PopUI, hash);
+        GameCore.Instance.UIManager.ShowUI("LogicUI/Shop/UIShopPack", UILayer.PopUI, hash);
     }
 
     public static void RefreshShopItems()
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UIEquipPack>("LogicUI/BagPack/UIShopPack");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIEquipPack>("LogicUI/Shop/UIShopPack");
         if (instance == null)
             return;
 
@@ -42,7 +42,7 @@ public class UIShopPack : UIBase
     {
         base.Show(hash);
 
-        ShowPackItems();
+        ShowPackItems(0);
     }
 
     public override void Hide()
@@ -50,33 +50,39 @@ public class UIShopPack : UIBase
         base.Hide();
     }
 
-    private void ShowPackItems()
+    public void ShowPackItems(int page)
     {
-        var page = _TagPanel.GetShowingPage();
         if (page == 0)
         {
             var itemList = new List<ItemEquip>( ShopData.Instance._EquipList);
             ExtendList(itemList);
             _ShopItemContainer.InitContentItem(itemList, ShowShopPackTooltips);
+            _BackPack._TagPanel.ShowPage(0);
+            _BackPack.OnShowPage(0);
         }
         else if (page == 1)
         {
             var itemList = new List<ItemBase>(ShopData.Instance._ItemList);
             ExtendList(itemList);
             _ShopItemContainer.InitContentItem(itemList, ShowShopPackTooltips);
+            _BackPack._TagPanel.ShowPage(1);
+            _BackPack.OnShowPage(1);
         }
         else if (page == 2)
         {
             var itemList = new List<ItemBase>(ShopData.Instance._GamblingItems);
             ExtendList(itemList);
             _ShopItemContainer.InitContentItem(itemList, ShowShopPackTooltips);
+            _BackPack._TagPanel.ShowPage(0);
+            _BackPack.OnShowPage(0);
         }
-        _BackPack.Show(null);
+        
     }
 
     private void ExtendList(List<ItemBase> itemList)
     {
-        for (int i = 0; i < 25 - itemList.Count; ++i)
+        int needExtend = 25 - itemList.Count;
+        for (int i = 0; i < needExtend; ++i)
         {
             itemList.Add(new ItemBase() { ItemDataID = "" });
         }
@@ -84,7 +90,8 @@ public class UIShopPack : UIBase
 
     private void ExtendList(List<ItemEquip> itemList)
     {
-        for (int i = 0; i < 25 - itemList.Count; ++i)
+        int needExtend = 25 - itemList.Count;
+        for (int i = 0; i < needExtend; ++i)
         {
             itemList.Add(new ItemEquip() { ItemDataID = "" });
         }
@@ -92,7 +99,7 @@ public class UIShopPack : UIBase
 
     public void RefreshItems()
     {
-        ShowPackItems();
+        ShowPackItems(_TagPanel.GetShowingPage());
         _BackPack.RefreshItems();
     }
 
@@ -101,11 +108,11 @@ public class UIShopPack : UIBase
         ItemEquip equipItem = itemObj as ItemEquip;
         if (equipItem != null && equipItem.IsVolid())
         {
-            UIEquipTooltips.ShowAsyn(equipItem, ToolTipsShowType.ShowInBackPack);
+            UIEquipTooltips.ShowAsyn(equipItem, ToolTipsShowType.ShowInShopRight);
         }
-        else
+        else if(itemObj.IsVolid())
         {
-
+            UIItemTooltips.ShowAsyn(itemObj, ToolTipsShowType.ShowInShopRight);
         }
     }
 
@@ -117,7 +124,7 @@ public class UIShopPack : UIBase
             if (equipItem == null || !equipItem.IsVolid())
                 return;
 
-            UIEquipTooltips.ShowAsyn(equipItem, ToolTipsShowType.ShowInEquipPack);
+            UIEquipTooltips.ShowAsyn(equipItem, ToolTipsShowType.ShowInShopLeft);
         }
         else if (equipObj is ItemBase)
         {
@@ -125,7 +132,7 @@ public class UIShopPack : UIBase
             if (equipItem == null || !equipItem.IsVolid())
                 return;
 
-            
+            UIItemTooltips.ShowAsyn(equipItem, ToolTipsShowType.ShowInShopLeft);
         }
     }
     #endregion

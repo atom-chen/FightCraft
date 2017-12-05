@@ -17,7 +17,8 @@ public class UIBackPack : UIBase
 
     #region 
 
-    public UIContainerSelect _ItemsContainer;
+    public UITagPanel _TagPanel;
+    public UIContainerBase _ItemsContainer;
 
     #endregion
 
@@ -39,11 +40,11 @@ public class UIBackPack : UIBase
     {
         if (page == 0)
         {
-            _ItemsContainer.InitSelectContent(BackBagPack.Instance.PageEquips, null, ShowBackPackTooltips);
+            _ItemsContainer.InitContentItem(BackBagPack.Instance.PageEquips, ShowBackPackTooltips);
         }
         else
         {
-            _ItemsContainer.InitSelectContent(BackBagPack.Instance.PageItems, null, ShowBackPackTooltips);
+            _ItemsContainer.InitContentItem(BackBagPack.Instance.PageItems, ShowBackPackTooltips);
         }
 
     }
