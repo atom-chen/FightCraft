@@ -31,11 +31,15 @@ namespace Tables
 //
         public static FightAttr FightAttr { get; internal set; }
 //
+        public static GemTable GemTable { get; internal set; }
+//
         public static LegendaryEquip LegendaryEquip { get; internal set; }
 //
         public static MonsterBase MonsterBase { get; internal set; }
 //
         public static RoleExp RoleExp { get; internal set; }
+//
+        public static ShopItem ShopItem { get; internal set; }
 //
         public static SkillInfo SkillInfo { get; internal set; }
 //
@@ -45,7 +49,7 @@ namespace Tables
 //
         public static StrTable StrTable { get; internal set; }
 //
-        public static ShopItem ShopItem { get; internal set; }
+        public static GemSet GemSet { get; internal set; }
 
         public static void ReadTables()
         {
@@ -53,27 +57,31 @@ namespace Tables
             CommonItem = new CommonItem(TableReadBase.GetTableText("CommonItem"), false);
             EquipItem = new EquipItem(TableReadBase.GetTableText("EquipItem"), false);
             FightAttr = new FightAttr(TableReadBase.GetTableText("FightAttr"), false);
+            GemTable = new GemTable(TableReadBase.GetTableText("GemTable"), false);
             LegendaryEquip = new LegendaryEquip(TableReadBase.GetTableText("LegendaryEquip"), false);
             MonsterBase = new MonsterBase(TableReadBase.GetTableText("MonsterBase"), false);
             RoleExp = new RoleExp(TableReadBase.GetTableText("RoleExp"), false);
+            ShopItem = new ShopItem(TableReadBase.GetTableText("ShopItem"), false);
             SkillInfo = new SkillInfo(TableReadBase.GetTableText("SkillInfo"), false);
             StageInfo = new StageInfo(TableReadBase.GetTableText("StageInfo"), false);
             StrDictionary = new StrDictionary(TableReadBase.GetTableText("StrDictionary"), false);
             StrTable = new StrTable(TableReadBase.GetTableText("StrTable"), false);
-            ShopItem = new ShopItem(TableReadBase.GetTableText("ShopItem"), false);
+            GemSet = new GemSet(TableReadBase.GetTableText("GemSet"), false);
 
             //初始化所有表
             CommonItem.CoverTableContent();
             EquipItem.CoverTableContent();
             FightAttr.CoverTableContent();
+            GemTable.CoverTableContent();
             LegendaryEquip.CoverTableContent();
             MonsterBase.CoverTableContent();
             RoleExp.CoverTableContent();
+            ShopItem.CoverTableContent();
             SkillInfo.CoverTableContent();
             StageInfo.CoverTableContent();
             StrDictionary.CoverTableContent();
             StrTable.CoverTableContent();
-            ShopItem.CoverTableContent();
+            GemSet.CoverTableContent();
         }
 
         #endregion

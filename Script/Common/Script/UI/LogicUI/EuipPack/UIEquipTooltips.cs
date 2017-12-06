@@ -3,27 +3,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
- 
 using UnityEngine.EventSystems;
 using System;
 using Tables;
 
- 
 
- 
-
-    public enum ToolTipsShowType
-    {
-        ShowForInfo = 0,
-        ShowInBackPack,
-        ShowInEquipPack,
-        ShowInStoreRight,
-        ShowInStoreLeft,
-        ShowInShopRight,
-        ShowInShopLeft,
-    }
-
-public class UIEquipTooltips : UIBase
+public class UIEquipTooltips : UIItemTooltips
 {
 
     #region static funs
@@ -36,7 +21,7 @@ public class UIEquipTooltips : UIBase
         GameCore.Instance.UIManager.ShowUI("LogicUI/BagPack/UIEquipTooltips", UILayer.MessageUI, hash);
     }
 
-    public static void HideAsyn()
+    public new static void HideAsyn()
     {
         UIManager.Instance.HideUI("LogicUI/BagPack/UIEquipTooltips");
     }
@@ -48,63 +33,37 @@ public class UIEquipTooltips : UIBase
     public UIEquipInfo _UIEquipInfo;
     public UIEquipInfo _CompareEquipInfo;
 
-    public GameObject _BtnPanel;
     public Button _BtnPutOn;
     public Button _BtnPutOff;
-    public Button _BtnSale;
-    public Button _BtnBuy;
-    public Button _BtnPutStore;
-    public Button _BtnGetStore;
 
     #endregion
 
     #region 
 
-    private ItemEquip _ShowItem;
-
     public override void Show(Hashtable hash)
     {
         base.Show(hash);
-        ItemEquip itemEquip = hash["ItemEquip"] as ItemEquip;
+        _ShowItem = hash["ItemEquip"] as ItemEquip;
         ToolTipsShowType showType = (ToolTipsShowType)hash["ShowType"];
-        ShowTips(itemEquip);
+        ShowTips(_ShowItem as ItemEquip);
         ShowCompare();
         ShowByType(showType);
     }
 
-    private void ShowByType(ToolTipsShowType showType)
+    protected override void ShowByType(ToolTipsShowType showType)
     {
-        _BtnPanel.SetActive(true);
+        base.ShowByType(showType);
+
         _BtnPutOn.gameObject.SetActive(false);
         _BtnPutOff.gameObject.SetActive(false);
-        _BtnSale.gameObject.SetActive(false);
-        _BtnBuy.gameObject.SetActive(false);
-        _BtnPutStore.gameObject.SetActive(false);
-        _BtnGetStore.gameObject.SetActive(false);
 
         switch (showType)
         {
-            case ToolTipsShowType.ShowForInfo:
-                _BtnPanel.SetActive(false);
-                break;
             case ToolTipsShowType.ShowInBackPack:
                 _BtnPutOn.gameObject.SetActive(true);
-                _BtnSale.gameObject.SetActive(true);
                 break;
             case ToolTipsShowType.ShowInEquipPack:
                 _BtnPutOff.gameObject.SetActive(true);
-                break;
-            case ToolTipsShowType.ShowInStoreRight:
-                _BtnPutStore.gameObject.SetActive(true);
-                break;
-            case ToolTipsShowType.ShowInStoreLeft:
-                _BtnGetStore.gameObject.SetActive(true);
-                break;
-            case ToolTipsShowType.ShowInShopRight:
-                _BtnSale.gameObject.SetActive(true);
-                break;
-            case ToolTipsShowType.ShowInShopLeft:
-                _BtnBuy.gameObject.SetActive(true);
                 break;
         }
     }
@@ -118,7 +77,7 @@ public class UIEquipTooltips : UIBase
         }
         _ShowItem = itemEquip;
 
-        _UIEquipInfo.ShowTips(_ShowItem);
+        _UIEquipInfo.ShowTips(_ShowItem as ItemEquip);
     }
 
     private void ShowCompare()
@@ -137,34 +96,16 @@ public class UIEquipTooltips : UIBase
 
     public void OnPutOn()
     {
-        RoleData.SelectRole.PutOnEquip(_ShowItem.EquipItemRecord.Slot, _ShowItem);
+        RoleData.SelectRole.PutOnEquip((_ShowItem as ItemEquip).EquipItemRecord.Slot, (_ShowItem as ItemEquip));
         Hide();
     }
 
     public void OnPutOff()
     {
-        RoleData.SelectRole.PutOffEquip(_ShowItem.EquipItemRecord.Slot, _ShowItem);
+        RoleData.SelectRole.PutOffEquip((_ShowItem as ItemEquip).EquipItemRecord.Slot, (_ShowItem as ItemEquip));
         Hide();
     }
-
-    public void OnSale()
-    {
-        if (_ShowItem != null)
-        {
-            _ShowItem.ResetItem();
-        }
-        Hide();
-    }
-
-    public void OnBuy()
-    { }
-
-    public void OnPutStore()
-    { }
-
-    public void OnGetStore()
-    { }
-
+    
     #endregion
 
 }

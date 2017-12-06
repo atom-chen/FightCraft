@@ -127,12 +127,12 @@ public class ShopData : SaveItemBase
 
     public static int GetEquipSellPrice(ItemEquip equip)
     {
-        return 1;
+        return 0;
     }
 
     public static int GetEuqipBuyPrice(ItemEquip equip)
     {
-        return 99;
+        return 0;
     }
     #endregion
 
@@ -209,9 +209,9 @@ public class ShopData : SaveItemBase
         if (_GamblingItems.Count < itemIdx)
             return;
 
-        if (itemIdx == 0)
+        //if (itemIdx == 0)
         {
-
+            Debug.Log("buy gambling:" + itemIdx);
         }
     }
 

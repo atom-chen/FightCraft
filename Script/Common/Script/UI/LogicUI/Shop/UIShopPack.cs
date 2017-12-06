@@ -8,6 +8,18 @@ public class UIShopPack : UIBase
 
     #region static funs
 
+    public static void BuyItemStatic(ItemBase item)
+    {
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIShopPack>("LogicUI/Shop/UIShopPack");
+        if (instance == null)
+            return;
+
+        if (!instance.isActiveAndEnabled)
+            return;
+
+        instance.BuyItem(item);
+    }
+
     public static void ShowAsyn()
     {
         Hashtable hash = new Hashtable();
@@ -16,7 +28,7 @@ public class UIShopPack : UIBase
 
     public static void RefreshShopItems()
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UIEquipPack>("LogicUI/Shop/UIShopPack");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIShopPack>("LogicUI/Shop/UIShopPack");
         if (instance == null)
             return;
 
@@ -135,6 +147,41 @@ public class UIShopPack : UIBase
             UIItemTooltips.ShowAsyn(equipItem, ToolTipsShowType.ShowInShopLeft);
         }
     }
+
+    #endregion
+
+    #region buy item
+
+    public void BuyItem(ItemBase itemBase)
+    {
+        int page = _TagPanel.GetShowingPage();
+        if (page == 0)
+        {
+            var shopIdx = ShopData.Instance._EquipList.IndexOf(itemBase as ItemEquip);
+            if (shopIdx < 0)
+                return;
+
+            ShopData.Instance.BuyEquip(shopIdx);
+        }
+        else if (page == 1)
+        {
+            var shopIdx = ShopData.Instance._ItemList.IndexOf(itemBase);
+            if (shopIdx < 0)
+                return;
+
+            ShopData.Instance.BuyItem(shopIdx);
+        } 
+        else if (page == 2)
+        {
+            var shopIdx = ShopData.Instance._GamblingItems.IndexOf(itemBase);
+            if (shopIdx < 0)
+                return;
+
+            ShopData.Instance.Gambling(shopIdx);
+        }
+        RefreshItems();
+    }
+
     #endregion
 
     #region 

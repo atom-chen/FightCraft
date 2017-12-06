@@ -64,6 +64,16 @@ public class UIMainFun : UIBase
         UIShopPack.ShowAsyn();
     }
 
+    public void BtnGem()
+    {
+        UIGemPack.ShowAsyn();
+    }
+
+    public void BtnSoul()
+    {
+        UISoulPack.ShowAsyn();
+    }
+
     public void BtnTestPanel()
     {
         UITestEquip.ShowAsyn();

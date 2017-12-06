@@ -68,5 +68,24 @@ public class UIBase : MonoBehaviour
 
     #endregion
 
+    #region static
+
+    public static void SetGOActive(Component actGO, bool isActive)
+    {
+        if (actGO == null)
+            return;
+ 
+        actGO.gameObject.SetActive(isActive);
+    }
+
+    public static void SetGOActive(GameObject actGO, bool isActive)
+    {
+        if (actGO == null)
+            return;
+
+        actGO.SetActive(isActive);
+    }
+
+    #endregion
 }
 

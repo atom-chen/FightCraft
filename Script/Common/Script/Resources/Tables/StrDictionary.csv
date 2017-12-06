@@ -119,5 +119,6 @@
 10000,equip,,Level,,
 10001,equip,,Value,,
 10002,,,backpack is full,,
-20000,,,not enough gold,,
-20001,,,not enough diamond,,
+20000,shop,,not enough gold,,
+20001,shop,,not enough diamond,,
+30001,gem,,No empty gem pos,,

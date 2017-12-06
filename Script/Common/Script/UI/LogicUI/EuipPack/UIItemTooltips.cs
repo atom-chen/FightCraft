@@ -8,7 +8,17 @@ using UnityEngine.EventSystems;
 using System;
 using Tables;
 
- 
+public enum ToolTipsShowType
+{
+    ShowForInfo = 0,
+    ShowInBackPack,
+    ShowInEquipPack,
+    ShowInStoreRight,
+    ShowInStoreLeft,
+    ShowInShopRight,
+    ShowInShopLeft,
+}
+
 public class UIItemTooltips : UIBase
 {
 
@@ -34,8 +44,8 @@ public class UIItemTooltips : UIBase
     public UIItemInfo _UIItemInfo;
 
     public GameObject _BtnPanel;
-    public Button _BtnPutOn;
-    public Button _BtnPutOff;
+
+    public Button _BtnUse;
     public Button _BtnSale;
     public Button _BtnBuy;
     public Button _BtnPutStore;
@@ -45,50 +55,46 @@ public class UIItemTooltips : UIBase
 
     #region 
 
-    private ItemBase _ShowItem;
+    protected ItemBase _ShowItem;
 
     public override void Show(Hashtable hash)
     {
         base.Show(hash);
-        ItemBase itemBase = hash["ItemBase"] as ItemBase;
+        _ShowItem = hash["ItemBase"] as ItemBase;
         ToolTipsShowType showType = (ToolTipsShowType)hash["ShowType"];
-        ShowTips(itemBase);
+        ShowTips(_ShowItem);
         ShowByType(showType);
     }
 
-    private void ShowByType(ToolTipsShowType showType)
+    protected virtual void ShowByType(ToolTipsShowType showType)
     {
         _BtnPanel.SetActive(true);
-        _BtnPutOn.gameObject.SetActive(false);
-        _BtnPutOff.gameObject.SetActive(false);
-        _BtnSale.gameObject.SetActive(false);
-        _BtnBuy.gameObject.SetActive(false);
-        _BtnPutStore.gameObject.SetActive(false);
-        _BtnGetStore.gameObject.SetActive(false);
+        SetGOActive(_BtnUse, false);
+        SetGOActive(_BtnSale, false);
+        SetGOActive(_BtnBuy, false);
+        SetGOActive(_BtnPutStore, false);
+        SetGOActive(_BtnGetStore, false);
 
         switch (showType)
         {
             case ToolTipsShowType.ShowForInfo:
-                _BtnPanel.SetActive(false);
+                _BtnPanel.SetActive(true);
                 break;
             case ToolTipsShowType.ShowInBackPack:
-                _BtnPutOn.gameObject.SetActive(true);
-                _BtnSale.gameObject.SetActive(true);
-                break;
-            case ToolTipsShowType.ShowInEquipPack:
-                _BtnPutOff.gameObject.SetActive(true);
+                SetGOActive(_BtnUse, true);
+                SetGOActive(_BtnSale, true);
                 break;
             case ToolTipsShowType.ShowInStoreRight:
-                _BtnPutStore.gameObject.SetActive(true);
+                SetGOActive(_BtnPutStore, true);
                 break;
             case ToolTipsShowType.ShowInStoreLeft:
-                _BtnGetStore.gameObject.SetActive(true);
+                SetGOActive(_BtnGetStore, true);
                 break;
             case ToolTipsShowType.ShowInShopRight:
-                _BtnSale.gameObject.SetActive(true);
+                SetGOActive(_BtnSale, true);
                 break;
             case ToolTipsShowType.ShowInShopLeft:
-                _BtnBuy.gameObject.SetActive(true);
+                SetGOActive(_BtnBuy, true);
                 break;
         }
     }
@@ -109,6 +115,8 @@ public class UIItemTooltips : UIBase
 
     #region operate
 
+
+
     public void OnUse()
     {
 
@@ -124,7 +132,10 @@ public class UIItemTooltips : UIBase
     }
 
     public void OnBuy()
-    { }
+    {
+        UIShopPack.BuyItemStatic(_ShowItem);
+        Hide();
+    }
 
     public void OnPutStore()
     { }

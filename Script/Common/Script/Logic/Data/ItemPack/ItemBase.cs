@@ -64,6 +64,11 @@ public class EquipExAttr
 
 public class ItemBase : SaveItemBase
 {
+    public ItemBase()
+    {
+        ItemDataID = "";
+    }
+
     [SaveField(1)]
     protected string _ItemDataID;
     public string ItemDataID

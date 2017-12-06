@@ -67,6 +67,7 @@ public class LogicManager
     {
         PlayerDataPack.Instance.SaveClass(true);
         BackBagPack.Instance.SaveClass(true);
+        ShopData.Instance.SaveClass(true);
         if (PlayerDataPack.Instance._SelectedRole != null)
         {
             PlayerDataPack.Instance._SelectedRole.SaveClass(true);
