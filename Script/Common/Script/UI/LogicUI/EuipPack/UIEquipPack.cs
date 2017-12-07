@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-public class UIEquipPack : UIBase
+public class UIEquipPack : UIBase,IDragablePack
 {
 
     #region static funs
@@ -26,6 +26,8 @@ public class UIEquipPack : UIBase
         instance.RefreshItems();
     }
 
+    
+
     #endregion
 
     #region 
@@ -36,6 +38,16 @@ public class UIEquipPack : UIBase
     #endregion
 
     #region 
+
+    public override void Init()
+    {
+        base.Init();
+
+        _BackPack = UIBackPack.GetUIBackPackInstance(transform);
+        _BackPack._OnItemSelectCallBack = ShowBackPackSelectItem;
+        _BackPack._OnDragItemCallBack = OnDragItem;
+        _BackPack._IsCanDropItemCallBack = IsCanDropItem;
+    }
 
     public override void Show(Hashtable hash)
     {
@@ -52,7 +64,7 @@ public class UIEquipPack : UIBase
     private void ShowPackItems()
     {
         Hashtable exHash = new Hashtable();
-        exHash.Add("UIBagPack", this);
+        exHash.Add("DragPack", this);
 
         _EquipContainer.InitContentItem(PlayerDataPack.Instance._SelectedRole._EquipList, ShowEquipPackTooltips, exHash);
         _BackPack.Show(null);
@@ -64,16 +76,16 @@ public class UIEquipPack : UIBase
         _BackPack.RefreshItems();
     }
 
-    public void ShowBackPackTooltips(ItemBase itemObj)
+    public void ShowBackPackSelectItem(ItemBase itemObj)
     {
         ItemEquip equipItem = itemObj as ItemEquip;
         if (equipItem != null && equipItem.IsVolid())
         {
-            UIEquipTooltips.ShowAsyn(equipItem, ToolTipsShowType.ShowInBackPack);
+            UIEquipTooltips.ShowAsyn(equipItem, new ToolTipFunc[1] { new ToolTipFunc(10003, PutOnEquip) });
         }
         else if (itemObj.IsVolid())
         {
-            UIItemTooltips.ShowAsyn(itemObj, ToolTipsShowType.ShowInBackPack);
+            UIItemTooltips.ShowAsyn(itemObj);
         }
     }
 
@@ -83,7 +95,7 @@ public class UIEquipPack : UIBase
         if (equipItem == null || !equipItem.IsVolid())
             return;
 
-        UIEquipTooltips.ShowAsyn(equipItem, ToolTipsShowType.ShowInEquipPack);
+        UIEquipTooltips.ShowAsyn(equipItem, new ToolTipFunc[1] { new ToolTipFunc(10004, PutOffEquip) });
     }
     #endregion
 
@@ -94,7 +106,98 @@ public class UIEquipPack : UIBase
         RefreshItems();
     }
 
+    public bool IsCanDropItem(UIDragableItemBase dragItem, UIDragableItemBase dropItem)
+    {
+        if (dragItem._DragPackBase == dropItem._DragPackBase)
+            return false;
+
+        if (dragItem._DragPackBase == this)
+        {
+            if (!dropItem.ShowedItem.IsVolid())
+                return true;
+
+            if (dropItem.ShowedItem is ItemEquip)
+            {
+                var equip = (ItemEquip)dropItem.ShowedItem;
+                var slot = PlayerDataPack.Instance._SelectedRole._EquipList.IndexOf(equip);
+                if (slot < 0)
+                    return false;
+
+                return PlayerDataPack.Instance._SelectedRole.IsCanEquipItem((Tables.EQUIP_SLOT)slot, equip);
+            }
+        }
+        else if (dropItem._DragPackBase == this)
+        {
+            if (dragItem.ShowedItem is ItemEquip)
+            {
+                var equip = (ItemEquip)dragItem.ShowedItem;
+                var slot = PlayerDataPack.Instance._SelectedRole._EquipList.IndexOf(dropItem.ShowedItem as ItemEquip);
+                if (slot < 0)
+                    return false;
+
+                return PlayerDataPack.Instance._SelectedRole.IsCanEquipItem((Tables.EQUIP_SLOT)slot, equip);
+            }
+        }
+
+        return true;
+    }
+
+    public void OnDragItem(UIDragableItemBase dragItem, UIDragableItemBase dropItem)
+    {
+        if (dragItem._DragPackBase == this)
+        {
+            var dragEquip = dragItem.ShowedItem as ItemEquip;
+
+            if (!dropItem.ShowedItem.IsVolid())
+            {
+                PlayerDataPack.Instance._SelectedRole.PutOffEquip(dragEquip.EquipItemRecord.Slot, dragEquip);
+                return;
+            }
+
+            if (dropItem.ShowedItem is ItemEquip)
+            {
+                PutOnEquip(dropItem.ShowedItem);
+            }
+            else
+            {
+                PutOffEquip(dragItem.ShowedItem);
+            }
+        }
+        else if (dropItem._DragPackBase == this)
+        {
+            if (dragItem.ShowedItem is ItemEquip)
+            {
+                PutOnEquip(dragItem.ShowedItem);
+            }
+        }
+    }
+
+    private void PutOnEquip(ItemBase itemBase)
+    {
+        if (!itemBase.IsVolid())
+            return;
+
+        var itemEquip = itemBase as ItemEquip;
+        if (itemEquip != null)
+        {
+            PlayerDataPack.Instance._SelectedRole.PutOnEquip(itemEquip.EquipItemRecord.Slot, itemEquip);
+        }
+    }
+
+    private void PutOffEquip(ItemBase itemBase)
+    {
+        if (!itemBase.IsVolid())
+            return;
+
+        var itemEquip = itemBase as ItemEquip;
+        if (itemEquip != null)
+        {
+            PlayerDataPack.Instance._SelectedRole.PutOffEquip(itemEquip.EquipItemRecord.Slot, itemEquip);
+        }
+    }
+
     #endregion
+
 
 }
 

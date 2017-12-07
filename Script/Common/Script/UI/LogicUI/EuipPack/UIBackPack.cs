@@ -4,16 +4,38 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-public class UIBackPack : UIBase
+public class UIBackPack : UIBase, IDragablePack
 {
-    [Serializable]
-    public class OnSelectItem : UnityEvent<ItemBase>
+    #region static
+
+    public static UIBackPack GetUIBackPackInstance(Transform parentTrans)
     {
-        public OnSelectItem() { }
+        var tempGO = ResourceManager.Instance.GetUI("LogicUI/BagPack/UIBackPack");
+        if (tempGO != null)
+        {
+            var uiGO = GameObject.Instantiate(tempGO);
+
+            uiGO.transform.SetParent(parentTrans);
+            uiGO.transform.localPosition = Vector3.zero;
+            uiGO.transform.localRotation = Quaternion.Euler(Vector3.zero);
+            uiGO.transform.localScale = Vector3.one;
+
+            var backPack = uiGO.GetComponent<UIBackPack>();
+            return backPack;
+        }
+        return null;
     }
 
-    [SerializeField]
+    #endregion
+
+    public delegate void OnSelectItem(ItemBase itemBase);
     public OnSelectItem _OnItemSelectCallBack;
+
+    public delegate void OnDragItem(UIDragableItemBase dragItem, UIDragableItemBase dropItem);
+    public OnDragItem _OnDragItemCallBack;
+
+    public delegate bool IsCanDropItem(UIDragableItemBase dragItem, UIDragableItemBase dropItem);
+    public IsCanDropItem _IsCanDropItemCallBack;
 
     #region 
 
@@ -38,13 +60,15 @@ public class UIBackPack : UIBase
 
     public void OnShowPage(int page)
     {
+        Hashtable hash = new Hashtable();
+        hash.Add("DragPack", this);
         if (page == 0)
         {
-            _ItemsContainer.InitContentItem(BackBagPack.Instance.PageEquips, ShowBackPackTooltips);
+            _ItemsContainer.InitContentItem(BackBagPack.Instance.PageEquips, ShowBackPackTooltips, hash);
         }
         else
         {
-            _ItemsContainer.InitContentItem(BackBagPack.Instance.PageItems, ShowBackPackTooltips);
+            _ItemsContainer.InitContentItem(BackBagPack.Instance.PageItems, ShowBackPackTooltips, hash);
         }
 
     }
@@ -68,6 +92,42 @@ public class UIBackPack : UIBase
     private void ItemRefresh(object sender, Hashtable args)
     {
         RefreshItems();
+    }
+
+
+
+    #endregion
+
+    #region 
+
+    void IDragablePack.OnDragItem(UIDragableItemBase dragItem, UIDragableItemBase dropItem)
+    {
+        if ((dragItem._DragPackBase == this && dropItem._DragPackBase == this))
+        {
+            dragItem.ShowedItem.ExchangeInfo(dropItem.ShowedItem);
+            dragItem.Refresh();
+            dropItem.Refresh();
+            return;
+        }
+
+        if (_OnDragItemCallBack != null)
+        {
+            _OnDragItemCallBack(dragItem, dropItem);
+        }
+    }
+
+    bool IDragablePack.IsCanDropItem(UIDragableItemBase dragItem, UIDragableItemBase dropItem)
+    {
+        if ((dragItem._DragPackBase == this && dropItem._DragPackBase == this))
+        {
+            return true;
+        }
+
+        if (_IsCanDropItemCallBack != null)
+        {
+            return _IsCanDropItemCallBack(dragItem, dropItem);
+        }
+        return true;
     }
 
     #endregion

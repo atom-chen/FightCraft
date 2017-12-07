@@ -72,7 +72,7 @@ public class UIGemPack : UIBase
         if (equipItem == null || !equipItem.IsVolid())
             return;
 
-        UIEquipTooltips.ShowAsyn(equipItem, ToolTipsShowType.ShowInEquipPack);
+        //UIEquipTooltips.ShowAsyn(equipItem, ToolTipsShowType.ShowInEquipPack);
     }
 
     private void ShowGemTooltipsRight(object equipObj)
@@ -81,7 +81,7 @@ public class UIGemPack : UIBase
         if (equipItem == null || !equipItem.IsVolid())
             return;
 
-        UIEquipTooltips.ShowAsyn(equipItem, ToolTipsShowType.ShowInEquipPack);
+        //UIEquipTooltips.ShowAsyn(equipItem, ToolTipsShowType.ShowInEquipPack);
     }
 
     private void ShowMaterialTooltips(object equipObj)
@@ -90,7 +90,7 @@ public class UIGemPack : UIBase
         if (equipItem == null || !equipItem.IsVolid())
             return;
 
-        UIEquipTooltips.ShowAsyn(equipItem, ToolTipsShowType.ShowInEquipPack);
+        //UIEquipTooltips.ShowAsyn(equipItem, ToolTipsShowType.ShowInEquipPack);
     }
     #endregion
 

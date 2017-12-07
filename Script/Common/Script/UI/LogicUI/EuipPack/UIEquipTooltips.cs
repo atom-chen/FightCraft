@@ -13,11 +13,11 @@ public class UIEquipTooltips : UIItemTooltips
 
     #region static funs
 
-    public static void ShowAsyn(ItemEquip itemEquip, ToolTipsShowType showType = ToolTipsShowType.ShowForInfo)
+    public static void ShowAsyn(ItemEquip itemEquip, params ToolTipFunc[] funcs)
     {
         Hashtable hash = new Hashtable();
         hash.Add("ItemEquip", itemEquip);
-        hash.Add("ShowType", showType);
+        hash.Add("ToolTipFun", funcs);
         GameCore.Instance.UIManager.ShowUI("LogicUI/BagPack/UIEquipTooltips", UILayer.MessageUI, hash);
     }
 
@@ -33,9 +33,6 @@ public class UIEquipTooltips : UIItemTooltips
     public UIEquipInfo _UIEquipInfo;
     public UIEquipInfo _CompareEquipInfo;
 
-    public Button _BtnPutOn;
-    public Button _BtnPutOff;
-
     #endregion
 
     #region 
@@ -44,30 +41,12 @@ public class UIEquipTooltips : UIItemTooltips
     {
         base.Show(hash);
         _ShowItem = hash["ItemEquip"] as ItemEquip;
-        ToolTipsShowType showType = (ToolTipsShowType)hash["ShowType"];
+        ToolTipFunc[] funcs = (ToolTipFunc[])hash["ToolTipFun"];
         ShowTips(_ShowItem as ItemEquip);
         ShowCompare();
-        ShowByType(showType);
+        ShowFuncs(funcs);
     }
-
-    protected override void ShowByType(ToolTipsShowType showType)
-    {
-        base.ShowByType(showType);
-
-        _BtnPutOn.gameObject.SetActive(false);
-        _BtnPutOff.gameObject.SetActive(false);
-
-        switch (showType)
-        {
-            case ToolTipsShowType.ShowInBackPack:
-                _BtnPutOn.gameObject.SetActive(true);
-                break;
-            case ToolTipsShowType.ShowInEquipPack:
-                _BtnPutOff.gameObject.SetActive(true);
-                break;
-        }
-    }
-
+    
     private void ShowTips(ItemEquip itemEquip)
     {
         if (itemEquip == null)
@@ -92,21 +71,6 @@ public class UIEquipTooltips : UIItemTooltips
 
     #endregion
 
-    #region operate
-
-    public void OnPutOn()
-    {
-        RoleData.SelectRole.PutOnEquip((_ShowItem as ItemEquip).EquipItemRecord.Slot, (_ShowItem as ItemEquip));
-        Hide();
-    }
-
-    public void OnPutOff()
-    {
-        RoleData.SelectRole.PutOffEquip((_ShowItem as ItemEquip).EquipItemRecord.Slot, (_ShowItem as ItemEquip));
-        Hide();
-    }
-    
-    #endregion
 
 }
 

@@ -8,15 +8,16 @@ using UnityEngine.EventSystems;
 using System;
 using Tables;
 
-public enum ToolTipsShowType
+public class ToolTipFunc
 {
-    ShowForInfo = 0,
-    ShowInBackPack,
-    ShowInEquipPack,
-    ShowInStoreRight,
-    ShowInStoreLeft,
-    ShowInShopRight,
-    ShowInShopLeft,
+    public ToolTipFunc(int strIDX, CallBackFunc func)
+    {
+        _FuncName = StrDictionary.GetFormatStr(strIDX);
+        _Func = func;
+    }
+    public string _FuncName;
+    public delegate void CallBackFunc(ItemBase itemBase);
+    public CallBackFunc _Func;
 }
 
 public class UIItemTooltips : UIBase
@@ -24,11 +25,11 @@ public class UIItemTooltips : UIBase
 
     #region static funs
 
-    public static void ShowAsyn(ItemBase itembase, ToolTipsShowType showType = ToolTipsShowType.ShowForInfo)
+    public static void ShowAsyn(ItemBase itembase, params ToolTipFunc[] funcs)
     {
         Hashtable hash = new Hashtable();
         hash.Add("ItemBase", itembase);
-        hash.Add("ShowType", showType);
+        hash.Add("ToolTipFun", funcs);
         GameCore.Instance.UIManager.ShowUI("LogicUI/BagPack/UIItemTooltips", UILayer.MessageUI, hash);
     }
 
@@ -45,57 +46,47 @@ public class UIItemTooltips : UIBase
 
     public GameObject _BtnPanel;
 
-    public Button _BtnUse;
-    public Button _BtnSale;
-    public Button _BtnBuy;
-    public Button _BtnPutStore;
-    public Button _BtnGetStore;
+    public Button[] _BtnGO;
+    public Text[] _BtnText;
 
     #endregion
 
     #region 
 
     protected ItemBase _ShowItem;
+    protected ToolTipFunc[] _ShowFuncs;
 
     public override void Show(Hashtable hash)
     {
         base.Show(hash);
         _ShowItem = hash["ItemBase"] as ItemBase;
-        ToolTipsShowType showType = (ToolTipsShowType)hash["ShowType"];
+        ToolTipFunc[] showType = (ToolTipFunc[])hash["ToolTipFun"];
         ShowTips(_ShowItem);
-        ShowByType(showType);
+        ShowFuncs(showType);
     }
 
-    protected virtual void ShowByType(ToolTipsShowType showType)
+    protected virtual void ShowFuncs(ToolTipFunc[] funcs)
     {
-        _BtnPanel.SetActive(true);
-        SetGOActive(_BtnUse, false);
-        SetGOActive(_BtnSale, false);
-        SetGOActive(_BtnBuy, false);
-        SetGOActive(_BtnPutStore, false);
-        SetGOActive(_BtnGetStore, false);
-
-        switch (showType)
+        _ShowFuncs = funcs;
+        if (funcs.Length == 0)
         {
-            case ToolTipsShowType.ShowForInfo:
-                _BtnPanel.SetActive(true);
-                break;
-            case ToolTipsShowType.ShowInBackPack:
-                SetGOActive(_BtnUse, true);
-                SetGOActive(_BtnSale, true);
-                break;
-            case ToolTipsShowType.ShowInStoreRight:
-                SetGOActive(_BtnPutStore, true);
-                break;
-            case ToolTipsShowType.ShowInStoreLeft:
-                SetGOActive(_BtnGetStore, true);
-                break;
-            case ToolTipsShowType.ShowInShopRight:
-                SetGOActive(_BtnSale, true);
-                break;
-            case ToolTipsShowType.ShowInShopLeft:
-                SetGOActive(_BtnBuy, true);
-                break;
+            SetGOActive(_BtnPanel, false);
+        }
+        else
+        {
+            SetGOActive(_BtnPanel, true);
+            for (int i = 0; i < _BtnGO.Length; ++i)
+            {
+                if (i < funcs.Length)
+                {
+                    SetGOActive(_BtnGO[i], true);
+                    _BtnText[i].text = funcs[i]._FuncName;
+                }
+                else
+                {
+                    SetGOActive(_BtnGO[i], false);
+                }
+            }
         }
     }
 
@@ -115,33 +106,11 @@ public class UIItemTooltips : UIBase
 
     #region operate
 
-
-
-    public void OnUse()
+    public void OnBtnFunc(int idx)
     {
-
-    }
-
-    public void OnSale()
-    {
-        if (_ShowItem != null)
-        {
-            _ShowItem.ResetItem();
-        }
+        _ShowFuncs[idx]._Func.Invoke(_ShowItem);
         Hide();
     }
-
-    public void OnBuy()
-    {
-        UIShopPack.BuyItemStatic(_ShowItem);
-        Hide();
-    }
-
-    public void OnPutStore()
-    { }
-
-    public void OnGetStore()
-    { }
 
     #endregion
 

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-public class UIShopPack : UIBase
+public class UIShopPack : UIBase,IDragablePack
 {
 
     #region static funs
@@ -50,6 +50,16 @@ public class UIShopPack : UIBase
 
     #region 
 
+    public override void Init()
+    {
+        base.Init();
+
+        _BackPack = UIBackPack.GetUIBackPackInstance(transform);
+        _BackPack._OnItemSelectCallBack = ShowBackPackSelectItem;
+        _BackPack._OnDragItemCallBack = OnDragItem;
+        _BackPack._IsCanDropItemCallBack = IsCanDropItem;
+    }
+
     public override void Show(Hashtable hash)
     {
         base.Show(hash);
@@ -64,11 +74,14 @@ public class UIShopPack : UIBase
 
     public void ShowPackItems(int page)
     {
+        Hashtable exHash = new Hashtable();
+        exHash.Add("DragPack", this);
+
         if (page == 0)
         {
             var itemList = new List<ItemEquip>( ShopData.Instance._EquipList);
             ExtendList(itemList);
-            _ShopItemContainer.InitContentItem(itemList, ShowShopPackTooltips);
+            _ShopItemContainer.InitContentItem(itemList, ShowShopPackTooltips, exHash);
             _BackPack._TagPanel.ShowPage(0);
             _BackPack.OnShowPage(0);
         }
@@ -76,7 +89,7 @@ public class UIShopPack : UIBase
         {
             var itemList = new List<ItemBase>(ShopData.Instance._ItemList);
             ExtendList(itemList);
-            _ShopItemContainer.InitContentItem(itemList, ShowShopPackTooltips);
+            _ShopItemContainer.InitContentItem(itemList, ShowShopPackTooltips, exHash);
             _BackPack._TagPanel.ShowPage(1);
             _BackPack.OnShowPage(1);
         }
@@ -84,7 +97,7 @@ public class UIShopPack : UIBase
         {
             var itemList = new List<ItemBase>(ShopData.Instance._GamblingItems);
             ExtendList(itemList);
-            _ShopItemContainer.InitContentItem(itemList, ShowShopPackTooltips);
+            _ShopItemContainer.InitContentItem(itemList, ShowShopPackTooltips, exHash);
             _BackPack._TagPanel.ShowPage(0);
             _BackPack.OnShowPage(0);
         }
@@ -115,16 +128,16 @@ public class UIShopPack : UIBase
         _BackPack.RefreshItems();
     }
 
-    public void ShowBackPackTooltips(ItemBase itemObj)
+    public void ShowBackPackSelectItem(ItemBase itemObj)
     {
         ItemEquip equipItem = itemObj as ItemEquip;
         if (equipItem != null && equipItem.IsVolid())
         {
-            UIEquipTooltips.ShowAsyn(equipItem, ToolTipsShowType.ShowInShopRight);
+            UIEquipTooltips.ShowAsyn(equipItem, new ToolTipFunc[1] { new ToolTipFunc(10005, SellItem) });
         }
         else if(itemObj.IsVolid())
         {
-            UIItemTooltips.ShowAsyn(itemObj, ToolTipsShowType.ShowInShopRight);
+            UIItemTooltips.ShowAsyn(itemObj, new ToolTipFunc[1] { new ToolTipFunc(10005, SellItem) });
         }
     }
 
@@ -136,7 +149,7 @@ public class UIShopPack : UIBase
             if (equipItem == null || !equipItem.IsVolid())
                 return;
 
-            UIEquipTooltips.ShowAsyn(equipItem, ToolTipsShowType.ShowInShopLeft);
+            UIEquipTooltips.ShowAsyn(equipItem, new ToolTipFunc[1] { new ToolTipFunc(10006, BuyItem) });
         }
         else if (equipObj is ItemBase)
         {
@@ -144,7 +157,7 @@ public class UIShopPack : UIBase
             if (equipItem == null || !equipItem.IsVolid())
                 return;
 
-            UIItemTooltips.ShowAsyn(equipItem, ToolTipsShowType.ShowInShopLeft);
+            UIItemTooltips.ShowAsyn(equipItem, new ToolTipFunc[1] { new ToolTipFunc(10006, BuyItem) });
         }
     }
 
@@ -182,6 +195,12 @@ public class UIShopPack : UIBase
         RefreshItems();
     }
 
+    public void SellItem(ItemBase itemBase)
+    {
+        itemBase.ResetItem();
+        RefreshItems();
+    }
+
     #endregion
 
     #region 
@@ -189,6 +208,27 @@ public class UIShopPack : UIBase
     private void ItemRefresh(object sender, Hashtable args)
     {
         RefreshItems();
+    }
+
+    public bool IsCanDropItem(UIDragableItemBase dragItem, UIDragableItemBase dropItem)
+    {
+        if (dragItem._DragPackBase == dropItem._DragPackBase)
+            return false;
+
+        return true;
+
+    }
+
+    public void OnDragItem(UIDragableItemBase dragItem, UIDragableItemBase dropItem)
+    {
+        if (dragItem._DragPackBase == this)
+        {
+            BuyItem(dragItem.ShowedItem);
+        }
+        else if (dropItem._DragPackBase == this)
+        {
+            SellItem(dropItem.ShowedItem);
+        }
     }
 
     #endregion
