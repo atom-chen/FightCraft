@@ -172,6 +172,20 @@ public class ItemBase : SaveItemBase
         //LogicManager.Instance.SaveGame();
     }
 
+    public void CopyFrom(ItemBase itembase)
+    {
+        if (itembase == null)
+            return;
+
+        ItemDataID = itembase.ItemDataID;
+
+        _DynamicDataInt = itembase._DynamicDataInt;
+
+        _DynamicDataVector = itembase._DynamicDataVector;
+
+        RefreshItemData();
+    }
+
     #endregion
 
     #region static create item

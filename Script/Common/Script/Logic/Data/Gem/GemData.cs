@@ -4,6 +4,13 @@ using UnityEngine;
 using System;
 using Tables;
 
+public class GemLevelInfo
+{
+    public string MaterialData;
+    public int MaterialCnt;
+    public int CostMoney;
+}
+
 public class GemData : SaveItemBase
 {
     #region 唯一
@@ -25,12 +32,19 @@ public class GemData : SaveItemBase
 
     #endregion
 
+    public void InitGemData()
+    {
+        InitGemContainer();
+        InitGemMaterials();
+        InitGemPack();
+    }
+
     #region gem pack
 
     public const int MAX_GEM_EQUIP = 6;
 
     [SaveField(1)]
-    private List<ItemBase> _EquipedGems;
+    public List<ItemBase> _EquipedGems;
 
     public void InitGemPack()
     {
@@ -42,14 +56,27 @@ public class GemData : SaveItemBase
                 _EquipedGems.Add(new ItemBase());
             }
         }
+        else
+        {
+            foreach (var gemEquiped in _EquipedGems)
+            {
+                foreach (var gemInPack in _GemContainer)
+                {
+                    if (gemEquiped.ItemDataID == gemInPack.ItemDataID)
+                    {
+                        gemEquiped.CopyFrom(gemInPack);
+                    }
+                }
+            }
+        }
     }
 
-    public void PutOnGem(ItemBase gem, int slot)
+    public bool PutOnGem(ItemBase gem, int slot)
     {
         if (slot >= MAX_GEM_EQUIP)
         {
             UIMessageTip.ShowMessageTip("gem slot error");
-            return;
+            return false;
         }
 
         int putOnSlot = -1;
@@ -66,22 +93,42 @@ public class GemData : SaveItemBase
         if (putOnSlot == -1)
         {
             UIMessageTip.ShowMessageTip(30001);
-            return;
+            return false;
         }
 
-        _EquipedGems[putOnSlot].ExchangeInfo(gem);
+        _EquipedGems[putOnSlot].CopyFrom(gem);
+        return true;
     }
 
-    public void PutOff()
+    public bool PutOff(ItemBase gem)
     {
+        if (!_EquipedGems.Contains(gem))
+            return false;
 
+        gem.ResetItem();
+        return true;
+    }
+
+    public bool IsEquipedGem(string gemDataID)
+    {
+        foreach (var gem in _EquipedGems)
+        {
+            if (gem.ItemDataID == gemDataID)
+                return true;
+        }
+
+        return false;
     }
 
     #endregion
 
     #region gem container
 
-    private List<ItemBase> _GemContainer;
+    [SaveField(2)]
+    public List<ItemBase> _GemContainer;
+
+    [SaveField(3)]
+    public List<ItemBase> _GemMaterials;
 
     private void InitGemContainer()
     {
@@ -97,6 +144,95 @@ public class GemData : SaveItemBase
                 _GemContainer.Add(gemItem);
             }
         }
+    }
+
+    private void InitGemMaterials()
+    {
+        if (_GemMaterials == null || _GemMaterials.Count == 0)
+        {
+            _GemMaterials.Add(new ItemBase() { ItemDataID = "70100" });
+            _GemMaterials.Add(new ItemBase() { ItemDataID = "70101" });
+            _GemMaterials.Add(new ItemBase() { ItemDataID = "70102" });
+            _GemMaterials.Add(new ItemBase() { ItemDataID = "70103" });
+            _GemMaterials.Add(new ItemBase() { ItemDataID = "70104" });
+            _GemMaterials.Add(new ItemBase() { ItemDataID = "70105" });
+        }
+    }
+
+    public GemLevelInfo GetGemLevelUpInfo(ItemBase gemItemBase)
+    {
+        ItemBase lvUpGem = gemItemBase;
+
+        var gemRecord = TableReader.GemTable.GetRecord(lvUpGem.ItemDataID);
+        if (gemRecord == null)
+            return null;
+
+        GemLevelInfo lvInfo = new GemLevelInfo();
+        lvInfo.MaterialData = gemRecord.LevelUpParam.ToString();
+        lvInfo.MaterialCnt = (2 ^ gemItemBase.ItemStackNum) * 6;
+        lvInfo.CostMoney = (2 ^ gemItemBase.ItemStackNum) * 1200;
+
+        return lvInfo;
+    }
+
+    public bool IsCanLevelUp(ItemBase gemItemBase, GemLevelInfo lvInfo = null)
+    {
+        if (lvInfo == null)
+            lvInfo = GetGemLevelUpInfo(gemItemBase);
+
+        if (PlayerDataPack.Instance.Gold < lvInfo.CostMoney)
+        {
+            UIMessageTip.ShowMessageTip(20000);
+            return false;
+        }
+
+        foreach (var mat in _GemMaterials)
+        {
+            if (mat.ItemDataID == lvInfo.MaterialData)
+            {
+                if (mat.ItemStackNum >= lvInfo.MaterialCnt)
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    public bool GemLevelUp(ItemBase gemItemBase, GemLevelInfo lvInfo = null)
+    {
+        ItemBase lvUpGem = gemItemBase;
+        if (_EquipedGems.Contains(gemItemBase))
+        {
+            foreach (var gem in _GemContainer)
+            {
+                if (gem.ItemDataID == gemItemBase.ItemDataID)
+                {
+                    lvUpGem = gem;
+                    break;
+                }
+            }
+        }
+
+        if (lvUpGem == null)
+            return false;
+
+        if (lvInfo == null)
+            lvInfo = GetGemLevelUpInfo(gemItemBase);
+
+        if (!IsCanLevelUp(gemItemBase, lvInfo))
+            return false;
+
+        PlayerDataPack.Instance.DecGold(lvInfo.CostMoney);
+        foreach (var mat in _GemMaterials)
+        {
+            if (mat.ItemDataID == lvInfo.MaterialData)
+            {
+                mat.ItemStackNum -= lvInfo.MaterialCnt;
+            }
+        }
+
+        lvUpGem.ItemStackNum += 1;
+
+        return true;
     }
 
     #endregion

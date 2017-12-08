@@ -32,9 +32,23 @@ public class PlayerDataPack : DataPackBase
     #region money
     [SaveField(1)]
     private int _Gold = 0;
+    public int Gold
+    {
+        get
+        {
+            return _Gold;
+        }
+    }
 
     [SaveField(2)]
     private int _Diamond = 0;
+    public int Diamond
+    {
+        get
+        {
+            return _Diamond;
+        }
+    }
 
     public void AddGold(int value)
     {

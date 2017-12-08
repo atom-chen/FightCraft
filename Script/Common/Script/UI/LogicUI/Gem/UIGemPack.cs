@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-public class UIGemPack : UIBase
+public class UIGemPack : UIBase, IDragablePack
 {
 
     #region static funs
@@ -54,9 +54,10 @@ public class UIGemPack : UIBase
     private void ShowPackItems()
     {
         Hashtable exHash = new Hashtable();
-        exHash.Add("UIBagPack", this);
+        exHash.Add("DragPack", this);
 
-        //_EquipContainer.InitContentItem(PlayerDataPack.Instance._SelectedRole._EquipList, ShowEquipPackTooltips, exHash);
+        _GemContainer.InitContentItem(GemData.Instance._GemContainer, ShowGemTooltipsRight, exHash);
+        _MaterialContainer.InitContentItem(GemData.Instance._GemMaterials, ShowMaterialTooltips, exHash);
         //_BackPack.Show(null);
     }
 
@@ -101,6 +102,23 @@ public class UIGemPack : UIBase
         RefreshItems();
     }
 
+    public bool IsCanDropItem(UIDragableItemBase dragItem, UIDragableItemBase dropItem)
+    {
+        return true;
+    }
+
+    public void OnDragItem(UIDragableItemBase dragItem, UIDragableItemBase dropItem)
+    {
+        if (GemData.Instance._EquipedGems.Contains(dragItem.ShowedItem))
+        {
+            GemData.Instance.PutOff(dragItem.ShowedItem);
+        }
+        else if (GemData.Instance._EquipedGems.Contains(dropItem.ShowedItem))
+        {
+            int idx = GemData.Instance._EquipedGems.IndexOf(dropItem.ShowedItem);
+            GemData.Instance.PutOnGem(dragItem.ShowedItem, idx);
+        }
+    }
     #endregion
 
 }

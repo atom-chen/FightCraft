@@ -227,7 +227,7 @@ public class UIShopPack : UIBase,IDragablePack
         }
         else if (dropItem._DragPackBase == this)
         {
-            SellItem(dropItem.ShowedItem);
+            SellItem(dragItem.ShowedItem);
         }
     }
 
