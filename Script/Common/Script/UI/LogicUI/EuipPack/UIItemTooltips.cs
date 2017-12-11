@@ -42,7 +42,7 @@ public class UIItemTooltips : UIBase
 
     #region 
 
-    public UIItemInfo _UIItemInfo;
+    public UIGemInfo _UIItemInfo;
 
     public GameObject _BtnPanel;
 
@@ -90,7 +90,7 @@ public class UIItemTooltips : UIBase
         }
     }
 
-    private void ShowTips(ItemBase itemBase)
+    protected virtual void ShowTips(ItemBase itemBase)
     {
         if (itemBase == null)
         {

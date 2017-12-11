@@ -39,10 +39,15 @@ public class LogicManager
     public void StartLoadRole(int idx)
     {
         PlayerDataPack.Instance.SelectRole(idx);
+
         BackBagPack.Instance.LoadClass(true);
         BackBagPack.Instance.InitBackPack();
+
         ShopData.Instance.LoadClass(true);
         ShopData.Instance.RefreshShop();
+
+        GemData.Instance.LoadClass(true);
+        GemData.Instance.InitGemData();
 
         UIMainFun.ShowAsyn();
     }
@@ -68,6 +73,8 @@ public class LogicManager
         PlayerDataPack.Instance.SaveClass(true);
         BackBagPack.Instance.SaveClass(true);
         ShopData.Instance.SaveClass(true);
+        GemData.Instance.SaveClass(true);
+
         if (PlayerDataPack.Instance._SelectedRole != null)
         {
             PlayerDataPack.Instance._SelectedRole.SaveClass(true);

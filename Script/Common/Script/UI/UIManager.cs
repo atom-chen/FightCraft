@@ -269,7 +269,7 @@ public class UIManager : MonoBehaviour
 
     public void UIConflict(UILayer uilayer)
     {
-        if (uilayer == UILayer.PopUI || uilayer == UILayer.MessageUI)
+        if (uilayer == UILayer.PopUI /*|| uilayer == UILayer.MessageUI*/)
         {
             HideLayer(uilayer);
         }

@@ -21,7 +21,10 @@ public class ShopData : SaveItemBase
         }
     }
 
-    private ShopData() { }
+    private ShopData()
+    {
+        _SaveFileName = "ShopData";
+    }
 
     #endregion
 

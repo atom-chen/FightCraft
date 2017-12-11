@@ -58,6 +58,10 @@ public class UIGemPack : UIBase, IDragablePack
 
         _GemContainer.InitContentItem(GemData.Instance._GemContainer, ShowGemTooltipsRight, exHash);
         _MaterialContainer.InitContentItem(GemData.Instance._GemMaterials, ShowMaterialTooltips, exHash);
+        for (int i = 0; i < _GemPack.Length; ++i)
+        {
+            _GemPack[i].ShowGem(GemData.Instance._EquipedGems[i]);
+        }
         //_BackPack.Show(null);
     }
 
@@ -69,19 +73,28 @@ public class UIGemPack : UIBase, IDragablePack
 
     private void ShowGemTooltipsLeft(object equipObj)
     {
-        ItemEquip equipItem = equipObj as ItemEquip;
-        if (equipItem == null || !equipItem.IsVolid())
+        ItemBase gemItem = equipObj as ItemBase;
+        if (gemItem == null || !gemItem.IsVolid())
             return;
 
+        UIGemTooltips.ShowAsyn(gemItem, new ToolTipFunc[2] { new ToolTipFunc(10008, PunchOff), new ToolTipFunc(10009, LevelUp) });
         //UIEquipTooltips.ShowAsyn(equipItem, ToolTipsShowType.ShowInEquipPack);
     }
 
     private void ShowGemTooltipsRight(object equipObj)
     {
-        ItemEquip equipItem = equipObj as ItemEquip;
-        if (equipItem == null || !equipItem.IsVolid())
+        ItemBase gemItem = equipObj as ItemBase;
+        if (gemItem == null || !gemItem.IsVolid())
             return;
 
+        if (gemItem.ItemStackNum == 0)
+        {
+            UIGemTooltips.ShowAsyn(gemItem, new ToolTipFunc[1] { new ToolTipFunc(10012, LevelUp) });
+        }
+        else
+        {
+            UIGemTooltips.ShowAsyn(gemItem, new ToolTipFunc[2] { new ToolTipFunc(10007, PunchOn), new ToolTipFunc(10009, LevelUp) });
+        }
         //UIEquipTooltips.ShowAsyn(equipItem, ToolTipsShowType.ShowInEquipPack);
     }
 
@@ -97,6 +110,25 @@ public class UIGemPack : UIBase, IDragablePack
 
     #region 
 
+    private void PunchOn(ItemBase itemBase)
+    {
+        if (!itemBase.IsVolid())
+            return;
+
+        var idx = GemData.Instance.GetPutOnIdx();
+        GemData.Instance.PutOnGem(itemBase, idx);
+    }
+
+    private void PunchOff(ItemBase itemBase)
+    {
+        GemData.Instance.PutOff(itemBase);
+    }
+
+    private void LevelUp(ItemBase itemBase)
+    {
+        GemData.Instance.GemLevelUp(itemBase);
+    }
+
     private void ItemRefresh(object sender, Hashtable args)
     {
         RefreshItems();
@@ -104,6 +136,12 @@ public class UIGemPack : UIBase, IDragablePack
 
     public bool IsCanDropItem(UIDragableItemBase dragItem, UIDragableItemBase dropItem)
     {
+        if (dragItem._DragPackBase == dropItem._DragPackBase)
+            return false;
+
+        if (dragItem.ShowedItem.ItemStackNum < 1)
+            return false;
+
         return true;
     }
 

@@ -20,9 +20,9 @@ public class UIItemInfo : UIBase
 
     #region 
 
-    private ItemBase _ShowItem;
+    protected ItemBase _ShowItem;
 
-    public void ShowTips(ItemBase itemBase)
+    public virtual void ShowTips(ItemBase itemBase)
     {
         if (itemBase == null || !itemBase.IsVolid())
         {

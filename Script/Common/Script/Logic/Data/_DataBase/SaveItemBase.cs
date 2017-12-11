@@ -9,6 +9,10 @@ public class SaveItemBase
 
     public void SaveClass(bool isSaveChild)
     {
+        if (string.IsNullOrEmpty(_SaveFileName))
+        {
+            _SaveFileName = this.GetType().ToString();
+        }
         DataPackSave.SaveData(this, isSaveChild);
     }
 

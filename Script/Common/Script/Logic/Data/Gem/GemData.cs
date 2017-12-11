@@ -28,7 +28,10 @@ public class GemData : SaveItemBase
         }
     }
 
-    private GemData() { }
+    private GemData()
+    {
+        _SaveFileName = "GemData";
+    }
 
     #endregion
 
@@ -71,6 +74,16 @@ public class GemData : SaveItemBase
         }
     }
 
+    public int GetPutOnIdx()
+    {
+        for (int i = 0; i < _EquipedGems.Count; ++i)
+        {
+            if (!_EquipedGems[i].IsVolid())
+                return i;
+        }
+        return 0;
+    }
+
     public bool PutOnGem(ItemBase gem, int slot)
     {
         if (slot >= MAX_GEM_EQUIP)
@@ -93,6 +106,12 @@ public class GemData : SaveItemBase
         if (putOnSlot == -1)
         {
             UIMessageTip.ShowMessageTip(30001);
+            return false;
+        }
+
+        if (gem.ItemStackNum < 1)
+        {
+            UIMessageTip.ShowMessageTip(30002);
             return false;
         }
 
@@ -150,13 +169,31 @@ public class GemData : SaveItemBase
     {
         if (_GemMaterials == null || _GemMaterials.Count == 0)
         {
+            _GemMaterials = new List<ItemBase>();
             _GemMaterials.Add(new ItemBase() { ItemDataID = "70100" });
             _GemMaterials.Add(new ItemBase() { ItemDataID = "70101" });
             _GemMaterials.Add(new ItemBase() { ItemDataID = "70102" });
             _GemMaterials.Add(new ItemBase() { ItemDataID = "70103" });
             _GemMaterials.Add(new ItemBase() { ItemDataID = "70104" });
-            _GemMaterials.Add(new ItemBase() { ItemDataID = "70105" });
+            //_GemMaterials.Add(new ItemBase() { ItemDataID = "70105" });
         }
+    }
+
+    public bool AddMaterial(string itemID, int itemNum)
+    {
+        if (itemNum <= 0)
+            return false;
+
+        for (int i = 0; i < _GemMaterials.Count; ++i)
+        {
+            if (_GemMaterials[i].ItemDataID == itemID)
+            {
+                _GemMaterials[i].ItemStackNum += itemNum;
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public GemLevelInfo GetGemLevelUpInfo(ItemBase gemItemBase)
@@ -190,11 +227,14 @@ public class GemData : SaveItemBase
         {
             if (mat.ItemDataID == lvInfo.MaterialData)
             {
-                if (mat.ItemStackNum >= lvInfo.MaterialCnt)
-                    return true;
+                if (mat.ItemStackNum < lvInfo.MaterialCnt)
+                {
+                    UIMessageTip.ShowMessageTip(30003);
+                    return false;
+                }
             }
         }
-        return false;
+        return true;
     }
 
     public bool GemLevelUp(ItemBase gemItemBase, GemLevelInfo lvInfo = null)

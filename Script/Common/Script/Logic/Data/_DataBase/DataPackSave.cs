@@ -59,6 +59,10 @@ public class DataPackSave
 
         SaveRoot saveRoot = new SaveRoot();
         saveRoot._SaveKey = dataObj._SaveFileName;
+        if (string.IsNullOrEmpty(dataObj._SaveFileName))
+        {
+            Debug.LogError("SaveKey is Empty:" + dataObj.ToString());
+        }
         saveRoot._ChildNode = GetNodesForSave(dataObj, saveChildItems);
         SaveRoot(saveRoot);
 
@@ -134,6 +138,7 @@ public class DataPackSave
                         else if (valueList[j] is SaveItemBase)
                         {
                             var saveItem = (SaveItemBase)valueList[j];
+                            saveItem._SaveFileName = dataObj.ToString() + fieldInfo.Name + j.ToString();
                             saveChilds.Add(saveItem);
                             childNode._SaveValue = saveItem._SaveFileName;
                         }
@@ -163,6 +168,7 @@ public class DataPackSave
                 {
                     baseNode._SaveType = fieldInfo.FieldType.Name;
                     var saveItem = (SaveItemBase)fieldInfo.GetValue(dataObj);
+                    saveItem._SaveFileName = dataObj.ToString() + fieldInfo.Name;
                     saveChilds.Add(saveItem);
                     baseNode._SaveValue = saveItem._SaveFileName;
                 }
@@ -195,7 +201,7 @@ public class DataPackSave
             saveStr += DataPackSave.SaveSplitChars[0] + child.ToSaveString(1);
         }
         saveStr = saveStr.Substring(1);
-        Debug.Log("SaveRoot:" + saveStr);
+        Debug.Log("Save:" + root._SaveKey + "," + saveStr);
         LocalSave.Save(root._SaveKey, saveStr);
 
     }

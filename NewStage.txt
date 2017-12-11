@@ -1,0 +1,21 @@
+02£¬04£¬05£¬08£¬09£¬10£¬11£¬14£¬15
+
+sha£º09£¬10£¬15£¬04£¬08
+cao£º07£¬06£¬03£¬01£¬04
+bing: 01,02,05,04
+sha:05,01,06,07,13
+di:05,01,03,02,04
+cheng:jjc,02,03,01
+
+sha:shanzei,gongbing,quanshi,jianbing,gunseng
+Hero_DianWei_01_AM£¬Hero_DiRenJie_01_AM£¬Hero_LianPo_01_AM£¬Hero_LeiZhenZi_01_AM£¬Hero_WuZeTian_01_AM£¬
+cao:dongwu,fubing,daobing,gongbing,shanzeiduizhang,cuibing,gaibang
+Hero_XiShi_01_AM£¬Hero_YangJian_01_AM£¬Hero_CaoCao_01_AM£¬Hero_ShenGongBao_01_AM£¬ Hero_WenZhong_01_AM
+bing:cuibingduizhang,fubingduizhang,gongbingduizhang,jianbingduizhang,quanshiduizhang
+Hero_DiaoChan_01_AM£¬Hero_WenZhong_01_AM£¬Hero_ZhaoYun_01_AM£¬Hero_LeiZhenZi_01_AM£¬Hero_BaiQi_01_AM£¬
+sha:daobingduizhang,shashou,shuangdaobing,daoshi,dongwu
+Hero_ZhouWang_01_AM£¬Hero_YangGuiFei_01_AM£¬Hero_JiangZiYa_01_AM£¬Hero_NeZha_01_AM£¬Hero_WuZeTian_01_AM£¬
+di:qilin,shashouduizhang,shuangdaobing,gaibangduizhang,shashou,shuangdaobing,gaibang
+Hero_LuBan_01_AM£¬Hero_JingKe_01_AM£¬Hero_YangGuiFei_01_AM£¬Hero_DiRenJie_01_AM
+cheng:daobingduizhang,gongbingduizhang,fubingduizhang,gunshengduizhang,qilin
+Hero_DaJi_01_AM£¬Hero_BaiQi_01_AM£¬Hero_JiangZiYa_01_AM

@@ -67,7 +67,7 @@ public class UITestEquip : UIBase
     {
         int itemCnt = int.Parse(_ItemCnt.text);
 
-        BackBagPack.Instance.AddItem(_ItemID.text, itemCnt);
+        ItemBase.CreateItemInPack(_ItemID.text, itemCnt);
     }
     #endregion
 

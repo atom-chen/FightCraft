@@ -8,12 +8,12 @@ public class UIMessageTip : UIBase
 {
     public static void ShowMessageTip(string str)
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UIMessageTip>("LogicUI/Message/UIMessageTip");
-        if (instance != null)
-        {
-            instance.ShowMessage(str);
-        }
-        else
+        //var instance = GameCore.Instance.UIManager.GetUIInstance<UIMessageTip>("LogicUI/Message/UIMessageTip");
+        //if (instance != null)
+        //{
+        //    instance.ShowMessage(str);
+        //}
+        //else
         {
             ShowAsyn(str);
         }

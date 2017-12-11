@@ -6,38 +6,24 @@ using System.Collections;
 using UnityEngine.EventSystems;
 using System;
 
-public class UIGemItem : UIItemSelect
+public class UIGemItem : UIDragableItemBase
 {
-    public Image _BG;
-    public Image _Icon;
-    public Image _Quality;
-    public Text _Lv;
-
-    protected ItemBase _ShowItem;
-    public ItemBase ShowItem
-    {
-        get
-        {
-            return _ShowItem;
-        }
-    }
-
     public override void Show(Hashtable hash)
     {
         base.Show();
 
         var showItem = (ItemBase)hash["InitObj"];
-        ShowEquip(showItem);
+        ShowGem(showItem);
     }
 
     public override void Refresh()
     {
         base.Refresh();
 
-        ShowEquip(_ShowItem);
+        ShowGem(_ShowedItem);
     }
 
-    public void ShowEquip(ItemBase showItem)
+    public void ShowGem(ItemBase showItem)
     {
         if (showItem == null)
         {
@@ -45,29 +31,42 @@ public class UIGemItem : UIItemSelect
             return;
         }
 
-        _ShowItem = showItem;
+        _ShowedItem = showItem;
         if (!showItem.IsVolid())
         {
             ClearItem();
             return;
         }
 
-        if (_Lv != null)
+        if (_Num != null)
         {
             {
-                _Lv.text = _ShowItem.ItemStackNum.ToString();
+                _Num.text = _ShowedItem.ItemStackNum.ToString();
+            }
+        }
+
+        if (_DisableGO != null)
+        {
+            if (_ShowedItem.ItemStackNum > 0)
+            {
+                _DisableGO.SetActive(false);
+            }
+            else
+            {
+                _DisableGO.SetActive(true);
             }
         }
         _Icon.gameObject.SetActive(true);
     }
 
-    private void ClearItem()
+    protected override void ClearItem()
     {
-        _Icon.gameObject.SetActive(false);
-        _Quality.gameObject.SetActive(false);
-        if (_Lv != null)
+        base.ClearItem();
+
+        if (_DisableGO != null)
         {
-            _Lv.text = "";
+
+            _DisableGO.SetActive(false);
         }
     }
 
@@ -76,6 +75,13 @@ public class UIGemItem : UIItemSelect
     public override void OnItemClick()
     {
         base.OnItemClick();
+    }
+
+    protected override bool IsCanDrag()
+    {
+        if (_ShowedItem.IsVolid() && _ShowedItem.ItemStackNum > 0)
+            return true;
+        return false;
     }
 
     #endregion
