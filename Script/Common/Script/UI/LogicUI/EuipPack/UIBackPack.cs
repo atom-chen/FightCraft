@@ -100,6 +100,14 @@ public class UIBackPack : UIBase, IDragablePack
 
     #region 
 
+    public bool IsCanDragItem(UIDragableItemBase dragItem)
+    {
+        if (!dragItem.ShowedItem.IsVolid())
+            return false;
+
+        return true;
+    }
+
     void IDragablePack.OnDragItem(UIDragableItemBase dragItem, UIDragableItemBase dropItem)
     {
         if ((dragItem._DragPackBase == this && dropItem._DragPackBase == this))

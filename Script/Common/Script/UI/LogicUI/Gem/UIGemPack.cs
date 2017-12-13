@@ -60,20 +60,30 @@ public class UIGemPack : UIBase, IDragablePack
         _MaterialContainer.InitContentItem(GemData.Instance._GemMaterials, ShowMaterialTooltips, exHash);
         for (int i = 0; i < _GemPack.Length; ++i)
         {
-            _GemPack[i].ShowGem(GemData.Instance._EquipedGems[i]);
+            Hashtable hash = new Hashtable();
+            hash.Add("InitObj", GemData.Instance._EquipedGems[i]);
+            hash.Add("DragPack", this);
+            _GemPack[i].Show(hash);
+            _GemPack[i]._ClickEvent += ShowGemTooltipsLeft;
         }
         //_BackPack.Show(null);
     }
 
     public void RefreshItems()
     {
+        _GemContainer.RefreshItems();
+        _MaterialContainer.RefreshItems();
+        for (int i = 0; i < _GemPack.Length; ++i)
+        {
+            _GemPack[i].Refresh();
+        }
         //_EquipContainer.RefreshItems();
         //_BackPack.RefreshItems();
     }
 
     private void ShowGemTooltipsLeft(object equipObj)
     {
-        ItemBase gemItem = equipObj as ItemBase;
+        ItemGem gemItem = equipObj as ItemGem;
         if (gemItem == null || !gemItem.IsVolid())
             return;
 
@@ -83,7 +93,7 @@ public class UIGemPack : UIBase, IDragablePack
 
     private void ShowGemTooltipsRight(object equipObj)
     {
-        ItemBase gemItem = equipObj as ItemBase;
+        ItemGem gemItem = equipObj as ItemGem;
         if (gemItem == null || !gemItem.IsVolid())
             return;
 
@@ -112,21 +122,29 @@ public class UIGemPack : UIBase, IDragablePack
 
     private void PunchOn(ItemBase itemBase)
     {
-        if (!itemBase.IsVolid())
+        ItemGem itemGem = itemBase as ItemGem;
+        if (!itemGem.IsVolid())
             return;
 
         var idx = GemData.Instance.GetPutOnIdx();
-        GemData.Instance.PutOnGem(itemBase, idx);
+        GemData.Instance.PutOnGem(itemGem, idx);
+        RefreshItems();
     }
 
     private void PunchOff(ItemBase itemBase)
     {
-        GemData.Instance.PutOff(itemBase);
+        ItemGem itemGem = itemBase as ItemGem;
+        GemData.Instance.PutOff(itemGem);
+        RefreshItems();
     }
 
     private void LevelUp(ItemBase itemBase)
     {
-        GemData.Instance.GemLevelUp(itemBase);
+        ItemGem itemGem = itemBase as ItemGem;
+        if (GemData.Instance.GemLevelUp(itemGem))
+        {
+            RefreshItems();
+        }
     }
 
     private void ItemRefresh(object sender, Hashtable args)
@@ -134,9 +152,29 @@ public class UIGemPack : UIBase, IDragablePack
         RefreshItems();
     }
 
+    public bool IsCanDragItem(UIDragableItemBase dragItem)
+    {
+        if (!dragItem.ShowedItem.IsVolid())
+            return false;
+
+        var gemRecord = Tables.TableReader.GemTable.GetRecord(dragItem.ShowedItem.ItemDataID);
+        if (gemRecord == null)
+            return false;
+
+        return true;
+    }
+
     public bool IsCanDropItem(UIDragableItemBase dragItem, UIDragableItemBase dropItem)
     {
-        if (dragItem._DragPackBase == dropItem._DragPackBase)
+        //if (dragItem._DragPackBase == dropItem._DragPackBase)
+        //    return false;
+
+        if (GemData.Instance._EquipedGems.Contains(dragItem.ShowedItem as ItemGem)
+            && GemData.Instance._EquipedGems.Contains(dropItem.ShowedItem as ItemGem))
+            return false;
+
+        if (!GemData.Instance._EquipedGems.Contains(dragItem.ShowedItem as ItemGem)
+            && !GemData.Instance._EquipedGems.Contains(dropItem.ShowedItem as ItemGem))
             return false;
 
         if (dragItem.ShowedItem.ItemStackNum < 1)
@@ -147,14 +185,14 @@ public class UIGemPack : UIBase, IDragablePack
 
     public void OnDragItem(UIDragableItemBase dragItem, UIDragableItemBase dropItem)
     {
-        if (GemData.Instance._EquipedGems.Contains(dragItem.ShowedItem))
+        if (GemData.Instance._EquipedGems.Contains(dragItem.ShowedItem as ItemGem))
         {
-            GemData.Instance.PutOff(dragItem.ShowedItem);
+            GemData.Instance.PutOff(dragItem.ShowedItem as ItemGem);
         }
-        else if (GemData.Instance._EquipedGems.Contains(dropItem.ShowedItem))
+        else if (GemData.Instance._EquipedGems.Contains(dropItem.ShowedItem as ItemGem))
         {
-            int idx = GemData.Instance._EquipedGems.IndexOf(dropItem.ShowedItem);
-            GemData.Instance.PutOnGem(dragItem.ShowedItem, idx);
+            int idx = GemData.Instance._EquipedGems.IndexOf(dropItem.ShowedItem as ItemGem);
+            GemData.Instance.PutOnGem(dragItem.ShowedItem as ItemGem, idx);
         }
     }
     #endregion

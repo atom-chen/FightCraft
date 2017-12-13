@@ -10,9 +10,9 @@ public class UIGemItem : UIDragableItemBase
 {
     public override void Show(Hashtable hash)
     {
-        base.Show();
+        base.Show(hash);
 
-        var showItem = (ItemBase)hash["InitObj"];
+        var showItem = (ItemGem)hash["InitObj"];
         ShowGem(showItem);
     }
 
@@ -20,10 +20,10 @@ public class UIGemItem : UIDragableItemBase
     {
         base.Refresh();
 
-        ShowGem(_ShowedItem);
+        ShowGem(_ShowedItem as ItemGem);
     }
 
-    public void ShowGem(ItemBase showItem)
+    public void ShowGem(ItemGem showItem)
     {
         if (showItem == null)
         {

@@ -23,6 +23,18 @@ public class UIMainFun : UIBase
         return showEvents;
     }
 
+    public static void UpdateMoney()
+    {
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIMainFun>("LogicUI/UIMainFun");
+        if (instance == null)
+            return;
+
+        if (!instance.isActiveAndEnabled)
+            return;
+
+        instance.UpdateMoneyInner();
+    }
+
     #endregion
 
     #region 
@@ -36,11 +48,26 @@ public class UIMainFun : UIBase
     public override void Show(Hashtable hash)
     {
         base.Show(hash);
+
+        UpdateMoneyInner();
     }
 
     public void OnEnable()
     {
+        
+    }
 
+    #endregion
+
+    #region info
+
+    public UICurrencyItem _GoldItem;
+    public UICurrencyItem _DiamondItem;
+
+    private void UpdateMoneyInner()
+    {
+        _GoldItem.ShowOwnCurrency(MONEYTYPE.GOLD);
+        _DiamondItem.ShowOwnCurrency(MONEYTYPE.DIAMOND);
     }
 
     #endregion

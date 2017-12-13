@@ -106,6 +106,13 @@ public class UIEquipPack : UIBase,IDragablePack
         RefreshItems();
     }
 
+    public bool IsCanDragItem(UIDragableItemBase dragItem)
+    {
+        if (!dragItem.ShowedItem.IsVolid())
+            return false;
+        return true;
+    }
+
     public bool IsCanDropItem(UIDragableItemBase dragItem, UIDragableItemBase dropItem)
     {
         if (dragItem._DragPackBase == dropItem._DragPackBase)

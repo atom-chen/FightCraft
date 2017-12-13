@@ -10,16 +10,15 @@ using Tables;
 public class UIGemInfo : UIItemInfo
 {
 
-    #region 
+    public UIEquipAttrItem _BaseAttr;
 
+    public void ShowTips(ItemGem itemBase)
+    {
+        base.ShowTips(itemBase);
 
-    #endregion
-
-    #region 
-    
-    #endregion
-
-
+        _Level.text = itemBase.Level.ToString();
+        _BaseAttr.ShowAttr(itemBase.GetExAttr());
+    }
 
 }
 

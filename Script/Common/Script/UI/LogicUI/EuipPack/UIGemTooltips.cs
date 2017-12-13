@@ -13,10 +13,10 @@ public class UIGemTooltips : UIItemTooltips
 
     #region static funs
 
-    public new static void ShowAsyn(ItemBase itemBase, params ToolTipFunc[] funcs)
+    public static void ShowAsyn(ItemGem itemBase, params ToolTipFunc[] funcs)
     {
         Hashtable hash = new Hashtable();
-        hash.Add("ItemBase", itemBase);
+        hash.Add("ItemGem", itemBase);
         hash.Add("ToolTipFun", funcs);
         GameCore.Instance.UIManager.ShowUI("LogicUI/Gem/UIGemTooltips", UILayer.MessageUI, hash);
     }
@@ -30,21 +30,25 @@ public class UIGemTooltips : UIItemTooltips
 
     #region 
 
+    public UIGemInfo _GemInfo;
+
     #endregion
 
     #region 
 
-    protected override void ShowTips(ItemBase itemBase)
-    {
-        if (itemBase == null)
-        {
-            _ShowItem = null;
-            return;
-        }
-        _ShowItem = itemBase;
+    private ItemGem _ItemGem;
 
-        _UIItemInfo.ShowTips(_ShowItem);
+    public override void Show(Hashtable hash)
+    {
+        base.Show(hash);
+        _ItemGem = hash["ItemGem"] as ItemGem;
+        _ShowItem = _ItemGem;
+        _GemInfo.ShowTips(_ItemGem);
+
+        ToolTipFunc[] showType = (ToolTipFunc[])hash["ToolTipFun"];
+        ShowFuncs(showType);
     }
+    
 
     #endregion
 

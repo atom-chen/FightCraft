@@ -47,16 +47,16 @@ public class GemData : SaveItemBase
     public const int MAX_GEM_EQUIP = 6;
 
     [SaveField(1)]
-    public List<ItemBase> _EquipedGems;
+    public List<ItemGem> _EquipedGems;
 
     public void InitGemPack()
     {
         if (_EquipedGems == null || _EquipedGems.Count == 0)
         {
-            _EquipedGems = new List<ItemBase>();
+            _EquipedGems = new List<ItemGem>();
             for (int i = 0; i < MAX_GEM_EQUIP; ++i)
             {
-                _EquipedGems.Add(new ItemBase());
+                _EquipedGems.Add(new ItemGem());
             }
         }
         else
@@ -84,7 +84,7 @@ public class GemData : SaveItemBase
         return 0;
     }
 
-    public bool PutOnGem(ItemBase gem, int slot)
+    public bool PutOnGem(ItemGem gem, int slot)
     {
         if (slot >= MAX_GEM_EQUIP)
         {
@@ -92,16 +92,16 @@ public class GemData : SaveItemBase
             return false;
         }
 
-        int putOnSlot = -1;
+        if (_EquipedGems.Contains(gem))
+        {
+            UIMessageTip.ShowMessageTip("allready put on gem");
+            return false;
+        }
+
+        int putOnSlot = slot;
         if (slot < 0)
         {
-            for (int i = 0; i < MAX_GEM_EQUIP; ++i)
-            {
-                if (!_EquipedGems[i].IsVolid())
-                {
-                    putOnSlot = i;
-                }
-            }
+            putOnSlot = GetPutOnIdx();
         }
         if (putOnSlot == -1)
         {
@@ -119,7 +119,7 @@ public class GemData : SaveItemBase
         return true;
     }
 
-    public bool PutOff(ItemBase gem)
+    public bool PutOff(ItemGem gem)
     {
         if (!_EquipedGems.Contains(gem))
             return false;
@@ -144,7 +144,7 @@ public class GemData : SaveItemBase
     #region gem container
 
     [SaveField(2)]
-    public List<ItemBase> _GemContainer;
+    public List<ItemGem> _GemContainer;
 
     [SaveField(3)]
     public List<ItemBase> _GemMaterials;
@@ -153,10 +153,10 @@ public class GemData : SaveItemBase
     {
         if (_GemContainer == null || _GemContainer.Count == 0)
         {
-            _GemContainer = new List<ItemBase>();
+            _GemContainer = new List<ItemGem>();
             foreach (var gemRecord in TableReader.GemTable.Records.Values)
             {
-                ItemBase gemItem = new ItemBase();
+                ItemGem gemItem = new ItemGem();
                 gemItem.ItemDataID = gemRecord.Id;
                 gemItem.ItemStackNum = 0;
 
@@ -196,9 +196,9 @@ public class GemData : SaveItemBase
         return false;
     }
 
-    public GemLevelInfo GetGemLevelUpInfo(ItemBase gemItemBase)
+    public GemLevelInfo GetGemLevelUpInfo(ItemGem gemItemBase)
     {
-        ItemBase lvUpGem = gemItemBase;
+        ItemGem lvUpGem = gemItemBase;
 
         var gemRecord = TableReader.GemTable.GetRecord(lvUpGem.ItemDataID);
         if (gemRecord == null)
@@ -212,7 +212,7 @@ public class GemData : SaveItemBase
         return lvInfo;
     }
 
-    public bool IsCanLevelUp(ItemBase gemItemBase, GemLevelInfo lvInfo = null)
+    public bool IsCanLevelUp(ItemGem gemItemBase, GemLevelInfo lvInfo = null)
     {
         if (lvInfo == null)
             lvInfo = GetGemLevelUpInfo(gemItemBase);
@@ -237,9 +237,9 @@ public class GemData : SaveItemBase
         return true;
     }
 
-    public bool GemLevelUp(ItemBase gemItemBase, GemLevelInfo lvInfo = null)
+    public bool GemLevelUp(ItemGem gemItemBase, GemLevelInfo lvInfo = null)
     {
-        ItemBase lvUpGem = gemItemBase;
+        ItemGem lvUpGem = gemItemBase;
         if (_EquipedGems.Contains(gemItemBase))
         {
             foreach (var gem in _GemContainer)
