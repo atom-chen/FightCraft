@@ -6,50 +6,56 @@ using System.Collections;
 using UnityEngine.EventSystems;
 using System;
 
-public class UIGemItem : UIDragableItemBase
+public class UIGemSuitGemItem : UIPackItemBase
 {
-    public GameObject _UsingGO;
+    public GameObject _UnClearItem; 
+
+    private string _GemDataID;
+    private int _MinGemLv;
+    private bool _ClearGem;
 
     public override void Show(Hashtable hash)
     {
         base.Show(hash);
 
-        var showItem = (ItemGem)hash["InitObj"];
-        ShowGem(showItem);
+        var gemInfo = (Tables.GemTableRecord)hash["InitObj"];
+        _MinGemLv = (int)hash["MinLevel"];
+        _ClearGem = (bool)hash["IsClearGem"];
+
+        ShowGem(gemInfo.Id);
     }
 
     public override void Refresh()
     {
         base.Refresh();
 
-        ShowGem(_ShowedItem as ItemGem);
+        ShowGem(_GemDataID);
     }
 
-    public void ShowGem(ItemGem showItem)
+
+    public void ShowGem(string gemDataID)
     {
-        if (showItem == null)
+
+        var gemData = GemData.Instance.GetGemInfo(gemDataID);
+        if (gemData == null || !gemData.IsVolid())
         {
             ClearItem();
             return;
         }
 
-        _ShowedItem = showItem;
-        if (!showItem.IsVolid())
-        {
-            ClearItem();
-            return;
-        }
+        _GemDataID = gemDataID;
 
         if (_Num != null)
         {
             {
-                _Num.text = showItem.Level.ToString();
+                _Num.text = gemData.Level.ToString();
             }
         }
+        _Icon.gameObject.SetActive(true);
 
         if (_DisableGO != null)
         {
-            if (showItem.Level > 0)
+            if (gemData.Level >= _MinGemLv)
             {
                 _DisableGO.SetActive(false);
             }
@@ -58,19 +64,18 @@ public class UIGemItem : UIDragableItemBase
                 _DisableGO.SetActive(true);
             }
         }
-
-        if (_UsingGO != null)
+        
+        if (!_ClearGem)
         {
-            if (GemData.Instance.IsEquipedGem(showItem.ItemDataID))
+            if (gemData.Level >= _MinGemLv)
             {
-                _UsingGO.SetActive(true);
+                _UnClearItem.SetActive(false);
             }
             else
             {
-                _UsingGO.SetActive(false);
+                _UnClearItem.SetActive(true);
             }
         }
-        _Icon.gameObject.SetActive(true);
     }
 
     protected override void ClearItem()
@@ -89,13 +94,6 @@ public class UIGemItem : UIDragableItemBase
     public override void OnItemClick()
     {
         base.OnItemClick();
-    }
-
-    protected override bool IsCanDrag()
-    {
-        if (_ShowedItem.IsVolid() && _ShowedItem.ItemStackNum > 0)
-            return true;
-        return false;
     }
 
     #endregion

@@ -14,10 +14,12 @@ namespace Tables
 
         public override string Id { get; set; }        public string Name { get; set; }
         public string Desc { get; set; }
+        public bool IsEnableDefault { get; set; }
+        public int MinGemLv { get; set; }
         public List<GemTableRecord> Gems { get; set; }
-        public List<int> BaseAttr { get; set; }
-        public List<int> AttrStep { get; set; }
-        public List<int> AttrStep2 { get; set; }
+        public List<Vector3> BaseAttr { get; set; }
+        public List<string> ExAttrName { get; set; }
+        public List<Vector3> ExAttrValue { get; set; }
         public GemSetRecord(DataRecord dataRecord)
         {
             if (dataRecord != null)
@@ -27,9 +29,9 @@ namespace Tables
 
             }
             Gems = new List<GemTableRecord>();
-            BaseAttr = new List<int>();
-            AttrStep = new List<int>();
-            AttrStep2 = new List<int>();
+            BaseAttr = new List<Vector3>();
+            ExAttrName = new List<string>();
+            ExAttrValue = new List<Vector3>();
         }
         public override string[] GetRecordStr()
         {
@@ -37,6 +39,8 @@ namespace Tables
             recordStrList.Add(TableWriteBase.GetWriteStr(Id));
             recordStrList.Add(TableWriteBase.GetWriteStr(Name));
             recordStrList.Add(TableWriteBase.GetWriteStr(Desc));
+            recordStrList.Add(TableWriteBase.GetWriteStr(IsEnableDefault));
+            recordStrList.Add(TableWriteBase.GetWriteStr(MinGemLv));
             foreach (var testTableItem in Gems)
             {
                 if (testTableItem != null)
@@ -52,11 +56,11 @@ namespace Tables
             {
                 recordStrList.Add(TableWriteBase.GetWriteStr(testTableItem));
             }
-            foreach (var testTableItem in AttrStep)
+            foreach (var testTableItem in ExAttrName)
             {
                 recordStrList.Add(TableWriteBase.GetWriteStr(testTableItem));
             }
-            foreach (var testTableItem in AttrStep2)
+            foreach (var testTableItem in ExAttrValue)
             {
                 recordStrList.Add(TableWriteBase.GetWriteStr(testTableItem));
             }
@@ -125,22 +129,8 @@ namespace Tables
             {
                 pair.Value.Name = TableReadBase.ParseString(pair.Value.ValueStr[1]);
                 pair.Value.Desc = TableReadBase.ParseString(pair.Value.ValueStr[2]);
-                if (!string.IsNullOrEmpty(pair.Value.ValueStr[3]))
-                {
-                    pair.Value.Gems.Add( TableReader.GemTable.GetRecord(pair.Value.ValueStr[3]));
-                }
-                else
-                {
-                    pair.Value.Gems.Add(null);
-                }
-                if (!string.IsNullOrEmpty(pair.Value.ValueStr[4]))
-                {
-                    pair.Value.Gems.Add( TableReader.GemTable.GetRecord(pair.Value.ValueStr[4]));
-                }
-                else
-                {
-                    pair.Value.Gems.Add(null);
-                }
+                pair.Value.IsEnableDefault = TableReadBase.ParseBool(pair.Value.ValueStr[3]);
+                pair.Value.MinGemLv = TableReadBase.ParseInt(pair.Value.ValueStr[4]);
                 if (!string.IsNullOrEmpty(pair.Value.ValueStr[5]))
                 {
                     pair.Value.Gems.Add( TableReader.GemTable.GetRecord(pair.Value.ValueStr[5]));
@@ -173,24 +163,34 @@ namespace Tables
                 {
                     pair.Value.Gems.Add(null);
                 }
-                pair.Value.BaseAttr.Add(TableReadBase.ParseInt(pair.Value.ValueStr[9]));
-                pair.Value.BaseAttr.Add(TableReadBase.ParseInt(pair.Value.ValueStr[10]));
-                pair.Value.BaseAttr.Add(TableReadBase.ParseInt(pair.Value.ValueStr[11]));
-                pair.Value.BaseAttr.Add(TableReadBase.ParseInt(pair.Value.ValueStr[12]));
-                pair.Value.BaseAttr.Add(TableReadBase.ParseInt(pair.Value.ValueStr[13]));
-                pair.Value.BaseAttr.Add(TableReadBase.ParseInt(pair.Value.ValueStr[14]));
-                pair.Value.AttrStep.Add(TableReadBase.ParseInt(pair.Value.ValueStr[15]));
-                pair.Value.AttrStep.Add(TableReadBase.ParseInt(pair.Value.ValueStr[16]));
-                pair.Value.AttrStep.Add(TableReadBase.ParseInt(pair.Value.ValueStr[17]));
-                pair.Value.AttrStep.Add(TableReadBase.ParseInt(pair.Value.ValueStr[18]));
-                pair.Value.AttrStep.Add(TableReadBase.ParseInt(pair.Value.ValueStr[19]));
-                pair.Value.AttrStep.Add(TableReadBase.ParseInt(pair.Value.ValueStr[20]));
-                pair.Value.AttrStep2.Add(TableReadBase.ParseInt(pair.Value.ValueStr[21]));
-                pair.Value.AttrStep2.Add(TableReadBase.ParseInt(pair.Value.ValueStr[22]));
-                pair.Value.AttrStep2.Add(TableReadBase.ParseInt(pair.Value.ValueStr[23]));
-                pair.Value.AttrStep2.Add(TableReadBase.ParseInt(pair.Value.ValueStr[24]));
-                pair.Value.AttrStep2.Add(TableReadBase.ParseInt(pair.Value.ValueStr[25]));
-                pair.Value.AttrStep2.Add(TableReadBase.ParseInt(pair.Value.ValueStr[26]));
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[9]))
+                {
+                    pair.Value.Gems.Add( TableReader.GemTable.GetRecord(pair.Value.ValueStr[9]));
+                }
+                else
+                {
+                    pair.Value.Gems.Add(null);
+                }
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[10]))
+                {
+                    pair.Value.Gems.Add( TableReader.GemTable.GetRecord(pair.Value.ValueStr[10]));
+                }
+                else
+                {
+                    pair.Value.Gems.Add(null);
+                }
+                pair.Value.BaseAttr.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[11]));
+                pair.Value.BaseAttr.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[12]));
+                pair.Value.BaseAttr.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[13]));
+                pair.Value.BaseAttr.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[14]));
+                pair.Value.BaseAttr.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[15]));
+                pair.Value.BaseAttr.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[16]));
+                pair.Value.ExAttrName.Add(TableReadBase.ParseString(pair.Value.ValueStr[17]));
+                pair.Value.ExAttrName.Add(TableReadBase.ParseString(pair.Value.ValueStr[18]));
+                pair.Value.ExAttrName.Add(TableReadBase.ParseString(pair.Value.ValueStr[19]));
+                pair.Value.ExAttrValue.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[20]));
+                pair.Value.ExAttrValue.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[21]));
+                pair.Value.ExAttrValue.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[22]));
             }
         }
     }

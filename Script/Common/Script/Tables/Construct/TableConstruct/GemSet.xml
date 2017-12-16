@@ -39,6 +39,26 @@
     <constructRepeat>1</constructRepeat>
   </constructColumn>
   <constructColumn>
+    <constructName>IsEnableDefault</constructName>
+    <constructCode>IsEnableDefault</constructCode>
+    <constructType1>基本类型</constructType1>
+    <constructType2>
+      <constructType2>布尔</constructType2>
+    </constructType2>
+    <constructDefault>FALSE</constructDefault>
+    <constructRepeat>1</constructRepeat>
+  </constructColumn>
+  <constructColumn>
+    <constructName>MinGemLv</constructName>
+    <constructCode>MinGemLv</constructCode>
+    <constructType1>基本类型</constructType1>
+    <constructType2>
+      <constructType2>整数</constructType2>
+    </constructType2>
+    <constructDefault>1</constructDefault>
+    <constructRepeat>1</constructRepeat>
+  </constructColumn>
+  <constructColumn>
     <constructName>Gems</constructName>
     <constructCode>Gems</constructCode>
     <constructType1>表格索引</constructType1>
@@ -54,29 +74,30 @@
     <constructCode>BaseAttr</constructCode>
     <constructType1>基本类型</constructType1>
     <constructType2>
-      <constructType2>整数</constructType2>
+      <constructType2>三元组</constructType2>
     </constructType2>
-    <constructDefault>0</constructDefault>
+    <constructDefault>0;0;0</constructDefault>
     <constructRepeat>6</constructRepeat>
   </constructColumn>
   <constructColumn>
-    <constructName>AttrStep</constructName>
-    <constructCode>AttrStep</constructCode>
+    <constructName>ExAttrName</constructName>
+    <constructCode>ExAttrName</constructCode>
     <constructType1>基本类型</constructType1>
     <constructType2>
-      <constructType2>整数</constructType2>
+      <constructType2>字符串</constructType2>
     </constructType2>
-    <constructDefault>0</constructDefault>
-    <constructRepeat>6</constructRepeat>
+    <constructDefault>
+    </constructDefault>
+    <constructRepeat>3</constructRepeat>
   </constructColumn>
   <constructColumn>
-    <constructName>AttrStep2</constructName>
-    <constructCode>AttrStep2</constructCode>
+    <constructName>ExAttrValue</constructName>
+    <constructCode>ExAttrValue</constructCode>
     <constructType1>基本类型</constructType1>
     <constructType2>
-      <constructType2>整数</constructType2>
+      <constructType2>三元组</constructType2>
     </constructType2>
-    <constructDefault>0</constructDefault>
-    <constructRepeat>6</constructRepeat>
+    <constructDefault>0;0;0</constructDefault>
+    <constructRepeat>3</constructRepeat>
   </constructColumn>
 </root>

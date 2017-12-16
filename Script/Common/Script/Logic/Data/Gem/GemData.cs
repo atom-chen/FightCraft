@@ -128,6 +128,17 @@ public class GemData : SaveItemBase
         return true;
     }
 
+    public void ExchangeGem(ItemGem gem1, ItemGem gem2)
+    {
+        if (!_EquipedGems.Contains(gem1))
+            return;
+
+        if (!_EquipedGems.Contains(gem2))
+            return;
+
+        gem1.ExchangeInfo(gem2);
+    }
+
     public bool IsEquipedGem(string gemDataID)
     {
         foreach (var gem in _EquipedGems)
@@ -177,6 +188,18 @@ public class GemData : SaveItemBase
             _GemMaterials.Add(new ItemBase() { ItemDataID = "70104" });
             //_GemMaterials.Add(new ItemBase() { ItemDataID = "70105" });
         }
+    }
+
+    public ItemGem GetGemInfo(string gemData)
+    {
+        foreach (var gemInfo in _GemContainer)
+        {
+            if (gemInfo.ItemDataID == gemData)
+            {
+                return gemInfo;
+            }
+        }
+        return null;
     }
 
     public bool AddMaterial(string itemID, int itemNum)

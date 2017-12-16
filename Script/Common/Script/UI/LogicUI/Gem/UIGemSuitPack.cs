@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-public class UIGemPack : UIBase, IDragablePack
+public class UIGemSuitPack : UIBase, IDragablePack
 {
 
     #region static funs

@@ -31,6 +31,8 @@ namespace Tables
 //
         public static FightAttr FightAttr { get; internal set; }
 //
+        public static GemSet GemSet { get; internal set; }
+//
         public static GemTable GemTable { get; internal set; }
 //
         public static LegendaryEquip LegendaryEquip { get; internal set; }
@@ -48,8 +50,6 @@ namespace Tables
         public static StrDictionary StrDictionary { get; internal set; }
 //
         public static StrTable StrTable { get; internal set; }
-//
-        public static GemSet GemSet { get; internal set; }
 
         public static void ReadTables()
         {
@@ -57,6 +57,7 @@ namespace Tables
             CommonItem = new CommonItem(TableReadBase.GetTableText("CommonItem"), false);
             EquipItem = new EquipItem(TableReadBase.GetTableText("EquipItem"), false);
             FightAttr = new FightAttr(TableReadBase.GetTableText("FightAttr"), false);
+            GemSet = new GemSet(TableReadBase.GetTableText("GemSet"), false);
             GemTable = new GemTable(TableReadBase.GetTableText("GemTable"), false);
             LegendaryEquip = new LegendaryEquip(TableReadBase.GetTableText("LegendaryEquip"), false);
             MonsterBase = new MonsterBase(TableReadBase.GetTableText("MonsterBase"), false);
@@ -66,12 +67,12 @@ namespace Tables
             StageInfo = new StageInfo(TableReadBase.GetTableText("StageInfo"), false);
             StrDictionary = new StrDictionary(TableReadBase.GetTableText("StrDictionary"), false);
             StrTable = new StrTable(TableReadBase.GetTableText("StrTable"), false);
-            GemSet = new GemSet(TableReadBase.GetTableText("GemSet"), false);
 
             //初始化所有表
             CommonItem.CoverTableContent();
             EquipItem.CoverTableContent();
             FightAttr.CoverTableContent();
+            GemSet.CoverTableContent();
             GemTable.CoverTableContent();
             LegendaryEquip.CoverTableContent();
             MonsterBase.CoverTableContent();
@@ -81,7 +82,6 @@ namespace Tables
             StageInfo.CoverTableContent();
             StrDictionary.CoverTableContent();
             StrTable.CoverTableContent();
-            GemSet.CoverTableContent();
         }
 
         #endregion
