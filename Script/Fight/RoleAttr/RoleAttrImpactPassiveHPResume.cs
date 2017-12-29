@@ -8,14 +8,14 @@ public class RoleAttrImpactPassiveHPResume : RoleAttrImpactPassive
     {
         base.InitImpact(skillInput, args);
 
-        var legendaryEquip = Tables.TableReader.LegendaryEquip.GetRecord(args[0].ToString());
-        _ActCD = GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValues[0]) - GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValueIncs[0] * args[1]);
-        if (legendaryEquip.ImpactValues[1] > 0)
+        var attrTab = Tables.TableReader.AttrValue.GetRecord(args[0].ToString());
+        _ActCD = GameDataValue.ConfigIntToFloat(attrTab.AttrParams[0]) - GameDataValue.ConfigIntToFloat(attrTab.AttrParams[0] * args[1]);
+        if (attrTab.AttrParams[1] > 0)
         {
-            _ActCD = Mathf.Max(_ActCD, legendaryEquip.ImpactValues[1]);
+            _ActCD = Mathf.Max(_ActCD, attrTab.AttrParams[1]);
         }
 
-        _ResumeHP = GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValues[2]) - GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValueIncs[1] * args[1]);
+        _ResumeHP = GameDataValue.ConfigIntToFloat(attrTab.AttrParams[2]) - GameDataValue.ConfigIntToFloat(attrTab.AttrParams[1] * args[1]);
         _ResumeHP = Mathf.Min(_ResumeHP, 1);
     }
 

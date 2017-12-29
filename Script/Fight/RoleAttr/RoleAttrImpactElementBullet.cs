@@ -7,10 +7,10 @@ public class RoleAttrImpactElementBullet : RoleAttrImpactBase
 
     public override void InitImpact(string skillInput, List<int> args)
     {
-        var legendaryEquip = Tables.TableReader.LegendaryEquip.GetRecord( args[0].ToString());
-        _ImpactName = legendaryEquip.BulletName;
-        _SkillInput = legendaryEquip.SkillInput;
-        _Damage = GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValues[0]) + GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValueIncs[0] * args[1]);
+        var attrTab = Tables.TableReader.AttrValue.GetRecord(args[0].ToString());
+        _ImpactName = attrTab.StrParam[0];
+        _SkillInput = attrTab.StrParam[1];
+        _Damage = GameDataValue.ConfigIntToFloat(attrTab.AttrParams[0]) + GameDataValue.ConfigIntToFloat(attrTab.AttrParams[0] * args[1]);
     }
 
     public override void ModifySkillBeforeInit(MotionManager roleMotion)
@@ -36,8 +36,8 @@ public class RoleAttrImpactElementBullet : RoleAttrImpactBase
 
     public static string GetAttrDesc(List<int> attrParams)
     {
-        var legendaryEquip = Tables.TableReader.LegendaryEquip.GetRecord(attrParams[0].ToString());
-        return string.Format(legendaryEquip.Desc, legendaryEquip.ImpactValues);
+        var attrTab = Tables.TableReader.AttrValue.GetRecord(attrParams[0].ToString());
+        return string.Format(attrTab.Desc, attrTab.AttrParams);
     }
 
     #region 

@@ -28,6 +28,38 @@ public class GemSuit
 
     #endregion
 
+    private GemSetRecord _ActSet;
+    public GemSetRecord ActSet
+    {
+        get
+        {
+            return _ActSet;
+        }
+    }
+
+    private int _ActLevel;
+    public int ActLevel
+    {
+        get
+        {
+            return _ActLevel;
+        }
+    }
+
+    private List<EquipExAttr> _ActSetAttrs = new List<EquipExAttr>();
+    public List<EquipExAttr> ActSetAttrs
+    {
+        get
+        {
+            if (_ActSetAttrs == null)
+            {
+                _ActSetAttrs = new List<EquipExAttr>();
+                IsActSet();
+            }
+            return _ActSetAttrs;
+        }
+    }
+
     public bool IsGemSetCanUse(GemSetRecord gemSet)
     {
         foreach (var gemRecord in gemSet.Gems)
@@ -40,4 +72,75 @@ public class GemSuit
         return true;
     }
 
+    public void UseGemSet(GemSetRecord gemSet)
+    {
+        if (!IsGemSetCanUse(gemSet))
+        {
+            return;
+        }
+
+        for (int i = 0; i < gemSet.Gems.Count; ++i)
+        {
+            var gemInfo = GemData.Instance.GetGemInfo(gemSet.Gems[i].Id);
+            if (gemInfo == null)
+            {
+                Debug.LogError("Get geminfo error");
+            }
+
+            GemData.Instance.PutOnGem(gemInfo, i);
+        }
+    }
+
+    public bool IsActSet()
+    {
+        var gemSuitTabs = Tables.TableReader.GemSet.Records;
+
+        _ActSet = null;
+        _ActLevel = 10;
+        foreach (var gemSuit in gemSuitTabs)
+        {
+            _ActLevel = 10;
+            for (int i = 0; i < gemSuit.Value.Gems.Count; ++i)
+            {
+                if (GemData.Instance._EquipedGems[i].ItemDataID == gemSuit.Value.Gems[i].Id
+                    && GemData.Instance._EquipedGems[i].Level >= gemSuit.Value.MinGemLv)
+                {
+                    _ActLevel = Mathf.Min(_ActLevel, GemData.Instance._EquipedGems[i].Level);
+                }
+                else
+                {
+                    break;
+                }
+
+                if (i == gemSuit.Value.Gems.Count - 1)
+                {
+                    _ActSet = gemSuit.Value;
+                    break;
+                }
+            }
+            if (_ActSet != null)
+            {
+                CalculateSetAttrs();
+                return true;
+            }
+        }
+
+        
+        return false;
+    }
+
+    private void CalculateSetAttrs()
+    {
+        _ActSetAttrs.Clear();
+        if (_ActSet != null)
+        {
+            foreach (var attrValue in _ActSet.Attrs)
+            {
+                if (attrValue != null)
+                {
+                    _ActSetAttrs.Add(attrValue.GetExAttr(_ActLevel));
+                }
+            }
+        }
+    }
 }

@@ -93,17 +93,24 @@ public class PlayerDataPack : DataPackBase
 
     public RoleData _SelectedRole;
 
+    public const int _MAX_ROLE_CNT = 4;
+
     public void InitPlayerData()
     {
-        if (_RoleList == null || _RoleList.Count == 0)
+        if (_RoleList == null || _RoleList.Count != _MAX_ROLE_CNT)
         {
-            _RoleList = new List<RoleData>();
-            for (int i = 0; i < 4; ++i)
+            if (_RoleList == null)
+            {
+                _RoleList = new List<RoleData>();
+            }
+            int startCnt = _RoleList.Count;
+            for (int i = startCnt; i < _MAX_ROLE_CNT; ++i)
             {
                 var newRole = new RoleData();
-                newRole._SaveFileName = "Role" + i;
+                //newRole._SaveFileName = "Role" + i;
                 _RoleList.Add(newRole);
             }
+            SaveClass(true);
         }
 
         for (int i = 0; i < _RoleList.Count; ++i)

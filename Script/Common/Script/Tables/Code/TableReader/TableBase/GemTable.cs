@@ -15,8 +15,7 @@ namespace Tables
         public override string Id { get; set; }        public string Name { get; set; }
         public string Desc { get; set; }
         public int Class { get; set; }
-        public int BaseAttr { get; set; }
-        public List<int> AttrStep { get; set; }
+        public AttrValueRecord AttrValue { get; set; }
         public int LevelUpParam { get; set; }
         public GemTableRecord(DataRecord dataRecord)
         {
@@ -26,7 +25,6 @@ namespace Tables
                 Id = ValueStr[0];
 
             }
-            AttrStep = new List<int>();
         }
         public override string[] GetRecordStr()
         {
@@ -35,10 +33,13 @@ namespace Tables
             recordStrList.Add(TableWriteBase.GetWriteStr(Name));
             recordStrList.Add(TableWriteBase.GetWriteStr(Desc));
             recordStrList.Add(TableWriteBase.GetWriteStr(Class));
-            recordStrList.Add(TableWriteBase.GetWriteStr(BaseAttr));
-            foreach (var testTableItem in AttrStep)
+            if (AttrValue != null)
             {
-                recordStrList.Add(TableWriteBase.GetWriteStr(testTableItem));
+                recordStrList.Add(AttrValue.Id);
+            }
+            else
+            {
+                recordStrList.Add("");
             }
             recordStrList.Add(TableWriteBase.GetWriteStr(LevelUpParam));
 
@@ -107,11 +108,15 @@ namespace Tables
                 pair.Value.Name = TableReadBase.ParseString(pair.Value.ValueStr[1]);
                 pair.Value.Desc = TableReadBase.ParseString(pair.Value.ValueStr[2]);
                 pair.Value.Class = TableReadBase.ParseInt(pair.Value.ValueStr[3]);
-                pair.Value.BaseAttr = TableReadBase.ParseInt(pair.Value.ValueStr[4]);
-                pair.Value.AttrStep.Add(TableReadBase.ParseInt(pair.Value.ValueStr[5]));
-                pair.Value.AttrStep.Add(TableReadBase.ParseInt(pair.Value.ValueStr[6]));
-                pair.Value.AttrStep.Add(TableReadBase.ParseInt(pair.Value.ValueStr[7]));
-                pair.Value.LevelUpParam = TableReadBase.ParseInt(pair.Value.ValueStr[8]);
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[4]))
+                {
+                    pair.Value.AttrValue =  TableReader.AttrValue.GetRecord(pair.Value.ValueStr[4]);
+                }
+                else
+                {
+                    pair.Value.AttrValue = null;
+                }
+                pair.Value.LevelUpParam = TableReadBase.ParseInt(pair.Value.ValueStr[5]);
             }
         }
     }

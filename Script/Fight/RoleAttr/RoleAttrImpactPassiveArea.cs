@@ -8,18 +8,18 @@ public class RoleAttrImpactPassiveArea : RoleAttrImpactPassive
     {
         base.InitImpact(skillInput, args);
 
-        var legendaryEquip = Tables.TableReader.LegendaryEquip.GetRecord(args[0].ToString());
-        _Range = GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValues[0]) + GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValueIncs[0] * args[1]);
+        var attrTab = Tables.TableReader.AttrValue.GetRecord(args[0].ToString());
+        _Range = GameDataValue.ConfigIntToFloat(attrTab.AttrParams[0]) + GameDataValue.ConfigIntToFloat(attrTab.AttrParams[0] * args[1]);
         
 
-        _DefenceValue = GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValues[1]) + GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValueIncs[1] * args[1]);
-        if (legendaryEquip.ImpactValues[2] < 0)
+        _DefenceValue = GameDataValue.ConfigIntToFloat(attrTab.AttrParams[1]) + GameDataValue.ConfigIntToFloat(attrTab.AttrParams[1] * args[1]);
+        if (attrTab.AttrParams[2] < 0)
         {
-            _DefenceValue = Mathf.Max(_DefenceValue, GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValues[2]));
+            _DefenceValue = Mathf.Max(_DefenceValue, GameDataValue.ConfigIntToFloat(attrTab.AttrParams[2]));
         }
-        else if (legendaryEquip.ImpactValues[2] > 0)
+        else if (attrTab.AttrParams[2] > 0)
         {
-            _DefenceValue = Mathf.Min(_DefenceValue, GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValues[2]));
+            _DefenceValue = Mathf.Min(_DefenceValue, GameDataValue.ConfigIntToFloat(attrTab.AttrParams[2]));
         }
     }
 

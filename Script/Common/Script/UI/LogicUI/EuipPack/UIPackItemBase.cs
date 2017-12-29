@@ -57,6 +57,11 @@ public class UIPackItemBase : UIItemSelect
             return;
         }
 
+        if (_Num != null)
+        {
+            _Num.text = _ShowedItem.ItemStackNum.ToString();
+        }
+
         SetGOActive(_Icon, true);
     }
 

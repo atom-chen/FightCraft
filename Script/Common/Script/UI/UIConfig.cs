@@ -11,6 +11,7 @@ public enum UILayer
     BaseUI,
     MainFunUI,
     PopUI,
+    SubPopUI,
     MessageUI,
     TopUI
 }

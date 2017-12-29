@@ -49,6 +49,9 @@ public class LogicManager
         GemData.Instance.LoadClass(true);
         GemData.Instance.InitGemData();
 
+        LegendaryData.Instance.LoadClass(true);
+        LegendaryData.Instance.InitLegendaryEquips();
+
         UIMainFun.ShowAsyn();
     }
 
@@ -70,14 +73,15 @@ public class LogicManager
 
     public void SaveGame()
     {
-        PlayerDataPack.Instance.SaveClass(true);
-        BackBagPack.Instance.SaveClass(true);
-        ShopData.Instance.SaveClass(true);
-        GemData.Instance.SaveClass(true);
+        PlayerDataPack.Instance.SaveClass(false);
+        //BackBagPack.Instance.SaveClass(true);
+        //ShopData.Instance.SaveClass(true);
+        //GemData.Instance.SaveClass(true);
+
 
         if (PlayerDataPack.Instance._SelectedRole != null)
         {
-            PlayerDataPack.Instance._SelectedRole.SaveClass(true);
+            PlayerDataPack.Instance._SelectedRole.SaveClass(false);
         }
         //DataManager.Instance.Save();
     }

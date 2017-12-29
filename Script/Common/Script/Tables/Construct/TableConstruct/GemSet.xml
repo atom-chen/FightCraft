@@ -70,34 +70,14 @@
     <constructRepeat>6</constructRepeat>
   </constructColumn>
   <constructColumn>
-    <constructName>BaseAttr</constructName>
-    <constructCode>BaseAttr</constructCode>
-    <constructType1>基本类型</constructType1>
+    <constructName>Attrs</constructName>
+    <constructCode>Attrs</constructCode>
+    <constructType1>表格索引</constructType1>
     <constructType2>
-      <constructType2>三元组</constructType2>
-    </constructType2>
-    <constructDefault>0;0;0</constructDefault>
-    <constructRepeat>6</constructRepeat>
-  </constructColumn>
-  <constructColumn>
-    <constructName>ExAttrName</constructName>
-    <constructCode>ExAttrName</constructCode>
-    <constructType1>基本类型</constructType1>
-    <constructType2>
-      <constructType2>字符串</constructType2>
+      <constructType2>AttrValue</constructType2>
     </constructType2>
     <constructDefault>
     </constructDefault>
-    <constructRepeat>3</constructRepeat>
-  </constructColumn>
-  <constructColumn>
-    <constructName>ExAttrValue</constructName>
-    <constructCode>ExAttrValue</constructCode>
-    <constructType1>基本类型</constructType1>
-    <constructType2>
-      <constructType2>三元组</constructType2>
-    </constructType2>
-    <constructDefault>0;0;0</constructDefault>
-    <constructRepeat>3</constructRepeat>
+    <constructRepeat>10</constructRepeat>
   </constructColumn>
 </root>

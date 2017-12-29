@@ -17,7 +17,7 @@
     <constructRepeat>1</constructRepeat>
   </constructColumn>
   <constructColumn>
-    <constructName>Name</constructName>
+    <constructName>名称</constructName>
     <constructCode>Name</constructCode>
     <constructType1>基本类型</constructType1>
     <constructType2>
@@ -28,22 +28,11 @@
     <constructRepeat>1</constructRepeat>
   </constructColumn>
   <constructColumn>
-    <constructName>Desc</constructName>
+    <constructName>描述</constructName>
     <constructCode>Desc</constructCode>
     <constructType1>基本类型</constructType1>
     <constructType2>
       <constructType2>字符串</constructType2>
-    </constructType2>
-    <constructDefault>
-    </constructDefault>
-    <constructRepeat>1</constructRepeat>
-  </constructColumn>
-  <constructColumn>
-    <constructName>EquipItem</constructName>
-    <constructCode>EquipItem</constructCode>
-    <constructType1>表格索引</constructType1>
-    <constructType2>
-      <constructType2>EquipItem</constructType2>
     </constructType2>
     <constructDefault>
     </constructDefault>
@@ -61,45 +50,24 @@
     <constructRepeat>1</constructRepeat>
   </constructColumn>
   <constructColumn>
-    <constructName>BulletName</constructName>
-    <constructCode>BulletName</constructCode>
+    <constructName>StrParam</constructName>
+    <constructCode>StrParam</constructCode>
     <constructType1>基本类型</constructType1>
     <constructType2>
       <constructType2>字符串</constructType2>
     </constructType2>
     <constructDefault>
     </constructDefault>
-    <constructRepeat>1</constructRepeat>
+    <constructRepeat>3</constructRepeat>
   </constructColumn>
   <constructColumn>
-    <constructName>SkillInput</constructName>
-    <constructCode>SkillInput</constructCode>
-    <constructType1>基本类型</constructType1>
-    <constructType2>
-      <constructType2>字符串</constructType2>
-    </constructType2>
-    <constructDefault>
-    </constructDefault>
-    <constructRepeat>1</constructRepeat>
-  </constructColumn>
-  <constructColumn>
-    <constructName>ImpactValues</constructName>
-    <constructCode>ImpactValues</constructCode>
+    <constructName>AttrParams</constructName>
+    <constructCode>AttrParams</constructCode>
     <constructType1>基本类型</constructType1>
     <constructType2>
       <constructType2>整数</constructType2>
     </constructType2>
-    <constructDefault>1</constructDefault>
-    <constructRepeat>3</constructRepeat>
-  </constructColumn>
-  <constructColumn>
-    <constructName>ImpactValueIncs</constructName>
-    <constructCode>ImpactValueIncs</constructCode>
-    <constructType1>基本类型</constructType1>
-    <constructType2>
-      <constructType2>整数</constructType2>
-    </constructType2>
-    <constructDefault>1</constructDefault>
-    <constructRepeat>3</constructRepeat>
+    <constructDefault>0</constructDefault>
+    <constructRepeat>10</constructRepeat>
   </constructColumn>
 </root>

@@ -8,19 +8,16 @@ using UnityEngine;
 
 namespace Tables
 {
-    public partial class LegendaryEquipRecord  : TableRecordBase
+    public partial class AttrValueRecord  : TableRecordBase
     {
         public DataRecord ValueStr;
 
         public override string Id { get; set; }        public string Name { get; set; }
         public string Desc { get; set; }
-        public EquipItemRecord EquipItem { get; set; }
         public string AttrImpact { get; set; }
-        public string BulletName { get; set; }
-        public string SkillInput { get; set; }
-        public List<int> ImpactValues { get; set; }
-        public List<int> ImpactValueIncs { get; set; }
-        public LegendaryEquipRecord(DataRecord dataRecord)
+        public List<string> StrParam { get; set; }
+        public List<int> AttrParams { get; set; }
+        public AttrValueRecord(DataRecord dataRecord)
         {
             if (dataRecord != null)
             {
@@ -28,8 +25,8 @@ namespace Tables
                 Id = ValueStr[0];
 
             }
-            ImpactValues = new List<int>();
-            ImpactValueIncs = new List<int>();
+            StrParam = new List<string>();
+            AttrParams = new List<int>();
         }
         public override string[] GetRecordStr()
         {
@@ -37,22 +34,12 @@ namespace Tables
             recordStrList.Add(TableWriteBase.GetWriteStr(Id));
             recordStrList.Add(TableWriteBase.GetWriteStr(Name));
             recordStrList.Add(TableWriteBase.GetWriteStr(Desc));
-            if (EquipItem != null)
-            {
-                recordStrList.Add(EquipItem.Id);
-            }
-            else
-            {
-                recordStrList.Add("");
-            }
             recordStrList.Add(TableWriteBase.GetWriteStr(AttrImpact));
-            recordStrList.Add(TableWriteBase.GetWriteStr(BulletName));
-            recordStrList.Add(TableWriteBase.GetWriteStr(SkillInput));
-            foreach (var testTableItem in ImpactValues)
+            foreach (var testTableItem in StrParam)
             {
                 recordStrList.Add(TableWriteBase.GetWriteStr(testTableItem));
             }
-            foreach (var testTableItem in ImpactValueIncs)
+            foreach (var testTableItem in AttrParams)
             {
                 recordStrList.Add(TableWriteBase.GetWriteStr(testTableItem));
             }
@@ -61,16 +48,16 @@ namespace Tables
         }
     }
 
-    public partial class LegendaryEquip : TableFileBase
+    public partial class AttrValue : TableFileBase
     {
-        public Dictionary<string, LegendaryEquipRecord> Records { get; internal set; }
+        public Dictionary<string, AttrValueRecord> Records { get; internal set; }
 
         public bool ContainsKey(string key)
         {
              return Records.ContainsKey(key);
         }
 
-        public LegendaryEquipRecord GetRecord(string id)
+        public AttrValueRecord GetRecord(string id)
         {
             try
             {
@@ -78,13 +65,13 @@ namespace Tables
             }
             catch (Exception ex)
             {
-                throw new Exception("LegendaryEquip" + ": " + id, ex);
+                throw new Exception("AttrValue" + ": " + id, ex);
             }
         }
 
-        public LegendaryEquip(string pathOrContent,bool isPath = true)
+        public AttrValue(string pathOrContent,bool isPath = true)
         {
-            Records = new Dictionary<string, LegendaryEquipRecord>();
+            Records = new Dictionary<string, AttrValueRecord>();
             if(isPath)
             {
                 string[] lines = File.ReadAllLines(pathOrContent);
@@ -109,7 +96,7 @@ namespace Tables
                     if (data[0].StartsWith("#"))
                         continue;
 
-                    LegendaryEquipRecord record = new LegendaryEquipRecord(data);
+                    AttrValueRecord record = new AttrValueRecord(data);
                     Records.Add(record.Id, record);
                 }
             }
@@ -121,23 +108,20 @@ namespace Tables
             {
                 pair.Value.Name = TableReadBase.ParseString(pair.Value.ValueStr[1]);
                 pair.Value.Desc = TableReadBase.ParseString(pair.Value.ValueStr[2]);
-                if (!string.IsNullOrEmpty(pair.Value.ValueStr[3]))
-                {
-                    pair.Value.EquipItem =  TableReader.EquipItem.GetRecord(pair.Value.ValueStr[3]);
-                }
-                else
-                {
-                    pair.Value.EquipItem = null;
-                }
-                pair.Value.AttrImpact = TableReadBase.ParseString(pair.Value.ValueStr[4]);
-                pair.Value.BulletName = TableReadBase.ParseString(pair.Value.ValueStr[5]);
-                pair.Value.SkillInput = TableReadBase.ParseString(pair.Value.ValueStr[6]);
-                pair.Value.ImpactValues.Add(TableReadBase.ParseInt(pair.Value.ValueStr[7]));
-                pair.Value.ImpactValues.Add(TableReadBase.ParseInt(pair.Value.ValueStr[8]));
-                pair.Value.ImpactValues.Add(TableReadBase.ParseInt(pair.Value.ValueStr[9]));
-                pair.Value.ImpactValueIncs.Add(TableReadBase.ParseInt(pair.Value.ValueStr[10]));
-                pair.Value.ImpactValueIncs.Add(TableReadBase.ParseInt(pair.Value.ValueStr[11]));
-                pair.Value.ImpactValueIncs.Add(TableReadBase.ParseInt(pair.Value.ValueStr[12]));
+                pair.Value.AttrImpact = TableReadBase.ParseString(pair.Value.ValueStr[3]);
+                pair.Value.StrParam.Add(TableReadBase.ParseString(pair.Value.ValueStr[4]));
+                pair.Value.StrParam.Add(TableReadBase.ParseString(pair.Value.ValueStr[5]));
+                pair.Value.StrParam.Add(TableReadBase.ParseString(pair.Value.ValueStr[6]));
+                pair.Value.AttrParams.Add(TableReadBase.ParseInt(pair.Value.ValueStr[7]));
+                pair.Value.AttrParams.Add(TableReadBase.ParseInt(pair.Value.ValueStr[8]));
+                pair.Value.AttrParams.Add(TableReadBase.ParseInt(pair.Value.ValueStr[9]));
+                pair.Value.AttrParams.Add(TableReadBase.ParseInt(pair.Value.ValueStr[10]));
+                pair.Value.AttrParams.Add(TableReadBase.ParseInt(pair.Value.ValueStr[11]));
+                pair.Value.AttrParams.Add(TableReadBase.ParseInt(pair.Value.ValueStr[12]));
+                pair.Value.AttrParams.Add(TableReadBase.ParseInt(pair.Value.ValueStr[13]));
+                pair.Value.AttrParams.Add(TableReadBase.ParseInt(pair.Value.ValueStr[14]));
+                pair.Value.AttrParams.Add(TableReadBase.ParseInt(pair.Value.ValueStr[15]));
+                pair.Value.AttrParams.Add(TableReadBase.ParseInt(pair.Value.ValueStr[16]));
             }
         }
     }

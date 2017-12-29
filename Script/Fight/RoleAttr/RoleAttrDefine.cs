@@ -8,6 +8,7 @@ public enum RoleAttrEnum
     None,
     Strength = 1,
     Dexterity,
+    Intelligence,
     Vitality,
 
     HPMax,
@@ -35,19 +36,6 @@ public enum RoleAttrEnum
     ColdEnhance,
     LightingEnhance,
     WindEnhance,
-
-    FireDamageReduse,
-    ColdDamageReduse,
-    LightingDamageReduse,
-    WindDamageReduse,
-    FireDamageRedusePersent,
-    ColdDamageRedusePersent,
-    LightingDamageRedusePersent,
-    WindDamageRedusePersent,
-    //FireAbsorbsPersent,
-    //ColdAbsorbsPersent,
-    //LightingAbsorbsPersent,
-    //WindAbsorbsPersent,
 
     IgnoreDefenceAttack,
     FinalDamageReduse,
@@ -270,12 +258,9 @@ public class RandomAttrs
 
         public EquipExAttr GetAttrRandom(int value)
         {
-            EquipExAttr exAttr = new EquipExAttr();
-            exAttr.AttrType = "RoleAttrImpactBaseAttr";
-            float randomValue = (value * Random.Range(0.85f, 1.15f));
+            float randomValue = (value * Random.Range(0.3f, 0.6f));
             int attrValue = BaseValue + (int)(randomValue * Step);
-            exAttr.AttrValues.Add((int)AttrID);
-            exAttr.AttrValues.Add(attrValue);
+            EquipExAttr exAttr = new EquipExAttr("RoleAttrImpactBaseAttr", (int)(randomValue), (int)AttrID, attrValue);
             return exAttr;
         }
     }

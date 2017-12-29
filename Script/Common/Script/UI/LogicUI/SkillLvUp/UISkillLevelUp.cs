@@ -35,7 +35,7 @@ public class UISkillLevelUp : UIBase
     public UIContainerSelect _SkillClass;
     public UIContainerSelect _SkillInfos;
 
-    private SkillInfoItem _SelectedSkill;
+    private ItemSkill _SelectedSkill;
 
     private void InitSkillClass()
     {
@@ -55,7 +55,7 @@ public class UISkillLevelUp : UIBase
 
     private void SelectSkillItem(object selectItem)
     {
-        var skillInfo = selectItem as SkillInfoItem;
+        var skillInfo = selectItem as ItemSkill;
         if (skillInfo == null)
             return;
 
@@ -77,12 +77,12 @@ public class UISkillLevelUp : UIBase
             return;
         }
 
-        var skillTab = Tables.TableReader.SkillInfo.GetRecord(_SelectedSkill._SkillID);
+        var skillTab = Tables.TableReader.SkillInfo.GetRecord(_SelectedSkill.SkillID);
         string skillDesc = skillTab.Desc;
-        skillDesc += " +" + skillTab.EffectValue[0] * _SelectedSkill._SkillLevel;
+        skillDesc += " +" + skillTab.EffectValue[0] * _SelectedSkill.SkillLevel;
         _Desc.text = skillDesc;
 
-        if (_SelectedSkill._SkillLevel >= skillTab.MaxLevel)
+        if (_SelectedSkill.SkillLevel >= skillTab.MaxLevel)
         {
             _LevelUp.interactable = false;
         }
@@ -97,7 +97,7 @@ public class UISkillLevelUp : UIBase
         if (_SelectedSkill == null)
             return;
 
-        RoleData.SelectRole.SkillLevelUp(_SelectedSkill._SkillID);
+        RoleData.SelectRole.SkillLevelUp(_SelectedSkill.SkillID);
         RefreshSkillInfos();
     }
 

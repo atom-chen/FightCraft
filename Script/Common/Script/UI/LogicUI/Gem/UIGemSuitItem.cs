@@ -8,7 +8,7 @@ using System;
 using Tables;
 
 
-public class UIGemSuitItem : UIItemBase
+public class UIGemSuitItem : UIItemSelect
 {
     public Text _SuitName;
     public UIContainerBase _SuitGems;
@@ -53,9 +53,11 @@ public class UIGemSuitItem : UIItemBase
         }
     }
 
-    public void IsGemSetCanUse()
+    public void OnBtnUseSet()
     {
-
+        Debug.Log("OnBtnUseSet:" + _GemSetTab.Id);
+        GemSuit.Instance.UseGemSet(_GemSetTab);
+        UIGemPack.RefreshPack();
     }
 
 }

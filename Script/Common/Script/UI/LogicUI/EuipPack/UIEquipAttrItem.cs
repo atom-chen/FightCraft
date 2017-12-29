@@ -40,9 +40,14 @@ public class UIEquipAttrItem : UIItemBase
         _ShowAttr = attr;
 
         string attrStr = _ShowAttr.GetAttrStr();
+        string valueStr = "";
+        if (_ShowAttr.Value > 0)
+        {
+            valueStr = string.Format("({0})", _ShowAttr.Value);
+        }
         if (_ItemEquip != null)
         {
-            attrStr = CommonDefine.GetQualityColorStr(_ItemEquip.EquipQuality) + attrStr + "</color>";
+            attrStr = CommonDefine.GetQualityColorStr(_ItemEquip.EquipQuality) + attrStr + valueStr + "</color>";
         }
         _AttrText.text = attrStr;
     }

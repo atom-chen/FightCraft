@@ -5,8 +5,80 @@ using System.Collections.Generic;
 using Tables;
 using System;
 
+public class EquipExAttr
+{
+
+    public string AttrType;
+
+    public int Value;
+
+    public List<int> AttrParams;
+
+
+    public EquipExAttr()
+    {
+        AttrParams = new List<int>();
+        //AttrValues.Add(0);
+    }
+
+    public EquipExAttr(string attrType, int value, params int[] attrValues)
+    {
+        AttrType = attrType;
+        Value = value;
+        AttrParams = new List<int>(attrValues);
+    }
+
+    public EquipExAttr(EquipExAttr copyInstance)
+    {
+        AttrType = copyInstance.AttrType;
+        Value = copyInstance.Value;
+        AttrParams = copyInstance.AttrParams;
+    }
+
+    public string GetAttrStr()
+    {
+        var impactType = Type.GetType(AttrType);
+        Debug.Log("AttrType:" + AttrType);
+        if (impactType == null)
+            return "";
+
+        var method = impactType.GetMethod("GetAttrDesc");
+        if (method == null)
+            return "";
+
+        return method.Invoke(null, new object[] { AttrParams }) as string;
+    }
+
+    public bool Add(EquipExAttr d)
+    {
+        if (d.AttrType != AttrType)
+            return false;
+
+        if (AttrType == "RoleAttrImpactBaseAttr")
+        {
+            for (int i = 0; i < AttrParams.Count; ++i)
+            {
+                AttrParams[i] += d.AttrParams[i];
+            }
+            return true;
+        }
+
+        return false;
+    }
+}
+
 public class ItemEquip : ItemBase
 {
+    public ItemEquip(string datID) : base(datID)
+    {
+
+    }
+
+    public ItemEquip():base()
+    {
+
+    }
+
     #region equipData
 
     public List<int> DynamicDataInt
@@ -76,6 +148,30 @@ public class ItemEquip : ItemBase
         }
     }
 
+    private List<EquipExAttr> _EquipExAttr;
+    public List<EquipExAttr> EquipExAttr
+    {
+        get
+        {
+            if (_EquipExAttr == null)
+            {
+                _EquipExAttr = new List<global::EquipExAttr>();
+                foreach (var strParam in _DynamicDataEx)
+                {
+                    EquipExAttr exAttr = new global::EquipExAttr();
+                    exAttr.AttrType = strParam._StrParams[0];
+                    exAttr.Value = int.Parse(strParam._StrParams[1]);
+                    for (int i = 2; i < strParam._StrParams.Count; ++i)
+                    {
+                        exAttr.AttrParams.Add(int.Parse(strParam._StrParams[i]));
+                    }
+                    _EquipExAttr.Add(exAttr);
+                }
+            }
+            return _EquipExAttr;
+        }
+    }
+
     public string GetEquipNameWithColor()
     {
         return CommonDefine.GetQualityColorStr(EquipQuality) + EquipItemRecord.CommonItem.Name + "</color>";
@@ -134,19 +230,30 @@ public class ItemEquip : ItemBase
 
     public EquipExAttr GetExAttr(int idx)
     {
-        if (_DynamicDataVector.Count > idx)
-            return _DynamicDataVector[idx];
+        if (EquipExAttr.Count > idx)
+            return EquipExAttr[idx];
         return null;
     }
 
     public void AddExAttr(EquipExAttr attr)
     {
-        _DynamicDataVector.Add(attr);
+        EquipExAttr.Add(attr);
+        ItemExData exData = new ItemExData();
+        exData._StrParams.Add(attr.AttrType);
+        exData._StrParams.Add(attr.Value.ToString());
+        for (int i = 0; i < attr.AttrParams.Count; ++i)
+        {
+            exData._StrParams.Add(attr.AttrParams[i].ToString());
+        }
+        _DynamicDataEx.Add(exData);
     }
 
     public void AddExAttr(List<EquipExAttr> attrs)
     {
-        _DynamicDataVector.AddRange(attrs);
+        foreach (var exAttr in attrs)
+        {
+            AddExAttr(exAttr);
+        }
     }
 
     #endregion
@@ -266,11 +373,11 @@ public class ItemEquip : ItemBase
         roleAttr.AddValue(RoleAttrEnum.HPMax, BaseHP);
         roleAttr.AddValue(RoleAttrEnum.Defense, BaseDefence);
 
-        foreach (var exAttrs in _DynamicDataVector)
+        foreach (var exAttrs in EquipExAttr)
         {
             if (exAttrs.AttrType == "RoleAttrImpactBaseAttr")
             {
-                roleAttr.AddValue((RoleAttrEnum)exAttrs.AttrValues[0], exAttrs.AttrValues[1]);
+                roleAttr.AddValue((RoleAttrEnum)exAttrs.AttrParams[0], exAttrs.AttrParams[1]);
             }
             else
             {
@@ -428,7 +535,7 @@ public class ItemEquip : ItemBase
 
     public void ResetEquipAttr()
     {
-        _DynamicDataVector.Clear();
+        _DynamicDataEx.Clear();
         RandomEquipAttr(this);
     }
 
@@ -444,10 +551,10 @@ public class ItemEquip : ItemBase
     public static ItemEquip CreateEquip(int level, Tables.ITEM_QUALITY quality, int value, int legencyEquipID = -1)
     {
         Tables.ITEM_QUALITY equipQuality = quality;
-        LegendaryEquipRecord legencyEquip = null;
+        EquipItemRecord legencyEquip = null;
         if (legencyEquipID > 0)
         {
-            legencyEquip = TableReader.LegendaryEquip.GetRecord(legencyEquipID.ToString());
+            legencyEquip = TableReader.EquipItem.GetRecord(legencyEquipID.ToString());
         }
         if (legencyEquip != null)
         {
@@ -457,7 +564,7 @@ public class ItemEquip : ItemBase
         EquipItemRecord baseEquip = null;
         if (legencyEquip != null)
         {
-            baseEquip = legencyEquip.EquipItem;
+            baseEquip = legencyEquip;
         }
         else
         {
@@ -468,8 +575,7 @@ public class ItemEquip : ItemBase
                 return null;
         }
 
-        ItemEquip itemEquip = new ItemEquip();
-        itemEquip.ItemDataID = baseEquip.Id;
+        ItemEquip itemEquip = new ItemEquip(baseEquip.Id);
         itemEquip.EquipLevel = level;
         itemEquip.EquipQuality = equipQuality;
         itemEquip.EquipValue = value;
@@ -479,10 +585,7 @@ public class ItemEquip : ItemBase
         itemEquip.AddExAttr(RandomAttrs.GetRandomEquipExAttrs(baseEquip.Slot, level, value, equipQuality, RoleData.SelectRole.Profession));
         if (legencyEquip != null)
         {
-            EquipExAttr legencyAttr = new EquipExAttr();
-            legencyAttr.AttrType = legencyEquip.AttrImpact;
-            legencyAttr.AttrValues.Add(legencyEquipID);
-            legencyAttr.AttrValues.Add(itemEquip.EquipLevel);
+            EquipExAttr legencyAttr = legencyEquip.ExAttr.GetExAttr(itemEquip.EquipLevel);
             itemEquip.AddExAttr(legencyAttr);
         }
 

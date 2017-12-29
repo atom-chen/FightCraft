@@ -28,8 +28,14 @@ public class RoleData : SaveItemBase
             _RoleLevel = 0;
         }
 
-        InitEquipList();
-        InitSkill();
+        bool needSave = false;
+        needSave |= InitEquipList();
+        needSave |= InitSkill();
+
+        if (needSave)
+        {
+            SaveClass(true);
+        }
     }
 
     #region equipManager
@@ -37,20 +43,26 @@ public class RoleData : SaveItemBase
     [SaveField(1)]
     public List<ItemEquip> _EquipList;
 
-    private void InitEquipList()
+    private bool InitEquipList()
     {
-        if (_EquipList == null || _EquipList.Count == 0)
+        int equipSlotCnt = Enum.GetValues(typeof(EQUIP_SLOT)).Length;
+        if (_EquipList == null || _EquipList.Count != equipSlotCnt)
         {
-            int equipSlotCnt = Enum.GetValues(typeof(EQUIP_SLOT)).Length;
-            _EquipList = new List<ItemEquip>();
-            for (int i = 0; i < equipSlotCnt; ++i)
+            if (_EquipList == null)
             {
-                ItemEquip newItemEquip = new ItemEquip();
-                newItemEquip.ItemDataID = "-1";
-                newItemEquip._SaveFileName = _SaveFileName + ".Equip" + i;
+                _EquipList = new List<ItemEquip>();
+            }
+
+            int startIdx = _EquipList.Count;
+            for (int i = startIdx; i < equipSlotCnt; ++i)
+            {
+                ItemEquip newItemEquip = new ItemEquip("-1");
+                //newItemEquip._SaveFileName = _SaveFileName + ".Equip" + i;
                 _EquipList.Add(newItemEquip);
             }
+            return true;
         }
+        return false;
     }
 
     public ItemEquip GetEquipItem(EQUIP_SLOT equipSlot)
@@ -338,10 +350,10 @@ public class RoleData : SaveItemBase
     #region skill
 
     [SaveField(9)]
-    private List<SkillInfoItem> _SkillItems = new List<SkillInfoItem>();
+    private List<ItemSkill> _SkillItems = new List<ItemSkill>();
 
-    private Dictionary<string, List<SkillInfoItem>> _SkillClassItems;
-    public Dictionary<string, List<SkillInfoItem>> SkillClassItems
+    private Dictionary<string, List<ItemSkill>> _SkillClassItems;
+    public Dictionary<string, List<ItemSkill>> SkillClassItems
     {
         get
         {
@@ -353,30 +365,28 @@ public class RoleData : SaveItemBase
         }
     }
 
-    private void InitSkill()
+    private bool InitSkill()
     {
-        _SkillClassItems = new Dictionary<string, List<SkillInfoItem>>();
+        bool isNeedSave = false;
+        _SkillClassItems = new Dictionary<string, List<ItemSkill>>();
         foreach (var skillPair in Tables.TableReader.SkillInfo.Records)
         {
             if (skillPair.Value.Profession == Profession)
             {
                 if (!_SkillClassItems.ContainsKey(skillPair.Value.SkillClass))
                 {
-                    _SkillClassItems.Add(skillPair.Value.SkillClass, new List<SkillInfoItem>());
+                    _SkillClassItems.Add(skillPair.Value.SkillClass, new List<ItemSkill>());
                 }
 
                 if (_SkillClassItems.ContainsKey(skillPair.Value.SkillClass))
                 {
-                    var skillInfo = GetSkillInfo(skillPair.Value.Id);
-                    if (skillInfo == null)
-                    {
-                        skillInfo = new SkillInfoItem(skillPair.Value.Id);
-                        skillInfo._SkillLevel = 0;
-                    }
+                    var skillInfo = GetSkillInfo(skillPair.Value.Id, ref isNeedSave);
                     _SkillClassItems[skillPair.Value.SkillClass].Add(skillInfo);
                 }
             }
         }
+
+        return isNeedSave;
     }
 
     public List<string> GetRoleSkills()
@@ -399,7 +409,7 @@ public class RoleData : SaveItemBase
             if (skillInfo.SkillRecord.Profession != Profession)
                 continue;
 
-            if (skillInfo._SkillLevel == 0)
+            if (skillInfo.SkillLevel == 0)
                 continue;
 
             if (skillInfo.SkillRecord.SkillAttr == "RoleAttrImpactSP")
@@ -482,11 +492,11 @@ public class RoleData : SaveItemBase
         return skillMotions;
     }
 
-    public SkillInfoItem GetSkillInfo(string skillID)
+    public ItemSkill GetSkillInfo(string skillID, ref bool isNeedSave)
     {
         var skillItem = _SkillItems.Find((skillInfo) =>
         {
-            if (skillInfo._SkillID == skillID)
+            if (skillInfo.SkillID == skillID)
             {
                 return true;
             }
@@ -495,9 +505,9 @@ public class RoleData : SaveItemBase
 
         if (skillItem == null)
         {
-            skillItem = new SkillInfoItem(skillID);
-            skillItem._SkillLevel = 0;
+            skillItem = new ItemSkill(skillID, 0);
             _SkillItems.Add(skillItem);
+            isNeedSave |= true;
         }
 
         return skillItem;
@@ -509,7 +519,7 @@ public class RoleData : SaveItemBase
 
         var findSkill = _SkillItems.Find((skillInfo) =>
         {
-            if (skillInfo._SkillID == skillID)
+            if (skillInfo.SkillID == skillID)
             {
                 return true;
             }
@@ -518,17 +528,16 @@ public class RoleData : SaveItemBase
 
         if (findSkill == null)
         {
-            findSkill = new SkillInfoItem(skillID);
+            findSkill = new ItemSkill(skillID);
             _SkillItems.Add(findSkill);
-        }
-        else
-        {
-            var skillTab = Tables.TableReader.SkillInfo.GetRecord(skillID);
-            if (skillTab.MaxLevel > findSkill._SkillLevel)
-            {
-                ++findSkill._SkillLevel;
-            }
 
+            SaveClass(false);
+        }
+
+        var skillTab = Tables.TableReader.SkillInfo.GetRecord(skillID);
+        if (skillTab.MaxLevel > findSkill.SkillLevel)
+        {
+            findSkill.LevelUp();
         }
 
         CalculateAttr();

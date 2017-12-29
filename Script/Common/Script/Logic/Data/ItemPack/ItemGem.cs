@@ -4,25 +4,33 @@ using Tables;
 
 public class ItemGem : ItemBase
 {
+    public ItemGem(string dataID) : base(dataID)
+    {
+        Level = 0;
+    }
+
+    public ItemGem() : base()
+    {
+        Level = 0;
+    }
     #region base attr
     public int Level
     {
         get
         {
-            if (_DynamicDataInt.Count == 0)
-            {
-                _DynamicDataInt.Add(0);
-            }
-            return _DynamicDataInt[0];
+            return ItemStackNum;
         }
-        set
+        protected set
         {
-            if (_DynamicDataInt.Count == 0)
-            {
-                _DynamicDataInt.Add(0);
-            }
-            _DynamicDataInt[0] = value;
+            ItemStackNum = value;
         }
+    }
+
+    public int LevelUp()
+    {
+        ++Level;
+        SaveClass(true);
+        return Level;
     }
 
     private GemTableRecord _GemRecord;
@@ -63,17 +71,10 @@ public class ItemGem : ItemBase
 
     public EquipExAttr GetExAttr()
     {
-        if (_GemAttr == null)
-        {
-            _GemAttr = new EquipExAttr();
-            _GemAttr.AttrType = "RoleAttrImpactBaseAttr";
-            _GemAttr.AttrValues.Add(GemRecord.BaseAttr);
-            var attrValue = GemRecord.AttrStep[0] + GemRecord.AttrStep[1] * Level;
-            _GemAttr.AttrValues.Add(attrValue);
-        }
-        return _GemAttr;
+        return GemRecord.AttrValue.GetExAttr(Level);
     }
 
     #endregion
+
 }
 

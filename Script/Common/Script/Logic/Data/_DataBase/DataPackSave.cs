@@ -66,17 +66,19 @@ public class DataPackSave
         saveRoot._ChildNode = GetNodesForSave(dataObj, saveChildItems);
         SaveRoot(saveRoot);
 
-        while (saveChildItems.Count > 0)
+        if (isSaveChild)
         {
-            var childItem = saveChildItems[0];
-            saveChildItems.RemoveAt(0);
+            while (saveChildItems.Count > 0)
+            {
+                var childItem = saveChildItems[0];
+                saveChildItems.RemoveAt(0);
 
-            SaveRoot saveChild = new SaveRoot();
-            saveChild._SaveKey = childItem._SaveFileName;
-            saveChild._ChildNode = GetNodesForSave(childItem, saveChildItems);
-            SaveRoot(saveChild);
+                SaveRoot saveChild = new SaveRoot();
+                saveChild._SaveKey = childItem._SaveFileName;
+                saveChild._ChildNode = GetNodesForSave(childItem, saveChildItems);
+                SaveRoot(saveChild);
+            }
         }
-
     }
 
     public static List<SaveNode> GetNodesForSave(object dataObj, List<SaveItemBase> saveChilds = null)

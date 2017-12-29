@@ -64,6 +64,7 @@ public class ShopData : SaveItemBase
 
             LastRefreshTime = DateTime.Now;
         }
+        SaveClass(true);
     }
 
     #endregion
@@ -149,9 +150,7 @@ public class ShopData : SaveItemBase
         _ItemList = new List<ItemBase>();
         foreach (var shopItem in TableReader.ShopItem.Records.Values)
         {
-            var item = new ItemBase();
-            item.ItemDataID = shopItem.Id;
-            item._DynamicDataInt.Add(3);
+            var item = new ItemBase(shopItem.Id, 3);
             _ItemList.Add(item);
         }
     }
@@ -186,24 +185,16 @@ public class ShopData : SaveItemBase
     public void RefreshGamblingItem()
     {
         _GamblingItems = new List<ItemBase>();
-        ItemBase gamblingItem = new ItemBase();
-        gamblingItem.ItemDataID = "60000";
-        gamblingItem.ItemStackNum = 1;
+        ItemBase gamblingItem = new ItemBase("60000", 1);
         _GamblingItems.Add(gamblingItem);
 
-        gamblingItem = new ItemBase();
-        gamblingItem.ItemDataID = "60001";
-        gamblingItem.ItemStackNum = 1;
+        gamblingItem = new ItemBase("60001", 1);
         _GamblingItems.Add(gamblingItem);
 
-        gamblingItem = new ItemBase();
-        gamblingItem.ItemDataID = "60002";
-        gamblingItem.ItemStackNum = 1;
+        gamblingItem = new ItemBase("60002", 1);
         _GamblingItems.Add(gamblingItem);
 
-        gamblingItem = new ItemBase();
-        gamblingItem.ItemDataID = "60003";
-        gamblingItem.ItemStackNum = 1;
+        gamblingItem = new ItemBase("60003", 1);
         _GamblingItems.Add(gamblingItem);
     }
 

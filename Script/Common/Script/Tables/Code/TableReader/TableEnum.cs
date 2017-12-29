@@ -23,12 +23,8 @@ namespace Tables
     public enum EQUIP_CLASS
     {
         None = 0, //None,枚举必须保留0值
-        WEAPON_BOY_DEFENCE = 1, //WEAPON_BOY_DEFENCE,
-        WEAPON_GIRL_DOUGE = 2, //WEAPON_GIRL_DOUGE,
-        WEAPON_BOY_DOUGE = 3, //WEAPON_BOY_DOUGE,
-        WEAPON_GIRL_DEFENCE = 4, //WEAPON_GIRL_DEFENCE,
-        DEFENCE = 5, //DEFENCE,
-        JEWELRY = 6, //JEWELRY,
+        Normal = 1, //Normal,Normal
+        Legendary = 2, //Legendary,Legendary
     }
 
     //

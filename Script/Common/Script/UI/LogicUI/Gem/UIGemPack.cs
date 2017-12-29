@@ -14,7 +14,7 @@ public class UIGemPack : UIBase, IDragablePack
         GameCore.Instance.UIManager.ShowUI("LogicUI/Gem/UIGemPack", UILayer.PopUI, hash);
     }
 
-    public static void RefreshBagItems()
+    public static void RefreshPack()
     {
         var instance = GameCore.Instance.UIManager.GetUIInstance<UIGemPack>("LogicUI/Gem/UIGemPack");
         if (instance == null)
@@ -220,7 +220,7 @@ public class UIGemPack : UIBase, IDragablePack
 
     public void OnBtnGemSuit()
     {
-
+        UIGemSuitPack.ShowAsyn();
     }
 
     #endregion

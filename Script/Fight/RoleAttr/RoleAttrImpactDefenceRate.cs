@@ -12,7 +12,7 @@ public class RoleAttrImpactDefenceRate : RoleAttrImpactBase
         _ValueModify = (float)args[0] * 0.0001f;
     }
 
-    public override List<int> GetSkillImpactVal(SkillInfoItem skillInfo)
+    public override List<int> GetSkillImpactVal(ItemSkill skillInfo)
     {
         var valList = new List<int>();
         valList.Add(skillInfo.SkillActureLevel * skillInfo.SkillRecord.EffectValue[0]);

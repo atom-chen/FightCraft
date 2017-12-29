@@ -109,7 +109,7 @@ public class UIShopPack : UIBase,IDragablePack
         int needExtend = 25 - itemList.Count;
         for (int i = 0; i < needExtend; ++i)
         {
-            itemList.Add(new ItemBase() { ItemDataID = "" });
+            itemList.Add(new ItemBase(""));
         }
     }
 
@@ -118,7 +118,7 @@ public class UIShopPack : UIBase,IDragablePack
         int needExtend = 25 - itemList.Count;
         for (int i = 0; i < needExtend; ++i)
         {
-            itemList.Add(new ItemEquip() { ItemDataID = "" });
+            itemList.Add(new ItemEquip(""));
         }
     }
 

@@ -23,7 +23,7 @@ public class UIEquipPack : UIBase,IDragablePack
         if (!instance.isActiveAndEnabled)
             return;
 
-        instance.RefreshItems();
+        instance.RefreshEquipItems();
     }
 
     
@@ -34,10 +34,7 @@ public class UIEquipPack : UIBase,IDragablePack
 
     public UIContainerBase _EquipContainer;
     public UIBackPack _BackPack;
-
-    #endregion
-
-    #region 
+    public UITagPanel _TagPanel;
 
     public override void Init()
     {
@@ -53,6 +50,7 @@ public class UIEquipPack : UIBase,IDragablePack
     {
         base.Show(hash);
 
+        _TagPanel.ShowPage(0);
         ShowPackItems();
     }
 
@@ -70,7 +68,7 @@ public class UIEquipPack : UIBase,IDragablePack
         _BackPack.Show(null);
     }
 
-    public void RefreshItems()
+    public void RefreshEquipItems()
     {
         _EquipContainer.RefreshItems();
         _BackPack.RefreshItems();
@@ -103,7 +101,7 @@ public class UIEquipPack : UIBase,IDragablePack
 
     private void ItemRefresh(object sender, Hashtable args)
     {
-        RefreshItems();
+        RefreshEquipItems();
     }
 
     public bool IsCanDragItem(UIDragableItemBase dragItem)

@@ -37,9 +37,15 @@ public class GemData : SaveItemBase
 
     public void InitGemData()
     {
-        InitGemContainer();
-        InitGemMaterials();
-        InitGemPack();
+        bool needSave = false;
+        needSave |= InitGemContainer();
+        needSave |= InitGemMaterials();
+        needSave |= InitGemPack();
+
+        if (needSave)
+        {
+            SaveClass(true);
+        }
     }
 
     #region gem pack
@@ -49,29 +55,36 @@ public class GemData : SaveItemBase
     [SaveField(1)]
     public List<ItemGem> _EquipedGems;
 
-    public void InitGemPack()
+    public bool InitGemPack()
     {
-        if (_EquipedGems == null || _EquipedGems.Count == 0)
+        if (_EquipedGems == null || _EquipedGems.Count < MAX_GEM_EQUIP)
         {
-            _EquipedGems = new List<ItemGem>();
-            for (int i = 0; i < MAX_GEM_EQUIP; ++i)
+            if (_EquipedGems == null)
             {
-                _EquipedGems.Add(new ItemGem());
+                _EquipedGems = new List<ItemGem>();
             }
-        }
-        else
-        {
-            foreach (var gemEquiped in _EquipedGems)
+            int startIdx = _EquipedGems.Count;
+            for (int i = startIdx; i < MAX_GEM_EQUIP; ++i)
             {
-                foreach (var gemInPack in _GemContainer)
+                _EquipedGems.Add(new ItemGem("-1"));
+            }
+            return true;
+        }
+
+        foreach (var gemEquiped in _EquipedGems)
+        {
+            foreach (var gemInPack in _GemContainer)
+            {
+                if (gemEquiped.ItemDataID == gemInPack.ItemDataID)
                 {
-                    if (gemEquiped.ItemDataID == gemInPack.ItemDataID)
-                    {
-                        gemEquiped.CopyFrom(gemInPack);
-                    }
+                    gemEquiped.CopyFrom(gemInPack);
                 }
             }
         }
+
+
+        GemSuit.Instance.IsActSet();
+        return false;
     }
 
     public int GetPutOnIdx()
@@ -116,6 +129,8 @@ public class GemData : SaveItemBase
         }
 
         _EquipedGems[putOnSlot].CopyFrom(gem);
+
+        GemSuit.Instance.IsActSet();
         return true;
     }
 
@@ -160,34 +175,50 @@ public class GemData : SaveItemBase
     [SaveField(3)]
     public List<ItemBase> _GemMaterials;
 
-    private void InitGemContainer()
+    private bool InitGemContainer()
     {
-        if (_GemContainer == null || _GemContainer.Count == 0)
+        var gemTabs = TableReader.GemTable.Records;
+        if (_GemContainer == null || _GemContainer.Count != gemTabs.Count)
         {
-            _GemContainer = new List<ItemGem>();
+            if (_GemContainer == null)
+            {
+                _GemContainer = new List<ItemGem>();
+            }
             foreach (var gemRecord in TableReader.GemTable.Records.Values)
             {
-                ItemGem gemItem = new ItemGem();
-                gemItem.ItemDataID = gemRecord.Id;
-                gemItem.ItemStackNum = 0;
-
-                _GemContainer.Add(gemItem);
+                var gemItem = _GemContainer.Find((itemGem) =>
+                {
+                    if (itemGem.ItemDataID == gemRecord.Id)
+                    {
+                        return true;
+                    }
+                    return false;
+                });
+                if (gemItem == null)
+                {
+                    gemItem = new ItemGem(gemRecord.Id);
+                    _GemContainer.Add(gemItem);
+                }
             }
+            return true;
         }
+        return false;
     }
 
-    private void InitGemMaterials()
+    private bool InitGemMaterials()
     {
         if (_GemMaterials == null || _GemMaterials.Count == 0)
         {
             _GemMaterials = new List<ItemBase>();
-            _GemMaterials.Add(new ItemBase() { ItemDataID = "70100" });
-            _GemMaterials.Add(new ItemBase() { ItemDataID = "70101" });
-            _GemMaterials.Add(new ItemBase() { ItemDataID = "70102" });
-            _GemMaterials.Add(new ItemBase() { ItemDataID = "70103" });
-            _GemMaterials.Add(new ItemBase() { ItemDataID = "70104" });
+            _GemMaterials.Add(new ItemBase("70100"));
+            _GemMaterials.Add(new ItemBase("70101"));
+            _GemMaterials.Add(new ItemBase("70102"));
+            _GemMaterials.Add(new ItemBase("70103"));
+            _GemMaterials.Add(new ItemBase("70104"));
             //_GemMaterials.Add(new ItemBase() { ItemDataID = "70105" });
+            return true;
         }
+        return false;
     }
 
     public ItemGem GetGemInfo(string gemData)
@@ -211,7 +242,7 @@ public class GemData : SaveItemBase
         {
             if (_GemMaterials[i].ItemDataID == itemID)
             {
-                _GemMaterials[i].ItemStackNum += itemNum;
+                _GemMaterials[i].AddStackNum(itemNum);
                 return true;
             }
         }
@@ -289,11 +320,12 @@ public class GemData : SaveItemBase
         {
             if (mat.ItemDataID == lvInfo.MaterialData)
             {
-                mat.ItemStackNum -= lvInfo.MaterialCnt;
+                mat.DecStackNum(lvInfo.MaterialCnt);
+                mat.SaveClass(true);
             }
         }
 
-        lvUpGem.ItemStackNum += 1;
+        lvUpGem.LevelUp();
 
         return true;
     }

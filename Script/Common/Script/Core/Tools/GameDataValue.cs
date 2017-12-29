@@ -8,4 +8,14 @@ public class GameDataValue
     {
          return val * 0.0001f;
     }
+
+    public static int ConfigFloatToInt(float val)
+    {
+        return (int)(val * 10000);
+    }
+
+    public static int GetMaxRate()
+    {
+        return 10000;
+    }
 }

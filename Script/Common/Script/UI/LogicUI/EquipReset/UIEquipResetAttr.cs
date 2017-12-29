@@ -3,15 +3,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
-
  
 using UnityEngine.EventSystems;
 using System;
 using Tables;
-
- 
-
-
 
 public class UIEquipResetAttr : UIBase
 {
@@ -82,7 +77,7 @@ public class UIEquipResetAttr : UIBase
 
         for (int i = equips.Count; i < BackBagPack._BAG_PAGE_SLOT_CNT; ++i)
         {
-            equips.Add(new ItemEquip() { ItemDataID = "-1" });
+            equips.Add(new ItemEquip("-1"));
         }
 
         if (equips.Count > 0)

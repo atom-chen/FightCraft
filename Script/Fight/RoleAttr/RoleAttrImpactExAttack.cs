@@ -14,7 +14,7 @@ public class RoleAttrImpactExAttack : RoleAttrImpactBase
         _ImpactName = "ExAttack";
     }
 
-    public override List<int> GetSkillImpactVal(SkillInfoItem skillInfo)
+    public override List<int> GetSkillImpactVal(ItemSkill skillInfo)
     {
         var valList = new List<int>();
         valList.Add(1);

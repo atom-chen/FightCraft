@@ -88,4 +88,15 @@
     <constructDefault>0</constructDefault>
     <constructRepeat>1</constructRepeat>
   </constructColumn>
+  <constructColumn>
+    <constructName>ExAttr</constructName>
+    <constructCode>ExAttr</constructCode>
+    <constructType1>表格索引</constructType1>
+    <constructType2>
+      <constructType2>AttrValue</constructType2>
+    </constructType2>
+    <constructDefault>
+    </constructDefault>
+    <constructRepeat>1</constructRepeat>
+  </constructColumn>
 </root>

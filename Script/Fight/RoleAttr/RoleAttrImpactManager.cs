@@ -21,11 +21,11 @@ public class RoleAttrImpactManager
         if (impactBase == null)
             return null;
 
-        impactBase.InitImpact("", equipAttr.AttrValues);
+        impactBase.InitImpact("", equipAttr.AttrParams);
         return impactBase;
     }
 
-    public static RoleAttrImpactBase GetAttrImpact(SkillInfoItem skillInfo)
+    public static RoleAttrImpactBase GetAttrImpact(ItemSkill skillInfo)
     {
         var impactType = Type.GetType(skillInfo.SkillRecord.SkillAttr);
         if (impactType == null)

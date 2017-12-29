@@ -19,6 +19,7 @@ namespace Tables
         public List<int> BaseAttrs { get; set; }
         public int LevelLimit { get; set; }
         public int ProfessionLimit { get; set; }
+        public AttrValueRecord ExAttr { get; set; }
         public EquipItemRecord(DataRecord dataRecord)
         {
             if (dataRecord != null)
@@ -43,6 +44,14 @@ namespace Tables
             }
             recordStrList.Add(TableWriteBase.GetWriteStr(LevelLimit));
             recordStrList.Add(TableWriteBase.GetWriteStr(ProfessionLimit));
+            if (ExAttr != null)
+            {
+                recordStrList.Add(ExAttr.Id);
+            }
+            else
+            {
+                recordStrList.Add("");
+            }
 
             return recordStrList.ToArray();
         }
@@ -114,6 +123,14 @@ namespace Tables
                 pair.Value.BaseAttrs.Add(TableReadBase.ParseInt(pair.Value.ValueStr[6]));
                 pair.Value.LevelLimit = TableReadBase.ParseInt(pair.Value.ValueStr[7]);
                 pair.Value.ProfessionLimit = TableReadBase.ParseInt(pair.Value.ValueStr[8]);
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[9]))
+                {
+                    pair.Value.ExAttr =  TableReader.AttrValue.GetRecord(pair.Value.ValueStr[9]);
+                }
+                else
+                {
+                    pair.Value.ExAttr = null;
+                }
             }
         }
     }

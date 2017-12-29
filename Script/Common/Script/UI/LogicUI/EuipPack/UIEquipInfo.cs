@@ -8,10 +8,6 @@ using UnityEngine.EventSystems;
 using System;
 using Tables;
 
- 
-
-
-
 public class UIEquipInfo : UIBase
 {
 
@@ -60,7 +56,7 @@ public class UIEquipInfo : UIBase
         }
         Hashtable hash = new Hashtable();
         hash.Add("ItemEquip", _ShowItem);
-        _AttrContainer.InitContentItem(itemEquip._DynamicDataVector, null, hash);
+        _AttrContainer.InitContentItem(itemEquip.EquipExAttr, null, hash);
     }
     #endregion
 

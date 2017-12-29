@@ -647,9 +647,7 @@ public class RoleAttrManager : MonoBehaviour
         {
             int fireEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.FireEnhance);
             int fireResistan = _BaseAttr.GetValue(RoleAttrEnum.FireResistan);
-            int fireReduse = _BaseAttr.GetValue(RoleAttrEnum.FireDamageReduse);
-            int fireRedusePersent = _BaseAttr.GetValue(RoleAttrEnum.FireDamageRedusePersent);
-            int fireDamage = Mathf.CeilToInt(fireAttack * damageRate * (1 + (fireEnhance - fireResistan) / 250.0f) * (1 - fireRedusePersent) - fireReduse);
+            int fireDamage = Mathf.CeilToInt(fireAttack * damageRate * (1 + (fireEnhance) / 250.0f) * (1 - fireResistan));
             damageClass.FireDamage = Mathf.Max(fireDamage, 0);
         }
 
@@ -663,9 +661,7 @@ public class RoleAttrManager : MonoBehaviour
         {
             int coldEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.ColdEnhance);
             int coldResistan = _BaseAttr.GetValue(RoleAttrEnum.ColdResistan);
-            int coldReduse = _BaseAttr.GetValue(RoleAttrEnum.ColdDamageReduse);
-            int coldRedusePersent = _BaseAttr.GetValue(RoleAttrEnum.ColdDamageRedusePersent);
-            int coldDamage = Mathf.CeilToInt(coldAttack * damageRate * (1 + (coldEnhance - coldResistan) / 250.0f) * (1 - coldRedusePersent) - coldReduse);
+            int coldDamage = Mathf.CeilToInt(coldAttack * damageRate * (1 + (coldEnhance - coldResistan) / 250.0f) * (1 - coldResistan));
             damageClass.IceDamage = Mathf.Max(coldDamage, 0);
         }
 
@@ -679,9 +675,7 @@ public class RoleAttrManager : MonoBehaviour
         {
             int lightingEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.LightingEnhance);
             int lightingResistan = _BaseAttr.GetValue(RoleAttrEnum.LightingResistan);
-            int lightingReduse = _BaseAttr.GetValue(RoleAttrEnum.LightingDamageReduse);
-            int lightingRedusePersent = _BaseAttr.GetValue(RoleAttrEnum.LightingDamageRedusePersent);
-            int lightingDamage = Mathf.CeilToInt(lightingAttack * damageRate * (1 + (lightingEnhance - lightingResistan) / 250.0f) * (1 - lightingRedusePersent) - lightingReduse);
+            int lightingDamage = Mathf.CeilToInt(lightingAttack * damageRate * (1 + (lightingEnhance) / 250.0f) * (1 - lightingResistan));
             damageClass.IceDamage = Mathf.Max(lightingDamage, 0);
         }
 
@@ -695,9 +689,7 @@ public class RoleAttrManager : MonoBehaviour
         {
             int windEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.WindEnhance);
             int windResistan = _BaseAttr.GetValue(RoleAttrEnum.WindResistan);
-            int windReduse = _BaseAttr.GetValue(RoleAttrEnum.WindDamageReduse);
-            int windRedusePersent = _BaseAttr.GetValue(RoleAttrEnum.WindDamageRedusePersent);
-            int windDamage = Mathf.CeilToInt(windAttack * damageRate * (1 + (windEnhance - windResistan) / 250.0f) * (1 - windRedusePersent) - windReduse);
+            int windDamage = Mathf.CeilToInt(windAttack * damageRate * (1 + (windEnhance) / 250.0f) * (1 - windResistan));
             damageClass.IceDamage = Mathf.Max(windDamage, 0);
         }
     }

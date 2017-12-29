@@ -16,7 +16,7 @@ public class UIGemSuitGemItem : UIPackItemBase
 
     public override void Show(Hashtable hash)
     {
-        base.Show(hash);
+        base.Show();
 
         var gemInfo = (Tables.GemTableRecord)hash["InitObj"];
         _MinGemLv = (int)hash["MinLevel"];
@@ -64,7 +64,7 @@ public class UIGemSuitGemItem : UIPackItemBase
                 _DisableGO.SetActive(true);
             }
         }
-        
+
         if (!_ClearGem)
         {
             if (gemData.Level >= _MinGemLv)
@@ -75,6 +75,10 @@ public class UIGemSuitGemItem : UIPackItemBase
             {
                 _UnClearItem.SetActive(true);
             }
+        }
+        else
+        {
+            _UnClearItem.SetActive(false);
         }
     }
 

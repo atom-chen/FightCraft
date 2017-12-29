@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using Tables;
 
-
-public class UIGemSuitPack : UIBase, IDragablePack
+public class UIGemSuitPack : UIBase
 {
 
     #region static funs
@@ -11,12 +12,12 @@ public class UIGemSuitPack : UIBase, IDragablePack
     public static void ShowAsyn()
     {
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("LogicUI/Gem/UIGemPack", UILayer.PopUI, hash);
+        GameCore.Instance.UIManager.ShowUI("LogicUI/Gem/UIGemSuitPack", UILayer.SubPopUI, hash);
     }
 
     public static void RefreshBagItems()
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UIGemPack>("LogicUI/Gem/UIGemPack");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIGemPack>("LogicUI/Gem/UIGemSuitPack");
         if (instance == null)
             return;
 
@@ -30,14 +31,12 @@ public class UIGemSuitPack : UIBase, IDragablePack
 
     #region 
 
-    public UIContainerBase _GemContainer;
-    public UIContainerBase _MaterialContainer;
+    public Text _GemSuitName;
+    public UIContainerBase _AttrContainer;
 
-    public UIGemItem[] _GemPack;
+    public UIContainerSelect _GemSuitContainer;
 
     #endregion
-
-    #region 
 
     public override void Show(Hashtable hash)
     {
@@ -46,184 +45,38 @@ public class UIGemSuitPack : UIBase, IDragablePack
         ShowPackItems();
     }
 
-    public override void Hide()
-    {
-        base.Hide();
-    }
-
     private void ShowPackItems()
     {
-        Hashtable exHash = new Hashtable();
-        exHash.Add("DragPack", this);
-
-        _GemContainer.InitContentItem(GemData.Instance._GemContainer, ShowGemTooltipsRight, exHash);
-        _MaterialContainer.InitContentItem(GemData.Instance._GemMaterials, ShowMaterialTooltips, exHash);
-        for (int i = 0; i < _GemPack.Length; ++i)
-        {
-            Hashtable hash = new Hashtable();
-            hash.Add("InitObj", GemData.Instance._EquipedGems[i]);
-            hash.Add("DragPack", this);
-            _GemPack[i].Show(hash);
-            _GemPack[i]._InitInfo = GemData.Instance._EquipedGems[i];
-            _GemPack[i]._ClickEvent += ShowGemTooltipsLeft;
-        }
-        //_BackPack.Show(null);
+        var suitTabs = Tables.TableReader.GemSet.Records.Values;
+        _GemSuitContainer.InitSelectContent(suitTabs, new List<GemSetRecord>() { GemSuit.Instance.ActSet }, SuitSelect);
     }
 
-    public void RefreshItems()
+    private void ClearSuitInfo()
     {
-        _GemContainer.RefreshItems();
-        _MaterialContainer.RefreshItems();
-        for (int i = 0; i < _GemPack.Length; ++i)
-        {
-            _GemPack[i].Refresh();
-        }
-        //_EquipContainer.RefreshItems();
-        //_BackPack.RefreshItems();
+        _GemSuitName.text = "";
+        _AttrContainer.InitContentItem(null);
     }
 
-    private void ShowGemTooltipsLeft(object equipObj)
+    private void SuitSelect(object suitObj)
     {
-        ItemGem gemItem = equipObj as ItemGem;
-        if (gemItem == null || !gemItem.IsVolid())
+        GemSetRecord gemSet = suitObj as GemSetRecord;
+        if (gemSet == null)
             return;
 
-        UIGemTooltips.ShowAsyn(gemItem, new ToolTipFunc[2] { new ToolTipFunc(10008, PunchOff), new ToolTipFunc(10009, LevelUp) });
-        //UIEquipTooltips.ShowAsyn(equipItem, ToolTipsShowType.ShowInEquipPack);
-    }
-
-    private void ShowGemTooltipsRight(object equipObj)
-    {
-        ItemGem gemItem = equipObj as ItemGem;
-        if (gemItem == null || !gemItem.IsVolid())
-            return;
-
-        if (gemItem.ItemStackNum == 0)
+        _GemSuitName.text = gemSet.Name;
+        List<EquipExAttr> exAttrs = new List<EquipExAttr>();
+        int level = gemSet.MinGemLv;
+        if (gemSet == GemSuit.Instance.ActSet)
         {
-            UIGemTooltips.ShowAsyn(gemItem, new ToolTipFunc[1] { new ToolTipFunc(10012, LevelUp) });
+            level = GemSuit.Instance.ActLevel;
         }
-        else
+        foreach (var setAttr in gemSet.Attrs)
         {
-            UIGemTooltips.ShowAsyn(gemItem, new ToolTipFunc[2] { new ToolTipFunc(10007, PunchOn), new ToolTipFunc(10009, LevelUp) });
+            if(setAttr != null)
+                exAttrs.Add(setAttr.GetExAttr(level));
         }
-        //UIEquipTooltips.ShowAsyn(equipItem, ToolTipsShowType.ShowInEquipPack);
+
+        _AttrContainer.InitContentItem(exAttrs);
     }
-
-    private void ShowMaterialTooltips(object equipObj)
-    {
-        ItemEquip equipItem = equipObj as ItemEquip;
-        if (equipItem == null || !equipItem.IsVolid())
-            return;
-
-        //UIEquipTooltips.ShowAsyn(equipItem, ToolTipsShowType.ShowInEquipPack);
-    }
-    #endregion
-
-    #region 
-
-    private void ExchangeGems(ItemGem itemGem1, ItemGem itemGem2)
-    {
-        GemData.Instance.ExchangeGem(itemGem1, itemGem2);
-        RefreshItems();
-    }
-
-    private void PunchOn(ItemGem itemGem, int idx)
-    {
-        GemData.Instance.PutOnGem(itemGem, idx);
-        RefreshItems();
-    }
-
-    private void PunchOn(ItemBase itemBase)
-    {
-        ItemGem itemGem = itemBase as ItemGem;
-        if (!itemGem.IsVolid())
-            return;
-
-        var idx = GemData.Instance.GetPutOnIdx();
-        PunchOn(itemGem, idx);
-    }
-
-    private void PunchOff(ItemBase itemBase)
-    {
-        ItemGem itemGem = itemBase as ItemGem;
-        GemData.Instance.PutOff(itemGem);
-        RefreshItems();
-    }
-
-    private void LevelUp(ItemBase itemBase)
-    {
-        ItemGem itemGem = itemBase as ItemGem;
-        if (GemData.Instance.GemLevelUp(itemGem))
-        {
-            RefreshItems();
-        }
-    }
-
-    private void ItemRefresh(object sender, Hashtable args)
-    {
-        RefreshItems();
-    }
-
-    public bool IsCanDragItem(UIDragableItemBase dragItem)
-    {
-        if (!dragItem.ShowedItem.IsVolid())
-            return false;
-
-        var gemRecord = Tables.TableReader.GemTable.GetRecord(dragItem.ShowedItem.ItemDataID);
-        if (gemRecord == null)
-            return false;
-
-        return true;
-    }
-
-    public bool IsCanDropItem(UIDragableItemBase dragItem, UIDragableItemBase dropItem)
-    {
-        //if (dragItem._DragPackBase == dropItem._DragPackBase)
-        //    return false;
-
-        //
-        //if (GemData.Instance._EquipedGems.Contains(dragItem.ShowedItem as ItemGem)
-        //    && GemData.Instance._EquipedGems.Contains(dropItem.ShowedItem as ItemGem))
-        //    return false;
-
-        //gem collect cant change
-        if (!GemData.Instance._EquipedGems.Contains(dragItem.ShowedItem as ItemGem)
-            && !GemData.Instance._EquipedGems.Contains(dropItem.ShowedItem as ItemGem))
-            return false;
-
-        if (dragItem.ShowedItem.ItemStackNum < 1)
-            return false;
-
-        return true;
-    }
-
-    public void OnDragItem(UIDragableItemBase dragItem, UIDragableItemBase dropItem)
-    {
-        if (GemData.Instance._EquipedGems.Contains(dragItem.ShowedItem as ItemGem)
-            && GemData.Instance._EquipedGems.Contains(dropItem.ShowedItem as ItemGem))
-        {
-            ExchangeGems(dragItem.ShowedItem as ItemGem, dropItem.ShowedItem as ItemGem);
-        }
-        else if (GemData.Instance._EquipedGems.Contains(dragItem.ShowedItem as ItemGem))
-        {
-            PunchOff(dragItem.ShowedItem as ItemGem);
-        }
-        else if (GemData.Instance._EquipedGems.Contains(dropItem.ShowedItem as ItemGem))
-        {
-            int idx = GemData.Instance._EquipedGems.IndexOf(dropItem.ShowedItem as ItemGem);
-            PunchOn(dragItem.ShowedItem as ItemGem, idx);
-        }
-    }
-    #endregion
-
-    #region 
-
-    public void OnBtnGemSuit()
-    {
-
-    }
-
-    #endregion
-
 }
 

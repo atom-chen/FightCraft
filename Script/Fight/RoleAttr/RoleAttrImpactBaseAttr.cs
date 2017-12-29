@@ -1,15 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Tables;
 
 public class RoleAttrImpactBaseAttr : RoleAttrImpactBase
 {
 
     public override void InitImpact(string skillInput, List<int> args)
     {
-        var legendaryEquip = Tables.TableReader.LegendaryEquip.GetRecord( args[0].ToString());
-        _ImpactName = legendaryEquip.BulletName;
-        _SkillInput = legendaryEquip.SkillInput;
+        
     }
 
     public override void ModifySkillBeforeInit(MotionManager roleMotion)
@@ -36,6 +35,15 @@ public class RoleAttrImpactBaseAttr : RoleAttrImpactBase
         var attrTab = Tables.TableReader.FightAttr.GetRecord(attrParams[0].ToString());
 
         return string.Format(attrTab.ShowTip, attrParams[1]);
+    }
+
+    public static EquipExAttr GetExAttrByValue(AttrValueRecord attrRecord, int arg)
+    {
+        int attrValue = attrRecord.AttrParams[1] + attrRecord.AttrParams[2] * arg;
+
+        EquipExAttr exAttr = new EquipExAttr(attrRecord.AttrImpact, 0, attrRecord.AttrParams[0], attrValue);
+
+        return exAttr;
     }
 
     #region 

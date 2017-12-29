@@ -50,6 +50,7 @@ public class UIBackPack : UIBase, IDragablePack
     {
         base.Show(hash);
 
+
         OnShowPage(0);
     }
 

@@ -8,11 +8,11 @@ public class RoleAttrImpactPassiveAddAttr : RoleAttrImpactPassive
     {
         base.InitImpact(skillInput, args);
 
-        var legendaryEquip = Tables.TableReader.LegendaryEquip.GetRecord(args[0].ToString());
-        _AddValue = GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValues[0]) + GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValueIncs[0] * args[1]);
-        if (legendaryEquip.ImpactValues[1] > 0)
+        var attrTab = Tables.TableReader.AttrValue.GetRecord(args[0].ToString());
+        _AddValue = GameDataValue.ConfigIntToFloat(attrTab.AttrParams[0]) + GameDataValue.ConfigIntToFloat(attrTab.AttrParams[0] * args[1]);
+        if (attrTab.AttrParams[1] > 0)
         {
-            _AddValue = Mathf.Min(_AddValue, GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValues[1]));
+            _AddValue = Mathf.Min(_AddValue, GameDataValue.ConfigIntToFloat(attrTab.AttrParams[1]));
         }
     }
 

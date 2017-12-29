@@ -7,9 +7,9 @@ public class RoleAttrImpactPassive : RoleAttrImpactBase
 
     public override void InitImpact(string skillInput, List<int> args)
     {
-        var legendaryEquip = Tables.TableReader.LegendaryEquip.GetRecord( args[0].ToString());
-        _ImpactName = legendaryEquip.BulletName;
-        _SkillInput = legendaryEquip.SkillInput;
+        var attrTab = Tables.TableReader.AttrValue.GetRecord(args[0].ToString());
+        _ImpactName = attrTab.StrParam[0];
+        _SkillInput = attrTab.StrParam[1];
     }
 
     public override void ModifySkillAfterInit(MotionManager roleMotion)
@@ -33,8 +33,8 @@ public class RoleAttrImpactPassive : RoleAttrImpactBase
 
     public static string GetAttrDesc(List<int> attrParams)
     {
-        var legendaryEquip = Tables.TableReader.LegendaryEquip.GetRecord(attrParams[0].ToString());
-        return string.Format(legendaryEquip.Desc, legendaryEquip.ImpactValues);
+        var attrTab = Tables.TableReader.AttrValue.GetRecord(attrParams[0].ToString());
+        return string.Format(attrTab.Desc, attrTab.AttrParams);
     }
 
     #region 

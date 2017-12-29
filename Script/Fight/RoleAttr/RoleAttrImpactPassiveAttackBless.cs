@@ -8,13 +8,13 @@ public class RoleAttrImpactPassiveAttackBless : RoleAttrImpactPassive
     {
         base.InitImpact(skillInput, args);
 
-        var legendaryEquip = Tables.TableReader.LegendaryEquip.GetRecord(args[0].ToString());
-        _ActRate = legendaryEquip.ImpactValues[0] + legendaryEquip.ImpactValueIncs[0] * args[1];
-        if (legendaryEquip.ImpactValues[1] > 0)
+        var attrTab = Tables.TableReader.AttrValue.GetRecord(args[0].ToString());
+        _ActRate = attrTab.AttrParams[0] + attrTab.AttrParams[0] * args[1];
+        if (attrTab.AttrParams[1] > 0)
         {
-            _ActRate = Mathf.Min(_ActRate, legendaryEquip.ImpactValues[1]);
+            _ActRate = Mathf.Min(_ActRate, attrTab.AttrParams[1]);
         }
-        _AttrValue = GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValues[2]) + GameDataValue.ConfigIntToFloat(legendaryEquip.ImpactValueIncs[1] * args[1]);
+        _AttrValue = GameDataValue.ConfigIntToFloat(attrTab.AttrParams[2]) + GameDataValue.ConfigIntToFloat(attrTab.AttrParams[1] * args[1]);
     }
 
     public override void ModifySkillAfterInit(MotionManager roleMotion)

@@ -4,62 +4,10 @@ using System.Collections.Generic;
 using Tables;
 using System;
 
-public class EquipExAttr
+public class ItemExData
 {
     [SaveField(1)]
-    public string AttrType;
-    [SaveField(2)]
-    public List<int> AttrValues;
-
-
-    public EquipExAttr()
-    {
-        AttrValues = new List<int>();
-        //AttrValues.Add(0);
-    }
-
-    public EquipExAttr(string attrType, params int[] attrValues)
-    {
-        AttrType = attrType;
-        AttrValues = new List<int>(attrValues);
-    }
-
-    public EquipExAttr(EquipExAttr copyInstance)
-    {
-        AttrType = copyInstance.AttrType;
-        AttrValues = copyInstance.AttrValues;
-    }
-
-    public string GetAttrStr()
-    {
-        var impactType = Type.GetType(AttrType);
-        Debug.Log("AttrType:" + AttrType);
-        if (impactType == null)
-            return "";
-
-        var method = impactType.GetMethod("GetAttrDesc");
-        if (method == null)
-            return "";
-
-        return method.Invoke(null, new object[] { AttrValues }) as string;
-    }
-
-    public bool Add(EquipExAttr d)
-    {
-        if (d.AttrType != AttrType)
-            return false;
-
-        if (AttrType == "RoleAttrImpactBaseAttr")
-        {
-            for (int i = 0; i < AttrValues.Count; ++i)
-            {
-                AttrValues[i] += d.AttrValues[i];
-            }
-            return true;
-        }
-
-        return false;
-    }
+    public List<string> _StrParams = new List<string>();
 }
 
 public class ItemBase : SaveItemBase
@@ -67,6 +15,17 @@ public class ItemBase : SaveItemBase
     public ItemBase()
     {
         ItemDataID = "";
+    }
+
+    public ItemBase(string itemDataID)
+    {
+        ItemDataID = itemDataID;
+    }
+
+    public ItemBase(string itemDataID, int num)
+    {
+        ItemDataID = itemDataID;
+        ItemStackNum = GetVolidItemNum(num);
     }
 
     [SaveField(1)]
@@ -110,7 +69,7 @@ public class ItemBase : SaveItemBase
     }
 
     [SaveField(2)]
-    public List<int> _DynamicDataInt = new List<int>();
+    protected List<int> _DynamicDataInt = new List<int>();
 
     public int ItemStackNum
     {
@@ -122,7 +81,7 @@ public class ItemBase : SaveItemBase
             }
             return _DynamicDataInt[0];
         }
-        set
+        protected set
         {
             if (_DynamicDataInt.Count == 0)
             {
@@ -132,8 +91,37 @@ public class ItemBase : SaveItemBase
         }
     }
 
+    private int GetVolidItemNum(int num)
+    {
+        return Math.Max(0, num);
+    }
+
+    public int SetStackNum(int num)
+    {
+        int temp = num;
+        ItemStackNum = GetVolidItemNum(temp);
+        SaveClass(true);
+        return ItemStackNum;
+    }
+
+    public int AddStackNum(int num)
+    {
+        int temp = num + ItemStackNum;
+        ItemStackNum = GetVolidItemNum(temp);
+        SaveClass(true);
+        return ItemStackNum;
+    }
+
+    public int DecStackNum(int num)
+    {
+        int temp = ItemStackNum - num;
+        ItemStackNum = GetVolidItemNum(temp);
+        SaveClass(true);
+        return ItemStackNum;
+    }
+
     [SaveField(3)]
-    public List<EquipExAttr> _DynamicDataVector = new List<EquipExAttr>();
+    protected List<ItemExData> _DynamicDataEx = new List<ItemExData>();
 
     #region fun
 
@@ -146,7 +134,7 @@ public class ItemBase : SaveItemBase
     {
         _ItemDataID = "-1";
         _DynamicDataInt = new List<int>();
-        _DynamicDataVector = new List<EquipExAttr>();
+        _DynamicDataEx = new List<ItemExData>();
     }
 
     public void ExchangeInfo(ItemBase itembase)
@@ -162,13 +150,14 @@ public class ItemBase : SaveItemBase
         itembase._DynamicDataInt = _DynamicDataInt;
         _DynamicDataInt = tempData;
 
-        var tempDataVector = itembase._DynamicDataVector;
-        itembase._DynamicDataVector = _DynamicDataVector;
-        _DynamicDataVector = tempDataVector;
+        var tempDataVector = itembase._DynamicDataEx;
+        itembase._DynamicDataEx = _DynamicDataEx;
+        _DynamicDataEx = tempDataVector;
 
         itembase.RefreshItemData();
         RefreshItemData();
-
+        SaveClass(true);
+        itembase.SaveClass(true);
         //LogicManager.Instance.SaveGame();
     }
 
@@ -181,7 +170,7 @@ public class ItemBase : SaveItemBase
 
         _DynamicDataInt = itembase._DynamicDataInt;
 
-        _DynamicDataVector = itembase._DynamicDataVector;
+        _DynamicDataEx = itembase._DynamicDataEx;
 
         RefreshItemData();
     }
@@ -192,8 +181,7 @@ public class ItemBase : SaveItemBase
 
     public static ItemBase CreateItem(string itemID)
     {
-        ItemBase newItem = new ItemBase();
-        newItem.ItemDataID = itemID;
+        ItemBase newItem = new ItemBase(itemID);
         return newItem;
     }
 

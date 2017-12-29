@@ -25,6 +25,8 @@ namespace Tables
         #region Logic
 
 //
+        public static AttrValue AttrValue { get; internal set; }
+//
         public static CommonItem CommonItem { get; internal set; }
 //
         public static EquipItem EquipItem { get; internal set; }
@@ -34,8 +36,6 @@ namespace Tables
         public static GemSet GemSet { get; internal set; }
 //
         public static GemTable GemTable { get; internal set; }
-//
-        public static LegendaryEquip LegendaryEquip { get; internal set; }
 //
         public static MonsterBase MonsterBase { get; internal set; }
 //
@@ -54,12 +54,12 @@ namespace Tables
         public static void ReadTables()
         {
             //读取所有表
+            AttrValue = new AttrValue(TableReadBase.GetTableText("AttrValue"), false);
             CommonItem = new CommonItem(TableReadBase.GetTableText("CommonItem"), false);
             EquipItem = new EquipItem(TableReadBase.GetTableText("EquipItem"), false);
             FightAttr = new FightAttr(TableReadBase.GetTableText("FightAttr"), false);
             GemSet = new GemSet(TableReadBase.GetTableText("GemSet"), false);
             GemTable = new GemTable(TableReadBase.GetTableText("GemTable"), false);
-            LegendaryEquip = new LegendaryEquip(TableReadBase.GetTableText("LegendaryEquip"), false);
             MonsterBase = new MonsterBase(TableReadBase.GetTableText("MonsterBase"), false);
             RoleExp = new RoleExp(TableReadBase.GetTableText("RoleExp"), false);
             ShopItem = new ShopItem(TableReadBase.GetTableText("ShopItem"), false);
@@ -69,12 +69,12 @@ namespace Tables
             StrTable = new StrTable(TableReadBase.GetTableText("StrTable"), false);
 
             //初始化所有表
+            AttrValue.CoverTableContent();
             CommonItem.CoverTableContent();
             EquipItem.CoverTableContent();
             FightAttr.CoverTableContent();
             GemSet.CoverTableContent();
             GemTable.CoverTableContent();
-            LegendaryEquip.CoverTableContent();
             MonsterBase.CoverTableContent();
             RoleExp.CoverTableContent();
             ShopItem.CoverTableContent();

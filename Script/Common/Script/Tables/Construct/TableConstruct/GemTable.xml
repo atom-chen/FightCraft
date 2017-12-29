@@ -49,24 +49,15 @@
     <constructRepeat>1</constructRepeat>
   </constructColumn>
   <constructColumn>
-    <constructName>BaseAttr</constructName>
-    <constructCode>BaseAttr</constructCode>
-    <constructType1>基本类型</constructType1>
+    <constructName>AttrValue</constructName>
+    <constructCode>AttrValue</constructCode>
+    <constructType1>表格索引</constructType1>
     <constructType2>
-      <constructType2>整数</constructType2>
+      <constructType2>AttrValue</constructType2>
     </constructType2>
-    <constructDefault>0</constructDefault>
+    <constructDefault>
+    </constructDefault>
     <constructRepeat>1</constructRepeat>
-  </constructColumn>
-  <constructColumn>
-    <constructName>AttrStep</constructName>
-    <constructCode>AttrStep</constructCode>
-    <constructType1>基本类型</constructType1>
-    <constructType2>
-      <constructType2>整数</constructType2>
-    </constructType2>
-    <constructDefault>0</constructDefault>
-    <constructRepeat>3</constructRepeat>
   </constructColumn>
   <constructColumn>
     <constructName>LevelUpParam</constructName>

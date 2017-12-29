@@ -53,30 +53,43 @@ public class BackBagPack : DataPackBase
 
     public void InitBackPack()
     {
-        if (_PageEquips == null || _PageEquips.Count == 0)
+        bool needSave = false;
+        if (_PageEquips == null || _PageEquips.Count != _BAG_PAGE_SLOT_CNT)
         {
-            int equipSlotCnt = _BAG_PAGE_SLOT_CNT;
-            _PageEquips = new List<ItemEquip>();
-            for (int i = 0; i < equipSlotCnt; ++i)
+            if (_PageEquips == null)
             {
-                ItemEquip newItemEquip = new ItemEquip();
-                newItemEquip.ItemDataID = "-1";
-                newItemEquip._SaveFileName = "BackPack.Equip" + i;
+                _PageEquips = new List<ItemEquip>();
+            }
+            int equipSlotCnt = _BAG_PAGE_SLOT_CNT;
+            int startIdx = _PageEquips.Count;
+            for (int i = startIdx; i < equipSlotCnt; ++i)
+            {
+                ItemEquip newItemEquip = new ItemEquip("-1");
                 _PageEquips.Add(newItemEquip);
             }
+            needSave = true;
         }
 
-        if (_PageItems == null || _PageItems.Count == 0)
+        if (_PageItems == null || _PageItems.Count != _BAG_PAGE_SLOT_CNT)
         {
+            if (_PageItems == null)
+            {
+                _PageItems = new List<ItemBase>();
+            }
             int equipSlotCnt = _BAG_PAGE_SLOT_CNT;
-            _PageItems = new List<ItemBase>();
+            int startIdx = _PageItems.Count;
             for (int i = 0; i < equipSlotCnt; ++i)
             {
-                ItemBase newItemEquip = new ItemBase();
-                newItemEquip.ItemDataID = "-1";
-                newItemEquip._SaveFileName = "BackPack.Item" + i;
+                ItemBase newItemEquip = new ItemBase("-1");
+                //newItemEquip._SaveFileName = "BackPack.Item" + i;
                 _PageItems.Add(newItemEquip);
             }
+            needSave = true;
+        }
+
+        if (needSave)
+        {
+            SaveClass(true);
         }
     }
 
@@ -113,12 +126,13 @@ public class BackBagPack : DataPackBase
         if (!itemPos.IsVolid())
         {
             itemPos.ItemDataID = itemID;
-            itemPos.ItemStackNum = itemCnt;
+            itemPos.SetStackNum(itemCnt);
         }
         else
         {
-            itemPos.ItemStackNum += (itemCnt);
+            itemPos.AddStackNum(itemCnt);
         }
+        itemPos.SaveClass(true);
         return true;
     }
 

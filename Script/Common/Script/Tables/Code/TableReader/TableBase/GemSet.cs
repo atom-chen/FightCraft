@@ -17,9 +17,7 @@ namespace Tables
         public bool IsEnableDefault { get; set; }
         public int MinGemLv { get; set; }
         public List<GemTableRecord> Gems { get; set; }
-        public List<Vector3> BaseAttr { get; set; }
-        public List<string> ExAttrName { get; set; }
-        public List<Vector3> ExAttrValue { get; set; }
+        public List<AttrValueRecord> Attrs { get; set; }
         public GemSetRecord(DataRecord dataRecord)
         {
             if (dataRecord != null)
@@ -29,9 +27,7 @@ namespace Tables
 
             }
             Gems = new List<GemTableRecord>();
-            BaseAttr = new List<Vector3>();
-            ExAttrName = new List<string>();
-            ExAttrValue = new List<Vector3>();
+            Attrs = new List<AttrValueRecord>();
         }
         public override string[] GetRecordStr()
         {
@@ -52,17 +48,16 @@ namespace Tables
                     recordStrList.Add("");
                 }
             }
-            foreach (var testTableItem in BaseAttr)
+            foreach (var testTableItem in Attrs)
             {
-                recordStrList.Add(TableWriteBase.GetWriteStr(testTableItem));
-            }
-            foreach (var testTableItem in ExAttrName)
-            {
-                recordStrList.Add(TableWriteBase.GetWriteStr(testTableItem));
-            }
-            foreach (var testTableItem in ExAttrValue)
-            {
-                recordStrList.Add(TableWriteBase.GetWriteStr(testTableItem));
+                if (testTableItem != null)
+                {
+                    recordStrList.Add(testTableItem.Id);
+                }
+                else
+                {
+                    recordStrList.Add("");
+                }
             }
 
             return recordStrList.ToArray();
@@ -179,18 +174,86 @@ namespace Tables
                 {
                     pair.Value.Gems.Add(null);
                 }
-                pair.Value.BaseAttr.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[11]));
-                pair.Value.BaseAttr.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[12]));
-                pair.Value.BaseAttr.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[13]));
-                pair.Value.BaseAttr.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[14]));
-                pair.Value.BaseAttr.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[15]));
-                pair.Value.BaseAttr.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[16]));
-                pair.Value.ExAttrName.Add(TableReadBase.ParseString(pair.Value.ValueStr[17]));
-                pair.Value.ExAttrName.Add(TableReadBase.ParseString(pair.Value.ValueStr[18]));
-                pair.Value.ExAttrName.Add(TableReadBase.ParseString(pair.Value.ValueStr[19]));
-                pair.Value.ExAttrValue.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[20]));
-                pair.Value.ExAttrValue.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[21]));
-                pair.Value.ExAttrValue.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[22]));
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[11]))
+                {
+                    pair.Value.Attrs.Add( TableReader.AttrValue.GetRecord(pair.Value.ValueStr[11]));
+                }
+                else
+                {
+                    pair.Value.Attrs.Add(null);
+                }
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[12]))
+                {
+                    pair.Value.Attrs.Add( TableReader.AttrValue.GetRecord(pair.Value.ValueStr[12]));
+                }
+                else
+                {
+                    pair.Value.Attrs.Add(null);
+                }
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[13]))
+                {
+                    pair.Value.Attrs.Add( TableReader.AttrValue.GetRecord(pair.Value.ValueStr[13]));
+                }
+                else
+                {
+                    pair.Value.Attrs.Add(null);
+                }
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[14]))
+                {
+                    pair.Value.Attrs.Add( TableReader.AttrValue.GetRecord(pair.Value.ValueStr[14]));
+                }
+                else
+                {
+                    pair.Value.Attrs.Add(null);
+                }
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[15]))
+                {
+                    pair.Value.Attrs.Add( TableReader.AttrValue.GetRecord(pair.Value.ValueStr[15]));
+                }
+                else
+                {
+                    pair.Value.Attrs.Add(null);
+                }
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[16]))
+                {
+                    pair.Value.Attrs.Add( TableReader.AttrValue.GetRecord(pair.Value.ValueStr[16]));
+                }
+                else
+                {
+                    pair.Value.Attrs.Add(null);
+                }
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[17]))
+                {
+                    pair.Value.Attrs.Add( TableReader.AttrValue.GetRecord(pair.Value.ValueStr[17]));
+                }
+                else
+                {
+                    pair.Value.Attrs.Add(null);
+                }
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[18]))
+                {
+                    pair.Value.Attrs.Add( TableReader.AttrValue.GetRecord(pair.Value.ValueStr[18]));
+                }
+                else
+                {
+                    pair.Value.Attrs.Add(null);
+                }
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[19]))
+                {
+                    pair.Value.Attrs.Add( TableReader.AttrValue.GetRecord(pair.Value.ValueStr[19]));
+                }
+                else
+                {
+                    pair.Value.Attrs.Add(null);
+                }
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[20]))
+                {
+                    pair.Value.Attrs.Add( TableReader.AttrValue.GetRecord(pair.Value.ValueStr[20]));
+                }
+                else
+                {
+                    pair.Value.Attrs.Add(null);
+                }
             }
         }
     }
