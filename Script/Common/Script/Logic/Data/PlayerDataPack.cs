@@ -53,6 +53,7 @@ public class PlayerDataPack : DataPackBase
     public void AddGold(int value)
     {
         _Gold += value;
+        SaveClass(false);
     }
 
     public bool DecGold(int value)
@@ -64,12 +65,14 @@ public class PlayerDataPack : DataPackBase
         }
 
         _Gold -= value;
+        SaveClass(false);
         return true;
     }
 
     public void AddDiamond(int value)
     {
         _Diamond += value;
+        SaveClass(false);
     }
 
     public bool DecDiamond(int value)
@@ -81,6 +84,7 @@ public class PlayerDataPack : DataPackBase
         }
 
         _Diamond -= value;
+        SaveClass(false);
         return true;
     }
     #endregion

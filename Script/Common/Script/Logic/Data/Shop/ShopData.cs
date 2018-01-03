@@ -67,6 +67,13 @@ public class ShopData : SaveItemBase
         SaveClass(true);
     }
 
+    public void SellItem(ItemBase sellItem)
+    {
+        sellItem.ResetItem();
+        PlayerDataPack.Instance.AddGold(1);
+        sellItem.SaveClass(true);
+    }
+
     #endregion
 
     #region equip shop

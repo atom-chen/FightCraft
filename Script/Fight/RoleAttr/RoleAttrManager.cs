@@ -737,64 +737,64 @@ public class RoleAttrManager : MonoBehaviour
 
     private void CaculateAttachDamage(RoleAttrManager sender, Hashtable resultHash, DamageClass damageClass)
     {
-        if (!resultHash.ContainsKey("ImpactBase"))
-            return;
+        //if (!resultHash.ContainsKey("ImpactBase"))
+        //    return;
 
-        var impactBase = (ImpactBase)resultHash["ImpactBase"];
-        if (impactBase == null || impactBase.SkillMotion == null)
-            return;
+        //var impactBase = (ImpactBase)resultHash["ImpactBase"];
+        //if (impactBase == null || impactBase.SkillMotion == null)
+        //    return;
 
-        int fireAttack = 0;
-        int coldAttack = 0;
-        int lightingAttack = 0;
-        int windAttack = 0;
-        if (impactBase.SkillMotion._ActInput == "k1")
-        {
-            fireAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill1FireDamagePersent);
-            coldAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill1ColdDamagePersent);
-            lightingAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill1LightingDamagePersent);
-            windAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill1WindDamagePersent);
-        }
-        else if (impactBase.SkillMotion._ActInput == "k2")
-        {
-            fireAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill2FireDamagePersent);
-            coldAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill2ColdDamagePersent);
-            lightingAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill2LightingDamagePersent);
-            windAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill2WindDamagePersent);
-        }
-        else if (impactBase.SkillMotion._ActInput == "k3")
-        {
-            fireAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill3FireDamagePersent);
-            coldAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill3ColdDamagePersent);
-            lightingAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill3LightingDamagePersent);
-            windAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill3WindDamagePersent);
-        }
+        //int fireAttack = 0;
+        //int coldAttack = 0;
+        //int lightingAttack = 0;
+        //int windAttack = 0;
+        //if (impactBase.SkillMotion._ActInput == "k1")
+        //{
+        //    fireAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill1FireDamagePersent);
+        //    coldAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill1ColdDamagePersent);
+        //    lightingAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill1LightingDamagePersent);
+        //    windAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill1WindDamagePersent);
+        //}
+        //else if (impactBase.SkillMotion._ActInput == "k2")
+        //{
+        //    fireAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill2FireDamagePersent);
+        //    coldAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill2ColdDamagePersent);
+        //    lightingAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill2LightingDamagePersent);
+        //    windAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill2WindDamagePersent);
+        //}
+        //else if (impactBase.SkillMotion._ActInput == "k3")
+        //{
+        //    fireAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill3FireDamagePersent);
+        //    coldAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill3ColdDamagePersent);
+        //    lightingAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill3LightingDamagePersent);
+        //    windAttack = sender._BaseAttr.GetValue(RoleAttrEnum.Skill3WindDamagePersent);
+        //}
 
-        int fireEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.FireEnhance);
-        int fireResistan = _BaseAttr.GetValue(RoleAttrEnum.FireResistan);
-        int fireDamage = Mathf.CeilToInt(fireAttack * 0.0001f * damageClass.TotalDamageValue * ((fireEnhance - fireResistan) / 250.0f));
-        damageClass.FireDamage += fireDamage;
-        damageClass.AttachDamageValue += fireDamage;
+        //int fireEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.FireEnhance);
+        //int fireResistan = _BaseAttr.GetValue(RoleAttrEnum.FireResistan);
+        //int fireDamage = Mathf.CeilToInt(fireAttack * 0.0001f * damageClass.TotalDamageValue * ((fireEnhance - fireResistan) / 250.0f));
+        //damageClass.FireDamage += fireDamage;
+        //damageClass.AttachDamageValue += fireDamage;
 
-        int coldEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.ColdEnhance);
-        int coldResistan = _BaseAttr.GetValue(RoleAttrEnum.ColdResistan);
-        int coldDamage = Mathf.CeilToInt(coldAttack * 0.0001f * damageClass.TotalDamageValue * ((coldEnhance - coldResistan) / 250.0f));
-        damageClass.IceDamage += coldDamage;
-        damageClass.AttachDamageValue += coldDamage;
+        //int coldEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.ColdEnhance);
+        //int coldResistan = _BaseAttr.GetValue(RoleAttrEnum.ColdResistan);
+        //int coldDamage = Mathf.CeilToInt(coldAttack * 0.0001f * damageClass.TotalDamageValue * ((coldEnhance - coldResistan) / 250.0f));
+        //damageClass.IceDamage += coldDamage;
+        //damageClass.AttachDamageValue += coldDamage;
 
-        int lightingEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.LightingEnhance);
-        int lightingResistan = _BaseAttr.GetValue(RoleAttrEnum.LightingResistan);
-        int lightingDamage = Mathf.CeilToInt(lightingAttack * 0.0001f * damageClass.TotalDamageValue * ((lightingEnhance - lightingResistan) / 250.0f));
-        damageClass.LightingDamage += lightingDamage;
-        damageClass.AttachDamageValue += lightingDamage;
+        //int lightingEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.LightingEnhance);
+        //int lightingResistan = _BaseAttr.GetValue(RoleAttrEnum.LightingResistan);
+        //int lightingDamage = Mathf.CeilToInt(lightingAttack * 0.0001f * damageClass.TotalDamageValue * ((lightingEnhance - lightingResistan) / 250.0f));
+        //damageClass.LightingDamage += lightingDamage;
+        //damageClass.AttachDamageValue += lightingDamage;
 
-        int windEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.WindEnhance);
-        int windResistan = _BaseAttr.GetValue(RoleAttrEnum.WindResistan);
-        int windDamage = Mathf.CeilToInt(windAttack * 0.0001f * damageClass.TotalDamageValue * ((windEnhance - windResistan) / 250.0f));
-        damageClass.WindDamage += windDamage;
-        damageClass.AttachDamageValue += windDamage;
+        //int windEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.WindEnhance);
+        //int windResistan = _BaseAttr.GetValue(RoleAttrEnum.WindResistan);
+        //int windDamage = Mathf.CeilToInt(windAttack * 0.0001f * damageClass.TotalDamageValue * ((windEnhance - windResistan) / 250.0f));
+        //damageClass.WindDamage += windDamage;
+        //damageClass.AttachDamageValue += windDamage;
 
-        damageClass.AttachDamageValue = Mathf.Max(damageClass.AttachDamageValue, 0);
+        //damageClass.AttachDamageValue = Mathf.Max(damageClass.AttachDamageValue, 0);
     }
 
     private void DamageHP(int damageValue)

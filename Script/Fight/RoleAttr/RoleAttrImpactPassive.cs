@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Tables;
 using UnityEngine;
 
 public class RoleAttrImpactPassive : RoleAttrImpactBase
@@ -33,8 +34,12 @@ public class RoleAttrImpactPassive : RoleAttrImpactBase
 
     public static string GetAttrDesc(List<int> attrParams)
     {
-        var attrTab = Tables.TableReader.AttrValue.GetRecord(attrParams[0].ToString());
-        return string.Format(attrTab.Desc, attrTab.AttrParams);
+        var attrValue = TableReader.AttrValue.GetRecord(attrParams[0].ToString());
+        List<int> copyAttrs = new List<int>(attrParams);
+        int legendaryId = copyAttrs[0];
+        copyAttrs.RemoveAt(0);
+        var strFormat = StrDictionary.GetFormatStr(legendaryId, copyAttrs);
+        return strFormat;
     }
 
     #region 

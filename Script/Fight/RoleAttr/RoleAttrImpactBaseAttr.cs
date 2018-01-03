@@ -31,10 +31,21 @@ public class RoleAttrImpactBaseAttr : RoleAttrImpactBase
 
     public static string GetAttrDesc(List<int> attrParams)
     {
-        Debug.Log("attrParams:" + attrParams[0]);
-        var attrTab = Tables.TableReader.FightAttr.GetRecord(attrParams[0].ToString());
+        //Debug.Log("attrParams:" + attrParams[0]);
+        float value = attrParams[1];
+        switch ((RoleAttrEnum)attrParams[0])
+        {
+            case RoleAttrEnum.AttackPersent:
+            case RoleAttrEnum.HPMaxPersent:
+            case RoleAttrEnum.MoveSpeed:
+            case RoleAttrEnum.AttackSpeed:
+            case RoleAttrEnum.CriticalHitChance:
+                value = GameDataValue.ConfigIntToFloatDex1(attrParams[1]) * 100;
+                break;
+        }
+        var strFormat = StrDictionary.GetFormatStr(attrParams[0], value);
 
-        return string.Format(attrTab.ShowTip, attrParams[1]);
+        return strFormat;
     }
 
     public static EquipExAttr GetExAttrByValue(AttrValueRecord attrRecord, int arg)

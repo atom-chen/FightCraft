@@ -183,7 +183,7 @@ public class ItemEquip : ItemBase
         if (EquipItemRecord.Slot == EQUIP_SLOT.WEAPON)
         {
             string attackValue = BaseAttack.ToString();
-            if (BaseAttack > EquipItemRecord.BaseAttrs[0])
+            if (_ExBaseAtk)
             {
                 attackValue = CommonDefine.GetQualityColorStr(EquipQuality) + attackValue + "</color>";
             }
@@ -191,15 +191,15 @@ public class ItemEquip : ItemBase
         }
         else if (EquipItemRecord.Slot == EQUIP_SLOT.TORSO || EquipItemRecord.Slot == EQUIP_SLOT.LEGS)
         {
-            string hpValue = BaseAttack.ToString();
-            if (BaseAttack > EquipItemRecord.BaseAttrs[0])
+            string hpValue = BaseHP.ToString();
+            if (_ExBaseHp)
             {
                 hpValue = CommonDefine.GetQualityColorStr(EquipQuality) + hpValue + "</color>";
             }
             attrStr = StrDictionary.GetFormatStr((int)RoleAttrEnum.Defense, hpValue);
 
-            string defenceValue = BaseAttack.ToString();
-            if (BaseAttack > EquipItemRecord.BaseAttrs[0])
+            string defenceValue = BaseDefence.ToString();
+            if (_ExBaseDef)
             {
                 defenceValue = CommonDefine.GetQualityColorStr(EquipQuality) + defenceValue + "</color>";
             }
@@ -261,78 +261,72 @@ public class ItemEquip : ItemBase
     #region equipBase
 
     private int _BaseAttack = -1;
+    private bool _ExBaseAtk = false;
     public int BaseAttack
     {
         get
         {
             if (_BaseAttack < 0)
             {
-                int exValue = 0;
-                _BaseAttack = EquipItemRecord.BaseAttrs[0];
-                //foreach (var exAttr in _DynamicDataVector)
-                //{
-                //    if (exAttr.AttrID == RoleAttrEnum.Attack)
-                //    {
-                //        exValue += exAttr.AttrValues[0];
-                //    }
-                //    else if (exAttr.AttrID == RoleAttrEnum.AttackPersent)
-                //    {
-                //        exValue += (int)(_BaseAttack * (exAttr.AttrValues[0] / 10000.0f));
-                //    }
-                //}
-                _BaseAttack += exValue;
+                _BaseAttack = GameDataValue.CalWeaponAttack(EquipLevel);
+                if (EquipExAttr.Count > 0 && EquipExAttr[0].AttrType == "RoleAttrImpactBaseAttr" && EquipExAttr[0].AttrParams[0] == (int)RoleAttrEnum.AttackPersent)
+                {
+                    _ExBaseAtk = true;
+                    _BaseAttack += Mathf.CeilToInt(_BaseAttack * GameDataValue.ConfigIntToFloatDex1(EquipExAttr[0].AttrParams[1]));
+                }
+                
             }
             return _BaseAttack;
         }
     }
 
     private int _BaseHP = -1;
+    private bool _ExBaseHp = false;
     public int BaseHP
     {
         get
         {
             if (_BaseHP < 0)
             {
-                int exValue = 0;
-                _BaseHP = EquipItemRecord.BaseAttrs[1];
-                //foreach (var exAttr in _DynamicDataVector)
-                //{
-                //    if (exAttr.AttrID == RoleAttrEnum.HPMax)
-                //    {
-                //        exValue += exAttr.AttrValues[0];
-                //    }
-                //    else if (exAttr.AttrID == RoleAttrEnum.HPMaxPersent)
-                //    {
-                //        exValue += (int)(_BaseHP * (exAttr.AttrValues[0] / 10000.0f));
-                //    }
-                //}
-                _BaseHP += exValue;
+                if (EquipItemRecord.Slot == EQUIP_SLOT.TORSO)
+                {
+                    _BaseHP = GameDataValue.CalEquipTorsoHP(EquipLevel);
+                }
+                else
+                {
+                    _BaseHP = GameDataValue.CalEquipLegsHP(EquipLevel);
+                }
+                if (EquipExAttr.Count > 0 && EquipExAttr[0].AttrType == "RoleAttrImpactBaseAttr" && EquipExAttr[0].AttrParams[0] == (int)RoleAttrEnum.AttackPersent)
+                {
+                    _ExBaseHp = true;
+                    _BaseHP += Mathf.CeilToInt(_BaseAttack * GameDataValue.ConfigIntToFloatDex1(EquipExAttr[0].AttrParams[1]));
+                }
             }
             return _BaseHP;
         }
     }
 
     private int _BaseDefence = -1;
+    private bool _ExBaseDef = false;
     public int BaseDefence
     {
         get
         {
             if (_BaseDefence < 0)
             {
-                int exValue = 0;
-                _BaseDefence = EquipItemRecord.BaseAttrs[0];
-                //foreach (var exAttr in _DynamicDataVector)
-                //{
-                //    if (exAttr.AttrID == RoleAttrEnum.Defense)
-                //    {
-                //        exValue += exAttr.AttrValues[0];
-                //    }
-                //    else if (exAttr.AttrID == RoleAttrEnum.DefensePersent)
-                //    {
-                //        exValue += (int)(_BaseDefence * (exAttr.AttrValues[0] / 10000.0f));
-                //    }
-                //}
-                _BaseDefence += exValue;
+                if (EquipItemRecord.Slot == EQUIP_SLOT.TORSO)
+                {
+                    _BaseDefence = GameDataValue.CalEquipTorsoDefence(EquipLevel);
+                }
+                else
+                {
+                    _BaseDefence = GameDataValue.CalEquipLegsDefence(EquipLevel);
+                }
+                if (EquipExAttr.Count > 0 && EquipExAttr[0].AttrType == "RoleAttrImpactBaseAttr" && EquipExAttr[0].AttrParams[0] == (int)RoleAttrEnum.AttackPersent)
+                {
+                    _ExBaseDef = true;
+                    _BaseDefence += Mathf.CeilToInt(_BaseAttack * GameDataValue.ConfigIntToFloatDex1(EquipExAttr[0].AttrParams[1]));
+                }
             }
             return _BaseDefence;
         }

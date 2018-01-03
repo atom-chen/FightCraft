@@ -197,7 +197,7 @@ public class UIShopPack : UIBase,IDragablePack
 
     public void SellItem(ItemBase itemBase)
     {
-        itemBase.ResetItem();
+        ShopData.Instance.SellItem(itemBase);
         RefreshItems();
     }
 
