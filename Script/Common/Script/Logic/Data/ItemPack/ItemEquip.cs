@@ -268,11 +268,18 @@ public class ItemEquip : ItemBase
         {
             if (_BaseAttack < 0)
             {
-                _BaseAttack = GameDataValue.CalWeaponAttack(EquipLevel);
-                if (EquipExAttr.Count > 0 && EquipExAttr[0].AttrType == "RoleAttrImpactBaseAttr" && EquipExAttr[0].AttrParams[0] == (int)RoleAttrEnum.AttackPersent)
+                if (EquipItemRecord.Slot == EQUIP_SLOT.WEAPON)
                 {
-                    _ExBaseAtk = true;
-                    _BaseAttack += Mathf.CeilToInt(_BaseAttack * GameDataValue.ConfigIntToFloatDex1(EquipExAttr[0].AttrParams[1]));
+                    _BaseAttack = GameDataValue.CalWeaponAttack(EquipLevel);
+                    if (EquipExAttr.Count > 0 && EquipExAttr[0].AttrType == "RoleAttrImpactBaseAttr" && EquipExAttr[0].AttrParams[0] == (int)RoleAttrEnum.AttackPersent)
+                    {
+                        _ExBaseAtk = true;
+                        _BaseAttack += Mathf.CeilToInt(_BaseAttack * GameDataValue.ConfigIntToFloatDex1(EquipExAttr[0].AttrParams[1]));
+                    }
+                }
+                else
+                {
+                    _BaseAttack = 0;
                 }
                 
             }
@@ -292,7 +299,7 @@ public class ItemEquip : ItemBase
                 {
                     _BaseHP = GameDataValue.CalEquipTorsoHP(EquipLevel);
                 }
-                else
+                else if(EquipItemRecord.Slot == EQUIP_SLOT.LEGS)
                 {
                     _BaseHP = GameDataValue.CalEquipLegsHP(EquipLevel);
                 }
@@ -318,7 +325,7 @@ public class ItemEquip : ItemBase
                 {
                     _BaseDefence = GameDataValue.CalEquipTorsoDefence(EquipLevel);
                 }
-                else
+                else if (EquipItemRecord.Slot == EQUIP_SLOT.LEGS)
                 {
                     _BaseDefence = GameDataValue.CalEquipLegsDefence(EquipLevel);
                 }
@@ -542,7 +549,7 @@ public class ItemEquip : ItemBase
         return null;
     }
 
-    public static ItemEquip CreateEquip(int level, Tables.ITEM_QUALITY quality, int value, int legencyEquipID = -1)
+    public static ItemEquip CreateEquip(int level, Tables.ITEM_QUALITY quality, int value, int legencyEquipID = -1, int equipSlotIdx = -1)
     {
         Tables.ITEM_QUALITY equipQuality = quality;
         EquipItemRecord legencyEquip = null;
@@ -562,9 +569,17 @@ public class ItemEquip : ItemBase
         }
         else
         {
-            var equipSlot = GetRandomItemSlot();
-            //EQUIP_SLOT equipSlot = EQUIP_SLOT.TORSO;
-            baseEquip = GetRandomItem(equipSlot, level);
+
+            if (equipSlotIdx < 0)
+            {
+                var equipSlot = GetRandomItemSlot();
+                baseEquip = GetRandomItem(equipSlot, level);
+            }
+            else
+            {
+                EQUIP_SLOT equipSlot = (EQUIP_SLOT)equipSlotIdx;
+                baseEquip = GetRandomItem(equipSlot, level);
+            }
             if (baseEquip == null)
                 return null;
         }

@@ -29,9 +29,11 @@ public class GameDataValue
 
     #region level -> baseAttr
 
+    private static int _MaxLv = 100;
     private static float _AttackPerLevel = 11.36f;
-    private static float _HPPerLevel = 99.86f;
-    private static float _DefencePerLevel = 6.72f;
+    private static float _HPPerLevel = 998.86f;
+    private static float _DefencePerLevel = 4.72f;
+    private static float _ValuePerLevel = 10;
     private static float _ValuePerAttack = 1;
 
     private static float _LegHPToTorso = 0.5f;
@@ -66,6 +68,7 @@ public class GameDataValue
         var value = _DefencePerLevel * equiplevel * 0.5f;
         return Mathf.CeilToInt(value);
     }
+
     #endregion
 
     #region baseAttr -> exAttr atk
@@ -86,7 +89,7 @@ public class GameDataValue
     private static float _FinalDmgRedusePerVit = 0.3f;
     private static float _VitToAtk = 1;
 
-    private static float _CriticalDmgToAtk = 5;
+    private static float _CriticalDmgToAtk = 0.1f;
 
     private static float _ElementToAtk = 1;
     private static float _DmgEnhancePerElementEnhance = 0.003f;
@@ -95,11 +98,11 @@ public class GameDataValue
 
     private static float _IgnoreDefenceToAtk = 2f;
 
-    private static float _HpToAtk = 0.1f;
+    private static float _HpToAtk = 0.01f;
     private static float _DefToAtk = 2f;
-    private static float _MoveSpeedToAtk = 1;
-    private static float _AtkSpeedToAtk = 1;
-    private static float _CriticalChanceToAtk = 1;
+    private static float _MoveSpeedToAtk = 0.135f;
+    private static float _AtkSpeedToAtk = 0.2f;
+    private static float _CriticalChanceToAtk = 0.2f;
 
     public static float GetAttrToValue(RoleAttrEnum roleAttr)
     {
@@ -188,26 +191,30 @@ public class GameDataValue
         int attrValue = 1;
         if (roleAttr == RoleAttrEnum.AttackPersent)
         {
-            attrValue = Mathf.Min(value, 10000);
+            attrValue = Mathf.Clamp(value, 1, 10000);
         }
         else if (roleAttr == RoleAttrEnum.HPMaxPersent)
         {
-            attrValue = Mathf.Min(value, 10000);
+            attrValue = Mathf.Clamp(value, 1, 10000);
         }
         else
         {
             attrValue = Mathf.CeilToInt(value / GetAttrToValue(roleAttr));
             if (roleAttr == RoleAttrEnum.AttackSpeed)
             {
-                attrValue = Mathf.Min(attrValue, 1000);
+                attrValue = Mathf.Clamp(attrValue, 1, 1000);
             }
             else if (roleAttr == RoleAttrEnum.MoveSpeed)
             {
-                attrValue = Mathf.Min(attrValue, 2000);
+                attrValue = Mathf.Clamp(attrValue, 1, 1500);
             }
             else if (roleAttr == RoleAttrEnum.CriticalHitChance)
             {
-                attrValue = Mathf.Min(attrValue, 1000);
+                attrValue = Mathf.Clamp(attrValue, 1, 1000);
+            }
+            else
+            {
+                attrValue = Mathf.Max(attrValue, 1);
             }
         }
         return attrValue;
@@ -216,8 +223,24 @@ public class GameDataValue
 
     #region ex -> base
 
-    private float _ExToBase = 0.2f;
+    private static float _ExToBase = 0.2f;
 
+    public static int CalLvValue(int level)
+    {
+        var exValue = _ValuePerLevel * level;
+        return Mathf.CeilToInt(exValue);
+    }
+
+    public static int CalExValue(int level)
+    {
+        var exValue = _ValuePerLevel * _ExToBase * level;
+        return Mathf.CeilToInt(exValue);
+    }
+
+    public static int GetMaxValue()
+    {
+        return Mathf.CeilToInt( CalExValue(_MaxLv) * 1.2f);
+    }
     #endregion
 
     #region equip
@@ -233,9 +256,24 @@ public class GameDataValue
         {
             return Mathf.CeilToInt(10000 * randomValue);
         }
+        //else if (roleAttr == RoleAttrEnum.MoveSpeed)
+        //{
+        //    int value = 300 + Mathf.CeilToInt( randomValue * baseValue);
+        //    return Mathf.Clamp(value, 300, 1500);
+        //}
+        //else if (roleAttr == RoleAttrEnum.AttackSpeed)
+        //{
+        //    int value = Mathf.CeilToInt(randomValue * baseValue);
+        //    return Mathf.Clamp(value, 300, 1000);
+        //}
+        //else if (roleAttr == RoleAttrEnum.CriticalHitChance)
+        //{
+        //    int value = Mathf.CeilToInt(randomValue * baseValue);
+        //    return Mathf.Clamp(value, 300, 1000);
+        //}
         else
         {
-            return Mathf.CeilToInt(baseValue * randomValue);
+            return Mathf.CeilToInt(baseValue * randomValue * _ExToBase);
         }
     }
 
@@ -305,12 +343,17 @@ public class GameDataValue
             foreach (var attrRandom in randomList)
             {
                 temp -= attrRandom.Random;
-                if (randomVar > temp)
+                if (randomVar >= temp)
                 {
                     attr = attrRandom;
                     break;
                 }
             }
+            if (attr == null)
+            {
+                attr = randomList[randomList.Count - 1];
+            }
+
             attrList.Add(attr.AttrID);
             if (!attr.CanRepeat)
             {
@@ -325,14 +368,14 @@ public class GameDataValue
     {
         public RoleAttrEnum AttrID;
         public bool CanRepeat;
-        public int MaxValue;
+        public int MinValue;
         public int Random;
 
         public EquipExAttrRandom(RoleAttrEnum attr, bool repeat, int maxValue, int randomVal)
         {
             AttrID = attr;
             CanRepeat = repeat;
-            MaxValue = maxValue;
+            MinValue = maxValue;
             Random = randomVal;
         }
     }
@@ -346,8 +389,8 @@ public class GameDataValue
         new EquipExAttrRandom(RoleAttrEnum.HPMax, true, -1, 100),
         new EquipExAttrRandom(RoleAttrEnum.Attack, true, -1, 100),
         new EquipExAttrRandom(RoleAttrEnum.Defense, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.AttackSpeed, false, 1000, 10),
-        new EquipExAttrRandom(RoleAttrEnum.CriticalHitChance, false, 1000, 10),
+        new EquipExAttrRandom(RoleAttrEnum.AttackSpeed, false, 300, 100),
+        new EquipExAttrRandom(RoleAttrEnum.CriticalHitChance, false, 300, 100),
         new EquipExAttrRandom(RoleAttrEnum.CriticalHitDamge, true, -1, 100),
         new EquipExAttrRandom(RoleAttrEnum.FireAttackAdd, true, -1, 100),
         new EquipExAttrRandom(RoleAttrEnum.ColdAttackAdd, true, -1, 100),
@@ -388,8 +431,8 @@ public class GameDataValue
         new EquipExAttrRandom(RoleAttrEnum.HPMax, true, -1, 100),
         new EquipExAttrRandom(RoleAttrEnum.Attack, true, -1, 100),
         new EquipExAttrRandom(RoleAttrEnum.Defense, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.AttackSpeed, false, 1000, 10),
-        new EquipExAttrRandom(RoleAttrEnum.CriticalHitChance, false, 1000, 10),
+        new EquipExAttrRandom(RoleAttrEnum.AttackSpeed, false, 300, 100),
+        new EquipExAttrRandom(RoleAttrEnum.CriticalHitChance, false, 300, 100),
         new EquipExAttrRandom(RoleAttrEnum.CriticalHitDamge, true, -1, 100),
         new EquipExAttrRandom(RoleAttrEnum.FireAttackAdd, true, -1, 100),
         new EquipExAttrRandom(RoleAttrEnum.ColdAttackAdd, true, -1, 100),

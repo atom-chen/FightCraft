@@ -61,4 +61,14 @@ public class CommonTool : Editor
 
     #endregion
 
+    #region 
+
+    [MenuItem("TyTools/Test/CaptureScreenshot")]
+    public static void CaptureScreenshot()
+    {
+        Application.CaptureScreenshot(Application.dataPath + "/" + "capture.png", 0);
+
+    }
+
+    #endregion
 }

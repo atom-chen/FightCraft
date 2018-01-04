@@ -71,5 +71,32 @@ public class UITestEquip : UIBase
     }
     #endregion
 
+    #region 
+
+    public InputField _TestLevel;
+
+    public void OnBtnEquipNumaricTest()
+    {
+        int level = int.Parse(_TestLevel.text);
+        RoleAttrStruct roleAttr = new RoleAttrStruct();
+        roleAttr.ResetBaseAttr();
+        for (int i = 0; i < (int)EQUIP_SLOT.RING + 1; ++i)
+        {
+            var equipItem = ItemEquip.CreateEquip(level, ITEM_QUALITY.PURPER, GameDataValue.CalLvValue(level), 0, i);
+            equipItem.SetEquipAttr(roleAttr);
+        }
+
+        for (int i = 0; i < (int)RoleAttrEnum.BASE_ATTR_MAX; ++i)
+        {
+            var value = roleAttr.GetValue((RoleAttrEnum)i);
+            if (value > 0)
+            {
+                Debug.Log(((RoleAttrEnum)i).ToString() + ":" + value);
+            }
+        }
+    }
+
+    #endregion
+
 }
 
