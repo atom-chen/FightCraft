@@ -17,6 +17,11 @@ public class UIMessageBox : UIPopBase
 {
     #region 
 
+    public static void Show(int dictIdx, Action okAction, Action cancelAction, BtnType btnType = BtnType.YESNOBTN)
+    {
+        Show(Tables.StrDictionary.GetFormatStr(dictIdx), okAction, cancelAction, btnType);
+    }
+
     public static void Show(string message, Action okAction, Action cancelAction, BtnType btnType = BtnType.YESNOBTN)
     {
         Hashtable hash = new Hashtable();

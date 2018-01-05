@@ -139,6 +139,7 @@ public class LogicManager
         UIHPPanel.ShowAsyn();
         UIPlayerFrame.ShowAsyn();
         UITargetFrame.ShowAsyn();
+        UIFuncInFight.ShowAsyn();
 
         UIDamagePanel.ShowAsyn();
         //DamagePanel.ShowAsyn();
@@ -148,11 +149,8 @@ public class LogicManager
     public void ExitFight()
     {
         //var sceneLoader = GameCore.Instance.SceneManager.ChangeLogicScene();
-
+        GameCore.Instance.UIManager.DestoryAllUI();
         UILoadingScene.ShowAsyn(GameDefine.GAMELOGIC_SCENE_NAME);
-
-        GameCore.Instance.UIManager.HideAllUI();
-
     }
 
     private void InitFightScene()

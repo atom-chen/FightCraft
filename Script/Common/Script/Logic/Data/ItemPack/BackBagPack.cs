@@ -95,13 +95,11 @@ public class BackBagPack : DataPackBase
 
     public bool AddEquip(ItemEquip equip)
     {
-        if (PageEquips.Count >= _BAG_PAGE_SLOT_CNT)
-        {
+        var emptyPos = GetEmptyPageEquip();
+        if (emptyPos == null)
             return false;
-        }
 
-        PageEquips.Add(equip);
-        LogicManager.Instance.SaveGame();
+        emptyPos.ExchangeInfo(equip);
         return true;
     }
 

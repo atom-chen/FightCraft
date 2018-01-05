@@ -183,9 +183,14 @@ public class UIManager : MonoBehaviour
 
     public void DestoryAllUI()
     {
+        var uiObjs = new List<UIBase>();
         foreach (var uiPair in _UIObjs)
         {
-            uiPair.Value.Destory();
+            uiObjs.Add(uiPair.Value);
+        }
+        for (int i = 0; i < uiObjs.Count; ++i)
+        {
+            uiObjs[i].Destory();
         }
         _UIObjs.Clear();
     }

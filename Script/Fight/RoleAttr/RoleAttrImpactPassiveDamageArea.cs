@@ -9,18 +9,19 @@ public class RoleAttrImpactPassiveDamageArea : RoleAttrImpactPassive
         base.InitImpact(skillInput, args);
 
         var attrTab = Tables.TableReader.AttrValue.GetRecord(args[0].ToString());
-        _Range = GameDataValue.ConfigIntToFloat(attrTab.AttrParams[0]) + GameDataValue.ConfigIntToFloat(attrTab.AttrParams[0] * args[1]);
-
-
-        _Damage = GameDataValue.ConfigIntToFloat(attrTab.AttrParams[1]) + GameDataValue.ConfigIntToFloat(attrTab.AttrParams[1] * args[1]);
+        _Range = GameDataValue.ConfigIntToFloat(attrTab.AttrParams[0]) + GameDataValue.ConfigIntToFloat(attrTab.AttrParams[1] * args[1]);
         if (attrTab.AttrParams[2] < 0)
         {
-            _Damage = Mathf.Max(_Range, GameDataValue.ConfigIntToFloat(attrTab.AttrParams[2]));
+            _Range = Mathf.Max(_Range, GameDataValue.ConfigIntToFloat(attrTab.AttrParams[2]));
         }
         else if (attrTab.AttrParams[2] > 0)
         {
-            _Damage = Mathf.Min(_Range, GameDataValue.ConfigIntToFloat(attrTab.AttrParams[2]));
+            _Range = Mathf.Min(_Range, GameDataValue.ConfigIntToFloat(attrTab.AttrParams[2]));
         }
+
+        _Damage = GameDataValue.ConfigIntToFloat(attrTab.AttrParams[3]) + GameDataValue.ConfigIntToFloat(attrTab.AttrParams[4] * args[1]);
+
+        _Interval = GameDataValue.ConfigIntToFloat(attrTab.AttrParams[5]);
     }
 
     public override void ModifySkillAfterInit(MotionManager roleMotion)
@@ -41,6 +42,7 @@ public class RoleAttrImpactPassiveDamageArea : RoleAttrImpactPassive
                 subBuff._DamageRate = _Damage;
             }
 
+            buff._Interval = _Interval;
             buff._Range = _Range;
             buff.ActImpact(roleMotion, roleMotion);
         }
@@ -51,6 +53,7 @@ public class RoleAttrImpactPassiveDamageArea : RoleAttrImpactPassive
 
     private float _Range;
     private float _Damage;
-    
+    private float _Interval;
+
     #endregion
 }

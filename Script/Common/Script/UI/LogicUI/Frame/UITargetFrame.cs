@@ -27,18 +27,24 @@ public class UITargetFrame : UIBase
     public Slider _HPProcess;
     public Text _HPText;
 
+    private MotionManager _TargetMotion;
+
     private void HpUpdate()
     {
         if (!AimTarget.Instance)
             return;
 
-        if (!AimTarget.Instance.LockTarget)
+        if (AimTarget.Instance.LockTarget != null)
         {
-            return;
+            _TargetMotion = AimTarget.Instance.LockTarget;
         }
 
-        _HPText.text = AimTarget.Instance.LockTarget.RoleAttrManager.HP + "/" + AimTarget.Instance.LockTarget.RoleAttrManager.GetBaseAttr(RoleAttrEnum.HPMax);
-        _HPProcess.value = AimTarget.Instance.LockTarget.RoleAttrManager.HPPersent;
+        if (_TargetMotion != null)
+        {
+
+            _HPText.text = AimTarget.Instance.LockTarget.RoleAttrManager.HP + "/" + AimTarget.Instance.LockTarget.RoleAttrManager.GetBaseAttr(RoleAttrEnum.HPMax);
+            _HPProcess.value = AimTarget.Instance.LockTarget.RoleAttrManager.HPPersent;
+        }
     }
 
     #endregion

@@ -83,26 +83,26 @@
 60001,GamblingWeapon,,FB_005,FB_005,2,Drop/Gem/Gem7
 60002,GamblingDefence,,FB_005,FB_005,3,Drop/Gem/Gem8
 60003,GamblingJwalry,,FB_005,FB_005,4,Drop/Gem/Gem9
-70000,Gem1,Gem1,FB_005,FB_005,1,Drop/Gem/Gem9
-70001,Gem2,Gem2,FB_005,FB_005,1,Drop/Gem/Gem9
-70002,Gem3,Gem3,FB_005,FB_005,1,Drop/Gem/Gem9
-70003,Gem4,Gem4,FB_005,FB_005,1,Drop/Gem/Gem9
-70004,Gem5,Gem5,FB_005,FB_005,1,Drop/Gem/Gem9
-70005,Gem6,Gem6,FB_005,FB_005,1,Drop/Gem/Gem9
-70006,Gem7,Gem7,FB_005,FB_005,1,Drop/Gem/Gem9
-70007,Gem8,Gem8,FB_005,FB_005,1,Drop/Gem/Gem9
-70008,Gem9,Gem9,FB_005,FB_005,1,Drop/Gem/Gem9
-70009,Gem10,Gem10,FB_005,FB_005,1,Drop/Gem/Gem9
-70010,Gem11,Gem11,FB_005,FB_005,1,Drop/Gem/Gem9
-70011,Gem12,Gem12,FB_005,FB_005,1,Drop/Gem/Gem9
-70012,Gem13,Gem13,FB_005,FB_005,1,Drop/Gem/Gem9
-70013,Gem14,Gem14,FB_005,FB_005,1,Drop/Gem/Gem9
-70014,Gem15,Gem15,FB_005,FB_005,1,Drop/Gem/Gem9
-70015,Gem16,Gem16,FB_005,FB_005,1,Drop/Gem/Gem9
-70016,Gem17,Gem17,FB_005,FB_005,1,Drop/Gem/Gem9
-70017,Gem18,Gem18,FB_005,FB_005,1,Drop/Gem/Gem9
-70018,Gem19,Gem19,FB_005,FB_005,1,Drop/Gem/Gem9
-70019,Gem20,Gem20,FB_005,FB_005,1,Drop/Gem/Gem9
+70000,BaiQi's Treasure,Gem1,FB_005,FB_005,1,Drop/Gem/Gem9
+70001,CaoCao's Treasure,Gem2,FB_005,FB_005,1,Drop/Gem/Gem9
+70002,DaJi's Treasure,Gem3,FB_005,FB_005,1,Drop/Gem/Gem9
+70003,DianWei's Treasure,Gem4,FB_005,FB_005,1,Drop/Gem/Gem9
+70004,DiaoChan's Treasure,Gem5,FB_005,FB_005,1,Drop/Gem/Gem9
+70005,DiRenJie's Treasure,Gem6,FB_005,FB_005,1,Drop/Gem/Gem9
+70006,JiangZiYa's Treasure,Gem7,FB_005,FB_005,1,Drop/Gem/Gem9
+70007,JingKe's Treasure,Gem8,FB_005,FB_005,1,Drop/Gem/Gem9
+70008,LeiZhenZi's Treasure,Gem9,FB_005,FB_005,1,Drop/Gem/Gem9
+70009,LianPo's Treasure,Gem10,FB_005,FB_005,1,Drop/Gem/Gem9
+70010,LuBan's Treasure,Gem11,FB_005,FB_005,1,Drop/Gem/Gem9
+70011,NeZha's Treasure,Gem12,FB_005,FB_005,1,Drop/Gem/Gem9
+70012,ShengGongBao's Treasure,Gem13,FB_005,FB_005,1,Drop/Gem/Gem9
+70013,WenZhong's Treasure,Gem14,FB_005,FB_005,1,Drop/Gem/Gem9
+70014,WuZeTian's Treasure,Gem15,FB_005,FB_005,1,Drop/Gem/Gem9
+70015,XiShi's Treasure,Gem16,FB_005,FB_005,1,Drop/Gem/Gem9
+70016,YangGuiFei's Treasure,Gem17,FB_005,FB_005,1,Drop/Gem/Gem9
+70017,YangJian's Treasure,Gem18,FB_005,FB_005,1,Drop/Gem/Gem9
+70018,ZhaoYun's Treasure,Gem19,FB_005,FB_005,1,Drop/Gem/Gem9
+70019,ZhouWang's Treasure,Gem20,FB_005,FB_005,1,Drop/Gem/Gem9
 70020,Gem21,Gem21,FB_005,FB_005,1,Drop/Gem/Gem9
 70021,Gem22,Gem22,FB_005,FB_005,1,Drop/Gem/Gem9
 70022,Gem23,Gem23,FB_005,FB_005,1,Drop/Gem/Gem9
@@ -186,3 +186,4 @@
 124009,Rings_8008,,Rings_8008,Rings_8008,1,Drop/Gem/Gem3
 124010,Rings_8009,,Rings_8009,Rings_8009,1,Drop/Gem/Gem3
 124011,Rings_8009,,Rings_8009,Rings_8009,1,Drop/Gem/Gem3
+999999,Rings_8009,,Rings_8009,Rings_8009,1,Drop/Gem/Gem3
