@@ -1,3 +1,4 @@
-create equip level error
-impact hp iron error
-monster AI
+pass stage cannt back to menu
+cannt pick item
+roll bug
+archer can more contract

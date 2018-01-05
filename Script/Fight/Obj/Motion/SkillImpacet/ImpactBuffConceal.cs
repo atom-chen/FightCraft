@@ -16,12 +16,14 @@ public class ImpactBuffConceal : ImpactBuff
 
         reciverManager.TriggerCollider.enabled = false;
         _OrgNavRadius = reciverManager.NavAgent.radius;
+        Debug.Log("_OrgNavRadius:" + _OrgNavRadius);
         reciverManager.NavAgent.radius = 0;
         reciverManager._CanBeSelectByEnemy = false;
     }
 
     public override void RemoveBuff(MotionManager reciverManager)
     {
+        Debug.Log("_OrgNavRadius:" + _OrgNavRadius);
         reciverManager.NavAgent.radius = _OrgNavRadius;
         reciverManager.TriggerCollider.enabled = true;
         reciverManager._CanBeSelectByEnemy = true;
