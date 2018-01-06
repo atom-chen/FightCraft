@@ -81,4 +81,15 @@
     <constructDefault>0</constructDefault>
     <constructRepeat>3</constructRepeat>
   </constructColumn>
+  <constructColumn>
+    <constructName>SpDrops</constructName>
+    <constructCode>SpDrops</constructCode>
+    <constructType1>表格索引</constructType1>
+    <constructType2>
+      <constructType2>CommonItem</constructType2>
+    </constructType2>
+    <constructDefault>
+    </constructDefault>
+    <constructRepeat>6</constructRepeat>
+  </constructColumn>
 </root>

@@ -18,6 +18,7 @@ namespace Tables
         public string ModelPath { get; set; }
         public string MotionType { get; set; }
         public List<int> BaseAttr { get; set; }
+        public List<CommonItemRecord> SpDrops { get; set; }
         public MonsterBaseRecord(DataRecord dataRecord)
         {
             if (dataRecord != null)
@@ -27,6 +28,7 @@ namespace Tables
 
             }
             BaseAttr = new List<int>();
+            SpDrops = new List<CommonItemRecord>();
         }
         public override string[] GetRecordStr()
         {
@@ -40,6 +42,17 @@ namespace Tables
             foreach (var testTableItem in BaseAttr)
             {
                 recordStrList.Add(TableWriteBase.GetWriteStr(testTableItem));
+            }
+            foreach (var testTableItem in SpDrops)
+            {
+                if (testTableItem != null)
+                {
+                    recordStrList.Add(testTableItem.Id);
+                }
+                else
+                {
+                    recordStrList.Add("");
+                }
             }
 
             return recordStrList.ToArray();
@@ -112,6 +125,54 @@ namespace Tables
                 pair.Value.BaseAttr.Add(TableReadBase.ParseInt(pair.Value.ValueStr[6]));
                 pair.Value.BaseAttr.Add(TableReadBase.ParseInt(pair.Value.ValueStr[7]));
                 pair.Value.BaseAttr.Add(TableReadBase.ParseInt(pair.Value.ValueStr[8]));
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[9]))
+                {
+                    pair.Value.SpDrops.Add( TableReader.CommonItem.GetRecord(pair.Value.ValueStr[9]));
+                }
+                else
+                {
+                    pair.Value.SpDrops.Add(null);
+                }
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[10]))
+                {
+                    pair.Value.SpDrops.Add( TableReader.CommonItem.GetRecord(pair.Value.ValueStr[10]));
+                }
+                else
+                {
+                    pair.Value.SpDrops.Add(null);
+                }
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[11]))
+                {
+                    pair.Value.SpDrops.Add( TableReader.CommonItem.GetRecord(pair.Value.ValueStr[11]));
+                }
+                else
+                {
+                    pair.Value.SpDrops.Add(null);
+                }
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[12]))
+                {
+                    pair.Value.SpDrops.Add( TableReader.CommonItem.GetRecord(pair.Value.ValueStr[12]));
+                }
+                else
+                {
+                    pair.Value.SpDrops.Add(null);
+                }
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[13]))
+                {
+                    pair.Value.SpDrops.Add( TableReader.CommonItem.GetRecord(pair.Value.ValueStr[13]));
+                }
+                else
+                {
+                    pair.Value.SpDrops.Add(null);
+                }
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[14]))
+                {
+                    pair.Value.SpDrops.Add( TableReader.CommonItem.GetRecord(pair.Value.ValueStr[14]));
+                }
+                else
+                {
+                    pair.Value.SpDrops.Add(null);
+                }
             }
         }
     }
