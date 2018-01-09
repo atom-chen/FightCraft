@@ -68,26 +68,26 @@
 124011,,,RoleAttrImpactPassiveHitEnemy,PassiveHitIceBullet,3,,10000,0,0,100,0,0,0,0,0,0
 999999,,,RoleAttrImpactPassiveDamageArea,PassiveDamageArea,3,,30000,100,50000,50000,1000,1000,0,0,0,0
 #,,,,,,,,,,,,,,,,
-70000,,,RoleAttrImpactBaseAttr,,,,1,100,100,1,0,0,0,0,0,0
-70001,,,RoleAttrImpactBaseAttr,,,,2,100,100,1,0,0,0,0,0,0
-70002,,,RoleAttrImpactBaseAttr,,,,3,100,100,1,0,0,0,0,0,0
-70003,,,RoleAttrImpactBaseAttr,,,,4,100,100,1,0,0,0,0,0,0
-70004,,,RoleAttrImpactBaseAttr,,,,5,100,100,1,0,0,0,0,0,0
-70005,,,RoleAttrImpactBaseAttr,,,,7,100,100,1,0,0,0,0,0,0
-70006,,,RoleAttrImpactBaseAttr,,,,14,100,100,1,0,0,0,0,0,0
-70007,,,RoleAttrImpactBaseAttr,,,,15,100,100,1,0,0,0,0,0,0
-70008,,,RoleAttrImpactBaseAttr,,,,16,100,100,1,0,0,0,0,0,0
-70009,,,RoleAttrImpactBaseAttr,,,,17,100,100,1,0,0,0,0,0,0
-70010,,,RoleAttrImpactBaseAttr,,,,18,100,100,1,0,0,0,0,0,0
-70011,,,RoleAttrImpactBaseAttr,,,,1,100,100,1,0,0,0,0,0,0
-70012,,,RoleAttrImpactBaseAttr,,,,2,100,100,1,0,0,0,0,0,0
-70013,,,RoleAttrImpactBaseAttr,,,,3,100,100,1,0,0,0,0,0,0
-70014,,,RoleAttrImpactBaseAttr,,,,4,100,100,1,0,0,0,0,0,0
-70015,,,RoleAttrImpactBaseAttr,,,,14,100,100,1,0,0,0,0,0,0
-70016,,,RoleAttrImpactBaseAttr,,,,15,100,100,1,0,0,0,0,0,0
-70017,,,RoleAttrImpactBaseAttr,,,,16,100,100,1,0,0,0,0,0,0
-70018,,,RoleAttrImpactBaseAttr,,,,17,100,100,1,0,0,0,0,0,0
-70019,,,RoleAttrImpactBaseAttr,,,,18,100,100,1,0,0,0,0,0,0
+70000,,,RoleAttrImpactBaseAttr,,Strength +{0},,1,100,100,1,0,0,0,0,0,0
+70001,,,RoleAttrImpactBaseAttr,,Dexterity +{0},,2,100,100,1,0,0,0,0,0,0
+70002,,,RoleAttrImpactBaseAttr,,Intelligence +{0},,3,100,100,1,0,0,0,0,0,0
+70003,,,RoleAttrImpactBaseAttr,,Vitality +{0},,4,100,100,1,0,0,0,0,0,0
+70004,,,RoleAttrImpactBaseAttr,,HP +{0},,5,100,100,1,0,0,0,0,0,0
+70005,,,RoleAttrImpactBaseAttr,,Attack +{0},,7,100,100,1,0,0,0,0,0,0
+70006,,,RoleAttrImpactBaseAttr,,Critical Hit Damge +{0}%,,14,100,100,1,0,0,0,0,0,0
+70007,,,RoleAttrImpactBaseAttr,,Fire Attack Add +{0},,15,100,100,1,0,0,0,0,0,0
+70008,,,RoleAttrImpactBaseAttr,,Cold Attack Add +{0},,16,100,100,1,0,0,0,0,0,0
+70009,,,RoleAttrImpactBaseAttr,,Lighting Attack Add +{0},,17,100,100,1,0,0,0,0,0,0
+70010,,,RoleAttrImpactBaseAttr,,Wind Attack Add +{0},,18,100,100,1,0,0,0,0,0,0
+70011,,,RoleAttrImpactBaseAttr,,Strength +{0},,1,100,100,1,0,0,0,0,0,0
+70012,,,RoleAttrImpactBaseAttr,,Dexterity +{0},,2,100,100,1,0,0,0,0,0,0
+70013,,,RoleAttrImpactBaseAttr,,Intelligence +{0},,3,100,100,1,0,0,0,0,0,0
+70014,,,RoleAttrImpactBaseAttr,,Vitality +{0},,4,100,100,1,0,0,0,0,0,0
+70015,,,RoleAttrImpactBaseAttr,,Critical Hit Damge +{0}%,,14,100,100,1,0,0,0,0,0,0
+70016,,,RoleAttrImpactBaseAttr,,Fire Attack Add +{0},,15,100,100,1,0,0,0,0,0,0
+70017,,,RoleAttrImpactBaseAttr,,Cold Attack Add +{0},,16,100,100,1,0,0,0,0,0,0
+70018,,,RoleAttrImpactBaseAttr,,Lighting Attack Add +{0},,17,100,100,1,0,0,0,0,0,0
+70019,,,RoleAttrImpactBaseAttr,,Wind Attack Add +{0},,18,100,100,1,0,0,0,0,0,0
 #,,,,,,,,,,,,,,,,
 80000,,,RoleAttrImpactBaseAttr,,,,1,100,100,1,0,0,0,0,0,0
 80001,,,RoleAttrImpactBaseAttr,,,,2,100,100,1,0,0,0,0,0,0

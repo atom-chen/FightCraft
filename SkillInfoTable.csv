@@ -1,7 +1,8 @@
 ,G,B,C,S,A,R
-baiqi fire wind ,G1:stone boom,B3:stone boom,add 20% MAXHP in battle,,,
-caocao wind,G2:wind blade,B2:whirlwind,add 20% defence in battle,,,wind blade when hit
-daji ice,G2:heart bullet,,damage reduse single hit,ice resist,"ice area,slow down attack speed",
+baiqi fire wind ,G1:stone boom human butcher,B3:stone boom,add 20% MAXHP in battle commander,,,
+caocao wind,G2:wind blade  abreast of sky,B2:whirlwind,add 20% defence in battle Uniting,,,wind blade when hit unscrupulous hero
+daji ice,"G2:heart bullet / couple
+",,damage reduse single hit / nine-tailed,ice resist / cold heart,"ice area,slow down attack speed/ fox spirit",
 dianwei light,,B2:whirl weapon,hp low strong AI,,add 20% strong in battle,add attack when hp low
 diaocan ice,G1:ice boom,B1:ice boom,,,"ice area,slow down move speed",add 20% ice damage
 direnjie light ,G1:skill enhance,B1:fire boom,,,,add 20% light damage
@@ -17,4 +18,4 @@ xishi wind,G3:big whirlwind,B3:whirlwind,hp low resume hp,wind resist,,add 20% w
 yangguifei wind,,,hp low intelligence AI,add move speed when hp low,,blood enemy
 yangjian fire light,,B2:eye light,hp low dexterous  AI,,remove debuff ,fire light element
 zhaoyun ice,G2:ice sprit,B2:ice circle,,,ice circle when be hit,ice boom when hit
-zouwang fire,G3:fire bullet,B3:fire split,thorns,,,add 20% fire damage
+zouwang fire,G3:fire bullet  / couple,B3:fire split,thorns,,,add 20% fire damage
