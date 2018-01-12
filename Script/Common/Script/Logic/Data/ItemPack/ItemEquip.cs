@@ -216,6 +216,10 @@ public class ItemEquip : ItemBase
     {
         base.RefreshItemData();
         _EquipItemRecord = null;
+        _EquipExAttr = null;
+        _BaseAttack = -1;
+        _BaseHP = -1;
+        _BaseDefence = -1;
     }
 
     public override void ResetItem()
@@ -254,6 +258,23 @@ public class ItemEquip : ItemBase
         {
             AddExAttr(exAttr);
         }
+    }
+
+    public void BakeExAttr()
+    {
+        _DynamicDataEx.Clear();
+        foreach (var exAttr in EquipExAttr)
+        {
+            ItemExData exData = new ItemExData();
+            exData._StrParams.Add(exAttr.AttrType);
+            exData._StrParams.Add(exAttr.Value.ToString());
+            for (int i = 0; i < exAttr.AttrParams.Count; ++i)
+            {
+                exData._StrParams.Add(exAttr.AttrParams[i].ToString());
+            }
+            _DynamicDataEx.Add(exData);
+        }
+        SaveClass(true);
     }
 
     #endregion
@@ -441,25 +462,25 @@ public class ItemEquip : ItemBase
             }
             else if (EquipLevel < 70)
             {
-                _ResetCostItem = TableReader.CommonItem.GetRecord("20001");
+                _ResetCostItem = TableReader.CommonItem.GetRecord("20000");
                 _ResetCostItemNum = 7;
                 _ResetCostMoney = 700;
             }
             else if (EquipLevel < 90)
             {
-                _ResetCostItem = TableReader.CommonItem.GetRecord("20002");
+                _ResetCostItem = TableReader.CommonItem.GetRecord("20000");
                 _ResetCostItemNum = 9;
                 _ResetCostMoney = 900;
             }
             else if (EquipLevel < 100)
             {
-                _ResetCostItem = TableReader.CommonItem.GetRecord("20003");
+                _ResetCostItem = TableReader.CommonItem.GetRecord("20000");
                 _ResetCostItemNum = 10;
                 _ResetCostMoney = 1000;
             }
             else
             {
-                _ResetCostItem = TableReader.CommonItem.GetRecord("20004");
+                _ResetCostItem = TableReader.CommonItem.GetRecord("20000");
                 _ResetCostItemNum = 10;
                 _ResetCostMoney = 1000;
             }
@@ -469,31 +490,31 @@ public class ItemEquip : ItemBase
         {
             if (EquipLevel < 40)
             {
-                _ResetCostItem = TableReader.CommonItem.GetRecord("20005");
+                _ResetCostItem = TableReader.CommonItem.GetRecord("20000");
                 _ResetCostItemNum = 4;
                 _ResetCostMoney = 400;
             }
             else if (EquipLevel < 70)
             {
-                _ResetCostItem = TableReader.CommonItem.GetRecord("20006");
+                _ResetCostItem = TableReader.CommonItem.GetRecord("20000");
                 _ResetCostItemNum = 7;
                 _ResetCostMoney = 700;
             }
             else if (EquipLevel < 90)
             {
-                _ResetCostItem = TableReader.CommonItem.GetRecord("20007");
+                _ResetCostItem = TableReader.CommonItem.GetRecord("20000");
                 _ResetCostItemNum = 9;
                 _ResetCostMoney = 900;
             }
             else if (EquipLevel < 100)
             {
-                _ResetCostItem = TableReader.CommonItem.GetRecord("20008");
+                _ResetCostItem = TableReader.CommonItem.GetRecord("20000");
                 _ResetCostItemNum = 10;
                 _ResetCostMoney = 1000;
             }
             else
             {
-                _ResetCostItem = TableReader.CommonItem.GetRecord("20009");
+                _ResetCostItem = TableReader.CommonItem.GetRecord("20000");
                 _ResetCostItemNum = 10;
                 _ResetCostMoney = 1000;
             }
@@ -503,31 +524,31 @@ public class ItemEquip : ItemBase
         {
             if (EquipLevel < 40)
             {
-                _ResetCostItem = TableReader.CommonItem.GetRecord("20010");
+                _ResetCostItem = TableReader.CommonItem.GetRecord("20000");
                 _ResetCostItemNum = 4;
                 _ResetCostMoney = 400;
             }
             else if (EquipLevel < 70)
             {
-                _ResetCostItem = TableReader.CommonItem.GetRecord("20011");
+                _ResetCostItem = TableReader.CommonItem.GetRecord("20000");
                 _ResetCostItemNum = 7;
                 _ResetCostMoney = 700;
             }
             else if (EquipLevel < 90)
             {
-                _ResetCostItem = TableReader.CommonItem.GetRecord("20012");
+                _ResetCostItem = TableReader.CommonItem.GetRecord("20000");
                 _ResetCostItemNum = 9;
                 _ResetCostMoney = 900;
             }
             else if (EquipLevel < 100)
             {
-                _ResetCostItem = TableReader.CommonItem.GetRecord("20013");
+                _ResetCostItem = TableReader.CommonItem.GetRecord("20000");
                 _ResetCostItemNum = 10;
                 _ResetCostMoney = 1000;
             }
             else
             {
-                _ResetCostItem = TableReader.CommonItem.GetRecord("20014");
+                _ResetCostItem = TableReader.CommonItem.GetRecord("20000");
                 _ResetCostItemNum = 10;
                 _ResetCostMoney = 1000;
             }
@@ -536,8 +557,8 @@ public class ItemEquip : ItemBase
 
     public void ResetEquipAttr()
     {
-        _DynamicDataEx.Clear();
-        RandomEquipAttr(this);
+        
+        
     }
 
     #endregion
@@ -601,85 +622,6 @@ public class ItemEquip : ItemBase
         return itemEquip;
     }
 
-    public static void RandomEquipAttr(ItemEquip itemEquip)
-    {
-        int attrCnt = GetRandomAttrCnt(itemEquip.EquipQuality);
-
-        List<FightAttrRecord> canGetAttrs = new List<FightAttrRecord>();
-        foreach (var record in TableReader.FightAttr.Records.Values)
-        {
-            if (record.LevelMin > 0 && record.LevelMin > itemEquip.EquipLevel)
-                continue;
-
-            if (record.LevelMax > 0 && record.LevelMax < itemEquip.EquipLevel)
-                continue;
-
-            if (record.SlotLimit >= 0)
-            {
-                if (((record.SlotLimit >> (int)itemEquip.EquipItemRecord.Slot) & 1) == 0)
-                {
-                    continue;
-                }
-            }
-
-            if (record.ProfessionLimit >= 0)
-            {
-                if (record.ProfessionLimit != (int)itemEquip.EquipItemRecord.ProfessionLimit)
-                    continue;
-            }
-
-            canGetAttrs.Add(record);
-        }
-
-        for (int i = 0; i < attrCnt; ++i)
-        {
-            int randomIdx = UnityEngine.Random.Range(0, canGetAttrs.Count);
-            itemEquip.AddExAttr(GetRandomAttr(canGetAttrs[randomIdx], itemEquip.EquipValue));
-            RemoveRandomAttr(canGetAttrs, canGetAttrs[randomIdx]);
-        }
-    }
-
-    private static EquipExAttr GetRandomAttr(FightAttrRecord attrRecord, int value)
-    {
-        EquipExAttr attrItem = new EquipExAttr();
-        //attrItem.AttrID = (RoleAttrEnum)attrRecord.AttrID;
-
-        //Vector3 attrValue = new Vector3();
-        //for (int i = attrRecord.Values.Count - 1; i >= 0; --i)
-        //{
-        //    if (attrRecord.Values[i].z > 0 && value > attrRecord.Values[i].z)
-        //    {
-        //        attrValue = attrRecord.Values[i];
-        //        break;
-        //    }
-        //}
-
-        //attrItem.AttrValues[0] = UnityEngine.Random.Range((int)attrValue.x, (int)attrValue.y + 1);
-        return attrItem;
-    }
-
-    private static List<FightAttrRecord> RemoveRandomAttr(List<FightAttrRecord> attrList, FightAttrRecord attrRecord)
-    {
-        attrList.Remove(attrRecord);
-        if (attrRecord.Conflict <= 0)
-            return attrList;
-
-        List<FightAttrRecord> conflicts = new List<FightAttrRecord>();
-        for (int i = 0; i < attrList.Count; ++i)
-        {
-            if (attrList[i].Conflict == attrRecord.Conflict)
-            {
-                conflicts.Add(attrList[i]);
-            }
-        }
-
-        foreach (var conflictRecord in conflicts)
-        {
-            attrList.Remove(conflictRecord);
-        }
-
-        return attrList;
-    }
 
     private static EquipItemRecord GetRandomItem(EQUIP_SLOT equipSlot, int level)
     {
@@ -741,23 +683,6 @@ public class ItemEquip : ItemBase
         int slotTypeCnt = Enum.GetValues(typeof(EQUIP_SLOT)).Length;
         int randomSlot = UnityEngine.Random.Range(0, slotTypeCnt);
         return (EQUIP_SLOT)randomSlot;
-    }
-
-    private static int GetRandomAttrCnt(Tables.ITEM_QUALITY quality)
-    {
-        switch (quality)
-        {
-            case Tables.ITEM_QUALITY.WHITE:
-                return 0;
-            case Tables.ITEM_QUALITY.BLUE:
-                return UnityEngine.Random.Range(1, 2);
-            case Tables.ITEM_QUALITY.PURPER:
-                return UnityEngine.Random.Range(3, 4);
-            case Tables.ITEM_QUALITY.ORIGIN:
-                return 5;
-            default:
-                return 0;
-        }
     }
 
     #endregion

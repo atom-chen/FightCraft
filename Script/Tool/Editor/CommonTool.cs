@@ -124,5 +124,17 @@ public class CommonTool : Editor
         Debug.Log("gemSetCritic:" + gemSetA.Id + "," + gemSetB.Id);
     }
 
+    [MenuItem("TyTools/Test/NumaricTest")]
+    public static void NumaricTest()
+    {
+        int testNum = 1500;
+        for(int i = 0; i< 100; ++i)
+        {
+            Debug.Log(testNum);
+            int decNum = Mathf.CeilToInt( testNum * 0.03f);
+            decNum = Mathf.Max(decNum, Mathf.CeilToInt(testNum / 100 + 1));
+            testNum = testNum - decNum;
+        }
+    }
     #endregion
 }

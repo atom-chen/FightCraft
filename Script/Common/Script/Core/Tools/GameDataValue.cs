@@ -30,10 +30,10 @@ public class GameDataValue
     #region level -> baseAttr
 
     private static int _MaxLv = 100;
-    private static float _AttackPerLevel = 11.36f;
-    private static float _HPPerLevel = 998.86f;
-    private static float _DefencePerLevel = 4.72f;
-    private static float _ValuePerLevel = 10;
+    private static float _AttackPerLevel = 55.36f;
+    private static float _HPPerLevel = 4875.86f;
+    private static float _DefencePerLevel = 24.72f;
+    private static float _ValuePerLevel = 50;
     private static float _ValuePerAttack = 1;
 
     private static float _LegHPToTorso = 0.5f;
@@ -362,6 +362,57 @@ public class GameDataValue
             }
         }
         return attrList;
+    }
+
+    public static void LvUpEquipAttr(ItemEquip itemEquip)
+    {
+        List<EquipExAttr> valueAttrs = new List<EquipExAttr>();
+        int curTotalValue = 0;
+        foreach (var equipExAttr in itemEquip.EquipExAttr)
+        {
+            if (equipExAttr.AttrType != "RoleAttrImpactBaseAttr")
+                continue;
+
+
+            if (equipExAttr.AttrParams[0] == (int)RoleAttrEnum.AttackPersent || equipExAttr.AttrParams[0] == (int)RoleAttrEnum.HPMaxPersent)
+            {
+                var randomPersent = Random.Range(30, 60);
+                equipExAttr.AttrParams[1] = GetValueAttr((RoleAttrEnum)equipExAttr.AttrParams[0], equipExAttr.AttrParams[1] + randomPersent);
+            }
+            else
+            {
+                valueAttrs.Add(equipExAttr);
+                curTotalValue += equipExAttr.Value;
+            }
+        }
+
+        int singleValueMax = Mathf.CeilToInt(itemEquip.EquipValue * _ExToBase);
+        int totalValue = valueAttrs.Count * singleValueMax;
+
+        int randomRate = Random.Range(100, 400);
+        int deltaValue = (totalValue - curTotalValue);
+        int increaseValue = Mathf.CeilToInt(deltaValue * ConfigIntToFloat(randomRate));
+        increaseValue = Mathf.Max(increaseValue, Mathf.CeilToInt(deltaValue / 100 + 1));
+
+        var attrEnums = GetRandomEquipAttrsType(itemEquip.EquipItemRecord.Slot, itemEquip.EquipQuality);
+        for (int i = 0; i < valueAttrs.Count; ++i)
+        {
+            int randomIncValue = Random.Range(0, increaseValue);
+            if(i == valueAttrs.Count - 1)
+            {
+                randomIncValue = increaseValue;
+                
+            }
+            int attrValueToMax = singleValueMax - valueAttrs[i].Value;
+            if (attrValueToMax < randomIncValue)
+            {
+                randomIncValue = attrValueToMax;
+            }
+            valueAttrs[i].AttrParams[0] = (int)attrEnums[i];
+            valueAttrs[i].Value += randomIncValue;
+            valueAttrs[i].AttrParams[1] = GetValueAttr(attrEnums[i], valueAttrs[i].Value);
+            increaseValue -= randomIncValue;
+        }
     }
 
     public class EquipExAttrRandom

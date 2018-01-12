@@ -67,8 +67,11 @@ public class RandomAttrs
         return exAttrs;
     }
 
-
-
+    public static void LvUpEquipExAttr(ItemEquip itemEquip)
+    {
+        GameDataValue.LvUpEquipAttr(itemEquip);
+        itemEquip.BakeExAttr();
+    }
     #region weapon
     
 

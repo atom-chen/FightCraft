@@ -26,7 +26,7 @@ public class UIEquipRefresh : UIBase
     public UITagPanel _TagPanel;
     public UIContainerSelect _EquipContainer;
     public Text _EquipTag;
-    public UIEquipInfo _EuipInfo;
+    public UIEquipInfoRefresh _EuipInfo;
 
     private ItemEquip _SelectedEuqip;
 
@@ -36,6 +36,7 @@ public class UIEquipRefresh : UIBase
 
         _TagPanel.ShowPage(0);
         InitEquipInPack();
+        UpdateRefreshPanel();
     }
 
     private void InitEquipInPack()
@@ -80,7 +81,7 @@ public class UIEquipRefresh : UIBase
             return;
 
         _SelectedEuqip = equipItem;
-        ShowEquipInfo(equipItem);
+        ShowEquipInfo(equipItem, null);
 
         if (PlayerDataPack.Instance._SelectedRole._EquipList.Contains(equipItem))
         {
@@ -92,9 +93,21 @@ public class UIEquipRefresh : UIBase
         }
     }
 
-    private void ShowEquipInfo(ItemEquip equipItem)
+    private void ShowEquipInfo(ItemEquip equipItem, ItemEquip orgEquip)
     {
-        _EuipInfo.ShowTips(equipItem);
+        _EuipInfo.ShowTips(equipItem, orgEquip);
+    }
+
+    public void OnTagPage(int page)
+    {
+        switch (page)
+        {
+            case 0:
+                UpdateRefreshPanel();
+                break;
+            case 1:
+                break;
+        }
     }
     #endregion
 
@@ -109,17 +122,60 @@ public class UIEquipRefresh : UIBase
     public Text _FreeTip;
     public GameObject _FreeBtn;
 
-    private ItemEquip _ShowItem;
+    private ItemEquip _OrgBake;
     public const string _MaterialDataID = "20000";
     public const int _MatCost = 5;
 
     private void UpdateRefreshPanel()
     {
         var matCnt = BackBagPack.Instance.GetItemCnt(_MaterialDataID);
+        if (matCnt > _MatCost)
+        {
+            _MaterialBtn.SetActive(true);
+            _DiamondBtn.SetActive(false);
+            _MaterialTip.text = matCnt + "/" + _MatCost;
+        }
+        else
+        { 
+            _MaterialBtn.SetActive(false);
+            _DiamondBtn.SetActive(true);
+            _DiamondTip.text = "";
+        }
+
+        UpdateFreeBtn();
+    }
+
+    private void UpdateFreeBtn()
+    {
 
     }
-    
 
+    public void OnBtnMaterial()
+    {
+        if (_SelectedEuqip == null)
+            return;
+
+        RefreshEquip();
+    }
+
+    public void OnBtnDiamond()
+    {
+        if (_SelectedEuqip == null)
+            return;
+
+        RefreshEquip();
+    }
+
+    public void OnBtnFree()
+    { }
+
+    private void RefreshEquip()
+    {
+        _OrgBake = new ItemEquip();
+        _OrgBake.CopyFrom(_SelectedEuqip);
+        RandomAttrs.LvUpEquipExAttr(_SelectedEuqip);
+        ShowEquipInfo(_SelectedEuqip, _OrgBake);
+    }
     #endregion
 
     #region equip destory

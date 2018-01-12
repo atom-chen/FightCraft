@@ -250,6 +250,7 @@ public class UIContainerBase : UIBase
                 hash = new Hashtable(exhash);
             }
             hash.Add("InitObj", contentItem.Obj);
+            preItem.Init();
             preItem.Show(hash);
             preItem._InitInfo = contentItem.Obj;
             preItem._ClickEvent = _OnClickItem;

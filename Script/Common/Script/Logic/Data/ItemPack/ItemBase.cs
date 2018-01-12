@@ -168,9 +168,9 @@ public class ItemBase : SaveItemBase
 
         ItemDataID = itembase.ItemDataID;
 
-        _DynamicDataInt = itembase._DynamicDataInt;
+        _DynamicDataInt = new List<int>( itembase._DynamicDataInt);
 
-        _DynamicDataEx = itembase._DynamicDataEx;
+        _DynamicDataEx = new List<ItemExData>( itembase._DynamicDataEx);
 
         RefreshItemData();
     }

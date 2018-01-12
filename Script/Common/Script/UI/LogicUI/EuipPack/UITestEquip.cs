@@ -56,7 +56,11 @@ public class UITestEquip : UIBase
         int level = int.Parse(_InputLevel.text);
         ITEM_QUALITY quality = (ITEM_QUALITY)(int.Parse(_InputQuality.text));
         int value = int.Parse(_InputValue.text);
-        int legencyID = int.Parse(_LegencyID.text);
+        int legencyID = 0;
+        if (!int.TryParse(_LegencyID.text, out legencyID))
+        {
+            legencyID = 0;
+        }
         var equipItem = ItemEquip.CreateEquip(level, quality, value, legencyID);
         var newEquip = BackBagPack.Instance.AddNewEquip(equipItem);
         //UIEquipTooltips.ShowAsyn(newEquip);

@@ -32,7 +32,7 @@ public class RoleAttrImpactBaseAttr : RoleAttrImpactBase
     public static string GetAttrDesc(List<int> attrParams)
     {
         //Debug.Log("attrParams:" + attrParams[0]);
-        float value = attrParams[1];
+        string valueStr = attrParams[1].ToString();
         switch ((RoleAttrEnum)attrParams[0])
         {
             case RoleAttrEnum.AttackPersent:
@@ -40,10 +40,11 @@ public class RoleAttrImpactBaseAttr : RoleAttrImpactBase
             case RoleAttrEnum.MoveSpeed:
             case RoleAttrEnum.AttackSpeed:
             case RoleAttrEnum.CriticalHitChance:
-                value = GameDataValue.ConfigIntToFloatDex1(attrParams[1]) * 100;
+                var value = GameDataValue.ConfigIntToFloatDex1(attrParams[1]) * 100;
+                valueStr = string.Format("{0:0.00}", value);
                 break;
         }
-        var strFormat = StrDictionary.GetFormatStr(attrParams[0], value);
+        var strFormat = StrDictionary.GetFormatStr(attrParams[0], valueStr);
 
         return strFormat;
     }
