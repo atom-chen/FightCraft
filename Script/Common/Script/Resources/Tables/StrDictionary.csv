@@ -40,6 +40,7 @@
 10010,,,Store,,
 10011,,,Get,,
 10012,,,Create,,
+10013,,,Equiping,,
 20000,shop,,not enough gold,,
 20001,shop,,not enough diamond,,
 30001,gem,,No empty gem pos,,

@@ -178,8 +178,8 @@ public class AI_Base : MonoBehaviour
 
     protected bool IsRandomActSkill()
     {
-        //var actRandom = Random.Range(0, 10000);
-        //if (_SelfMotion.RoleAttrManager.Level * 50 >= actRandom)
+        var actRandom = Random.Range(0, 10000);
+        if (_SelfMotion.RoleAttrManager.Level * 50 >= actRandom)
         {
             return true;
         }

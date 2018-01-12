@@ -104,7 +104,6 @@ public class ObjMotionSkillAttack : ObjMotionSkillBase
         }
     }
 
-    private int _CurStep;
     public int CurStep
     {
         get

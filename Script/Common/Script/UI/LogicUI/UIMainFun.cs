@@ -108,7 +108,7 @@ public class UIMainFun : UIBase
 
     public void BtnResetEquip()
     {
-        UIEquipResetAttr.ShowAsyn();
+        UIEquipRefresh.ShowAsyn();
     }
 
     public void BtnSkill()

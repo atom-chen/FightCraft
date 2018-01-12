@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-// 边缘高亮
 public class EffectMaterialChange : EffectController
 {
     public Material _ChangeMaterial;

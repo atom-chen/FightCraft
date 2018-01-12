@@ -63,11 +63,65 @@ public class CommonTool : Editor
 
     #region 
 
-    [MenuItem("TyTools/Test/CaptureScreenshot")]
-    public static void CaptureScreenshot()
+    [MenuItem("TyTools/Test/GemSetTest")]
+    public static void GemSetTest()
     {
-        Application.CaptureScreenshot(Application.dataPath + "/" + "capture.png", 0);
+        foreach (var gemSetRecord in Tables.TableReader.GemSet.Records.Values)
+        {
+            GemSetGemsCriticSelf(gemSetRecord);
+        }
 
+    }
+
+    private static void GemSetGemsCriticSelf(Tables.GemSetRecord gemSet)
+    {
+        foreach (var gem in gemSet.Gems)
+        {
+            var sameGems = gemSet.Gems.FindAll((gemInfo) =>
+            {
+                if (gem.Id == gemInfo.Id)
+                    return true;
+                return false;
+            });
+            if (sameGems.Count > 1)
+            {
+                Debug.Log("GemSetGemsCriticSelf:" + gemSet.Id);
+            }
+        }
+    }
+
+    [MenuItem("TyTools/Test/GemSetGroupTest")]
+    public static void GemSetCriticTest()
+    {
+        foreach (var gemSetRecordA in Tables.TableReader.GemSet.Records.Values)
+        {
+            foreach (var gemSetRecordB in Tables.TableReader.GemSet.Records.Values)
+            {
+                if (gemSetRecordA == gemSetRecordB)
+                    continue;
+
+                GemSetCriticTableTest(gemSetRecordA, gemSetRecordB);
+            }
+        }
+    }
+
+    public static void GemSetCriticTableTest(Tables.GemSetRecord gemSetA, Tables.GemSetRecord gemSetB)
+    {
+        foreach (var gem in gemSetA.Gems)
+        {
+            var sameGems = gemSetB.Gems.Find((gemInfo) =>
+            {
+                if (gem.Id == gemInfo.Id)
+                    return true;
+                return false;
+            });
+
+            if (sameGems == null)
+            {
+                return;
+            }
+        }
+        Debug.Log("gemSetCritic:" + gemSetA.Id + "," + gemSetB.Id);
     }
 
     #endregion

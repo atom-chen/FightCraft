@@ -3,8 +3,7 @@
 Shader "TYImage/CharAlpha" {
    Properties {
       _MainTex ("RGBA Texture Image", 2D) = "white" {} 
-      _AlphaTex ("ALPHA Texture Image", 2D) = "white" {} 
-	  _Alpha ("Alpha", Range(0,1)) = 1
+	  _MainColor ("Albedo", Color) = (0,0,0,0.5)
    }
    SubShader {
       Tags {"Queue" = "Transparent" "IgnoreProjector"="True" "RenderType"="TransparentCutout"}  
@@ -22,8 +21,7 @@ Shader "TYImage/CharAlpha" {
          #pragma fragment frag 
  
          uniform sampler2D _MainTex;    
-         uniform sampler2D _AlphaTex;    
-	   		 uniform float _Alpha;
+	     uniform float4 _MainColor;
  
          struct vertexInput {
             float4 vertex : POSITION;
@@ -47,10 +45,8 @@ Shader "TYImage/CharAlpha" {
          {
          	float2 uv = float2(input.tex.xy);
          	float4 clr  = tex2D(_MainTex,  uv);
-         	float4 clr2 = tex2D(_AlphaTex, uv);
-         	float4 clr3 = clr+clr*float4(UNITY_LIGHTMODEL_AMBIENT.xyz, 0)*0.85 ;
         	
-        	return (float4(clr3.r, clr3.g, clr3.b, clr2.r*_Alpha));
+        	return (float4(clr.r * _MainColor.r, clr.g * _MainColor.g, clr.b * _MainColor.b, clr.r*_MainColor.a));
          }
  
          ENDCG

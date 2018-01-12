@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-
- 
+using System.Collections.Generic;
+using UnityEngine.AI;
 
 public class FightSceneAreaKBossWithFish : FightSceneAreaBase
 {
@@ -15,7 +15,7 @@ public class FightSceneAreaKBossWithFish : FightSceneAreaBase
         StartStep();
     }
 
-    protected override void UpdateArea()
+    public override void UpdateArea()
     {
         base.UpdateArea();
 
@@ -41,6 +41,7 @@ public class FightSceneAreaKBossWithFish : FightSceneAreaBase
 
     public Transform _BossBornPos;
     public string _BossMotionID;
+    public bool _FishBornFixPos = true;
     public Transform[] _EnemyBornPos;
     public SerializeRandomEnemy[] _EnemyMotionID;
     public float _BossStepEnemyInterval = 10;
@@ -67,29 +68,69 @@ public class FightSceneAreaKBossWithFish : FightSceneAreaBase
             if (_LivingEnemyCnt < _FightingEnemyCnt)
             {
                 CreateEngoughEnemy();
+                _LastUpdateFishTime = Time.time;
             }
         }
     }
 
     private void StepMotionDie(MotionManager motion)
     {
+        if (motion.MonsterBase == null)
+            return;
+
         if (motion.MonsterBase.Id == _BossMotionID)
         {
             FinishArea();
         }
+        
         --_LivingEnemyCnt;
     }
 
     private void CreateEngoughEnemy()
     {
-        int randomPos = Random.Range(0, _EnemyBornPos.Length);
-        var enemyMotion = FightManager.Instance.InitEnemy(GetRandomEnmeyID(), _EnemyBornPos[randomPos].position, _EnemyBornPos[randomPos].rotation.eulerAngles);
+        if (_EnemyMotionID.Length == 0)
+            return;
+
+        MotionManager enemyMotion;
+        if (_FishBornFixPos)
+        {
+            int randomPos = Random.Range(0, _EnemyBornPos.Length);
+            enemyMotion = FightManager.Instance.InitEnemy(GetRandomEnmeyID(), _EnemyBornPos[randomPos].position, _EnemyBornPos[randomPos].rotation.eulerAngles);
+        }
+        else
+        {
+            enemyMotion = FightManager.Instance.InitEnemy(GetRandomEnmeyID(), GetFishRandomPos(), Vector3.zero);
+        }
         AI_CloseAttack ai = enemyMotion.GetComponent<AI_CloseAttack>();
         if (ai != null)
         {
             ai._AlertRange = 1000;
         }
         ++_LivingEnemyCnt;
+    }
+
+    private static List<Vector3> _FishRandomPosDelta = new List<Vector3>()
+    {
+        new Vector3(-10,0,0),
+        new Vector3(-7.5f,0,7.5f),
+        new Vector3(0,0,10),
+        new Vector3(7.5f,0,7.5f),
+        new Vector3(10,0,0),
+        new Vector3(7.5f,0,-7.5f),
+        new Vector3(0,0,-10),
+        new Vector3(-7.5f,0,-7.5f),
+    };
+    private Vector3 GetFishRandomPos()
+    {
+        int randomIdx = Random.Range(0, _FishRandomPosDelta.Count);
+        var randomPos = _FishRandomPosDelta[randomIdx] + FightManager.Instance.MainChatMotion.transform.position;
+        NavMeshHit navMeshHit;
+        if (NavMesh.SamplePosition(randomPos, out navMeshHit, 100, -1))
+        {
+            return navMeshHit.position;
+        }
+        return _BossBornPos.position;
+
     }
 
     private string GetRandomEnmeyID()

@@ -25,7 +25,7 @@ public class FightSceneAreaBase : MonoBehaviour
         _FightSceneLogic.AreaFinish(this);
     }
 
-    protected virtual void UpdateArea()
+    public virtual void UpdateArea()
     { }
 
     public virtual void MotionDie(MotionManager motion)

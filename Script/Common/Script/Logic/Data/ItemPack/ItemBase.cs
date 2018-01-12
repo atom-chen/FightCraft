@@ -188,14 +188,9 @@ public class ItemBase : SaveItemBase
     public static void CreateItemInPack(string itemID, int num)
     {
         int itemDataID = int.Parse(itemID);
-        if (itemDataID >= 70100 && itemDataID <= 70105)
-        {
-            GemData.Instance.AddMaterial(itemID, num);
-        }
-        else
-        {
-            BackBagPack.Instance.AddItem(itemID, num);
-        }
+
+        BackBagPack.Instance.AddItem(itemID, num);
+
     }
 
     #endregion

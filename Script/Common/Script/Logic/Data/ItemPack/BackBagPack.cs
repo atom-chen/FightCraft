@@ -151,15 +151,39 @@ public class BackBagPack : DataPackBase
     {
         for (int i = 0; i < PageItems.Count; ++i)
         {
-            if (PageItems[0].IsVolid() && PageItems[0].ItemDataID == itemID)
+            if (PageItems[i].IsVolid() && PageItems[i].ItemDataID == itemID)
             {
-                return PageItems[0];
+                return PageItems[i];
             }
         }
         return GetEmptyPageItem();
     }
 
-    
+    public ItemBase GetItem(string itemID)
+    {
+        for (int i = 0; i < PageItems.Count; ++i)
+        {
+            if (PageItems[i].IsVolid() && PageItems[i].ItemDataID == itemID)
+            {
+                return PageItems[i];
+            }
+        }
+        return null;
+    }
+
+    public int GetItemCnt(string itemID)
+    {
+        int itemCnt = 0;
+        for (int i = 0; i < PageItems.Count; ++i)
+        {
+            if (PageItems[i].IsVolid() && PageItems[i].ItemDataID == itemID)
+            {
+                itemCnt += PageItems[i].ItemStackNum;
+            }
+        }
+
+        return itemCnt;
+    }
 
     public ItemBase GetEmptyPageItem()
     {

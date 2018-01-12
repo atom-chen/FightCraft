@@ -31,7 +31,7 @@ public class FightSceneLogicPassArea : FightSceneLogicBase
     {
         base.UpdateLogic();
 
-        
+        _RunningArea.UpdateArea();
     }
 
     public override void MotionDie(MotionManager motion)

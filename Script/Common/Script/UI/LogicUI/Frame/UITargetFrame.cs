@@ -42,8 +42,8 @@ public class UITargetFrame : UIBase
         if (_TargetMotion != null)
         {
 
-            _HPText.text = AimTarget.Instance.LockTarget.RoleAttrManager.HP + "/" + AimTarget.Instance.LockTarget.RoleAttrManager.GetBaseAttr(RoleAttrEnum.HPMax);
-            _HPProcess.value = AimTarget.Instance.LockTarget.RoleAttrManager.HPPersent;
+            _HPText.text = _TargetMotion.RoleAttrManager.HP + "/" + _TargetMotion.RoleAttrManager.GetBaseAttr(RoleAttrEnum.HPMax);
+            _HPProcess.value = _TargetMotion.RoleAttrManager.HPPersent;
         }
     }
 

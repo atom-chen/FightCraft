@@ -22,7 +22,7 @@ public class FightSceneAreaKEnemyCnt : FightSceneAreaBase
         StartStep();
     }
 
-    protected override void UpdateArea()
+    public override void UpdateArea()
     {
         base.UpdateArea();
     }

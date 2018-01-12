@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class BulletMuTong : BulletSummon
 {
-    public float _DelayTime = 1;
     public AnimationClip _HitAnimation;
     public BulletEmitterBase _SubBulletEmitter;
 

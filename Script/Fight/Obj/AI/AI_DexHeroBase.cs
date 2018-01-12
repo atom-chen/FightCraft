@@ -8,7 +8,7 @@ public class AI_DexHeroBase : AI_HeroBase
         base.Init();
         Debug.Log("init AI_StrengthHeroBase");
         InitAttackBlock();
-        InitBlockSkill();
+        //InitBlockSkill();
     }
 
     #region super armor
@@ -36,7 +36,7 @@ public class AI_DexHeroBase : AI_HeroBase
         {
             if (_DexStage2Buff == null)
             {
-                var buffGO = ResourceManager.Instance.GetGameObject("SkillMotion/DexAccelateBuff");
+                var buffGO = ResourceManager.Instance.GetGameObject("SkillMotion/CommonImpact/DexAccelateBuff");
                 _DexStage2Buff = buffGO.GetComponents<ImpactBuff>();
             }
             return _DexStage2Buff;
@@ -47,7 +47,7 @@ public class AI_DexHeroBase : AI_HeroBase
     {
         base.AIUpdate();
 
-        if (_SelfMotion.RoleAttrManager.HPPersent < 0.5f)
+        //if (_SelfMotion.RoleAttrManager.HPPersent < 0.5f)
         {
             StartStage2();
         }

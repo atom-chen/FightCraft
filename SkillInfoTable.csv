@@ -1,21 +1,21 @@
 ,G,B,C,S,A,R
-baiqi fire wind ,G1:stone boom human butcher,B3:stone boom,add 20% MAXHP in battle commander,,,
-caocao wind,G2:wind blade  abreast of sky,B2:whirlwind,add 20% defence in battle Uniting,,,wind blade when hit unscrupulous hero
-daji ice,"G2:heart bullet / couple
+baiqi fire wind /Str,G1:stone boom human butcher,B3:stone boom,add 20% MAXHP in battle commander,,,
+caocao wind /Dec,G2:wind blade  abreast of sky,B2:whirlwind,add 20% defence in battle Uniting,,,wind blade when hit unscrupulous hero
+daji ice /Int,"G2:heart bullet / couple
 ",,damage reduse single hit / nine-tailed,ice resist / cold heart,"ice area,slow down attack speed/ fox spirit",
-dianwei light,,B2:whirl weapon,hp low strong AI,,add 20% strong in battle,add attack when hp low
-diaocan ice,G1:ice boom,B1:ice boom,,,"ice area,slow down move speed",add 20% ice damage
-direnjie light ,G1:skill enhance,B1:fire boom,,,,add 20% light damage
-jiangziya light,G2:lightening hit,B2:lighting hit,,light resist,revenge lightening,lightening when hit
-jingke wind,G0:blink,B1:wind damage,,add move speed when be hit,add 20% inc in battle,
-leizhenzi light,G3:lightening 3,B3:lighting 3,,ignore low move speed buff,,lightening circle
-lianpo fire wind,G1:fire sprit,B3:stone boom,,,,
-luban fire ice,,,resist one hit,fire resist,,time boom
-nazha fire,,,alive,ex move speed,add attack when hp full,fire boom when hit
-wuzetian fire,G3:fire bird,,,,add 20% int in battle,
-wenzhong fire ice wind,G2:fire bullet,B1:ice bullet,,,element enhance,
-xishi wind,G3:big whirlwind,B3:whirlwind,hp low resume hp,wind resist,,add 20% wind damage
-yangguifei wind,,,hp low intelligence AI,add move speed when hp low,,blood enemy
-yangjian fire light,,B2:eye light,hp low dexterous  AI,,remove debuff ,fire light element
-zhaoyun ice,G2:ice sprit,B2:ice circle,,,ice circle when be hit,ice boom when hit
-zouwang fire,G3:fire bullet  / couple,B3:fire split,thorns,,,add 20% fire damage
+dianwei light /Str, /Berserker,B2:whirl weapon,hp low strong AI /beast force,,add 20% strong in battle /iron arm,add attack when hp low /bloody guardian
+diaocan ice /Int,G1:ice boom,B1:ice boom,,,"ice area,slow down move speed",add 20% ice damage
+direnjie light /Dec,G1:skill enhance,B1:fire boom,,,,add 20% light damage
+jiangziya light /Int,G2:lightening hit,B2:lighting hit,,light resist,revenge lightening,lightening when hit
+jingke wind /Dec,G0:blink,B1:wind damage,,add move speed when be hit,add 20% inc in battle,
+leizhenzi light /Int,G3:lightening 3,B3:lighting 3,,ignore low move speed buff,,lightening circle
+lianpo fire wind /Str,G1:fire sprit,B3:stone boom,,,,
+luban fire ice /Int,,,resist one hit,fire resist,,time boom
+nazha fire /Dec,,,alive,ex move speed,add attack when hp full,fire boom when hit
+wuzetian fire /Int,G3:fire bird,,,,add 20% int in battle,
+wenzhong fire ice wind /Int,G2:fire bullet,B1:ice bullet,,,element enhance,
+xishi wind /Dec,G3:big whirlwind,B3:whirlwind,hp low resume hp,wind resist,,add 20% wind damage
+yangguifei wind /Dec,,,hp low intelligence AI,add move speed when hp low,,blood enemy
+yangjian fire light /Str,,B2:eye light,hp low dexterous  AI,,remove debuff ,fire light element
+zhaoyun ice /Str,G2:ice sprit,B2:ice circle,,,ice circle when be hit,ice boom when hit
+zouwang fire /Str,G3:fire bullet  / couple,B3:fire split,thorns,,,add 20% fire damage

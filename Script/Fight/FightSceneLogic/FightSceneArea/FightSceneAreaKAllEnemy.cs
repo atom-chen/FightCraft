@@ -11,7 +11,7 @@ public class FightSceneAreaKAllEnemy : FightSceneAreaBase
         StartStep();
     }
 
-    protected override void UpdateArea()
+    public override void UpdateArea()
     {
         base.UpdateArea();
     }

@@ -39,7 +39,6 @@ public class GemData : SaveItemBase
     {
         bool needSave = false;
         needSave |= InitGemContainer();
-        needSave |= InitGemMaterials();
         needSave |= InitGemPack();
 
         if (needSave)
@@ -172,8 +171,7 @@ public class GemData : SaveItemBase
     [SaveField(2)]
     public List<ItemGem> _GemContainer;
 
-    [SaveField(3)]
-    public List<ItemBase> _GemMaterials;
+    public static List<string> _GemMaterialDataIDs = new List<string>() { "70100", "70101", "70102", "70103", "70104" };
 
     private bool InitGemContainer()
     {
@@ -204,23 +202,7 @@ public class GemData : SaveItemBase
         }
         return false;
     }
-
-    private bool InitGemMaterials()
-    {
-        if (_GemMaterials == null || _GemMaterials.Count == 0)
-        {
-            _GemMaterials = new List<ItemBase>();
-            _GemMaterials.Add(new ItemBase("70100"));
-            _GemMaterials.Add(new ItemBase("70101"));
-            _GemMaterials.Add(new ItemBase("70102"));
-            _GemMaterials.Add(new ItemBase("70103"));
-            _GemMaterials.Add(new ItemBase("70104"));
-            //_GemMaterials.Add(new ItemBase() { ItemDataID = "70105" });
-            return true;
-        }
-        return false;
-    }
-
+    
     public ItemGem GetGemInfo(string gemData)
     {
         foreach (var gemInfo in _GemContainer)
@@ -231,23 +213,6 @@ public class GemData : SaveItemBase
             }
         }
         return null;
-    }
-
-    public bool AddMaterial(string itemID, int itemNum)
-    {
-        if (itemNum <= 0)
-            return false;
-
-        for (int i = 0; i < _GemMaterials.Count; ++i)
-        {
-            if (_GemMaterials[i].ItemDataID == itemID)
-            {
-                _GemMaterials[i].AddStackNum(itemNum);
-                return true;
-            }
-        }
-
-        return false;
     }
 
     public GemLevelInfo GetGemLevelUpInfo(ItemGem gemItemBase)
@@ -277,17 +242,12 @@ public class GemData : SaveItemBase
             return false;
         }
 
-        foreach (var mat in _GemMaterials)
+        if (BackBagPack.Instance.GetItemCnt(lvInfo.MaterialData) < lvInfo.MaterialCnt)
         {
-            if (mat.ItemDataID == lvInfo.MaterialData)
-            {
-                if (mat.ItemStackNum < lvInfo.MaterialCnt)
-                {
-                    UIMessageTip.ShowMessageTip(30003);
-                    return false;
-                }
-            }
+            UIMessageTip.ShowMessageTip(30003);
+            return false;
         }
+
         return true;
     }
 
@@ -316,14 +276,8 @@ public class GemData : SaveItemBase
             return false;
 
         PlayerDataPack.Instance.DecGold(lvInfo.CostMoney);
-        foreach (var mat in _GemMaterials)
-        {
-            if (mat.ItemDataID == lvInfo.MaterialData)
-            {
-                mat.DecStackNum(lvInfo.MaterialCnt);
-                mat.SaveClass(true);
-            }
-        }
+        var matItem = BackBagPack.Instance.GetItem(lvInfo.MaterialData);
+        matItem.DecStackNum(lvInfo.MaterialCnt);
 
         lvUpGem.LevelUp();
 

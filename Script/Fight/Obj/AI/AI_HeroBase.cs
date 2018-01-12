@@ -15,11 +15,12 @@ public class AI_HeroBase : AI_Base
         base.AIUpdate();
 
         RiseUpdate();
+        UpdateCriticalAI();
     }
 
     #region rise
 
-    private ObjMotionSkillBase _RiseBoom;
+    private ImpactBase _RiseBoom;
 
     private float _RiseTime = 1f;
     private bool _IsRiseEvent = false;
@@ -32,8 +33,8 @@ public class AI_HeroBase : AI_Base
         riseBoom.transform.localPosition = Vector3.zero;
         riseBoom.transform.localRotation = Quaternion.Euler(Vector3.zero);
 
-        _RiseBoom = riseBoom.GetComponent<ObjMotionSkillBase>();
-        _RiseBoom.Init();
+        _RiseBoom = riseBoom.GetComponent<ImpactBase>();
+        
     }
 
     private void RiseUpdate()
@@ -43,7 +44,7 @@ public class AI_HeroBase : AI_Base
             if (!_IsRiseEvent)
             {
                 _IsRiseEvent = true;
-                _RiseBoom.ActSkill(null);
+                _RiseBoom.ActImpact(_SelfMotion, _SelfMotion);
             }
         }
         else
@@ -99,6 +100,31 @@ public class AI_HeroBase : AI_Base
         {
             _BuffInstance.RemoveBuff(_SelfMotion);
         }
+    }
+
+    #endregion
+
+    #region critical AI
+
+    //if target start use skill, AI use skill
+    private void UpdateCriticalAI()
+    {
+        if (_SelfMotion._ActionState != _SelfMotion._StateIdle)
+            return;
+
+        if (_TargetMotion.ActingSkill == null)
+            return;
+
+        AI_Skill_Info aiSkill = _AISkills[0];
+        for (int i = _AISkills.Count - 1; i >= 0; ++i)
+        {
+            if (!_AISkills[i].IsSkillCD())
+            {
+                aiSkill = _AISkills[i];
+                break;
+            }
+        }
+        StartSkill(aiSkill);
     }
 
     #endregion

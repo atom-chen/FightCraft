@@ -57,7 +57,21 @@ public class UIGemPack : UIBase, IDragablePack
         exHash.Add("DragPack", this);
 
         _GemContainer.InitContentItem(GemData.Instance._GemContainer, ShowGemTooltipsRight, exHash);
-        _MaterialContainer.InitContentItem(GemData.Instance._GemMaterials, ShowMaterialTooltips, exHash);
+
+        List<ItemBase> matItems = new List<ItemBase>();
+        foreach (var matData in GemData._GemMaterialDataIDs)
+        {
+            var matItemInPack = BackBagPack.Instance.GetItem(matData);
+            if (matItemInPack == null)
+            {
+                matItems.Add(new ItemBase(matData));
+            }
+            else
+            {
+                matItems.Add(matItemInPack);
+            }
+        }
+        _MaterialContainer.InitContentItem(matItems, ShowMaterialTooltips, exHash);
         for (int i = 0; i < _GemPack.Length; ++i)
         {
             Hashtable hash = new Hashtable();

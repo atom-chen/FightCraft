@@ -32,7 +32,7 @@ public class ObjMotionSkillBase : MonoBehaviour
         this.enabled = false;
     }
 
-    private int _CurStep;
+    protected int _CurStep;
     public List<AnimationClip> _NextAnim;
     public List<EffectController> _NextEffect;
     public string _ActInput;
