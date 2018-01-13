@@ -117,7 +117,11 @@ public class UIDragableItemBase : UIPackItemBase, IBeginDragHandler, IEndDragHan
 
     protected virtual bool IsCanDrag()
     {
-        return ShowedItem.IsVolid();
+        if (_IsCanDrag)
+        {
+            return ShowedItem.IsVolid();
+        }
+        return false;
     }
 
     protected virtual bool IsCanDrop()

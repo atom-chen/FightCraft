@@ -19,6 +19,21 @@ public class UIEquipRefresh : UIBase
         GameCore.Instance.UIManager.ShowUI("LogicUI/EquipReset/UIEquipRefresh", UILayer.PopUI, hash);
     }
 
+    public static void Refresh()
+    {
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIEquipRefresh>("LogicUI/EquipReset/UIEquipRefresh");
+        if (instance == null)
+            return;
+
+        if (!instance.isActiveAndEnabled)
+            return;
+
+        if (instance._TagPanel.GetShowingPage() == 0)
+        {
+            instance.UpdateRefreshPanel();
+        }
+    }
+
     #endregion
 
     #region 
@@ -91,6 +106,8 @@ public class UIEquipRefresh : UIBase
         {
             _EquipTag.text = "";
         }
+
+        UpdateRefreshPanel();
     }
 
     private void ShowEquipInfo(ItemEquip equipItem, ItemEquip orgEquip)
@@ -103,9 +120,11 @@ public class UIEquipRefresh : UIBase
         switch (page)
         {
             case 0:
+                
                 UpdateRefreshPanel();
                 break;
             case 1:
+                UpdateEquipPack();
                 break;
         }
     }
@@ -123,17 +142,23 @@ public class UIEquipRefresh : UIBase
     public GameObject _FreeBtn;
 
     private ItemEquip _OrgBake;
-    public const string _MaterialDataID = "20000";
-    public const int _MatCost = 5;
 
     private void UpdateRefreshPanel()
     {
-        var matCnt = BackBagPack.Instance.GetItemCnt(_MaterialDataID);
-        if (matCnt > _MatCost)
+        if (_SelectedEuqip == null)
+        {
+            _MaterialBtn.SetActive(false);
+            _DiamondBtn.SetActive(false);
+            return;
+        }
+
+        var refreshCost = EquipRefresh.Instance.GetEquipRefreshCost(_SelectedEuqip);
+        var matCnt = BackBagPack.Instance.GetItemCnt(EquipRefresh._RefreshMatDataID);
+        if (matCnt > refreshCost._MatCnt)
         {
             _MaterialBtn.SetActive(true);
             _DiamondBtn.SetActive(false);
-            _MaterialTip.text = matCnt + "/" + _MatCost;
+            _MaterialTip.text = matCnt + "/" + refreshCost._MatCnt;
         }
         else
         { 
@@ -147,7 +172,7 @@ public class UIEquipRefresh : UIBase
 
     private void UpdateFreeBtn()
     {
-
+        _FreeTip.text = EquipRefresh.Instance.LastFreeTimes.ToString();
     }
 
     public void OnBtnMaterial()
@@ -155,7 +180,13 @@ public class UIEquipRefresh : UIBase
         if (_SelectedEuqip == null)
             return;
 
-        RefreshEquip();
+        _OrgBake = new ItemEquip();
+        _OrgBake.CopyFrom(_SelectedEuqip);
+
+        EquipRefresh.Instance.EquipRefreshMat(_SelectedEuqip);
+
+        UpdateRefreshPanel();
+        ShowEquipInfo(_SelectedEuqip, _OrgBake);
     }
 
     public void OnBtnDiamond()
@@ -163,25 +194,87 @@ public class UIEquipRefresh : UIBase
         if (_SelectedEuqip == null)
             return;
 
-        RefreshEquip();
+        _OrgBake = new ItemEquip();
+        _OrgBake.CopyFrom(_SelectedEuqip);
+
+        EquipRefresh.Instance.EquipRefreshDiamond(_SelectedEuqip);
+
+        UpdateRefreshPanel();
+        ShowEquipInfo(_SelectedEuqip, _OrgBake);
     }
 
     public void OnBtnFree()
-    { }
-
-    private void RefreshEquip()
     {
+        if (_SelectedEuqip == null)
+            return;
+
         _OrgBake = new ItemEquip();
         _OrgBake.CopyFrom(_SelectedEuqip);
-        RandomAttrs.LvUpEquipExAttr(_SelectedEuqip);
+
+        EquipRefresh.Instance.EquipRefreshFree(_SelectedEuqip);
+
+        UpdateRefreshPanel();
         ShowEquipInfo(_SelectedEuqip, _OrgBake);
     }
+
+    public void OnBtnWatchVideoForRefesh()
+    {
+        EquipRefresh.Instance.WatchVideoForFreeRefresh();
+    }
+
     #endregion
 
     #region equip destory
 
+    public UIContainerSelect _EquipPack;
 
-    
+    private ItemEquip _DestorySelectedEquip;
+
+    public void UpdateEquipPack()
+    {
+        List<ItemEquip> destoryEquipList = new List<ItemEquip>();
+        foreach (var itemEquip in BackBagPack.Instance.PageEquips)
+        {
+            if (itemEquip.EquipQuality == ITEM_QUALITY.PURPER || itemEquip.EquipQuality == ITEM_QUALITY.ORIGIN)
+            {
+                destoryEquipList.Add(itemEquip);
+            }
+        }
+        _EquipPack.InitContentItem(destoryEquipList, ShowEquipPackTooltips);
+    }
+
+    private void ShowEquipPackTooltips(object equipObj)
+    {
+        ItemEquip equipItem = equipObj as ItemEquip;
+        if (equipItem == null || !equipItem.IsVolid())
+            return;
+
+        _DestorySelectedEquip = equipItem;
+        UIEquipTooltips.ShowAsyn(equipItem, new ToolTipFunc[1] { new ToolTipFunc(10014, DetoryEquip) });
+    }
+
+    private void DetoryEquip(ItemBase itemBase)
+    {
+        if (!itemBase.IsVolid())
+            return;
+
+        var itemEquip = itemBase as ItemEquip;
+        if (itemEquip != null)
+        {
+            var commonTab = TableReader.CommonItem.GetRecord(EquipRefresh._RefreshMatDataID);
+            var destoryGetCnt = EquipRefresh.Instance.GetDestoryMatCnt(itemEquip);
+            string tips = StrDictionary.GetFormatStr(40001, commonTab.Name, destoryGetCnt);
+            UIMessageBox.Show(tips, DestoryEquipOk, null);
+        }
+    }
+
+    private void DestoryEquipOk()
+    {
+        EquipRefresh.Instance.DestoryMatCnt(_DestorySelectedEquip);
+        UpdateEquipPack();
+
+        InitEquipInPack();
+    }
     #endregion
 
 }

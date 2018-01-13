@@ -54,6 +54,7 @@ public class PlayerDataPack : DataPackBase
     {
         _Gold += value;
         SaveClass(false);
+        UIMainFun.UpdateMoney();
     }
 
     public bool DecGold(int value)
@@ -66,6 +67,7 @@ public class PlayerDataPack : DataPackBase
 
         _Gold -= value;
         SaveClass(false);
+        UIMainFun.UpdateMoney();
         return true;
     }
 
@@ -73,6 +75,7 @@ public class PlayerDataPack : DataPackBase
     {
         _Diamond += value;
         SaveClass(false);
+        UIMainFun.UpdateMoney();
     }
 
     public bool DecDiamond(int value)
@@ -85,6 +88,7 @@ public class PlayerDataPack : DataPackBase
 
         _Diamond -= value;
         SaveClass(false);
+        UIMainFun.UpdateMoney();
         return true;
     }
     #endregion

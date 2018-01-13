@@ -42,7 +42,7 @@ public class UIItemTooltips : UIBase
 
     #region 
 
-    public UIGemInfo _UIItemInfo;
+    public UIItemInfo _UIItemInfo;
 
     public GameObject _BtnPanel;
 

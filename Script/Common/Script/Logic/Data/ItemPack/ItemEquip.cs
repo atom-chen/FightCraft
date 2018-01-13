@@ -230,7 +230,7 @@ public class ItemEquip : ItemBase
 
     #endregion
 
-    #region equipAttr
+    #region equipExAttr
 
     public EquipExAttr GetExAttr(int idx)
     {
@@ -409,160 +409,6 @@ public class ItemEquip : ItemBase
     }
     #endregion
 
-    #region equip reset
-
-    private CommonItemRecord _ResetCostItem = null;
-    public CommonItemRecord ResetCostItem
-    {
-        get
-        {
-            if (_ResetCostItem == null)
-            {
-                InitEquipResetCostItemData();
-            }
-            return _ResetCostItem;
-        }
-    }
-
-    private int _ResetCostItemNum = -1;
-    public int ResetCostItemNum
-    {
-        get
-        {
-            if (_ResetCostItemNum < 0)
-            {
-                InitEquipResetCostItemData();
-            }
-            return _ResetCostItemNum;
-        }
-    }
-
-    private int _ResetCostMoney = -1;
-    public int ResetCostMoney
-    {
-        get
-        {
-            if (_ResetCostMoney < 0)
-            {
-                InitEquipResetCostItemData();
-            }
-            return _ResetCostMoney;
-        }
-    }
-
-    private void InitEquipResetCostItemData()
-    {
-        if (EquipItemRecord.Slot == EQUIP_SLOT.WEAPON)
-        {
-            if (EquipLevel < 40)
-            {
-                _ResetCostItem = TableReader.CommonItem.GetRecord("20000");
-                _ResetCostItemNum = 4;
-                _ResetCostMoney = 400;
-            }
-            else if (EquipLevel < 70)
-            {
-                _ResetCostItem = TableReader.CommonItem.GetRecord("20000");
-                _ResetCostItemNum = 7;
-                _ResetCostMoney = 700;
-            }
-            else if (EquipLevel < 90)
-            {
-                _ResetCostItem = TableReader.CommonItem.GetRecord("20000");
-                _ResetCostItemNum = 9;
-                _ResetCostMoney = 900;
-            }
-            else if (EquipLevel < 100)
-            {
-                _ResetCostItem = TableReader.CommonItem.GetRecord("20000");
-                _ResetCostItemNum = 10;
-                _ResetCostMoney = 1000;
-            }
-            else
-            {
-                _ResetCostItem = TableReader.CommonItem.GetRecord("20000");
-                _ResetCostItemNum = 10;
-                _ResetCostMoney = 1000;
-            }
-        }
-        else if (EquipItemRecord.Slot == EQUIP_SLOT.TORSO
-            || EquipItemRecord.Slot == EQUIP_SLOT.LEGS)
-        {
-            if (EquipLevel < 40)
-            {
-                _ResetCostItem = TableReader.CommonItem.GetRecord("20000");
-                _ResetCostItemNum = 4;
-                _ResetCostMoney = 400;
-            }
-            else if (EquipLevel < 70)
-            {
-                _ResetCostItem = TableReader.CommonItem.GetRecord("20000");
-                _ResetCostItemNum = 7;
-                _ResetCostMoney = 700;
-            }
-            else if (EquipLevel < 90)
-            {
-                _ResetCostItem = TableReader.CommonItem.GetRecord("20000");
-                _ResetCostItemNum = 9;
-                _ResetCostMoney = 900;
-            }
-            else if (EquipLevel < 100)
-            {
-                _ResetCostItem = TableReader.CommonItem.GetRecord("20000");
-                _ResetCostItemNum = 10;
-                _ResetCostMoney = 1000;
-            }
-            else
-            {
-                _ResetCostItem = TableReader.CommonItem.GetRecord("20000");
-                _ResetCostItemNum = 10;
-                _ResetCostMoney = 1000;
-            }
-        }
-        else if (EquipItemRecord.Slot == EQUIP_SLOT.AMULET
-            || EquipItemRecord.Slot == EQUIP_SLOT.RING)
-        {
-            if (EquipLevel < 40)
-            {
-                _ResetCostItem = TableReader.CommonItem.GetRecord("20000");
-                _ResetCostItemNum = 4;
-                _ResetCostMoney = 400;
-            }
-            else if (EquipLevel < 70)
-            {
-                _ResetCostItem = TableReader.CommonItem.GetRecord("20000");
-                _ResetCostItemNum = 7;
-                _ResetCostMoney = 700;
-            }
-            else if (EquipLevel < 90)
-            {
-                _ResetCostItem = TableReader.CommonItem.GetRecord("20000");
-                _ResetCostItemNum = 9;
-                _ResetCostMoney = 900;
-            }
-            else if (EquipLevel < 100)
-            {
-                _ResetCostItem = TableReader.CommonItem.GetRecord("20000");
-                _ResetCostItemNum = 10;
-                _ResetCostMoney = 1000;
-            }
-            else
-            {
-                _ResetCostItem = TableReader.CommonItem.GetRecord("20000");
-                _ResetCostItemNum = 10;
-                _ResetCostMoney = 1000;
-            }
-        }
-    }
-
-    public void ResetEquipAttr()
-    {
-        
-        
-    }
-
-    #endregion
-
     #region create equip
 
     public static ItemEquip CreateEquipByMonster(int level, Tables.ITEM_QUALITY quality, int value)
@@ -683,6 +529,91 @@ public class ItemEquip : ItemBase
         int slotTypeCnt = Enum.GetValues(typeof(EQUIP_SLOT)).Length;
         int randomSlot = UnityEngine.Random.Range(0, slotTypeCnt);
         return (EQUIP_SLOT)randomSlot;
+    }
+
+    #endregion
+
+    #region equip sp attr
+
+    public static string _DefauletSpSetID = "1";
+    public static int _ActSetLeastExCnt = 2;
+    public static float _ActSetValPersent = 0.9f;
+
+    private EquipSpAttrRecord _SpSetRecord;
+    public EquipSpAttrRecord SpSetRecord
+    {
+        get
+        {
+            return _SpSetRecord;
+        }
+    }
+
+    public void CalculateSet()
+    {
+        _SpSetRecord = null;
+        if (EquipExAttr.Count < _ActSetLeastExCnt)
+        {
+            return;
+        }
+
+        int valAttrCnt = 0;
+        List<EquipExAttr> randomAttrs = new List<global::EquipExAttr>();
+        foreach (var exAttr in EquipExAttr)
+        {
+            var valuePersent = GameDataValue.GetExAttrPersent(this, exAttr);
+            if (valuePersent > _ActSetValPersent)
+            {
+                ++valAttrCnt;
+            }
+
+            if (exAttr.AttrType == "RoleAttrImpactBaseAttr"
+                && (exAttr.AttrParams[0] != (int)RoleAttrEnum.AttackPersent
+                && exAttr.AttrParams[0] != (int)RoleAttrEnum.HPMaxPersent
+                && exAttr.AttrParams[0] != (int)RoleAttrEnum.MoveSpeed))
+            {
+                randomAttrs.Add(exAttr);
+            }
+        }
+        if (valAttrCnt < _ActSetLeastExCnt)
+        {
+            return;
+        }
+
+
+        foreach (var setRecord in TableReader.EquipSpAttr.Records.Values)
+        {
+            if (setRecord.Id == _DefauletSpSetID)
+                continue;
+
+            _SpSetRecord = setRecord;
+            foreach (var exAttr in randomAttrs)
+            {
+                bool isAttrOk = false;
+                for (int i = 0; i < setRecord.ExAttrEnum.Count; ++i)
+                {
+                    if (exAttr.AttrParams[0] == setRecord.ExAttrEnum[i])
+                    {
+                        isAttrOk = true;
+                        break;
+                    }
+                }
+                if (!isAttrOk)
+                {
+                    _SpSetRecord = null;
+                    break;
+                }
+            }
+            if (_SpSetRecord != null)
+            {
+                break;
+            }
+        }
+
+        if (_SpSetRecord == null)
+        {
+            _SpSetRecord = TableReader.EquipSpAttr.GetRecord(_DefauletSpSetID);
+        }
+        Debug.Log("SPSet:" + _SpSetRecord.Id);
     }
 
     #endregion

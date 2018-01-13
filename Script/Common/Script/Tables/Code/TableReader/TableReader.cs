@@ -31,6 +31,8 @@ namespace Tables
 //
         public static EquipItem EquipItem { get; internal set; }
 //
+        public static EquipSpAttr EquipSpAttr { get; internal set; }
+//
         public static FightAttr FightAttr { get; internal set; }
 //
         public static GemSet GemSet { get; internal set; }
@@ -57,6 +59,7 @@ namespace Tables
             AttrValue = new AttrValue(TableReadBase.GetTableText("AttrValue"), false);
             CommonItem = new CommonItem(TableReadBase.GetTableText("CommonItem"), false);
             EquipItem = new EquipItem(TableReadBase.GetTableText("EquipItem"), false);
+            EquipSpAttr = new EquipSpAttr(TableReadBase.GetTableText("EquipSpAttr"), false);
             FightAttr = new FightAttr(TableReadBase.GetTableText("FightAttr"), false);
             GemSet = new GemSet(TableReadBase.GetTableText("GemSet"), false);
             GemTable = new GemTable(TableReadBase.GetTableText("GemTable"), false);
@@ -72,6 +75,7 @@ namespace Tables
             AttrValue.CoverTableContent();
             CommonItem.CoverTableContent();
             EquipItem.CoverTableContent();
+            EquipSpAttr.CoverTableContent();
             FightAttr.CoverTableContent();
             GemSet.CoverTableContent();
             GemTable.CoverTableContent();

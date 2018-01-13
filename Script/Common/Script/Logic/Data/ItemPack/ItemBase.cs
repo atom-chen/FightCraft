@@ -116,6 +116,10 @@ public class ItemBase : SaveItemBase
     {
         int temp = ItemStackNum - num;
         ItemStackNum = GetVolidItemNum(temp);
+        if (ItemStackNum == 0)
+        {
+            ResetItem();
+        }
         SaveClass(true);
         return ItemStackNum;
     }

@@ -277,51 +277,57 @@ public class GameDataValue
         }
     }
 
-    public static List<RoleAttrEnum> GetRandomEquipAttrsType(Tables.EQUIP_SLOT equipSlot, Tables.ITEM_QUALITY quality)
+    public static List<RoleAttrEnum> GetRandomEquipAttrsType(Tables.EQUIP_SLOT equipSlot, Tables.ITEM_QUALITY quality, int fixNum = 0)
     {
         List<EquipExAttr> exAttrs = new List<EquipExAttr>();
 
         int exAttrCnt = 0;
-        
-        switch (equipSlot)
-        {
-            case Tables.EQUIP_SLOT.WEAPON:
-                exAttrCnt = 2;
-                if (quality == Tables.ITEM_QUALITY.BLUE)
-                {
-                    exAttrCnt = Random.Range(1, 3);
-                }
-                return CalRandomAttrs(_WeaponExAttrs, exAttrCnt);
-            case Tables.EQUIP_SLOT.TORSO:
-                exAttrCnt = 2;
-                if (quality == Tables.ITEM_QUALITY.BLUE)
-                {
-                    exAttrCnt = Random.Range(1, 3);
-                }
-                return CalRandomAttrs(_DefenceExAttrs, exAttrCnt);
-            case Tables.EQUIP_SLOT.LEGS:
-                exAttrCnt = 2;
-                if (quality == Tables.ITEM_QUALITY.BLUE)
-                {
-                    exAttrCnt = Random.Range(1, 3);
-                }
-                return CalRandomAttrs(_DefenceExAttrs, exAttrCnt);
-            case Tables.EQUIP_SLOT.AMULET:
-                exAttrCnt = 3;
-                if (quality == Tables.ITEM_QUALITY.BLUE)
-                {
-                    exAttrCnt = Random.Range(1, 3);
-                }
-                return CalRandomAttrs(_AmuletExAttrs, exAttrCnt);
-            case Tables.EQUIP_SLOT.RING:
-                exAttrCnt = 3;
-                if (quality == Tables.ITEM_QUALITY.BLUE)
-                {
-                    exAttrCnt = Random.Range(1, 3);
-                }
-                return CalRandomAttrs(_AmuletExAttrs, exAttrCnt);
-        }
 
+        if (fixNum == 0)
+        {
+            switch (equipSlot)
+            {
+                case Tables.EQUIP_SLOT.WEAPON:
+                    exAttrCnt = 2;
+                    if (quality == Tables.ITEM_QUALITY.BLUE)
+                    {
+                        exAttrCnt = Random.Range(1, 3);
+                    }
+                    return CalRandomAttrs(_WeaponExAttrs, exAttrCnt);
+                case Tables.EQUIP_SLOT.TORSO:
+                    exAttrCnt = 2;
+                    if (quality == Tables.ITEM_QUALITY.BLUE)
+                    {
+                        exAttrCnt = Random.Range(1, 3);
+                    }
+                    return CalRandomAttrs(_DefenceExAttrs, exAttrCnt);
+                case Tables.EQUIP_SLOT.LEGS:
+                    exAttrCnt = 2;
+                    if (quality == Tables.ITEM_QUALITY.BLUE)
+                    {
+                        exAttrCnt = Random.Range(1, 3);
+                    }
+                    return CalRandomAttrs(_DefenceExAttrs, exAttrCnt);
+                case Tables.EQUIP_SLOT.AMULET:
+                    exAttrCnt = 3;
+                    if (quality == Tables.ITEM_QUALITY.BLUE)
+                    {
+                        exAttrCnt = Random.Range(1, 3);
+                    }
+                    return CalRandomAttrs(_AmuletExAttrs, exAttrCnt);
+                case Tables.EQUIP_SLOT.RING:
+                    exAttrCnt = 3;
+                    if (quality == Tables.ITEM_QUALITY.BLUE)
+                    {
+                        exAttrCnt = Random.Range(1, 3);
+                    }
+                    return CalRandomAttrs(_AmuletExAttrs, exAttrCnt);
+            }
+        }
+        else
+        {
+            return CalRandomAttrs(_AmuletExAttrs, fixNum);
+        }
         return null;
     }
 
@@ -368,16 +374,26 @@ public class GameDataValue
     {
         List<EquipExAttr> valueAttrs = new List<EquipExAttr>();
         int curTotalValue = 0;
+        int singleValueMax = Mathf.CeilToInt(itemEquip.EquipValue * _ExToBase);
+
         foreach (var equipExAttr in itemEquip.EquipExAttr)
         {
             if (equipExAttr.AttrType != "RoleAttrImpactBaseAttr")
                 continue;
 
-
             if (equipExAttr.AttrParams[0] == (int)RoleAttrEnum.AttackPersent || equipExAttr.AttrParams[0] == (int)RoleAttrEnum.HPMaxPersent)
             {
                 var randomPersent = Random.Range(30, 60);
-                equipExAttr.AttrParams[1] = GetValueAttr((RoleAttrEnum)equipExAttr.AttrParams[0], equipExAttr.AttrParams[1] + randomPersent);
+                equipExAttr.Value = Mathf.Min(10000, equipExAttr.Value + randomPersent);
+                equipExAttr.AttrParams[1] = GetValueAttr((RoleAttrEnum)equipExAttr.AttrParams[0], equipExAttr.Value);
+            }
+            if (equipExAttr.AttrParams[0] == (int)RoleAttrEnum.MoveSpeed)
+            {
+                var randomPersent = Random.Range(30, 60);
+                var incValue = (int)Mathf.Max(1, singleValueMax * ConfigIntToFloat(randomPersent));
+                equipExAttr.Value = Mathf.Min(singleValueMax, equipExAttr.Value + incValue);
+                equipExAttr.AttrParams[1] = GetValueAttr((RoleAttrEnum)equipExAttr.AttrParams[0], equipExAttr.Value);
+                continue;
             }
             else
             {
@@ -386,7 +402,6 @@ public class GameDataValue
             }
         }
 
-        int singleValueMax = Mathf.CeilToInt(itemEquip.EquipValue * _ExToBase);
         int totalValue = valueAttrs.Count * singleValueMax;
 
         int randomRate = Random.Range(100, 400);
@@ -394,7 +409,7 @@ public class GameDataValue
         int increaseValue = Mathf.CeilToInt(deltaValue * ConfigIntToFloat(randomRate));
         increaseValue = Mathf.Max(increaseValue, Mathf.CeilToInt(deltaValue / 100 + 1));
 
-        var attrEnums = GetRandomEquipAttrsType(itemEquip.EquipItemRecord.Slot, itemEquip.EquipQuality);
+        var attrEnums = GetRandomEquipAttrsType(itemEquip.EquipItemRecord.Slot, itemEquip.EquipQuality, valueAttrs.Count);
         for (int i = 0; i < valueAttrs.Count; ++i)
         {
             int randomIncValue = Random.Range(0, increaseValue);
@@ -413,6 +428,15 @@ public class GameDataValue
             valueAttrs[i].AttrParams[1] = GetValueAttr(attrEnums[i], valueAttrs[i].Value);
             increaseValue -= randomIncValue;
         }
+    }
+
+    public static float GetExAttrPersent(ItemEquip itemEquip, EquipExAttr exAttr)
+    {
+        if (exAttr.AttrType != "RoleAttrImpactBaseAttr")
+            return 1;
+
+        int singleValueMax = Mathf.CeilToInt(itemEquip.EquipValue * _ExToBase);
+        return (float)exAttr.Value / singleValueMax;
     }
 
     public class EquipExAttrRandom

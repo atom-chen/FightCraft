@@ -134,6 +134,18 @@ public class BackBagPack : DataPackBase
         return true;
     }
 
+    public bool DecItem(string itemID, int itemCnt)
+    {
+        var item = GetItem(itemID);
+        if (item.ItemStackNum < itemCnt)
+        {
+            UIMessageTip.ShowMessageTip(30003);
+            return false;
+        }
+        item.DecStackNum(itemCnt);
+        return true;
+    }
+
     public ItemEquip GetEmptyPageEquip()
     {
         for (int i = 0; i < PageEquips.Count; ++i)

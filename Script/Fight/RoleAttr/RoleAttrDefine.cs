@@ -71,6 +71,7 @@ public class RandomAttrs
     {
         GameDataValue.LvUpEquipAttr(itemEquip);
         itemEquip.BakeExAttr();
+        itemEquip.CalculateSet();
     }
     #region weapon
     
