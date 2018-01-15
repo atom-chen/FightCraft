@@ -25,13 +25,13 @@ public class GameDataValue
         return 10000;
     }
 
-    #region numaric
+    #region fight numaric
 
     #region level -> baseAttr
 
     private static int _MaxLv = 100;
     private static float _AttackPerLevel = 55.36f;
-    private static float _HPPerLevel = 4875.86f;
+    private static float _HPPerLevel = 487.86f;
     private static float _DefencePerLevel = 24.72f;
     private static float _ValuePerLevel = 50;
     private static float _ValuePerAttack = 1;
@@ -73,36 +73,38 @@ public class GameDataValue
 
     #region baseAttr -> exAttr atk
 
-    private static float _AttackPerStrength = 0.5f;
-    private static float _DmgEnhancePerStrength = 0.0005f;
+    private static float _AttackPerStrength = 0.25f;
+    private static float _DmgEnhancePerStrength = 0.5f;
     private static float _StrToAtk = 1;
 
-    private static float _IgnoreAtkPerDex = 0.25f;
-    private static float _CriticalDmgPerDex = 0.001f;
+    private static float _IgnoreAtkPerDex = 0.15f;
+    private static float _CriticalRatePerDex = 0.1f;
+    private static float _CriticalDmgPerDex = 1.5f;
     private static float _DexToAtk = 1;
 
     private static float _EleAtkPerInt = 0.1f;
-    private static float _EleEnhancePerInt = 0.3f;
+    private static float _EleEnhancePerInt = 0.1f;
     private static float _IntToAtk = 1;
 
     private static float _HPPerVit = 3;
     private static float _FinalDmgRedusePerVit = 0.3f;
     private static float _VitToAtk = 1;
 
-    private static float _CriticalDmgToAtk = 0.1f;
+    private static float _CriticalDmgToAtk = 2f;
 
     private static float _ElementToAtk = 1;
-    private static float _DmgEnhancePerElementEnhance = 0.003f;
-    private static float _EleEnhanceToAtk = 3;
-    private static float _EleResistToAtk = 3;
+    private static float _DmgEnhancePerElementEnhance = 10;
+    private static float _EleEnhanceToAtk = 0.3f;
+    private static float _EleResistToAtk = 0.3f;
 
-    private static float _IgnoreDefenceToAtk = 2f;
+    private static float _IgnoreDefenceToAtk = 0.5f;
 
-    private static float _HpToAtk = 0.01f;
-    private static float _DefToAtk = 2f;
-    private static float _MoveSpeedToAtk = 0.135f;
-    private static float _AtkSpeedToAtk = 0.2f;
-    private static float _CriticalChanceToAtk = 0.2f;
+    private static float _HpToAtk = 11.0f;
+    private static float _DefToAtk = 0.5f;
+    private static float _MoveSpeedToAtk = 1.35f;
+    private static float _AtkSpeedToAtk = 1;
+    private static float _CriticalChanceToAtk = 1;
+    private static float _DamageEnhance = 1;
 
     public static float GetAttrToValue(RoleAttrEnum roleAttr)
     {
@@ -138,6 +140,9 @@ public class GameDataValue
                 break;
             case RoleAttrEnum.CriticalHitChance:
                 value = _CriticalChanceToAtk;
+                break;
+            case RoleAttrEnum.DamageEnhance:
+                value = _DamageEnhance;
                 break;
             case RoleAttrEnum.CriticalHitDamge:
                 value = _CriticalDmgToAtk;
@@ -199,7 +204,7 @@ public class GameDataValue
         }
         else
         {
-            attrValue = Mathf.CeilToInt(value / GetAttrToValue(roleAttr));
+            attrValue = Mathf.CeilToInt(value * GetAttrToValue(roleAttr));
             if (roleAttr == RoleAttrEnum.AttackSpeed)
             {
                 attrValue = Mathf.Clamp(attrValue, 1, 1000);
@@ -521,6 +526,47 @@ public class GameDataValue
 
     #endregion
 
+    #region gem
+
+    public static float _GemAttrV = 10;
+    public static float _GemAttrA = 20;
+
+    public static int GetGemValue(int level)
+    {
+        int value = Mathf.CeilToInt(level * _GemAttrV + 0.5f * level * level * _GemAttrA);
+        return value;
+    }
+
+    public static EquipExAttr GetGemAttr(RoleAttrEnum attr, int level)
+    {
+        int value = Mathf.CeilToInt( level * _GemAttrV + 0.5f * level * level * _GemAttrA);
+        EquipExAttr exAttr = EquipExAttr.GetBaseExAttr(attr, value);
+        return exAttr;
+    }
+
+    public static List<EquipExAttr> GetGemSetAttr(Tables.GemSetRecord gemSet, int level)
+    {
+        List<EquipExAttr> attrList = new List<EquipExAttr>();
+        foreach (var attrValue in gemSet.Attrs)
+        {
+            if (attrValue == null || string.IsNullOrEmpty(attrValue.AttrImpact))
+                continue;
+
+            if (attrValue.AttrImpact == "RoleAttrImpactBaseAttr")
+            {
+                var exAttr = GetGemAttr((RoleAttrEnum)attrValue.AttrParams[0], level);
+                attrList.Add(exAttr);
+            }
+            else
+            {
+                var exAttr = attrValue.GetExAttr(level);
+                attrList.Add(exAttr);
+            }
+        }
+        return attrList;
+    }
+
+    #endregion
     #endregion
 
 

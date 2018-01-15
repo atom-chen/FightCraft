@@ -37,6 +37,8 @@ public enum RoleAttrEnum
     LightingEnhance,
     WindEnhance,
 
+    DamageEnhance,
+
     IgnoreDefenceAttack,
     FinalDamageReduse,
 

@@ -7,6 +7,16 @@ using System;
 
 public class EquipExAttr
 {
+    public static EquipExAttr GetBaseExAttr(RoleAttrEnum roleAttr, int value)
+    {
+        EquipExAttr exAttr = new EquipExAttr();
+        exAttr.AttrType = "RoleAttrImpactBaseAttr";
+        exAttr.Value = value;
+        exAttr.AttrParams.Add((int)roleAttr);
+        exAttr.AttrParams.Add(Mathf.CeilToInt(GameDataValue.GetAttrToValue(roleAttr) * value));
+
+        return exAttr;
+    }
 
     public string AttrType;
 
@@ -550,6 +560,10 @@ public class ItemEquip : ItemBase
 
     public void CalculateSet()
     {
+        if (_SpSetRecord != null)
+        {
+            EquipSet.Instance.RemoveActingSpAttr(_SpSetRecord);
+        }
         _SpSetRecord = null;
         if (EquipExAttr.Count < _ActSetLeastExCnt)
         {
@@ -613,8 +627,10 @@ public class ItemEquip : ItemBase
         {
             _SpSetRecord = TableReader.EquipSpAttr.GetRecord(_DefauletSpSetID);
         }
+        EquipSet.Instance.ActingSpAttr(_SpSetRecord);
         Debug.Log("SPSet:" + _SpSetRecord.Id);
     }
+
 
     #endregion
 }

@@ -13,6 +13,7 @@ public class ItemGem : ItemBase
     {
         Level = 0;
     }
+
     #region base attr
     public int Level
     {
@@ -68,12 +69,18 @@ public class ItemGem : ItemBase
     #region fun
 
     private EquipExAttr _GemAttr;
-
-    public EquipExAttr GetExAttr()
+    public EquipExAttr GemAttr
     {
-        return GemRecord.AttrValue.GetExAttr(Level);
+        get
+        {
+            if (_GemAttr == null)
+            {
+                _GemAttr = GameDataValue.GetGemAttr((RoleAttrEnum)GemRecord.AttrValue.AttrParams[0], Level);
+            }
+            return _GemAttr;
+        }
     }
-
+    
     #endregion
 
 }

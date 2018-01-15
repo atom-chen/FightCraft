@@ -123,7 +123,7 @@ public class LegendaryData : SaveItemBase
         _LegendaryValue = 0;
         foreach (var equip in _LegendaryEquips)
         {
-            _LegendaryValue += equip.EquipValue;
+            _LegendaryValue += equip.EquipLevel;
         }
     }
 
@@ -131,8 +131,8 @@ public class LegendaryData : SaveItemBase
     {
         _ExAttrs = new List<EquipExAttr>();
         CalculateValue();
-        _ExAttrs.Add(TableReader.AttrValue.GetExAttr("90000", _LegendaryValue));
-        _ExAttrs.Add(TableReader.AttrValue.GetExAttr("90001", _LegendaryValue));
+        _ExAttrs.Add(EquipExAttr.GetBaseExAttr(RoleAttrEnum.Attack, _LegendaryValue));
+        _ExAttrs.Add(EquipExAttr.GetBaseExAttr(RoleAttrEnum.HPMax, _LegendaryValue));
     }
 
     public static bool IsEquipLegendary(ItemEquip equip)

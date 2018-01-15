@@ -17,7 +17,7 @@ public class UIGemInfo : UIItemInfo
         base.ShowTips(itemBase);
 
         _Level.text = itemBase.Level.ToString();
-        _BaseAttr.ShowAttr(itemBase.GetExAttr());
+        _BaseAttr.ShowAttr(itemBase.GemAttr);
     }
 
 }

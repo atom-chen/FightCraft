@@ -30,6 +30,12 @@ public class MapPosObj : MonoBehaviour
         obj.transform.localRotation = Quaternion.Euler(Vector3.zero);
         obj.name = "ShowChil";
         obj.SetActive(true);
+
+        var modelObj = ResourceManager.Instance.GetInstanceGameObject("Model/" + monsterBase.ModelPath);
+        modelObj.transform.SetParent(obj.transform);
+        modelObj.transform.localPosition = Vector3.zero;
+        modelObj.transform.localRotation = Quaternion.Euler(Vector3.zero);
+        modelObj.SetActive(true);
     }
 
     public void RemoveShow()

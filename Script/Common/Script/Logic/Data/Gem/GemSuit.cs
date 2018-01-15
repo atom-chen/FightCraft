@@ -134,13 +134,7 @@ public class GemSuit
         _ActSetAttrs.Clear();
         if (_ActSet != null)
         {
-            foreach (var attrValue in _ActSet.Attrs)
-            {
-                if (attrValue != null)
-                {
-                    _ActSetAttrs.Add(attrValue.GetExAttr(_ActLevel));
-                }
-            }
+            _ActSetAttrs = GameDataValue.GetGemSetAttr(_ActSet, _ActLevel);
         }
     }
 }
