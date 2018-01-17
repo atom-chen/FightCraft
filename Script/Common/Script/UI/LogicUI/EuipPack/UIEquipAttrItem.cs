@@ -47,7 +47,7 @@ public class UIEquipAttrItem : UIItemBase
         }
         if (_ItemEquip != null)
         {
-            attrStr = CommonDefine.GetQualityColorStr(_ItemEquip.EquipQuality) + attrStr + valueStr + "</color>";
+            attrStr = CommonDefine.GetQualityColorStr(attr.AttrQuality) + attrStr + valueStr + "</color>";
         }
         _AttrText.text = attrStr;
     }

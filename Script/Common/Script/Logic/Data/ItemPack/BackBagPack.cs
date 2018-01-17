@@ -69,6 +69,16 @@ public class BackBagPack : DataPackBase
             }
             needSave = true;
         }
+        else
+        {
+            for (int i = 0; i < _BAG_PAGE_SLOT_CNT; ++i)
+            {
+                if (_PageEquips[i].IsVolid())
+                {
+                    _PageEquips[i].CalculateSet();
+                }
+            }
+        }
 
         if (_PageItems == null || _PageItems.Count != _BAG_PAGE_SLOT_CNT)
         {

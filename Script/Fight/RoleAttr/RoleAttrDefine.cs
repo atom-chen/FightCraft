@@ -36,11 +36,11 @@ public enum RoleAttrEnum
     ColdEnhance,
     LightingEnhance,
     WindEnhance,
-
-    DamageEnhance,
+    PhysicDamageEnhance,
 
     IgnoreDefenceAttack,
     FinalDamageReduse,
+
 
     BASE_ATTR_MAX,
 }

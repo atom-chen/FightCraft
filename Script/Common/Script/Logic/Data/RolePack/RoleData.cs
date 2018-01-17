@@ -62,6 +62,13 @@ public class RoleData : SaveItemBase
             }
             return true;
         }
+        foreach (var itemEquip in _EquipList)
+        {
+            if (itemEquip.IsVolid())
+            {
+                itemEquip.CalculateSet();
+            }
+        }
         return false;
     }
 

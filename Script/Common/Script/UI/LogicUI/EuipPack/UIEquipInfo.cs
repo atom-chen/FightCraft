@@ -37,7 +37,7 @@ public class UIEquipInfo : UIBase
         _Name.text = _ShowItem.GetEquipNameWithColor();
         if (_ShowItem.RequireLevel > RoleData.SelectRole._RoleLevel)
         {
-            _Level.text = StrDictionary.GetFormatStr(10000) + " " + CommonDefine.GetEnableColorStr(0) + _ShowItem.RequireLevel + "</color>";
+            _Level.text = StrDictionary.GetFormatStr(10000) + " " + CommonDefine.GetEnableRedStr(0) + _ShowItem.RequireLevel + "</color>";
         }
         else
         {

@@ -37,7 +37,7 @@ public class UIEquipInfoRefresh : UIBase
         _Name.text = _ShowItem.GetEquipNameWithColor();
         if (_ShowItem.RequireLevel > RoleData.SelectRole._RoleLevel)
         {
-            _Level.text = StrDictionary.GetFormatStr(10000) + " " + CommonDefine.GetEnableColorStr(0) + _ShowItem.RequireLevel + "</color>";
+            _Level.text = StrDictionary.GetFormatStr(10000) + " " + CommonDefine.GetEnableRedStr(0) + _ShowItem.RequireLevel + "</color>";
         }
         else
         {
@@ -70,6 +70,12 @@ public class UIEquipInfoRefresh : UIBase
             {
                 refreshAttr._OrgValue = 0;
             }
+            refreshAttrs.Add(refreshAttr);
+        }
+        if (itemEquip.SpSetRecord != null)
+        {
+            RefreshAttr refreshAttr = new RefreshAttr();
+            refreshAttr._SetAttr = true;
             refreshAttrs.Add(refreshAttr);
         }
         _AttrContainer.InitContentItem(refreshAttrs, null, hash);

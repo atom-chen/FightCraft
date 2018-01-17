@@ -141,7 +141,7 @@ public class GameDataValue
             case RoleAttrEnum.CriticalHitChance:
                 value = _CriticalChanceToAtk;
                 break;
-            case RoleAttrEnum.DamageEnhance:
+            case RoleAttrEnum.PhysicDamageEnhance:
                 value = _DamageEnhance;
                 break;
             case RoleAttrEnum.CriticalHitDamge:
@@ -250,7 +250,7 @@ public class GameDataValue
 
     #region equip
 
-    public static int GetExAttrRandomValue(RoleAttrEnum roleAttr, int baseValue, float lowPersent = 0.4f, float upPersent = 0.6f)
+    public static int GetExAttrRandomValue(RoleAttrEnum roleAttr, int baseValue, float lowPersent = 0.2f, float upPersent = 0.3f)
     {
         var randomValue = Random.Range(lowPersent, upPersent);
         if (roleAttr == RoleAttrEnum.AttackPersent)
@@ -388,17 +388,16 @@ public class GameDataValue
 
             if (equipExAttr.AttrParams[0] == (int)RoleAttrEnum.AttackPersent || equipExAttr.AttrParams[0] == (int)RoleAttrEnum.HPMaxPersent)
             {
-                var randomPersent = Random.Range(30, 60);
+                var randomPersent = Random.Range(20, 30);
                 equipExAttr.Value = Mathf.Min(10000, equipExAttr.Value + randomPersent);
                 equipExAttr.AttrParams[1] = GetValueAttr((RoleAttrEnum)equipExAttr.AttrParams[0], equipExAttr.Value);
             }
-            if (equipExAttr.AttrParams[0] == (int)RoleAttrEnum.MoveSpeed)
+            else if (equipExAttr.AttrParams[0] == (int)RoleAttrEnum.MoveSpeed)
             {
-                var randomPersent = Random.Range(30, 60);
+                var randomPersent = Random.Range(20, 30);
                 var incValue = (int)Mathf.Max(1, singleValueMax * ConfigIntToFloat(randomPersent));
                 equipExAttr.Value = Mathf.Min(singleValueMax, equipExAttr.Value + incValue);
                 equipExAttr.AttrParams[1] = GetValueAttr((RoleAttrEnum)equipExAttr.AttrParams[0], equipExAttr.Value);
-                continue;
             }
             else
             {
@@ -409,7 +408,7 @@ public class GameDataValue
 
         int totalValue = valueAttrs.Count * singleValueMax;
 
-        int randomRate = Random.Range(100, 400);
+        int randomRate = Random.Range(100, 200);
         int deltaValue = (totalValue - curTotalValue);
         int increaseValue = Mathf.CeilToInt(deltaValue * ConfigIntToFloat(randomRate));
         increaseValue = Mathf.Max(increaseValue, Mathf.CeilToInt(deltaValue / 100 + 1));
@@ -439,6 +438,11 @@ public class GameDataValue
     {
         if (exAttr.AttrType != "RoleAttrImpactBaseAttr")
             return 1;
+
+        if (ItemEquip.IsAttrSpToEquip(exAttr))
+        {
+            return ConfigIntToFloat(exAttr.Value);
+        }
 
         int singleValueMax = Mathf.CeilToInt(itemEquip.EquipValue * _ExToBase);
         return (float)exAttr.Value / singleValueMax;
@@ -523,6 +527,12 @@ public class GameDataValue
         new EquipExAttrRandom(RoleAttrEnum.LightingResistan, true, -1, 100),
         new EquipExAttrRandom(RoleAttrEnum.WindResistan, true, -1, 100),
     };
+
+    #endregion
+
+    #region equip set
+
+    
 
     #endregion
 

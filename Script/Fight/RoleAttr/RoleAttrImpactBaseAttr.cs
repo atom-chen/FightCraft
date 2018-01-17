@@ -40,8 +40,8 @@ public class RoleAttrImpactBaseAttr : RoleAttrImpactBase
             case RoleAttrEnum.MoveSpeed:
             case RoleAttrEnum.AttackSpeed:
             case RoleAttrEnum.CriticalHitChance:
-            case RoleAttrEnum.DamageEnhance:
-                var value = GameDataValue.ConfigIntToFloatDex1(attrParams[1]) * 100;
+            case RoleAttrEnum.PhysicDamageEnhance:
+                var value = (attrParams[1]) * 0.01f;
                 valueStr = string.Format("{0:0.00}", value);
                 break;
         }

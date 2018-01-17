@@ -69,6 +69,28 @@ public class ShopData : SaveItemBase
 
     public void SellItem(ItemBase sellItem)
     {
+        if (sellItem is ItemEquip)
+        {
+            ItemEquip itemEquip = sellItem as ItemEquip;
+            if (itemEquip.EquipRefreshCostMatrial > 0)
+            {
+                UIMessageBox.Show(20002, null, null, BtnType.OKBTN);
+                return;
+            }
+        }
+
+        if (sellItem.CommonItemRecord.Quality == ITEM_QUALITY.ORIGIN
+            || sellItem.CommonItemRecord.Quality == ITEM_QUALITY.PURPER)
+        {
+            UIMessageBox.Show(20003, () => { SellItemOK(sellItem); }, null);
+            return;
+        }
+        SellItemOK(sellItem);
+
+    }
+
+    public void SellItemOK(ItemBase sellItem)
+    {
         sellItem.ResetItem();
         PlayerDataPack.Instance.AddGold(1);
         sellItem.SaveClass(true);

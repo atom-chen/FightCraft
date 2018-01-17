@@ -173,6 +173,7 @@ public class EquipRefresh : DataPackBase
         BackBagPack.Instance.DecItem(_RefreshMatDataID, refreshCost._MatCnt);
 
         RandomAttrs.LvUpEquipExAttr(itemEquip);
+        itemEquip.EquipRefreshCostMatrial += refreshCost._MatCnt;
     }
 
     public void EquipRefreshDiamond(ItemEquip itemEquip)
@@ -185,10 +186,12 @@ public class EquipRefresh : DataPackBase
         }
 
         RandomAttrs.LvUpEquipExAttr(itemEquip);
+        itemEquip.EquipRefreshCostMatrial += refreshCost._MatCnt;
     }
 
     public void EquipRefreshFree(ItemEquip itemEquip)
     {
+        var refreshCost = GetEquipRefreshCost(itemEquip);
         if (_LastFreeTimes == 0)
         {
             UIMessageBox.Show(40000, WatchVideoForFreeRefresh, null);
@@ -197,6 +200,7 @@ public class EquipRefresh : DataPackBase
 
         --_LastFreeTimes;
         RandomAttrs.LvUpEquipExAttr(itemEquip);
+        itemEquip.EquipRefreshCostMatrial += refreshCost._MatCnt;
     }
 
     public void WatchVideoForFreeRefresh()
@@ -216,22 +220,97 @@ public class EquipRefresh : DataPackBase
 
     public int GetDestoryMatCnt(ItemEquip itemEquip)
     {
+        int destoryMatCnt = Mathf.CeilToInt(itemEquip.EquipRefreshCostMatrial * 0.8f);
+        destoryMatCnt = Mathf.Max(destoryMatCnt, 1);
         if (itemEquip.EquipQuality == ITEM_QUALITY.PURPER)
         {
-            return 10;
+            destoryMatCnt += 10;
         }
         else if (itemEquip.EquipQuality == ITEM_QUALITY.ORIGIN)
         {
-            return 50;
+            destoryMatCnt += 50;
         }
-        return 0;
+        return destoryMatCnt;
     }
 
     public void DestoryMatCnt(ItemEquip itemEquip)
     {
+        if (itemEquip.CommonItemRecord.Quality == ITEM_QUALITY.ORIGIN
+            || itemEquip.CommonItemRecord.Quality == ITEM_QUALITY.PURPER)
+        {
+            UIMessageBox.Show(20003, () => { DestoryMatCntOk(itemEquip); }, null);
+            return;
+        }
+        DestoryMatCntOk(itemEquip);
+    }
+
+    public void DestoryMatCntOk(ItemEquip itemEquip)
+    {
         int destoryGetCnt = GetDestoryMatCnt(itemEquip);
         itemEquip.ResetItem();
+        itemEquip.SaveClass(true);
         BackBagPack.Instance.AddItem(_RefreshMatDataID, destoryGetCnt);
     }
+    #endregion
+
+    #region equip exchange
+
+    public void ExchangeExAttr(ItemEquip exchangeEquip1, ItemEquip exchangeEquip2)
+    {
+        int idx1 = 0;
+        int idx2 = 0;
+
+        while (idx1 < exchangeEquip1.EquipExAttr.Count && idx2 < exchangeEquip2.EquipExAttr.Count)
+        {
+            if (idx1 == 0 && idx2 == 0)
+            {
+                if (ItemEquip.IsAttrSpToEquip(exchangeEquip1.EquipExAttr[idx1]) && ItemEquip.IsAttrSpToEquip(exchangeEquip2.EquipExAttr[idx2]))
+                {
+                    ExChangeSingleAttr(exchangeEquip1, exchangeEquip1.EquipExAttr[idx1], exchangeEquip2, exchangeEquip2.EquipExAttr[idx2]);
+                    ++idx1;
+                    ++idx2;
+                }
+            }
+
+            if (ItemEquip.IsAttrSpToEquip(exchangeEquip1.EquipExAttr[idx1]) || !ItemEquip.IsAttrBaseAttr(exchangeEquip1.EquipExAttr[idx1]))
+            {
+                ++idx1;
+                continue;
+            }
+
+            if (ItemEquip.IsAttrSpToEquip(exchangeEquip2.EquipExAttr[idx2]) || !ItemEquip.IsAttrBaseAttr(exchangeEquip2.EquipExAttr[idx2]))
+            {
+                ++idx2;
+                continue;
+            }
+
+            ExChangeSingleAttr(exchangeEquip1, exchangeEquip1.EquipExAttr[idx1], exchangeEquip2, exchangeEquip2.EquipExAttr[idx2]);
+            ++idx1;
+            ++idx2;
+        }
+
+        int tempRefreshValue = exchangeEquip1.EquipRefreshCostMatrial;
+        exchangeEquip1.EquipRefreshCostMatrial = exchangeEquip2.EquipRefreshCostMatrial;
+        exchangeEquip2.EquipRefreshCostMatrial = tempRefreshValue;
+
+        exchangeEquip1.BakeExAttr();
+        exchangeEquip2.BakeExAttr();
+    }
+
+    
+
+    private void ExChangeSingleAttr(ItemEquip exchangeEquip1, EquipExAttr exAttr1, ItemEquip exchangeEquip2, EquipExAttr exAttr2)
+    {
+        int idx1 = exchangeEquip1.EquipExAttr.IndexOf(exAttr1);
+        int idx2 = exchangeEquip2.EquipExAttr.IndexOf(exAttr2);
+
+        exchangeEquip1.EquipExAttr.Insert(idx1, exAttr2);
+        exchangeEquip2.EquipExAttr.Insert(idx2, exAttr1);
+
+        exchangeEquip1.EquipExAttr.Remove(exAttr1);
+        exchangeEquip2.EquipExAttr.Remove(exAttr2);
+    }
+
+
     #endregion
 }

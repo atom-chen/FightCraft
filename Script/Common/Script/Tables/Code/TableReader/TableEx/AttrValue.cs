@@ -34,6 +34,10 @@ namespace Tables
             {
                 return RoleAttrImpactBaseAttr.GetExAttrByValue(record, arg);
             }
+            if (record.AttrImpact == "RoleAttrImpactSetAttrByEquip")
+            {
+                return RoleAttrImpactSetAttrByEquip.GetSetAttr(record, arg);
+            }
             else
             {
                 EquipExAttr exAttr = new EquipExAttr(record.AttrImpact, 0, int.Parse(record.Id), arg);

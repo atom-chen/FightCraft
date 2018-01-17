@@ -32,7 +32,9 @@ public class UIEquipTooltips : UIItemTooltips
 
     public UIEquipInfo _UIEquipInfo;
     public UIEquipInfo _CompareEquipInfo;
+    public UIEquipSetInfo _EquipSetInfo;
 
+    private ItemEquip _ShowEquip;
     #endregion
 
     #region 
@@ -43,6 +45,15 @@ public class UIEquipTooltips : UIItemTooltips
         _ShowItem = hash["ItemEquip"] as ItemEquip;
         ToolTipFunc[] funcs = (ToolTipFunc[])hash["ToolTipFun"];
         ShowTips(_ShowItem as ItemEquip);
+        if (_ShowEquip.SpSetRecord != null)
+        {
+            _EquipSetInfo.gameObject.SetActive(true);
+            _EquipSetInfo.ShowTips(_ShowEquip);
+        }
+        else
+        {
+            _EquipSetInfo.gameObject.SetActive(false);
+        }
         ShowCompare();
         ShowFuncs(funcs);
     }
@@ -55,13 +66,26 @@ public class UIEquipTooltips : UIItemTooltips
             return;
         }
         _ShowItem = itemEquip;
+        _ShowEquip = itemEquip;
 
-        _UIEquipInfo.ShowTips(_ShowItem as ItemEquip);
+        _UIEquipInfo.ShowTips(_ShowEquip);
     }
 
     private void ShowCompare()
     {
         HideCompare();
+        if (_ShowEquip == null)
+            return;
+
+        var equipingItem = RoleData.SelectRole.GetEquipItem(_ShowEquip.EquipItemRecord.Slot);
+        if (equipingItem == null || !equipingItem.IsVolid())
+            return;
+
+        if (equipingItem == _ShowEquip)
+            return;
+
+        _CompareEquipInfo.gameObject.SetActive(true);
+        _CompareEquipInfo.ShowTips(equipingItem);
     }
 
     private void HideCompare()

@@ -24,6 +24,7 @@ public class EquipExAttr
 
     public List<int> AttrParams;
 
+    public ITEM_QUALITY AttrQuality = ITEM_QUALITY.BLUE;
 
     public EquipExAttr()
     {
@@ -91,13 +92,21 @@ public class ItemEquip : ItemBase
 
     #region equipData
 
+    private static int MAX_INT_CNT = 4;
     public List<int> DynamicDataInt
     {
         get
         {
             if (_DynamicDataInt == null || _DynamicDataInt.Count == 0)
             {
-                _DynamicDataInt = new List<int>() { 0, 0, 0 };
+                _DynamicDataInt = new List<int>() { 0, 0, 0, 0 };
+            }
+            else if (_DynamicDataInt.Count < MAX_INT_CNT)
+            {
+                for (int i = 0; i < MAX_INT_CNT; ++i)
+                {
+                    _DynamicDataInt.Add(0);
+                }
             }
             return _DynamicDataInt;
         }
@@ -158,6 +167,18 @@ public class ItemEquip : ItemBase
         }
     }
 
+    public int EquipRefreshCostMatrial
+    {
+        get
+        {
+            return DynamicDataInt[3];
+        }
+        set
+        {
+            DynamicDataInt[3] = value;
+        }
+    }
+
     private List<EquipExAttr> _EquipExAttr;
     public List<EquipExAttr> EquipExAttr
     {
@@ -180,11 +201,21 @@ public class ItemEquip : ItemBase
             }
             return _EquipExAttr;
         }
+        set
+        {
+            _EquipExAttr = value;
+            BakeExAttr();
+        }
     }
 
     public string GetEquipNameWithColor()
     {
-        return CommonDefine.GetQualityColorStr(EquipQuality) + EquipItemRecord.CommonItem.Name + "</color>";
+        string equipName = EquipItemRecord.CommonItem.Name;
+        if (SpSetRecord != null)
+        {
+            equipName = SpSetRecord.Name + equipName;
+        }
+        return CommonDefine.GetQualityColorStr(EquipQuality) + equipName + "</color>";
     }
 
     public string GetBaseAttrStr()
@@ -286,6 +317,7 @@ public class ItemEquip : ItemBase
         }
         SaveClass(true);
     }
+
 
     #endregion
 
@@ -562,7 +594,7 @@ public class ItemEquip : ItemBase
     {
         if (_SpSetRecord != null)
         {
-            EquipSet.Instance.RemoveActingSpAttr(_SpSetRecord);
+            EquipSet.Instance.RemoveActingSpAttr(_SpSetRecord, EquipValue);
         }
         _SpSetRecord = null;
         if (EquipExAttr.Count < _ActSetLeastExCnt)
@@ -574,14 +606,24 @@ public class ItemEquip : ItemBase
         List<EquipExAttr> randomAttrs = new List<global::EquipExAttr>();
         foreach (var exAttr in EquipExAttr)
         {
+            if (exAttr.AttrType != "RoleAttrImpactBaseAttr")
+            {
+                exAttr.AttrQuality = ITEM_QUALITY.ORIGIN;
+                continue;
+            }
+
             var valuePersent = GameDataValue.GetExAttrPersent(this, exAttr);
             if (valuePersent > _ActSetValPersent)
             {
+                exAttr.AttrQuality = ITEM_QUALITY.ORIGIN;
                 ++valAttrCnt;
             }
+            else
+            {
+                exAttr.AttrQuality = ITEM_QUALITY.BLUE;
+            }
 
-            if (exAttr.AttrType == "RoleAttrImpactBaseAttr"
-                && (exAttr.AttrParams[0] != (int)RoleAttrEnum.AttackPersent
+            if ((exAttr.AttrParams[0] != (int)RoleAttrEnum.AttackPersent
                 && exAttr.AttrParams[0] != (int)RoleAttrEnum.HPMaxPersent
                 && exAttr.AttrParams[0] != (int)RoleAttrEnum.MoveSpeed))
             {
@@ -627,11 +669,32 @@ public class ItemEquip : ItemBase
         {
             _SpSetRecord = TableReader.EquipSpAttr.GetRecord(_DefauletSpSetID);
         }
-        EquipSet.Instance.ActingSpAttr(_SpSetRecord);
+        EquipSet.Instance.ActingSpAttr(_SpSetRecord, EquipValue);
         Debug.Log("SPSet:" + _SpSetRecord.Id);
     }
 
+    public static bool IsAttrSpToEquip(EquipExAttr exAttr)
+    {
+        if (exAttr.AttrType != "RoleAttrImpactBaseAttr")
+            return false;
 
+        if (((RoleAttrEnum)exAttr.AttrParams[0] == RoleAttrEnum.AttackPersent
+                        || (RoleAttrEnum)exAttr.AttrParams[0] == RoleAttrEnum.DefensePersent
+                        || (RoleAttrEnum)exAttr.AttrParams[0] == RoleAttrEnum.HPMaxPersent
+                        || (RoleAttrEnum)exAttr.AttrParams[0] == RoleAttrEnum.MoveSpeed))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public static bool IsAttrBaseAttr(EquipExAttr exAttr)
+    {
+        if (exAttr.AttrType != "RoleAttrImpactBaseAttr")
+            return false;
+
+        return true;
+    }
     #endregion
 }
 

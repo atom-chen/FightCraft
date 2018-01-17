@@ -86,9 +86,9 @@ public class UIRoleAttr : UIBase
         string criticalHitDamageStr = criticalHitDamage + "%";
         pair.Add(new AttrPair(RoleAttrEnum.CriticalHitDamge.ToString(), criticalHitDamageStr));
 
-        float damageEnhance = RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.DamageEnhance) / 100.0f;
+        float damageEnhance = RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.PhysicDamageEnhance) / 100.0f;
         string damageEnhanceStr = damageEnhance + "%";
-        pair.Add(new AttrPair(RoleAttrEnum.DamageEnhance.ToString(), damageEnhanceStr));
+        pair.Add(new AttrPair(RoleAttrEnum.PhysicDamageEnhance.ToString(), damageEnhanceStr));
 
         _AttrItemContainer.InitContentItem(pair);
     }

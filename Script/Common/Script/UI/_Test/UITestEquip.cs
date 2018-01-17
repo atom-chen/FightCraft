@@ -3,14 +3,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
- 
 using UnityEngine.EventSystems;
 using System;
 using Tables;
-
- 
-
-
 
 public class UITestEquip : UIBase
 {
@@ -102,5 +97,22 @@ public class UITestEquip : UIBase
 
     #endregion
 
+    #region test res
+
+    public void OnBtnRes()
+    {
+        BackBagPack.Instance.AddItem("70100", 9999);
+        BackBagPack.Instance.AddItem("70101", 9999);
+        BackBagPack.Instance.AddItem("70102", 9999);
+        BackBagPack.Instance.AddItem("70103", 9999);
+        BackBagPack.Instance.AddItem("70104", 9999);
+        BackBagPack.Instance.AddItem("70105", 9999);
+        BackBagPack.Instance.AddItem("20000", 9999);
+
+        PlayerDataPack.Instance.AddGold(9999999);
+        PlayerDataPack.Instance.AddDiamond(9999999);
+    }
+
+    #endregion
 }
 

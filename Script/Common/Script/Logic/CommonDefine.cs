@@ -22,7 +22,12 @@ public class CommonDefine
         return "<color=#ffffff>";
     }
 
-    public static string GetEnableColorStr(int isEnable)
+    public static string GetMigicAttrColor()
+    {
+        return "<color=#3ba0ff>";
+    }
+
+    public static string GetEnableRedStr(int isEnable)
     {
         switch (isEnable)
         {
@@ -30,6 +35,18 @@ public class CommonDefine
                 return "<color=#00ff00>";
             case 0:
                 return "<color=#ff0000>";
+        }
+        return "<color=#ffffff>";
+    }
+
+    public static string GetEnableGrayStr(int isEnable)
+    {
+        switch (isEnable)
+        {
+            case 1:
+                return "<color=#00ff00>";
+            case 0:
+                return "<color=#77777777>";
         }
         return "<color=#ffffff>";
     }

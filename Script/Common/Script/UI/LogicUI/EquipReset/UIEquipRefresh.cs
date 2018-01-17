@@ -107,7 +107,16 @@ public class UIEquipRefresh : UIBase
             _EquipTag.text = "";
         }
 
-        UpdateRefreshPanel();
+
+
+        if (_TagPanel.GetShowingPage() == 0)
+        {
+            UpdateRefreshPanel();
+        }
+        else if(_TagPanel.GetShowingPage() == 2)
+        {
+            InitExchangeEquip();
+        }
     }
 
     private void ShowEquipInfo(ItemEquip equipItem, ItemEquip orgEquip)
@@ -125,6 +134,9 @@ public class UIEquipRefresh : UIBase
                 break;
             case 1:
                 UpdateEquipPack();
+                break;
+            case 2:
+                InitExchangeEquip();
                 break;
         }
     }
@@ -235,7 +247,7 @@ public class UIEquipRefresh : UIBase
         List<ItemEquip> destoryEquipList = new List<ItemEquip>();
         foreach (var itemEquip in BackBagPack.Instance.PageEquips)
         {
-            if (itemEquip.EquipQuality == ITEM_QUALITY.PURPER || itemEquip.EquipQuality == ITEM_QUALITY.ORIGIN)
+            if (itemEquip.EquipQuality == ITEM_QUALITY.PURPER || itemEquip.EquipQuality == ITEM_QUALITY.ORIGIN || itemEquip.EquipRefreshCostMatrial > 0)
             {
                 destoryEquipList.Add(itemEquip);
             }
@@ -277,5 +289,105 @@ public class UIEquipRefresh : UIBase
     }
     #endregion
 
+    #region exAttrExchange
+
+    public UIContainerSelect _ExchangeEquipContainer;
+    public Text _ExchangeEquipTag;
+    public UIEquipInfoRefresh _ExchangeEuipInfo;
+    public Text _ExchangeCost;
+
+    private ItemEquip _SelectedExchangeEuqip;
+
+    private void InitExchangeEquip()
+    {
+        List<ItemEquip> equipList = new List<ItemEquip>();
+        foreach (var equipItem in PlayerDataPack.Instance._SelectedRole._EquipList)
+        {
+            if (equipItem.IsVolid() 
+                && equipItem.EquipItemRecord.Slot == _SelectedEuqip.EquipItemRecord.Slot
+                && equipItem != _SelectedEuqip)
+            {
+                equipList.Add(equipItem);
+            }
+        }
+
+        List<ItemEquip> equipInBackPack = new List<ItemEquip>();
+        foreach (var equipItem in BackBagPack.Instance.PageEquips)
+        {
+            if (equipItem.IsVolid() 
+                && equipItem.EquipItemRecord.Slot == _SelectedEuqip.EquipItemRecord.Slot
+                && equipItem != _SelectedEuqip)
+            {
+                equipInBackPack.Add(equipItem);
+            }
+        }
+        equipInBackPack.Sort((equipA, equipB) =>
+        {
+            if (equipA.EquipQuality > equipB.EquipQuality)
+                return 1;
+            return -1;
+        });
+        equipList.AddRange(equipInBackPack);
+
+
+        if (equipList.Count > 0)
+        {
+            List<ItemEquip> selectedEquip = new List<ItemEquip>();
+            selectedEquip.Add(equipList[0]);
+            _ExchangeEquipContainer.InitSelectContent(equipList, selectedEquip, OnExchangeSelectedEquip);
+        }
+        else
+        {
+            _ExchangeEquipContainer.InitSelectContent(equipList, null, OnExchangeSelectedEquip);
+            OnExchangeSelectedEquip(null);
+        }
+    }
+
+    private void OnExchangeSelectedEquip(object equipObj)
+    {
+        ItemEquip equipItem = equipObj as ItemEquip;
+        if (equipItem == null)
+        {
+            ShowExchangeEquipInfo(null, null);
+            return;
+        }
+
+        _SelectedExchangeEuqip = equipItem;
+        ShowExchangeEquipInfo(equipItem, null);
+
+        if (PlayerDataPack.Instance._SelectedRole._EquipList.Contains(equipItem))
+        {
+            _ExchangeEquipTag.text = StrDictionary.GetFormatStr(10013);
+        }
+        else
+        {
+            _ExchangeEquipTag.text = "";
+        }
+        _ExchangeCost.text = (_SelectedExchangeEuqip.EquipLevel * _SelectedEuqip.EquipLevel).ToString();
+    }
+
+    private void ShowExchangeEquipInfo(ItemEquip equipItem, ItemEquip orgEquip)
+    {
+        _ExchangeEuipInfo.ShowTips(equipItem, orgEquip);
+    }
+
+    public void OnBtnExchange()
+    {
+        if (_SelectedEuqip == null || _SelectedExchangeEuqip == null)
+            return;
+
+        if (_SelectedEuqip == _SelectedExchangeEuqip)
+        {
+            UIMessageTip.ShowMessageTip(40002);
+            return;
+        }
+
+        EquipRefresh.Instance.ExchangeExAttr(_SelectedEuqip, _SelectedExchangeEuqip);
+
+        ShowExchangeEquipInfo(_SelectedExchangeEuqip, null);
+        ShowEquipInfo(_SelectedEuqip, null);
+    }
+
+    #endregion
 }
 

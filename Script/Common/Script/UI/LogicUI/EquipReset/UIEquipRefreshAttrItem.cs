@@ -10,6 +10,7 @@ public class RefreshAttr
 {
     public EquipExAttr _ShowAttr;
     public int _OrgValue;
+    public bool _SetAttr;
 }
 
 public class UIEquipRefreshAttrItem : UIItemBase
@@ -36,8 +37,15 @@ public class UIEquipRefreshAttrItem : UIItemBase
         var showItem = (RefreshAttr)hash["InitObj"];
         _ItemEquip = (ItemEquip)hash["ItemEquip"];
 
-        _OrgValue = showItem._OrgValue;
-        ShowAttr(showItem._ShowAttr);
+        if (showItem._ShowAttr != null)
+        {
+            _OrgValue = showItem._OrgValue;
+            ShowAttr(showItem._ShowAttr);
+        }
+        else if (showItem._SetAttr)
+        {
+            ShowSetAttr();
+        }
     }
 
     public override void Refresh()
@@ -75,12 +83,36 @@ public class UIEquipRefreshAttrItem : UIItemBase
         _Value.text = _ShowAttr.Value.ToString();
         if (_ItemEquip != null)
         {
-            attrStr = CommonDefine.GetQualityColorStr(_ItemEquip.EquipQuality) + attrStr + "</color>";
+            attrStr = CommonDefine.GetQualityColorStr(attr.AttrQuality) + attrStr + "</color>";
         }
         _AttrText.text = attrStr;
         SetValueDelta();
     }
 
+    public void ShowSetAttr()
+    {
+        if (_ItemEquip == null)
+        {
+            ClearItem();
+            return;
+        }
 
+        var spAttrInfo = EquipSet.Instance.GetSetInfo(_ItemEquip.SpSetRecord);
+        if (spAttrInfo == null)
+        {
+            ClearItem();
+            return;
+        }
+
+        string setCnt = string.Format(" ({0}/5)", spAttrInfo.SetEquipCnt);
+        _AttrText.text = CommonDefine.GetQualityColorStr(ITEM_QUALITY.ORIGIN) + _ItemEquip.SpSetRecord.Name + setCnt + "</color>";
+    }
+
+    private void ClearItem()
+    {
+        _Value.text = "";
+        _AddValue.text = "";
+        _AttrText.text = "";
+    }
 }
 
