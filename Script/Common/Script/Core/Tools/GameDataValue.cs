@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Tables;
 
 public class GameDataValue
 {
@@ -287,6 +288,8 @@ public class GameDataValue
         List<EquipExAttr> exAttrs = new List<EquipExAttr>();
 
         int exAttrCnt = 0;
+        if (quality == ITEM_QUALITY.WHITE)
+            return new List<RoleAttrEnum>();
 
         if (fixNum == 0)
         {
@@ -579,5 +582,241 @@ public class GameDataValue
     #endregion
     #endregion
 
+    #region product & consume
 
+    #region exp
+
+    public static int _NormalExpBase = 50;
+    public static int _EliteExpBase = 250;
+    public static int _BossExpBase = 1250;
+
+    public static int _LevelExpBase = 10000;
+    public static float _Level30ExpRate = 0.1f;
+    public static float _Level60ExpRate = 0.11f;
+    public static float _Level90ExpRate = 0.12f;
+    public static float _Level100ExpRate = 0.15f;
+    public static float _Level999ExpRate = 0.2f;
+
+    public static int GetLvUpExp(int playerLv, int attrLv)
+    {
+        int realLv = playerLv + attrLv;
+        int levelExp = 0;
+        if (realLv <= 30)
+        {
+            levelExp = Mathf.CeilToInt((1 + _Level30ExpRate * realLv) * _LevelExpBase);
+        }
+        else if (realLv <= 60)
+        {
+            levelExp = Mathf.CeilToInt((1 + _Level60ExpRate * realLv) * _LevelExpBase);
+        }
+        else if (realLv <= 90)
+        {
+            levelExp = Mathf.CeilToInt((1 + _Level90ExpRate * realLv) * _LevelExpBase);
+        }
+        else if (realLv <= 100)
+        {
+            levelExp = Mathf.CeilToInt((1 + _Level100ExpRate * realLv) * _LevelExpBase);
+        }
+        else
+        {
+            levelExp = Mathf.CeilToInt((1 + _Level999ExpRate * realLv) * _LevelExpBase);
+        }
+
+        return levelExp;
+    }
+
+    public static int GetMonsterExp(MotionType motionType, int level, int playerLv)
+    {
+        int levelDelta = Mathf.Clamp(playerLv - level,0, 10);
+        int monExpLevel = Mathf.Clamp(level, 1, 100);
+        int expBase = 0;
+        switch (motionType)
+        {
+            case MotionType.Normal:
+                expBase = _NormalExpBase;
+                break;
+            case MotionType.Elite:
+                expBase = _EliteExpBase;
+                break;
+            case MotionType.Hero:
+                expBase = _BossExpBase;
+                break;
+        }
+        int levelExp = 0;
+        if (monExpLevel <= 30)
+        {
+            levelExp = Mathf.CeilToInt((1 + _Level30ExpRate * monExpLevel) * expBase);
+        }
+        else if (monExpLevel <= 60)
+        {
+            levelExp = Mathf.CeilToInt((1 + _Level60ExpRate * monExpLevel) * expBase);
+        }
+        else if (monExpLevel <= 90)
+        {
+            levelExp = Mathf.CeilToInt((1 + _Level90ExpRate * monExpLevel) * expBase);
+        }
+        else if (monExpLevel <= 100)
+        {
+            levelExp = Mathf.CeilToInt((1 + _Level100ExpRate * monExpLevel) * expBase);
+        }
+        else
+        {
+            levelExp = Mathf.CeilToInt((1 + _Level999ExpRate * monExpLevel) * expBase);
+        }
+
+        levelExp = Mathf.CeilToInt(levelExp * (1 + levelDelta * 0.1f));
+        return levelExp;
+    }
+
+    #endregion
+
+    #region equip
+
+    private static int _EqiupLvWeapon = 1;
+    private static int _EqiupLvTorso = 2;
+    private static int _EqiupLvShoes = 3;
+    private static int _EqiupLvRing = 4;
+    private static int _EqiupLvAmulate = 4;
+
+    private static List<ITEM_QUALITY> GetDropQualitys(MotionType motionType, MonsterBaseRecord monsterRecord, int level, int dropActType = 1)
+    {
+        List<ITEM_QUALITY> dropEquipQualitys = new List<ITEM_QUALITY>();
+        int dropCnt = 0;
+        int dropQuality = 0;
+        switch (motionType)
+        {
+            case MotionType.Normal:
+                dropCnt = GameRandom.GetRandomLevel(95, 5);
+                for (int i = 0; i < dropCnt; ++i)
+                {
+                    dropQuality = GameRandom.GetRandomLevel(70, 30);
+                    dropEquipQualitys.Add((ITEM_QUALITY)dropQuality);
+                }
+                
+                break;
+            case MotionType.Elite:
+                dropCnt = GameRandom.GetRandomLevel(10, 70, 20);
+                for (int i = 0; i < dropCnt; ++i)
+                {
+                    dropQuality = GameRandom.GetRandomLevel(30, 65, 5);
+                    dropEquipQualitys.Add((ITEM_QUALITY)dropQuality);
+                }
+
+                break;
+            case MotionType.Hero:
+                if (level <= 30)
+                    dropCnt = GameRandom.GetRandomLevel(0, 80, 10, 10);
+                else if (level <= 60)
+                    dropCnt = GameRandom.GetRandomLevel(0, 50, 30, 10);
+                else
+                    dropCnt = GameRandom.GetRandomLevel(0, 50, 30, 10);
+                bool isOringe = false;
+                for (int i = 0; i < dropCnt; ++i)
+                {
+                    if(level <= 30)
+                        dropQuality = GameRandom.GetRandomLevel(0, 60, 30, 10);
+                    else
+                        dropQuality = GameRandom.GetRandomLevel(0, 60, 35, 5);
+                    if (dropQuality == (int)ITEM_QUALITY.ORIGIN)
+                    {
+                        if (!isOringe)
+                        {
+                            isOringe = true;
+                        }
+                        else
+                        {
+                            --dropQuality;
+                        }
+                    }
+                    dropEquipQualitys.Add((ITEM_QUALITY)dropQuality);
+                }
+
+                break;
+        }
+        return dropEquipQualitys;
+    }
+
+    private static int GetEquipLv(EQUIP_SLOT equipSlot, int dropLevel)
+    {
+        if (dropLevel > _MaxLv)
+            return _MaxLv;
+        var levelGroup = dropLevel / 5;
+        var baseLevel = levelGroup * 5;
+        switch (equipSlot)
+        {
+            case EQUIP_SLOT.WEAPON:
+                return baseLevel + _EqiupLvWeapon;
+            case EQUIP_SLOT.TORSO:
+                return baseLevel + _EqiupLvTorso;
+            case EQUIP_SLOT.LEGS:
+                return baseLevel + _EqiupLvShoes;
+            case EQUIP_SLOT.RING:
+                return baseLevel + _EqiupLvRing;
+            case EQUIP_SLOT.AMULET:
+                return baseLevel + _EqiupLvAmulate;
+        }
+        return dropLevel;
+    }
+
+    public static List<ItemEquip> GetMonsterDropEquipNormal(MotionType motionType, MonsterBaseRecord monsterRecord, int level, int dropActType = 1)
+    {
+        List<ItemEquip> dropEquipList = new List<ItemEquip>();
+        var dropEquipQualitys = GetDropQualitys(motionType, monsterRecord, level, dropActType);
+        if (dropEquipQualitys.Count == 0)
+            return dropEquipList;
+        
+        for (int i = 0; i < dropEquipQualitys.Count; ++i)
+        {
+            if (dropEquipQualitys[i] == ITEM_QUALITY.ORIGIN)
+            {
+                if (monsterRecord.SpDrops.Count == 0)
+                    continue;
+
+                int dropIdx = Random.Range(0, monsterRecord.ValidSpDrops.Count);
+                var dropItem = monsterRecord.ValidSpDrops[dropIdx];
+                var dropEquipTab = TableReader.EquipItem.GetRecord(dropItem.Id);
+                var equipLevel = GetEquipLv(dropEquipTab.Slot, level);
+                var equipValue = Mathf.CeilToInt(equipLevel * _ValuePerLevel);
+                var dropEquip = ItemEquip.CreateEquip(level, dropEquipQualitys[i], equipValue, int.Parse(dropItem.Id), (int)dropEquipTab.Slot);
+                dropEquipList.Add(dropEquip);
+            }
+            else
+            {
+                var equipSlot = GetRandomItemSlot(dropEquipQualitys[i]);
+                var equipLevel = GetEquipLv(equipSlot, level);
+                var equipValue = Mathf.CeilToInt( equipLevel * _ValuePerLevel);
+                var dropEquip = ItemEquip.CreateEquip(level, dropEquipQualitys[i], equipValue, -1, (int)equipSlot);
+                dropEquipList.Add(dropEquip);
+            }
+        }
+
+        return dropEquipList;
+    }
+
+    public static EQUIP_SLOT GetRandomItemSlot(ITEM_QUALITY itemQuality)
+    {
+        int slotTypeCnt = (int)EQUIP_SLOT.RING + 1;
+        if (itemQuality == ITEM_QUALITY.WHITE)
+        {
+            slotTypeCnt = (int)EQUIP_SLOT.LEGS + 1;
+        }
+        int randomSlot = UnityEngine.Random.Range(0, slotTypeCnt);
+        return (EQUIP_SLOT)randomSlot;
+    }
+
+
+    #endregion
+
+    #region equip material
+
+    //public static int _EquipMatDropBase = 100;
+
+    //public int GetEquipMatDropCnt(MotionType motionType, MonsterBaseRecord monsterRecord, int level, int playerLevel)
+    //{
+
+    //}
+
+    #endregion
+
+    #endregion
 }

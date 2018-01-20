@@ -481,7 +481,7 @@ public class ItemEquip : ItemBase
 
             if (equipSlotIdx < 0)
             {
-                var equipSlot = GetRandomItemSlot();
+                var equipSlot = GameDataValue.GetRandomItemSlot(quality);
                 baseEquip = GetRandomItem(equipSlot, level);
             }
             else
@@ -566,12 +566,7 @@ public class ItemEquip : ItemBase
         return null;
     }
 
-    public static EQUIP_SLOT GetRandomItemSlot()
-    {
-        int slotTypeCnt = Enum.GetValues(typeof(EQUIP_SLOT)).Length;
-        int randomSlot = UnityEngine.Random.Range(0, slotTypeCnt);
-        return (EQUIP_SLOT)randomSlot;
-    }
+    
 
     #endregion
 

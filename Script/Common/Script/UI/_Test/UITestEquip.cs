@@ -114,5 +114,52 @@ public class UITestEquip : UIBase
     }
 
     #endregion
+
+    #region test exp
+
+    public InputField _TestExp;
+
+    public void OnBtnTestExp()
+    {
+        int level = int.Parse(_TestExp.text);
+        //int monLevel = Mathf.Min(100, level);
+        //var levelExp = GameDataValue.GetLvUpExp(level, 0);
+        //var stageExp = 0;
+        //for (int i = 0; i < 100; ++i)
+        //{
+        //    stageExp += GameDataValue.GetMonsterExp(MotionType.Normal, monLevel, monLevel);
+        //}
+        //for (int i = 0; i < 15; ++i)
+        //{
+        //    stageExp += GameDataValue.GetMonsterExp(MotionType.Elite, monLevel, monLevel);
+        //}
+        //stageExp += GameDataValue.GetMonsterExp(MotionType.Hero, monLevel, monLevel);
+        //Debug.Log("LvUpExp:" + levelExp + ", StageExp:" + stageExp);
+
+        var bossRecord = TableReader.MonsterBase.GetRecord("2");
+        //for (int i = 0; i < 100; ++i)
+        //{
+        //    var equipList = GameDataValue.GetMonsterDropEquipNormal(MotionType.Normal, bossRecord, level);
+        //    foreach (var equip in equipList)
+        //    {
+        //        var newEquip = BackBagPack.Instance.AddNewEquip(equip);
+        //    }
+        //}
+        //for (int i = 0; i < 15; ++i)
+        //{
+        //    var equipList2 = GameDataValue.GetMonsterDropEquipNormal(MotionType.Elite, bossRecord, level);
+        //    foreach (var equip in equipList2)
+        //    {
+        //        var newEquip = BackBagPack.Instance.AddNewEquip(equip);
+        //    }
+        //}
+        var equipList3 = GameDataValue.GetMonsterDropEquipNormal(MotionType.Hero, bossRecord, level);
+        foreach (var equip in equipList3)
+        {
+            var newEquip = BackBagPack.Instance.AddNewEquip(equip);
+        }
+    }
+
+    #endregion
 }
 
