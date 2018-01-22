@@ -10,6 +10,7 @@ public enum MotionType
     MainChar,
     Hero,
     Elite,
+    Special,
     Normal,
     
 }

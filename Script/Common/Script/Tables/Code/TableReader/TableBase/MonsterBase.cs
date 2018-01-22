@@ -16,6 +16,7 @@ namespace Tables
         public string Desc { get; set; }
         public string MotionPath { get; set; }
         public string ModelPath { get; set; }
+        public int ElementType { get; set; }
         public string MotionType { get; set; }
         public List<int> BaseAttr { get; set; }
         public List<CommonItemRecord> SpDrops { get; set; }
@@ -38,6 +39,7 @@ namespace Tables
             recordStrList.Add(TableWriteBase.GetWriteStr(Desc));
             recordStrList.Add(TableWriteBase.GetWriteStr(MotionPath));
             recordStrList.Add(TableWriteBase.GetWriteStr(ModelPath));
+            recordStrList.Add(TableWriteBase.GetWriteStr(ElementType));
             recordStrList.Add(TableWriteBase.GetWriteStr(MotionType));
             foreach (var testTableItem in BaseAttr)
             {
@@ -121,18 +123,11 @@ namespace Tables
                 pair.Value.Desc = TableReadBase.ParseString(pair.Value.ValueStr[2]);
                 pair.Value.MotionPath = TableReadBase.ParseString(pair.Value.ValueStr[3]);
                 pair.Value.ModelPath = TableReadBase.ParseString(pair.Value.ValueStr[4]);
-                pair.Value.MotionType = TableReadBase.ParseString(pair.Value.ValueStr[5]);
-                pair.Value.BaseAttr.Add(TableReadBase.ParseInt(pair.Value.ValueStr[6]));
+                pair.Value.ElementType = TableReadBase.ParseInt(pair.Value.ValueStr[5]);
+                pair.Value.MotionType = TableReadBase.ParseString(pair.Value.ValueStr[6]);
                 pair.Value.BaseAttr.Add(TableReadBase.ParseInt(pair.Value.ValueStr[7]));
                 pair.Value.BaseAttr.Add(TableReadBase.ParseInt(pair.Value.ValueStr[8]));
-                if (!string.IsNullOrEmpty(pair.Value.ValueStr[9]))
-                {
-                    pair.Value.SpDrops.Add( TableReader.CommonItem.GetRecord(pair.Value.ValueStr[9]));
-                }
-                else
-                {
-                    pair.Value.SpDrops.Add(null);
-                }
+                pair.Value.BaseAttr.Add(TableReadBase.ParseInt(pair.Value.ValueStr[9]));
                 if (!string.IsNullOrEmpty(pair.Value.ValueStr[10]))
                 {
                     pair.Value.SpDrops.Add( TableReader.CommonItem.GetRecord(pair.Value.ValueStr[10]));
@@ -168,6 +163,14 @@ namespace Tables
                 if (!string.IsNullOrEmpty(pair.Value.ValueStr[14]))
                 {
                     pair.Value.SpDrops.Add( TableReader.CommonItem.GetRecord(pair.Value.ValueStr[14]));
+                }
+                else
+                {
+                    pair.Value.SpDrops.Add(null);
+                }
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[15]))
+                {
+                    pair.Value.SpDrops.Add( TableReader.CommonItem.GetRecord(pair.Value.ValueStr[15]));
                 }
                 else
                 {

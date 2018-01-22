@@ -74,7 +74,8 @@ public class FightSceneLogicSimple : FightSceneLogicBase
     private void Step0MotionDie(MotionManager motion)
     {
         if (motion.RoleAttrManager.MotionType == MotionType.Elite
-                || motion.RoleAttrManager.MotionType == MotionType.Normal)
+                || motion.RoleAttrManager.MotionType == MotionType.Normal
+                || motion.RoleAttrManager.MotionType == MotionType.Special)
         {
             ++_DeadEnemyCnt;
             --_CurEnemyCnt;

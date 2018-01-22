@@ -171,7 +171,7 @@ public class GemData : SaveItemBase
     [SaveField(2)]
     public List<ItemGem> _GemContainer;
 
-    public static List<string> _GemMaterialDataIDs = new List<string>() { "70100", "70101", "70102", "70103", "70104" };
+    public static List<string> _GemMaterialDataIDs = new List<string>() { "70100", "70101", "70102", "70103" };
 
     private bool InitGemContainer()
     {

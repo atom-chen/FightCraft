@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 using UnityEngine.EventSystems;
 using System;
@@ -137,6 +138,7 @@ public class UITestEquip : UIBase
         //Debug.Log("LvUpExp:" + levelExp + ", StageExp:" + stageExp);
 
         var bossRecord = TableReader.MonsterBase.GetRecord("2");
+        var normalRecord = TableReader.MonsterBase.GetRecord("21");
         //for (int i = 0; i < 100; ++i)
         //{
         //    var equipList = GameDataValue.GetMonsterDropEquipNormal(MotionType.Normal, bossRecord, level);
@@ -153,10 +155,57 @@ public class UITestEquip : UIBase
         //        var newEquip = BackBagPack.Instance.AddNewEquip(equip);
         //    }
         //}
-        var equipList3 = GameDataValue.GetMonsterDropEquipNormal(MotionType.Hero, bossRecord, level);
-        foreach (var equip in equipList3)
+        //var equipList3 = GameDataValue.GetMonsterDropEquipNormal(MotionType.Hero, bossRecord, level);
+        //foreach (var equip in equipList3)
+        //{
+        //    var newEquip = BackBagPack.Instance.AddNewEquip(equip);
+        //}
+
+        int dropMatCnt = 0;
+        for (int i = 0; i < 100; ++i)
         {
-            var newEquip = BackBagPack.Instance.AddNewEquip(equip);
+            dropMatCnt += GameDataValue.GetEquipMatDropCnt(MotionType.Normal, bossRecord, level);
+        }
+        for (int i = 0; i < 15; ++i)
+        {
+            dropMatCnt += GameDataValue.GetEquipMatDropCnt(MotionType.Elite, bossRecord, level);
+        }
+        dropMatCnt += GameDataValue.GetEquipMatDropCnt(MotionType.Special, bossRecord, level);
+        dropMatCnt += GameDataValue.GetEquipMatDropCnt(MotionType.Hero, bossRecord, level);
+        Debug.Log("DropMatCnt:" + dropMatCnt);
+
+        Dictionary<string, int> _DropGemMats = new Dictionary<string, int>();
+        for (int i = 0; i < 100; ++i)
+        {
+            var gemType = GameDataValue.GetGemMatDropItemID(normalRecord);
+            var gemCnt = GameDataValue.GetGemMatDropCnt(MotionType.Normal, bossRecord, level);
+            if (!_DropGemMats.ContainsKey(gemType))
+            {
+                _DropGemMats.Add(gemType, 0);
+            }
+            _DropGemMats[gemType] += gemCnt;
+        }
+        for (int i = 0; i < 15; ++i)
+        {
+            var gemType = GameDataValue.GetGemMatDropItemID(normalRecord);
+            var gemCnt = GameDataValue.GetGemMatDropCnt(MotionType.Elite, bossRecord, level);
+            if (!_DropGemMats.ContainsKey(gemType))
+            {
+                _DropGemMats.Add(gemType, 0);
+            }
+            _DropGemMats[gemType] += gemCnt;
+        }
+        var gemTypeBoss = GameDataValue.GetGemMatDropItemID(normalRecord);
+        var gemCntBoss = GameDataValue.GetGemMatDropCnt(MotionType.Hero, bossRecord, level);
+        if (!_DropGemMats.ContainsKey(gemTypeBoss))
+        {
+            _DropGemMats.Add(gemTypeBoss, 0);
+        }
+        _DropGemMats[gemTypeBoss] += gemCntBoss;
+
+        foreach (var dropGem in _DropGemMats)
+        {
+            Debug.Log("DropGem:" + dropGem.Key + "," + dropGem.Value);
         }
     }
 
