@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine.SceneManagement;
+using Tables;
 
 public class UILoadingScene : UIBase
 {
@@ -16,6 +17,13 @@ public class UILoadingScene : UIBase
         GameCore.Instance.UIManager.ShowUI("SystemUI/UILoadingScene", UILayer.TopUI, hash);
     }
 
+    public static void ShowAsyn(StageInfoRecord stage)
+    {
+        Hashtable hash = new Hashtable();
+        hash.Add("StageInfo", stage);
+        GameCore.Instance.UIManager.ShowUI("SystemUI/UILoadingScene", UILayer.TopUI, hash);
+    }
+
     #endregion
 
     #region 
@@ -23,8 +31,9 @@ public class UILoadingScene : UIBase
     public RawImage _BG;
     public Slider _LoadProcess;
 
-    private AsyncOperation _LoadSceneOperation;
+    private List<AsyncOperation> _LoadSceneOperation = new List<AsyncOperation>();
     private string _LoadSceneName;
+    private StageInfoRecord _LoadStageInfo;
 
     private bool _IsFinishLoading;
 
@@ -38,9 +47,23 @@ public class UILoadingScene : UIBase
     {
         base.Show(hash);
 
-        _LoadSceneName = (string)hash["SceneName"];
+        _LoadSceneName = "";
+        _LoadStageInfo = null;
+        _LoadSceneOperation.Clear();
 
-        _LoadSceneOperation = SceneManager.LoadSceneAsync(_LoadSceneName);
+        if (hash.ContainsKey("SceneName"))
+        {
+            _LoadSceneName = (string)hash["SceneName"];
+            var asyncOpt = SceneManager.LoadSceneAsync(_LoadSceneName);
+            _LoadSceneOperation.Add(asyncOpt);
+        }
+        else if (hash.ContainsKey("StageInfo"))
+        {
+            _LoadStageInfo = (StageInfoRecord)hash["StageInfo"];
+            var asyncOpt = SceneManager.LoadSceneAsync(_LoadStageInfo.ScenePath[0]);
+            _LoadSceneOperation.Add(asyncOpt);
+        }
+        
 
         ShowBG();
         _IsFinishLoading = false;
@@ -54,29 +77,56 @@ public class UILoadingScene : UIBase
 
         transform.SetSiblingIndex(10000);
 
-        float processValue = (Time.time - _ProcessStartTime) / MAX_PROCESS_TIME;
-        if (processValue < 0.85)
+        if (_LoadStageInfo == null)
         {
-            processValue = Mathf.Max(_LoadSceneOperation.progress, processValue);
+            float processValue = _LoadSceneOperation[0].progress;
+            _LoadProcess.value = processValue;
+            if (_LoadSceneOperation[0] == null || _LoadSceneOperation[0].isDone)
+            {
+                _IsFinishLoading = true;
+                LogicManager.Instance.StartLogic();
+                base.Destory();
+            }
         }
         else
         {
-            processValue = _LoadSceneOperation.progress;
-        }
-        _LoadProcess.value = processValue;
-        if (_LoadSceneOperation == null || _LoadSceneOperation.isDone)
-        {
-            _IsFinishLoading = true;
-            if (_LoadSceneName == GameDefine.GAMELOGIC_SCENE_NAME)
+            if (_LoadSceneOperation[0] == null || _LoadSceneOperation[0].isDone)
             {
-                LogicManager.Instance.StartLogic();
-                //base.Destory(0.2f);
+                if (_LoadSceneOperation.Count == _LoadStageInfo.ValidScenePath.Count)
+                {
+                    float loadStageProcess = 0;
+                    foreach (var asyncOpt in _LoadSceneOperation)
+                    {
+                        if (asyncOpt == null || asyncOpt.isDone)
+                        {
+                            loadStageProcess += 1;
+                        }
+                        else
+                        {
+                            loadStageProcess += asyncOpt.progress;
+                        }
+                    }
+                    _LoadProcess.value = loadStageProcess / _LoadStageInfo.ValidScenePath.Count;
+                    if (loadStageProcess == _LoadStageInfo.ValidScenePath.Count)
+                    {
+                        LogicManager.Instance.EnterFightFinish();
+                        base.Destory();
+                    }
+                }
+                else
+                {
+                    for (int i = 1; i < _LoadStageInfo.ValidScenePath.Count; ++i)
+                    {
+                        var asyncOpt = SceneManager.LoadSceneAsync(_LoadStageInfo.ScenePath[i], LoadSceneMode.Additive);
+                        _LoadSceneOperation.Add(asyncOpt);
+                    }
+                }
             }
             else
             {
-                LogicManager.Instance.EnterFightFinish();
+                float processValue = _LoadSceneOperation[0].progress;
+                _LoadProcess.value = processValue * 0.5f;
             }
-            base.Destory();
         }
     }
 

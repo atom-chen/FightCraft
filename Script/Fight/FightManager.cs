@@ -16,33 +16,57 @@ public class FightManager : InstanceBase<FightManager>
         InitMainRole();
         InitCamera();
     }
-	
+
     #region Init
+
+    private CameraFollow _CameraFollow;
+    private int _ActingRegion;
+    private List<GameObject> _SceneSPObj = new List<GameObject>();
 
     private void InitCamera()
     {
         GameObject cameraRoot = new GameObject("CameraRoot");
-        cameraRoot.transform.position = Camera.main.transform.position;
-        cameraRoot.transform.rotation = Camera.main.transform.rotation;
-        Camera.main.transform.SetParent(cameraRoot.transform);
-        Camera.main.transform.localPosition = Vector3.zero;
-        Camera.main.transform.localRotation = Quaternion.Euler(Vector3.zero);
-        Camera.main.cullingMask &= ~(1 << LayerMask.NameToLayer("UI"));
+
+        Camera sceneCamera = Camera.main;
+        if (sceneCamera == null)
+        {
+            GameObject go = new GameObject("Camera");
+            sceneCamera = go.AddComponent<Camera>();
+            go.tag = "MainCamera";
+        }
+        cameraRoot.transform.position = sceneCamera.transform.position;
+        cameraRoot.transform.rotation = sceneCamera.transform.rotation;
+
+        sceneCamera.transform.SetParent(cameraRoot.transform);
+        sceneCamera.transform.localPosition = Vector3.zero;
+        sceneCamera.transform.localRotation = Quaternion.Euler(Vector3.zero);
+        sceneCamera.cullingMask &= ~(1 << LayerMask.NameToLayer("UI"));
 
         var subUICamera = ResourceManager.Instance.GetInstanceGameObject("Common/SubUICamera");
-        subUICamera.transform.SetParent(Camera.main.transform);
+        subUICamera.transform.SetParent(sceneCamera.transform);
         subUICamera.transform.localPosition = Vector3.zero;
         subUICamera.transform.localRotation = Quaternion.Euler(Vector3.zero);
 
-
-        var cameraFollow = cameraRoot.AddComponent<CameraFollow>();
-        cameraFollow._FollowObj = _MainChatMotion.gameObject;
-        cameraFollow._Distance = LogicManager.Instance.EnterStageInfo.CameraOffset;
+        _ActingRegion = 0;
+        _CameraFollow = cameraRoot.AddComponent<CameraFollow>();
+        _CameraFollow._FollowObj = _MainChatMotion.gameObject;
+        _CameraFollow._Distance = LogicManager.Instance.EnterStageInfo.CameraOffset[_ActingRegion];
 
         var globalEffect = cameraRoot.AddComponent<GlobalEffect>();
         var inputManager = cameraRoot.AddComponent<InputManager>();
         var aimManager = cameraRoot.AddComponent<AimTarget>();
         inputManager._InputMotion = _MainChatMotion;
+
+        for (int i = 0; i < LogicManager.Instance.EnterStageInfo.ValidScenePath.Count; ++i)
+        {
+            var spGO = GameObject.Find(LogicManager.Instance.EnterStageInfo.ValidScenePath[i] + "_SP");
+            _SceneSPObj.Add(spGO);
+
+            if (i > 0)
+            {
+                _SceneSPObj[i].SetActive(false);
+            }
+        }
     }
 
     private void InitResourcePool()
@@ -219,6 +243,25 @@ public class FightManager : InstanceBase<FightManager>
         {
             return _Combo;
         }
+    }
+
+    #endregion
+
+    #region region teleport
+
+    public void TeleportToNextRegion(Transform destTrans)
+    {
+        FightManager.Instance.MainChatMotion.SetPosition(destTrans.position);
+        FightManager.Instance.MainChatMotion.SetRotate(destTrans.rotation.eulerAngles);
+        _SceneSPObj[_ActingRegion].SetActive(false);
+        ++_ActingRegion;
+        _SceneSPObj[_ActingRegion].SetActive(true);
+        _CameraFollow._Distance = LogicManager.Instance.EnterStageInfo.CameraOffset[_ActingRegion];
+
+        var effectPrefab = ResourceManager.Instance.GetEffect("Born2");
+        var effectSingle = GameObject.Instantiate(effectPrefab).GetComponent<EffectSingle>();
+        effectSingle.transform.position = destTrans.position;
+        effectSingle.Play();
     }
 
     #endregion

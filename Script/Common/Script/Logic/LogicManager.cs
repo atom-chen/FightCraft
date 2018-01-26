@@ -124,7 +124,7 @@ public class LogicManager
 
         GameCore.Instance.UIManager.HideAllUI();
 
-        UILoadingScene.ShowAsyn(_EnterStageInfo.ScenePath);
+        UILoadingScene.ShowAsyn(_EnterStageInfo);
     }
 
     public void EnterFightFinish()

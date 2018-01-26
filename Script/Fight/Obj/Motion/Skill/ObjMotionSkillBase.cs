@@ -35,6 +35,7 @@ public class ObjMotionSkillBase : MonoBehaviour
     protected int _CurStep;
     public List<AnimationClip> _NextAnim;
     public List<EffectController> _NextEffect;
+    public List<AudioClip> _NextAudio;
     public string _ActInput;
     public int _SkillMotionPrior = 100;
     public float _SkillBaseSpeed = 1;
@@ -152,6 +153,12 @@ public class ObjMotionSkillBase : MonoBehaviour
                 PlaySkillEffect(_NextEffect[_CurStep]);
             }
 
+            if (_NextAudio.Count > _CurStep && _NextAudio[_CurStep] != null)
+            {
+                PlayAudio(_NextAudio[_CurStep]);
+            }
+            
+
         }
     }
 
@@ -210,6 +217,11 @@ public class ObjMotionSkillBase : MonoBehaviour
     protected void PlaySkillEffect(EffectController effect)
     {
         _MotionManager.PlaySkillEffect(effect, (SkillActSpeed) * _SkillBaseSpeed);
+    }
+
+    protected void PlayAudio(AudioClip audioClip)
+    {
+        _MotionManager.PlayAudio(audioClip);
     }
 
     protected void StopSkillEffect(EffectController effect)

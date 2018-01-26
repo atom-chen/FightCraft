@@ -53,8 +53,23 @@ public class FightSceneAreaBase : MonoBehaviour
         TRIG_EVENT,
     }
 
+    public float _EnemyAlertDistance;
     public GameObject[] _AreaDoors;
     public TrigType _TrigAreaType;
+
+    protected bool _IsEnemyAlert = false;
+
+    private void UpdateEnemyAlert()
+    {
+        if (_IsEnemyAlert)
+            return;
+
+        if (_EnemyAlertDistance <= 0)
+        {
+            _IsEnemyAlert = true;
+            return;
+        }
+    }
 
     private void CloseAllDoor()
     {

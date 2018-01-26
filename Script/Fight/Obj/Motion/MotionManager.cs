@@ -42,6 +42,7 @@ public class MotionManager : MonoBehaviour
         _CanBeSelectByEnemy = true;
 
         //InitSkills();
+        InitAudio();
 
         InitState();
     }
@@ -681,6 +682,26 @@ public class MotionManager : MonoBehaviour
 
             PlayDynamicEffect(ResourcePool.Instance._CommonHitEffect[effectIdx], hash);
         }
+    }
+
+    #endregion
+
+    #region audio
+
+    public AudioSource _AudioSource;
+
+    public void InitAudio()
+    {
+        _AudioSource = gameObject.GetComponent<AudioSource>();
+        if (_AudioSource == null)
+        {
+            _AudioSource = gameObject.AddComponent<AudioSource>();
+        }
+    }
+
+    public void PlayAudio(AudioClip audioClip)
+    {
+        _AudioSource.PlayOneShot(audioClip);
     }
 
     #endregion

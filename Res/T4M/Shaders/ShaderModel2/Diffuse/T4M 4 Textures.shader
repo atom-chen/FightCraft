@@ -1,4 +1,4 @@
-Shader "T4MShaders/ShaderModel2/Diffuse/T4M 4 Textures" {
+Shader "TYImage/Scene/T4M 4 Textures" {
 	Properties{
 		_Splat0("Layer 1", 2D) = "white" {}
 	_Splat1("Layer 2", 2D) = "white" {}

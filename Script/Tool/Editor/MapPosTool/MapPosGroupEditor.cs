@@ -91,9 +91,10 @@ namespace NavMeshExtension
 
             }
 
-            //if (GUILayout.Button("FitEnemies"))
-            //{
-            //}
+            if (GUILayout.Button("ExtentPoses"))
+            {
+                OnExtentPoses();
+            }
 
         }
     
@@ -112,11 +113,7 @@ namespace NavMeshExtension
                 Physics.Raycast(worldRay, out hitInfo);
                 if (Physics.Raycast(worldRay, out hitInfo))
                 {
-                    GameObject go = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    go.AddComponent<MapPosObj>();
-                    go.name = "MapPos";
-                    go.transform.SetParent(script.transform);
-                    go.transform.position = hitInfo.point;
+                    CreateEnemyPosGO(hitInfo.point);
                 }
                 else
                 {
@@ -124,6 +121,49 @@ namespace NavMeshExtension
                 }
 
             }
+        }
+
+        private GameObject CreateEnemyPosGO(Vector3 pos)
+        {
+            GameObject go = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            go.AddComponent<MapPosObj>();
+            go.name = "MapPos";
+            go.transform.SetParent(script.transform);
+            go.transform.position = pos;
+            return go;
+        }
+
+        public void OnExtentPoses()
+        {
+            script.transform.position = script._FightEnemyBasePos.position;
+            int rawCnt = Mathf.CeilToInt(script._EnemyCnt / (float)script._LineCnt);
+            float startX = -rawCnt * 0.5f * script._Distance;
+            float startY = -script._LineCnt * 0.5f * script._Distance;
+
+            int lastClumnCnt = script._EnemyCnt % script._LineCnt;
+            float lastStartX = (script._LineCnt - lastClumnCnt) * 0.5f * script._Distance;
+            if (lastClumnCnt == 0)
+            {
+                lastStartX = 0;
+            }
+
+            for (int i = 0; i < script._EnemyCnt; ++i)
+            {
+                int raw = i / script._LineCnt;
+                int clumn = i % script._LineCnt;
+
+                Vector3 pos = script.transform.position;
+                if (raw == rawCnt - 1)
+                {
+                    CreateEnemyPosGO(pos + new Vector3(raw * script._Distance + startX, 0, clumn * script._Distance + lastStartX + startY));
+                }
+                else
+                {
+                    CreateEnemyPosGO(pos + new Vector3(raw * script._Distance + startX, 0, clumn * script._Distance + startY));
+                }
+
+            }
+
         }
 
         
