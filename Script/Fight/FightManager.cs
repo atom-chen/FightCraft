@@ -262,6 +262,11 @@ public class FightManager : InstanceBase<FightManager>
         var effectSingle = GameObject.Instantiate(effectPrefab).GetComponent<EffectSingle>();
         effectSingle.transform.position = destTrans.position;
         effectSingle.Play();
+
+        if (_FightScene is FightSceneLogicPassArea)
+        {
+            (_FightScene as FightSceneLogicPassArea).StartNextArea();
+        }
     }
 
     #endregion

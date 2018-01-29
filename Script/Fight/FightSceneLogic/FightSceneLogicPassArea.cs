@@ -88,7 +88,7 @@ public class FightSceneLogicPassArea : FightSceneLogicBase
         StartNextArea();
     }
 
-    private void StartNextArea()
+    public void StartNextArea()
     {
         ++_RunningIdx;
         if (_RunningIdx < _FightArea.Count)

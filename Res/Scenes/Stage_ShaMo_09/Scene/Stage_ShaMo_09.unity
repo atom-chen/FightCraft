@@ -2051,6 +2051,52 @@ Transform:
   m_Father: {fileID: 2003947158}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1136581691
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4990493619914520, guid: c3e5ccf3cc9ee5f409f7b35532e5ac34, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 49000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4990493619914520, guid: c3e5ccf3cc9ee5f409f7b35532e5ac34, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4990493619914520, guid: c3e5ccf3cc9ee5f409f7b35532e5ac34, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4990493619914520, guid: c3e5ccf3cc9ee5f409f7b35532e5ac34, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4990493619914520, guid: c3e5ccf3cc9ee5f409f7b35532e5ac34, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4990493619914520, guid: c3e5ccf3cc9ee5f409f7b35532e5ac34, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4990493619914520, guid: c3e5ccf3cc9ee5f409f7b35532e5ac34, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4990493619914520, guid: c3e5ccf3cc9ee5f409f7b35532e5ac34, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1043305218451346, guid: c3e5ccf3cc9ee5f409f7b35532e5ac34, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: c3e5ccf3cc9ee5f409f7b35532e5ac34, type: 2}
+  m_IsPrefabParent: 0
 --- !u!43 &1140069755
 Mesh:
   m_ObjectHideFlags: 0
@@ -3523,102 +3569,6 @@ Mesh:
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 
   m_MeshOptimized: 0
---- !u!1001 &1661870694
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4990493619914520, guid: c3e5ccf3cc9ee5f409f7b35532e5ac34, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 49000
-      objectReference: {fileID: 0}
-    - target: {fileID: 4990493619914520, guid: c3e5ccf3cc9ee5f409f7b35532e5ac34, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4990493619914520, guid: c3e5ccf3cc9ee5f409f7b35532e5ac34, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4990493619914520, guid: c3e5ccf3cc9ee5f409f7b35532e5ac34, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4990493619914520, guid: c3e5ccf3cc9ee5f409f7b35532e5ac34, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4990493619914520, guid: c3e5ccf3cc9ee5f409f7b35532e5ac34, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4990493619914520, guid: c3e5ccf3cc9ee5f409f7b35532e5ac34, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4990493619914520, guid: c3e5ccf3cc9ee5f409f7b35532e5ac34, type: 2}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114774993409348200, guid: c3e5ccf3cc9ee5f409f7b35532e5ac34,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114683959144067496, guid: c3e5ccf3cc9ee5f409f7b35532e5ac34,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114746245485518464, guid: c3e5ccf3cc9ee5f409f7b35532e5ac34,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114524753867353694, guid: c3e5ccf3cc9ee5f409f7b35532e5ac34,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114445451903448320, guid: c3e5ccf3cc9ee5f409f7b35532e5ac34,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114421297319762462, guid: c3e5ccf3cc9ee5f409f7b35532e5ac34,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114653051712419104, guid: c3e5ccf3cc9ee5f409f7b35532e5ac34,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114649806515361678, guid: c3e5ccf3cc9ee5f409f7b35532e5ac34,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114137145937301026, guid: c3e5ccf3cc9ee5f409f7b35532e5ac34,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114875257944400040, guid: c3e5ccf3cc9ee5f409f7b35532e5ac34,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1043305218451346, guid: c3e5ccf3cc9ee5f409f7b35532e5ac34, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: c3e5ccf3cc9ee5f409f7b35532e5ac34, type: 2}
-  m_IsPrefabParent: 0
 --- !u!43 &1662239012
 Mesh:
   m_ObjectHideFlags: 0
