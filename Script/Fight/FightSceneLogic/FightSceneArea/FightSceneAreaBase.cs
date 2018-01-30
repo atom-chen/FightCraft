@@ -15,6 +15,7 @@ public class FightSceneAreaBase : MonoBehaviour
 
     public virtual void StartArea()
     {
+        UpdateEnemyAlert();
         InitFightLogic();
         CloseAllDoor();
     }
@@ -26,7 +27,9 @@ public class FightSceneAreaBase : MonoBehaviour
     }
 
     public virtual void UpdateArea()
-    { }
+    {
+        UpdateEnemyAlert();
+    }
 
     public virtual void MotionDie(MotionManager motion)
     {

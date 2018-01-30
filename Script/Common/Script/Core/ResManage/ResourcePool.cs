@@ -216,7 +216,7 @@ public class ResourcePool : InstanceBase<ResourcePool>
         model.transform.localRotation = Quaternion.Euler(Vector3.zero);
         _IdleModel[objName].Push(model);
 
-        GameObject.Destroy(objMotion);
+        GameObject.Destroy(objMotion.gameObject);
     }
 
     public void ClearObjs()

@@ -6210,7 +6210,7 @@ MonoBehaviour:
   _AreaDoors: []
   _TrigAreaType: 0
   _BossBornPos: {fileID: 4211646909910866}
-  _BossMotionID: 23
+  _BossMotionID: 6
   _FishBornFixPos: 1
   _EnemyBornPos:
   - {fileID: 4099616447259318}
