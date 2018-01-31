@@ -11,7 +11,7 @@ sha:shanzei,gongbing,jianbing,gunseng
 Hero_DianWei_01_AM£¬Hero_DiRenJie_01_AM£¬Hero_LianPo_01_AM£¬Hero_WuZeTian_01_AM£¬
 cao:fubing,,gongbing,cuibing,gaibang
 Hero_XiShi_01_AM£¬Hero_YangJian_01_AM£¬Hero_CaoCao_01_AM£¬Hero_ShenGongBao_01_AM£¬ 
-bing:daobing£¬cuibing£¬gongbing
+bing:daobing£¬fubing£¬gongbing
 Hero_DiaoChan_01_AM£¬Hero_WenZhong_01_AM£¬Hero_ZhaoYun_01_AM£¬
 sha:shanzei,shuangdaobing,daoshi
 Hero_ZhouWang_01_AM£¬Hero_YangGuiFei_01_AM£¬Hero_JiangZiYa_01_AM£¬Hero_NeZha_01_AM

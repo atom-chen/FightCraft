@@ -4986,7 +4986,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2f7c49959ddd6248b827eaa7d8812bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _MainCharBornPos: {fileID: 0}
+  _MainCharBornPos: {fileID: 4796718493001478}
   _FightArea:
   - {fileID: 114917816956759708}
   - {fileID: 114170193225895580}
