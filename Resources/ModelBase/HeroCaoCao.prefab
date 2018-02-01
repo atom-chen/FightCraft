@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114000010370190816}
   - component: {fileID: 195000010132214596}
   - component: {fileID: 114000012562540006}
-  - component: {fileID: 114000013215325140}
+  - component: {fileID: 114628455586969430}
   m_Layer: 0
   m_Name: HeroCaoCao
   m_TagString: Untagged
@@ -74,23 +74,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _MotionManager: {fileID: 0}
   _MotionType: 1
---- !u!114 &114000013215325140
+--- !u!114 &114628455586969430
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011359632890}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b38837fb32685c44f9203b173d3f09f9, type: 3}
+  m_Script: {fileID: 11500000, guid: 648e3692c58e5f44caeaf5d5d303a0d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _IdleAnim: {fileID: 7400000, guid: b147c2f7cc37b7b4585c5b3c86d2aefb, type: 2}
-  _MoveAnim: {fileID: 7400000, guid: 80fef41d6e10e7c478e187ba32aa862d, type: 2}
-  _HitAnim: {fileID: 7400000, guid: c14e9cbd3531ad045b69be6734c8c0ab, type: 2}
-  _FlyAnim: {fileID: 7400000, guid: fa58254ee912bdd4fb7a9dc9d8a80463, type: 2}
-  _RiseAnim: {fileID: 7400000, guid: b495ef8970d7c3044ac0b78da6e5d1e2, type: 2}
-  _BodyDisappearTime: 0
+  _TargetMotion: {fileID: 0}
+  _AISkills:
+  - SkillBase: {fileID: 114000013637780200, guid: a68f2a78ba88b2e4abf80862b6c56fcd,
+      type: 2}
+    SkillRange: 2
+    SkillInterval: 3
+  - SkillBase: {fileID: 114000014173051062, guid: 0fbbd08ddf88d024993add3b225cfad8,
+      type: 2}
+    SkillRange: 2
+    SkillInterval: 5
+  - SkillBase: {fileID: 114000011041597018, guid: 435e36269dc85614db8973f6f90d83e1,
+      type: 2}
+    SkillRange: 2
+    SkillInterval: 15
+  _MoveRadius: 0
+  _NormalRadius: 0
+  Stage2BuffTime: 20
+  _BlockAnim: {fileID: 0}
+  _AfterBlockSkill: -1
+  _AlertRange: 15
+  _CloseRange: 2
+  _CloseInterval: 1
 --- !u!195 &195000010132214596
 NavMeshAgent:
   m_ObjectHideFlags: 1

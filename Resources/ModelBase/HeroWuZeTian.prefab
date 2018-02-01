@@ -22,8 +22,7 @@ GameObject:
   - component: {fileID: 114000014080874150}
   - component: {fileID: 195000010642263092}
   - component: {fileID: 114000011780593716}
-  - component: {fileID: 114000012146472440}
-  - component: {fileID: 114000013174341036}
+  - component: {fileID: 114402712915620288}
   m_Layer: 0
   m_Name: HeroWuZeTian
   m_TagString: Untagged
@@ -57,58 +56,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _MotionManager: {fileID: 0}
   _MotionType: 1
---- !u!114 &114000012146472440
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000011416750270}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b38837fb32685c44f9203b173d3f09f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _IdleAnim: {fileID: 7400000, guid: 8ff1750b36f094d42a421f20bc836295, type: 2}
-  _MoveAnim: {fileID: 7400000, guid: fd38aabaef7663540bd855ab4013f879, type: 2}
-  _HitAnim: {fileID: 7400000, guid: e3de8f13be8b3f849a3b06f94b7da2b4, type: 2}
-  _FlyAnim: {fileID: 7400000, guid: aae097204ed94b54c910d6b995dbf673, type: 2}
-  _RiseAnim: {fileID: 7400000, guid: be388246688f9ac4585f84e49a30f840, type: 2}
-  _BodyDisappearTime: 1
---- !u!114 &114000013174341036
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000011416750270}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d45a65ab1ef6dc489d04980847340ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _TargetMotion: {fileID: 0}
-  _AISkills:
-  - SkillBase: {fileID: 114958160321306078, guid: 2bee2adb496c2ef4d98c5d8635962a4c,
-      type: 2}
-    SkillRange: 1.5
-    SkillInterval: 3
-  - SkillBase: {fileID: 114464337479163520, guid: 13a630704028a404385ea0e7a81c9377,
-      type: 2}
-    SkillRange: 2
-    SkillInterval: 10
-  - SkillBase: {fileID: 114198893401085286, guid: 9bb78f32bbaf7e14eb89731f9742dfbe,
-      type: 2}
-    SkillRange: 8
-    SkillInterval: 25
-  - SkillBase: {fileID: 114955231770751162, guid: f9e40dc3b444ec84885476d505889b49,
-      type: 2}
-    SkillRange: 8
-    SkillInterval: 15
-  _MoveRadius: 0
-  _NormalRadius: 0
-  Stage2BuffTime: 60
-  _AlertRange: 15
-  _CloseRange: 2
-  _CloseInterval: 1
 --- !u!114 &114000014080874150
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -127,6 +74,41 @@ MonoBehaviour:
   _CanBeSelectByEnemy: 1
   _ColliderInfo: {x: 0.4, y: 1.8, z: 0}
   _MotionAnimPath: 
+--- !u!114 &114402712915620288
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011416750270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdf04efe821e7e743a151c4a923fceef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _TargetMotion: {fileID: 0}
+  _AISkills:
+  - SkillBase: {fileID: 114958160321306078, guid: 2bee2adb496c2ef4d98c5d8635962a4c,
+      type: 2}
+    SkillRange: 2
+    SkillInterval: 3
+  - SkillBase: {fileID: 114464337479163520, guid: 13a630704028a404385ea0e7a81c9377,
+      type: 2}
+    SkillRange: 2
+    SkillInterval: 5
+  - SkillBase: {fileID: 114198893401085286, guid: 9bb78f32bbaf7e14eb89731f9742dfbe,
+      type: 2}
+    SkillRange: 5
+    SkillInterval: 15
+  - SkillBase: {fileID: 114955231770751162, guid: f9e40dc3b444ec84885476d505889b49,
+      type: 2}
+    SkillRange: 5
+    SkillInterval: 15
+  _MoveRadius: 0
+  _NormalRadius: 0
+  Stage2BuffTime: 60
+  _AlertRange: 15
+  _CloseRange: 2
+  _CloseInterval: 1
 --- !u!195 &195000010642263092
 NavMeshAgent:
   m_ObjectHideFlags: 1

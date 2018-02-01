@@ -39,6 +39,8 @@ public class UILoadingScene : UIBase
 
     private const float MAX_PROCESS_TIME = 5.0f;
     private float _ProcessStartTime;
+
+    private List<string> _LoadedSceneName = new List<string>();
     #endregion
 
     #region 
@@ -61,6 +63,7 @@ public class UILoadingScene : UIBase
         {
             _LoadStageInfo = (StageInfoRecord)hash["StageInfo"];
             var asyncOpt = SceneManager.LoadSceneAsync(_LoadStageInfo.ScenePath[0]);
+            _LoadedSceneName.Add(_LoadStageInfo.ScenePath[0]);
             _LoadSceneOperation.Add(asyncOpt);
         }
         
@@ -117,8 +120,12 @@ public class UILoadingScene : UIBase
                 {
                     for (int i = 1; i < _LoadStageInfo.ValidScenePath.Count; ++i)
                     {
+                        if (_LoadedSceneName.Contains(_LoadStageInfo.ScenePath[i]))
+                            continue;
+
                         var asyncOpt = SceneManager.LoadSceneAsync(_LoadStageInfo.ScenePath[i], LoadSceneMode.Additive);
                         _LoadSceneOperation.Add(asyncOpt);
+                        _LoadedSceneName.Add(_LoadStageInfo.ScenePath[i]);
                     }
                 }
             }

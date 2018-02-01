@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114000010530404576}
   - component: {fileID: 195000013233848778}
   - component: {fileID: 114000013761019854}
-  - component: {fileID: 114000014228650998}
+  - component: {fileID: 114525805946372854}
   m_Layer: 0
   m_Name: HeroJiangZiYa
   m_TagString: Untagged
@@ -74,23 +74,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _MotionManager: {fileID: 0}
   _MotionType: 1
---- !u!114 &114000014228650998
+--- !u!114 &114525805946372854
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012509079718}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b38837fb32685c44f9203b173d3f09f9, type: 3}
+  m_Script: {fileID: 11500000, guid: cdf04efe821e7e743a151c4a923fceef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _IdleAnim: {fileID: 7400000, guid: 29f6b17e11b598f408735a708bbdb556, type: 2}
-  _MoveAnim: {fileID: 7400000, guid: 8b950973359357d439f367afef1ba131, type: 2}
-  _HitAnim: {fileID: 7400000, guid: b347692bd423a0f41893006bbfea2aa4, type: 2}
-  _FlyAnim: {fileID: 7400000, guid: ef3aec5f344e51c4cbaf6c14a555c06a, type: 2}
-  _RiseAnim: {fileID: 7400000, guid: 8808f22219523a44f860daf6737535c7, type: 2}
-  _BodyDisappearTime: 0
+  _TargetMotion: {fileID: 0}
+  _AISkills:
+  - SkillBase: {fileID: 114506078929303158, guid: a15e8d85a9663bd4592a1f866b8ce28f,
+      type: 2}
+    SkillRange: 5
+    SkillInterval: 3
+  - SkillBase: {fileID: 114861554373288994, guid: 447114cfad4f8e74fa3ee25c83d4c908,
+      type: 2}
+    SkillRange: 5
+    SkillInterval: 5
+  - SkillBase: {fileID: 114398118172080536, guid: 1fb63df2889dd4a4b87afedf0359bd1d,
+      type: 2}
+    SkillRange: 5
+    SkillInterval: 15
+  _MoveRadius: 0
+  _NormalRadius: 0
+  Stage2BuffTime: 60
+  _AlertRange: 15
+  _CloseRange: 2
+  _CloseInterval: 1
 --- !u!195 &195000013233848778
 NavMeshAgent:
   m_ObjectHideFlags: 1

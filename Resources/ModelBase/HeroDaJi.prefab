@@ -22,8 +22,7 @@ GameObject:
   - component: {fileID: 114000011031562200}
   - component: {fileID: 195000014040273260}
   - component: {fileID: 114000011128329806}
-  - component: {fileID: 114000013517536458}
-  - component: {fileID: 114494460863424638}
+  - component: {fileID: 114756082815362814}
   m_Layer: 0
   m_Name: HeroDaJi
   m_TagString: Untagged
@@ -75,24 +74,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _MotionManager: {fileID: 0}
   _MotionType: 1
---- !u!114 &114000013517536458
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013083827198}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b38837fb32685c44f9203b173d3f09f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _IdleAnim: {fileID: 7400000, guid: c707efd444fc6ac4fa565353c07f236c, type: 2}
-  _MoveAnim: {fileID: 7400000, guid: b1ee21eea1ce3d3458d2656db7ae8dfd, type: 2}
-  _HitAnim: {fileID: 7400000, guid: f3be92dcd7a41724abd25d6b8cde254f, type: 2}
-  _FlyAnim: {fileID: 7400000, guid: 36dd18d0402a2354285a495cc997b6e2, type: 2}
-  _RiseAnim: {fileID: 7400000, guid: 0bc3823fd62a8c6448269ba0bba0d9dc, type: 2}
-  _BodyDisappearTime: 1
---- !u!114 &114494460863424638
+--- !u!114 &114756082815362814
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -100,7 +82,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000013083827198}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ebb791175f61214e906ffe0b226d5e7, type: 3}
+  m_Script: {fileID: 11500000, guid: cdf04efe821e7e743a151c4a923fceef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _TargetMotion: {fileID: 0}
@@ -108,15 +90,15 @@ MonoBehaviour:
   - SkillBase: {fileID: 114000013024742250, guid: 17833365275b166408b608b8b7edc471,
       type: 2}
     SkillRange: 2
-    SkillInterval: 1
+    SkillInterval: 3
   - SkillBase: {fileID: 114917265834608062, guid: 56a2a3f5ed7657f4fbe90bc37fe5cd4d,
       type: 2}
-    SkillRange: 2
+    SkillRange: 3
     SkillInterval: 5
   - SkillBase: {fileID: 114000011968909306, guid: 0faf73b24dfd95b48a3e635f9e8b7877,
       type: 2}
-    SkillRange: 4
-    SkillInterval: 10
+    SkillRange: 5
+    SkillInterval: 15
   _MoveRadius: 0
   _NormalRadius: 0
   Stage2BuffTime: 60

@@ -15,11 +15,11 @@
 13,Stage 13,-1,FightLogic_Stage_13,Stage_ShaMo_01,,,0;6;-6,0;6;-6,0;6;-6,0;6;-6,0;6;-6,0;6;-6
 14,Stage 14,-1,FightLogic_Stage_14,Stage_ShaMo_09,Stage_ShaMo_10,,0;6;6,0;6;6,0;6;-6,0;6;-6,0;6;-6,0;6;-6
 15,Stage 15,-1,FightLogic_Stage_15,Stage_ShaMo_07,,,0;6;-6,0;6;-6,0;6;-6,0;6;-6,0;6;-6,0;6;-6
-16,Stage 16,-1,FightLogic_DiXiaCheng_05,Stage_DiXiaCheng_01,Stage_DiXiaCheng_05,,0;6;-6,0;6;-6,0;6;-6,0;6;-6,0;6;-6,0;6;-6
-17,Stage 17,-1,FightLogic_DiXiaCheng_01,Stage_DiXiaCheng_01,Stage_DiXiaCheng_03,,0;6;-6,0;6;-6,0;6;-6,0;6;-6,0;6;-6,0;6;-6
-18,Stage 18,-1,FightLogic_DiXiaCheng_03,Stage_DiXiaCheng_01,Stage_DiXiaCheng_02,,0;6;-6,0;6;-6,0;6;-6,0;6;-6,0;6;-6,0;6;-6
-19,Stage 19,-1,FightLogic_DiXiaCheng_02,Stage_DiXiaCheng_01,Stage_DiXiaCheng_04,,0;6;-6,0;6;-6,0;6;-6,0;6;-6,0;6;-6,0;6;-6
-20,Stage 20,-1,FightLogic_JingJiChang,Stage_DiXiaCheng_04,,,0;6;-6,0;6;-6,0;6;-6,0;6;-6,0;6;-6,0;6;-6
+16,Stage 16,-1,FightLogic_Stage_16,Stage_DiXiaCheng_01,,,0;6;-6,0;6;-6,0;6;-6,0;6;-6,0;6;-6,0;6;-6
+17,Stage 17,-1,FightLogic_Stage_17,Stage_DiXiaCheng_01,Stage_DiXiaCheng_05,,0;6;-6,0;6;-6,0;6;-6,0;6;-6,0;6;-6,0;6;-6
+18,Stage 18,-1,FightLogic_Stage_18,Stage_DiXiaCheng_02,,,0;6;-6,0;6;-6,0;6;-6,0;6;-6,0;6;-6,0;6;-6
+19,Stage 19,-1,FightLogic_Stage_19,Stage_DiXiaCheng_03,,,0;6;-6,0;6;-6,0;6;-6,0;6;-6,0;6;-6,0;6;-6
+20,Stage 20,-1,FightLogic_Stage_20,Stage_DiXiaCheng_04,,,0;6;-6,0;6;-6,0;6;-6,0;6;-6,0;6;-6,0;6;-6
 100,Stage_01_01,-1,FightLogic_GongDian_01,Stage_01_01,,,0;6;-6,0;6;-6,0;6;-6,0;6;-6,0;6;-6,0;6;-6
 101,Stage_01_02,-1,FightLogic_GongDian_02,Stage_01_02,,,0;6;-6,0;6;-6,0;6;-6,0;6;-6,0;6;-6,0;6;-6
 102,Stage_01_03,-1,FightLogic_GongDian_03,Stage_01_03,,,0;6;6,0;6;6,0;6;6,0;6;6,0;6;6,0;6;6

@@ -22,8 +22,7 @@ GameObject:
   - component: {fileID: 114000013114019936}
   - component: {fileID: 195000010303347608}
   - component: {fileID: 114000011295301262}
-  - component: {fileID: 114000013632595362}
-  - component: {fileID: 114000013375720186}
+  - component: {fileID: 114989327869733072}
   m_Layer: 0
   m_Name: HeroDiaoChan
   m_TagString: Untagged
@@ -75,7 +74,7 @@ MonoBehaviour:
   _CanBeSelectByEnemy: 1
   _ColliderInfo: {x: 0.4, y: 1.8, z: 0}
   _MotionAnimPath: 
---- !u!114 &114000013375720186
+--- !u!114 &114989327869733072
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -83,42 +82,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000010871332726}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ee181bf251770c43bb39ccb0bf57c61, type: 3}
+  m_Script: {fileID: 11500000, guid: cdf04efe821e7e743a151c4a923fceef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _TargetMotion: {fileID: 0}
   _AISkills:
-  - SkillBase: {fileID: 0}
-    SkillRange: 2.5
-    SkillInterval: 1
-  - SkillBase: {fileID: 0}
-    SkillRange: 3
+  - SkillBase: {fileID: 114000011590770758, guid: f4118675505c6d641b565ee024a49fb3,
+      type: 2}
+    SkillRange: 4
+    SkillInterval: 3
+  - SkillBase: {fileID: 114000013872718266, guid: 650e8ae67e1f63d45a98d92cd2e8f709,
+      type: 2}
+    SkillRange: 4
     SkillInterval: 5
-  - SkillBase: {fileID: 0}
-    SkillRange: 10
-    SkillInterval: 10
+  - SkillBase: {fileID: 114000010824334590, guid: 7c192e1ca005154408025d48605b9f74,
+      type: 2}
+    SkillRange: 5
+    SkillInterval: 15
+  _MoveRadius: 0
+  _NormalRadius: 0
+  Stage2BuffTime: 60
+  _AlertRange: 15
   _CloseRange: 2
-  _CloseInterval: 0.5
-  _NormalAttackIdx: 0
-  _RiseSkillIdx: 1
-  _GlobalSkillIdx: 2
---- !u!114 &114000013632595362
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010871332726}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b38837fb32685c44f9203b173d3f09f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _IdleAnim: {fileID: 7400000, guid: 60c0c8f5e65f8cf4e9ada4dd24cf74e6, type: 2}
-  _MoveAnim: {fileID: 7400000, guid: 3a9e3cbec064eec49918bd77e130fd71, type: 2}
-  _HitAnim: {fileID: 7400000, guid: e99762b5fe9a7284283db6ac3981660d, type: 2}
-  _FlyAnim: {fileID: 7400000, guid: 4dd2876fe1a3b464f9179bf8f9bf2bbb, type: 2}
-  _RiseAnim: {fileID: 7400000, guid: cfc7944bbfa72e443a394fb25edf8ef0, type: 2}
-  _BodyDisappearTime: 1
+  _CloseInterval: 1
 --- !u!195 &195000010303347608
 NavMeshAgent:
   m_ObjectHideFlags: 1

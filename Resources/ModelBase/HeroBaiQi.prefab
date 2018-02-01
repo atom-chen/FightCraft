@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114000013231586606}
   - component: {fileID: 195000011951042904}
   - component: {fileID: 114000010699486758}
-  - component: {fileID: 114000013126605050}
+  - component: {fileID: 114696531089225910}
   m_Layer: 9
   m_Name: HeroBaiQi
   m_TagString: Untagged
@@ -56,23 +56,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _MotionManager: {fileID: 0}
   _MotionType: 1
---- !u!114 &114000013126605050
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000011799130856}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b38837fb32685c44f9203b173d3f09f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _IdleAnim: {fileID: 7400000, guid: 6d7a1bb90c21ac64faa768d4222fd194, type: 2}
-  _MoveAnim: {fileID: 7400000, guid: ab62cd6b8b3ae7b4cb9d23f440b4cc1c, type: 2}
-  _HitAnim: {fileID: 7400000, guid: 857ad4387e5a1ae488b9d12c758c8e3b, type: 2}
-  _FlyAnim: {fileID: 7400000, guid: 769548d90d2fd4c429dca60c33a8de44, type: 2}
-  _RiseAnim: {fileID: 7400000, guid: d81392d35f6f3d54895436c7152f97ca, type: 2}
-  _BodyDisappearTime: 0
 --- !u!114 &114000013231586606
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -91,6 +74,37 @@ MonoBehaviour:
   _CanBeSelectByEnemy: 1
   _ColliderInfo: {x: 0.4, y: 1.8, z: 0}
   _MotionAnimPath: 
+--- !u!114 &114696531089225910
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011799130856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79020b080acdee548b2c59d8f630d608, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _TargetMotion: {fileID: 0}
+  _AISkills:
+  - SkillBase: {fileID: 114657478882531904, guid: 51d966d4e5dc79149bae383a1a3df898,
+      type: 2}
+    SkillRange: 2
+    SkillInterval: 3
+  - SkillBase: {fileID: 114000013701415714, guid: 5fd09886aab16f341989caed54b443eb,
+      type: 2}
+    SkillRange: 2
+    SkillInterval: 5
+  - SkillBase: {fileID: 114000011360021528, guid: 22036d41928ea214aaaa6c57b16ca2e8,
+      type: 2}
+    SkillRange: 2
+    SkillInterval: 15
+  _MoveRadius: 0
+  _NormalRadius: 0
+  Stage2SuperTime: 20
+  _AlertRange: 15
+  _CloseRange: 2
+  _CloseInterval: 1
 --- !u!195 &195000011951042904
 NavMeshAgent:
   m_ObjectHideFlags: 1
