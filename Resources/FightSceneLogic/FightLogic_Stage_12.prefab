@@ -1552,6 +1552,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4635132140685342}
   - component: {fileID: 114385382097549518}
+  - component: {fileID: 114630757042089062}
   m_Layer: 0
   m_Name: FightArea
   m_TagString: Untagged
@@ -3406,7 +3407,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1868790340284530}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 45000, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4098539792773792}
@@ -5371,8 +5372,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _DestPos: {fileID: 4034000398777972}
-  _TeleDistance: 1
-  _TeleProcessTime: 1
 --- !u!114 &114193461977079724
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6481,6 +6480,22 @@ MonoBehaviour:
   _EnemyCnt: 8
   _LineCnt: 3
   _Distance: 2
+--- !u!114 &114630757042089062
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1648501621950372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6baea76d91facc641bece37e7a163e79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _FightSceneLogic: {fileID: 0}
+  _EnemyAlertDistance: 0
+  _AreaDoors: []
+  _TrigAreaType: 0
+  _Teleport: {fileID: 1513828367968882}
 --- !u!114 &114632000839509970
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6799,6 +6814,7 @@ MonoBehaviour:
   - {fileID: 114325327198351680}
   - {fileID: 114780301068427668}
   - {fileID: 114308597818136414}
+  - {fileID: 114630757042089062}
   - {fileID: 114969089226983630}
   - {fileID: 114767811193540266}
   - {fileID: 114893688595006458}

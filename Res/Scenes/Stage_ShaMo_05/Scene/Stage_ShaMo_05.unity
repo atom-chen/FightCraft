@@ -3141,7 +3141,7 @@ GameObject:
   m_Component:
   - component: {fileID: 883394416}
   m_Layer: 0
-  m_Name: Stage_05_05_SP
+  m_Name: Stage_ShaMo_05_SP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3666,21 +3666,16 @@ MeshCollider:
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 1921717682}
---- !u!4 &1034540392 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4289695374409150, guid: 280a16777e65bdd488bd554fcc471e33,
-    type: 2}
-  m_PrefabInternal: {fileID: 1040239807}
 --- !u!1001 &1040239807
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1210287106}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4289695374409150, guid: 280a16777e65bdd488bd554fcc471e33, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 45000
       objectReference: {fileID: 0}
     - target: {fileID: 4289695374409150, guid: 280a16777e65bdd488bd554fcc471e33, type: 2}
       propertyPath: m_LocalPosition.y
@@ -3708,87 +3703,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4289695374409150, guid: 280a16777e65bdd488bd554fcc471e33, type: 2}
       propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114434882988672684, guid: 280a16777e65bdd488bd554fcc471e33,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114351669976534572, guid: 280a16777e65bdd488bd554fcc471e33,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114376638835451672, guid: 280a16777e65bdd488bd554fcc471e33,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114180761918756918, guid: 280a16777e65bdd488bd554fcc471e33,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114395207434594286, guid: 280a16777e65bdd488bd554fcc471e33,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114341524359795500, guid: 280a16777e65bdd488bd554fcc471e33,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114907915035199004, guid: 280a16777e65bdd488bd554fcc471e33,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114705344578346304, guid: 280a16777e65bdd488bd554fcc471e33,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114487140215924006, guid: 280a16777e65bdd488bd554fcc471e33,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114630244145308492, guid: 280a16777e65bdd488bd554fcc471e33,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114857240034710814, guid: 280a16777e65bdd488bd554fcc471e33,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114347718866965766, guid: 280a16777e65bdd488bd554fcc471e33,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114755703224343930, guid: 280a16777e65bdd488bd554fcc471e33,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114736380472845830, guid: 280a16777e65bdd488bd554fcc471e33,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114193461977079724, guid: 280a16777e65bdd488bd554fcc471e33,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114718460363301884, guid: 280a16777e65bdd488bd554fcc471e33,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 280a16777e65bdd488bd554fcc471e33, type: 2}
@@ -4600,9 +4515,8 @@ Transform:
   - {fileID: 793718370}
   - {fileID: 1343273031}
   - {fileID: 883394416}
-  - {fileID: 1034540392}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &1214770927
 Mesh:

@@ -2547,11 +2547,6 @@ Mesh:
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 
   m_MeshOptimized: 0
---- !u!4 &857692487 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4005324120296206, guid: f19ea417602a6cb4eb084a9756b40a88,
-    type: 2}
-  m_PrefabInternal: {fileID: 1010882411}
 --- !u!43 &916605550
 Mesh:
   m_ObjectHideFlags: 0
@@ -2813,11 +2808,11 @@ Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1345732798}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4005324120296206, guid: f19ea417602a6cb4eb084a9756b40a88, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 13000
       objectReference: {fileID: 0}
     - target: {fileID: 4005324120296206, guid: f19ea417602a6cb4eb084a9756b40a88, type: 2}
       propertyPath: m_LocalPosition.y
@@ -2845,77 +2840,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4005324120296206, guid: f19ea417602a6cb4eb084a9756b40a88, type: 2}
       propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114239362053206302, guid: f19ea417602a6cb4eb084a9756b40a88,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114572087397498340, guid: f19ea417602a6cb4eb084a9756b40a88,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114086659308063706, guid: f19ea417602a6cb4eb084a9756b40a88,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114493051356585698, guid: f19ea417602a6cb4eb084a9756b40a88,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114590352111105068, guid: f19ea417602a6cb4eb084a9756b40a88,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114931119062990294, guid: f19ea417602a6cb4eb084a9756b40a88,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114777915946038622, guid: f19ea417602a6cb4eb084a9756b40a88,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114369270757612962, guid: f19ea417602a6cb4eb084a9756b40a88,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114774969356848608, guid: f19ea417602a6cb4eb084a9756b40a88,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114990593379352312, guid: f19ea417602a6cb4eb084a9756b40a88,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114032375370336732, guid: f19ea417602a6cb4eb084a9756b40a88,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114875194590905914, guid: f19ea417602a6cb4eb084a9756b40a88,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114431546585955686, guid: f19ea417602a6cb4eb084a9756b40a88,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114054780197275084, guid: f19ea417602a6cb4eb084a9756b40a88,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f19ea417602a6cb4eb084a9756b40a88, type: 2}
@@ -3057,7 +2982,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1060529800}
   m_Layer: 0
-  m_Name: Stage_02_04_SP
+  m_Name: Stage_BingYuan_05_SP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3419,9 +3344,8 @@ Transform:
   - {fileID: 1776115067}
   - {fileID: 1060529800}
   - {fileID: 162194208}
-  - {fileID: 857692487}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &1362013880
 Mesh:

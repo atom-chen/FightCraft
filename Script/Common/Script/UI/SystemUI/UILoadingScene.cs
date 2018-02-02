@@ -121,7 +121,10 @@ public class UILoadingScene : UIBase
                     for (int i = 1; i < _LoadStageInfo.ValidScenePath.Count; ++i)
                     {
                         if (_LoadedSceneName.Contains(_LoadStageInfo.ScenePath[i]))
+                        {
+                            _LoadSceneOperation.Add(null);
                             continue;
+                        }
 
                         var asyncOpt = SceneManager.LoadSceneAsync(_LoadStageInfo.ScenePath[i], LoadSceneMode.Additive);
                         _LoadSceneOperation.Add(asyncOpt);

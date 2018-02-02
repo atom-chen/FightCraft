@@ -14,8 +14,8 @@ public class AreaGate : MonoBehaviour {
     #region teleport
 
     public Transform _DestPos;
-    public float _TeleDistance = 1;
-    public float _TeleProcessTime = 1;
+    public static float _TeleDistance = 3;
+    public static float _TeleProcessTime = 1;
 
     private bool _Teleporting = false;
     private float _StartingTime = 0;

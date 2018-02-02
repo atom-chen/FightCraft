@@ -116,7 +116,7 @@ public class AI_HeroBase : AI_Base
             return;
 
         AI_Skill_Info aiSkill = _AISkills[0];
-        for (int i = _AISkills.Count - 1; i >= 0; ++i)
+        for (int i = _AISkills.Count - 1; i >= 0; --i)
         {
             if (!_AISkills[i].IsSkillCD())
             {

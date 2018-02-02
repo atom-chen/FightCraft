@@ -44,8 +44,6 @@ public class ImpactBuffIntervalRangeSub : ImpactBuffSub
             return;
 
         ActSubImpacts(_BuffSender, targetMotion);
-
-        Debug.Log("OnTriggerStay:" + targetMotion.name);
     }
 
 }

@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114000012655320330}
   - component: {fileID: 195000012836548624}
   - component: {fileID: 114000014124994176}
-  - component: {fileID: 114000012339248488}
+  - component: {fileID: 114089806241812686}
   m_Layer: 0
   m_Name: MonShuangDaoBing
   m_TagString: Untagged
@@ -43,23 +43,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114000012339248488
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010685934358}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b38837fb32685c44f9203b173d3f09f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _IdleAnim: {fileID: 7400000, guid: 38ce1e03604099a47a8c06492a94e4af, type: 2}
-  _MoveAnim: {fileID: 7400000, guid: e2e5895dbc5a2574db7f6be9410e4ae1, type: 2}
-  _HitAnim: {fileID: 7400000, guid: 8d06f40609c2c954987a9a28a57f1b3a, type: 2}
-  _FlyAnim: {fileID: 7400000, guid: 9ac83956793a25040bb94101a33a956a, type: 2}
-  _RiseAnim: {fileID: 7400000, guid: 7417917a67a61d74a9ed83022003a91f, type: 2}
-  _BodyDisappearTime: 0
 --- !u!114 &114000012655320330
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -91,6 +74,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _MotionManager: {fileID: 0}
   _MotionType: 3
+--- !u!114 &114089806241812686
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010685934358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f595782b51ffa9488df4c0e859f19c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _TargetMotion: {fileID: 0}
+  _AISkills:
+  - SkillBase: {fileID: 114210481489168386, guid: 084de0112b22bd44e98bf1eb684dfe4f,
+      type: 2}
+    SkillRange: 2
+    SkillInterval: 3
+  _MoveRadius: 0
+  _NormalRadius: 0
+  _AlertRange: 15
+  _CloseRange: 2
+  _CloseInterval: 1
 --- !u!195 &195000012836548624
 NavMeshAgent:
   m_ObjectHideFlags: 1

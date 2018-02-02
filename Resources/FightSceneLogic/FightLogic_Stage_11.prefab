@@ -2422,7 +2422,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1903108707523314
 GameObject:
   m_ObjectHideFlags: 0
@@ -4337,7 +4337,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1900451073750830}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 12000, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4045999888668982}
@@ -5760,8 +5760,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _DestPos: {fileID: 4632802406200512}
-  _TeleDistance: 1
-  _TeleProcessTime: 1
 --- !u!114 &114222016822052266
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6591,24 +6589,22 @@ MonoBehaviour:
   _AreaDoors: []
   _TrigAreaType: 0
   _EnemyBornPos:
-  - _EnemyTransform: {fileID: 0}
-    _EnemyDataID: 23
   - _EnemyTransform: {fileID: 4505894108475498}
-    _EnemyDataID: 23
+    _EnemyDataID: 25
   - _EnemyTransform: {fileID: 4049016452262362}
-    _EnemyDataID: 23
+    _EnemyDataID: 25
   - _EnemyTransform: {fileID: 4660835190423788}
-    _EnemyDataID: 23
+    _EnemyDataID: 25
   - _EnemyTransform: {fileID: 4609511908827710}
-    _EnemyDataID: 23
+    _EnemyDataID: 27
   - _EnemyTransform: {fileID: 4388349846580310}
-    _EnemyDataID: 23
+    _EnemyDataID: 27
   - _EnemyTransform: {fileID: 4681513385866350}
-    _EnemyDataID: 23
+    _EnemyDataID: 27
   - _EnemyTransform: {fileID: 4300060072284010}
-    _EnemyDataID: 23
+    _EnemyDataID: 27
   - _EnemyTransform: {fileID: 4733157178396780}
-    _EnemyDataID: 23
+    _EnemyDataID: 31
 --- !u!114 &114561784111468364
 MonoBehaviour:
   m_ObjectHideFlags: 1

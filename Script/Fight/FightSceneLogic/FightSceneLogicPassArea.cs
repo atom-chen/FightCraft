@@ -68,6 +68,10 @@ public class FightSceneLogicPassArea : FightSceneLogicBase
         {
             return (nextArea as FightSceneAreaKBossWithFish)._BossBornPos.position;
         }
+        else if (nextArea is FightSceneAreaKShowTeleport)
+        {
+            return (nextArea as FightSceneAreaKShowTeleport)._Teleport.transform.position;
+        }
         return Vector3.zero;
     }
 

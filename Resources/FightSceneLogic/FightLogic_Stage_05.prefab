@@ -2948,7 +2948,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1869742557307688}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 26000, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4777324217125070}
@@ -4560,12 +4560,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _FightSceneLogic: {fileID: 0}
   _EnemyAlertDistance: 0
-  _AreaDoors:
-  - {fileID: 1142111310369526}
-  - {fileID: 1824461972277638}
-  - {fileID: 1937816629654902}
-  - {fileID: 1022144571750574}
-  _TrigAreaType: 0
+  _AreaDoors: []
+  _TrigAreaType: 1
   _EnemyBornPos:
   - _EnemyTransform: {fileID: 4420547669173092}
     _EnemyDataID: 27
@@ -4741,8 +4737,6 @@ MonoBehaviour:
   _FightSceneLogic: {fileID: 0}
   _EnemyAlertDistance: 0
   _AreaDoors:
-  - {fileID: 1142111310369526}
-  - {fileID: 1824461972277638}
   - {fileID: 1937816629654902}
   - {fileID: 1022144571750574}
   _TrigAreaType: 0
@@ -5871,11 +5865,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _FightSceneLogic: {fileID: 0}
   _EnemyAlertDistance: 0
-  _AreaDoors:
-  - {fileID: 1142111310369526}
-  - {fileID: 1824461972277638}
-  - {fileID: 1937816629654902}
-  - {fileID: 1022144571750574}
+  _AreaDoors: []
   _TrigAreaType: 0
   _EnemyBornPos:
   - _EnemyTransform: {fileID: 4790666083397494}
@@ -5918,8 +5908,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _DestPos: {fileID: 4723176875424310}
-  _TeleDistance: 1
-  _TeleProcessTime: 1
 --- !u!114 &114764104058914950
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6168,11 +6156,9 @@ MonoBehaviour:
   _FightSceneLogic: {fileID: 0}
   _EnemyAlertDistance: 0
   _AreaDoors:
-  - {fileID: 1142111310369526}
-  - {fileID: 1824461972277638}
   - {fileID: 1937816629654902}
   - {fileID: 1022144571750574}
-  _TrigAreaType: 0
+  _TrigAreaType: 1
   _EnemyBornPos:
   - _EnemyTransform: {fileID: 4418431393855812}
     _EnemyDataID: 27
@@ -6378,8 +6364,6 @@ MonoBehaviour:
   _FightSceneLogic: {fileID: 0}
   _EnemyAlertDistance: 0
   _AreaDoors:
-  - {fileID: 1142111310369526}
-  - {fileID: 1824461972277638}
   - {fileID: 1937816629654902}
   - {fileID: 1022144571750574}
   _TrigAreaType: 0

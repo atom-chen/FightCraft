@@ -116,6 +116,12 @@ public class TestFight : MonoBehaviour
 
     private bool StartSkill()
     {
+        if (_EnemyMotion == null)
+            return false;
+
+        if (_EnemyMotion.IsMotionDie)
+            return false;
+
         if (FightManager.Instance.MainChatMotion.ActingSkill == null)
         {
             _RandomSkillIdx = Random.Range(0, 4);

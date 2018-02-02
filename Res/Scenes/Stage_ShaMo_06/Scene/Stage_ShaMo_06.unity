@@ -2036,7 +2036,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1007163807}
   m_Layer: 0
-  m_Name: Stage_05_06_SP
+  m_Name: Stage_ShaMo_06_SP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2054,7 +2054,7 @@ Transform:
   m_Children:
   - {fileID: 445119913}
   m_Father: {fileID: 1708192412}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &1049310621
 Mesh:
@@ -2596,7 +2596,6 @@ Transform:
   - {fileID: 2097951203}
   - {fileID: 1749255157}
   - {fileID: 634875416}
-  - {fileID: 2036919079}
   - {fileID: 1007163807}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -3280,11 +3279,11 @@ Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1708192412}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4712136932573106, guid: 85b4fae7b54b946499c2ac81a31e1793, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 46000
       objectReference: {fileID: 0}
     - target: {fileID: 4712136932573106, guid: 85b4fae7b54b946499c2ac81a31e1793, type: 2}
       propertyPath: m_LocalPosition.y
@@ -3312,29 +3311,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4712136932573106, guid: 85b4fae7b54b946499c2ac81a31e1793, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1762622348118496, guid: 85b4fae7b54b946499c2ac81a31e1793, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 33944828386785466, guid: 85b4fae7b54b946499c2ac81a31e1793, type: 2}
-    - {fileID: 23878798485270686, guid: 85b4fae7b54b946499c2ac81a31e1793, type: 2}
-    - {fileID: 65918148067713278, guid: 85b4fae7b54b946499c2ac81a31e1793, type: 2}
-    - {fileID: 33459540349127680, guid: 85b4fae7b54b946499c2ac81a31e1793, type: 2}
-    - {fileID: 23515794116718918, guid: 85b4fae7b54b946499c2ac81a31e1793, type: 2}
-    - {fileID: 65932539603038632, guid: 85b4fae7b54b946499c2ac81a31e1793, type: 2}
-    - {fileID: 33486881436049554, guid: 85b4fae7b54b946499c2ac81a31e1793, type: 2}
-    - {fileID: 23503499110952816, guid: 85b4fae7b54b946499c2ac81a31e1793, type: 2}
-    - {fileID: 65290311346480568, guid: 85b4fae7b54b946499c2ac81a31e1793, type: 2}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 85b4fae7b54b946499c2ac81a31e1793, type: 2}
   m_IsPrefabParent: 0
---- !u!4 &2036919079 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4712136932573106, guid: 85b4fae7b54b946499c2ac81a31e1793,
-    type: 2}
-  m_PrefabInternal: {fileID: 2036919078}
 --- !u!43 &2065490556
 Mesh:
   m_ObjectHideFlags: 0

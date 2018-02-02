@@ -68,22 +68,16 @@ public class AI_HeroStrNormal : AI_StrengthHeroBase
 
         float dis = Vector3.Distance(_SelfMotion.transform.position, _TargetMotion.transform.position);
 
-        List<int> skillIdxs = null;
-
-        for (int i = skillIdxs.Count - 1; i >= 0; --i)
+        for (int i = _AISkills.Count - 1; i >= 0; --i)
         {
-            if (_AISkills[skillIdxs[i]].SkillRange < dis)
+            if (_AISkills[i].SkillRange < dis)
                 continue;
 
-            if (!_AISkills[skillIdxs[i]].IsSkillCD())
+            if (!_AISkills[i].IsSkillCD())
                 continue;
 
             {
-                if(skillIdxs[i] == 2)
-                {
-                    _NextForceSkill = 3;
-                }
-                StartSkill(_AISkills[skillIdxs[i]]);
+                StartSkill(_AISkills[i]);
                 return true;
             }
         }

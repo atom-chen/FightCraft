@@ -70,7 +70,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _TargetMotion: {fileID: 0}
   _AISkills:
-  - SkillBase: {fileID: 0}
+  - SkillBase: {fileID: 114268570313697582, guid: 8246aa84afdc7154fb878c3611985eaa,
+      type: 2}
     SkillRange: 2
     SkillInterval: 1
   _MoveRadius: 0
