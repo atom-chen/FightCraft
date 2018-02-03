@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114000014185219366}
   - component: {fileID: 195000010547278504}
   - component: {fileID: 114000011443440612}
-  - component: {fileID: 114000014236558978}
+  - component: {fileID: 114217628175570054}
   m_Layer: 0
   m_Name: MonQiLinMo
   m_TagString: Untagged
@@ -74,23 +74,32 @@ MonoBehaviour:
   _CanBeSelectByEnemy: 1
   _ColliderInfo: {x: 0.4, y: 1.8, z: 0}
   _MotionAnimPath: 
---- !u!114 &114000014236558978
+--- !u!114 &114217628175570054
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010740350512}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b38837fb32685c44f9203b173d3f09f9, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f595782b51ffa9488df4c0e859f19c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _IdleAnim: {fileID: 7400000, guid: 5af32885c7e4f174f8ac12fed7e9d6dc, type: 2}
-  _MoveAnim: {fileID: 7400000, guid: 7386e6b3c92e2834280073660bd22eaa, type: 2}
-  _HitAnim: {fileID: 7400000, guid: 4c2132e15d959ea4c9fb99c50dd58a41, type: 2}
-  _FlyAnim: {fileID: 7400000, guid: 0863afbab6bd06c40b7386f678235f3b, type: 2}
-  _RiseAnim: {fileID: 7400000, guid: c947b6d4e823cd248a373a73e4efb232, type: 2}
-  _BodyDisappearTime: 0
+  _TargetMotion: {fileID: 0}
+  _AISkills:
+  - SkillBase: {fileID: 114468534903139514, guid: 8be699a1095256941965329099d2612a,
+      type: 2}
+    SkillRange: 2
+    SkillInterval: 1
+  - SkillBase: {fileID: 114895245369544600, guid: 479bf5ad7681cba4ba9aaaf67e49f64a,
+      type: 2}
+    SkillRange: 5
+    SkillInterval: 10
+  _MoveRadius: 0
+  _NormalRadius: 0
+  _AlertRange: 15
+  _CloseRange: 2
+  _CloseInterval: 1
 --- !u!195 &195000010547278504
 NavMeshAgent:
   m_ObjectHideFlags: 1

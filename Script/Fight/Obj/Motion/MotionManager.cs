@@ -312,7 +312,7 @@ public class MotionManager : MonoBehaviour
         else if (_MonsterBase != null)
         {
             _RoleAttrManager.InitEnemyAttr(_MonsterBase);
-            _MotionAnimPath = _MonsterBase.MotionPath;
+            _MotionAnimPath = _MonsterBase.AnimPath;
         }
         else
         {

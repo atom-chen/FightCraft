@@ -14,10 +14,12 @@ namespace Tables
 
         public override string Id { get; set; }        public string Name { get; set; }
         public string Desc { get; set; }
+        public int MotionGroup { get; set; }
         public string MotionPath { get; set; }
+        public string AnimPath { get; set; }
         public string ModelPath { get; set; }
         public int ElementType { get; set; }
-        public string MotionType { get; set; }
+        public MOTION_TYPE MotionType { get; set; }
         public List<int> BaseAttr { get; set; }
         public List<CommonItemRecord> SpDrops { get; set; }
         public MonsterBaseRecord(DataRecord dataRecord)
@@ -37,10 +39,12 @@ namespace Tables
             recordStrList.Add(TableWriteBase.GetWriteStr(Id));
             recordStrList.Add(TableWriteBase.GetWriteStr(Name));
             recordStrList.Add(TableWriteBase.GetWriteStr(Desc));
+            recordStrList.Add(TableWriteBase.GetWriteStr(MotionGroup));
             recordStrList.Add(TableWriteBase.GetWriteStr(MotionPath));
+            recordStrList.Add(TableWriteBase.GetWriteStr(AnimPath));
             recordStrList.Add(TableWriteBase.GetWriteStr(ModelPath));
             recordStrList.Add(TableWriteBase.GetWriteStr(ElementType));
-            recordStrList.Add(TableWriteBase.GetWriteStr(MotionType));
+            recordStrList.Add(((int)MotionType).ToString());
             foreach (var testTableItem in BaseAttr)
             {
                 recordStrList.Add(TableWriteBase.GetWriteStr(testTableItem));
@@ -121,29 +125,15 @@ namespace Tables
             {
                 pair.Value.Name = TableReadBase.ParseString(pair.Value.ValueStr[1]);
                 pair.Value.Desc = TableReadBase.ParseString(pair.Value.ValueStr[2]);
-                pair.Value.MotionPath = TableReadBase.ParseString(pair.Value.ValueStr[3]);
-                pair.Value.ModelPath = TableReadBase.ParseString(pair.Value.ValueStr[4]);
-                pair.Value.ElementType = TableReadBase.ParseInt(pair.Value.ValueStr[5]);
-                pair.Value.MotionType = TableReadBase.ParseString(pair.Value.ValueStr[6]);
-                pair.Value.BaseAttr.Add(TableReadBase.ParseInt(pair.Value.ValueStr[7]));
-                pair.Value.BaseAttr.Add(TableReadBase.ParseInt(pair.Value.ValueStr[8]));
+                pair.Value.MotionGroup = TableReadBase.ParseInt(pair.Value.ValueStr[3]);
+                pair.Value.MotionPath = TableReadBase.ParseString(pair.Value.ValueStr[4]);
+                pair.Value.AnimPath = TableReadBase.ParseString(pair.Value.ValueStr[5]);
+                pair.Value.ModelPath = TableReadBase.ParseString(pair.Value.ValueStr[6]);
+                pair.Value.ElementType = TableReadBase.ParseInt(pair.Value.ValueStr[7]);
+                pair.Value.MotionType =  (MOTION_TYPE)TableReadBase.ParseInt(pair.Value.ValueStr[8]);
                 pair.Value.BaseAttr.Add(TableReadBase.ParseInt(pair.Value.ValueStr[9]));
-                if (!string.IsNullOrEmpty(pair.Value.ValueStr[10]))
-                {
-                    pair.Value.SpDrops.Add( TableReader.CommonItem.GetRecord(pair.Value.ValueStr[10]));
-                }
-                else
-                {
-                    pair.Value.SpDrops.Add(null);
-                }
-                if (!string.IsNullOrEmpty(pair.Value.ValueStr[11]))
-                {
-                    pair.Value.SpDrops.Add( TableReader.CommonItem.GetRecord(pair.Value.ValueStr[11]));
-                }
-                else
-                {
-                    pair.Value.SpDrops.Add(null);
-                }
+                pair.Value.BaseAttr.Add(TableReadBase.ParseInt(pair.Value.ValueStr[10]));
+                pair.Value.BaseAttr.Add(TableReadBase.ParseInt(pair.Value.ValueStr[11]));
                 if (!string.IsNullOrEmpty(pair.Value.ValueStr[12]))
                 {
                     pair.Value.SpDrops.Add( TableReader.CommonItem.GetRecord(pair.Value.ValueStr[12]));
@@ -171,6 +161,22 @@ namespace Tables
                 if (!string.IsNullOrEmpty(pair.Value.ValueStr[15]))
                 {
                     pair.Value.SpDrops.Add( TableReader.CommonItem.GetRecord(pair.Value.ValueStr[15]));
+                }
+                else
+                {
+                    pair.Value.SpDrops.Add(null);
+                }
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[16]))
+                {
+                    pair.Value.SpDrops.Add( TableReader.CommonItem.GetRecord(pair.Value.ValueStr[16]));
+                }
+                else
+                {
+                    pair.Value.SpDrops.Add(null);
+                }
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[17]))
+                {
+                    pair.Value.SpDrops.Add( TableReader.CommonItem.GetRecord(pair.Value.ValueStr[17]));
                 }
                 else
                 {

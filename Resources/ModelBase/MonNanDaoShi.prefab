@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 114000012794691232}
   - component: {fileID: 195000012183300870}
   - component: {fileID: 114000011291506250}
-  - component: {fileID: 114000012722443792}
   - component: {fileID: 114000013065212636}
   m_Layer: 0
   m_Name: MonNanDaoShi
@@ -57,23 +56,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _MotionManager: {fileID: 0}
   _MotionType: 3
---- !u!114 &114000012722443792
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000012214678552}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b38837fb32685c44f9203b173d3f09f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _IdleAnim: {fileID: 7400000, guid: dc7b65498080da74e80dd697b49741f6, type: 2}
-  _MoveAnim: {fileID: 7400000, guid: ee7eaf7163866724693fe48646674b48, type: 2}
-  _HitAnim: {fileID: 7400000, guid: de67ad7fa2a89ff429acaed3105ed032, type: 2}
-  _FlyAnim: {fileID: 7400000, guid: f4ce647875a07ca4294ca5dbbf771266, type: 2}
-  _RiseAnim: {fileID: 7400000, guid: 03de29b8c839da940bd3ff4dc701e040, type: 2}
-  _BodyDisappearTime: 0
 --- !u!114 &114000012794691232
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -105,7 +87,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _TargetMotion: {fileID: 0}
   _AISkills:
-  - SkillBase: {fileID: 0}
+  - SkillBase: {fileID: 114280008943024502, guid: 5322d5d0bc012e1419188cbf3942080f,
+      type: 2}
     SkillRange: 4
     SkillInterval: 1
   _MoveRadius: 0

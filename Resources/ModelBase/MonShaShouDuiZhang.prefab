@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114000010098970148}
   - component: {fileID: 195000012957607322}
   - component: {fileID: 114000013863435116}
-  - component: {fileID: 114000012237324082}
+  - component: {fileID: 114032833945484338}
   m_Layer: 0
   m_Name: MonShaShouDuiZhang
   m_TagString: Untagged
@@ -61,23 +61,6 @@ MonoBehaviour:
   _CanBeSelectByEnemy: 1
   _ColliderInfo: {x: 0.4, y: 1.8, z: 0}
   _MotionAnimPath: 
---- !u!114 &114000012237324082
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000012909360344}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b38837fb32685c44f9203b173d3f09f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _IdleAnim: {fileID: 7400000, guid: f04d15c844f01434fa6bd64c3373f2bf, type: 2}
-  _MoveAnim: {fileID: 7400000, guid: b913b865e3867f64e91a2ddf78fb76ad, type: 2}
-  _HitAnim: {fileID: 7400000, guid: d4748a8f378f23e4d98e3100495e963e, type: 2}
-  _FlyAnim: {fileID: 7400000, guid: 175d2aa743837ad4abfd7652fe8c5d31, type: 2}
-  _RiseAnim: {fileID: 7400000, guid: f9c3f90c28ebcc942b1782147ab0131a, type: 2}
-  _BodyDisappearTime: 0
 --- !u!114 &114000013863435116
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -91,6 +74,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _MotionManager: {fileID: 0}
   _MotionType: 3
+--- !u!114 &114032833945484338
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012909360344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f595782b51ffa9488df4c0e859f19c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _TargetMotion: {fileID: 0}
+  _AISkills:
+  - SkillBase: {fileID: 114619449478163218, guid: 17d010b061805834f979392617b7c2c0,
+      type: 2}
+    SkillRange: 4
+    SkillInterval: 2
+  - SkillBase: {fileID: 114690437201857154, guid: eb19cb65d10e7d143aca8da644c31a4c,
+      type: 2}
+    SkillRange: 2
+    SkillInterval: 5
+  _MoveRadius: 0
+  _NormalRadius: 0
+  _AlertRange: 15
+  _CloseRange: 2
+  _CloseInterval: 1
 --- !u!195 &195000012957607322
 NavMeshAgent:
   m_ObjectHideFlags: 1

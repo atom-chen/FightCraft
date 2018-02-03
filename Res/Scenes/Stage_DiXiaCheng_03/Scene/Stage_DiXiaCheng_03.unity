@@ -516,86 +516,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114168688362448200, guid: 52c7a02ea71cd8649b27f4a520ee6bcc,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114939199649783066, guid: 52c7a02ea71cd8649b27f4a520ee6bcc,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114754180891344396, guid: 52c7a02ea71cd8649b27f4a520ee6bcc,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114243751307739928, guid: 52c7a02ea71cd8649b27f4a520ee6bcc,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114501088434328702, guid: 52c7a02ea71cd8649b27f4a520ee6bcc,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114243280227798016, guid: 52c7a02ea71cd8649b27f4a520ee6bcc,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114530484619095834, guid: 52c7a02ea71cd8649b27f4a520ee6bcc,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114409090337448610, guid: 52c7a02ea71cd8649b27f4a520ee6bcc,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114035635082245876, guid: 52c7a02ea71cd8649b27f4a520ee6bcc,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114238927575303358, guid: 52c7a02ea71cd8649b27f4a520ee6bcc,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114443515737594390, guid: 52c7a02ea71cd8649b27f4a520ee6bcc,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114739652154298426, guid: 52c7a02ea71cd8649b27f4a520ee6bcc,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114145623869205510, guid: 52c7a02ea71cd8649b27f4a520ee6bcc,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114084024026871842, guid: 52c7a02ea71cd8649b27f4a520ee6bcc,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114524111571747280, guid: 52c7a02ea71cd8649b27f4a520ee6bcc,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114695487271660442, guid: 52c7a02ea71cd8649b27f4a520ee6bcc,
-        type: 2}
-      propertyPath: _FightEnemyBasePos
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 1450115170580420, guid: 52c7a02ea71cd8649b27f4a520ee6bcc, type: 2}
       propertyPath: m_IsActive
       value: 0
@@ -963,6 +883,35 @@ MeshCollider:
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 313079245}
+--- !u!1 &159189508
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 159189509}
+  m_Layer: 0
+  m_Name: Stage_DiXiaCheng_03_SP
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &159189509
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 159189508}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 910591596}
+  m_Father: {fileID: 1776931161}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &260521890
 Prefab:
   m_ObjectHideFlags: 0
@@ -7786,7 +7735,7 @@ Transform:
   m_LocalPosition: {x: 23.636719, y: 12.1875, z: 16.19336}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1776931161}
+  m_Father: {fileID: 159189509}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &921932792
@@ -8840,7 +8789,7 @@ Transform:
   - {fileID: 778234162}
   - {fileID: 921932793}
   m_Father: {fileID: 1776931161}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &1262432112
 Mesh:
@@ -11020,9 +10969,9 @@ Transform:
   m_LocalPosition: {x: 33000, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 910591596}
-  - {fileID: 767828094}
   - {fileID: 1252771080}
+  - {fileID: 767828094}
+  - {fileID: 159189509}
   - {fileID: 533621790}
   m_Father: {fileID: 0}
   m_RootOrder: 0

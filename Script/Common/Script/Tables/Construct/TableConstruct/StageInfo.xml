@@ -39,6 +39,16 @@
     <constructRepeat>1</constructRepeat>
   </constructColumn>
   <constructColumn>
+    <constructName>StageType</constructName>
+    <constructCode>StageType</constructCode>
+    <constructType1>自定义枚举</constructType1>
+    <constructType2>
+      <constructType2>STAGE_TYPE</constructType2>
+    </constructType2>
+    <constructDefault>0</constructDefault>
+    <constructRepeat>1</constructRepeat>
+  </constructColumn>
+  <constructColumn>
     <constructName>FightLogicPath</constructName>
     <constructCode>FightLogicPath</constructCode>
     <constructType1>基本类型</constructType1>

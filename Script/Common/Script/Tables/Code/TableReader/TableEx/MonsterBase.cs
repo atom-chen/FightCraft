@@ -33,5 +33,20 @@ namespace Tables
 
     public partial class MonsterBase : TableFileBase
     {
+
+        public MonsterBaseRecord GetGroupElite(MonsterBaseRecord monsterBase)
+        {
+            foreach (var record in Records)
+            {
+                if (monsterBase.MotionGroup == record.Value.MotionGroup
+                    && record.Value.MotionType == MOTION_TYPE.Elite)
+                {
+                    return record.Value;
+                }
+            }
+
+            return monsterBase;
+        }
+
     }
 }

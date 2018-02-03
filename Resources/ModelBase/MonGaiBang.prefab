@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 114000012754402758}
   - component: {fileID: 195000011491581658}
   - component: {fileID: 114000012698396734}
-  - component: {fileID: 114000014217768782}
   - component: {fileID: 114000012550363454}
   m_Layer: 9
   m_Name: MonGaiBang
@@ -61,10 +60,6 @@ MonoBehaviour:
       type: 2}
     SkillRange: 2
     SkillInterval: 1
-  - SkillBase: {fileID: 114583739739931080, guid: 85a8928f5104dc1488e8c969f5a673fd,
-      type: 2}
-    SkillRange: 2
-    SkillInterval: 5
   _MoveRadius: 0
   _NormalRadius: 0
   _AlertRange: 10
@@ -101,23 +96,6 @@ MonoBehaviour:
   _CanBeSelectByEnemy: 1
   _ColliderInfo: {x: 0.4, y: 1.8, z: 0}
   _MotionAnimPath: MonGaiBang
---- !u!114 &114000014217768782
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000012548113886}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b38837fb32685c44f9203b173d3f09f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _IdleAnim: {fileID: 7400000, guid: 3576ab3a009a6254f921f7a7c3e9ecf1, type: 2}
-  _MoveAnim: {fileID: 7400000, guid: 2d1179e6a3afdbe47bf048932ba733c3, type: 2}
-  _HitAnim: {fileID: 7400000, guid: faf1067904168fe4f9d5cb29f1339884, type: 2}
-  _FlyAnim: {fileID: 7400000, guid: aeec02e5f65b2df41a5dd4b941dc35ad, type: 2}
-  _RiseAnim: {fileID: 7400000, guid: 0fd38de63005d1c44880ef371e7392cd, type: 2}
-  _BodyDisappearTime: 0
 --- !u!195 &195000011491581658
 NavMeshAgent:
   m_ObjectHideFlags: 1

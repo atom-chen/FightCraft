@@ -105,10 +105,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _TargetMotion: {fileID: 0}
   _AISkills:
-  - SkillBase: {fileID: 0}
+  - SkillBase: {fileID: 114784943986531486, guid: 2db80e54879b5b3459cc67b3adc01864,
+      type: 2}
     SkillRange: 4
     SkillInterval: 1
-  - SkillBase: {fileID: 0}
+  - SkillBase: {fileID: 114345616113830892, guid: a9bbf16abe17d2c4595356d96a0232e4,
+      type: 2}
+    SkillRange: 5
+    SkillInterval: 5
+  - SkillBase: {fileID: 114495276197699228, guid: 1bd12d82c67efdd49bd21b543ef71e58,
+      type: 2}
     SkillRange: 5
     SkillInterval: 5
   _MoveRadius: 0

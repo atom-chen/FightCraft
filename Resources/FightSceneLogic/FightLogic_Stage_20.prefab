@@ -349,7 +349,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1069785583699212
 GameObject:
   m_ObjectHideFlags: 1
@@ -789,7 +789,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1162933000391166
 GameObject:
   m_ObjectHideFlags: 1
@@ -1604,7 +1604,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1419621800173810
 GameObject:
   m_ObjectHideFlags: 1
@@ -1945,7 +1945,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1498647551155500
 GameObject:
   m_ObjectHideFlags: 1
@@ -2075,7 +2075,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1521973122281404
 GameObject:
   m_ObjectHideFlags: 1
@@ -2124,7 +2124,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1538526273918206
 GameObject:
   m_ObjectHideFlags: 1
@@ -2624,7 +2624,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1677624715430968
 GameObject:
   m_ObjectHideFlags: 0
@@ -3017,7 +3017,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1764026046098724
 GameObject:
   m_ObjectHideFlags: 1
@@ -3145,7 +3145,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1779304921964704
 GameObject:
   m_ObjectHideFlags: 1
@@ -3161,7 +3161,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1782571517613718
 GameObject:
   m_ObjectHideFlags: 1
@@ -4651,7 +4651,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1162155762071030}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 34000, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4240903597356166}
@@ -7645,8 +7645,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _DestPos: {fileID: 4703836722213222}
-  _TeleDistance: 1
-  _TeleProcessTime: 1
+  _IsTransScene: 0
 --- !u!114 &114066518696941312
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8062,11 +8061,11 @@ MonoBehaviour:
   _EventCallBack:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 114685024182622630}
         m_MethodName: AreaStart
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgument: {fileID: 114728451982603906}
           m_ObjectArgumentAssemblyTypeName: FightSceneAreaBase, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -8391,8 +8390,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _DestPos: {fileID: 4703836722213222}
-  _TeleDistance: 1
-  _TeleProcessTime: 1
+  _IsTransScene: 0
 --- !u!114 &114290546478754054
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8780,8 +8778,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _DestPos: {fileID: 4703836722213222}
-  _TeleDistance: 1
-  _TeleProcessTime: 1
+  _IsTransScene: 0
 --- !u!114 &114461159689615590
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9677,7 +9674,7 @@ MonoBehaviour:
   - {fileID: 1674729652551660}
   - {fileID: 1779158720976164}
   - {fileID: 1416026499278302}
-  _TrigAreaType: 0
+  _TrigAreaType: 1
   _EnemyBornPos:
   - _EnemyTransform: {fileID: 4808544560919026}
     _EnemyDataID: 50

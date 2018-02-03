@@ -12,6 +12,8 @@ public class SerializeEnemyInfo
 
 public class FightSceneAreaBase : MonoBehaviour
 {
+    public virtual void InitArea()
+    { }
 
     public virtual void StartArea()
     {

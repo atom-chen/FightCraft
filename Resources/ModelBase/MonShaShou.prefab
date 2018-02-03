@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 114000013878481360}
   - component: {fileID: 195000013353747140}
   - component: {fileID: 114000010532314196}
-  - component: {fileID: 114000011729168086}
   - component: {fileID: 114254852294971038}
   m_Layer: 0
   m_Name: MonShaShou
@@ -57,23 +56,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _MotionManager: {fileID: 0}
   _MotionType: 3
---- !u!114 &114000011729168086
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000011402733106}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b38837fb32685c44f9203b173d3f09f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _IdleAnim: {fileID: 7400000, guid: f04d15c844f01434fa6bd64c3373f2bf, type: 2}
-  _MoveAnim: {fileID: 7400000, guid: b913b865e3867f64e91a2ddf78fb76ad, type: 2}
-  _HitAnim: {fileID: 7400000, guid: d4748a8f378f23e4d98e3100495e963e, type: 2}
-  _FlyAnim: {fileID: 7400000, guid: 175d2aa743837ad4abfd7652fe8c5d31, type: 2}
-  _RiseAnim: {fileID: 7400000, guid: f9c3f90c28ebcc942b1782147ab0131a, type: 2}
-  _BodyDisappearTime: 0
 --- !u!114 &114000013878481360
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -105,7 +87,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _TargetMotion: {fileID: 0}
   _AISkills:
-  - SkillBase: {fileID: 0}
+  - SkillBase: {fileID: 114619449478163218, guid: 17d010b061805834f979392617b7c2c0,
+      type: 2}
     SkillRange: 4.5
     SkillInterval: 1
   _MoveRadius: 0

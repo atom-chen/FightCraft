@@ -7,7 +7,7 @@ public class FightSceneAreaKAllEnemy : FightSceneAreaBase
     public override void StartArea()
     {
         base.StartArea();
-
+        Debug.Log("StartArea:" + gameObject.name);
         StartStep();
     }
 
@@ -56,10 +56,24 @@ public class FightSceneAreaKAllEnemy : FightSceneAreaBase
 
     private void StartStep()
     {
-        foreach (var enemyInfo in _EnemyBornPos)
+        var eliteRate = FightManager.Instance.GetEliteMonsterRate();
+        var eliteRandom = Random.Range(0, GameDataValue.GetMaxRate());
+        int eliteIdx = -1;
+        if (eliteRandom < eliteRate)
         {
-            var enemy = FightManager.Instance.InitEnemy(enemyInfo._EnemyDataID, enemyInfo._EnemyTransform.position, enemyInfo._EnemyTransform.rotation.eulerAngles);
+            eliteIdx = Random.Range(0, _EnemyBornPos.Length);
+        }
 
+        for(int i = 0; i< _EnemyBornPos.Length; ++i)
+        {
+            bool isElite = false;
+            if (eliteIdx == i)
+            {
+                isElite = true;
+            }
+
+            MotionManager enemy = FightManager.Instance.InitEnemy(_EnemyBornPos[i]._EnemyDataID, _EnemyBornPos[i]._EnemyTransform.position, _EnemyBornPos[i]._EnemyTransform.rotation.eulerAngles, isElite);
+            
             var enemyAI = enemy.gameObject.GetComponent<AI_Base>();
             _EnemyAI.Add(enemyAI);
             if (_IsEnemyAlert)

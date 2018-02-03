@@ -21,6 +21,11 @@ public class FightSceneLogicPassArea : FightSceneLogicBase
     {
         base.StartLogic();
 
+        foreach (var area in _FightArea)
+        {
+            area.InitArea();
+        }
+
         _RunningIdx = -1;
 
         StartNextArea();

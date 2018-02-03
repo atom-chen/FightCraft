@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 114000012337357870}
   - component: {fileID: 195000011207434448}
   - component: {fileID: 114000010411588520}
-  - component: {fileID: 114000011669332956}
   - component: {fileID: 114000011753955956}
   m_Layer: 0
   m_Name: MonJianBing
@@ -57,23 +56,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _MotionManager: {fileID: 0}
   _MotionType: 3
---- !u!114 &114000011669332956
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013217867806}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b38837fb32685c44f9203b173d3f09f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _IdleAnim: {fileID: 7400000, guid: bd6ed1111c8e0bd478f95cd09477a97f, type: 2}
-  _MoveAnim: {fileID: 7400000, guid: 63049851e317d034892e98c44744436a, type: 2}
-  _HitAnim: {fileID: 7400000, guid: 5e4823af88d0d994caf65d463d54d91c, type: 2}
-  _FlyAnim: {fileID: 7400000, guid: 0f94e3970c83a8648aef3b806a4540cb, type: 2}
-  _RiseAnim: {fileID: 7400000, guid: 485a169c7d961da45bfdde19d0e20c8f, type: 2}
-  _BodyDisappearTime: 0
 --- !u!114 &114000011753955956
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -91,10 +73,6 @@ MonoBehaviour:
       type: 2}
     SkillRange: 2
     SkillInterval: 1
-  - SkillBase: {fileID: 114848915287673798, guid: 4f6b8f57f6429c2429ee9b2532e3a3ed,
-      type: 2}
-    SkillRange: 2
-    SkillInterval: 5
   _MoveRadius: 0
   _NormalRadius: 0
   _AlertRange: 10

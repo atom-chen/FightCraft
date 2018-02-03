@@ -90,7 +90,7 @@ public class AI_CloseAttack : AI_Base
             return false;
         }
 
-            return base.StartSkill();
+        return base.StartSkill();
     }
 
     #endregion

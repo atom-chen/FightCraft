@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114000013859360822}
   - component: {fileID: 195000011213396766}
   - component: {fileID: 114000010042513082}
-  - component: {fileID: 114000013904118530}
+  - component: {fileID: 114057801434167754}
   m_Layer: 0
   m_Name: MonQiLinShui
   m_TagString: Untagged
@@ -74,23 +74,32 @@ MonoBehaviour:
   _CanBeSelectByEnemy: 1
   _ColliderInfo: {x: 0.4, y: 1.8, z: 0}
   _MotionAnimPath: 
---- !u!114 &114000013904118530
+--- !u!114 &114057801434167754
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010862356728}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b38837fb32685c44f9203b173d3f09f9, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f595782b51ffa9488df4c0e859f19c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _IdleAnim: {fileID: 7400000, guid: 5af32885c7e4f174f8ac12fed7e9d6dc, type: 2}
-  _MoveAnim: {fileID: 7400000, guid: 7386e6b3c92e2834280073660bd22eaa, type: 2}
-  _HitAnim: {fileID: 7400000, guid: 4c2132e15d959ea4c9fb99c50dd58a41, type: 2}
-  _FlyAnim: {fileID: 7400000, guid: 0863afbab6bd06c40b7386f678235f3b, type: 2}
-  _RiseAnim: {fileID: 7400000, guid: c947b6d4e823cd248a373a73e4efb232, type: 2}
-  _BodyDisappearTime: 0
+  _TargetMotion: {fileID: 0}
+  _AISkills:
+  - SkillBase: {fileID: 114004431479678280, guid: 0c758d252e2a13d4183bc4c3d359b0bf,
+      type: 2}
+    SkillRange: 2
+    SkillInterval: 1
+  - SkillBase: {fileID: 114074961287797532, guid: 4260c6c6ac8f45a4484cb13292e287ef,
+      type: 2}
+    SkillRange: 5
+    SkillInterval: 10
+  _MoveRadius: 0
+  _NormalRadius: 0
+  _AlertRange: 15
+  _CloseRange: 2
+  _CloseInterval: 1
 --- !u!195 &195000011213396766
 NavMeshAgent:
   m_ObjectHideFlags: 1

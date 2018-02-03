@@ -80,6 +80,13 @@ public class FightManager : InstanceBase<FightManager>
 
     #region Objects
 
+    public int _FightLevel;
+
+    public int GetEliteMonsterRate()
+    {
+        return GameDataValue.GetMaxRate();
+    }
+
     private MotionManager _MainChatMotion;
     public MotionManager MainChatMotion
     {
@@ -166,9 +173,13 @@ public class FightManager : InstanceBase<FightManager>
         }
     }
 
-    public MotionManager InitEnemy(string monsterID, Vector3 pos, Vector3 rot)
+    public MotionManager InitEnemy(string monsterID, Vector3 pos, Vector3 rot, bool isElite = false)
     {
-        var monsterBase = Tables.TableReader.MonsterBase.GetRecord(monsterID);
+        Tables.MonsterBaseRecord monsterBase = Tables.TableReader.MonsterBase.GetRecord(monsterID);
+        if (isElite)
+        {
+            monsterBase = Tables.TableReader.MonsterBase.GetGroupElite(monsterBase);
+        }
         if (monsterBase == null)
             return null;
 
@@ -251,12 +262,15 @@ public class FightManager : InstanceBase<FightManager>
 
     #region region teleport
 
-    public void TeleportToNextRegion(Transform destTrans)
+    public void TeleportToNextRegion(Transform destTrans, bool transScene = true)
     {
         FightManager.Instance.MainChatMotion.SetPosition(destTrans.position);
         FightManager.Instance.MainChatMotion.SetRotate(destTrans.rotation.eulerAngles);
         _SceneSPObj[_ActingRegion].SetActive(false);
-        ++_ActingRegion;
+        if (transScene)
+        {
+            ++_ActingRegion;
+        }
         _SceneSPObj[_ActingRegion].SetActive(true);
         _CameraFollow._Distance = LogicManager.Instance.EnterStageInfo.CameraOffset[_ActingRegion];
 

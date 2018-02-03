@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 114000012345636356}
   - component: {fileID: 195000011419501730}
   - component: {fileID: 114000010947264366}
-  - component: {fileID: 114000013895927278}
   - component: {fileID: 114000012904301198}
   m_Layer: 9
   m_Name: MonChiFuShanZei
@@ -92,32 +91,11 @@ MonoBehaviour:
       type: 2}
     SkillRange: 2
     SkillInterval: 1
-  - SkillBase: {fileID: 114022265073675920, guid: fce85653397986a4eabcae9ab5251620,
-      type: 2}
-    SkillRange: 2
-    SkillInterval: 5
   _MoveRadius: 0.3
   _NormalRadius: 0.1
   _AlertRange: 10
   _CloseRange: 2
   _CloseInterval: 1
---- !u!114 &114000013895927278
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000012334148594}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b38837fb32685c44f9203b173d3f09f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _IdleAnim: {fileID: 7400000, guid: f15213517f5a98f4394aa3a0c35286f7, type: 2}
-  _MoveAnim: {fileID: 7400000, guid: 0b15e6563e368df479b94d5198cac843, type: 2}
-  _HitAnim: {fileID: 7400000, guid: 977dd6600fbd17c4fb1e8c13fe88d6ac, type: 2}
-  _FlyAnim: {fileID: 7400000, guid: 5ab1c0c4dcf28a14faaa99c87b7e4538, type: 2}
-  _RiseAnim: {fileID: 7400000, guid: 67a8187a083d8024ca6980b25cf076a1, type: 2}
-  _BodyDisappearTime: 0
 --- !u!195 &195000011419501730
 NavMeshAgent:
   m_ObjectHideFlags: 1

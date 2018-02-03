@@ -28,7 +28,6 @@ public class MonsterDrop
 
     public static void MonsterDripItems(MotionManager monsterMotion)
     {
-        Debug.Log("MonsterDripItems:" + monsterMotion.name);
 
         var drops = GetMonsterDrops(monsterMotion);
         var randomPoses = GameRandom.GetIndependentRandoms(0, 16, drops.Count);

@@ -136,5 +136,31 @@ public class CommonTool : Editor
             testNum = testNum - decNum;
         }
     }
+
+    [MenuItem("TyTools/Test/StageNumaric")]
+    public static void StageNumaric()
+    {
+        var stagetables = Tables.TableReader.StageInfo.Records;
+        foreach (var stageInfo in stagetables)
+        {
+            if (stageInfo.Value.StageType == Tables.STAGE_TYPE.NORMAL)
+            {
+                GetStageNumaric(stageInfo.Value);
+            }
+        }
+    }
+
+    private static void GetStageNumaric(Tables.StageInfoRecord stageInfo)
+    {
+        var sceneLogic = Resources.Load("FightSceneLogic/" + stageInfo.FightLogicPath) as GameObject;
+        var enemyGroups = sceneLogic.GetComponentsInChildren<FightSceneAreaKAllEnemy>();
+        int enemyGroupCnt = enemyGroups.Length;
+        int enemyCnt = 0;
+        foreach (var enemyGroup in enemyGroups)
+        {
+            enemyCnt += enemyGroup._EnemyBornPos.Length;
+        }
+        Debug.Log("Stage " + stageInfo.Name + ": enemyGroup " + enemyGroupCnt + ", enemyCnt " + enemyCnt);
+    }
     #endregion
 }

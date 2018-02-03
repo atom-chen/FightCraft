@@ -14,6 +14,7 @@ public class AreaGate : MonoBehaviour {
     #region teleport
 
     public Transform _DestPos;
+    public bool _IsTransScene = true;
     public static float _TeleDistance = 3;
     public static float _TeleProcessTime = 1;
 
@@ -72,7 +73,7 @@ public class AreaGate : MonoBehaviour {
         if (_DestPos == null)
             return;
 
-        FightManager.Instance.TeleportToNextRegion(_DestPos);
+        FightManager.Instance.TeleportToNextRegion(_DestPos, _IsTransScene);
     }
 
     #endregion

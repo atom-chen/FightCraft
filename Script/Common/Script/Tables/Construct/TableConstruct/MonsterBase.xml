@@ -39,8 +39,29 @@
     <constructRepeat>1</constructRepeat>
   </constructColumn>
   <constructColumn>
+    <constructName>MotionGroup</constructName>
+    <constructCode>MotionGroup</constructCode>
+    <constructType1>基本类型</constructType1>
+    <constructType2>
+      <constructType2>整数</constructType2>
+    </constructType2>
+    <constructDefault>0</constructDefault>
+    <constructRepeat>1</constructRepeat>
+  </constructColumn>
+  <constructColumn>
     <constructName>MotionPath</constructName>
     <constructCode>MotionPath</constructCode>
+    <constructType1>基本类型</constructType1>
+    <constructType2>
+      <constructType2>字符串</constructType2>
+    </constructType2>
+    <constructDefault>
+    </constructDefault>
+    <constructRepeat>1</constructRepeat>
+  </constructColumn>
+  <constructColumn>
+    <constructName>AnimPath</constructName>
+    <constructCode>AnimPath</constructCode>
     <constructType1>基本类型</constructType1>
     <constructType2>
       <constructType2>字符串</constructType2>
@@ -73,12 +94,11 @@
   <constructColumn>
     <constructName>MotionType</constructName>
     <constructCode>MotionType</constructCode>
-    <constructType1>基本类型</constructType1>
+    <constructType1>自定义枚举</constructType1>
     <constructType2>
-      <constructType2>字符串</constructType2>
+      <constructType2>MOTION_TYPE</constructType2>
     </constructType2>
-    <constructDefault>
-    </constructDefault>
+    <constructDefault>0</constructDefault>
     <constructRepeat>1</constructRepeat>
   </constructColumn>
   <constructColumn>

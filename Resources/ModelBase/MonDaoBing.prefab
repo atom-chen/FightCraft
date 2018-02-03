@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 114000011895445384}
   - component: {fileID: 195000012252904670}
   - component: {fileID: 114000013471145498}
-  - component: {fileID: 114000010914099312}
   - component: {fileID: 114000011441709276}
   m_Layer: 9
   m_Name: MonDaoBing
@@ -44,23 +43,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114000010914099312
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010647207696}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b38837fb32685c44f9203b173d3f09f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _IdleAnim: {fileID: 7400000, guid: cad08653d5a41884d9e45417c8973ce5, type: 2}
-  _MoveAnim: {fileID: 7400000, guid: ad69736292687d743bb707ae2424ac72, type: 2}
-  _HitAnim: {fileID: 7400000, guid: a697fa9cdd35b5d4cbc85e9bee01c740, type: 2}
-  _FlyAnim: {fileID: 7400000, guid: 776c33782b6f4fb4f8f68d4858845625, type: 2}
-  _RiseAnim: {fileID: 7400000, guid: 5ba1240aba6341e4ebb22acf8195d0f4, type: 2}
-  _BodyDisappearTime: 0
 --- !u!114 &114000011441709276
 MonoBehaviour:
   m_ObjectHideFlags: 1

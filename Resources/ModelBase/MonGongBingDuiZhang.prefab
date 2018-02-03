@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 114000012410577806}
   - component: {fileID: 195000013858782004}
   - component: {fileID: 114000010647727000}
-  - component: {fileID: 114000013333214842}
   - component: {fileID: 114000010976973294}
   m_Layer: 9
   m_Name: MonGongBingDuiZhang
@@ -70,10 +69,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _TargetMotion: {fileID: 0}
   _AISkills:
-  - SkillBase: {fileID: 0}
+  - SkillBase: {fileID: 114532351801078892, guid: d6bbe737693abf240941347661955406,
+      type: 2}
     SkillRange: 6.2
     SkillInterval: 1
-  - SkillBase: {fileID: 0}
+  - SkillBase: {fileID: 114835476330316846, guid: 4d4a82e3edb5c51489964187a5cd8f9f,
+      type: 2}
     SkillRange: 6.2
     SkillInterval: 3
   _MoveRadius: 0
@@ -99,23 +100,6 @@ MonoBehaviour:
   _CanBeSelectByEnemy: 1
   _ColliderInfo: {x: 0.4, y: 1.8, z: 0}
   _MotionAnimPath: 
---- !u!114 &114000013333214842
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000012348884108}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b38837fb32685c44f9203b173d3f09f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _IdleAnim: {fileID: 7400000, guid: ceb6a4e5cada6f645acc6f8339e50451, type: 2}
-  _MoveAnim: {fileID: 7400000, guid: e189d29a589882549a705775ead3e438, type: 2}
-  _HitAnim: {fileID: 7400000, guid: 446881c483bfa284a93ebcf6945ce82b, type: 2}
-  _FlyAnim: {fileID: 7400000, guid: cac625f142b94fa4fb19499c6d8a793f, type: 2}
-  _RiseAnim: {fileID: 7400000, guid: 4b4eb2d201325954b8474b1864e15878, type: 2}
-  _BodyDisappearTime: 0
 --- !u!195 &195000013858782004
 NavMeshAgent:
   m_ObjectHideFlags: 1
