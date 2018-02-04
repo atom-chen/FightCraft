@@ -30,6 +30,7 @@ Shader "TYImage/Water"
 		Tags{ "queue" = "Transparent" "RenderType" = "Transparent" }
 		ZWrite Off
 		Cull Off
+		Fog{ Mode Off }
 		Blend SrcAlpha OneMinusSrcAlpha
 
 		Pass

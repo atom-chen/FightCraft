@@ -12,7 +12,7 @@ Shader "TDGame/Particles/AdditiveSpecial" {
 		ZWrite Off
 		Cull Off
 		Lighting Off 		
-		Fog { Color (0,0,0,0) }
+			Fog{ Mode Off }
 		
 		BindChannels {
 			Bind "Color", color

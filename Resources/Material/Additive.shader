@@ -16,9 +16,7 @@ Shader "TYImage/Particles/Additive" {
 		 ZWrite Off
 		 Cull Off
 		 ZTest Always
-		 Fog {
-			Color(0,0,0,0)
-		 }
+		Fog{ Mode Off }
 		Blend SrcAlpha One
 
 		SetTexture[_MainTex]{ combine texture * primary }
