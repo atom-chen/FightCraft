@@ -3160,6 +3160,48 @@ Mesh:
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 
   m_MeshOptimized: 0
+--- !u!1001 &1333821239
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4752681959990676, guid: 0fa8331ce8a1c6249bcf453bb6ae60a6, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 50000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4752681959990676, guid: 0fa8331ce8a1c6249bcf453bb6ae60a6, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4752681959990676, guid: 0fa8331ce8a1c6249bcf453bb6ae60a6, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4752681959990676, guid: 0fa8331ce8a1c6249bcf453bb6ae60a6, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4752681959990676, guid: 0fa8331ce8a1c6249bcf453bb6ae60a6, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4752681959990676, guid: 0fa8331ce8a1c6249bcf453bb6ae60a6, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4752681959990676, guid: 0fa8331ce8a1c6249bcf453bb6ae60a6, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4752681959990676, guid: 0fa8331ce8a1c6249bcf453bb6ae60a6, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 0fa8331ce8a1c6249bcf453bb6ae60a6, type: 2}
+  m_IsPrefabParent: 0
 --- !u!43 &1376077023
 Mesh:
   m_ObjectHideFlags: 0
@@ -4004,52 +4046,6 @@ Mesh:
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 
   m_MeshOptimized: 0
---- !u!1001 &1863953683
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4752681959990676, guid: 0fa8331ce8a1c6249bcf453bb6ae60a6, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 50000
-      objectReference: {fileID: 0}
-    - target: {fileID: 4752681959990676, guid: 0fa8331ce8a1c6249bcf453bb6ae60a6, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4752681959990676, guid: 0fa8331ce8a1c6249bcf453bb6ae60a6, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4752681959990676, guid: 0fa8331ce8a1c6249bcf453bb6ae60a6, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4752681959990676, guid: 0fa8331ce8a1c6249bcf453bb6ae60a6, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4752681959990676, guid: 0fa8331ce8a1c6249bcf453bb6ae60a6, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4752681959990676, guid: 0fa8331ce8a1c6249bcf453bb6ae60a6, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4752681959990676, guid: 0fa8331ce8a1c6249bcf453bb6ae60a6, type: 2}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1359858600354788, guid: 0fa8331ce8a1c6249bcf453bb6ae60a6, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 0fa8331ce8a1c6249bcf453bb6ae60a6, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &1927977905 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1163909351327872, guid: 74dbe56077bccca4696b640235d52a05,
