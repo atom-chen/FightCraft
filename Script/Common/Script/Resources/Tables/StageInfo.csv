@@ -1,6 +1,6 @@
 """ID""","""Name""","""Desc""","""StageType""","""FightLogicPath""","""ScenePath1""","""ScenePath2""","""ScenePath3""","""CameraOffset1""","""CameraOffset2""","""CameraOffset3""","""CameraLimit1""","""CameraLimit2""","""CameraLimit3"""
 0,0,-1,0,FightLogic_Boss_ShaMo,Stage_ShaMo_Boss,,,4;6;-4,4;6;-4,4;6;-4,0;6;-6,0;6;-6,0;6;-6
-1,1,-1,0,FightLogic_Stage_01,Stage_ShaMo_09,Stage_ShaMo_02,,4;6;-4,4;6;-4,4;6;-4,0;6;-6,0;6;-6,0;6;-6
+1,1,-1,0,FightLogic_Stage_01,Stage_ShaMo_09,Stage_ShaMo_02,,4;6;4,4;6;-4,4;6;-4,0;6;-6,0;6;-6,0;6;-6
 2,2,-1,0,FightLogic_Stage_02,Stage_ShaMo_08,Stage_ShaMo_10,,4;6;-4,4;6;-4,4;6;-4,0;6;-6,0;6;-6,0;6;-6
 3,3,-1,0,FightLogic_Stage_03,Stage_ShaMo_15,Stage_ShaMo_11,,4;6;-4,4;6;-4,4;6;-4,0;6;-6,0;6;-6,0;6;-6
 4,4,-1,0,FightLogic_Stage_04,Stage_ShaMo_04,Stage_ShaMo_12,Stage_ShaMo_04,4;6;-4,4;6;-4,4;6;4,0;6;-6,0;6;-6,0;6;-6
