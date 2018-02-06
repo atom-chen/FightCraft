@@ -78,6 +78,9 @@ public class AI_HeroBase : AI_Base
 
     protected void InitSuperArmorSkill(ObjMotionSkillBase objMotionSkill)
     {
+        if (objMotionSkill._NextAnim.Count == 0)
+            return;
+
         float attackConlliderTime = _SelfMotion.AnimationEvent.GetAnimFirstColliderEventTime(objMotionSkill._NextAnim[0]);
         if (attackConlliderTime < 0)
             return;
