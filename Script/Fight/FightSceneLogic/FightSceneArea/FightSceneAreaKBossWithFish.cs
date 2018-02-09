@@ -53,7 +53,14 @@ public class FightSceneAreaKBossWithFish : FightSceneAreaBase
 
     private void StartStep()
     {
-        FightManager.Instance.InitEnemy(_BossMotionID, _BossBornPos.position, _BossBornPos.rotation.eulerAngles);
+        var bossMotion = FightManager.Instance.InitEnemy(_BossMotionID, _BossBornPos.position, _BossBornPos.rotation.eulerAngles);
+        AI_Base ai = bossMotion.GetComponent<AI_Base>();
+        if (ai != null)
+        {
+            ai._TargetMotion = FightManager.Instance.MainChatMotion;
+            ai.AIWake = true;
+        }
+
         for (int i = 0; i < _FightingEnemyCnt; ++i)
         {
             CreateEngoughEnemy();
@@ -104,7 +111,8 @@ public class FightSceneAreaKBossWithFish : FightSceneAreaBase
         AI_CloseAttack ai = enemyMotion.GetComponent<AI_CloseAttack>();
         if (ai != null)
         {
-            ai._AlertRange = 1000;
+            ai._TargetMotion = FightManager.Instance.MainChatMotion;
+            ai.AIWake = true;
         }
         ++_LivingEnemyCnt;
     }

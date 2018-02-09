@@ -6,6 +6,7 @@ using System;
 public class BulletEmitterBase : ImpactBase
 {
     public BulletBase _BulletPrefab;
+    public bool _SenderPos = true;
     public Vector3 _EmitterOffset;
     public float _Damage;
 
@@ -24,7 +25,14 @@ public class BulletEmitterBase : ImpactBase
         Vector3 modifyPos = transform.forward * _EmitterOffset.x + transform.right * _EmitterOffset.z + transform.up * _EmitterOffset.y;
         var bulletObj = ResourcePool.Instance.GetIdleBullet(_BulletPrefab);
         bulletObj.transform.SetParent(ResourcePool.Instance.transform);
-        bulletObj.transform.position = SenderMotion.transform.position + modifyPos;
+        if (_SenderPos)
+        {
+            bulletObj.transform.position = SenderMotion.transform.position + modifyPos;
+        }
+        else
+        {
+            bulletObj.transform.position = transform.position + modifyPos;
+        }
         bulletObj.transform.rotation = transform.rotation;
         bulletObj.gameObject.SetActive(true);
         bulletObj.gameObject.layer = FightLayerCommon.GetBulletLayer(_SenderManager);

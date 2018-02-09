@@ -42,11 +42,11 @@ public class BulletLine : BulletBase
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("OnTriggerEnter:" + other.ToString());
         var targetMotion = other.GetComponentInParent<MotionManager>();
         if (targetMotion == null)
             return;
 
+        Debug.Log("OnTriggerEnter:" + targetMotion.ToString());
         TriggetMotion(targetMotion);
     }
 

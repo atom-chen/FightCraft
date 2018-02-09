@@ -121,9 +121,9 @@ public class UIMainFun : UIBase
         UIRoleAttr.ShowAsyn();
     }
 
-    public void BtnTest()
+    public void BtnBossStage()
     {
-        UIMessageTip.ShowMessageTip("test message");
+        UIBossStageSelect.ShowAsyn();
     }
     #endregion
 }

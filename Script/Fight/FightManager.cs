@@ -239,6 +239,11 @@ public class FightManager : InstanceBase<FightManager>
 
     }
 
+    public void StagePass()
+    {
+        
+    }
+
     public void LogicFinish(bool isWin)
     {
         Debug.Log("LogicFinish");
@@ -276,8 +281,9 @@ public class FightManager : InstanceBase<FightManager>
 
         var effectPrefab = ResourceManager.Instance.GetEffect("Born2");
         var effectSingle = GameObject.Instantiate(effectPrefab).GetComponent<EffectSingle>();
-        effectSingle.transform.position = destTrans.position;
-        effectSingle.Play();
+        var effectInstance = FightManager.Instance.MainChatMotion.PlayDynamicEffect(effectSingle);
+        effectInstance.transform.position = destTrans.position;
+
 
         if (_FightScene is FightSceneLogicPassArea)
         {

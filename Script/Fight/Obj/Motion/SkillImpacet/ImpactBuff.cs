@@ -90,7 +90,7 @@ public class ImpactBuff : ImpactBase
         var dynamicBuff = reciverManager.AddBuff(this);
     }
 
-    public ImpactBuff ActBuffInstance(MotionManager senderManager, MotionManager reciverManager, float lastTime = -1)
+    public ImpactBuff ActBuffInstance(MotionManager senderManager, MotionManager reciverManager, float lastTime = 0)
     {
         base.ActImpact(senderManager, reciverManager);
 

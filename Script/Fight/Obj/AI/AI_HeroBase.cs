@@ -101,7 +101,7 @@ public class AI_HeroBase : AI_Base
     {
         if (_BuffInstance != null)
         {
-            _BuffInstance.RemoveBuff(_SelfMotion);
+            _SelfMotion.RemoveBuff(_BuffInstance);
         }
     }
 

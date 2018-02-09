@@ -132,6 +132,7 @@ public class StateSkill : StateBase
         var skillList = _MotionManager.GetComponentsInChildren<ObjMotionSkillBase>();
         foreach (var skill in skillList)
         {
+            skill.gameObject.SetActive(true);
             //Debug.Log("skill._ActInput:" + skill._ActInput);
             _SkillMotions.Add(skill._ActInput, skill);
             //skill.SetImpactElement(ElementType.Cold);

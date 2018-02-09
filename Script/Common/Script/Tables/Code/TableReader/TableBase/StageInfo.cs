@@ -18,7 +18,6 @@ namespace Tables
         public string FightLogicPath { get; set; }
         public List<string> ScenePath { get; set; }
         public List<Vector3> CameraOffset { get; set; }
-        public List<Vector3> CameraLimit { get; set; }
         public StageInfoRecord(DataRecord dataRecord)
         {
             if (dataRecord != null)
@@ -29,7 +28,6 @@ namespace Tables
             }
             ScenePath = new List<string>();
             CameraOffset = new List<Vector3>();
-            CameraLimit = new List<Vector3>();
         }
         public override string[] GetRecordStr()
         {
@@ -44,10 +42,6 @@ namespace Tables
                 recordStrList.Add(TableWriteBase.GetWriteStr(testTableItem));
             }
             foreach (var testTableItem in CameraOffset)
-            {
-                recordStrList.Add(TableWriteBase.GetWriteStr(testTableItem));
-            }
-            foreach (var testTableItem in CameraLimit)
             {
                 recordStrList.Add(TableWriteBase.GetWriteStr(testTableItem));
             }
@@ -121,12 +115,13 @@ namespace Tables
                 pair.Value.ScenePath.Add(TableReadBase.ParseString(pair.Value.ValueStr[5]));
                 pair.Value.ScenePath.Add(TableReadBase.ParseString(pair.Value.ValueStr[6]));
                 pair.Value.ScenePath.Add(TableReadBase.ParseString(pair.Value.ValueStr[7]));
-                pair.Value.CameraOffset.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[8]));
-                pair.Value.CameraOffset.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[9]));
+                pair.Value.ScenePath.Add(TableReadBase.ParseString(pair.Value.ValueStr[8]));
+                pair.Value.ScenePath.Add(TableReadBase.ParseString(pair.Value.ValueStr[9]));
                 pair.Value.CameraOffset.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[10]));
-                pair.Value.CameraLimit.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[11]));
-                pair.Value.CameraLimit.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[12]));
-                pair.Value.CameraLimit.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[13]));
+                pair.Value.CameraOffset.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[11]));
+                pair.Value.CameraOffset.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[12]));
+                pair.Value.CameraOffset.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[13]));
+                pair.Value.CameraOffset.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[14]));
             }
         }
     }

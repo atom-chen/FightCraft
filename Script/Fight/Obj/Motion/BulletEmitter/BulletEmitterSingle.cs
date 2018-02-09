@@ -5,7 +5,6 @@ using System;
 
 public class BulletEmitterSingle : BulletEmitterElement
 {
-
     public override void ActImpact(MotionManager senderManager, MotionManager reciverManager)
     {
         base.ActImpact(senderManager, reciverManager);

@@ -97,6 +97,7 @@ public class UIStageSelect : UIBase
 
     public void OnEnterStage()
     {
+        ActData.Instance.StartStage(1, int.Parse(_SelectedStage.Id));
         LogicManager.Instance.EnterFight(_SelectedStage);
     }
 

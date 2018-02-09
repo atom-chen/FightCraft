@@ -12,6 +12,7 @@ public class BulletDaiJiHeart : BulletBase
     private Vector3 _UpSpeed;
     private Vector3 _TargetPosition;
     private Vector3 _TrackSpeed;
+    private Collider _Collider;
 
     public override void Init(MotionManager senderMotion, BulletEmitterBase emitterBase)
     {
@@ -22,6 +23,9 @@ public class BulletDaiJiHeart : BulletBase
         {
             _TargetMotion = target.GetComponent<MotionManager>();
         }
+
+        _Collider = gameObject.GetComponent<Collider>();
+        _Collider.enabled = false;
     }
 
     public void SetInitSpeed(Vector3 initSpeed)
@@ -45,13 +49,16 @@ public class BulletDaiJiHeart : BulletBase
         }
         else
         {
+            _Collider.enabled = true;
             transform.position += _TrackSpeed * Time.fixedDeltaTime;
             _TrackSpeed += _TrackAccelate * _TrackSpeed.normalized;
             if (transform.position.y < _TargetPosition.y)
             {
                 if (_SubEffect != null)
                 {
-                    ResourcePool.Instance.PlaySceneEffect(_SubEffect, transform.position, Vector3.zero);
+                    //ResourcePool.Instance.PlaySceneEffect(_SubEffect, transform.position, Vector3.zero);
+                    var effectInstance = SkillMotion.PlayDynamicEffect(_SubEffect);
+                    effectInstance.transform.position = transform.position;
                 }
 
                 BulletFinish();
@@ -75,7 +82,9 @@ public class BulletDaiJiHeart : BulletBase
 
         if (_SubEffect != null)
         {
-            ResourcePool.Instance.PlaySceneEffect(_SubEffect, transform.position, Vector3.zero);
+            var effectInstance = SkillMotion.PlayDynamicEffect(_SubEffect);
+            effectInstance.transform.position = transform.position;
+            //ResourcePool.Instance.PlaySceneEffect(_SubEffect, transform.position, Vector3.zero);
         }
 
         BulletFinish();

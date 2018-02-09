@@ -12,14 +12,12 @@ public class SelectNearTarget : SelectBase
         if (_ObjMotion == null)
             return;
 
-        var selectTargets = SelectTargetCommon.GetNearMotions(_ObjMotion, _SelectRange);
+        var selectTarget = SelectTargetCommon.GetNearMotion(_ObjMotion, transform.position, null, SelectTargetType.Enemy);
 
-        if (selectTargets.Count > 0)
+        foreach (var impact in _ImpactList)
         {
-            foreach (var impact in _ImpactList)
-            {
-                impact.ActImpact(_ObjMotion, selectTargets[0]);
-            }
+            impact.ActImpact(_ObjMotion, selectTarget);
         }
+
     }
 }

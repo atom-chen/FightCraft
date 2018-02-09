@@ -36,11 +36,11 @@ public class BulletLineBoom : BulletBase
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("OnTriggerEnter:" + other.ToString());
         var targetMotion = other.GetComponentInParent<MotionManager>();
         if (targetMotion == null)
             return;
 
+        Debug.Log("OnTriggerEnter:" + targetMotion.ToString());
         if (!_IsBulletHitLie && (targetMotion.MotionPrior == BaseMotionManager.LIE_PRIOR || targetMotion.MotionPrior == BaseMotionManager.RISE_PRIOR))
             return;
 

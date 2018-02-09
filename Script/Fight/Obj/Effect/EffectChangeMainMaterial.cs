@@ -31,6 +31,7 @@ public class EffectChangeMainMaterial : EffectController
 
     public override void HideEffect()
     {
+        Debug.Log("HideEffect");
         if (!_IsPlayingEffect)
             return;
 
@@ -65,7 +66,7 @@ public class EffectChangeMainMaterial : EffectController
             materials.Insert(0, _ChangeMaterial);
             _SkinnedMesh.materials = materials.ToArray();
             _SkinnedMesh.materials[0].SetTexture("_MainTex", _OrgMaterial.GetTexture("_MainTex"));
-
+            Debug.Log("AddMat:" + _SkinnedMesh.materials[0].name);
         }
     }
 
@@ -79,6 +80,8 @@ public class EffectChangeMainMaterial : EffectController
             materials.RemoveAt(0);
             materials.Insert(0, _OrgMaterial);
             _SkinnedMesh.materials = materials.ToArray();
+
+            Debug.Log("RemMat:" + _SkinnedMesh.materials[0].name);
         }
     }
 

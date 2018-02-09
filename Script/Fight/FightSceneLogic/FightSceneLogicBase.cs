@@ -22,6 +22,7 @@ public class FightSceneLogicBase : MonoBehaviour
     public virtual void StartLogic()
     {
         _IsStart = true;
+        StartTimmer();
     }
 
     protected virtual void UpdateLogic()
@@ -40,6 +41,36 @@ public class FightSceneLogicBase : MonoBehaviour
 
     #endregion
 
+    #region timmer
+
+    public int _LogicTimmer;
+
+    private float _StartTime = 0;
+    private bool _IsRunTimmer = false;
+
+    public void StartTimmer()
+    {
+        _IsRunTimmer = true;
+        _LogicTimmer = 0;
+        InvokeRepeating("TimmerUpdate", 0, 1);
+    }
+
+    public void StopTimmer()
+    {
+        _IsRunTimmer = false;
+    }
+
+    public void TimmerUpdate()
+    {
+        if (_IsRunTimmer)
+        {
+            ++_LogicTimmer;
+        }
+    }
+
+
+    #endregion
+
     protected void LogicFinish(bool isWin)
     {
         StartCoroutine(ExitFightLogic(isWin));
@@ -48,7 +79,10 @@ public class FightSceneLogicBase : MonoBehaviour
     private IEnumerator ExitFightLogic(bool isWin)
     {
         yield return new WaitForSeconds(3);
-        //FightManager.Instance.LogicFinish(true);
+        if (isWin)
+        {
+            FightManager.Instance.StagePass();
+        }
         UIFightFinish.ShowAsyn(isWin);
     }
 }

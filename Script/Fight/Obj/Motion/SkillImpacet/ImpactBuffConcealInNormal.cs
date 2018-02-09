@@ -19,6 +19,13 @@ public class ImpactBuffConcealInNormal : ImpactBuff
         }
     }
 
+    public override void RemoveBuff(MotionManager ownerManager)
+    {
+        base.RemoveBuff(ownerManager);
+
+        _DynamicConcealEffect.HideEffect();
+    }
+
     public override void UpdateBuff()
     {
         base.UpdateBuff();

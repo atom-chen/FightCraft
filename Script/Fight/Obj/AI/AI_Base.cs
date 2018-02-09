@@ -66,7 +66,6 @@ public class AI_Base : MonoBehaviour
 
         ModifyInitSkill();
         InitSkillInfos();
-        _AIAwake = false;
     }
 
     protected virtual void AIUpdate()
@@ -143,7 +142,7 @@ public class AI_Base : MonoBehaviour
         skillInfo.LastUseSkillTime = Time.time;
     }
 
-    protected void StartSkill(AI_Skill_Info skillInfo, bool isIgnoreCD = false)
+    protected virtual void StartSkill(AI_Skill_Info skillInfo, bool isIgnoreCD = false)
     {
         if (!skillInfo.SkillBase.IsCanActSkill())
             return;

@@ -17,7 +17,7 @@ public class UIBossStageSelect : UIBase
     public static void ShowAsyn()
     {
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("LogicUI/Stage/UIStageSelect", UILayer.PopUI, hash);
+        GameCore.Instance.UIManager.ShowUI("LogicUI/Stage/UIBossStageSelect", UILayer.PopUI, hash);
     }
 
     #endregion
@@ -58,16 +58,16 @@ public class UIBossStageSelect : UIBase
 
     public UIContainerSelect _StageContainer;
 
-    private StageInfoRecord _SelectedStage;
+    private BossStageRecord _SelectedStage;
 
     public void InitContainer()
     {
-        _StageContainer.InitSelectContent(TableReader.StageInfo.Records.Values, null, OnSelectStage);
+        _StageContainer.InitSelectContent(TableReader.BossStage.Records.Values, null, OnSelectStage);
     }
 
     private void OnSelectStage(object stageObj)
     {
-        StageInfoRecord stageInfo = stageObj as StageInfoRecord;
+        BossStageRecord stageInfo = stageObj as BossStageRecord;
         if (stageInfo == null)
             return;
 
@@ -84,7 +84,7 @@ public class UIBossStageSelect : UIBase
     public Text _StageLevel;
     public Text _StageDesc;
 
-    private void SetStageInfo(StageInfoRecord stage)
+    private void SetStageInfo(BossStageRecord stage)
     {
         _StageName.text = stage.Name;
         _StageLevel.text = "1";
@@ -93,7 +93,8 @@ public class UIBossStageSelect : UIBase
 
     public void OnEnterStage()
     {
-        LogicManager.Instance.EnterFight(_SelectedStage);
+        ActData.Instance.StartStage(1, int.Parse(_SelectedStage.Id));
+        LogicManager.Instance.EnterFight(Tables.TableReader.StageInfo.GetRecord("100"));
     }
 
     #endregion

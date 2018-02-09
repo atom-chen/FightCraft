@@ -52,6 +52,9 @@ public class LogicManager
         LegendaryData.Instance.LoadClass(true);
         LegendaryData.Instance.InitLegendaryEquips();
 
+        ActData.Instance.LoadClass(true);
+        ActData.Instance.InitActData();
+
         UIMainFun.ShowAsyn();
     }
 
@@ -148,6 +151,7 @@ public class LogicManager
 
     public void ExitFight()
     {
+        ActData.Instance.PassStage(_EnterStageInfo.StageType);
         //var sceneLoader = GameCore.Instance.SceneManager.ChangeLogicScene();
         GameCore.Instance.UIManager.DestoryAllUI();
         UILoadingScene.ShowAsyn(GameDefine.GAMELOGIC_SCENE_NAME);

@@ -79,6 +79,7 @@ public class FightSceneAreaKAllEnemy : FightSceneAreaBase
             if (_IsEnemyAlert)
             {
                 enemyAI._TargetMotion = FightManager.Instance.MainChatMotion;
+                enemyAI.AIWake = true;
             }
         }
     }

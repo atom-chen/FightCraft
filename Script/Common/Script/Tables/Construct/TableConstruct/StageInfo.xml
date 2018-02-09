@@ -68,7 +68,7 @@
     </constructType2>
     <constructDefault>
     </constructDefault>
-    <constructRepeat>3</constructRepeat>
+    <constructRepeat>5</constructRepeat>
   </constructColumn>
   <constructColumn>
     <constructName>CameraOffset</constructName>
@@ -78,16 +78,6 @@
       <constructType2>三元组</constructType2>
     </constructType2>
     <constructDefault>0;0;0</constructDefault>
-    <constructRepeat>3</constructRepeat>
-  </constructColumn>
-  <constructColumn>
-    <constructName>CameraLimit</constructName>
-    <constructCode>CameraLimit</constructCode>
-    <constructType1>基本类型</constructType1>
-    <constructType2>
-      <constructType2>三元组</constructType2>
-    </constructType2>
-    <constructDefault>0;0;0</constructDefault>
-    <constructRepeat>3</constructRepeat>
+    <constructRepeat>5</constructRepeat>
   </constructColumn>
 </root>

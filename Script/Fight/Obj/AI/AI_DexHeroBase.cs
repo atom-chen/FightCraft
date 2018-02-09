@@ -47,7 +47,7 @@ public class AI_DexHeroBase : AI_HeroBase
     {
         base.AIUpdate();
 
-        //if (_SelfMotion.RoleAttrManager.HPPersent < 0.5f)
+        if (_SelfMotion.RoleAttrManager.HPPersent < 0.5f)
         {
             StartStage2();
         }

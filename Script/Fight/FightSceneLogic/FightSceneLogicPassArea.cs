@@ -14,8 +14,8 @@ public class FightSceneLogicPassArea : FightSceneLogicBase
 
     #endregion
 
-    private FightSceneAreaBase _RunningArea;
-    private int _RunningIdx;
+    protected FightSceneAreaBase _RunningArea;
+    protected int _RunningIdx;
 
     public override void StartLogic()
     {
@@ -82,13 +82,13 @@ public class FightSceneLogicPassArea : FightSceneLogicBase
 
     #region 
 
-    public void AreaStart(FightSceneAreaBase startArea)
+    public virtual void AreaStart(FightSceneAreaBase startArea)
     {
         _RunningArea = startArea;
         startArea.StartArea();
     }
 
-    public void AreaFinish(FightSceneAreaBase finishArea)
+    public virtual void AreaFinish(FightSceneAreaBase finishArea)
     {
         if (finishArea == _RunningArea)
         {
@@ -97,7 +97,7 @@ public class FightSceneLogicPassArea : FightSceneLogicBase
         StartNextArea();
     }
 
-    public void StartNextArea()
+    public virtual void StartNextArea()
     {
         ++_RunningIdx;
         if (_RunningIdx < _FightArea.Count)

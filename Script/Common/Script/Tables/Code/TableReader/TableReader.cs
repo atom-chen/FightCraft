@@ -27,6 +27,8 @@ namespace Tables
 //
         public static AttrValue AttrValue { get; internal set; }
 //
+        public static BossStage BossStage { get; internal set; }
+//
         public static CommonItem CommonItem { get; internal set; }
 //
         public static EquipItem EquipItem { get; internal set; }
@@ -57,6 +59,7 @@ namespace Tables
         {
             //读取所有表
             AttrValue = new AttrValue(TableReadBase.GetTableText("AttrValue"), false);
+            BossStage = new BossStage(TableReadBase.GetTableText("BossStage"), false);
             CommonItem = new CommonItem(TableReadBase.GetTableText("CommonItem"), false);
             EquipItem = new EquipItem(TableReadBase.GetTableText("EquipItem"), false);
             EquipSpAttr = new EquipSpAttr(TableReadBase.GetTableText("EquipSpAttr"), false);
@@ -73,6 +76,7 @@ namespace Tables
 
             //初始化所有表
             AttrValue.CoverTableContent();
+            BossStage.CoverTableContent();
             CommonItem.CoverTableContent();
             EquipItem.CoverTableContent();
             EquipSpAttr.CoverTableContent();
