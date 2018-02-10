@@ -8,6 +8,8 @@ public class AI_HeroBase : AI_Base
     {
         base.Init();
         InitRise();
+
+        InitPassiveSkills();
     }
 
     protected override void AIUpdate()
@@ -109,6 +111,8 @@ public class AI_HeroBase : AI_Base
 
     #region critical AI
 
+    public float _CriticalSkillRate = 0;
+
     //if target start use skill, AI use skill
     private void UpdateCriticalAI()
     {
@@ -116,6 +120,13 @@ public class AI_HeroBase : AI_Base
             return;
 
         if (_TargetMotion.ActingSkill == null)
+            return;
+
+        if (_CriticalSkillRate <= 0)
+            return;
+
+        var random = Random.Range(0, 1);
+        if (_CriticalSkillRate < random)
             return;
 
         AI_Skill_Info aiSkill = _AISkills[0];
@@ -128,6 +139,30 @@ public class AI_HeroBase : AI_Base
             }
         }
         StartSkill(aiSkill);
+    }
+
+    #endregion
+
+    #region Passive skills
+
+    public Transform _PassiveGO;
+
+    protected void InitPassiveSkills()
+    {
+        if (_PassiveGO == null)
+            return;
+
+        List<ImpactBase> passiveImpacts = new List<ImpactBase>();
+        for (int i = 0; i < _PassiveGO.childCount; ++i)
+        {
+            var passiveImpact = _PassiveGO.GetChild(i).GetComponents<ImpactBase>();
+            passiveImpacts.AddRange(passiveImpact);
+        }
+
+        foreach (var buff in passiveImpacts)
+        {
+            buff.ActImpact(_SelfMotion, _SelfMotion);
+        }
     }
 
     #endregion

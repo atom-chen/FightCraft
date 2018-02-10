@@ -15,6 +15,9 @@ public class BulletMuTong : BulletSummon
 
         gameObject.layer = FightLayerCommon.EVIL;
 
+        var collider = gameObject.GetComponent<Collider>();
+        collider.enabled = true;
+
         _Animation = gameObject.GetComponentInChildren<Animation>();
         if (_Animation != null && _HitAnimation != null)
         {
@@ -25,6 +28,8 @@ public class BulletMuTong : BulletSummon
     void OnTriggerEnter(Collider other)
     {
         Debug.Log("OnTriggerEnter:" + other.ToString());
+        if (other.gameObject.GetComponent<Rigidbody>() != null)
+            return;
 
         var collider = gameObject.GetComponent<Collider>();
         collider.enabled = false;

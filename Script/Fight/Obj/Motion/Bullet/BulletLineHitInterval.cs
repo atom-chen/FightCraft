@@ -8,11 +8,14 @@ public class BulletLineHitInterval : BulletBase
     public float _MoveSpeed = 4;
     public float _HitInterval = 0.1f;
     public float _StayTime = 10;
+    public GameObject _SubImpact;
 
     private float _LiftTime = 0;
     private float _NextSpeed = 0;
     private float _LastHitTime = 0;
     private Collider _Collider;
+
+    private List<ImpactBase> _ImpactBase;
 
     public override void Init(MotionManager senderMotion, BulletEmitterBase emitterBase)
     {
@@ -29,7 +32,11 @@ public class BulletLineHitInterval : BulletBase
 
         if (_LastHitTime + _HitInterval < Time.time)
         {
-            StartCoroutine(CalculateHit());
+            if (_Collider != null)
+            {
+                StartCoroutine(CalculateHit());
+            }
+            ActSubImpacts();
             _LastHitTime = Time.time;
         }
 
@@ -40,7 +47,7 @@ public class BulletLineHitInterval : BulletBase
         }
     }
 
-    IEnumerator CalculateHit()
+    protected IEnumerator CalculateHit()
     {
         _Collider.enabled = true;
 
@@ -61,6 +68,23 @@ public class BulletLineHitInterval : BulletBase
 
         _NextSpeed = 0;
         BulletHit(targetMotion);
+    }
+
+    private void ActSubImpacts()
+    {
+        if (_ImpactBase == null)
+        {
+            _ImpactBase = new List<ImpactBase>();
+            if (_SubImpact != null)
+            {
+                _ImpactBase.AddRange(_SubImpact.GetComponents<ImpactBase>());
+            }
+        }
+
+        for (int i = 0; i < _ImpactBase.Count; ++i)
+        {
+            _ImpactBase[i].ActImpact(_SkillMotion, _SkillMotion);
+        }
     }
 
 }

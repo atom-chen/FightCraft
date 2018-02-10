@@ -7,7 +7,7 @@ public class BulletEmitterRandomSplit : BulletEmitterBase
     public int _MaxRange = 8;
     public float _SplitRange = 0.5f;
 
-    private int _SplitCnt;
+    protected int _SplitCnt;
     public override void ActImpact(MotionManager senderManager, MotionManager reciverManager)
     {
         base.ActImpact(senderManager, reciverManager);
@@ -20,7 +20,7 @@ public class BulletEmitterRandomSplit : BulletEmitterBase
         }
     }
 
-    private void EmitBullet(int bulletPos)
+    protected void EmitBullet(int bulletPos)
     {
         var bullet = InitBulletGO<BulletBase>();
 

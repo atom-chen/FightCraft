@@ -24,6 +24,7 @@ public class BulletEmitterBase : ImpactBase
     {
         Vector3 modifyPos = transform.forward * _EmitterOffset.x + transform.right * _EmitterOffset.z + transform.up * _EmitterOffset.y;
         var bulletObj = ResourcePool.Instance.GetIdleBullet(_BulletPrefab);
+        bulletObj.gameObject.SetActive(true);
         bulletObj.transform.SetParent(ResourcePool.Instance.transform);
         if (_SenderPos)
         {
@@ -34,7 +35,6 @@ public class BulletEmitterBase : ImpactBase
             bulletObj.transform.position = transform.position + modifyPos;
         }
         bulletObj.transform.rotation = transform.rotation;
-        bulletObj.gameObject.SetActive(true);
         bulletObj.gameObject.layer = FightLayerCommon.GetBulletLayer(_SenderManager);
         bulletObj.Init(_SenderManager, this);
         var bulletHits= bulletObj.GetComponentsInChildren<ImpactHit>();

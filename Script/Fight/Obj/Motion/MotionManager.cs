@@ -827,6 +827,8 @@ public class MotionManager : MonoBehaviour
     {
         _NavAgent.speed = RoleAttrManager.MoveSpeed;
         _NavAgent.SetDestination(targetPos);
+
+        transform.LookAt(targetPos);
     }
 
     public void StopMove()
