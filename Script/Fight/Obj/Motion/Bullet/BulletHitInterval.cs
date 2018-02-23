@@ -10,6 +10,7 @@ public class BulletHitInterval : BulletBase
     public float _ShowHitObjDelay = 0f;
     public float _FirstHitDelay = 0f;
     public float _HitInterval = 0.1f;
+    public bool _RestartHitObj = false;
     public float _StayTime = 10;
 
     private bool _StartHit = false;
@@ -78,6 +79,11 @@ public class BulletHitInterval : BulletBase
     IEnumerator CalculateHit()
     {
         _Collider.enabled = true;
+        if (_RestartHitObj)
+        {
+            _HitObj.SetActive(false);
+            _HitObj.SetActive(true);
+        }
 
         yield return new WaitForFixedUpdate();
 

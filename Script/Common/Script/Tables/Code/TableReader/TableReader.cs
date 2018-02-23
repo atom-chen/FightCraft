@@ -25,6 +25,8 @@ namespace Tables
         #region Logic
 
 //
+        public static Achievement Achievement { get; internal set; }
+//
         public static AttrValue AttrValue { get; internal set; }
 //
         public static BossStage BossStage { get; internal set; }
@@ -58,6 +60,7 @@ namespace Tables
         public static void ReadTables()
         {
             //读取所有表
+            Achievement = new Achievement(TableReadBase.GetTableText("Achievement"), false);
             AttrValue = new AttrValue(TableReadBase.GetTableText("AttrValue"), false);
             BossStage = new BossStage(TableReadBase.GetTableText("BossStage"), false);
             CommonItem = new CommonItem(TableReadBase.GetTableText("CommonItem"), false);
@@ -75,6 +78,7 @@ namespace Tables
             StrTable = new StrTable(TableReadBase.GetTableText("StrTable"), false);
 
             //初始化所有表
+            Achievement.CoverTableContent();
             AttrValue.CoverTableContent();
             BossStage.CoverTableContent();
             CommonItem.CoverTableContent();
