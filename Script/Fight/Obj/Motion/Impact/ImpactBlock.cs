@@ -11,18 +11,12 @@ public class ImpactBlock : ImpactBuff
     {
         base.ActBuff(senderManager, reciverManager);
 
-        reciverManager.EventController.RegisteEvent(EVENT_TYPE.EVENT_MOTION_HIT, HitEvent, 99);
-        reciverManager.EventController.RegisteEvent(EVENT_TYPE.EVENT_MOTION_FLY, FlyEvent, 99);
-
         _BuffOwner = reciverManager;
     }
 
     public override void RemoveBuff(MotionManager reciverManager)
     {
         base.RemoveBuff(reciverManager);
-
-        reciverManager.EventController.UnRegisteEvent(EVENT_TYPE.EVENT_MOTION_HIT, HitEvent);
-        reciverManager.EventController.UnRegisteEvent(EVENT_TYPE.EVENT_MOTION_FLY, FlyEvent);
         
     }
 

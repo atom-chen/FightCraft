@@ -151,6 +151,7 @@ public class GemData : SaveItemBase
             return;
 
         gem1.ExchangeInfo(gem2);
+        GemSuit.Instance.IsActSet();
     }
 
     public bool IsEquipedGem(string gemDataID)
@@ -280,6 +281,10 @@ public class GemData : SaveItemBase
         matItem.DecStackNum(lvInfo.MaterialCnt);
 
         lvUpGem.LevelUp();
+
+        Hashtable hash = new Hashtable();
+        hash.Add("GemInfo", lvUpGem);
+        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_GEM_LEVEL_UP, this, hash);
 
         return true;
     }

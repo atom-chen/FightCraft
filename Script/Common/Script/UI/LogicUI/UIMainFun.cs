@@ -14,15 +14,6 @@ public class UIMainFun : UIBase
         GameCore.Instance.UIManager.ShowUI("LogicUI/UIMainFun", UILayer.BaseUI, hash);
     }
 
-    public static List<EVENT_TYPE> GetShowEvent()
-    {
-        List<EVENT_TYPE> showEvents = new List<EVENT_TYPE>();
-
-        showEvents.Add(EVENT_TYPE.EVENT_LOGIC_LOGIC_START);
-
-        return showEvents;
-    }
-
     public static void UpdateMoney()
     {
         var instance = GameCore.Instance.UIManager.GetUIInstance<UIMainFun>("LogicUI/UIMainFun");
@@ -124,6 +115,11 @@ public class UIMainFun : UIBase
     public void BtnBossStage()
     {
         UIBossStageSelect.ShowAsyn();
+    }
+
+    public void BtnMission()
+    {
+        UIDailyMission.ShowAsyn();
     }
     #endregion
 }

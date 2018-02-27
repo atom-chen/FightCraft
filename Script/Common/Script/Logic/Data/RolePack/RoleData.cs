@@ -315,6 +315,8 @@ public class RoleData : SaveItemBase
         _UnDistrubutePoint += 5;
 
         CalculateAttr();
+
+        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_ROLE_LEVEL_UP, this, null);
     }
 
     private void AttrLevelUp()

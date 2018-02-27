@@ -212,6 +212,13 @@ public class FightManager : InstanceBase<FightManager>
         _FightScene.MotionDie(objMotion);
         
         --_SceneEnemyCnt;
+
+        if (objMotion.MonsterBase != null)
+        {
+            Hashtable hash = new Hashtable();
+            hash.Add("MonsterInfo", objMotion.MonsterBase);
+            GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_KILL_MONSTER, this, hash);
+        }
     }
 
     #endregion
@@ -241,13 +248,22 @@ public class FightManager : InstanceBase<FightManager>
 
     public void StagePass()
     {
-        
+        ActData.Instance.PassStage(LogicManager.Instance.EnterStageInfo.StageType);
+
+        Hashtable hash = new Hashtable();
+        hash.Add("StageInfo", LogicManager.Instance.EnterStageInfo);
+        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_PASS_STAGE, this, hash);
+
     }
 
     public void LogicFinish(bool isWin)
     {
         Debug.Log("LogicFinish");
         LogicManager.Instance.ExitFight();
+
+        Hashtable hash = new Hashtable();
+        hash.Add("IsWin", isWin);
+        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_EXIT_STAGE, this, hash);
     }
 
     #endregion

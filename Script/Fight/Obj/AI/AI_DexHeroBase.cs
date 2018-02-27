@@ -87,7 +87,6 @@ public class AI_DexHeroBase : AI_HeroBase
         _SkillBlock.Init();
 
         _LastBlockTime = -_BlockCD;
-        _SelfMotion.EventController.RegisteEvent(EVENT_TYPE.EVENT_MOTION_HIT, HitEvent);
     }
 
     private void HitEvent(object sender, Hashtable eventArgs)

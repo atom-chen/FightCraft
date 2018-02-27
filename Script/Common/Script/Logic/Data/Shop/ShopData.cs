@@ -236,6 +236,10 @@ public class ShopData : SaveItemBase
         {
             Debug.Log("buy gambling:" + itemIdx);
         }
+
+        Hashtable hash = new Hashtable();
+        //hash.Add("EquipInfo", equip);
+        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_GAMBLING, this, hash);
     }
 
     #endregion

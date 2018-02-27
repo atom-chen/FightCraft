@@ -46,12 +46,12 @@ public class BaseMotionManager : MonoBehaviour
         eventHash.Add("Sender", impactSender);
         if (_MotionManager.MotionPrior == FLY_PRIOR || _MotionManager.MotionPrior == LIE_PRIOR)
         {
-            _MotionManager.EventController.PushEvent(EVENT_TYPE.EVENT_MOTION_FLY, this, eventHash);
+
             MotionFlyStay(hitTime, hitEffect, impactSender);
         }
         else if(_MotionManager.MotionPrior <= HIT_PRIOR)
         {
-            _MotionManager.EventController.PushEvent(EVENT_TYPE.EVENT_MOTION_HIT, this, eventHash);
+
             MotionHit(hitTime, hitEffect, impactSender);
         }
          
@@ -71,7 +71,7 @@ public class BaseMotionManager : MonoBehaviour
 
         Hashtable eventHash = new Hashtable();
         eventHash.Add("Sender", impactSender);
-        _MotionManager.EventController.PushEvent(EVENT_TYPE.EVENT_MOTION_FLY, this, eventHash);
+
         MotionFly(flyHeight, hitEffect, impactSender);
     }
 
@@ -486,7 +486,7 @@ public class BaseMotionManager : MonoBehaviour
     {
         _MotionManager.MotionPrior = RISE_PRIOR;
         _MotionManager.PlayAnimation(_RiseAnim);
-        _MotionManager.EventController.PushEvent(EVENT_TYPE.EVENT_MOTION_RISE, this, new Hashtable());
+
     }
 
     private IEnumerator MotionCorpse()
@@ -516,7 +516,7 @@ public class BaseMotionManager : MonoBehaviour
     {
         MotionIdle();
         _MotionManager.ResumeCorpsePrior();
-        _MotionManager.EventController.PushEvent(EVENT_TYPE.EVENT_MOTION_RISE_FINISH, this, new Hashtable());
+
     }
 
     private void DispatchRiseEvent(string funcName, object param)

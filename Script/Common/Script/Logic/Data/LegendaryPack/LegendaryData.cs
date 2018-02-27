@@ -103,6 +103,10 @@ public class LegendaryData : SaveItemBase
         _LegendaryEquipDict[legendaryTab].ExchangeInfo(equip);
         CalculateAttrs();
 
+        Hashtable hash = new Hashtable();
+        hash.Add("EquipInfo", equip);
+        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_EQUIP_STORE, this, hash);
+
         return true;
     }
 

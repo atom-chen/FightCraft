@@ -70,6 +70,10 @@ public class GameCore : MonoBehaviour
     private UIManager _UIManager;
     public UIManager UIManager { get { return _UIManager; } }
 
+    [SerializeField]
+    private EventController _EventController;
+    public EventController EventController { get { return _EventController; } }
+
     #endregion
 
     #region 

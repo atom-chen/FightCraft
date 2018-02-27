@@ -174,6 +174,10 @@ public class EquipRefresh : DataPackBase
 
         RandomAttrs.LvUpEquipExAttr(itemEquip);
         itemEquip.EquipRefreshCostMatrial += refreshCost._MatCnt;
+
+        Hashtable hash = new Hashtable();
+        hash.Add("EquipInfo", itemEquip);
+        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_EQUIP_REFRESH, this, hash);
     }
 
     public void EquipRefreshDiamond(ItemEquip itemEquip)
@@ -187,6 +191,10 @@ public class EquipRefresh : DataPackBase
 
         RandomAttrs.LvUpEquipExAttr(itemEquip);
         itemEquip.EquipRefreshCostMatrial += refreshCost._MatCnt;
+
+        Hashtable hash = new Hashtable();
+        hash.Add("EquipInfo", itemEquip);
+        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_EQUIP_REFRESH, this, hash);
     }
 
     public void EquipRefreshFree(ItemEquip itemEquip)
@@ -201,6 +209,10 @@ public class EquipRefresh : DataPackBase
         --_LastFreeTimes;
         RandomAttrs.LvUpEquipExAttr(itemEquip);
         itemEquip.EquipRefreshCostMatrial += refreshCost._MatCnt;
+
+        Hashtable hash = new Hashtable();
+        hash.Add("EquipInfo", itemEquip);
+        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_EQUIP_REFRESH, this, hash);
     }
 
     public void WatchVideoForFreeRefresh()
@@ -250,6 +262,10 @@ public class EquipRefresh : DataPackBase
         itemEquip.ResetItem();
         itemEquip.SaveClass(true);
         BackBagPack.Instance.AddItem(_RefreshMatDataID, destoryGetCnt);
+
+        Hashtable hash = new Hashtable();
+        hash.Add("EquipInfo", itemEquip);
+        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_EQUIP_DESTORY, this, hash);
     }
     #endregion
 

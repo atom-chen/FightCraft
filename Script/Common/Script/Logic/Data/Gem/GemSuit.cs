@@ -121,6 +121,11 @@ public class GemSuit
             if (_ActSet != null)
             {
                 CalculateSetAttrs();
+
+                Hashtable hash = new Hashtable();
+                hash.Add("ActGemSet", _ActSet);
+                GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_GEM_ACT_SUIT, this, hash);
+
                 return true;
             }
         }

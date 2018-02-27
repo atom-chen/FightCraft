@@ -56,6 +56,8 @@ namespace Tables
         public static StrDictionary StrDictionary { get; internal set; }
 //
         public static StrTable StrTable { get; internal set; }
+//
+        public static Mission Mission { get; internal set; }
 
         public static void ReadTables()
         {
@@ -76,6 +78,7 @@ namespace Tables
             StageInfo = new StageInfo(TableReadBase.GetTableText("StageInfo"), false);
             StrDictionary = new StrDictionary(TableReadBase.GetTableText("StrDictionary"), false);
             StrTable = new StrTable(TableReadBase.GetTableText("StrTable"), false);
+            Mission = new Mission(TableReadBase.GetTableText("Mission"), false);
 
             //初始化所有表
             Achievement.CoverTableContent();
@@ -94,6 +97,7 @@ namespace Tables
             StageInfo.CoverTableContent();
             StrDictionary.CoverTableContent();
             StrTable.CoverTableContent();
+            Mission.CoverTableContent();
         }
 
         #endregion

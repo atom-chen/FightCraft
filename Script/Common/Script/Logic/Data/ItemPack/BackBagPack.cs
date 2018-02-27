@@ -110,6 +110,11 @@ public class BackBagPack : DataPackBase
             return false;
 
         emptyPos.ExchangeInfo(equip);
+
+        Hashtable hash = new Hashtable();
+        hash.Add("EquipInfo", emptyPos);
+        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_EQUIP_GET, this, hash);
+
         return true;
     }
 
