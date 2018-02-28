@@ -49,6 +49,9 @@ public class LogicManager
         GemData.Instance.LoadClass(true);
         GemData.Instance.InitGemData();
 
+        EquipRefresh.Instance.LoadClass(true);
+        EquipRefresh.Instance.InitEquipRefresh();
+
         LegendaryData.Instance.LoadClass(true);
         LegendaryData.Instance.InitLegendaryEquips();
 
@@ -57,6 +60,9 @@ public class LogicManager
 
         MissionData.Instance.LoadClass(true);
         MissionData.Instance.InitMissionData();
+
+        AchievementData.Instance.LoadClass(true);
+        AchievementData.Instance.InitMissionData();
 
         UIMainFun.ShowAsyn();
     }

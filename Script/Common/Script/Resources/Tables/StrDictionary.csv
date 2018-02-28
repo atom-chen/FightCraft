@@ -53,6 +53,8 @@
 40000,equipRefersh,,"not enough times, watch a video?",,
 40001,equipRefersh,,"destory it will get {0}*{1}, a u sure?",,
 40002,equipRefersh,,the same equip,,
+50000,mission,,Daily,,
+50001,mission,,Challenge,,
 100000,fightTip,,realy exit this stage ?,,
 120000,legendary attr,,element damage {0},,
 120001,legendary attr,,element damage {0},,

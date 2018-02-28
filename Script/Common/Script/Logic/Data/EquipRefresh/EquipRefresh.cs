@@ -46,6 +46,14 @@ public class EquipRefresh : DataPackBase
         }
     }
 
+    public void InitEquipRefresh()
+    {
+        if (_LastFreeTimes < 0)
+        {
+            _LastFreeTimes = 0;
+        }
+    }
+
     public static string _RefreshMatDataID = "20000";
 
     public EquipRefreshCost GetEquipRefreshCost(ItemEquip itemEquip)
@@ -210,6 +218,8 @@ public class EquipRefresh : DataPackBase
         RandomAttrs.LvUpEquipExAttr(itemEquip);
         itemEquip.EquipRefreshCostMatrial += refreshCost._MatCnt;
 
+        SaveClass(false);
+
         Hashtable hash = new Hashtable();
         hash.Add("EquipInfo", itemEquip);
         GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_EQUIP_REFRESH, this, hash);
@@ -224,6 +234,8 @@ public class EquipRefresh : DataPackBase
     {
         ++_LastFreeTimes;
         UIEquipRefresh.Refresh();
+
+        SaveClass(false);
     }
 
     #endregion

@@ -380,6 +380,9 @@ public class DataPackSave
 
     public static void SetBaseField(object obj, FieldInfo field, string valueStr)
     {
+        if (string.IsNullOrEmpty(valueStr))
+            return;
+
         if (field.FieldType == typeof(int))
         {
             field.SetValue(obj, int.Parse(valueStr));

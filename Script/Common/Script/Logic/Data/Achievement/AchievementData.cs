@@ -6,90 +6,61 @@ using Tables;
 public class AchievementData : DataPackBase
 {
 
-    public void InitAchievement()
+    #region 唯一
+
+    private static AchievementData _Instance = null;
+    public static AchievementData Instance
     {
-        InitAchieveItems();
-        InitAchieveData();
-    }
-
-    #region achieveitems
-
-    [SaveField(1)]
-    public List<AchievementItem> _AchieveItemList;
-
-    public void InitAchieveItems()
-    {
-        if (_AchieveItemList == null || _AchieveItemList.Count == 0)
+        get
         {
-            foreach (var achieveRecord in TableReader.Achievement.Records.Values)
+            if (_Instance == null)
             {
-                AchievementItem achieveItem = new AchievementItem();
-                achieveItem._AchieveDataID = achieveRecord.Id;
-                achieveItem._AchieveState = AchieveState.Processing;
+                _Instance = new AchievementData();
             }
+            return _Instance;
         }
     }
 
-    public Dictionary<string, AchievementItem> GetShowAchieveList()
+    private AchievementData()
     {
-        Dictionary<string, AchievementItem> showList = new Dictionary<string, AchievementItem>();
-
-        foreach (var achieveItem in _AchieveItemList)
-        {
-            if (achieveItem._AchieveState == AchieveState.Done
-                || achieveItem._AchieveState == AchieveState.Processing
-                || achieveItem.AchieveTabRecord.ClassFinal)
-            {
-                if (!showList.ContainsKey(achieveItem.AchieveTabRecord.ClassScript))
-                {
-                    showList.Add(achieveItem.AchieveTabRecord.ClassScript, achieveItem);
-                }
-            }
-        }
-
-        return showList;
+        _SaveFileName = "AchievementData";
     }
 
     #endregion
 
-    #region achieve data
+    #region 
 
-    [SaveField(2)]
-    private List<int> _AchieveData;
+    [SaveField(1)]
+    public List<MissionItem> _MissionItems;
 
-    private List<string> _AchieveScripts = new List<string>();
-
-    public void InitAchieveData()
+    public void InitMissionData()
     {
-        foreach (var achieveRecord in TableReader.Achievement.Records.Values)
+        List<MissionRecord> achieveMission = new List<MissionRecord>();
+        foreach (var missionTab in TableReader.Mission.Records)
         {
-            if (!_AchieveScripts.Contains(achieveRecord.ClassScript))
+            if (missionTab.Value.Achieve == 1)
             {
-                _AchieveScripts.Add(achieveRecord.ClassScript);
+                achieveMission.Add(missionTab.Value);
             }
         }
 
-        if (_AchieveData == null || _AchieveScripts.Count != _AchieveData.Count)
+        if (_MissionItems == null || achieveMission.Count != _MissionItems.Count)
         {
-            _AchieveData = new List<int>();
-            for (int i = 0; i < _AchieveScripts.Count; ++i)
+            _MissionItems = new List<MissionItem>();
+            foreach (var achieve in achieveMission)
             {
-                _AchieveData.Add(0);
+                MissionItem missionItem = new MissionItem(achieve);
+                _MissionItems.Add(missionItem);
             }
+            SaveClass(true);
+        }
+
+        foreach (var mission in _MissionItems)
+        {
+            mission.InitMissionItem();
         }
     }
-
-    public int GetAchieveData(string scriptName)
-    {
-        int idx = _AchieveScripts.IndexOf(scriptName);
-        return _AchieveData[idx];
-    }
-
-    public void SetAchieveData(string scriptName, int value)
-    {
-        int idx = _AchieveScripts.IndexOf(scriptName);
-        _AchieveData[idx] = value;
-    }
+    
 
     #endregion
 

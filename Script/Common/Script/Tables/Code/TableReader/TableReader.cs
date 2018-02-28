@@ -43,6 +43,8 @@ namespace Tables
 //
         public static GemTable GemTable { get; internal set; }
 //
+        public static Mission Mission { get; internal set; }
+//
         public static MonsterBase MonsterBase { get; internal set; }
 //
         public static RoleExp RoleExp { get; internal set; }
@@ -56,8 +58,6 @@ namespace Tables
         public static StrDictionary StrDictionary { get; internal set; }
 //
         public static StrTable StrTable { get; internal set; }
-//
-        public static Mission Mission { get; internal set; }
 
         public static void ReadTables()
         {
@@ -71,6 +71,7 @@ namespace Tables
             FightAttr = new FightAttr(TableReadBase.GetTableText("FightAttr"), false);
             GemSet = new GemSet(TableReadBase.GetTableText("GemSet"), false);
             GemTable = new GemTable(TableReadBase.GetTableText("GemTable"), false);
+            Mission = new Mission(TableReadBase.GetTableText("Mission"), false);
             MonsterBase = new MonsterBase(TableReadBase.GetTableText("MonsterBase"), false);
             RoleExp = new RoleExp(TableReadBase.GetTableText("RoleExp"), false);
             ShopItem = new ShopItem(TableReadBase.GetTableText("ShopItem"), false);
@@ -78,7 +79,6 @@ namespace Tables
             StageInfo = new StageInfo(TableReadBase.GetTableText("StageInfo"), false);
             StrDictionary = new StrDictionary(TableReadBase.GetTableText("StrDictionary"), false);
             StrTable = new StrTable(TableReadBase.GetTableText("StrTable"), false);
-            Mission = new Mission(TableReadBase.GetTableText("Mission"), false);
 
             //初始化所有表
             Achievement.CoverTableContent();
@@ -90,6 +90,7 @@ namespace Tables
             FightAttr.CoverTableContent();
             GemSet.CoverTableContent();
             GemTable.CoverTableContent();
+            Mission.CoverTableContent();
             MonsterBase.CoverTableContent();
             RoleExp.CoverTableContent();
             ShopItem.CoverTableContent();
@@ -97,7 +98,6 @@ namespace Tables
             StageInfo.CoverTableContent();
             StrDictionary.CoverTableContent();
             StrTable.CoverTableContent();
-            Mission.CoverTableContent();
         }
 
         #endregion

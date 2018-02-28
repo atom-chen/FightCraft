@@ -6,7 +6,7 @@ public class MissionConditionLvUp : MissionConditionBase
 {
     private int _TargetLv = 0;
 
-    public override void InitCondition(MissionProcessData missionData, List<string> conditionParams)
+    public override void InitCondition(MissionItem missionData, List<string> conditionParams)
     {
         _TargetLv = int.Parse(conditionParams[0]);
         GameCore.Instance.EventController.RegisteEvent(EVENT_TYPE.EVENT_LOGIC_ROLE_LEVEL_UP, EventDelegate);

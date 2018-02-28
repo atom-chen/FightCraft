@@ -99,5 +99,14 @@ namespace Tables
         DOUBLE_BOSS = 2, //DOUBLE_BOSS,DOUBLE_BOSS
     }
 
+    //
+    public enum AWARD_TYPE
+    {
+        None = 0, //None,枚举必须保留0值
+        Item = 1, //Item,Item
+        Diamond = 2, //Diamond,Diamond
+        Gold = 3, //Gold,Gold
+    }
+
 
 }

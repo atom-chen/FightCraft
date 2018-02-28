@@ -1,2 +1,12 @@
-"""ID""","""??""","""??""","""ConditionScript""","""ConditionParams1""","""ConditionParams2""","""ConditionParams3""","""ConditionNum""","""HardStar"""
-1,EquipRefresh,,ConEquipRefreshTimes,1,0,0,1,1
+"""ID""","""??""","""??""","""Achieve""","""Class""","""SubClass""","""ConditionScript""","""ConditionParams1""","""ConditionParams2""","""ConditionParams3""","""ConditionNum""","""HardStar""","""AwardType""","""AwardSubType""","""AwardNum"""
+1,EquipRefresh,,0,EquipRefresh,EquipRefresh,ConEquipRefreshTimes,3,0,0,1,1,2,0,100
+1000,EquipRefreshTimes,,1,EquipRefresh,EquipRefreshTimes,ConEquipRefreshTimes,10,0,0,1,1,2,0,100
+1001,EquipRefreshTimes,,1,EquipRefresh,EquipRefreshTimes,ConEquipRefreshTimes,50,0,0,1,2,2,0,100
+1002,EquipRefreshTimes,,1,EquipRefresh,EquipRefreshTimes,ConEquipRefreshTimes,100,0,0,1,3,2,0,100
+1003,EquipRefreshTimes,,1,EquipRefresh,EquipRefreshTimes,ConEquipRefreshTimes,200,0,0,1,4,2,0,100
+1004,EquipRefreshTimes,,1,EquipRefresh,EquipRefreshTimes,ConEquipRefreshTimes,500,0,0,1,5,2,0,100
+1005,EquipRefreshTimes,,1,EquipRefresh,EquipRefreshTimes,ConEquipRefreshTimes,1000,0,0,1,6,2,0,100
+1006,EquipRefreshTimes,,1,EquipRefresh,EquipRefreshTimes,ConEquipRefreshTimes,1600,0,0,1,7,2,0,100
+1007,EquipRefreshTimes,,1,EquipRefresh,EquipRefreshTimes,ConEquipRefreshTimes,3200,0,0,1,8,2,0,100
+1008,EquipRefreshTimes,,1,EquipRefresh,EquipRefreshTimes,ConEquipRefreshTimes,6000,0,0,1,9,2,0,100
+1009,EquipRefreshTimes,,1,EquipRefresh,EquipRefreshTimes,ConEquipRefreshTimes,10000,0,0,1,10,2,0,100

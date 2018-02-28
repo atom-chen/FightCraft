@@ -44,7 +44,7 @@ public class MissionData : DataPackBase
 
     public void InitMissionData()
     {
-        //if (_RefreshTime.Day != System.DateTime.Now.Day)
+        if (_RefreshTime.Day != System.DateTime.Now.Day)
         {
             RefreshMissions();
             _RefreshTime = System.DateTime.Now;

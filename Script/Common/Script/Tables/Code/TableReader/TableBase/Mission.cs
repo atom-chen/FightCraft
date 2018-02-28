@@ -14,10 +14,16 @@ namespace Tables
 
         public override string Id { get; set; }        public string Name { get; set; }
         public string Desc { get; set; }
+        public int Achieve { get; set; }
+        public string Class { get; set; }
+        public string SubClass { get; set; }
         public string ConditionScript { get; set; }
         public List<string> ConditionParams { get; set; }
         public int ConditionNum { get; set; }
         public int HardStar { get; set; }
+        public int AwardType { get; set; }
+        public int AwardSubType { get; set; }
+        public int AwardNum { get; set; }
         public MissionRecord(DataRecord dataRecord)
         {
             if (dataRecord != null)
@@ -34,6 +40,9 @@ namespace Tables
             recordStrList.Add(TableWriteBase.GetWriteStr(Id));
             recordStrList.Add(TableWriteBase.GetWriteStr(Name));
             recordStrList.Add(TableWriteBase.GetWriteStr(Desc));
+            recordStrList.Add(TableWriteBase.GetWriteStr(Achieve));
+            recordStrList.Add(TableWriteBase.GetWriteStr(Class));
+            recordStrList.Add(TableWriteBase.GetWriteStr(SubClass));
             recordStrList.Add(TableWriteBase.GetWriteStr(ConditionScript));
             foreach (var testTableItem in ConditionParams)
             {
@@ -41,6 +50,9 @@ namespace Tables
             }
             recordStrList.Add(TableWriteBase.GetWriteStr(ConditionNum));
             recordStrList.Add(TableWriteBase.GetWriteStr(HardStar));
+            recordStrList.Add(TableWriteBase.GetWriteStr(AwardType));
+            recordStrList.Add(TableWriteBase.GetWriteStr(AwardSubType));
+            recordStrList.Add(TableWriteBase.GetWriteStr(AwardNum));
 
             return recordStrList.ToArray();
         }
@@ -106,12 +118,18 @@ namespace Tables
             {
                 pair.Value.Name = TableReadBase.ParseString(pair.Value.ValueStr[1]);
                 pair.Value.Desc = TableReadBase.ParseString(pair.Value.ValueStr[2]);
-                pair.Value.ConditionScript = TableReadBase.ParseString(pair.Value.ValueStr[3]);
-                pair.Value.ConditionParams.Add(TableReadBase.ParseString(pair.Value.ValueStr[4]));
-                pair.Value.ConditionParams.Add(TableReadBase.ParseString(pair.Value.ValueStr[5]));
-                pair.Value.ConditionParams.Add(TableReadBase.ParseString(pair.Value.ValueStr[6]));
-                pair.Value.ConditionNum = TableReadBase.ParseInt(pair.Value.ValueStr[7]);
-                pair.Value.HardStar = TableReadBase.ParseInt(pair.Value.ValueStr[8]);
+                pair.Value.Achieve = TableReadBase.ParseInt(pair.Value.ValueStr[3]);
+                pair.Value.Class = TableReadBase.ParseString(pair.Value.ValueStr[4]);
+                pair.Value.SubClass = TableReadBase.ParseString(pair.Value.ValueStr[5]);
+                pair.Value.ConditionScript = TableReadBase.ParseString(pair.Value.ValueStr[6]);
+                pair.Value.ConditionParams.Add(TableReadBase.ParseString(pair.Value.ValueStr[7]));
+                pair.Value.ConditionParams.Add(TableReadBase.ParseString(pair.Value.ValueStr[8]));
+                pair.Value.ConditionParams.Add(TableReadBase.ParseString(pair.Value.ValueStr[9]));
+                pair.Value.ConditionNum = TableReadBase.ParseInt(pair.Value.ValueStr[10]);
+                pair.Value.HardStar = TableReadBase.ParseInt(pair.Value.ValueStr[11]);
+                pair.Value.AwardType = TableReadBase.ParseInt(pair.Value.ValueStr[12]);
+                pair.Value.AwardSubType = TableReadBase.ParseInt(pair.Value.ValueStr[13]);
+                pair.Value.AwardNum = TableReadBase.ParseInt(pair.Value.ValueStr[14]);
             }
         }
     }

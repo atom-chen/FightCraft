@@ -121,6 +121,11 @@ public class UIMainFun : UIBase
     {
         UIDailyMission.ShowAsyn();
     }
+
+    public void BtnAchieve()
+    {
+        UIAchievement.ShowAsyn();
+    }
     #endregion
 }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MissionConditionBase
 {
-    public virtual void InitCondition(MissionProcessData missionData, List<string> conditionParam)
+    public virtual void InitCondition(MissionItem missionData, List<string> conditionParam)
     { }
 
     public virtual bool IsConditionMet()
@@ -20,5 +20,10 @@ public class MissionConditionBase
     public virtual string GetConditionProcessText()
     {
         return "";
+    }
+
+    public virtual void ConditionGoto()
+    {
+
     }
 }

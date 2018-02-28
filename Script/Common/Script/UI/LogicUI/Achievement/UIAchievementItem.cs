@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using System;
 using Tables;
 
-public class UIDailyMissionItem : UIItemSelect
+public class UIAchievementItem : UIItemSelect
 {
     public Image _MissionIcon;
     public Text _MissionDesc;

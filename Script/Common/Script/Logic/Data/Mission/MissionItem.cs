@@ -3,11 +3,6 @@ using System.Collections;
 using Tables;
 using System;
 
-public class MissionProcessData
-{
-    public int MissionProcessInt = 0;
-}
-
 public enum MissionState
 {
     None,
@@ -50,13 +45,17 @@ public class MissionItem : SaveItemBase
     }
 
     [SaveField(2)]
-    private MissionProcessData _MissionProcessData = new MissionProcessData();
+    private int _MissionProcessData = 0;
 
-    public MissionProcessData MissionProcessData
+    public int MissionProcessData
     {
         get
         {
             return _MissionProcessData;
+        }
+        set
+        {
+            _MissionProcessData = value;
         }
     }
 
@@ -69,7 +68,7 @@ public class MissionItem : SaveItemBase
     {
         var conditionType = Type.GetType(MissionRecord.ConditionScript);
         _MissionCondition = Activator.CreateInstance(conditionType) as MissionConditionBase;
-        _MissionCondition.InitCondition(MissionProcessData, MissionRecord.ConditionParams);
+        _MissionCondition.InitCondition(this, MissionRecord.ConditionParams);
     }
 
     public void RefreshMissionState()
