@@ -32,17 +32,29 @@ public class UISkillLevelUp : UIBase
 
     #endregion
 
-    public UIContainerSelect _SkillClass;
+    public UISubScollMenu _SkillClass;
     public UIContainerSelect _SkillInfos;
 
+    private Dictionary<string, List< ItemSkill>> _SkillClasses = new Dictionary<string, List<ItemSkill>>();
     private ItemSkill _SelectedSkill;
 
     private void InitSkillClass()
     {
-        _SkillClass.InitSelectContent(RoleData.SelectRole.SkillClassItems.Keys, new List<Tables.SKILL_CLASS>() { Tables.SKILL_CLASS.NORMAL_ATTACK }, SelectSkillClass);
+        _SkillClasses.Clear();
+        foreach (var skillItem in RoleData.SelectRole.ProfessionSkills)
+        {
+            if (!_SkillClasses.ContainsKey(skillItem.SkillRecord.SkillType))
+            {
+                _SkillClasses.Add(skillItem.SkillRecord.SkillType, new List<ItemSkill>());
+                _SkillClass.PushMenu(skillItem.SkillRecord.SkillType);
+            }
+
+            _SkillClasses[skillItem.SkillRecord.SkillType].Add(skillItem);
+        }
+        _SkillClass.ShowDefaultFirst();
     }
 
-    private void SelectSkillClass(object selectGO)
+    public void SelectSkillClass(object selectGO)
     {
         var skillClass = (string)selectGO;
         InitSkillItems(skillClass);
@@ -50,7 +62,7 @@ public class UISkillLevelUp : UIBase
 
     private void InitSkillItems(string skillClass)
     {
-        _SkillInfos.InitSelectContent(RoleData.SelectRole.SkillClassItems[skillClass], null, SelectSkillItem);
+        _SkillInfos.InitSelectContent(_SkillClasses[skillClass], null, SelectSkillItem);
     }
 
     private void SelectSkillItem(object selectItem)

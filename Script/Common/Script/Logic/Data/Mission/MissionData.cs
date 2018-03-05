@@ -44,7 +44,8 @@ public class MissionData : DataPackBase
 
     public void InitMissionData()
     {
-        if (_RefreshTime.Day != System.DateTime.Now.Day)
+        var timeSpan = System.DateTime.Now - _RefreshTime;
+        if (timeSpan.Days > 0)
         {
             RefreshMissions();
             _RefreshTime = System.DateTime.Now;
@@ -68,6 +69,9 @@ public class MissionData : DataPackBase
         List<MissionRecord> hardMission = new List<MissionRecord>();
         foreach (var missionRecord in TableReader.Mission.Records)
         {
+            if (missionRecord.Value.Achieve == 1)
+                continue;
+
             if (missionRecord.Value.HardStar == 1)
             {
                 simpleMission.Add(missionRecord.Value);
@@ -95,8 +99,6 @@ public class MissionData : DataPackBase
             _ChallengeItems.Add(missionItem);
         }
     }
-
-    
 
     #endregion
 

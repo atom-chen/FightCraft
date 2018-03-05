@@ -9,17 +9,10 @@ using System;
 
 
 
-public class UISkillLevelClassItem : UIItemSelect
+public class UISkillLevelClassItem : UISubMenuItem
 {
-    public Text _SkillClassName;
 
-    public override void Show(Hashtable hash)
-    {
-        base.Show();
 
-        var skillClass = (string)hash["InitObj"];
-        _SkillClassName.text = skillClass.ToString();
-    }
 
 }
 

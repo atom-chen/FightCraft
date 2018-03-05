@@ -155,7 +155,7 @@ public class ShopData : SaveItemBase
         if (!PlayerDataPack.Instance.DecGold(GetEuqipBuyPrice(_EquipList[equipIdx])))
             return;
 
-        emptyPos.ExchangeInfo(_EquipList[equipIdx]);
+        BackBagPack.Instance.AddEquip(_EquipList[equipIdx]);
     }
 
     public static int GetEquipSellPrice(ItemEquip equip)

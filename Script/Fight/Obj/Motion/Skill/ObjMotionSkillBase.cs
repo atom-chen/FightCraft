@@ -130,10 +130,6 @@ public class ObjMotionSkillBase : MonoBehaviour
 
         MotionManager.BuffAttack();
 
-        Hashtable hash = new Hashtable();
-        hash.Add("SkillInfo", this);
-        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_USE_SKILL, this, hash);
-
         return true;
     }
 

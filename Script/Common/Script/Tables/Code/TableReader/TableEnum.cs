@@ -20,6 +20,15 @@ namespace Tables
     }
 
     //
+    public enum AWARD_TYPE
+    {
+        None = 0, //None,枚举必须保留0值
+        Item = 1, //Item,Item
+        Diamond = 2, //Diamond,Diamond
+        Gold = 3, //Gold,Gold
+    }
+
+    //
     public enum EQUIP_CLASS
     {
         None = 0, //None,枚举必须保留0值
@@ -97,15 +106,6 @@ namespace Tables
         NORMAL = 0, //NORMAL,枚举必须保留0值
         BOSS = 1, //BOSS,BOSS
         DOUBLE_BOSS = 2, //DOUBLE_BOSS,DOUBLE_BOSS
-    }
-
-    //
-    public enum AWARD_TYPE
-    {
-        None = 0, //None,枚举必须保留0值
-        Item = 1, //Item,Item
-        Diamond = 2, //Diamond,Diamond
-        Gold = 3, //Gold,Gold
     }
 
 

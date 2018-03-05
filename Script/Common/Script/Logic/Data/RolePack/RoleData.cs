@@ -323,6 +323,8 @@ public class RoleData : SaveItemBase
     {
         ++_AttrLevel;
         _UnDistrubutePoint += 1;
+
+        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_ROLE_LEVEL_UP, this, null);
     }
 
     public void ResetPoints()
@@ -361,37 +363,30 @@ public class RoleData : SaveItemBase
     [SaveField(9)]
     private List<ItemSkill> _SkillItems = new List<ItemSkill>();
 
-    private Dictionary<string, List<ItemSkill>> _SkillClassItems;
-    public Dictionary<string, List<ItemSkill>> SkillClassItems
+    private List<ItemSkill> _ProfessionSkills;
+    public List<ItemSkill> ProfessionSkills
     {
         get
         {
-            if (_SkillClassItems == null)
+            if (_ProfessionSkills == null)
             {
                 InitSkill();
             }
-            return _SkillClassItems;
+            return _ProfessionSkills;
         }
     }
 
     private bool InitSkill()
     {
         bool isNeedSave = false;
-        _SkillClassItems = new Dictionary<string, List<ItemSkill>>();
+        _ProfessionSkills = new List<ItemSkill>();
         foreach (var skillPair in Tables.TableReader.SkillInfo.Records)
         {
-            if (skillPair.Value.Profession == Profession)
+            if (skillPair.Value.Profession > 0 &&
+            ((skillPair.Value.Profession >> (int)Profession) & 1) != 0)
             {
-                if (!_SkillClassItems.ContainsKey(skillPair.Value.SkillClass))
-                {
-                    _SkillClassItems.Add(skillPair.Value.SkillClass, new List<ItemSkill>());
-                }
-
-                if (_SkillClassItems.ContainsKey(skillPair.Value.SkillClass))
-                {
-                    var skillInfo = GetSkillInfo(skillPair.Value.Id, ref isNeedSave);
-                    _SkillClassItems[skillPair.Value.SkillClass].Add(skillInfo);
-                }
+                var skillInfo = GetSkillInfo(skillPair.Value.Id, ref isNeedSave);
+                _ProfessionSkills.Add(skillInfo);
             }
         }
 
@@ -415,7 +410,8 @@ public class RoleData : SaveItemBase
         bool spSkill3 = false;
         foreach (var skillInfo in _SkillItems)
         {
-            if (skillInfo.SkillRecord.Profession != Profession)
+            if (skillInfo.SkillRecord.Profession > 0 &&
+            ((skillInfo.SkillRecord.Profession >> (int)Profession) & 1) == 0)
                 continue;
 
             if (skillInfo.SkillLevel == 0)
@@ -423,15 +419,15 @@ public class RoleData : SaveItemBase
 
             if (skillInfo.SkillRecord.SkillAttr == "RoleAttrImpactSP")
             {
-                if (skillInfo.SkillRecord.SkillClass == "1")
+                if (skillInfo.SkillRecord.SkillInput == "1")
                 {
                     spSkill1 = true;
                 }
-                if (skillInfo.SkillRecord.SkillClass == "2")
+                if (skillInfo.SkillRecord.SkillInput == "2")
                 {
                     spSkill2 = true;
                 }
-                if (skillInfo.SkillRecord.SkillClass == "3")
+                if (skillInfo.SkillRecord.SkillInput == "3")
                 {
                     spSkill3 = true;
                 }

@@ -35,7 +35,7 @@ public class RoleAttrImpactManager
         if (impactBase == null)
             return null;
 
-        impactBase.InitImpact(skillInfo.SkillRecord.SkillClass, impactBase.GetSkillImpactVal(skillInfo));
+        impactBase.InitImpact(skillInfo.SkillRecord.SkillInput, impactBase.GetSkillImpactVal(skillInfo));
         return impactBase;
     }
 }

@@ -4,13 +4,10 @@ using UnityEngine;
 
 public class ConEquipRefreshTimes : MissionConditionBase
 {
-    private int _RefreshTimes = 0;
-    private MissionItem _MissionItem;
 
-    public override void InitCondition(MissionItem missionData, List<string> conditionParams)
+    public override void InitCondition(MissionItem missionData, Tables.MissionRecord missionRecord)
     {
-        _RefreshTimes = int.Parse( conditionParams[0]);
-        _MissionItem = missionData;
+        base.InitCondition(missionData, missionRecord);
         GameCore.Instance.EventController.RegisteEvent(EVENT_TYPE.EVENT_LOGIC_EQUIP_REFRESH, EventDelegate);
     }
 
@@ -18,25 +15,21 @@ public class ConEquipRefreshTimes : MissionConditionBase
     {
         ++_MissionItem.MissionProcessData;
         _MissionItem.SaveClass(true);
-        if (RoleData.SelectRole._RoleLevel >= _RefreshTimes)
-        {
-
-        }
     }
 
     public override float GetConditionProcess()
     {
-        return _MissionItem.MissionProcessData / (float)_RefreshTimes;
+        return _MissionItem.MissionProcessData / (float)_MissionRecord.ConditionNum;
     }
 
     public override string GetConditionProcessText()
     {
-        return _MissionItem.MissionProcessData + "/" + _RefreshTimes;
+        return _MissionItem.MissionProcessData + "/" + _MissionRecord.ConditionNum;
     }
 
     public override bool IsConditionMet()
     {
-        if (_MissionItem.MissionProcessData >= _RefreshTimes)
+        if (_MissionItem.MissionProcessData >= _MissionRecord.ConditionNum)
         {
             return true;
         }

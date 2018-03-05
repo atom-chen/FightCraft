@@ -64,6 +64,12 @@ public class ActData : DataPackBase
                 SetPassBossStage(_ProcessStageDiff, _ProcessStageIdx);
                 break;
         }
+
+        Hashtable hash = new Hashtable();
+        hash.Add("StageType", stageMode);
+        hash.Add("StageIdx", _ProcessStageIdx);
+        hash.Add("StageDiff", _ProcessStageDiff);
+        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_PASS_STAGE, this, hash);
     }
 
     #endregion

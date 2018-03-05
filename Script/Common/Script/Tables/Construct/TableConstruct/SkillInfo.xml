@@ -41,16 +41,27 @@
   <constructColumn>
     <constructName>Profession</constructName>
     <constructCode>Profession</constructCode>
-    <constructType1>自定义枚举</constructType1>
+    <constructType1>基本类型</constructType1>
     <constructType2>
-      <constructType2>PROFESSION</constructType2>
+      <constructType2>整数</constructType2>
     </constructType2>
     <constructDefault>0</constructDefault>
     <constructRepeat>1</constructRepeat>
   </constructColumn>
   <constructColumn>
-    <constructName>SkillClass</constructName>
-    <constructCode>SkillClass</constructCode>
+    <constructName>SkillInput</constructName>
+    <constructCode>SkillInput</constructCode>
+    <constructType1>基本类型</constructType1>
+    <constructType2>
+      <constructType2>字符串</constructType2>
+    </constructType2>
+    <constructDefault>
+    </constructDefault>
+    <constructRepeat>1</constructRepeat>
+  </constructColumn>
+  <constructColumn>
+    <constructName>SkillType</constructName>
+    <constructCode>SkillType</constructCode>
     <constructType1>基本类型</constructType1>
     <constructType2>
       <constructType2>字符串</constructType2>

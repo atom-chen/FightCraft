@@ -249,11 +249,6 @@ public class FightManager : InstanceBase<FightManager>
     public void StagePass()
     {
         ActData.Instance.PassStage(LogicManager.Instance.EnterStageInfo.StageType);
-
-        Hashtable hash = new Hashtable();
-        hash.Add("StageInfo", LogicManager.Instance.EnterStageInfo);
-        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_PASS_STAGE, this, hash);
-
     }
 
     public void LogicFinish(bool isWin)

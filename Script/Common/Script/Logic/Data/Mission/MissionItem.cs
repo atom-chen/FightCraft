@@ -68,7 +68,7 @@ public class MissionItem : SaveItemBase
     {
         var conditionType = Type.GetType(MissionRecord.ConditionScript);
         _MissionCondition = Activator.CreateInstance(conditionType) as MissionConditionBase;
-        _MissionCondition.InitCondition(this, MissionRecord.ConditionParams);
+        _MissionCondition.InitCondition(this, MissionRecord);
     }
 
     public void RefreshMissionState()

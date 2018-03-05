@@ -58,7 +58,27 @@ public class UIDailyMission : UIBase
         string missionType = missionTypeObj.ToString();
         if (missionType == StrDictionary.GetFormatStr(50000))
         {
+            foreach (var missionItem in MissionData.Instance._MissionItems)
+            {
+                missionItem.RefreshMissionState();
+            }
             _MissionContainer.InitContentItem(MissionData.Instance._MissionItems);
+            MissionItem totalMission = new MissionItem("998");
+            totalMission.InitMissionItem();
+            totalMission.RefreshMissionState();
+            _TotalMissionItem.ShowMissionItem(totalMission);
+        }
+        else if (missionType == StrDictionary.GetFormatStr(50001))
+        {
+            foreach (var missionItem in MissionData.Instance._ChallengeItems)
+            {
+                missionItem.RefreshMissionState();
+            }
+            _MissionContainer.InitContentItem(MissionData.Instance._ChallengeItems);
+            MissionItem totalMission = new MissionItem("999");
+            totalMission.InitMissionItem();
+            totalMission.RefreshMissionState();
+            _TotalMissionItem.ShowMissionItem(totalMission);
         }
     }
 

@@ -24,13 +24,13 @@ public class UIDailyMissionItem : UIItemSelect
         base.Show();
 
         _MissionItem = (MissionItem)hash["InitObj"];
-        _MissionItem.RefreshMissionState();
         ShowMissionItem(_MissionItem);
     }
 
-    private void ShowMissionItem(MissionItem showItem)
+    public void ShowMissionItem(MissionItem showItem)
     {
-        _MissionDesc.text = showItem.MissionRecord.Name;
+        _MissionItem = showItem;
+        _MissionDesc.text = showItem.MissionRecord.Desc;
         _MissionProcess.value = showItem._MissionCondition.GetConditionProcess();
         _MissionProcessText.text = showItem._MissionCondition.GetConditionProcessText();
 
