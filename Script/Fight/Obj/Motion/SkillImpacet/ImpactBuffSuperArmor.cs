@@ -7,6 +7,11 @@ public class ImpactBuffSuperArmor : ImpactBuff
 
     public override void ActBuff(MotionManager senderManager, MotionManager reciverManager)
     {
+        if (_BuffOwner._ActionState == _BuffOwner._StateCatch
+            || _BuffOwner._ActionState == _BuffOwner._StateHit)
+        {
+            _BuffOwner.TryEnterState(_BuffOwner._StateIdle);
+        }
         base.ActBuff(senderManager, reciverManager);
     }
 
@@ -24,6 +29,11 @@ public class ImpactBuffSuperArmor : ImpactBuff
         if(_HitEffect != null)
             _BuffOwner.PlaySkillEffect(_HitEffect);
         ((EffectOutLine)_DynamicEffect).PlayHitted();
+
+        Hashtable hash = new Hashtable();
+        hash.Add("Motion", _SenderMotion);
+        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_SOMEONE_SUPER_ARMOR, this, hash);
+
         return false;
     }
 }

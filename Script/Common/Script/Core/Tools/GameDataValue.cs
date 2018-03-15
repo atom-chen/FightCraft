@@ -583,6 +583,16 @@ public class GameDataValue
     }
 
     #endregion
+
+    #region skill
+
+    public static int GetSkillDamageRate(int skillLv, List<int> skillParam)
+    {
+        return skillLv * skillParam[0];
+    }
+
+    #endregion
+
     #endregion
 
     #region product & consume

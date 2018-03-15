@@ -130,6 +130,8 @@ public class ObjMotionSkillBase : MonoBehaviour
 
         MotionManager.BuffAttack();
 
+        _LastUseTime = Time.time;
+
         return true;
     }
 
@@ -338,6 +340,15 @@ public class ObjMotionSkillBase : MonoBehaviour
 
         }
     }
+
+    #endregion
+
+    #region cd for skill bar
+
+    public float _SkillCD = 0;
+    public float _LastUseTime;
+    public int _StoreUseTimes = 0;
+    public int _LastUseTimes = 0;
 
     #endregion
 

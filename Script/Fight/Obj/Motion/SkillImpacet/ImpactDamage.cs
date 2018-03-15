@@ -5,6 +5,7 @@ public class ImpactDamage : ImpactBase
 {
     public float _DamageRate = 1;
     public ElementType _DamageType = ElementType.Physic;
+    public bool _IsCharSkillDamage = false;
 
     public override void ActImpact(MotionManager senderManager, MotionManager reciverManager)
     {

@@ -387,6 +387,14 @@ public class RoleData : SaveItemBase
             {
                 var skillInfo = GetSkillInfo(skillPair.Value.Id, ref isNeedSave);
                 _ProfessionSkills.Add(skillInfo);
+
+                if (skillInfo.SkillRecord.SkillAttr == "RoleAttrImpactSkillDamage")
+                {
+                    if (skillInfo.SkillLevel == 0)
+                    {
+                        skillInfo.LevelUp();
+                    }
+                }
             }
         }
 
@@ -395,7 +403,7 @@ public class RoleData : SaveItemBase
 
     public List<string> GetRoleSkills()
     {
-        List<string> skillMotions = new List<string>() { "Attack", "Buff1", "Buff2", "Dush", "AttackEx" };
+        List<string> skillMotions = new List<string>() { "Attack", "Dush", "AttackEx" };
         if (Profession == PROFESSION.BOY_DEFENCE || Profession == PROFESSION.GIRL_DEFENCE)
         {
             skillMotions.Add("Defence");
@@ -416,6 +424,21 @@ public class RoleData : SaveItemBase
 
             if (skillInfo.SkillLevel == 0)
                 continue;
+
+            if (skillInfo.SkillRecord.SkillInput == "5")
+            {
+                if (!skillMotions.Contains("Buff1"))
+                {
+                    skillMotions.Add("Buff1");
+                }
+            }
+            if (skillInfo.SkillRecord.SkillInput == "6")
+            {
+                if (!skillMotions.Contains("Buff2"))
+                {
+                    skillMotions.Add("Buff2");
+                }
+            }
 
             if (skillInfo.SkillRecord.SkillAttr == "RoleAttrImpactSP")
             {

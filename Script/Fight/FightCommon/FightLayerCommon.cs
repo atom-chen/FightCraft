@@ -21,6 +21,7 @@ public class FightLayerCommon
         }
 
         playerMotion.TriggerCollider.gameObject.layer = CAMP_1;
+        playerMotion.gameObject.layer = CAMP_1;
         playerMotion.gameObject.tag = "Player";
         playerMotion.RoleAttrManager.MotionType = MotionType.MainChar;
     }
@@ -34,6 +35,7 @@ public class FightLayerCommon
         }
 
         motion.TriggerCollider.gameObject.layer = CAMP_2;
+        motion.gameObject.layer = CAMP_2;
         motion.RoleAttrManager.MotionType = MotionType.Normal;
     }
 

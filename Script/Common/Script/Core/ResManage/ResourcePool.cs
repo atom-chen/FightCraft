@@ -49,6 +49,7 @@ public class ResourcePool : InstanceBase<ResourcePool>
 
     public EffectController GetIdleEffect(EffectController effct)
     {
+
         EffectController idleEffect = null;
         if (_IdleEffects.ContainsKey(effct.name))
         {

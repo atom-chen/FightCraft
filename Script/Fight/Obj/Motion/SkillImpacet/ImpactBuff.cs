@@ -165,7 +165,6 @@ public class ImpactBuff : ImpactBase
 
     public IEnumerator TimeOut(MotionManager ownerManager)
     {
-        Debug.Log("buff time:" + _LastTime + ", exTime:" + ExLastTime);
         yield return new WaitForSeconds(_LastTime + ExLastTime);
         ownerManager.RemoveBuff(this);
     }

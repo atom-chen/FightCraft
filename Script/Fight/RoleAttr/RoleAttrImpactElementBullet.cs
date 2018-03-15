@@ -11,7 +11,7 @@ public class RoleAttrImpactElementBullet : RoleAttrImpactBase
         var attrTab = Tables.TableReader.AttrValue.GetRecord(args[0].ToString());
         _ImpactName = attrTab.StrParam[0];
         _SkillInput = attrTab.StrParam[1];
-        _Damage = GameDataValue.ConfigIntToFloat(attrTab.AttrParams[0]) + GameDataValue.ConfigIntToFloat(attrTab.AttrParams[0] * args[1]);
+        _Damage = GameDataValue.ConfigIntToFloat(attrTab.AttrParams[0]) + GameDataValue.ConfigIntToFloat(attrTab.AttrParams[1] * args[1]);
     }
 
     public override void ModifySkillBeforeInit(MotionManager roleMotion)

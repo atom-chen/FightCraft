@@ -1,33 +1,33 @@
 """ID""","""??""","""??""","""AttrImpact""","""StrParam1""","""StrParam2""","""StrParam3""","""AttrParams1""","""AttrParams2""","""AttrParams3""","""AttrParams4""","""AttrParams5""","""AttrParams6""","""AttrParams7""","""AttrParams8""","""AttrParams9""","""AttrParams10"""
-120000,,,RoleAttrImpactElementBullet,ImpactAttr2_B3_Stone,3,,10000,0,0,100,0,0,0,0,0,0
-120001,,,RoleAttrImpactElementBullet,ImpactAttr4_B3_WhirlWind,3,,10000,0,0,100,0,0,0,0,0,0
-120002,,,RoleAttrImpactElementBullet,ImpactAttr6_B2_Weapon,2,,10000,0,0,100,0,0,0,0,0,0
-120003,,,RoleAttrImpactElementBullet,ImpactAttr8_B1_Ice,1,,10000,0,0,100,0,0,0,0,0,0
-120004,,,RoleAttrImpactElementBullet,ImpactAttr10_B1_FireBoom3,1,,10000,0,0,100,0,0,0,0,0,0
-120005,,,RoleAttrImpactElementBullet,ImpactAttr12_B2_LighteningHit,2,,10000,0,0,100,0,0,0,0,0,0
-120006,,,RoleAttrImpactElementBullet,ImpactAttr14_B1_WindEnhance,1,,10000,0,0,100,0,0,0,0,0,0
-120007,,,RoleAttrImpactElementBullet,ImpactAttr16_B3_Lightening3,3,,10000,0,0,100,0,0,0,0,0,0
-120008,,,RoleAttrImpactElementBullet,ImpactAttr18_B3_StoneBoom,3,,10000,0,0,100,0,0,0,0,0,0
-120009,,,RoleAttrImpactElementBullet,ImpactAttr21_B1_IceLoong,1,,10000,0,0,100,0,0,0,0,0,0
-120010,,,RoleAttrImpactElementBullet,ImpactAttr23_B2_WhirlWind,2,,10000,0,0,100,0,0,0,0,0,0
-120011,,,RoleAttrImpactElementBullet,ImpactAttr24_B2_LightEye,2,,10000,0,0,100,0,0,0,0,0,0
-120012,,,RoleAttrImpactElementBullet,ImpactAttr26_B2_IceCircle,2,,10000,0,0,100,0,0,0,0,0,0
-120013,,,RoleAttrImpactElementBullet,ImpactAttr28_B3_FireSprit,3,,10000,0,0,100,0,0,0,0,0,0
-120100,,,RoleAttrImpactElementBullet,ImpactAttr1_G1_Stone,1,,10000,0,0,100,0,0,0,0,0,0
-120101,,,RoleAttrImpactElementBullet,ImpactAttr3_G2_WindBlade,2,,10000,0,0,100,0,0,0,0,0,0
-120102,,,RoleAttrImpactElementBullet,ImpactAttr5_G2_HeartBoom,2,,10000,0,0,100,0,0,0,0,0,0
-120103,,,RoleAttrImpactElementBullet,ImpactAttr7_G2_Ice,2,,10000,0,0,100,0,0,0,0,0,0
-120104,,,RoleAttrImpactElementBullet,ImpactAttr9_G2_EnhanceFire,2,,10000,0,0,100,0,0,0,0,0,0
-120105,,,RoleAttrImpactElementBullet,ImpactAttr11_G2_LighteningHit,2,,10000,0,0,100,0,0,0,0,0,0
-120106,,,RoleAttrImpactElementBullet,ImpactAttr13_G0_Blink,0,,10000,0,0,100,0,0,0,0,0,0
-120107,,,RoleAttrImpactElementBullet,ImpactAttr15_G3_Lightening3,3,,10000,0,0,100,0,0,0,0,0,0
-120108,,,RoleAttrImpactElementBullet,ImpactAttr17_G1_FireSprite,1,,10000,0,0,100,0,0,0,0,0,0
-120109,,,RoleAttrImpactElementBullet,ImpactAttr19_G3_FireBird,3,,10000,0,0,100,0,0,0,0,0,0
-120110,,,RoleAttrImpactElementBullet,ImpactAttr20_G2_FireLoong,2,,10000,0,0,100,0,0,0,0,0,0
-120111,,,RoleAttrImpactElementBullet,ImpactAttr22_G3_WhirlWind,3,,10000,0,0,100,0,0,0,0,0,0
-120112,,,RoleAttrImpactElementBullet,ImpactAttr25_G2_IceSprit,2,,10000,0,0,100,0,0,0,0,0,0
-120113,,,RoleAttrImpactElementBullet,ImpactAttr27_G3_FireLoong,3,,10000,0,0,100,0,0,0,0,0,0
-121001,,,RoleAttrImpactPassive,PassiveDamageLimit,3,,10000,0,0,100,0,0,0,0,0,0
+120000,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr2_B3_Stone,3,,10000,100,0,0,0,0,0,0,0,0
+120001,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr4_B3_WhirlWind,3,,10000,100,0,0,0,0,0,0,0,0
+120002,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr6_B2_Weapon,2,,10000,100,0,0,0,0,0,0,0,0
+120003,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr8_B1_Ice,1,,10000,100,0,0,0,0,0,0,0,0
+120004,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr10_B1_FireBoom3,1,,10000,100,0,0,0,0,0,0,0,0
+120005,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr12_B2_LighteningHit,2,,10000,100,0,0,0,0,0,0,0,0
+120006,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr14_B1_WindEnhance,1,,10000,100,0,0,0,0,0,0,0,0
+120007,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr16_B3_Lightening3,3,,10000,100,0,0,0,0,0,0,0,0
+120008,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr18_B3_StoneBoom,3,,10000,100,0,0,0,0,0,0,0,0
+120009,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr21_B1_IceLoong,1,,10000,100,0,0,0,0,0,0,0,0
+120010,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr23_B2_WhirlWind,2,,10000,100,0,0,0,0,0,0,0,0
+120011,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr24_B2_LightEye,2,,10000,100,0,0,0,0,0,0,0,0
+120012,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr26_B2_IceCircle,2,,10000,100,0,0,0,0,0,0,0,0
+120013,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr28_B3_FireSprit,3,,10000,100,0,0,0,0,0,0,0,0
+120100,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr1_G1_Stone,1,,10000,100,0,0,0,0,0,0,0,0
+120101,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr3_G2_WindBlade,2,,10000,100,0,0,0,0,0,0,0,0
+120102,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr5_G2_HeartBoom,2,,10000,100,0,0,0,0,0,0,0,0
+120103,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr7_G2_Ice,2,,10000,100,0,0,0,0,0,0,0,0
+120104,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr9_G2_EnhanceFire,2,,10000,100,0,0,0,0,0,0,0,0
+120105,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr11_G2_LighteningHit,2,,10000,100,0,0,0,0,0,0,0,0
+120106,,G0 blink,RoleAttrImpactAddSkill,ImpactAttr13_G0_Blink,0,,10000,100,0,0,0,0,0,0,0,0
+120107,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr15_G3_Lightening3,3,,10000,100,0,0,0,0,0,0,0,0
+120108,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr17_G1_FireSprite,1,,10000,100,0,0,0,0,0,0,0,0
+120109,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr19_G3_FireBird,3,,10000,100,0,0,0,0,0,0,0,0
+120110,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr20_G2_FireLoong,2,,10000,100,0,0,0,0,0,0,0,0
+120111,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr22_G3_WhirlWind,3,,10000,100,0,0,0,0,0,0,0,0
+120112,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr25_G2_IceSprit,2,,10000,100,0,0,0,0,0,0,0,0
+120113,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr27_G3_FireLoong,3,,10000,100,0,0,0,0,0,0,0,0
+121001,,,RoleAttrImpactPassive,PassiveDamageLimit,3,,10000,100,0,0,0,0,0,0,0,0
 121002,,,RoleAttrImpactPassiveSubLastTime,PassiveHPLowIron,3,,50000,150000,0,500,0,0,0,0,0,0
 121003,,,RoleAttrImpactPassiveAddAttr,PassiveAddHP,3,,10000,0,0,100,0,0,0,0,0,0
 121004,,,RoleAttrImpactPassiveAddAttr,PassiveAddDefence,3,,10000,0,0,100,0,0,0,0,0,0

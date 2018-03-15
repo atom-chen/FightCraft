@@ -114,7 +114,7 @@ public class AI_HeroBase : AI_Base
     public float _CriticalSkillRate = 0;
 
     //if target start use skill, AI use skill
-    private void UpdateCriticalAI()
+    protected void UpdateCriticalAI()
     {
         if (_SelfMotion._ActionState != _SelfMotion._StateIdle)
             return;

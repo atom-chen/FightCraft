@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <enumColumn>
+    <enumName>BOY_DEFENCE</enumName>
+    <enumCode>BOY_DEFENCE</enumCode>
+    <enumValue>1</enumValue>
+    <enumDesc>BOY_DEFENCE</enumDesc>
+  </enumColumn>
+  <enumColumn>
+    <enumName>GIRL_DOUGE</enumName>
+    <enumCode>GIRL_DOUGE</enumCode>
+    <enumValue>2</enumValue>
+    <enumDesc>GIRL_DOUGE</enumDesc>
+  </enumColumn>
+  <enumColumn>
+    <enumName>BOY_DOUGE</enumName>
+    <enumCode>BOY_DOUGE</enumCode>
+    <enumValue>3</enumValue>
+    <enumDesc>BOY_DOUGE</enumDesc>
+  </enumColumn>
+  <enumColumn>
+    <enumName>GIRL_DEFENCE</enumName>
+    <enumCode>GIRL_DEFENCE</enumCode>
+    <enumValue>4</enumValue>
+    <enumDesc>GIRL_DEFENCE</enumDesc>
+  </enumColumn>
+  <enumColumn>
+    <enumName>MAX</enumName>
+    <enumCode>MAX</enumCode>
+    <enumValue>4</enumValue>
+    <enumDesc>MAX</enumDesc>
+  </enumColumn>
+  <enumColumn>
+    <enumName>NONE</enumName>
+    <enumCode>NONE</enumCode>
+    <enumValue>0</enumValue>
+    <enumDesc>NONE</enumDesc>
+  </enumColumn>
+</root>

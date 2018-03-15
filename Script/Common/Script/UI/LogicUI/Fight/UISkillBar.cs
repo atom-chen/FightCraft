@@ -4,9 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 
  
-
-
-
 public class UISkillBar : UIBase
 {
     #region static
@@ -15,6 +12,18 @@ public class UISkillBar : UIBase
     {
         Hashtable hash = new Hashtable();
         GameCore.Instance.UIManager.ShowUI("LogicUI/Fight/UISkillBar", UILayer.BaseUI, hash);
+    }
+
+    public static void SetSkillUseTips(string input, float time)
+    {
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UISkillBar>("LogicUI/Fight/UISkillBar");
+        if (instance == null)
+            return;
+
+        if (!instance.isActiveAndEnabled)
+            return;
+
+        instance.SetBtnUseTip(input, time);
     }
 
     public static void SetAimTypeStatic(AimTarget.AimTargetType aimType)
@@ -29,14 +38,19 @@ public class UISkillBar : UIBase
         instance.SetAimType(aimType);
     }
 
+    public void Update()
+    {
+        UpdateCD();
+    }
+
     #endregion
 
-    public UIPressBtn _ButtonJ;
-    public UIPressBtn _ButtonK;
-    public UIPressBtn _ButtonL;
-    public UIPressBtn _ButtonU;
+    public UISkillBarItem _ButtonJ;
+    public UISkillBarItem _ButtonK;
+    public UISkillBarItem _ButtonL;
+    public UISkillBarItem _ButtonU;
 
-    private Dictionary<string, UIPressBtn> _Buttons = new Dictionary<string, UIPressBtn>();
+    private Dictionary<string, UISkillBarItem> _Buttons = new Dictionary<string, UISkillBarItem>();
 
     public override void Init()
     {
@@ -52,7 +66,7 @@ public class UISkillBar : UIBase
     {
         if (_Buttons.ContainsKey(key))
         {
-            return _Buttons[key].IsPress;
+            return _Buttons[key]._BtnPress.IsPress;
         }
         return false;
     }
@@ -61,11 +75,41 @@ public class UISkillBar : UIBase
     {
         foreach (var btn in _Buttons)
         {
-            if (btn.Value.IsPress)
+            if (btn.Value._BtnPress.IsPress)
                 return true;
         }
         return false;
     }
+
+    public void SetBtnUseTip(string key, float useTipTime)
+    {
+        if (_Buttons.ContainsKey(key))
+        {
+            _Buttons[key].SetUseTips(useTipTime);
+        }
+    }
+
+    #region cd
+    List<string> skillInput = new List<string>() { "j", "k", "l" };
+
+    public void UpdateCD()
+    {
+        for (int i = 0; i < skillInput.Count; ++i)
+        {
+            var skillBase = InputManager.Instance.GetCharSkill(skillInput[i]);
+            if (skillBase == null)
+                continue;
+
+            if (skillBase._SkillCD == 0)
+                continue;
+
+            var cd = Time.time - skillBase._LastUseTime;
+            float cdPro = cd / skillBase._SkillCD;
+            _Buttons[skillInput[i]].SetCD(cdPro);
+        }
+    }
+
+    #endregion
 
     #region emulate
 

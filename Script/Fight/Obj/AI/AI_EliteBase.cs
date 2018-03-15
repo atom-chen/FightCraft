@@ -18,7 +18,7 @@ public class AI_EliteBase : AI_HeroBase
 
     protected override void AIUpdate()
     {
-        base.AIUpdate();
+        base.UpdateCriticalAI();
 
         if (_TargetMotion == null)
             return;

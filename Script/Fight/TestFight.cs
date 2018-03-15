@@ -25,6 +25,7 @@ public class TestFight : MonoBehaviour
     {
         InputManager.Instance._EmulateMode = true;
         _NormalAttack = gameObject.GetComponentInChildren<ObjMotionSkillAttack>();
+        InitDefence();
     }
 
     #region find target
@@ -124,7 +125,11 @@ public class TestFight : MonoBehaviour
 
         if (FightManager.Instance.MainChatMotion.ActingSkill == null)
         {
-            _RandomSkillIdx = Random.Range(0, 4);
+            ++_RandomSkillIdx;
+            if (_RandomSkillIdx > 3)
+            {
+                _RandomSkillIdx = 1;
+            }
             //FightManager.Instance.MainChatMotion.ActSkill(FightManager.Instance.MainChatMotion._SkillMotions["j"]);
             transform.LookAt(_EnemyMotion.transform.position);
             InputManager.Instance.SetEmulatePress("j");
@@ -137,8 +142,12 @@ public class TestFight : MonoBehaviour
                 //if (_NormalAttack.CanNextInput)
                 {
                     InputManager.Instance.SetEmulatePress("k");
-                    Debug.Log("emulate key k");
-                    _RandomSkillIdx = -1;
+                    Debug.Log("emulate key k:" + _RandomSkillIdx);
+                    ++_RandomSkillIdx;
+                    if (_RandomSkillIdx > 3)
+                    {
+                        _RandomSkillIdx = 1;
+                    }
                 }
             }
         }
@@ -149,5 +158,35 @@ public class TestFight : MonoBehaviour
     {
         InputManager.Instance.ReleasePress();
     }
+    #endregion
+
+    #region defence skill
+
+
+
+    public void InitDefence()
+    {
+        GameCore.Instance.EventController.RegisteEvent(EVENT_TYPE.EVENT_LOGIC_SOMEONE_SUPER_ARMOR, SomeOneSuperArmor);
+    }
+
+    private void SomeOneSuperArmor(object go, Hashtable eventArgs)
+    {
+        MotionManager motion = (MotionManager)eventArgs["Motion"];
+        if (motion == null || motion == FightManager.Instance.MainChatMotion)
+            return;
+
+        CancelInvoke("CancleDefence");
+
+        Debug.Log("Use defence skill");
+        InputManager.Instance.SetEmulatePress("l");
+
+        Invoke("CancleDefence", 1);
+    }
+
+    private void CancleDefence()
+    {
+        InputManager.Instance.ReleasePress();
+    }
+
     #endregion
 }

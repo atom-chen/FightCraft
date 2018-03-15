@@ -9,13 +9,13 @@ public class RoleAttrImpactSkillDamage : RoleAttrImpactBase
     public override void InitImpact(string skillInput, List<int> args)
     {
         _SkillInput = skillInput;
-        _DamageModify = (float)args[0] * 0.0001f;
+        _DamageModify = GameDataValue.ConfigIntToFloat(args[0]);
     }
 
     public override List<int> GetSkillImpactVal(ItemSkill skillInfo)
     {
         var valList = new List<int>();
-        valList.Add(skillInfo.SkillActureLevel * skillInfo.SkillRecord.EffectValue[0]);
+        valList.Add(GameDataValue.GetSkillDamageRate(skillInfo.SkillActureLevel, skillInfo.SkillRecord.EffectValue));
 
         return valList;
     }
@@ -26,7 +26,14 @@ public class RoleAttrImpactSkillDamage : RoleAttrImpactBase
             return;
 
         var skillMotion = roleMotion._StateSkill._SkillMotions[_SkillInput];
-        //skillMotion.SkillAddSpeed += (_SpeedModify);
+        var skillDamages = skillMotion.GetComponentsInChildren<ImpactDamage>(true);
+        foreach (var damage in skillDamages)
+        {
+            if (damage._IsCharSkillDamage)
+            {
+                damage._DamageRate *= (1 + _DamageModify);
+            }
+        }
     }
 
     #region 

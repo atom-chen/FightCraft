@@ -46,7 +46,6 @@ public class BulletLine : BulletBase
         if (targetMotion == null)
             return;
 
-        Debug.Log("OnTriggerEnter:" + targetMotion.ToString());
         TriggetMotion(targetMotion);
     }
 

@@ -47,7 +47,7 @@ public class ImpactExAttack : ImpactBase
 
     private void UpdateInput()
     {
-        if (InputManager.Instance.IsKeyHold("k"))
+        if (InputManager.Instance.IsKeyHold("j"))
         {
             SenderMotion.ActSkill(_ExAttackSkill);
         }

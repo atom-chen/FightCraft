@@ -149,6 +149,17 @@ public class FightManager : InstanceBase<FightManager>
             }
         }
 
+        foreach (var impact in RoleData.SelectRole._BaseAttr._ExAttr)
+        {
+            if (impact is RoleAttrImpactAddSkill)
+            {
+                var skillBase = (impact as RoleAttrImpactAddSkill).GetSkillBase();
+                skillBase.transform.SetParent(motionTran);
+                skillBase.transform.localPosition = Vector3.zero;
+                skillBase.gameObject.SetActive(true);
+            }
+        }
+
         _MainChatMotion.InitMotion();
         FightLayerCommon.SetPlayerLayer(_MainChatMotion);
         UIHPPanel.ShowHPItem(_MainChatMotion);
@@ -216,7 +227,7 @@ public class FightManager : InstanceBase<FightManager>
         if (objMotion.MonsterBase != null)
         {
             Hashtable hash = new Hashtable();
-            hash.Add("MonsterInfo", objMotion.MonsterBase);
+            hash.Add("MonsterInfo", objMotion);
             GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_KILL_MONSTER, this, hash);
         }
     }
@@ -291,7 +302,7 @@ public class FightManager : InstanceBase<FightManager>
         _CameraFollow._Distance = LogicManager.Instance.EnterStageInfo.CameraOffset[_ActingRegion];
 
         var effectPrefab = ResourceManager.Instance.GetEffect("Born2");
-        var effectSingle = GameObject.Instantiate(effectPrefab).GetComponent<EffectSingle>();
+        var effectSingle = effectPrefab.GetComponent<EffectSingle>();
         var effectInstance = FightManager.Instance.MainChatMotion.PlayDynamicEffect(effectSingle);
         effectInstance.transform.position = destTrans.position;
 

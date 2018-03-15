@@ -13,6 +13,7 @@ public class GameCore : MonoBehaviour
     public void Awake()
     {
         DontDestroyOnLoad(this);
+        Application.runInBackground = true;
         _Instance = this;
     }
 

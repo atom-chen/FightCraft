@@ -163,4 +163,22 @@ public class CommonTool : Editor
         Debug.Log("Stage " + stageInfo.Name + ": enemyGroup " + enemyGroupCnt + ", enemyCnt " + enemyCnt);
     }
     #endregion
+
+    #region change skill char damage
+
+    [MenuItem("GameObject/UI/Fight/SetSkillCharDamage")]
+    public static void SetSkillCharDamage()
+    {
+        Object[] selection = Selection.GetFiltered(typeof(GameObject), SelectionMode.TopLevel);
+        if (selection.Length > 0 && selection[0] is GameObject)
+        {
+            var damages = (selection[0] as GameObject).GetComponentsInChildren<ImpactDamage>(true);
+            foreach (var damage in damages)
+            {
+                damage._IsCharSkillDamage = true;
+            }
+        }
+    }
+
+    #endregion
 }

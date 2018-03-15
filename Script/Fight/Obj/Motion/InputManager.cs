@@ -16,7 +16,8 @@ public class InputManager : InstanceBase<InputManager>
         {
             _NormalAttack = _InputMotion.GetComponentInChildren<ObjMotionSkillAttack>();
         }
-	}
+        InitReuseSkill();
+    }
 
     void OnDestory()
     {
@@ -184,7 +185,7 @@ public class InputManager : InstanceBase<InputManager>
 
         if (IsKeyHold("k"))
         {
-            if (_InputMotion.ActingSkill== _NormalAttack && _NormalAttack.CurStep > 0 && _NormalAttack.CurStep < 4 && _NormalAttack.CanNextInput)
+            if (_InputMotion.ActingSkill == _NormalAttack && _NormalAttack.CurStep > 0 && _NormalAttack.CurStep < 4 && _NormalAttack.CanNextInput)
             {
                 string inputKey = (_NormalAttack.CurStep).ToString();
                 if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
@@ -193,15 +194,23 @@ public class InputManager : InstanceBase<InputManager>
                     _InputMotion.ActSkill(_InputMotion._StateSkill._SkillMotions[inputKey]);
                 }
             }
-            //else if(_InputMotion.ActingSkill== null)
-            //{
-            //    string inputKey = "k0";
-            //    if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
-            //    {
-            //        AutoRotate();
-            //        _InputMotion.ActSkill(_InputMotion._StateSkill._SkillMotions[inputKey]);
-            //    }
-            //}
+            else if (_InputMotion.ActingSkill == null)
+            {
+                if (CanReuseSkill())
+                {
+                    _InputMotion.ActSkill(_InputMotion._StateSkill._SkillMotions[_ReuseSkillInput]);
+                    return;
+                }
+                
+                {
+                    string inputKey = "k";
+                    if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
+                    {
+                        AutoRotate();
+                        _InputMotion.ActSkill(_InputMotion._StateSkill._SkillMotions[inputKey]);
+                    }
+                }
+            }
         }
 
         if (IsKeyHold("u"))
@@ -234,6 +243,14 @@ public class InputManager : InstanceBase<InputManager>
             {
                 _InputMotion.ActSkill(_InputMotion._StateSkill._SkillMotions[inputKey]);
             }
+            else
+            {
+                inputKey = "7";
+                if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
+                {
+                    _InputMotion.ActSkill(_InputMotion._StateSkill._SkillMotions[inputKey]);
+                }
+            }
         }
     }
 
@@ -248,5 +265,140 @@ public class InputManager : InstanceBase<InputManager>
         }
     }
 
-#endregion
+    public ObjMotionSkillBase GetCharSkill(string input)
+    {
+        if (_NormalAttack == null)
+            return null;
+
+        if (IsKeyHold("j"))
+        {
+            return _InputMotion._StateSkill._SkillMotions["j"];
+        }
+
+        if (IsKeyHold("k"))
+        {
+            if (_InputMotion.ActingSkill == _NormalAttack && _NormalAttack.CurStep > 0 && _NormalAttack.CurStep < 4 && _NormalAttack.CanNextInput)
+            {
+                string inputKey = (_NormalAttack.CurStep).ToString();
+                if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
+                {
+                    return _InputMotion._StateSkill._SkillMotions[inputKey];
+                }
+            }
+            else if (_InputMotion.ActingSkill == null)
+            {
+                if (CanReuseSkill())
+                {
+                    return _InputMotion._StateSkill._SkillMotions[_ReuseSkillInput];
+                }
+
+                {
+                    string inputKey = "k0";
+                    if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
+                    {
+                        return  (_InputMotion._StateSkill._SkillMotions[inputKey]);
+                    }
+                }
+            }
+        }
+
+        if (IsKeyHold("u"))
+        {
+            if (_InputMotion.ActingSkill == _NormalAttack && _NormalAttack.CurStep > 0 && _NormalAttack.CurStep < 4 && _NormalAttack.CanNextInput)
+            {
+                string inputKey = "6";
+                Hashtable hash = new Hashtable();
+                hash.Add("AttackStep", _NormalAttack.CurStep);
+
+                if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
+                {
+                    return  (_InputMotion._StateSkill._SkillMotions[inputKey]);
+                }
+            }
+            else if (_InputMotion.ActingSkill == null)
+            {
+                string inputKey = "5";
+                if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
+                {
+                    return  (_InputMotion._StateSkill._SkillMotions[inputKey]);
+                }
+            }
+        }
+
+        if (IsKeyHold("l"))
+        {
+            string inputKey = "4";
+            if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
+            {
+                return  (_InputMotion._StateSkill._SkillMotions[inputKey]);
+            }
+            else
+            {
+                inputKey = "7";
+                if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
+                {
+                    return  (_InputMotion._StateSkill._SkillMotions[inputKey]);
+                }
+            }
+        }
+
+        return null;
+    }
+
+    #endregion
+
+    #region use skill again
+
+    private string _ReuseSkillInput;
+    private int _ReuseTimes = 0;
+    private float _ReuseStartTime = 0;
+    private float _ReuseLast = 1;
+
+    public void InitReuseSkill()
+    {
+        foreach (var skillInfo in RoleData.SelectRole.ProfessionSkills)
+        {
+            if (skillInfo.SkillRecord.SkillAttr == "RoleAttrImpactAnotherUse")
+            {
+                _ReuseSkillInput = skillInfo.SkillRecord.SkillInput;
+                break;
+            }
+        }
+    }
+
+    public void SkillFinish(ObjMotionSkillBase motionSkill)
+    {
+        if (_ReuseTimes > 0)
+        {
+            if (motionSkill._ActInput == "j"
+                || motionSkill._ActInput == "1"
+                || motionSkill._ActInput == "2"
+                || motionSkill._ActInput == "3")
+            {
+                _ReuseTimes = 0;
+                UISkillBar.SetSkillUseTips("k", 0);
+                return;
+            }
+        }
+        if (_InputMotion == FightManager.Instance.MainChatMotion)
+        {
+            if (motionSkill._ActInput == _ReuseSkillInput)
+            {
+                _ReuseTimes = 1;
+                _ReuseStartTime = Time.time;
+                UISkillBar.SetSkillUseTips("k", _ReuseTimes);
+            }
+        }
+    }
+
+    private bool CanReuseSkill()
+    {
+        if (_ReuseTimes > 0 && Time.time - _ReuseStartTime < _ReuseLast)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    #endregion
 }

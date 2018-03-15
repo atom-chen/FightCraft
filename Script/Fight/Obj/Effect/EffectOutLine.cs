@@ -87,7 +87,7 @@ public class EffectOutLine : EffectController
     private void RemoveMaterial()
     {
         var matHandleCnt = DecMatCnt();
-        Debug.Log("DecMatCnt:" + matHandleCnt);
+
         if (matHandleCnt > 0)
             return;
         //foreach (SkinnedMeshRenderer curMeshRender in meshes)
@@ -131,7 +131,7 @@ public class EffectOutLine : EffectController
         }
 
         ++_RenderMatCnt[_SkinnedMesh];
-        Debug.Log("AddMatCnt:" + _RenderMatCnt[_SkinnedMesh]);
+        
         return _RenderMatCnt[_SkinnedMesh];
     }
 

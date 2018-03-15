@@ -1122,6 +1122,11 @@ public class MotionManager : MonoBehaviour
     public void FinishSkill(ObjMotionSkillBase skillMotion)
     {
         StateOpt(StateBase.MotionOpt.Stop_Skill, skillMotion);
+
+        if (InputManager.Instance._InputMotion == this)
+        {
+            InputManager.Instance.SkillFinish(skillMotion);
+        }
     }
 
     public void ActionPause(float time)
