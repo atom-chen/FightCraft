@@ -9,13 +9,14 @@ public class RoleAttrImpactBuffRate : RoleAttrImpactBase
     public override void InitImpact(string skillInput, List<int> args)
     {
         _SkillInput = skillInput;
-        _ValueModify = args[0] * 0.0001f;
+        _ValueModify = args[0];
     }
 
     public override List<int> GetSkillImpactVal(ItemSkill skillInfo)
     {
         var valList = new List<int>();
-        valList.Add(skillInfo.SkillActureLevel * skillInfo.SkillRecord.EffectValue[0]);
+        valList.Add(skillInfo.SkillRecord.EffectValue[0]);
+        valList.Add(skillInfo.SkillActureLevel * skillInfo.SkillRecord.EffectValue[1]);
 
         return valList;
     }
@@ -29,7 +30,7 @@ public class RoleAttrImpactBuffRate : RoleAttrImpactBase
         var impactBuff = skillMotion.GetComponentInChildren<ImpactBuffAttrAdd>(true);
         //for (int i = 0; i < impactBuffs.Length; ++i)
         {
-            impactBuff.ExAddValue = impactBuff._AddValue * _ValueModify;
+            impactBuff._AddValue = _ValueModify;
         }
     }
 

@@ -9,7 +9,7 @@ public class RoleAttrImpactSkillSpeed : RoleAttrImpactBase
     public override void InitImpact(string skillInput, List<int> args)
     {
         _SkillInput = skillInput;
-        _SpeedModify = (int)args[0] * 0.0001f;
+        _SpeedModify = GameDataValue.ConfigIntToFloat(args[0]);
     }
 
     public override List<int> GetSkillImpactVal(ItemSkill skillInfo)

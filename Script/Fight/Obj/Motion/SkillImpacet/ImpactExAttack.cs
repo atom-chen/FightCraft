@@ -6,12 +6,13 @@ public class ImpactExAttack : ImpactBase
 
     void Update()
     {
-        if (SenderMotion.ActingSkill!= SkillMotion)
+        if (SenderMotion == null || SenderMotion.ActingSkill!= SkillMotion)
         {
             FinishImpact(SenderMotion);
             return;
         }
 
+        Debug.Log("Impact ex attack");
         UpdateInput();
     }
 

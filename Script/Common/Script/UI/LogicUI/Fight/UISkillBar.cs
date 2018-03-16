@@ -94,17 +94,26 @@ public class UISkillBar : UIBase
 
     public void UpdateCD()
     {
+        if (InputManager.Instance == null)
+            return;
+
         for (int i = 0; i < skillInput.Count; ++i)
         {
             var skillBase = InputManager.Instance.GetCharSkill(skillInput[i]);
             if (skillBase == null)
+            {
+                _Buttons[skillInput[i]].SetCD(0);
                 continue;
+            }
 
             if (skillBase._SkillCD == 0)
+            {
+                _Buttons[skillInput[i]].SetCD(0);
                 continue;
+            }
 
             var cd = Time.time - skillBase._LastUseTime;
-            float cdPro = cd / skillBase._SkillCD;
+            float cdPro = (skillBase._SkillCD - cd) / skillBase._SkillCD;
             _Buttons[skillInput[i]].SetCD(cdPro);
         }
     }

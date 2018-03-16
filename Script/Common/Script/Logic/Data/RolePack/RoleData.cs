@@ -578,26 +578,15 @@ public class RoleData : SaveItemBase
             if (skillItem.SkillActureLevel == 0)
                 continue;
 
-            var attrImpact = RoleAttrImpactManager.GetAttrImpact(skillItem);
-            if (attrImpact != null)
+            if (skillItem.SkillRecord.Profession > 0 &&
+            ((skillItem.SkillRecord.Profession >> (int)Profession) & 1) != 0)
             {
-                _BaseAttr.AddExAttr(attrImpact);
+                var attrImpact = RoleAttrImpactManager.GetAttrImpact(skillItem);
+                if (attrImpact != null)
+                {
+                    _BaseAttr.AddExAttr(attrImpact);
+                }
             }
-            //switch (skillItem.SkillRecord.SkillAttr)
-            //{
-            //    case "RoleAttrImpactAccumulate":
-            //        RoleAttrImpactAccumulate impactAccumulate = new RoleAttrImpactAccumulate();
-            //        impactAccumulate.InitImpact(skillItem.SkillRecord.SkillClass, 0.5f, 0.4f);
-            //        _BaseAttr.AddExAttr(impactAccumulate);
-            //        break;
-            //    case "RoleAttrImpactExAttack":
-            //        RoleAttrImpactExAttack attrImpact = new RoleAttrImpactExAttack();
-            //        attrImpact.InitImpact(skillItem.SkillRecord.SkillClass, 1, 0.4f);
-            //        _BaseAttr.AddExAttr(attrImpact);
-            //        break;
-            //    case "RoleAttrImpactSkillSpeed":
-            //        break;
-            //}
         }
     }
 

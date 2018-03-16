@@ -40,8 +40,8 @@ public class ImpactAccumulate : ImpactBase
 
         SkillMotion._NextAnim.Insert(0, _AccumulateAnim);
         SkillMotion._NextEffect.Insert(0, null);
-        SenderMotion.AnimationEvent.AddSelectorEvent(_AccumulateAnim, 0, selector._ColliderID);
-        SenderMotion.AnimationEvent.AddSelectorFinishEvent(_AccumulateAnim, 2.0f, selector._ColliderID);
+        skillMotion.MotionManager.AnimationEvent.AddSelectorEvent(_AccumulateAnim, 0, selector._ColliderID);
+        skillMotion.MotionManager.AnimationEvent.AddSelectorFinishEvent(_AccumulateAnim, 2.0f, selector._ColliderID);
     }
 
     public override void ActImpact(MotionManager senderManager, MotionManager reciverManager)

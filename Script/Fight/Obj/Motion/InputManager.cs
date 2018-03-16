@@ -270,12 +270,12 @@ public class InputManager : InstanceBase<InputManager>
         if (_NormalAttack == null)
             return null;
 
-        if (IsKeyHold("j"))
+        if (input == ("j"))
         {
             return _InputMotion._StateSkill._SkillMotions["j"];
         }
 
-        if (IsKeyHold("k"))
+        if (input == ("k"))
         {
             if (_InputMotion.ActingSkill == _NormalAttack && _NormalAttack.CurStep > 0 && _NormalAttack.CurStep < 4 && _NormalAttack.CanNextInput)
             {
@@ -302,7 +302,7 @@ public class InputManager : InstanceBase<InputManager>
             }
         }
 
-        if (IsKeyHold("u"))
+        if (input == ("u"))
         {
             if (_InputMotion.ActingSkill == _NormalAttack && _NormalAttack.CurStep > 0 && _NormalAttack.CurStep < 4 && _NormalAttack.CanNextInput)
             {
@@ -325,7 +325,7 @@ public class InputManager : InstanceBase<InputManager>
             }
         }
 
-        if (IsKeyHold("l"))
+        if (input == ("l"))
         {
             string inputKey = "4";
             if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
