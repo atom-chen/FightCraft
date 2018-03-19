@@ -9,6 +9,13 @@ public class ObjMotionSkillInHit : ObjMotionSkillBase
     public bool _ActInLie = true;
     public bool _ActInRise = true;
 
+    public override bool ActSkill(Hashtable exhash)
+    {
+        return base.ActSkill(exhash);
+
+        MotionManager._StateFly.ResetFly();
+    }
+
 
     public override bool IsCanActSkill()
     {

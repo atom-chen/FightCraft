@@ -18,13 +18,13 @@ public class ImpactBuffDefence : ImpactBuff
         
     }
 
-    public override bool IsBuffCanHit(ImpactHit damageImpact)
+    public override bool IsBuffCanHit(MotionManager impactSender, ImpactHit damageImpact)
     {
         float targetAngle = Mathf.Abs(Vector3.Angle(damageImpact.SenderMotion.transform.position - _BuffOwner.transform.position, _BuffOwner.transform.forward));
-        if (targetAngle > _DefenceAngle)
-        {
-            return true;
-        }
+        //if (targetAngle > _DefenceAngle)
+        //{
+        //    return true;
+        //}
         if (targetAngle > 60)
         {
             _BuffOwner.SetLookAt(damageImpact.SenderMotion.transform.position);

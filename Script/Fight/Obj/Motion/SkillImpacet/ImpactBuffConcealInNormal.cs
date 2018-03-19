@@ -41,7 +41,7 @@ public class ImpactBuffConcealInNormal : ImpactBuff
         }
     }
 
-    public override bool IsBuffCanHit(ImpactHit damageImpact)
+    public override bool IsBuffCanHit(MotionManager impactSender, ImpactHit damageImpact)
     {
         if(_BuffOwner._ActionState == _BuffOwner._StateIdle
             || _BuffOwner._ActionState == _BuffOwner._StateMove)

@@ -109,6 +109,80 @@ public class AI_HeroBase : AI_Base
 
     #endregion
 
+    #region 
+
+    #region ready skill speed
+
+    private static float _ReadySkillSpeedTime = 0.8f;
+    private float _CurAnimSpeed;
+    private float _CurEffectSpeed;
+    private Dictionary<ObjMotionSkillBase, float> _SkillColliderTime = new Dictionary<ObjMotionSkillBase, float>();
+
+    public void InitReadySkillSpeed(ObjMotionSkillBase objMotionSkill)
+    {
+        if (_ReadySkillSpeedTime == 0)
+            return;
+
+        float attackConlliderTime = _SelfMotion.AnimationEvent.GetAnimFirstColliderEventTime(objMotionSkill._NextAnim[0]);
+        if (attackConlliderTime < 0)
+            return;
+
+        _SkillColliderTime.Add(objMotionSkill, attackConlliderTime);
+        _SelfMotion.AnimationEvent.AddEvent(objMotionSkill._NextAnim[0], 0, AttackStartForSpeed);
+        _SelfMotion.AnimationEvent.AddEvent(objMotionSkill._NextAnim[0], attackConlliderTime - 0.05f, AttackColliderForSpeed);
+        _SelfMotion.AnimationEvent.AddEvent(objMotionSkill._NextAnim[0], objMotionSkill._NextAnim[0].length, AttackColliderForSpeed);
+    }
+
+    private void AttackStartForSpeed()
+    {
+        _CurAnimSpeed = -1;
+        var animState = _SelfMotion.GetCurAnim();
+        if (animState == null)
+            return;
+
+        if (!_SkillColliderTime.ContainsKey(_SelfMotion._StateSkill.ActingSkill))
+            return;
+
+        var readyTime = _SkillColliderTime[_SelfMotion._StateSkill.ActingSkill];
+        if (readyTime > _ReadySkillSpeedTime)
+            return;
+
+        var speed = readyTime * animState.speed / _ReadySkillSpeedTime;
+        _CurAnimSpeed = animState.speed;
+        animState.speed = speed;
+
+        if (_SelfMotion.PlayingEffect != null)
+        {
+            var effectSpeed = readyTime * _SelfMotion.PlayingEffect.LastPlaySpeed / _ReadySkillSpeedTime;
+            _CurEffectSpeed = _SelfMotion.PlayingEffect.LastPlaySpeed;
+            _SelfMotion.PlayingEffect.SetEffectSpeed(effectSpeed);
+        }
+    }
+
+    private void AttackColliderForSpeed()
+    {
+        if (_CurAnimSpeed < 0)
+            return;
+
+        var animState = _SelfMotion.GetCurAnim();
+        if (animState == null)
+            return;
+
+        if (!_SkillColliderTime.ContainsKey(_SelfMotion._StateSkill.ActingSkill))
+            return;
+
+        animState.speed = _CurAnimSpeed;
+
+        if (_SelfMotion.PlayingEffect != null)
+        {
+            _SelfMotion.PlayingEffect.SetEffectSpeed(_CurEffectSpeed);
+        }
+    }
+
+    #endregion
+
+    #endregion
+
     #region critical AI
 
     public float _CriticalSkillRate = 0;

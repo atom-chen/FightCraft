@@ -10,10 +10,18 @@ public class ImpactHit : ImpactDamage
     public override void ActImpact(MotionManager senderManager, MotionManager reciverManager)
     {
         //base.ActImpact(senderManager, reciverManager);
+        InitActImpact(senderManager, reciverManager);
 
         HitMotion(senderManager, reciverManager);
 
         ProcessDamge(senderManager, reciverManager);
+    }
+
+    protected virtual void InitActImpact(MotionManager senderManager, MotionManager reciverManager)
+    {
+        _SenderMotion = senderManager;
+        _ReciveMotion = reciverManager;
+        _IsActingImpact = true;
     }
 
     protected virtual void HitMotion(MotionManager senderManager, MotionManager reciverManager)

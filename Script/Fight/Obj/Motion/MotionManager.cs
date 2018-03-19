@@ -158,12 +158,15 @@ public class MotionManager : MonoBehaviour
     }
 
     float _OrgSpeed = 1;
+    float _OrgEffectSpeed = 1;
     int _PauseCnt = 0;
     public void PauseAnimation(AnimationClip animClip, float lastTime)
     {
         if (_Animaton[animClip.name].speed == 0)
         {
             ++_PauseCnt;
+            if (lastTime > 0)
+                StartCoroutine(ResumeAnimationLater(animClip, lastTime));
             return;
         }
         else
@@ -173,6 +176,12 @@ public class MotionManager : MonoBehaviour
 
         _OrgSpeed = _Animaton[animClip.name].speed;
         _Animaton[animClip.name].speed = 0;
+
+        if (_PlayingEffect != null)
+        {
+            _OrgEffectSpeed = _PlayingEffect.LastPlaySpeed;
+            _PlayingEffect.SetEffectSpeed(0);
+        }
 
         if(lastTime > 0)
             StartCoroutine(ResumeAnimationLater(animClip, lastTime));
@@ -190,6 +199,19 @@ public class MotionManager : MonoBehaviour
 
     }
 
+    public AnimationState GetCurAnim()
+    {
+        foreach (AnimationState state in _Animaton)
+        {
+            if (_Animaton.IsPlaying(state.name))
+            {
+                return state;
+            }
+        }
+
+        return null;
+    }
+
     public void ResumeAnimation(AnimationClip animClip)
     {
         --_PauseCnt;
@@ -199,6 +221,11 @@ public class MotionManager : MonoBehaviour
         if (_Animaton.IsPlaying(animClip.name))
         {
             _Animaton[animClip.name].speed = _OrgSpeed;
+        }
+
+        if (_PlayingEffect != null)
+        {
+            _PlayingEffect.SetEffectSpeed(_OrgEffectSpeed);
         }
     }
 
@@ -478,7 +505,7 @@ public class MotionManager : MonoBehaviour
 
         for (int i = 0; i < _ImpactBuffs.Count; ++i)
         {
-            if (!_ImpactBuffs[i].IsBuffCanHit(impactHit))
+            if (!_ImpactBuffs[i].IsBuffCanHit(impactSender, impactHit))
                 return false;
         }
         return true;
@@ -549,6 +576,13 @@ public class MotionManager : MonoBehaviour
     private Dictionary<string, EffectController> _SkillEffects = new Dictionary<string, EffectController>();
     private Dictionary<string, Transform> _BindTransform = new Dictionary<string, Transform>();
     private EffectController _PlayingEffect;
+    public EffectController PlayingEffect
+    {
+        get
+        {
+            return _PlayingEffect;
+        }
+    }
 
     public void PlaySkillEffect(EffectController effect, float speed = -1, ElementType elementType = ElementType.None)
     {

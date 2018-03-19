@@ -238,17 +238,31 @@ public class InputManager : InstanceBase<InputManager>
 
         if (IsKeyHold("l"))
         {
-            string inputKey = "4";
-            if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
+            if (_InputMotion._ActionState == _InputMotion._StateHit
+                || _InputMotion._ActionState == _InputMotion._StateFly
+                || _InputMotion._ActionState == _InputMotion._StateLie
+                || _InputMotion._ActionState == _InputMotion._StateRise)
             {
-                _InputMotion.ActSkill(_InputMotion._StateSkill._SkillMotions[inputKey]);
-            }
-            else
-            {
-                inputKey = "7";
+                string inputKey = "8";
                 if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
                 {
                     _InputMotion.ActSkill(_InputMotion._StateSkill._SkillMotions[inputKey]);
+                }
+            }
+            else
+            {
+                string inputKey = "4";
+                if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
+                {
+                    _InputMotion.ActSkill(_InputMotion._StateSkill._SkillMotions[inputKey]);
+                }
+                else
+                {
+                    inputKey = "7";
+                    if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
+                    {
+                        _InputMotion.ActSkill(_InputMotion._StateSkill._SkillMotions[inputKey]);
+                    }
                 }
             }
         }
@@ -327,17 +341,31 @@ public class InputManager : InstanceBase<InputManager>
 
         if (input == ("l"))
         {
-            string inputKey = "4";
-            if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
+            if (_InputMotion._ActionState == _InputMotion._StateHit
+                || _InputMotion._ActionState == _InputMotion._StateFly
+                || _InputMotion._ActionState == _InputMotion._StateLie
+                || _InputMotion._ActionState == _InputMotion._StateRise)
             {
-                return  (_InputMotion._StateSkill._SkillMotions[inputKey]);
+                string inputKey = "8";
+                if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
+                {
+                    return (_InputMotion._StateSkill._SkillMotions[inputKey]);
+                }
             }
             else
             {
-                inputKey = "7";
+                string inputKey = "4";
                 if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
                 {
-                    return  (_InputMotion._StateSkill._SkillMotions[inputKey]);
+                    return (_InputMotion._StateSkill._SkillMotions[inputKey]);
+                }
+                else
+                {
+                    inputKey = "7";
+                    if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
+                    {
+                        return (_InputMotion._StateSkill._SkillMotions[inputKey]);
+                    }
                 }
             }
         }

@@ -112,9 +112,12 @@ public class UISkillBar : UIBase
                 continue;
             }
 
-            var cd = Time.time - skillBase._LastUseTime;
+            var cd = Time.time - skillBase.LastUseTime;
             float cdPro = (skillBase._SkillCD - cd) / skillBase._SkillCD;
             _Buttons[skillInput[i]].SetCD(cdPro);
+
+
+            _Buttons[skillInput[i]].SetStoreTimes(skillBase.LastUseTimes);
         }
     }
 

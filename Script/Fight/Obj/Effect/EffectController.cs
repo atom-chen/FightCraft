@@ -7,7 +7,14 @@ public class EffectController : MonoBehaviour
     
     #region Binded Effect
 
-    private float _LastPlaySpeed = 1;
+    protected float _LastPlaySpeed = 1;
+    public float LastPlaySpeed
+    {
+        get
+        {
+            return _LastPlaySpeed;
+        }
+    }
     private ParticleSystem[] _Particles;
 
     public ParticleSystem[] Particles
@@ -39,7 +46,8 @@ public class EffectController : MonoBehaviour
 
             foreach (var particle in Particles)
             {
-                particle.playbackSpeed = speed;
+                var particleMain = particle.main;
+                particleMain.simulationSpeed = speed;
             }
         }
         if (gameObject.activeSelf)
@@ -47,6 +55,20 @@ public class EffectController : MonoBehaviour
             gameObject.SetActive(false);
         }
         gameObject.SetActive(true);
+    }
+
+    public virtual void SetEffectSpeed(float speed)
+    {
+        if (speed != _LastPlaySpeed)
+        {
+            _LastPlaySpeed = speed;
+
+            foreach (var particle in Particles)
+            {
+                var particleMain = particle.main;
+                particleMain.simulationSpeed = speed;
+            }
+        }
     }
 
     public virtual void PlayEffect(Hashtable hash)

@@ -9,7 +9,7 @@ public class ImpactFlyToPos : ImpactFly
 
     public override void ActImpact(MotionManager senderManager, MotionManager reciverManager)
     {
-        base.ActImpact(senderManager, reciverManager);
+        InitActImpact(senderManager, reciverManager);
 
         Vector3 hitPos = senderManager.transform.position + senderManager.transform.forward * _Offset.x + reciverManager.transform.right * _Offset.y;
         Vector3 distance = hitPos - reciverManager.transform.position;

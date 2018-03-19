@@ -18,7 +18,7 @@ public class ImpactBuffBlock : ImpactBuff
         base.RemoveBuff(reciverManager);
     }
 
-    public override bool IsBuffCanHit(ImpactHit impactHit)
+    public override bool IsBuffCanHit(MotionManager impactSender, ImpactHit impactHit)
     {
         if (impactHit == null)
             return true;

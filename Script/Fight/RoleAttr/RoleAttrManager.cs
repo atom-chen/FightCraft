@@ -163,7 +163,20 @@ public class RoleAttrManager : MonoBehaviour
     {
         return _BaseAttr._ExAttr;
     }
-    
+
+    private float _AccumulateDamageRate = 0;
+    public float AccumulateDamageRate
+    {
+        get
+        {
+            return _AccumulateDamageRate;
+        }
+        set
+        {
+            _AccumulateDamageRate = value;
+        }
+    }
+
 
     #endregion
 
@@ -622,7 +635,13 @@ public class RoleAttrManager : MonoBehaviour
 
     private void CalculateNormalDamage(RoleAttrManager sender, Hashtable resultHash, DamageClass damageClass)
     {
+        var impactDamage = (ImpactBase)resultHash["ImpactBase"] as ImpactDamage;
         float damageRate = (float)resultHash["SkillDamageRate"];
+        if (impactDamage != null && impactDamage._IsCharSkillDamage)
+        {
+            damageRate *= (1 + sender.AccumulateDamageRate);
+        }
+        Debug.Log("DamageRate:" + damageRate);
         ElementType damageType = ElementType.Physic;
         if (resultHash.ContainsKey("DamageType"))
         {

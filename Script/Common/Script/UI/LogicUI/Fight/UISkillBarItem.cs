@@ -12,6 +12,7 @@ public class UISkillBarItem : UIItemSelect
     public Image _CDImage;
     public Image _UseTipImage;
     public string _SkillInput;
+    public Text _StoreTimes;
 
     public bool IsSkillAct
     {
@@ -70,6 +71,14 @@ public class UISkillBarItem : UIItemSelect
         {
             _CDImage.gameObject.SetActive(false);
         }
+    }
+
+    public void SetStoreTimes(int times)
+    {
+        if (_StoreTimes == null)
+            return;
+
+        _StoreTimes.text = times.ToString();
     }
 
     #endregion

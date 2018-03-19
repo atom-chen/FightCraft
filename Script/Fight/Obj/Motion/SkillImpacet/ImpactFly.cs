@@ -7,6 +7,8 @@ public class ImpactFly : ImpactHit
 
     public override void ActImpact(MotionManager senderManager, MotionManager reciverManager)
     {
+        InitActImpact(senderManager, reciverManager);
+
         HitFlyMotion(senderManager, reciverManager);
 
         ProcessDamge(senderManager, reciverManager);

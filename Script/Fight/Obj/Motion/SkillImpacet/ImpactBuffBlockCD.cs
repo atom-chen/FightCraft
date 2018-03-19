@@ -11,7 +11,7 @@ public class ImpactBuffBlockCD : ImpactBuffCD
             return false;
     }
 
-    public override bool IsBuffCanHit(ImpactHit damageImpact)
+    public override bool IsBuffCanHit(MotionManager impactSender, ImpactHit damageImpact)
     {
         if (IsInCD())
             return true;

@@ -20,13 +20,18 @@ public class ImpactBuffSuperArmor : ImpactBuff
         base.RemoveBuff(reciverManager);
     }
 
-    public override bool IsBuffCanHit(ImpactHit impactHit)
+    public override bool IsBuffCanHit(MotionManager impactSender, ImpactHit impactHit)
     {
         //GlobalEffect.Instance.Pause(0.1f);
         _BuffOwner.ResetMove();
         _BuffOwner.ActionPause(0.1f);
 
-        if(_HitEffect != null)
+        if (!impactHit._IsBulletHit)
+        {
+            impactSender.ActionPause(0.1f);
+        }
+
+        if (_HitEffect != null)
             _BuffOwner.PlaySkillEffect(_HitEffect);
         ((EffectOutLine)_DynamicEffect).PlayHitted();
 

@@ -20,7 +20,7 @@ public class ImpactBuffShield : ImpactBuff
         base.RemoveBuff(reciverManager);
     }
 
-    public override bool IsBuffCanHit(ImpactHit damageImpact)
+    public override bool IsBuffCanHit(MotionManager impactSender, ImpactHit damageImpact)
     {
         return false;
     }

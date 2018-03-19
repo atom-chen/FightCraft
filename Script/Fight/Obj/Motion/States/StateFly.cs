@@ -85,6 +85,13 @@ public class StateFly : StateBase
     private const float _DownSpeed = 10;
 
     private GameObject _FlyBody;
+    public GameObject FlyBody
+    {
+        get
+        {
+            return _FlyBody;
+        }
+    }
     private float _FlyHeight = 0;
     private float _StayTime = 0;
 
@@ -134,6 +141,11 @@ public class StateFly : StateBase
         _MotionManager.RePlayAnimation(_Animation, 1);
 
         _StayTime = 0.15f;
+    }
+
+    public void ResetFly()
+    {
+        _FlyBody.transform.localPosition = Vector3.zero;
     }
 
     public void FlyUpdate()

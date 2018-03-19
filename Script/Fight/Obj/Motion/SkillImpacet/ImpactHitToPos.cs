@@ -9,6 +9,7 @@ public class ImpactHitToPos : ImpactHit
 
     public override void ActImpact(MotionManager senderManager, MotionManager reciverManager)
     {
+        InitActImpact(senderManager, reciverManager);
 
         Vector3 hitPos = senderManager.transform.position + senderManager.transform.forward * _Offset.x + senderManager.transform.right * _Offset.y;
         Vector3 distance = hitPos - reciverManager.transform.position;

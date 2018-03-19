@@ -7,7 +7,7 @@ public class ImpactHitDelay : ImpactHit
 
     public override void ActImpact(MotionManager senderManager, MotionManager reciverManager)
     {
-        base.ActImpact(senderManager, reciverManager);
+        InitActImpact(senderManager, reciverManager);
 
         StartCoroutine(ActDelay(senderManager, reciverManager));
     }

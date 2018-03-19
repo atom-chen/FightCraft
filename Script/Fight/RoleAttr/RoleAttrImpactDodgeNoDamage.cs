@@ -9,7 +9,7 @@ public class RoleAttrImpactDodgeNoDamage : RoleAttrImpactBase
     public override void InitImpact(string skillInput, List<int> args)
     {
         _SkillInput = skillInput;
-        _ImpactName = "DodgeNoDamage";
+        _ImpactName = "DodgeDexImpact";
 
     }
 

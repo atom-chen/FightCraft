@@ -20,4 +20,13 @@ public class ImpactBuffCD : ImpactBuff
         var cdTime = Time.time - _StartTime;
         return _ActCD > cdTime;
     }
+
+    public float GetCDProcess()
+    {
+        var cdTime = Time.time - _StartTime;
+        if (cdTime > _ActCD)
+            return 1;
+
+        return cdTime / _ActCD;
+    }
 }

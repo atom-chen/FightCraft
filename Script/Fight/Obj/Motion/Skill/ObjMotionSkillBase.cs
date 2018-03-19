@@ -32,7 +32,14 @@ public class ObjMotionSkillBase : MonoBehaviour
         this.enabled = false;
     }
 
-    protected int _CurStep;
+    protected int _CurStep = -1;
+    public int CurStep
+    {
+        get
+        {
+            return _CurStep;
+        }
+    }
     public List<AnimationClip> _NextAnim;
     public List<EffectController> _NextEffect;
     public List<AudioClip> _NextAudio;
@@ -54,6 +61,14 @@ public class ObjMotionSkillBase : MonoBehaviour
         {
             return _MotionManager;
         }
+    }
+
+    public AnimationClip GetCurAnim()
+    {
+        if (_CurStep < 0 || _CurStep >= _NextAnim.Count)
+            return null;
+
+        return _NextAnim[_CurStep];
     }
 
     public virtual bool IsCanActSkill()
@@ -103,6 +118,8 @@ public class ObjMotionSkillBase : MonoBehaviour
         this.enabled = false;
         _MotionManager.ResetMove();
         ColliderStop();
+
+        MotionManager.RoleAttrManager.AccumulateDamageRate = 0;
     }
 
     public virtual void AnimEvent(string function, object param)
@@ -346,10 +363,32 @@ public class ObjMotionSkillBase : MonoBehaviour
     #region cd for skill bar
 
     public float _SkillCD = 0;
-    public float _LastUseTime;
+    protected float _LastUseTime;
+    public float LastUseTime
+    {
+        get
+        {
+            return _LastUseTime;
+        }
+        set
+        {
+            _LastUseTime = value;
+        }
+    }
+
     public int _StoreUseTimes = 0;
-    public int _LastUseTimes = 0;
+    protected float _LastStoreTime = 0;
+    protected int _LastUseTimes = 0;
+    public int LastUseTimes
+    {
+        get
+        {
+            return _LastUseTimes;
+        }
+    }
 
     #endregion
+
+
 
 }

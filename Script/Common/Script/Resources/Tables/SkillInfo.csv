@@ -49,8 +49,8 @@
 10048,S.BuffHit,use buff skill can hit around enemy,15,-1,Talent,RoleAttrImpactBuffHit,1,1000,0,0,0,5
 10049,S.ActBuff,can act skill after buff,15,-1,Talent,RoleAttrImpactBuffActSkill,1,1,0,0,0,4
 10050,S.Accumulate,Accumulate skill,9,-1,Talent,RoleAttrImpactAccumulate,1,10000,5000,0,0,3
-10051,D.NoDamage,NoDamage When using dodge,6,-1,Talent,RoleAttrImpactDodgeNoDamage,1,102,2,2,2,3
-10052,D.Enhance,D.Enhance,6,-1,Talent,RoleAttrImpactDodgeNoDamage,1,102,2,2,2,3
-10053,D.DefenceSuper,reduse damage when defence,9,-1,Talent,RoleAttrImpactDefenceRate,1,2500,0,0,0,5
-10054,D.Enhance,reduse damage when defence,9,-1,Talent,RoleAttrImpactDefenceRate,1,2500,0,0,0,5
-10055,D.ActHitted,reduse damage when defence,15,-1,Talent,RoleAttrImpactDefenceRate,1,2500,0,0,0,5
+10051,D.NoDamage,NoDamage When using dodge,6,4,Talent,RoleAttrImpactDodgeNoDamage,1,102,2,2,2,3
+10052,D.Enhance,D.Enhance,6,4,Talent,RoleAttrImpactSkillCD,1,-4000,2,2,2,3
+10053,D.DefenceSuper,reduse damage when defence,9,7,Talent,RoleAttrImpactDefenceArmor,1,2500,0,0,0,5
+10054,D.Enhance,reduse damage when defence,9,7,Talent,RoleAttrImpactSkillCD,1,-6000,0,0,0,5
+10055,D.ActHitted,reduse damage when defence,15,-1,Talent,RoleAttrImpactBuffInHit,1,2500,0,0,0,5

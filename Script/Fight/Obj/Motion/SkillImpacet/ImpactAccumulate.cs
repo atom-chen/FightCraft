@@ -49,6 +49,8 @@ public class ImpactAccumulate : ImpactBase
         base.ActImpact(senderManager, reciverManager);
         _IsActingImpact = true;
         _HoldTime = Time.time;
+
+        reciverManager.RoleAttrManager.AccumulateDamageRate = 0;
     }
 
     public override void FinishImpact(MotionManager reciverManager)
@@ -68,6 +70,7 @@ public class ImpactAccumulate : ImpactBase
         float accumulateRate = (Time.time - _HoldTime / _AccumulateTime);
         accumulateRate = Mathf.Clamp(accumulateRate, 0, 1);
         _IsActingImpact = false;
+        ReciveMotion.RoleAttrManager.AccumulateDamageRate = accumulateRate * _AccumulateDamage;
 
         SkillMotion.PlayerNextAnim();
     }

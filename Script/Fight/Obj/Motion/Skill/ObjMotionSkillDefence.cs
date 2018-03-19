@@ -21,6 +21,7 @@ public class ObjMotionSkillDefence : ObjMotionSkillBase
     public override bool ActSkill(Hashtable exhash)
     {
         var actSkill = base.ActSkill(exhash);
+        _LastUseTime = 0;
         _DefenceTime = _MinDefenceTime;
         _BuffDefence.ActImpact(MotionManager, MotionManager);
         return actSkill;
@@ -30,6 +31,7 @@ public class ObjMotionSkillDefence : ObjMotionSkillBase
     {
         base.FinishSkillImmediately();
 
+        _LastUseTime = Time.time;
         MotionManager.RemoveBuff(_BuffDefence.GetType());
     }
 

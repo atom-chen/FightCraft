@@ -198,7 +198,11 @@ public class ResourcePool : InstanceBase<ResourcePool>
         modelObj.transform.SetParent(motion.transform);
         modelObj.transform.localPosition = Vector3.zero;
         modelObj.transform.localRotation = Quaternion.Euler(Vector3.zero);
-        
+
+        var shadow = ResourceManager.Instance.GetInstanceGameObject("Common/ShadowPlane");
+        shadow.transform.SetParent(motion.transform);
+        shadow.transform.localPosition = Vector3.zero;
+        shadow.transform.localRotation = Quaternion.Euler(Vector3.zero);
 
         return motion.GetComponent<MotionManager>();
     }

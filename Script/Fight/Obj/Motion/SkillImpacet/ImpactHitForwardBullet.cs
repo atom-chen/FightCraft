@@ -8,6 +8,7 @@ public class ImpactHitForwardBullet : ImpactHit
 
     public override void ActImpact(MotionManager senderManager, MotionManager reciverManager)
     {
+        InitActImpact(senderManager, reciverManager);
 
         Vector3 destMove = transform.forward.normalized * _Speed * _Time;
 

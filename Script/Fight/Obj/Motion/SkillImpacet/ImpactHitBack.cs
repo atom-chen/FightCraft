@@ -8,6 +8,8 @@ public class ImpactHitBack : ImpactHit
 
     public override void ActImpact(MotionManager senderManager, MotionManager reciverManager)
     {
+        InitActImpact(senderManager, reciverManager);
+
         Vector3 destMove = -senderManager.transform.forward.normalized * _Speed * _Time;
 
         HitMotion(senderManager, reciverManager, destMove, _Time);

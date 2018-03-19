@@ -8,6 +8,7 @@ public class ImpactFlyForward : ImpactFly
 
     public override void ActImpact(MotionManager senderManager, MotionManager reciverManager)
     {
+        InitActImpact(senderManager, reciverManager);
 
         Vector3 destMove = senderManager.transform.forward.normalized * _Speed * _Time;
 

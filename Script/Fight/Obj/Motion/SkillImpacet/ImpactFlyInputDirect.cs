@@ -8,6 +8,7 @@ public class ImpactFlyInputDirect : ImpactFly
 
     public override void ActImpact(MotionManager senderManager, MotionManager reciverManager)
     {
+        InitActImpact(senderManager, reciverManager);
 
         Vector3 moveDirect = new Vector3(InputManager.Instance.CameraAxis.x, 0, InputManager.Instance.CameraAxis.y);
         if (moveDirect == Vector3.zero)

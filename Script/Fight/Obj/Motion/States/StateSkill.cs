@@ -79,6 +79,13 @@ public class StateSkill : StateBase
             case MotionOpt.Catch:
                 _MotionManager.TryEnterState(_MotionManager._StateCatch, args);
                 break;
+            case MotionOpt.Pause_State:
+                var curAnim = _ActingSkill.GetCurAnim();
+                if (curAnim != null)
+                {
+                    _MotionManager.PauseAnimation(curAnim, (float)args[0]);
+                }
+                break;
             default:
                 break;
         }

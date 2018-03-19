@@ -7,17 +7,18 @@ public class AI_DexHeroBase : AI_HeroBase
     {
         base.Init();
         Debug.Log("init AI_StrengthHeroBase");
-        InitAttackBlock();
+        InitSkills();
         //InitBlockSkill();
     }
 
-    #region super armor
+    #region initSkill
 
-    private void InitAttackBlock()
+    private void InitSkills()
     {
         for (int i = 0; i < _AISkills.Count; ++i)
         {
             InitSuperArmorSkill(_AISkills[i].SkillBase);
+            InitReadySkillSpeed(_AISkills[i].SkillBase);
         }
     }
 

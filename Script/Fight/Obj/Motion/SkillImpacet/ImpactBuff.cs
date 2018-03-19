@@ -183,7 +183,7 @@ public class ImpactBuff : ImpactBase
 
     }
 
-    public virtual bool IsBuffCanHit(ImpactHit damageImpact)
+    public virtual bool IsBuffCanHit(MotionManager impactSender, ImpactHit damageImpact)
     {
         return true;
     }

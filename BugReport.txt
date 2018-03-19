@@ -1,4 +1,3 @@
-baiqi ai show passive cd
-shadow
+
 alert effect/ui direct
-boss skill ready time
+

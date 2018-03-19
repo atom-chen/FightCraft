@@ -8,6 +8,8 @@ public class ImpactFlyAway : ImpactFly
 
     public override void ActImpact(MotionManager senderManager, MotionManager reciverManager)
     {
+        InitActImpact(senderManager, reciverManager);
+
         Vector3 destMove = (reciverManager.transform.position - senderManager.transform.position).normalized * _Speed * _Time;
 
         HitFlyMotion(senderManager, reciverManager, destMove, _Time);
