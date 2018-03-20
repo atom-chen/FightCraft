@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Tables;
 using UnityEngine;
 
 public class RoleAttrImpactPassiveSubLastTime : RoleAttrImpactPassive
@@ -9,8 +10,7 @@ public class RoleAttrImpactPassiveSubLastTime : RoleAttrImpactPassive
         base.InitImpact(skillInput, args);
 
         var attrTab = Tables.TableReader.AttrValue.GetRecord(args[0].ToString());
-        _SubBuffLastTime = GameDataValue.ConfigIntToFloat(attrTab.AttrParams[0]) + GameDataValue.ConfigIntToFloat(attrTab.AttrParams[0] * args[1]);
-        _SubBuffLastTime = Mathf.Min(_SubBuffLastTime, attrTab.AttrParams[1]);
+        _SubBuffLastTime = GetSubBuffLastTimeFromTab(attrTab, args[1]);
     }
 
     public override void ModifySkillAfterInit(MotionManager roleMotion)
@@ -32,14 +32,28 @@ public class RoleAttrImpactPassiveSubLastTime : RoleAttrImpactPassive
             }
             buff.ActImpact(roleMotion, roleMotion);
         }
-
-
     }
 
+    public new static string GetAttrDesc(List<int> attrParams)
+    {
+        List<int> copyAttrs = new List<int>(attrParams);
+        int attrDescID = copyAttrs[0];
+        var attrTab = Tables.TableReader.AttrValue.GetRecord(attrDescID.ToString());
+        var lastTime = GetSubBuffLastTimeFromTab(attrTab, attrParams[1]);
+        var strFormat = StrDictionary.GetFormatStr(attrDescID, (lastTime));
+        return strFormat;
+    }
 
     #region 
 
     private float _SubBuffLastTime;
+
+    private static float GetSubBuffLastTimeFromTab(AttrValueRecord attrRecord, int level)
+    {
+        var lastTime = GameDataValue.ConfigIntToFloat(attrRecord.AttrParams[0] + attrRecord.AttrParams[1] * level);
+        lastTime = Mathf.Min(lastTime, attrRecord.AttrParams[2]);
+        return lastTime;
+    }
     
     #endregion
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Tables;
 using UnityEngine;
 
 public class RoleAttrImpactPassiveLightCircleBuff : RoleAttrImpactPassive
@@ -9,12 +10,10 @@ public class RoleAttrImpactPassiveLightCircleBuff : RoleAttrImpactPassive
         base.InitImpact(skillInput, args);
 
         var attrTab = Tables.TableReader.AttrValue.GetRecord(args[0].ToString());
-        _ActRate = attrTab.AttrParams[0] + attrTab.AttrParams[0] * args[1];
-        if (attrTab.AttrParams[1] > 0)
-        {
-            _ActRate = Mathf.Min(_ActRate, attrTab.AttrParams[1]);
-        }
-        _Damage = GameDataValue.ConfigIntToFloat(attrTab.AttrParams[2]) + GameDataValue.ConfigIntToFloat(attrTab.AttrParams[1] * args[1]);
+
+        _Damage = GetValueFromTab(attrTab, args[1]);
+        _ActRate = (int)GetValue2FromTab(attrTab, args[1]);
+        _ActCD = GameDataValue.ConfigIntToFloat(attrTab.AttrParams[6]);
     }
 
     public override void ModifySkillAfterInit(MotionManager roleMotion)
@@ -35,16 +34,42 @@ public class RoleAttrImpactPassiveLightCircleBuff : RoleAttrImpactPassive
                 subBuff._DamageRate = _Damage;
             }
 
+            buff._ActCD = _ActCD;
             buff._Rate = _ActRate;
             buff.ActImpact(roleMotion, roleMotion);
         }
     }
 
+    public new static string GetAttrDesc(List<int> attrParams)
+    {
+        List<int> copyAttrs = new List<int>(attrParams);
+        int attrDescID = copyAttrs[0];
+        var attrTab = Tables.TableReader.AttrValue.GetRecord(attrDescID.ToString());
+        var value1 = GetValueFromTab(attrTab, attrParams[1]);
+        var value2 = GetValue2FromTab(attrTab, attrParams[1]);
+        var strFormat = StrDictionary.GetFormatStr(attrDescID, GameDataValue.ConfigFloatToPersent(value1), GameDataValue.ConfigIntToPersent((int)value2));
+        return strFormat;
+    }
 
     #region 
 
     private int _ActRate;
     private float _Damage;
-    
+    private float _ActCD;
+
+    private static float GetValueFromTab(AttrValueRecord attrRecord, int level)
+    {
+        var theValue = GameDataValue.ConfigIntToFloat(attrRecord.AttrParams[0] + attrRecord.AttrParams[1] * level);
+        theValue = Mathf.Min(theValue, GameDataValue.ConfigIntToFloat(attrRecord.AttrParams[2]));
+        return theValue;
+    }
+
+    private static float GetValue2FromTab(AttrValueRecord attrRecord, int level)
+    {
+        var theValue = (attrRecord.AttrParams[3] + attrRecord.AttrParams[4] * level);
+        theValue = Mathf.Min(theValue, (attrRecord.AttrParams[5]));
+        return theValue;
+    }
+
     #endregion
 }

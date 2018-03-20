@@ -7,18 +7,32 @@ public class GameDataValue
 {
     public static float ConfigIntToFloat(int val)
     {
-         return val * 0.0001f;
+        var resultVal = new decimal(0.0001) * new decimal(val);
+        return (float)resultVal;
     }
 
     public static float ConfigIntToFloatDex1(int val)
     {
         int dex = Mathf.CeilToInt(val * 0.1f);
-        return dex * 0.001f;
+        var resultVal = new decimal(0.001) * new decimal(dex);
+        return (float)resultVal;
+    }
+
+    public static float ConfigIntToPersent(int val)
+    {
+        
+        var resultVal = new decimal(0.01) * new decimal(val);
+        return (float)resultVal;
     }
 
     public static int ConfigFloatToInt(float val)
     {
         return (int)(val * 10000);
+    }
+
+    public static int ConfigFloatToPersent(float val)
+    {
+        return (int)(val * 100);
     }
 
     public static int GetMaxRate()

@@ -11,7 +11,7 @@ public class RoleAttrImpactElementBullet : RoleAttrImpactBase
         var attrTab = Tables.TableReader.AttrValue.GetRecord(args[0].ToString());
         _ImpactName = attrTab.StrParam[0];
         _SkillInput = attrTab.StrParam[1];
-        _Damage = GameDataValue.ConfigIntToFloat(attrTab.AttrParams[0]) + GameDataValue.ConfigIntToFloat(attrTab.AttrParams[1] * args[1]);
+        _Damage = GameDataValue.ConfigIntToFloat(attrTab.AttrParams[0] + attrTab.AttrParams[1] * args[1]);
     }
 
     public override void ModifySkillBeforeInit(MotionManager roleMotion)
@@ -38,9 +38,10 @@ public class RoleAttrImpactElementBullet : RoleAttrImpactBase
     public static string GetAttrDesc(List<int> attrParams)
     {
         List<int> copyAttrs = new List<int>(attrParams);
-        int legendaryId = copyAttrs[0];
-        copyAttrs.RemoveAt(0);
-        var strFormat = StrDictionary.GetFormatStr(legendaryId, copyAttrs);
+        int attrDescID = copyAttrs[0];
+        var attrTab = Tables.TableReader.AttrValue.GetRecord(attrDescID.ToString());
+        var damage = attrTab.AttrParams[0] + attrTab.AttrParams[1] * attrParams[1];
+        var strFormat = StrDictionary.GetFormatStr(attrDescID, GameDataValue.ConfigIntToPersent(damage));
         return strFormat;
     }
 

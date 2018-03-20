@@ -34,11 +34,9 @@ public class RoleAttrImpactPassive : RoleAttrImpactBase
 
     public static string GetAttrDesc(List<int> attrParams)
     {
-        var attrValue = TableReader.AttrValue.GetRecord(attrParams[0].ToString());
         List<int> copyAttrs = new List<int>(attrParams);
-        int legendaryId = copyAttrs[0];
-        copyAttrs.RemoveAt(0);
-        var strFormat = StrDictionary.GetFormatStr(legendaryId, copyAttrs);
+        int attrDescID = copyAttrs[0];
+        var strFormat = StrDictionary.GetFormatStr(attrDescID);
         return strFormat;
     }
 
