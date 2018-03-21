@@ -60,7 +60,7 @@
 60002,Skill,girlskill3,Sword Dance,,
 ,,,Twirls around in a circular motion and attacking enemies with high count of multi-hit.Total Damage: <color=#001100>{0}%</color>,,
 ,,,Quickly deliver multiple slashes and then dash forward. Total Damage:<color=#001100>{0}%</color>,,
-,,,Launching the enemy into the air then slashes them multiple times,,
+,,,"Launching the enemy into the air then slashes them multiple times,finally ",,
 60100,Skill,boyskill1,Gale Smash,,
 60101,Skill,boyskill2,Spinning Cross,,
 60102,Skill,boyskill3,Atomic Smash,,
