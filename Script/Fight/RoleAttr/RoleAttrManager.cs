@@ -641,7 +641,7 @@ public class RoleAttrManager : MonoBehaviour
         {
             damageRate *= (1 + sender.AccumulateDamageRate);
         }
-        Debug.Log("DamageRate:" + damageRate);
+
         ElementType damageType = ElementType.Physic;
         if (resultHash.ContainsKey("DamageType"))
         {
@@ -650,17 +650,12 @@ public class RoleAttrManager : MonoBehaviour
 
         int attackValue = sender._BaseAttr.GetValue(RoleAttrEnum.Attack);
         int defenceValue = _BaseAttr.GetValue(RoleAttrEnum.Defense);
-        damageClass.NormalDamageValue = Mathf.CeilToInt(attackValue * damageRate * (1 - defenceValue / (defenceValue + (Level + 1) * 200.0f)));
-
-        int ignoreDAttack = sender._BaseAttr.GetValue(RoleAttrEnum.IgnoreDefenceAttack);
-        int ignoreDaamge = Mathf.CeilToInt(ignoreDAttack * damageRate);
-        damageClass.NormalDamageValue += ignoreDaamge;
 
         //element attack
         int fireAttack = sender._BaseAttr.GetValue(RoleAttrEnum.FireAttackAdd);
         if (damageType == ElementType.Fire)
         {
-            fireAttack += damageClass.NormalDamageValue;
+            fireAttack += (int)(attackValue * damageRate);
             damageClass.NormalDamageValue = 0;
         }
         if (fireAttack > 0)
@@ -674,7 +669,7 @@ public class RoleAttrManager : MonoBehaviour
         int coldAttack = sender._BaseAttr.GetValue(RoleAttrEnum.ColdAttackAdd);
         if (damageType == ElementType.Cold)
         {
-            coldAttack += damageClass.NormalDamageValue;
+            coldAttack += (int)(attackValue * damageRate);
             damageClass.NormalDamageValue = 0;
         }
         if (coldAttack > 0)
@@ -688,7 +683,7 @@ public class RoleAttrManager : MonoBehaviour
         int lightingAttack = sender._BaseAttr.GetValue(RoleAttrEnum.LightingAttackAdd);
         if (damageType == ElementType.Lighting)
         {
-            lightingAttack += damageClass.NormalDamageValue;
+            lightingAttack += (int)(attackValue * damageRate);
             damageClass.NormalDamageValue = 0;
         }
         if (lightingAttack > 0)
@@ -702,7 +697,7 @@ public class RoleAttrManager : MonoBehaviour
         int windAttack = sender._BaseAttr.GetValue(RoleAttrEnum.WindAttackAdd);
         if (damageType == ElementType.Wind)
         {
-            windAttack += damageClass.NormalDamageValue;
+            windAttack += (int)(attackValue * damageRate);
             damageClass.NormalDamageValue = 0;
         }
         if (windAttack > 0)
@@ -712,6 +707,19 @@ public class RoleAttrManager : MonoBehaviour
             int windDamage = Mathf.CeilToInt(windAttack * damageRate * (1 + (windEnhance) / 250.0f) * (1 - windResistan));
             damageClass.IceDamage = Mathf.Max(windDamage, 0);
         }
+
+        if (damageType == ElementType.Physic)
+        {
+            int phyEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.PhysicDamageEnhance);
+            int phyDamage = Mathf.CeilToInt(damageClass.NormalDamageValue * damageRate * (1 + (phyEnhance) / 250.0f));
+            damageClass.NormalDamageValue = Mathf.CeilToInt(phyDamage * (1 - defenceValue / (defenceValue + (Level + 1) * 200.0f)));
+            damageClass.NormalDamageValue = Mathf.Max(damageClass.NormalDamageValue, 0);
+            
+        }
+
+        int ignoreDAttack = sender._BaseAttr.GetValue(RoleAttrEnum.IgnoreDefenceAttack);
+        int ignoreDaamge = Mathf.CeilToInt(ignoreDAttack * damageRate);
+        damageClass.NormalDamageValue += ignoreDaamge;
     }
 
     private bool CaculateCriticleHit(RoleAttrManager sender, Hashtable resultHash, DamageClass damageClass)

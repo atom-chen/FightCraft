@@ -258,6 +258,9 @@ public class UIManager : MonoBehaviour
 
     public Vector3 WorldToScreenPoint(Vector3 worldPos)
     {
+        if (Camera.main == null)
+            return Vector3.zero;
+
         if (_UICanvasRect == null)
         {
             _UICanvasRect = gameObject.GetComponent<RectTransform>();

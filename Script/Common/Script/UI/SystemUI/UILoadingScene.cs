@@ -6,6 +6,13 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using Tables;
 
+public enum LoadSceneStep
+{
+    StartLoad,
+    LoadSceneRes,
+    InitScene,
+}
+
 public class UILoadingScene : UIBase
 {
     #region static funs
@@ -41,6 +48,8 @@ public class UILoadingScene : UIBase
     private float _ProcessStartTime;
 
     private List<string> _LoadedSceneName = new List<string>();
+
+    private LoadSceneStep _LoadSceneStep;
     #endregion
 
     #region 
@@ -71,6 +80,7 @@ public class UILoadingScene : UIBase
         ShowBG();
         _IsFinishLoading = false;
         _ProcessStartTime = Time.time;
+        _LoadSceneStep = LoadSceneStep.LoadSceneRes;
     }
 
     public void FixedUpdate()
@@ -80,6 +90,23 @@ public class UILoadingScene : UIBase
 
         transform.SetSiblingIndex(10000);
 
+        if (_LoadSceneStep == LoadSceneStep.LoadSceneRes)
+        {
+            UpdateLoadSceneRes();
+        }
+        else if (_LoadSceneStep == LoadSceneStep.InitScene)
+        {
+            if (FightManager.Instance != null)
+            {
+                _LoadProcess.value = FightManager.Instance.InitProcess;
+                if (FightManager.Instance.InitProcess == 1)
+                    base.Destory();
+            }
+        }
+    }
+
+    private void UpdateLoadSceneRes()
+    {
         if (_LoadStageInfo == null)
         {
             float processValue = _LoadSceneOperation[0].progress;
@@ -88,7 +115,7 @@ public class UILoadingScene : UIBase
             {
                 _IsFinishLoading = true;
                 LogicManager.Instance.StartLogic();
-                base.Destory();
+                _LoadSceneStep = LoadSceneStep.InitScene;
             }
         }
         else
@@ -113,7 +140,7 @@ public class UILoadingScene : UIBase
                     if (loadStageProcess == _LoadStageInfo.ValidScenePath.Count)
                     {
                         LogicManager.Instance.EnterFightFinish();
-                        base.Destory();
+                        _LoadSceneStep = LoadSceneStep.InitScene;
                     }
                 }
                 else

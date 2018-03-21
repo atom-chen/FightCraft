@@ -87,7 +87,6 @@ public class AI_HeroBase : AI_Base
         if (attackConlliderTime < 0)
             return;
 
-        Debug.Log("first collider time:"+ objMotionSkill.name + ":" + attackConlliderTime);
         _SelfMotion.AnimationEvent.AddEvent(objMotionSkill._NextAnim[0], 0, AttackStart);
         _SelfMotion.AnimationEvent.AddEvent(objMotionSkill._NextAnim[0], attackConlliderTime + 0.05f, AttackCollider);
         _SelfMotion.AnimationEvent.AddEvent(objMotionSkill._NextAnim[0], objMotionSkill._NextAnim[0].length, AttackCollider);

@@ -18,6 +18,11 @@ namespace Tables
 
         public static string GetFormatStr(int idx, params object[] param)
         {
+            return GetFormatStr(idx.ToString());
+        }
+
+        public static string GetFormatStr(string idx, params object[] param)
+        {
             var strRecord = TableReader.StrDictionary.GetRecord(idx.ToString());
             if (strRecord == null)
             {

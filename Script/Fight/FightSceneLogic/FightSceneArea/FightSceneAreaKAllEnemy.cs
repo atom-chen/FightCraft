@@ -7,7 +7,6 @@ public class FightSceneAreaKAllEnemy : FightSceneAreaBase
     public override void StartArea()
     {
         base.StartArea();
-        Debug.Log("StartArea:" + gameObject.name);
         StartStep();
     }
 
@@ -109,4 +108,19 @@ public class FightSceneAreaKAllEnemy : FightSceneAreaBase
     }
 
     #endregion
+
+    public override List<string> GetAreaMonIDs()
+    {
+        List<string> monIdList = new List<string>();
+
+        for (int i = 0; i < _EnemyBornPos.Length; ++i)
+        {
+            if (!monIdList.Contains(_EnemyBornPos[i]._EnemyDataID))
+            {
+                monIdList.Add(_EnemyBornPos[i]._EnemyDataID);
+            }
+        }
+
+        return monIdList;
+    }
 }

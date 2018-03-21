@@ -25,6 +25,9 @@ public class AreaGate : MonoBehaviour {
     {
 
         var mainChar = FightManager.Instance.MainChatMotion;
+        if (mainChar == null)
+            return;
+
         if (mainChar._ActionState == mainChar._StateIdle &&
             Vector3.Distance(transform.position, mainChar.transform.position) < _TeleDistance)
         {

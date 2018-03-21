@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
- 
+
 
 [System.Serializable]
 public class SerializeRandomEnemy
@@ -125,4 +126,19 @@ public class FightSceneAreaKEnemyCnt : FightSceneAreaBase
         return _EnemyMotionID[_EnemyMotionID.Length - 1]._EnemyDataID;
     }
     #endregion
+
+    public override List<string> GetAreaMonIDs()
+    {
+        List<string> monIdList = new List<string>();
+
+        for (int i = 0; i < _EnemyMotionID.Length; ++i)
+        {
+            if (!monIdList.Contains(_EnemyMotionID[i]._EnemyDataID))
+            {
+                monIdList.Add(_EnemyMotionID[i]._EnemyDataID);
+            }
+        }
+
+        return monIdList;
+    }
 }

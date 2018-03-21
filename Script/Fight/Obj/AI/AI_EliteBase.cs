@@ -12,7 +12,6 @@ public class AI_EliteBase : AI_HeroBase
     protected override void Init()
     {
         base.Init();
-        Debug.Log("init AI_StrengthHeroBase");
         InitSkills();
     }
 

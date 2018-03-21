@@ -150,12 +150,49 @@ public class ResourcePool : InstanceBase<ResourcePool>
 
     private Dictionary<string, Stack<GameObject>> _IdleModel = new Dictionary<string, Stack<GameObject>>();
 
+    private Dictionary<string, GameObject> _MonsterBasePrefab = new Dictionary<string, GameObject>();
+
+    public void InitMonsterBase(List<string> monIds)
+    {
+        for (int i = 0; i < monIds.Count; ++i)
+        {
+            if (_MonsterBasePrefab.ContainsKey(monIds[i]))
+                continue;
+
+            var monsterTab = Tables.TableReader.MonsterBase.GetRecord(monIds[i]);
+            var instance = ResourceManager.Instance.GetGameObject("ModelBase/" + monsterTab.MotionPath);
+            instance.gameObject.SetActive(false);
+            _MonsterBasePrefab.Add(monIds[i], instance);
+
+            var monElite = Tables.TableReader.MonsterBase.GetGroupElite(monsterTab);
+            if (_MonsterBasePrefab.ContainsKey(monElite.Id))
+                continue;
+            if (monElite != null)
+            {
+                var instanceElite = ResourceManager.Instance.GetGameObject("ModelBase/" + monElite.MotionPath);
+                instanceElite.gameObject.SetActive(false);
+                _MonsterBasePrefab.Add(monElite.Id, instanceElite);
+            }
+        }
+    }
+
     public MotionManager GetIdleMotion(Tables.MonsterBaseRecord monsterTab)
     {
         if (monsterTab == null)
             return null;
 
-        var motion = ResourceManager.Instance.GetInstanceGameObject("ModelBase/" + monsterTab.MotionPath);
+        GameObject motion = null;
+        
+        if (_MonsterBasePrefab.ContainsKey(monsterTab.Id))
+        {
+            Debug.Log("GetIdleMotion1");
+            motion = GameObject.Instantiate(_MonsterBasePrefab[monsterTab.Id]);
+        }
+        else
+        {
+            Debug.Log("GetIdleMotion2");
+            motion = ResourceManager.Instance.GetInstanceGameObject("ModelBase/" + monsterTab.MotionPath);
+        }
         var motionScript = motion.GetComponent<MotionManager>();
         var aiScript = motion.GetComponent<AI_Base>();
         aiScript.InitSkillGoes(motionScript);

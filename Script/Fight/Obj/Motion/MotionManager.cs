@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System;
 using UnityEngine.AI;
+using UnityEngine.Profiling;
 
 public class MotionManager : MonoBehaviour
 {
@@ -350,6 +351,7 @@ public class MotionManager : MonoBehaviour
 
     public void MotionDie()
     {
+        Profiler.BeginSample("MotionDie");
         if (IsBuffCanDie())
         {
             _IsMotionDie = true;
@@ -365,7 +367,7 @@ public class MotionManager : MonoBehaviour
         {
             _RoleAttrManager.AddHP(1);
         }
-        
+        Profiler.EndSample();
     }
 
     public void MotionCorpse()

@@ -9,10 +9,31 @@ public class FightManager : InstanceBase<FightManager>
     void Start ()
     {
         SetInstance(this);
+        _InitProcess = 0;
+
+        StartCoroutine(InitFightManager());
+    }
+
+    IEnumerator InitFightManager()
+    {
         InitResourcePool();
+        _InitProcess = 0.2f;
+
         InitScene();
+        _InitProcess = 0.2f;
+        yield return new WaitForFixedUpdate();
+
         InitMainRole();
+        _InitProcess = 0.4f;
+        yield return new WaitForFixedUpdate();
+
         InitCamera();
+        _InitProcess = 0.7f;
+        yield return new WaitForFixedUpdate();
+
+        InitMonsterPrefab();
+        _InitProcess = 1f;
+        yield return new WaitForFixedUpdate();
     }
 
     #region Init
@@ -20,6 +41,15 @@ public class FightManager : InstanceBase<FightManager>
     private CameraFollow _CameraFollow;
     private int _ActingRegion;
     private List<GameObject> _SceneSPObj = new List<GameObject>();
+
+    private float _InitProcess = 0;
+    public float InitProcess
+    {
+        get
+        {
+            return _InitProcess;
+        }
+    }
 
     private void InitCamera()
     {
@@ -72,6 +102,15 @@ public class FightManager : InstanceBase<FightManager>
     private void InitResourcePool()
     {
         gameObject.AddComponent<ResourcePool>();
+    }
+
+    private void InitMonsterPrefab()
+    {
+        var fightLogic = _FightScene as FightSceneLogicPassArea;
+        if (fightLogic == null)
+            return;
+
+        ResourcePool.Instance.InitMonsterBase(fightLogic.GetLogicMonIDs());
     }
 
     #endregion

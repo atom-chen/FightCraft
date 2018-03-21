@@ -602,7 +602,7 @@ public class GameDataValue
 
     public static int GetSkillDamageRate(int skillLv, List<int> skillParam)
     {
-        return skillLv * skillParam[0];
+        return skillParam[0] + skillLv * skillParam[1];
     }
 
     #endregion

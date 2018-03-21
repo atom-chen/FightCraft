@@ -203,7 +203,7 @@ public class DataPackSave
             saveStr += DataPackSave.SaveSplitChars[0] + child.ToSaveString(1);
         }
         saveStr = saveStr.Substring(1);
-        Debug.Log("Save:" + root._SaveKey + "," + saveStr);
+        //Debug.Log("Save:" + root._SaveKey + "," + saveStr);
         LocalSave.Save(root._SaveKey, saveStr);
 
     }

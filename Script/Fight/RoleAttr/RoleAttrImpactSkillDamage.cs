@@ -36,6 +36,16 @@ public class RoleAttrImpactSkillDamage : RoleAttrImpactBase
         }
     }
 
+    public new static string GetAttrDesc(List<int> attrParams)
+    {
+        List<int> copyAttrs = new List<int>(attrParams);
+        int attrDescID = copyAttrs[0];
+        var skillRecord = Tables.TableReader.SkillInfo.GetRecord(attrDescID.ToString());
+        var damageModify = GameDataValue.GetSkillDamageRate(attrParams[1], skillRecord.EffectValue);
+        var strFormat = StrDictionary.GetFormatStr(attrDescID, GameDataValue.ConfigIntToPersent((int)(damageModify)));
+        return strFormat;
+    }
+
     #region 
 
     public float _DamageModify;

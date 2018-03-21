@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System;
 
 [System.Serializable]
@@ -94,6 +95,11 @@ public class FightSceneAreaBase : MonoBehaviour
     #endregion
 
     public virtual Transform GetAreaTransform()
+    {
+        return null;
+    }
+
+    public virtual List<string> GetAreaMonIDs()
     {
         return null;
     }

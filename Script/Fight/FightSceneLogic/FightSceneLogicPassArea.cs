@@ -118,4 +118,27 @@ public class FightSceneLogicPassArea : FightSceneLogicBase
 
 
     #endregion
+
+    public virtual List<string> GetLogicMonIDs()
+    {
+        List<string> monIds = new List<string>();
+
+        for (int i = 0; i < _FightArea.Count; ++i)
+        {
+            var areaIds = _FightArea[i].GetAreaMonIDs();
+
+            if (areaIds == null)
+                continue;
+
+            for (int j = 0; j < areaIds.Count; ++j)
+            {
+                if (!monIds.Contains(areaIds[j]))
+                {
+                    monIds.Add(areaIds[j]);
+                }
+            }
+        }
+
+        return monIds;
+    }
 }

@@ -165,4 +165,20 @@ public class FightSceneAreaKBossWithFish : FightSceneAreaBase
         return _EnemyMotionID[_EnemyMotionID.Length - 1]._EnemyDataID;
     }
     #endregion
+
+    public override List<string> GetAreaMonIDs()
+    {
+        List<string> monIdList = new List<string>();
+
+        monIdList.Add(_BossMotionID);
+        for (int i = 0; i < _EnemyMotionID.Length; ++i)
+        {
+            if (!monIdList.Contains(_EnemyMotionID[i]._EnemyDataID))
+            {
+                monIdList.Add(_EnemyMotionID[i]._EnemyDataID);
+            }
+        }
+
+        return monIdList;
+    }
 }
