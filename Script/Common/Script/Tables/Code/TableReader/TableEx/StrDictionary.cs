@@ -18,7 +18,7 @@ namespace Tables
 
         public static string GetFormatStr(int idx, params object[] param)
         {
-            return GetFormatStr(idx.ToString());
+            return GetFormatStr(idx.ToString(), param);
         }
 
         public static string GetFormatStr(string idx, params object[] param)

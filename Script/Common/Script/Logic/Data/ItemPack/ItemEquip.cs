@@ -237,14 +237,14 @@ public class ItemEquip : ItemBase
             {
                 hpValue = CommonDefine.GetQualityColorStr(EquipQuality) + hpValue + "</color>";
             }
-            attrStr = StrDictionary.GetFormatStr((int)RoleAttrEnum.Defense, hpValue);
+            attrStr = StrDictionary.GetFormatStr((int)RoleAttrEnum.HPMax, hpValue); 
 
             string defenceValue = BaseDefence.ToString();
             if (_ExBaseDef)
             {
                 defenceValue = CommonDefine.GetQualityColorStr(EquipQuality) + defenceValue + "</color>";
             }
-            attrStr += "\n" + StrDictionary.GetFormatStr((int)RoleAttrEnum.HPMax, defenceValue);
+            attrStr += "\n" + StrDictionary.GetFormatStr((int)RoleAttrEnum.Defense, defenceValue);
         }
         return attrStr;
 

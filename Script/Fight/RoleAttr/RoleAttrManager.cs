@@ -453,6 +453,14 @@ public class RoleAttrManager : MonoBehaviour
     #endregion
 
     #region 
+    private MonsterBaseRecord _MonsterRecord;
+    public MonsterBaseRecord MonsterRecord
+    {
+        get
+        {
+            return _MonsterRecord;
+        }  
+    }
 
     public void InitMainRoleAttr()
     {
@@ -631,6 +639,11 @@ public class RoleAttrManager : MonoBehaviour
         }
 
         DamageHP(damageClass.TotalDamageValue + damageClass.AttachDamageValue);
+
+        if (sender == FightManager.Instance.MainChatMotion.RoleAttrManager)
+        {
+            TestData.Instance.SetDamage(impactBase, damageClass.TotalDamageValue);
+        }
     }
 
     private void CalculateNormalDamage(RoleAttrManager sender, Hashtable resultHash, DamageClass damageClass)
@@ -655,14 +668,14 @@ public class RoleAttrManager : MonoBehaviour
         int fireAttack = sender._BaseAttr.GetValue(RoleAttrEnum.FireAttackAdd);
         if (damageType == ElementType.Fire)
         {
-            fireAttack += (int)(attackValue * damageRate);
+            fireAttack += attackValue;
             damageClass.NormalDamageValue = 0;
         }
         if (fireAttack > 0)
         {
             int fireEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.FireEnhance);
             int fireResistan = _BaseAttr.GetValue(RoleAttrEnum.FireResistan);
-            int fireDamage = Mathf.CeilToInt(fireAttack * damageRate * (1 + (fireEnhance) / 250.0f) * (1 - fireResistan));
+            int fireDamage = GameDataValue.GetEleDamage(fireAttack, damageRate, fireEnhance, fireResistan);
             damageClass.FireDamage = Mathf.Max(fireDamage, 0);
         }
 
@@ -676,7 +689,7 @@ public class RoleAttrManager : MonoBehaviour
         {
             int coldEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.ColdEnhance);
             int coldResistan = _BaseAttr.GetValue(RoleAttrEnum.ColdResistan);
-            int coldDamage = Mathf.CeilToInt(coldAttack * damageRate * (1 + (coldEnhance - coldResistan) / 250.0f) * (1 - coldResistan));
+            int coldDamage = GameDataValue.GetEleDamage(coldAttack, damageRate, coldEnhance, coldResistan);
             damageClass.IceDamage = Mathf.Max(coldDamage, 0);
         }
 
@@ -690,7 +703,7 @@ public class RoleAttrManager : MonoBehaviour
         {
             int lightingEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.LightingEnhance);
             int lightingResistan = _BaseAttr.GetValue(RoleAttrEnum.LightingResistan);
-            int lightingDamage = Mathf.CeilToInt(lightingAttack * damageRate * (1 + (lightingEnhance) / 250.0f) * (1 - lightingResistan));
+            int lightingDamage = GameDataValue.GetEleDamage(lightingAttack, damageRate, lightingEnhance, lightingResistan);
             damageClass.IceDamage = Mathf.Max(lightingDamage, 0);
         }
 
@@ -704,16 +717,15 @@ public class RoleAttrManager : MonoBehaviour
         {
             int windEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.WindEnhance);
             int windResistan = _BaseAttr.GetValue(RoleAttrEnum.WindResistan);
-            int windDamage = Mathf.CeilToInt(windAttack * damageRate * (1 + (windEnhance) / 250.0f) * (1 - windResistan));
+            int windDamage = GameDataValue.GetEleDamage(windAttack, damageRate, windEnhance, windResistan);
             damageClass.IceDamage = Mathf.Max(windDamage, 0);
         }
 
         if (damageType == ElementType.Physic)
         {
             int phyEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.PhysicDamageEnhance);
-            int phyDamage = Mathf.CeilToInt(damageClass.NormalDamageValue * damageRate * (1 + (phyEnhance) / 250.0f));
-            damageClass.NormalDamageValue = Mathf.CeilToInt(phyDamage * (1 - defenceValue / (defenceValue + (Level + 1) * 200.0f)));
-            damageClass.NormalDamageValue = Mathf.Max(damageClass.NormalDamageValue, 0);
+            var phyDamage = GameDataValue.GetPhyDamage(attackValue, damageRate, attackValue, defenceValue, Level);
+            damageClass.NormalDamageValue = Mathf.Max(phyDamage, 0);
             
         }
 
@@ -726,30 +738,29 @@ public class RoleAttrManager : MonoBehaviour
     {
         var criticleRate = _BaseAttr.GetValue(RoleAttrEnum.CriticalHitChance);
         var criticleDamage = _BaseAttr.GetValue(RoleAttrEnum.CriticalHitDamge);
-        int randomRate = Random.Range(0, 10001);
-        damageClass.IsCriticle = false;
-        if (randomRate < criticleRate)
+        damageClass.IsCriticle = GameDataValue.IsCriticleHit(criticleRate);
+        if (damageClass.IsCriticle)
         {
-            damageClass.IsCriticle = true;
+            float criticleDamageRate = GameDataValue.GetCriticleDamageRate(criticleDamage) + 1;
             if (damageClass.NormalDamageValue > 0)
             {
-                damageClass.NormalDamageValue = Mathf.CeilToInt(((criticleDamage * 0.0001f) + 1) * damageClass.NormalDamageValue);
+                damageClass.NormalDamageValue = Mathf.CeilToInt(criticleDamageRate * damageClass.NormalDamageValue);
             }
             if (damageClass.FireDamage > 0)
             {
-                damageClass.FireDamage = Mathf.CeilToInt(((criticleDamage * 0.0001f) + 1) * damageClass.FireDamage);
+                damageClass.FireDamage = Mathf.CeilToInt(criticleDamageRate * damageClass.FireDamage);
             }
             if (damageClass.IceDamage > 0)
             {
-                damageClass.IceDamage = Mathf.CeilToInt(((criticleDamage * 0.0001f) + 1) * damageClass.IceDamage);
+                damageClass.IceDamage = Mathf.CeilToInt(criticleDamageRate * damageClass.IceDamage);
             }
             if (damageClass.LightingDamage > 0)
             {
-                damageClass.LightingDamage = Mathf.CeilToInt(((criticleDamage * 0.0001f) + 1) * damageClass.LightingDamage);
+                damageClass.LightingDamage = Mathf.CeilToInt(criticleDamageRate * damageClass.LightingDamage);
             }
             if (damageClass.WindDamage > 0)
             {
-                damageClass.WindDamage = Mathf.CeilToInt(((criticleDamage * 0.0001f) + 1) * damageClass.WindDamage);
+                damageClass.WindDamage = Mathf.CeilToInt(criticleDamageRate * damageClass.WindDamage);
             }
             return true;
         }

@@ -108,6 +108,7 @@ public class AI_Base : MonoBehaviour
         public ObjMotionSkillBase SkillBase;
         public float SkillRange;
         public float SkillInterval;
+        public float ReadyTime = 0;
 
         public float LastUseSkillTime { get; set; }
 

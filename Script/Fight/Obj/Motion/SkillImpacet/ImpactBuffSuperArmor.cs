@@ -4,6 +4,7 @@ using System.Collections;
 public class ImpactBuffSuperArmor : ImpactBuff
 {
     public EffectController _HitEffect;
+    public float _BlockTime = 0.0f;
 
     public override void ActBuff(MotionManager senderManager, MotionManager reciverManager)
     {
@@ -24,11 +25,11 @@ public class ImpactBuffSuperArmor : ImpactBuff
     {
         //GlobalEffect.Instance.Pause(0.1f);
         _BuffOwner.ResetMove();
-        _BuffOwner.ActionPause(0.1f);
+        _BuffOwner.ActionPause(_BlockTime);
 
         if (!impactHit._IsBulletHit)
         {
-            impactSender.ActionPause(0.1f);
+            impactSender.ActionPause(_BlockTime);
         }
 
         if (_HitEffect != null)

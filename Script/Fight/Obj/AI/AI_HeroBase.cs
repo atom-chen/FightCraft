@@ -76,6 +76,20 @@ public class AI_HeroBase : AI_Base
         }
     }
 
+    private ImpactBuff _SuperArmorBlockPrefab;
+    public ImpactBuff SuperArmorBlockPrefab
+    {
+        get
+        {
+            if (_SuperArmorBlockPrefab == null)
+            {
+                var buffGO = ResourceManager.Instance.GetGameObject("SkillMotion/CommonImpact/SuperArmorBlock");
+                _SuperArmorBlockPrefab = buffGO.GetComponent<ImpactBuff>();
+            }
+            return _SuperArmorBlockPrefab;
+        }
+    }
+
     private ImpactBuffSuperArmor _BuffInstance;
 
     protected void InitSuperArmorSkill(ObjMotionSkillBase objMotionSkill)
@@ -94,7 +108,7 @@ public class AI_HeroBase : AI_Base
 
     private void AttackStart()
     {
-        _BuffInstance = SuperArmorPrefab.ActBuffInstance(_SelfMotion, _SelfMotion) as ImpactBuffSuperArmor;
+        _BuffInstance = SuperArmorBlockPrefab.ActBuffInstance(_SelfMotion, _SelfMotion) as ImpactBuffSuperArmor;
 
     }
 
@@ -117,19 +131,18 @@ public class AI_HeroBase : AI_Base
     private float _CurEffectSpeed;
     private Dictionary<ObjMotionSkillBase, float> _SkillColliderTime = new Dictionary<ObjMotionSkillBase, float>();
 
-    public void InitReadySkillSpeed(ObjMotionSkillBase objMotionSkill)
+    public void InitReadySkillSpeed(AI_Skill_Info aiSkillInfo)
     {
+        if (aiSkillInfo.ReadyTime == 0)
+            return;
+
         if (_ReadySkillSpeedTime == 0)
             return;
 
-        float attackConlliderTime = _SelfMotion.AnimationEvent.GetAnimFirstColliderEventTime(objMotionSkill._NextAnim[0]);
-        if (attackConlliderTime < 0)
-            return;
-
-        _SkillColliderTime.Add(objMotionSkill, attackConlliderTime);
-        _SelfMotion.AnimationEvent.AddEvent(objMotionSkill._NextAnim[0], 0, AttackStartForSpeed);
-        _SelfMotion.AnimationEvent.AddEvent(objMotionSkill._NextAnim[0], attackConlliderTime - 0.05f, AttackColliderForSpeed);
-        _SelfMotion.AnimationEvent.AddEvent(objMotionSkill._NextAnim[0], objMotionSkill._NextAnim[0].length, AttackColliderForSpeed);
+        _SkillColliderTime.Add(aiSkillInfo.SkillBase, aiSkillInfo.ReadyTime);
+        _SelfMotion.AnimationEvent.AddEvent(aiSkillInfo.SkillBase._NextAnim[0], 0, AttackStartForSpeed);
+        _SelfMotion.AnimationEvent.AddEvent(aiSkillInfo.SkillBase._NextAnim[0], aiSkillInfo.ReadyTime - 0.05f, AttackColliderForSpeed);
+        _SelfMotion.AnimationEvent.AddEvent(aiSkillInfo.SkillBase._NextAnim[0], aiSkillInfo.SkillBase._NextAnim[0].length, AttackColliderForSpeed);
     }
 
     private void AttackStartForSpeed()

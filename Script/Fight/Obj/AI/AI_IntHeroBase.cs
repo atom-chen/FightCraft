@@ -17,7 +17,7 @@ public class AI_IntHeroBase : AI_HeroBase
         for (int i = 0; i < _AISkills.Count; ++i)
         {
             InitSuperArmorSkill(_AISkills[i].SkillBase);
-            InitReadySkillSpeed(_AISkills[i].SkillBase);
+            InitReadySkillSpeed(_AISkills[i]);
         }
     }
 

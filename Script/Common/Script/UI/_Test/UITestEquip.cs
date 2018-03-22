@@ -210,5 +210,14 @@ public class UITestEquip : UIBase
     }
 
     #endregion
+
+    #region 
+
+    public void TestPassStage()
+    {
+
+    }
+
+    #endregion
 }
 

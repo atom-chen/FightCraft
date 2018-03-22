@@ -607,6 +607,50 @@ public class GameDataValue
 
     #endregion
 
+    #region damage
+
+    public static int GetEleDamage(int eleAtk, float damageRate, int eleEnhance, int eleResist)
+    {
+        float eleDamage = eleAtk * damageRate * (1 + eleEnhance / 1000.0f);
+        float resistRate = 0;
+        if (eleResist > 0)
+        {
+            resistRate = (1 - eleResist / (eleResist + 1000.0f));
+        }
+        else
+        {
+            resistRate = (1 + eleResist / 1000.0f);
+        }
+        int finalDamage = Mathf.CeilToInt(eleDamage * resistRate);
+        return finalDamage;
+    }
+
+    public static int GetPhyDamage(int phyAtk, float damageRate, int enhance, int defence, int roleLevel)
+    {
+        float eleDamage = phyAtk * damageRate * (1 + enhance / 1000.0f);
+        float resistRate = 1;
+        if (defence > 0)
+        {
+            resistRate = (1 - defence / (defence + _DefencePerLevel * roleLevel * 1.5f));
+        }
+
+        int finalDamage = Mathf.CeilToInt(eleDamage * resistRate);
+        return finalDamage;
+    }
+
+    public static bool IsCriticleHit(int criticleRate)
+    {
+        int randomRate = Random.Range(0, 10001);
+        return criticleRate > randomRate;
+    }
+
+    public static float GetCriticleDamageRate(int criticleDamage)
+    {
+        return ConfigIntToFloat(criticleDamage) + 0.5f;
+    }
+
+    #endregion
+
     #endregion
 
     #region product & consume
@@ -798,7 +842,7 @@ public class GameDataValue
         return dropLevel;
     }
 
-    public static List<ItemEquip> GetMonsterDropEquipNormal(MotionType motionType, MonsterBaseRecord monsterRecord, int level, int dropActType = 1)
+    public static List<ItemEquip> GetMonsterDropEquip(MotionType motionType, MonsterBaseRecord monsterRecord, int level, int dropActType = 1)
     {
         List<ItemEquip> dropEquipList = new List<ItemEquip>();
         var dropEquipQualitys = GetDropQualitys(motionType, monsterRecord, level, dropActType);
@@ -817,7 +861,7 @@ public class GameDataValue
                 var dropEquipTab = TableReader.EquipItem.GetRecord(dropItem.Id);
                 var equipLevel = GetEquipLv(dropEquipTab.Slot, level);
                 var equipValue = CalLvValue(level);
-                var dropEquip = ItemEquip.CreateEquip(level, dropEquipQualitys[i], equipValue, int.Parse(dropItem.Id), (int)dropEquipTab.Slot);
+                var dropEquip = ItemEquip.CreateEquip(equipLevel, dropEquipQualitys[i], equipValue, int.Parse(dropItem.Id), (int)dropEquipTab.Slot);
                 dropEquipList.Add(dropEquip);
             }
             else
@@ -825,7 +869,7 @@ public class GameDataValue
                 var equipSlot = GetRandomItemSlot(dropEquipQualitys[i]);
                 var equipLevel = GetEquipLv(equipSlot, level);
                 var equipValue = CalLvValue(level);
-                var dropEquip = ItemEquip.CreateEquip(level, dropEquipQualitys[i], equipValue, -1, (int)equipSlot);
+                var dropEquip = ItemEquip.CreateEquip(equipLevel, dropEquipQualitys[i], equipValue, -1, (int)equipSlot);
                 dropEquipList.Add(dropEquip);
             }
         }
@@ -858,6 +902,10 @@ public class GameDataValue
     public static int _EliteMatBase = 10000;
     public static int _SpecialMatBase = 10000;
     public static int _BossMatBase = 100000;
+    //public static int _NormalMatBase = 0;
+    //public static int _EliteMatBase = 10000;
+    //public static int _SpecialMatBase = 10000;
+    //public static int _BossMatBase = 50000;
 
     public static int GetEquipMatDropCnt(MotionType motionType, MonsterBaseRecord monsterRecord, int level)
     {
@@ -938,6 +986,10 @@ public class GameDataValue
     public static int _EliteGemBase = 5000;
     public static int _SpecialGemBase = 5000;
     public static int _BossGemBase = 150000;
+    //public static int _NormalGemBase = 0;
+    //public static int _EliteGemBase = 0;
+    //public static int _SpecialGemBase = 0;
+    //public static int _BossGemBase = 150000;
 
     public static string GetGemMatDropItemID(MonsterBaseRecord monsterRecord)
     {

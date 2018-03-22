@@ -377,7 +377,7 @@ public class MotionManager : MonoBehaviour
         NavAgent.enabled = false;
         FightManager.Instance.ObjCorpse(this);
 
-        MonsterDrop.MonsterDripItems(this);
+        MonsterDrop.MonsterDropItems(this);
     }
 
     public void MotionDisappear()

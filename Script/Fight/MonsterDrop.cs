@@ -26,7 +26,7 @@ public class MonsterDrop
         { "20003","30003","40003"},
         { "20004","30004","40004"}};
 
-    public static void MonsterDripItems(MotionManager monsterMotion)
+    public static void MonsterDropItems(MotionManager monsterMotion)
     {
 
         var drops = GetMonsterDrops(monsterMotion);
@@ -43,24 +43,42 @@ public class MonsterDrop
             dropItem.InitDrop(drop);
         }
 
+        int dropExp = GameDataValue.GetMonsterExp(monsterMotion.RoleAttrManager.MotionType, monsterMotion.RoleAttrManager.Level, RoleData.SelectRole._RoleLevel);
+        RoleData.SelectRole.AddExp(dropExp);
     }
 
-    private static List<DropItemData> GetMonsterDrops(MotionManager monsterMotion)
+    public static List<DropItemData> GetMonsterDrops(MotionManager monsterMotion)
     {
         List<DropItemData> dropList = new List<DropItemData>();
 
-        if (monsterMotion.RoleAttrManager.MotionType == MotionType.Normal)
+        var monsterRecord = monsterMotion.RoleAttrManager.MonsterRecord;
+        var monsterType = monsterMotion.RoleAttrManager.MotionType;
+        List<ItemEquip> dropEquips = GameDataValue.GetMonsterDropEquip(monsterType, monsterRecord, monsterMotion.RoleAttrManager.Level);
+        int dropMatCnt = GameDataValue.GetEquipMatDropCnt(monsterType, monsterRecord, monsterMotion.RoleAttrManager.Level);
+        var gemType = GameDataValue.GetGemMatDropItemID(monsterRecord);
+        var gemCnt = GameDataValue.GetGemMatDropCnt(monsterType, monsterRecord, monsterMotion.RoleAttrManager.Level);
+
+        for (int i = 0; i < dropEquips.Count; ++i)
         {
-            return GetNormalMonsterDrops(monsterMotion);
+            DropItemData dropItem = new DropItemData();
+            dropItem._ItemEquip = dropEquips[i];
+            dropList.Add(dropItem);
         }
-        else if (monsterMotion.RoleAttrManager.MotionType == MotionType.Elite)
+
+        if (dropMatCnt > 0)
         {
-            return GetEliteMonsterDrops(monsterMotion);
+            DropItemData dropItem = new DropItemData();
+            dropItem._ItemBase = new ItemBase(EquipRefresh._RefreshMatDataID, dropMatCnt);
+            dropList.Add(dropItem);
         }
-        else if (monsterMotion.RoleAttrManager.MotionType == MotionType.Hero)
+
+        if (gemCnt > 0)
         {
-            return GetBossMonsterDrops(monsterMotion);
+            DropItemData dropItem = new DropItemData();
+            dropItem._ItemBase = new ItemBase(gemType, gemCnt);
+            dropList.Add(dropItem);
         }
+
         return dropList;
     }
 
