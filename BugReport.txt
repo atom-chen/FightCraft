@@ -1,3 +1,7 @@
 boss born slow
 alert effect/ui direct
 
+diaochan skill error
+jiangziya needs another superarmor
+effect fog
+boss stage idx
