@@ -185,12 +185,10 @@ public class ResourcePool : InstanceBase<ResourcePool>
         
         if (_MonsterBasePrefab.ContainsKey(monsterTab.Id))
         {
-            Debug.Log("GetIdleMotion1");
             motion = GameObject.Instantiate(_MonsterBasePrefab[monsterTab.Id]);
         }
         else
         {
-            Debug.Log("GetIdleMotion2");
             motion = ResourceManager.Instance.GetInstanceGameObject("ModelBase/" + monsterTab.MotionPath);
         }
         var motionScript = motion.GetComponent<MotionManager>();

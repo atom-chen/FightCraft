@@ -55,12 +55,17 @@ public class FightSceneAreaKAllEnemy : FightSceneAreaBase
 
     private void StartStep()
     {
-        var eliteRate = FightManager.Instance.GetEliteMonsterRate();
-        var eliteRandom = Random.Range(0, GameDataValue.GetMaxRate());
         int eliteIdx = -1;
-        if (eliteRandom < eliteRate)
+
+        if (ActData.Instance._ProcessStageDiff > 1)
         {
-            eliteIdx = Random.Range(0, _EnemyBornPos.Length);
+            var eliteRate = FightManager.Instance.GetEliteMonsterRate();
+            var eliteRandom = Random.Range(0, GameDataValue.GetMaxRate());
+
+            if (eliteRandom < eliteRate)
+            {
+                eliteIdx = Random.Range(0, _EnemyBornPos.Length);
+            }
         }
 
         for(int i = 0; i< _EnemyBornPos.Length; ++i)

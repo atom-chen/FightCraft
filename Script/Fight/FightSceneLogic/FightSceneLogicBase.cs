@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
- 
+using Tables;
 
 public class FightSceneLogicBase : MonoBehaviour
 {
@@ -32,7 +32,7 @@ public class FightSceneLogicBase : MonoBehaviour
 
     public virtual void MotionDie(MotionManager motion)
     {
-        if (motion.RoleAttrManager.MotionType == MotionType.MainChar)
+        if (motion.RoleAttrManager.MotionType == MOTION_TYPE.MainChar)
         {
             LogicFinish(false);
             return;

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Tables;
 using UnityEngine;
 
 public class ConKillMonster : MissionConditionBase
@@ -23,7 +24,7 @@ public class ConKillMonster : MissionConditionBase
         if (!string.Equals(_MonsterID, "-1") && monsterMotion.MonsterBase.Id != _MonsterID)
             return;
 
-        if (_MonsterType != (int)MotionType.Normal && (int)monsterMotion.RoleAttrManager.MotionType != _MonsterType)
+        if (_MonsterType != (int)MOTION_TYPE.Normal && (int)monsterMotion.RoleAttrManager.MotionType != _MonsterType)
             return;
 
         ++_MissionItem.MissionProcessData;

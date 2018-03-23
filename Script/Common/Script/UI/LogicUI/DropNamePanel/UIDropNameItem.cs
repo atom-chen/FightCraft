@@ -34,6 +34,7 @@ public class UIDropNameItem : UIItemBase
         _HeightDelta.y += 0.2f;
 
         _DropName.text = _DropItem._DropName;
+        _Picked = false;
     }
 
 
@@ -51,8 +52,14 @@ public class UIDropNameItem : UIItemBase
 
     #region 
 
+    private bool _Picked = false;
+
     public override void OnItemClick()
     {
+        if (_Picked)
+            return;
+
+        _Picked = true;
         base.OnItemClick();
 
         MonsterDrop.PickItem(_DropItem);

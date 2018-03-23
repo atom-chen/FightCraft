@@ -46,11 +46,18 @@ public class ActData : DataPackBase
 
     public int _ProcessStageDiff;
     public int _ProcessStageIdx;
+    public STAGE_TYPE _StageMode;
 
-    public void StartStage(int diff, int stageIdx)
+    public void StartStage(int diff, int stageIdx, Tables.STAGE_TYPE stageMode)
     {
         _ProcessStageDiff = diff;
         _ProcessStageIdx = stageIdx;
+        _StageMode = stageMode;
+    }
+
+    public int GetStageLevel()
+    {
+        return GameDataValue.GetStageLevel(_ProcessStageDiff, _ProcessStageIdx, _StageMode);
     }
 
     public void PassStage(Tables.STAGE_TYPE stageMode)

@@ -97,6 +97,8 @@ public class FightManager : InstanceBase<FightManager>
             }
         }
         _SceneSPObj[0].SetActive(true);
+
+        _FightLevel = ActData.Instance.GetStageLevel();
     }
 
     private void InitResourcePool()
@@ -234,7 +236,7 @@ public class FightManager : InstanceBase<FightManager>
         var mainBase = ResourcePool.Instance.GetIdleMotion(monsterBase);
         mainBase.SetPosition(pos);
         mainBase.SetRotate(rot);
-
+        
         mainBase.InitRoleAttr(monsterBase);
         mainBase.InitMotion();
         FightLayerCommon.SetEnemyLayer(mainBase);

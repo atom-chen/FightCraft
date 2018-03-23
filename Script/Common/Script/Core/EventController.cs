@@ -114,7 +114,11 @@ public class EventController : MonoBehaviour
 
     public void PushEvent(EVENT_TYPE EventType, object sender, Hashtable eventArgs)
     {
-        _EventList.Add(new EventParam(EventType, sender, eventArgs));
+        Hashtable hash = eventArgs;
+        if (hash == null)
+            hash = new Hashtable();
+
+        _EventList.Add(new EventParam(EventType, sender, hash));
         //if (!_IsSendedEvent)
         //{
         //    Invoke("DispatchEvent", 0);

@@ -5,16 +5,6 @@ using System.Collections.Generic;
  
 using Tables;
 
-public enum MotionType
-{
-    MainChar,
-    Hero,
-    Elite,
-    Special,
-    Normal,
-    
-}
-
 public enum ElementType
 {
     None,
@@ -50,8 +40,8 @@ public class RoleAttrManager : MonoBehaviour
     }
     
     [SerializeField]
-    private MotionType _MotionType;
-    public MotionType MotionType
+    private MOTION_TYPE _MotionType;
+    public MOTION_TYPE MotionType
     {
         get
         {
@@ -484,15 +474,18 @@ public class RoleAttrManager : MonoBehaviour
         AddHPPersent(1);
         InitEvent();
         InitSkillAttr();
+        _MotionType = MOTION_TYPE.MainChar;
     }
 
-    public void InitEnemyAttr(MonsterBaseRecord monsterBase)
+    public void InitEnemyAttr(MonsterBaseRecord monsterBase, int level)
     {
         _BaseMoveSpeed = 4;
-        _Level = 1;
+        _Level = level;
         _MonsterValue = 1;
-
-        _BaseAttr = GetMonsterAttr(monsterBase, _Level, MotionType.Normal);
+        
+        _MonsterRecord = monsterBase;
+        _MotionType = _MonsterRecord.MotionType;
+        _BaseAttr = GetMonsterAttr(monsterBase, _Level, _MonsterRecord.MotionType);
 
         RefreshMoveSpeed();
         RefreshAttackSpeed();
@@ -518,7 +511,7 @@ public class RoleAttrManager : MonoBehaviour
         InitEvent();
     }
 
-    private RoleAttrStruct GetMonsterAttr(MonsterBaseRecord monsterBase, int level, MotionType monsterType)
+    private RoleAttrStruct GetMonsterAttr(MonsterBaseRecord monsterBase, int level, MOTION_TYPE monsterType)
     {
         var baseAttr = new RoleAttrStruct();
         int hpStep = 0;
@@ -622,7 +615,7 @@ public class RoleAttrManager : MonoBehaviour
         damageClass.TotalDamageValue = _MotionManager.BuffModifyDamage(damageClass.TotalDamageValue, impactBase);
         damageClass.AttachDamageValue = _MotionManager.BuffModifyDamage(damageClass.AttachDamageValue, impactBase);
 
-        if (MotionType == MotionType.MainChar)
+        if (MotionType == MOTION_TYPE.MainChar)
         {
             UIDamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, ShowDamageType.Hurt, 1);
             //DamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, ShowDamageType.Hurt, 1);

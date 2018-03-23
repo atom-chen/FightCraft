@@ -93,7 +93,7 @@ public class UIBossStageSelect : UIBase
 
     public void OnEnterStage()
     {
-        ActData.Instance.StartStage(1, int.Parse(_SelectedStage.Id));
+        ActData.Instance.StartStage(1, int.Parse(_SelectedStage.Id), STAGE_TYPE.BOSS);
         LogicManager.Instance.EnterFight(Tables.TableReader.StageInfo.GetRecord("100"));
     }
 

@@ -23,6 +23,8 @@ public class AreaGate : MonoBehaviour {
 
     private void TeleportUpdate()
     {
+        if (FightManager.Instance == null)
+            return;
 
         var mainChar = FightManager.Instance.MainChatMotion;
         if (mainChar == null)

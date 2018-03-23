@@ -56,6 +56,7 @@ public class GameRandom
         return randomList;
     }
 
+    //from 0 to length - 1
     public static int GetRandomLevel(params int[] levelRates)
     {
         int totalRate = 0;

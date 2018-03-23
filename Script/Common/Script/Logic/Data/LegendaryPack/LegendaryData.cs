@@ -92,6 +92,15 @@ public class LegendaryData : SaveItemBase
         }
     }
 
+    public bool IsCollect(ItemEquip itemEquip)
+    {
+        var collectItem = _LegendaryEquipDict[itemEquip.EquipItemRecord];
+        if (collectItem == null)
+            return false;
+
+        return collectItem.IsVolid();
+    }
+
     public bool PutInEquip(ItemEquip equip)
     {
         var legendaryTab = TableReader.EquipItem.GetRecord(equip.ItemDataID);

@@ -331,7 +331,7 @@ public class MotionManager : MonoBehaviour
         }
         _RoleAttrManager._MotionManager = this;
 
-        if (_RoleAttrManager.MotionType == MotionType.MainChar)
+        if (_RoleAttrManager.MotionType == Tables.MOTION_TYPE.MainChar)
         {
             _RoleAttrManager.InitMainRoleAttr();
             if(RoleData.SelectRole != null)
@@ -339,7 +339,7 @@ public class MotionManager : MonoBehaviour
         }
         else if (_MonsterBase != null)
         {
-            _RoleAttrManager.InitEnemyAttr(_MonsterBase);
+            _RoleAttrManager.InitEnemyAttr(_MonsterBase, FightManager.Instance._FightLevel);
             _MotionAnimPath = _MonsterBase.AnimPath;
         }
         else

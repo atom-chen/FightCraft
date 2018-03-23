@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Tables;
 
 public class FightSceneLogicSimple : FightSceneLogicBase
 {
@@ -30,7 +31,7 @@ public class FightSceneLogicSimple : FightSceneLogicBase
     public override void MotionDie(MotionManager motion)
     {
         Debug.Log("MotionDie motion " + motion.name);
-        if (motion.RoleAttrManager.MotionType == MotionType.MainChar)
+        if (motion.RoleAttrManager.MotionType == MOTION_TYPE.MainChar)
         {
             FightManager.Instance.LogicFinish(false);
             return;
@@ -73,9 +74,8 @@ public class FightSceneLogicSimple : FightSceneLogicBase
 
     private void Step0MotionDie(MotionManager motion)
     {
-        if (motion.RoleAttrManager.MotionType == MotionType.Elite
-                || motion.RoleAttrManager.MotionType == MotionType.Normal
-                || motion.RoleAttrManager.MotionType == MotionType.Special)
+        if (motion.RoleAttrManager.MotionType == MOTION_TYPE.Elite
+                || motion.RoleAttrManager.MotionType == MOTION_TYPE.Normal)
         {
             ++_DeadEnemyCnt;
             --_CurEnemyCnt;
@@ -122,7 +122,7 @@ public class FightSceneLogicSimple : FightSceneLogicBase
     {
         --_CurEnemyCnt1;
 
-        if (motion.RoleAttrManager.MotionType == MotionType.Hero)
+        if (motion.RoleAttrManager.MotionType == MOTION_TYPE.Hero)
         {
             FightManager.Instance.LogicFinish(true);
         }

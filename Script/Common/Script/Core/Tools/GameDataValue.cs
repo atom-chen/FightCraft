@@ -697,23 +697,20 @@ public class GameDataValue
         return levelExp;
     }
 
-    public static int GetMonsterExp(MotionType motionType, int level, int playerLv)
+    public static int GetMonsterExp(MOTION_TYPE motionType, int level, int playerLv)
     {
         int levelDelta = Mathf.Clamp(playerLv - level,0, 10);
         int monExpLevel = Mathf.Clamp(level, 1, 100);
         int expBase = 0;
         switch (motionType)
         {
-            case MotionType.Normal:
+            case MOTION_TYPE.Normal:
                 expBase = _NormalExpBase;
                 break;
-            case MotionType.Elite:
+            case MOTION_TYPE.Elite:
                 expBase = _EliteExpBase;
                 break;
-            case MotionType.Special:
-                expBase = _SpecialExpBase;
-                break;
-            case MotionType.Hero:
+            case MOTION_TYPE.Hero:
                 expBase = _BossExpBase;
                 break;
         }
@@ -753,14 +750,14 @@ public class GameDataValue
     private static int _EqiupLvRing = 4;
     private static int _EqiupLvAmulate = 4;
 
-    private static List<ITEM_QUALITY> GetDropQualitys(MotionType motionType, MonsterBaseRecord monsterRecord, int level, int dropActType = 1)
+    private static List<ITEM_QUALITY> GetDropQualitys(MOTION_TYPE motionType, MonsterBaseRecord monsterRecord, int level, int dropActType = 1)
     {
         List<ITEM_QUALITY> dropEquipQualitys = new List<ITEM_QUALITY>();
         int dropCnt = 0;
         int dropQuality = 0;
         switch (motionType)
         {
-            case MotionType.Normal:
+            case MOTION_TYPE.Normal:
                 dropCnt = GameRandom.GetRandomLevel(95, 5);
                 for (int i = 0; i < dropCnt; ++i)
                 {
@@ -769,7 +766,7 @@ public class GameDataValue
                 }
                 
                 break;
-            case MotionType.Elite:
+            case MOTION_TYPE.Elite:
                 dropCnt = GameRandom.GetRandomLevel(10, 70, 20);
                 for (int i = 0; i < dropCnt; ++i)
                 {
@@ -778,16 +775,7 @@ public class GameDataValue
                 }
 
                 break;
-            case MotionType.Special:
-                dropCnt = GameRandom.GetRandomLevel(10, 70, 20);
-                for (int i = 0; i < dropCnt; ++i)
-                {
-                    dropQuality = GameRandom.GetRandomLevel(30, 65, 5);
-                    dropEquipQualitys.Add((ITEM_QUALITY)dropQuality);
-                }
-
-                break;
-            case MotionType.Hero:
+            case MOTION_TYPE.Hero:
                 if (level <= 30)
                     dropCnt = GameRandom.GetRandomLevel(0, 50, 30, 10);
                 else if (level <= 60)
@@ -842,7 +830,7 @@ public class GameDataValue
         return dropLevel;
     }
 
-    public static List<ItemEquip> GetMonsterDropEquip(MotionType motionType, MonsterBaseRecord monsterRecord, int level, int dropActType = 1)
+    public static List<ItemEquip> GetMonsterDropEquip(MOTION_TYPE motionType, MonsterBaseRecord monsterRecord, int level, int dropActType = 1)
     {
         List<ItemEquip> dropEquipList = new List<ItemEquip>();
         var dropEquipQualitys = GetDropQualitys(motionType, monsterRecord, level, dropActType);
@@ -907,7 +895,7 @@ public class GameDataValue
     //public static int _SpecialMatBase = 10000;
     //public static int _BossMatBase = 50000;
 
-    public static int GetEquipMatDropCnt(MotionType motionType, MonsterBaseRecord monsterRecord, int level)
+    public static int GetEquipMatDropCnt(MOTION_TYPE motionType, MonsterBaseRecord monsterRecord, int level)
     {
         int dropCnt = 0;
         if (level < _DropMatLevel)
@@ -915,16 +903,13 @@ public class GameDataValue
 
         switch (motionType)
         {
-            case MotionType.Normal:
+            case MOTION_TYPE.Normal:
                 dropCnt = GetDropCnt(Mathf.CeilToInt( _NormalMatBase * level * _LevelParam));
                 break;
-            case MotionType.Elite:
+            case MOTION_TYPE.Elite:
                 dropCnt = GetDropCnt(Mathf.CeilToInt(_EliteMatBase * level * _LevelParam));
                 break;
-            case MotionType.Special:
-                dropCnt = GetDropCnt(Mathf.CeilToInt(_SpecialMatBase * level * _LevelParam));
-                break;
-            case MotionType.Hero:
+            case MOTION_TYPE.Hero:
                 dropCnt = GetDropCnt(Mathf.CeilToInt(_BossMatBase * level * _LevelParam));
                 break;
         }
@@ -1004,7 +989,7 @@ public class GameDataValue
         }
     }
 
-    public static int GetGemMatDropCnt(MotionType motionType, MonsterBaseRecord monsterRecord, int level)
+    public static int GetGemMatDropCnt(MOTION_TYPE motionType, MonsterBaseRecord monsterRecord, int level)
     {
         int dropCnt = 0;
         if (level < _DropGemLevel)
@@ -1012,16 +997,13 @@ public class GameDataValue
 
         switch (motionType)
         {
-            case MotionType.Normal:
+            case MOTION_TYPE.Normal:
                 dropCnt = GetDropCnt(Mathf.CeilToInt(_NormalGemBase * level * _LevelParam));
                 break;
-            case MotionType.Elite:
+            case MOTION_TYPE.Elite:
                 dropCnt = GetDropCnt(Mathf.CeilToInt(_EliteGemBase * level * _LevelParam));
                 break;
-            case MotionType.Special:
-                dropCnt = GetDropCnt(Mathf.CeilToInt(_SpecialGemBase * level * _LevelParam));
-                break;
-            case MotionType.Hero:
+            case MOTION_TYPE.Hero:
                 dropCnt = GetDropCnt(Mathf.CeilToInt(_BossGemBase * level * _LevelParam));
                 break;
         }
@@ -1037,5 +1019,85 @@ public class GameDataValue
 
     #endregion
 
+    #region gold
+
+    public static float _GoldLevelParam = 100f;
+    public static int _NormalGoldBase = 2000;
+    public static int _EliteGoldBase = 8000;
+    public static int _SpecialGoldBase = 8000;
+    public static int[] _BossGoldBase = {0, 6000, 3000, 1000};
+    
+
+    public static int GetGoldDropCnt(MOTION_TYPE motionType, int level)
+    {
+        int dropCnt = 0;
+        switch (motionType)
+        {
+            case MOTION_TYPE.Normal:
+                dropCnt = GetGoldDropCnt(_NormalGoldBase);
+                break;
+            case MOTION_TYPE.Elite:
+                dropCnt = GetGoldDropCnt(_EliteGoldBase);
+                break;
+            case MOTION_TYPE.Hero:
+                dropCnt = GetGoldDropCnt(_BossGoldBase) + 1;
+                break;
+        }
+
+        return dropCnt;
+    }
+
+    public static int GetGoldDropNum(MOTION_TYPE motionType, int level)
+    {
+        float dropNum = level * _GoldLevelParam;
+        if (motionType == MOTION_TYPE.Normal)
+            dropNum *= 0.5f;
+
+        float random = Random.Range(0.6f, 1.4f);
+        return Mathf.CeilToInt(dropNum * random);
+    }
+
+    public static int GetGoldDropCnt(params int[] rates)
+    {
+        int goldCnt = 0;
+        var random = Random.Range(0, GetMaxRate());
+        if (rates.Length == 1)
+        {
+            if (random < rates[0])
+                goldCnt = 1;
+        }
+        else
+        {
+            goldCnt = GameRandom.GetRandomLevel(rates);
+        }
+
+        return goldCnt;
+    }
+
     #endregion
+
+    #endregion
+
+    #region other
+
+    public static int _BossStageStarLevel;
+
+    public static int GetStageLevel(int difficult, int stageIdx, STAGE_TYPE stageMode)
+    {
+        int level = 0;
+        if (stageMode == STAGE_TYPE.NORMAL)
+        {
+            level = (difficult - 1) * 20 + stageIdx;
+        }
+        else if (stageMode == STAGE_TYPE.BOSS)
+        {
+            var stageRecord = TableReader.BossStage.GetRecord(stageIdx.ToString());
+            level = stageRecord.Level;
+        }
+
+        return level;
+    }
+
+    #endregion
+
 }

@@ -41,23 +41,26 @@ public class TestData : SaveItemBase
     public void SetDamage(ImpactBase impact, int finalDamage)
     {
         ImpactHit impactHit = impact as ImpactHit;
-        string skillName = "";
-        if (impactHit._IsCharSkillDamage)
+        if (impactHit != null)
         {
-            skillName = impactHit.SkillMotion._ActInput;
-        }
-        else
-        {
-            skillName = impactHit.gameObject.name;
-        }
+            string skillName = "";
+            if (impactHit._IsCharSkillDamage)
+            {
+                skillName = impactHit.SkillMotion._ActInput;
+            }
+            else
+            {
+                skillName = impactHit.gameObject.name;
+            }
 
-        if (!_DamageInfos.ContainsKey(skillName))
-        {
-            _DamageInfos.Add(skillName, 0);
-        }
-        _DamageInfos[skillName] += finalDamage;
+            if (!_DamageInfos.ContainsKey(skillName))
+            {
+                _DamageInfos.Add(skillName, 0);
+            }
+            _DamageInfos[skillName] += finalDamage;
 
-        Debug.Log("Damage:" + skillName + "," + finalDamage);
+            Debug.Log("Damage:" + skillName + "," + finalDamage);
+        }
     }
 
     public void FinishFight(string stageName)

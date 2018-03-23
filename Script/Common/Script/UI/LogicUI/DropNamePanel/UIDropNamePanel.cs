@@ -37,17 +37,22 @@ public class UIDropNamePanel : UIInstanceBase<UIDropNamePanel>
 
     public UIDropNameItem _UIDropItemPrefab;
 
+    public List<UIDropNameItem> _DropItems = new List<UIDropNameItem>();
+
     private void ShowItem(Hashtable args)
     {
         var itemBase = ResourcePool.Instance.GetIdleUIItem<UIDropNameItem>(_UIDropItemPrefab.gameObject);
         itemBase.Show(args);
         itemBase.transform.SetParent(transform);
         itemBase.transform.localScale = Vector3.one;
+
+        _DropItems.Add(itemBase);
     }
 
     private void HideItem(Hashtable args)
     {
         UIDropNameItem hideItem = args["HideItem"] as UIDropNameItem;
+        _DropItems.Remove(hideItem);
         ResourcePool.Instance.RecvIldeUIItem(hideItem.gameObject);
     }
 

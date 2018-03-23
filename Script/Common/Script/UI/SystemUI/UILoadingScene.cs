@@ -96,11 +96,14 @@ public class UILoadingScene : UIBase
         }
         else if (_LoadSceneStep == LoadSceneStep.InitScene)
         {
-            if (FightManager.Instance != null)
+            if (_LoadStageInfo != null)
             {
-                _LoadProcess.value = FightManager.Instance.InitProcess;
-                if (FightManager.Instance.InitProcess == 1)
-                    base.Destory();
+                if (FightManager.Instance != null)
+                {
+                    _LoadProcess.value = FightManager.Instance.InitProcess;
+                    if (FightManager.Instance.InitProcess == 1)
+                        base.Destory();
+                }
             }
         }
     }
@@ -116,6 +119,9 @@ public class UILoadingScene : UIBase
                 _IsFinishLoading = true;
                 LogicManager.Instance.StartLogic();
                 _LoadSceneStep = LoadSceneStep.InitScene;
+                Resources.UnloadUnusedAssets();
+                
+                base.Destory();
             }
         }
         else

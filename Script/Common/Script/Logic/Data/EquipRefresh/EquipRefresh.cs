@@ -257,13 +257,16 @@ public class EquipRefresh : DataPackBase
         return destoryMatCnt;
     }
 
-    public void DestoryMatCnt(ItemEquip itemEquip)
+    public void DestoryMatCnt(ItemEquip itemEquip, bool needEnsure = true)
     {
-        if (itemEquip.CommonItemRecord.Quality == ITEM_QUALITY.ORIGIN
-            || itemEquip.CommonItemRecord.Quality == ITEM_QUALITY.PURPER)
+        if (needEnsure)
         {
-            UIMessageBox.Show(20003, () => { DestoryMatCntOk(itemEquip); }, null);
-            return;
+            if (itemEquip.CommonItemRecord.Quality == ITEM_QUALITY.ORIGIN
+                || itemEquip.CommonItemRecord.Quality == ITEM_QUALITY.PURPER)
+            {
+                UIMessageBox.Show(20003, () => { DestoryMatCntOk(itemEquip); }, null);
+                return;
+            }
         }
         DestoryMatCntOk(itemEquip);
     }

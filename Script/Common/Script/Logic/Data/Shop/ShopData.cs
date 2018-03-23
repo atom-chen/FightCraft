@@ -67,24 +67,28 @@ public class ShopData : SaveItemBase
         SaveClass(true);
     }
 
-    public void SellItem(ItemBase sellItem)
+    public void SellItem(ItemBase sellItem, bool isNeedEnsure = true)
     {
-        if (sellItem is ItemEquip)
+        if (isNeedEnsure)
         {
-            ItemEquip itemEquip = sellItem as ItemEquip;
-            if (itemEquip.EquipRefreshCostMatrial > 0)
+            if (sellItem is ItemEquip)
             {
-                UIMessageBox.Show(20002, null, null, BtnType.OKBTN);
+                ItemEquip itemEquip = sellItem as ItemEquip;
+                if (itemEquip.EquipRefreshCostMatrial > 0)
+                {
+                    UIMessageBox.Show(20002, null, null, BtnType.OKBTN);
+                    return;
+                }
+            }
+
+            if (sellItem.CommonItemRecord.Quality == ITEM_QUALITY.ORIGIN
+                || sellItem.CommonItemRecord.Quality == ITEM_QUALITY.PURPER)
+            {
+                UIMessageBox.Show(20003, () => { SellItemOK(sellItem); }, null);
                 return;
             }
         }
 
-        if (sellItem.CommonItemRecord.Quality == ITEM_QUALITY.ORIGIN
-            || sellItem.CommonItemRecord.Quality == ITEM_QUALITY.PURPER)
-        {
-            UIMessageBox.Show(20003, () => { SellItemOK(sellItem); }, null);
-            return;
-        }
         SellItemOK(sellItem);
 
     }

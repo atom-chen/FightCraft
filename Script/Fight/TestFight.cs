@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Tables;
 using UnityEngine;
 
 public class TestFight : MonoBehaviour
@@ -19,7 +20,9 @@ public class TestFight : MonoBehaviour
         {
             CloseUpdate();
         }
-	}
+
+        UpdatePick();
+    }
 
     void Start()
     {
@@ -47,7 +50,7 @@ public class TestFight : MonoBehaviour
         float tarDistance = 10;
         foreach (var motion in motions)
         {
-            if (motion.RoleAttrManager.MotionType != MotionType.MainChar && !motion.IsMotionDie)
+            if (motion.RoleAttrManager.MotionType != MOTION_TYPE.MainChar && !motion.IsMotionDie)
             {
                 float distance = Vector3.Distance(transform.position, motion.transform.position);
                 if (distance < tarDistance)
@@ -186,6 +189,80 @@ public class TestFight : MonoBehaviour
     private void CancleDefence()
     {
         InputManager.Instance.ReleasePress();
+    }
+
+    #endregion
+
+    #region pick items
+
+    public void UpdatePick()
+    {
+        if (!UIDropNamePanel.Instance)
+            return;
+
+        foreach (var dropItem in UIDropNamePanel.Instance._DropItems)
+        {
+            dropItem.OnItemClick();
+        }
+    }
+
+    public static void DelAllEquip()
+    {
+        //equip
+        foreach (var itemEquip in BackBagPack.Instance.PageEquips)
+        {
+            if (!itemEquip.IsVolid())
+                continue;
+
+            var equipedItem = RoleData.SelectRole.GetEquipItem(itemEquip.EquipItemRecord.Slot);
+            bool changeEquip = false;
+            if (equipedItem.IsVolid())
+            {
+                if (itemEquip.EquipQuality == ITEM_QUALITY.ORIGIN)
+                {
+                    int levelDelta = itemEquip.EquipLevel - equipedItem.EquipLevel;
+                    if (levelDelta > 10)
+                    {
+                        changeEquip = true;
+                    }
+                }
+                else
+                {
+                    if (itemEquip.EquipValue > equipedItem.EquipValue)
+                        changeEquip = true;
+                }
+            }
+            else
+            {
+                changeEquip = true;
+            }
+
+            if (changeEquip)
+            {
+                RoleData.SelectRole.PutOnEquip(itemEquip.EquipItemRecord.Slot, itemEquip);
+            }
+        }
+
+        //destory
+        foreach (var itemEquip in BackBagPack.Instance.PageEquips)
+        {
+            if (itemEquip.EquipQuality == ITEM_QUALITY.ORIGIN)
+            {
+                if (LegendaryData.Instance.IsCollect(itemEquip))
+                {
+                    LegendaryData.Instance.PutInEquip(itemEquip);
+                    continue;
+                }
+            }
+
+            if (itemEquip.EquipQuality != ITEM_QUALITY.WHITE)
+            {
+                EquipRefresh.Instance.DestoryMatCnt(itemEquip, false);
+                continue;
+            }
+
+            ShopData.Instance.SellItem(itemEquip, false);
+        }
     }
 
     #endregion

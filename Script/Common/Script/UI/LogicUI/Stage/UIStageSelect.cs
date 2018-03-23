@@ -4,14 +4,9 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
- 
 using UnityEngine.EventSystems;
 using System;
 using Tables;
-
- 
-
-
 
 public class UIStageSelect : UIBase
 {
@@ -97,7 +92,7 @@ public class UIStageSelect : UIBase
 
     public void OnEnterStage()
     {
-        ActData.Instance.StartStage(1, int.Parse(_SelectedStage.Id));
+        ActData.Instance.StartStage(1, int.Parse(_SelectedStage.Id), STAGE_TYPE.NORMAL);
         LogicManager.Instance.EnterFight(_SelectedStage);
     }
 

@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
- 
+using Tables;
 
 public class DropItemData
 {
@@ -29,7 +28,7 @@ public class MonsterDrop
     public static void MonsterDropItems(MotionManager monsterMotion)
     {
 
-        var drops = GetMonsterDrops(monsterMotion);
+        var drops = GetMonsterDrops(monsterMotion.MonsterBase, monsterMotion.RoleAttrManager.MotionType, monsterMotion.RoleAttrManager.Level);
         var randomPoses = GameRandom.GetIndependentRandoms(0, 16, drops.Count);
         int posIdx = 0;
         foreach (var drop in drops)
@@ -47,17 +46,12 @@ public class MonsterDrop
         RoleData.SelectRole.AddExp(dropExp);
     }
 
-    public static List<DropItemData> GetMonsterDrops(MotionManager monsterMotion)
+    public static int DropGold = 0;
+    public static List<DropItemData> GetMonsterDrops(Tables.MonsterBaseRecord monsterRecord, MOTION_TYPE monsterType, int level)
     {
         List<DropItemData> dropList = new List<DropItemData>();
 
-        var monsterRecord = monsterMotion.RoleAttrManager.MonsterRecord;
-        var monsterType = monsterMotion.RoleAttrManager.MotionType;
-        List<ItemEquip> dropEquips = GameDataValue.GetMonsterDropEquip(monsterType, monsterRecord, monsterMotion.RoleAttrManager.Level);
-        int dropMatCnt = GameDataValue.GetEquipMatDropCnt(monsterType, monsterRecord, monsterMotion.RoleAttrManager.Level);
-        var gemType = GameDataValue.GetGemMatDropItemID(monsterRecord);
-        var gemCnt = GameDataValue.GetGemMatDropCnt(monsterType, monsterRecord, monsterMotion.RoleAttrManager.Level);
-
+        List<ItemEquip> dropEquips = GameDataValue.GetMonsterDropEquip(monsterType, monsterRecord, level);
         for (int i = 0; i < dropEquips.Count; ++i)
         {
             DropItemData dropItem = new DropItemData();
@@ -65,6 +59,7 @@ public class MonsterDrop
             dropList.Add(dropItem);
         }
 
+        int dropMatCnt = GameDataValue.GetEquipMatDropCnt(monsterType, monsterRecord, level);
         if (dropMatCnt > 0)
         {
             DropItemData dropItem = new DropItemData();
@@ -72,6 +67,8 @@ public class MonsterDrop
             dropList.Add(dropItem);
         }
 
+        var gemType = GameDataValue.GetGemMatDropItemID(monsterRecord);
+        var gemCnt = GameDataValue.GetGemMatDropCnt(monsterType, monsterRecord, level);
         if (gemCnt > 0)
         {
             DropItemData dropItem = new DropItemData();
@@ -79,6 +76,18 @@ public class MonsterDrop
             dropList.Add(dropItem);
         }
 
+        var goldCnt = GameDataValue.GetGoldDropCnt(monsterType, level);
+        for (int i = 0; i < goldCnt; ++i)
+        {
+            var goldNum = GameDataValue.GetGoldDropNum(monsterType, level);
+            DropItemData dropItem = new DropItemData();
+            dropItem._DropGold = goldNum;
+            dropList.Add(dropItem);
+
+            DropGold += goldNum;
+            Debug.Log("DropGold:" + DropGold);
+        }
+        
         return dropList;
     }
 
@@ -213,6 +222,9 @@ public class MonsterDrop
 
     public static void PickItem(DropItem dropItem)
     {
+        if (dropItem == null)
+            return;
+
         if (dropItem.DropData._DropGold > 0)
         {
             PlayerDataPack.Instance.AddGold(dropItem.DropData._DropGold);

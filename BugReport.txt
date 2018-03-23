@@ -2,7 +2,5 @@ boss born slow
 alert effect/ui direct
 
 effect fog
-back to menu error
 role use the same equip
-stage 3 error
 
