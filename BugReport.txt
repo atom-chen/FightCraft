@@ -3,4 +3,6 @@ alert effect/ui direct
 
 effect fog
 role use the same equip
+strbuff error: anim pause
+dexbuff error: still can be atk
 
