@@ -5,4 +5,5 @@ effect fog
 role use the same equip
 strbuff error: anim pause
 dexbuff error: still can be atk
+stage 4 cant move in android
 
