@@ -25,29 +25,29 @@ public class AimTargetItem : MonoBehaviour
 
     void Update()
     {
-        _AnimColor.a = _AnimAlpha;
-        if (_LastUpdateColor == _AnimColor)
-        {
-            return;
-        }
+        //_AnimColor.a = _AnimAlpha;
+        //if (_LastUpdateColor == _AnimColor)
+        //{
+        //    return;
+        //}
 
         
-        _LastUpdateColor = _AnimColor;
-        _ImageRenderer.material.SetColor("_Color", _AnimColor);
+        //_LastUpdateColor = _AnimColor;
+        //_ImageRenderer.material.SetColor("_Color", _AnimColor);
     }
 
     public void SetAimType(AimType aimType)
     {
-        if (aimType == AimType.Free)
-        {
-            _AnimColor = _AimFreeColor;
-            _Animator.Play("AimFree");
-        }
-        else
-        {
-            _AnimColor = _AimLockColor;
-            _Animator.Play("AimLock");
-        }
+        //if (aimType == AimType.Free)
+        //{
+        //    _AnimColor = _AimFreeColor;
+        //    _Animator.Play("AimFree");
+        //}
+        //else
+        //{
+        //    _AnimColor = _AimLockColor;
+        //    _Animator.Play("AimLock");
+        //}
     }
 }
 

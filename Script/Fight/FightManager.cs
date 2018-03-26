@@ -202,6 +202,8 @@ public class FightManager : InstanceBase<FightManager>
         _MainChatMotion.InitMotion();
         FightLayerCommon.SetPlayerLayer(_MainChatMotion);
         UIHPPanel.ShowHPItem(_MainChatMotion);
+
+        GameCore.Instance.EventController.RegisteEvent( EVENT_TYPE.EVENT_LOGIC_ROLE_LEVEL_UP, RoleLevelUp);
     }
 
     private void SetSkillElement(string skillName, ObjMotionSkillBase skillBase)
@@ -309,6 +311,8 @@ public class FightManager : InstanceBase<FightManager>
         Hashtable hash = new Hashtable();
         hash.Add("IsWin", isWin);
         GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_EXIT_STAGE, this, hash);
+
+        GameCore.Instance.EventController.UnRegisteEvent(EVENT_TYPE.EVENT_LOGIC_ROLE_LEVEL_UP, RoleLevelUp);
     }
 
     #endregion
@@ -340,16 +344,25 @@ public class FightManager : InstanceBase<FightManager>
         _SceneSPObj[_ActingRegion].SetActive(true);
         _CameraFollow._Distance = LogicManager.Instance.EnterStageInfo.CameraOffset[_ActingRegion];
 
-        var effectPrefab = ResourceManager.Instance.GetEffect("Born2");
-        var effectSingle = effectPrefab.GetComponent<EffectSingle>();
-        var effectInstance = FightManager.Instance.MainChatMotion.PlayDynamicEffect(effectSingle);
-        effectInstance.transform.position = destTrans.position;
+        //var effectPrefab = ResourceManager.Instance.GetEffect("Born2");
+        //var effectSingle = effectPrefab.GetComponent<EffectSingle>();
+        //var effectInstance = FightManager.Instance.MainChatMotion.PlayDynamicEffect(effectSingle);
+        //effectInstance.transform.position = destTrans.position;
 
 
         if (_FightScene is FightSceneLogicPassArea)
         {
             (_FightScene as FightSceneLogicPassArea).StartNextArea();
         }
+    }
+
+    public void RoleLevelUp(object sender, Hashtable arg)
+    {
+        var effectPrefab = ResourceManager.Instance.GetEffect("Born2");
+        var effectSingle = effectPrefab.GetComponent<EffectSingle>();
+        var effectInstance = FightManager.Instance.MainChatMotion.PlayDynamicEffect(effectSingle);
+        effectInstance.transform.position = FightManager.Instance.MainChatMotion.transform.position;
+
     }
 
     #endregion

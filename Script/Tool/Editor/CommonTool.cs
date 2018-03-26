@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEditor;
 using System.IO;
+using System.Collections.Generic;
 
 public class CommonTool : Editor
 {
@@ -178,6 +179,40 @@ public class CommonTool : Editor
                 damage._IsCharSkillDamage = true;
             }
         }
+    }
+
+    #endregion
+
+    #region particle shader
+
+    [MenuItem("TyTools/Particle/ChangeScene")]
+    public static void ParticleChangeShader()
+    {
+        var selections = Selection.GetFiltered(typeof(UnityEngine.GameObject), SelectionMode.DeepAssets);
+        var paricleShader = Shader.Find("TYImage/Particles/Additive");
+
+        foreach (var selected in selections)
+        {
+            var selectedGO = selected as GameObject;
+            if (selectedGO == null)
+                return;
+
+            ParticleSystem[] paricals = selectedGO.GetComponentsInChildren<ParticleSystem>();
+            var selfPart = selectedGO.GetComponents<ParticleSystem>();
+            List<ParticleSystem> partList = new List<ParticleSystem>(paricals);
+            partList.AddRange(selfPart);
+            foreach (var particle in partList)
+            {
+                var renderer = particle.GetComponent<Renderer>();
+                if (renderer != null)
+                {
+                    renderer.sharedMaterial.shader = paricleShader;
+                }
+            }
+        }
+
+        
+        
     }
 
     #endregion

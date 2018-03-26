@@ -852,7 +852,7 @@ public class MotionManager : MonoBehaviour
 
     public void MoveDirect(Vector3 derectV3)
     {
-        Vector3 destPoint = transform.position + derectV3.normalized;
+        Vector3 destPoint = transform.position + derectV3 * 5;
 
         transform.rotation = Quaternion.LookRotation(derectV3);
         _NavAgent.speed = RoleAttrManager.MoveSpeed;

@@ -141,12 +141,13 @@ public class UISkillBar : UIBase
     private int _AimType = 0;
     public void OnSwitchAimType()
     {
-        ++_AimType;
-        if (_AimType >= 3)
-            _AimType = 0;
+        //++_AimType;
+        //if (_AimType >= 3)
+        //    _AimType = 0;
 
-        AimTarget.Instance.SwitchAimType(_AimType);
-        UpdateAim();
+        //AimTarget.Instance.SwitchAimType(_AimType);
+        //UpdateAim();
+        AimTarget.Instance.SwitchAimTarget();
     }
 
     public void SetAimType(AimTarget.AimTargetType aimType)

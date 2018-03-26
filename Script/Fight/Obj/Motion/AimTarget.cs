@@ -41,6 +41,7 @@ public class AimTarget : InstanceBase<AimTarget>
         }
     }
 
+    
     #region lock target
 
     private MotionManager _LockTarget;
@@ -51,6 +52,8 @@ public class AimTarget : InstanceBase<AimTarget>
             return _LockTarget;
         }
     }
+
+    private EffectController _AnimEffectInstance;
 
     private void OnTargetPointClick(PointerEventData eventData)
     {
@@ -78,6 +81,23 @@ public class AimTarget : InstanceBase<AimTarget>
 
     }
 
+    //private void ShowAimEffect()
+    //{
+    //    if (_AnimEffectInstance == null)
+    //    {
+    //        var effectPrefab = ResourceManager.Instance.GetEffect("BuffAlert2");
+    //        var effectSingle = effectPrefab.GetComponent<EffectSingle>();
+    //        var _AnimEffectInstance = FightManager.Instance.MainChatMotion.PlayDynamicEffect(effectSingle);
+    //    }
+
+    //    _AnimEffectInstance.transform.SetParent(_LockTarget.GetBindTransform(_AnimEffectInstance._BindPos));
+    //}
+
+    //private void HideAnimEffect()
+    //{
+
+    //}
+
     #endregion
 
     #region free aim
@@ -87,20 +107,8 @@ public class AimTarget : InstanceBase<AimTarget>
         if (_AimType != AimTargetType.Free)
             return;
 
-        Vector3 derectV3 = new Vector3(InputManager.Instance.Axis.x, 0, InputManager.Instance.Axis.y);
-        if (derectV3 == Vector3.zero)
-        {
-            derectV3 = FightManager.Instance.MainChatMotion.transform.forward;
-        }
-        var selecteds = SelectTargetCommon.GetDirectMotions(FightManager.Instance.MainChatMotion, derectV3, 5, 30, SelectTargetCommon.SelectSortType.Distance);
-        if (selecteds.Count > 0)
-        {
-            _LockTarget = selecteds[0]._SelectedMotion;
-        }
-        else
-        {
-            _LockTarget = null;
-        }
+        _LockTarget = null;
+        ReSelectTargets();
 
         if (_LockTarget == null)
         {
@@ -109,6 +117,45 @@ public class AimTarget : InstanceBase<AimTarget>
         }
 
         AimTargetPanel.ShowAimTarget(_LockTarget, AimType.Free);
+    }
+
+    #endregion
+
+    #region switch target 
+
+    private List<SelectTargetCommon.SelectedInfo> _SelectedTarget = new List<SelectTargetCommon.SelectedInfo>();
+    private float _LastSelectTime = 0;
+    private int _LastSelectIdx = 0;
+    private static float _ChangeSelectInterval = 3.0f;
+
+    public void SwitchAimTarget()
+    {
+        if (Time.time - _LastSelectTime > _ChangeSelectInterval)
+        {
+            _LastSelectTime = Time.time;
+            ReSelectTargets();
+        }
+        else
+        {
+            ++_LastSelectIdx;
+            if (_LastSelectIdx == _SelectedTarget.Count || _SelectedTarget[_LastSelectIdx]._SelectedMotion == null)
+            {
+                ReSelectTargets();
+            }
+            else
+            {
+                _LockTarget = _SelectedTarget[_LastSelectIdx]._SelectedMotion;
+            }
+        }
+    }
+
+    private void ReSelectTargets()
+    {
+        _SelectedTarget = SelectTargetCommon.GetFrontMotions(FightManager.Instance.MainChatMotion, 8, 180, SelectTargetCommon.SelectSortType.Distance);
+        if (_SelectedTarget.Count == 0)
+            return;
+
+        _LockTarget = _SelectedTarget[0]._SelectedMotion;
     }
 
     #endregion

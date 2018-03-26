@@ -71,7 +71,7 @@ public class AimTargetPanel : InstanceBase<AimTargetPanel>
     {
         if (_AimTarget != null && !_AimTarget.IsMotionDie)
         {
-            _AimItem.transform.position = _AimTarget.transform.position + _AimTarget._ColliderInfo + new Vector3(-0.4f, -0.4f, 0);
+            _AimItem.transform.position = _AimTarget.transform.position + new Vector3(0, 1.0f, 0);
         }
         else
         {

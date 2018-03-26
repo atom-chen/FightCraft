@@ -24,12 +24,16 @@ public class ImpactBuffSuperArmor : ImpactBuff
     public override bool IsBuffCanHit(MotionManager impactSender, ImpactHit impactHit)
     {
         //GlobalEffect.Instance.Pause(0.1f);
-        _BuffOwner.ResetMove();
-        _BuffOwner.ActionPause(_BlockTime);
 
-        if (!impactHit._IsBulletHit)
+        if (_BlockTime > 0)
         {
-            impactSender.ActionPause(_BlockTime);
+            _BuffOwner.ResetMove();
+            _BuffOwner.ActionPause(_BlockTime);
+
+            if (!impactHit._IsBulletHit)
+            {
+                impactSender.ActionPause(_BlockTime);
+            }
         }
 
         if (_HitEffect != null)
