@@ -17,7 +17,7 @@ public class AI_HeroBase : AI_Base
         base.AIUpdate();
 
         RiseUpdate();
-        UpdateCriticalAI();
+        //UpdateCriticalAI();
     }
 
     #region rise

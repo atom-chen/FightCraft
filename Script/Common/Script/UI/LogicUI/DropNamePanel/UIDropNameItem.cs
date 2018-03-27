@@ -62,7 +62,7 @@ public class UIDropNameItem : UIItemBase
         _Picked = true;
         base.OnItemClick();
 
-        MonsterDrop.PickItem(_DropItem);
+        _DropItem.PickDropItem();
     }
 
     #endregion

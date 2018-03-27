@@ -85,7 +85,6 @@ public class MonsterDrop
             dropList.Add(dropItem);
 
             DropGold += goldNum;
-            Debug.Log("DropGold:" + DropGold);
         }
         
         return dropList;
@@ -220,29 +219,29 @@ public class MonsterDrop
         return pos;
     }
 
-    public static void PickItem(DropItem dropItem)
+    public static void PickItem(DropItemData dropItemData)
     {
-        if (dropItem == null)
+        if (dropItemData == null)
             return;
 
-        if (dropItem.DropData._DropGold > 0)
+        if (dropItemData._DropGold > 0)
         {
-            PlayerDataPack.Instance.AddGold(dropItem.DropData._DropGold);
+            PlayerDataPack.Instance.AddGold(dropItemData._DropGold);
         }
-        else if (dropItem.DropData._ItemEquip != null)
+        else if (dropItemData._ItemEquip != null)
         {
-            if (!BackBagPack.Instance.AddEquip(dropItem.DropData._ItemEquip))
+            if (!BackBagPack.Instance.AddEquip(dropItemData._ItemEquip))
                 return;
         }
-        else if (dropItem.DropData._ItemBase != null)
+        else if (dropItemData._ItemBase != null)
         {
-            if (!BackBagPack.Instance.AddItem(dropItem.DropData._ItemBase))
+            if (!BackBagPack.Instance.AddItem(dropItemData._ItemBase))
                 return;
         }
         else
         {
             Debug.Log("Drop Empty");
         }
-        ResourceManager.Instance.DestoryObj(dropItem.gameObject);
+        
     }
 }

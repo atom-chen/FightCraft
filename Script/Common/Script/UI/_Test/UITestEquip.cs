@@ -73,9 +73,30 @@ public class UITestEquip : UIBase
 
     #region 
 
+    int _StageIdx = 0;
+    int _Diff = 1;
+
+    int _TotalExp = 0;
+    int _TotalGold = 0;
+
     public void OnTestPassStage()
     {
-        TestPassNormalStage(1, 1);
+        int exp = 0;
+        int gold = 0;
+
+        ++_StageIdx;
+        if (_StageIdx > 20)
+        {
+            _StageIdx = 1;
+            ++_Diff;
+        }
+        TestPassNormalStage(_StageIdx, _Diff, ref exp, ref gold);
+
+        _TotalExp += exp;
+        _TotalGold += gold;
+
+        Debug.Log("TotalDrop Exp:" + _TotalExp + ", Gold:" + _TotalGold);
+        Debug.Log("Role Atk:" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Attack) + ", Def:" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Defense) + ", HP:" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax));
     }
 
     public void OnTestDelEquips()
@@ -83,7 +104,7 @@ public class UITestEquip : UIBase
         TestFight.DelAllEquip();
     }
 
-    private void TestPassNormalStage(int stageIdx, int diff)
+    private void TestPassNormalStage(int stageIdx, int diff, ref int exp, ref int gold)
     {
         var stageRecord = TableReader.StageInfo.GetRecord(stageIdx.ToString());
         int level = GameDataValue.GetStageLevel(diff, stageIdx, STAGE_TYPE.NORMAL);
@@ -113,7 +134,6 @@ public class UITestEquip : UIBase
         }
         monsterIds.Add(bossAreas._BossMotionID);
 
-        int gold = 0;
         Dictionary<string, int> items = new Dictionary<string, int>();
         foreach (var monId in monsterIds)
         {
@@ -137,16 +157,18 @@ public class UITestEquip : UIBase
                 }
                 else if (dropItem._ItemEquip != null)
                 {
-                    Debug.Log("drop equip:" + dropItem._ItemEquip.ItemDataID + "," + dropItem._ItemEquip.EquipQuality);
+                    MonsterDrop.PickItem(dropItem);
                 }
             }
+            int dropExp = GameDataValue.GetMonsterExp(monRecord.MotionType, level, 1);
+            exp += dropExp;
         }
-        Debug.Log("Drop Gold:" + gold);
-        foreach (var dropItem in items)
-        {
-            Debug.Log("Drop Item :" + dropItem.Key + "," + dropItem.Value);
-        }
-        Debug.Log("EliteCnt:" + eliteCnt);
+        TestFight.DelAllEquip();
+        //foreach (var dropItem in items)
+        //{
+        //    Debug.Log("Drop Item :" + dropItem.Key + "," + dropItem.Value);
+        //}
+        Debug.Log("Drop Exp:" + exp + ", Gold:" + gold);
     }
 
     #endregion

@@ -111,7 +111,14 @@ public class DropItem : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        MonsterDrop.PickItem(this);
+        PickDropItem();
+    }
+
+    public void PickDropItem()
+    {
+        MonsterDrop.PickItem(_DropData);
+
+        ResourceManager.Instance.DestoryObj(gameObject);
     }
 
     #endregion
