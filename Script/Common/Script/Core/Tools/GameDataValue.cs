@@ -841,7 +841,7 @@ public class GameDataValue
         {
             if (dropEquipQualitys[i] == ITEM_QUALITY.ORIGIN)
             {
-                if (monsterRecord.SpDrops.Count == 0)
+                if (monsterRecord.ValidSpDrops.Count == 0)
                     continue;
 
                 int dropIdx = Random.Range(0, monsterRecord.ValidSpDrops.Count);

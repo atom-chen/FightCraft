@@ -95,7 +95,7 @@ public class UITestEquip : UIBase
         _TotalExp += exp;
         _TotalGold += gold;
 
-        Debug.Log("TotalDrop Exp:" + _TotalExp + ", Gold:" + _TotalGold);
+        Debug.Log("TotalDrop stage:" + _StageIdx  + " Exp:" + _TotalExp + ", Gold:" + _TotalGold);
         Debug.Log("Role Atk:" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Attack) + ", Def:" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Defense) + ", HP:" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax));
     }
 
@@ -109,30 +109,40 @@ public class UITestEquip : UIBase
         var stageRecord = TableReader.StageInfo.GetRecord(stageIdx.ToString());
         int level = GameDataValue.GetStageLevel(diff, stageIdx, STAGE_TYPE.NORMAL);
         var sceneGO = ResourceManager.Instance.GetGameObject("FightSceneLogic/" + stageRecord.FightLogicPath);
-        var areas = sceneGO.GetComponentsInChildren<FightSceneAreaKAllEnemy>(true);
-        var bossAreas = sceneGO.GetComponentInChildren<FightSceneAreaKBossWithFish>(true);
+        var areaPass = sceneGO.GetComponent<FightSceneLogicPassArea>();
+        //var areas = sceneGO.GetComponentsInChildren<FightSceneAreaKAllEnemy>(true);
+        //var bossAreas = sceneGO.GetComponentInChildren<FightSceneAreaKBossWithFish>(true);
         List<string> monsterIds = new List<string>();
         int eliteCnt = 0;
-        foreach (var enemyArea in areas)
+        foreach (var enemyArea in areaPass._FightArea)
         {
-            for(int i = 0; i< enemyArea._EnemyBornPos.Length - 1; ++i)
+            if (enemyArea is FightSceneAreaKAllEnemy)
             {
-                monsterIds.Add(enemyArea._EnemyBornPos[i]._EnemyDataID);
-            }
+                var kenemyArea = enemyArea as FightSceneAreaKAllEnemy;
+                for (int i = 0; i < kenemyArea._EnemyBornPos.Length - 1; ++i)
+                {
+                    monsterIds.Add(kenemyArea._EnemyBornPos[i]._EnemyDataID);
+                }
 
-            var monLastId = enemyArea._EnemyBornPos[enemyArea._EnemyBornPos.Length - 1]._EnemyDataID;
-            if (diff > 1)
-            {
-                var monId = TableReader.MonsterBase.GetGroupElite(TableReader.MonsterBase.GetRecord(monLastId));
-                monsterIds.Add(monId.Id);
-                ++eliteCnt;
+                var monLastId = kenemyArea._EnemyBornPos[kenemyArea._EnemyBornPos.Length - 1]._EnemyDataID;
+                if (diff > 1)
+                {
+                    var monId = TableReader.MonsterBase.GetGroupElite(TableReader.MonsterBase.GetRecord(monLastId));
+                    monsterIds.Add(monId.Id);
+                    ++eliteCnt;
+                }
+                else
+                {
+                    monsterIds.Add(monLastId);
+                }
             }
-            else
+            else if (enemyArea is FightSceneAreaKBossWithFish)
             {
-                monsterIds.Add(monLastId);
+                var bossArea = enemyArea as FightSceneAreaKBossWithFish;
+                monsterIds.Add(bossArea._BossMotionID);
             }
         }
-        monsterIds.Add(bossAreas._BossMotionID);
+        
 
         Dictionary<string, int> items = new Dictionary<string, int>();
         foreach (var monId in monsterIds)
