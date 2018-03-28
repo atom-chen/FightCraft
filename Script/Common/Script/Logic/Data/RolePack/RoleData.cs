@@ -23,12 +23,10 @@ public class RoleData : SaveItemBase
 
     public void InitRoleData()
     {
-        if (_RoleLevel < 0)
-        {
-            _RoleLevel = 0;
-        }
+        
 
         bool needSave = false;
+        needSave |= InitLevel();
         needSave |= InitEquipList();
         needSave |= InitSkill();
 
@@ -60,6 +58,17 @@ public class RoleData : SaveItemBase
                 //newItemEquip._SaveFileName = _SaveFileName + ".Equip" + i;
                 _EquipList.Add(newItemEquip);
             }
+
+            string baseWeaponID = "1";
+            if (Profession == PROFESSION.GIRL_DOUGE
+                || Profession == PROFESSION.GIRL_DEFENCE)
+            {
+                baseWeaponID = "1001";
+            }
+
+            var equipItem = ItemEquip.GetBaseEquip(baseWeaponID, 1, ITEM_QUALITY.WHITE, 10, 0);
+            PutOnEquip(EQUIP_SLOT.WEAPON, equipItem);
+
             return true;
         }
         foreach (var itemEquip in _EquipList)
@@ -281,28 +290,43 @@ public class RoleData : SaveItemBase
         }
     }
 
+    private static int MAX_LEVEL = 100;
+    private int _LvUpExp = 0;
+    public int LvUpExp
+    {
+        get
+        {
+            return _LvUpExp;
+        }
+    }
+
+    public bool InitLevel()
+    {
+        if (_RoleLevel < 0)
+        {
+            _RoleLevel = 1;
+        }
+        _LvUpExp = GameDataValue.GetLvUpExp(_RoleLevel, _AttrLevel);
+        return false;
+    }
+
     public void AddExp(int value)
     {
-        if (_RoleLevel < value)
+        if (_RoleLevel < MAX_LEVEL)
         {
             _CurExp += value;
-            var expRecord = TableReader.RoleExp.GetRecord((_RoleLevel + 1).ToString());
-            if (_CurExp >= expRecord.ExpValue)
+            if (_CurExp >= _LvUpExp)
             {
-                _CurExp -= expRecord.ExpValue;
+                _CurExp -= _LvUpExp;
                 RoleLevelUp();
             }
         }
         else
         {
             _CurExp += value;
-            var expRecord = TableReader.RoleExp.GetRecord((_AttrLevel + MAX_ROLE_LEVEL + 1).ToString());
-            if (expRecord == null)
-                return;
-
-            if (_CurExp >= expRecord.ExpValue)
+            if (_CurExp >= _LvUpExp)
             {
-                _CurExp -= expRecord.ExpValue;
+                _CurExp -= _LvUpExp;
                 AttrLevelUp();
             }
         }
@@ -316,6 +340,7 @@ public class RoleData : SaveItemBase
 
         CalculateAttr();
 
+        _LvUpExp = GameDataValue.GetLvUpExp(_RoleLevel, _AttrLevel);
         GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_ROLE_LEVEL_UP, this, null);
     }
 
@@ -324,6 +349,7 @@ public class RoleData : SaveItemBase
         ++_AttrLevel;
         _UnDistrubutePoint += 1;
 
+        _LvUpExp = GameDataValue.GetLvUpExp(_RoleLevel, _AttrLevel);
         GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_ROLE_LEVEL_UP, this, null);
     }
 

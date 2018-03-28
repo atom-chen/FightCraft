@@ -510,6 +510,17 @@ public class ItemEquip : ItemBase
         return itemEquip;
     }
 
+    public static ItemEquip GetBaseEquip(string id, int level, ITEM_QUALITY quality, int value, int requireLv)
+    {
+        ItemEquip itemEquip = new ItemEquip(id);
+        itemEquip.EquipLevel = level;
+        itemEquip.EquipQuality = quality;
+        itemEquip.EquipValue = value;
+        itemEquip.RequireLevel = requireLv;
+
+        return itemEquip;
+    }
+
 
     private static EquipItemRecord GetRandomItem(EQUIP_SLOT equipSlot, int level)
     {

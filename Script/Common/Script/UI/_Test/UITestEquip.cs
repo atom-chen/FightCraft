@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using System;
 using Tables;
+using System.IO;
 
 public class UITestEquip : UIBase
 {
@@ -79,24 +80,70 @@ public class UITestEquip : UIBase
     int _TotalExp = 0;
     int _TotalGold = 0;
 
+    List<PassStageInfo> _PassInfoList = new List<PassStageInfo>();
+
+    class PassStageInfo
+    {
+        public int diff;
+        public int stateIdx;
+        public int level;
+        public int exp;
+        public int gold;
+        public int levelExp;
+        public int atk;
+        public int hp;
+    }
+
     public void OnTestPassStage()
     {
-        int exp = 0;
-        int gold = 0;
+        //    int exp = 0;
+        //    int gold = 0;
 
-        ++_StageIdx;
-        if (_StageIdx > 20)
+        //    ++_StageIdx;
+        //    if (_StageIdx > 20)
+        //    {
+        //        _StageIdx = 1;
+        //        ++_Diff;
+        //    }
+        //    TestPassNormalStage(_StageIdx, _Diff, ref exp, ref gold);
+
+        //    _TotalExp += exp;
+        //    _TotalGold += gold;
+
+        //    Debug.Log("TotalDrop stage:" + _StageIdx  + " Exp:" + _TotalExp + ", Gold:" + _TotalGold);
+        //    Debug.Log("Role Atk:" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Attack) + ", Def:" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Defense) + ", HP:" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax));
+
+        for (int diff = 1; diff < 6; ++diff)
         {
-            _StageIdx = 1;
-            ++_Diff;
+            for (int stageid = 1; stageid < 21; ++stageid)
+            {
+                int exp = 0;
+                int gold = 0;
+                TestPassNormalStage(stageid, diff, ref exp, ref gold);
+
+                PassStageInfo passInfo = new PassStageInfo();
+                passInfo.diff = diff;
+                passInfo.stateIdx = stageid;
+                passInfo.level = GameDataValue.GetStageLevel(diff, stageid, STAGE_TYPE.NORMAL);
+                passInfo.exp = exp;
+                passInfo.gold = gold;
+                passInfo.levelExp = GameDataValue.GetLvUpExp(passInfo.level, 0);
+                passInfo.atk = RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Attack);
+                passInfo.hp = (int)(passInfo.level * passInfo.level * 0.005f * 4000 + 4000);
+
+                _PassInfoList.Add(passInfo);
+            }
         }
-        TestPassNormalStage(_StageIdx, _Diff, ref exp, ref gold);
 
-        _TotalExp += exp;
-        _TotalGold += gold;
-
-        Debug.Log("TotalDrop stage:" + _StageIdx  + " Exp:" + _TotalExp + ", Gold:" + _TotalGold);
-        Debug.Log("Role Atk:" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Attack) + ", Def:" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Defense) + ", HP:" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax));
+        string fileName = "StagePassInfos";
+        string path = Application.dataPath + fileName + ".txt";
+        var fileStream = File.Create(path);
+        var streamWriter = new StreamWriter(fileStream);
+        foreach (var passInfo in _PassInfoList)
+        {
+            streamWriter.WriteLine(passInfo.diff + "\t" + passInfo.stateIdx + "\t" + passInfo.level + "\t" + passInfo.exp + "\t" + passInfo.gold + "\t" + passInfo.levelExp + "\t" + passInfo.atk + "\t" + passInfo.hp);
+        }
+        streamWriter.Close();
     }
 
     public void OnTestDelEquips()
@@ -170,7 +217,7 @@ public class UITestEquip : UIBase
                     MonsterDrop.PickItem(dropItem);
                 }
             }
-            int dropExp = GameDataValue.GetMonsterExp(monRecord.MotionType, level, 1);
+            int dropExp = GameDataValue.GetMonsterExp(monRecord.MotionType, level, level);
             exp += dropExp;
         }
         TestFight.DelAllEquip();

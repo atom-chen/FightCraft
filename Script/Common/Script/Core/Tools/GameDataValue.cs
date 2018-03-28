@@ -45,9 +45,10 @@ public class GameDataValue
     #region level -> baseAttr
 
     private static int _MaxLv = 100;
-    private static float _AttackPerLevel = 55.36f;
-    private static float _HPPerLevel = 487.86f;
-    private static float _DefencePerLevel = 24.72f;
+    private static float _AttackPerLevel = 136.0f;
+    private static float _AttackIncreaseLevel = 1.2f;
+    private static float _HPPerLevel = 128.0f;
+    private static float _DefencePerLevel = 68.0f;
     private static float _ValuePerLevel = 50;
     private static float _ValuePerAttack = 1;
 
@@ -56,31 +57,34 @@ public class GameDataValue
 
     public static int CalWeaponAttack(int equiplevel)
     {
-        var attackValue = _AttackPerLevel* equiplevel;
+        int power = equiplevel / 5;
+        var attackValue = _AttackPerLevel* Mathf.Pow(_AttackIncreaseLevel, power);
         return Mathf.CeilToInt(attackValue);
     }
 
     public static int CalEquipTorsoHP(int equiplevel)
     {
-        var value = _HPPerLevel * equiplevel;
+        int power = equiplevel / 5;
+        var value = _HPPerLevel * Mathf.Pow(_AttackIncreaseLevel, power);
         return Mathf.CeilToInt(value);
     }
 
     public static int CalEquipTorsoDefence(int equiplevel)
     {
-        var value = _DefencePerLevel * equiplevel;
+        int power = equiplevel / 5;
+        var value = _DefencePerLevel * Mathf.Pow(_AttackIncreaseLevel, power);
         return Mathf.CeilToInt(value);
     }
 
     public static int CalEquipLegsHP(int equiplevel)
     {
-        var value = _HPPerLevel * equiplevel * 0.5f;
+        var value = CalEquipTorsoHP(equiplevel) * 0.5f;
         return Mathf.CeilToInt(value);
     }
 
     public static int CalEquipLegsDefence(int equiplevel)
     {
-        var value = _DefencePerLevel * equiplevel * 0.5f;
+        var value = CalEquipTorsoDefence(equiplevel) * 0.5f;
         return Mathf.CeilToInt(value);
     }
 
@@ -662,7 +666,7 @@ public class GameDataValue
     public static int _SpecialExpBase = 500;
     public static int _BossExpBase = 1250;
 
-    public static int _LevelExpBase = 10000;
+    public static int _LevelExpBase = 5000;
     public static float _Level30ExpRate = 0.1f;
     public static float _Level60ExpRate = 0.11f;
     public static float _Level90ExpRate = 0.12f;
@@ -673,25 +677,26 @@ public class GameDataValue
     {
         int realLv = playerLv + attrLv;
         int levelExp = 0;
+        float rate = realLv * realLv * 0.1f;
         if (realLv <= 30)
         {
-            levelExp = Mathf.CeilToInt((1 + _Level30ExpRate * realLv) * _LevelExpBase);
+            levelExp = Mathf.CeilToInt((1 + _Level30ExpRate * rate) * _LevelExpBase);
         }
         else if (realLv <= 60)
         {
-            levelExp = Mathf.CeilToInt((1 + _Level60ExpRate * realLv) * _LevelExpBase);
+            levelExp = Mathf.CeilToInt((1 + _Level60ExpRate * rate) * _LevelExpBase);
         }
         else if (realLv <= 90)
         {
-            levelExp = Mathf.CeilToInt((1 + _Level90ExpRate * realLv) * _LevelExpBase);
+            levelExp = Mathf.CeilToInt((1 + _Level90ExpRate * rate) * _LevelExpBase);
         }
         else if (realLv <= 100)
         {
-            levelExp = Mathf.CeilToInt((1 + _Level100ExpRate * realLv) * _LevelExpBase);
+            levelExp = Mathf.CeilToInt((1 + _Level100ExpRate * rate) * _LevelExpBase);
         }
         else
         {
-            levelExp = Mathf.CeilToInt((1 + _Level999ExpRate * realLv) * _LevelExpBase);
+            levelExp = Mathf.CeilToInt((1 + _Level999ExpRate * rate) * _LevelExpBase);
         }
 
         return levelExp;
@@ -736,7 +741,8 @@ public class GameDataValue
             levelExp = Mathf.CeilToInt((1 + _Level999ExpRate * monExpLevel) * expBase);
         }
 
-        levelExp = Mathf.CeilToInt(levelExp * (1 + levelDelta * 0.1f));
+        var deltaRate = Mathf.Clamp(levelDelta * 0.03f, -0.3f, 0.2f);
+        levelExp = Mathf.CeilToInt(levelExp * (1 + deltaRate));
         return levelExp;
     }
 
@@ -1021,7 +1027,7 @@ public class GameDataValue
 
     #region gold
 
-    public static float _GoldLevelParam = 100f;
+    public static float _GoldLevelParam = 10f;
     public static int _NormalGoldBase = 2000;
     public static int _EliteGoldBase = 8000;
     public static int _SpecialGoldBase = 8000;
@@ -1072,6 +1078,16 @@ public class GameDataValue
         }
 
         return goldCnt;
+    }
+
+    #endregion
+
+    #region skill
+
+    public static int GetSkillLvUpGold(int costBase, int skillLv)
+    {
+        int goldCost = (int)(Mathf.Pow(1.35f, skillLv) * costBase);
+        return goldCost;
     }
 
     #endregion
