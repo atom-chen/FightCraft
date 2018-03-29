@@ -25,6 +25,13 @@ public class UIFuncInFight : UIBase
         base.Show(hash);
 
         StartFightTime();
+
+        GameCore.Instance.EventController.RegisteEvent(EVENT_TYPE.EVENT_LOGIC_PASS_STAGE, EventDelegate);
+    }
+
+    public override void Destory()
+    {
+        GameCore.Instance.EventController.UnRegisteEvent(EVENT_TYPE.EVENT_LOGIC_PASS_STAGE, EventDelegate);
     }
 
     public void OnBtnExit()
@@ -54,6 +61,12 @@ public class UIFuncInFight : UIBase
         ++_FightSecond;
         DateTime dateTime = new DateTime((long)(_FightSecond * 10000000L));
         _FightTime.text = string.Format("{0:mm:ss}", dateTime);
+    }
+
+    private void EventDelegate(object go, Hashtable eventArgs)
+    {
+        Debug.Log("Fight finish time:" + _FightSecond);
+
     }
 
     #endregion

@@ -58,8 +58,6 @@ public class TestData : SaveItemBase
                 _DamageInfos.Add(skillName, 0);
             }
             _DamageInfos[skillName] += finalDamage;
-
-            Debug.Log("Damage:" + skillName + "," + finalDamage);
         }
     }
 

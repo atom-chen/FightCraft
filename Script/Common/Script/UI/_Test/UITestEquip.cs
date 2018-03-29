@@ -129,7 +129,7 @@ public class UITestEquip : UIBase
                 passInfo.gold = gold;
                 passInfo.levelExp = GameDataValue.GetLvUpExp(passInfo.level, 0);
                 passInfo.atk = RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Attack);
-                passInfo.hp = (int)(passInfo.level * passInfo.level * 0.005f * 4000 + 4000);
+                passInfo.hp = (int)(passInfo.level * passInfo.level * 0.012f * 4000 + 4000);
 
                 _PassInfoList.Add(passInfo);
             }

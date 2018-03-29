@@ -136,19 +136,19 @@ public class EventController : MonoBehaviour
                 for (int j = 0; j < _HandleList[_EventList[i].EventType].Count; ++j)
                 {
                     EventDelegate handler = _HandleList[_EventList[i].EventType][j]._EventDelegate;
-                    //try
-                    //{
-                    handler(_EventList[i].Sender, _EventList[i].EventArgs);
-                    if (_EventList[i].EventArgs.ContainsKey("StopEvent"))
+                    try
                     {
-                        break;
+                        handler(_EventList[i].Sender, _EventList[i].EventArgs);
+                        if (_EventList[i].EventArgs.ContainsKey("StopEvent"))
+                        {
+                            break;
+                        }
                     }
-                    //}
-                    //catch (Exception ex)
-                    //{
-                    //    Debug.LogError("SkillEventController DispatchEvent Exception EventType:" + _EventList[i].EventType +
-                    //        " handleName:" + handler.ToString() + " e:" + ex);
-                    //}
+                    catch (Exception ex)
+                    {
+                        Debug.LogError("SkillEventController DispatchEvent Exception EventType:" + _EventList[i].EventType +
+                            " handleName:" + handler.ToString() + " e:" + ex);
+                    }
                 }
             }
         }

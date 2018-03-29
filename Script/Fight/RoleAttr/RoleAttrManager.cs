@@ -514,44 +514,14 @@ public class RoleAttrManager : MonoBehaviour
     private RoleAttrStruct GetMonsterAttr(MonsterBaseRecord monsterBase, int roleLv, MOTION_TYPE monsterType)
     {
         var baseAttr = new RoleAttrStruct();
-        int hpStep = 0;
-        int attackStep = 0;
-        int defenceStep = 0;
-        int level = roleLv - 1;
-        if (level <= 5)
-        {
-            hpStep = 10;
-            attackStep = 1;
-            defenceStep = 1;
-        }
-        else if (level <= 20)
-        {
-            hpStep = 20;
-            attackStep = 2;
-            defenceStep = 2;
-        }
-        else if (level <= 50)
-        {
-            hpStep = 100;
-            attackStep = 5;
-            defenceStep = 5;
-        }
-        else if (level <= 100)
-        {
-            hpStep = 200;
-            attackStep = 10;
-            defenceStep = 10;
-        }
-        else
-        {
-            hpStep = 180;
-            attackStep = 10;
-            defenceStep = 8;
-        }
-
-        baseAttr.SetValue(RoleAttrEnum.HPMax, 500 + level * hpStep * monsterBase.BaseAttr[0]);
-        baseAttr.SetValue(RoleAttrEnum.Attack, 60 + level * attackStep * monsterBase.BaseAttr[1]);
-        baseAttr.SetValue(RoleAttrEnum.Defense, 5 + level * defenceStep * monsterBase.BaseAttr[2]);
+        int hpMax = (int)(roleLv * roleLv * 0.012f * monsterBase.BaseAttr[0] + monsterBase.BaseAttr[0]);
+        int attackStep = monsterBase.BaseAttr[1];
+        int defenceStep = monsterBase.BaseAttr[2];
+        int level = roleLv;
+        
+        baseAttr.SetValue(RoleAttrEnum.HPMax, hpMax);
+        baseAttr.SetValue(RoleAttrEnum.Attack, attackStep);
+        baseAttr.SetValue(RoleAttrEnum.Defense, defenceStep);
 
         return baseAttr;
     }

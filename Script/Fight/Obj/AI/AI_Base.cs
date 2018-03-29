@@ -176,10 +176,31 @@ public class AI_Base : MonoBehaviour
         return false;
     }
 
+    int _ActValue = -1;
     protected bool IsRandomActSkill()
     {
         var actRandom = Random.Range(0, 10000);
-        if (_SelfMotion.RoleAttrManager.Level * 50 >= actRandom)
+
+        if (_ActValue < 0)
+        {
+            int aiLevel = _SelfMotion.RoleAttrManager.Level / 10;
+            aiLevel = Mathf.Clamp(aiLevel, 1, 10);
+
+            if (_SelfMotion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.Normal)
+            {
+                _ActValue = aiLevel * 3 + 40;
+            }
+            else if (_SelfMotion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.Elite)
+            {
+                _ActValue = aiLevel * 7 + 70;
+            }
+            else if (_SelfMotion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.Hero)
+            {
+                _ActValue = aiLevel * 40 + 100;
+            }
+        }
+
+        if (_ActValue >= actRandom)
         {
             return true;
         }
