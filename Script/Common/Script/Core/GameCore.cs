@@ -75,6 +75,8 @@ public class GameCore : MonoBehaviour
     private EventController _EventController;
     public EventController EventController { get { return _EventController; } }
 
+    public SoundManager _SoundManager;
+
     #endregion
 
     #region 

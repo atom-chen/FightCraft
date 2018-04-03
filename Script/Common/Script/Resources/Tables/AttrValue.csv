@@ -1,71 +1,71 @@
 """ID""","""??""","""??""","""AttrImpact""","""StrParam1""","""StrParam2""","""StrParam3""","""AttrParams1""","""AttrParams2""","""AttrParams3""","""AttrParams4""","""AttrParams5""","""AttrParams6""","""AttrParams7""","""AttrParams8""","""AttrParams9""","""AttrParams10"""
-120000,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr2_B3_Stone,3,,10000,500,0,0,0,0,0,0,0,0
-120001,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr4_B3_WhirlWind,3,,10000,500,0,0,0,0,0,0,0,0
-120002,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr6_B2_Weapon,2,,10000,500,0,0,0,0,0,0,0,0
-120003,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr8_B1_Ice,1,,10000,500,0,0,0,0,0,0,0,0
-120004,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr10_B1_FireBoom3,1,,10000,500,0,0,0,0,0,0,0,0
-120005,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr12_B2_LighteningHit,2,,10000,500,0,0,0,0,0,0,0,0
-120006,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr14_B1_WindEnhance,1,,10000,500,0,0,0,0,0,0,0,0
-120007,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr16_B3_Lightening3,3,,10000,500,0,0,0,0,0,0,0,0
-120008,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr18_B3_StoneBoom,3,,10000,500,0,0,0,0,0,0,0,0
-120009,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr21_B1_IceLoong,1,,10000,500,0,0,0,0,0,0,0,0
-120010,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr23_B2_WhirlWind,2,,10000,500,0,0,0,0,0,0,0,0
-120011,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr24_B2_LightEye,2,,10000,500,0,0,0,0,0,0,0,0
-120012,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr26_B2_IceCircle,2,,10000,500,0,0,0,0,0,0,0,0
-120013,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr28_B3_FireSprit,3,,10000,500,0,0,0,0,0,0,0,0
-120100,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr1_G1_Stone,1,,10000,500,0,0,0,0,0,0,0,0
-120101,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr3_G2_WindBlade,2,,10000,500,0,0,0,0,0,0,0,0
-120102,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr5_G2_HeartBoom,2,,10000,500,0,0,0,0,0,0,0,0
-120103,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr7_G2_Ice,2,,10000,500,0,0,0,0,0,0,0,0
-120104,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr9_G2_EnhanceFire,2,,10000,500,0,0,0,0,0,0,0,0
-120105,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr11_G2_LighteningHit,2,,10000,500,0,0,0,0,0,0,0,0
-120106,,G0 blink,RoleAttrImpactAddSkill,ImpactAttr13_G0_Blink,0,,10000,500,0,0,0,0,0,0,0,0
-120107,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr15_G3_Lightening3,3,,10000,500,0,0,0,0,0,0,0,0
-120108,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr17_G1_FireSprite,1,,10000,500,0,0,0,0,0,0,0,0
-120109,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr19_G3_FireBird,3,,10000,500,0,0,0,0,0,0,0,0
-120110,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr20_G2_FireLoong,2,,10000,500,0,0,0,0,0,0,0,0
-120111,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr22_G3_WhirlWind,3,,10000,500,0,0,0,0,0,0,0,0
-120112,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr25_G2_IceSprit,2,,10000,500,0,0,0,0,0,0,0,0
-120113,,B3 add {0}% damage at last hit,RoleAttrImpactElementBullet,ImpactAttr27_G3_FireLoong,3,,10000,500,0,0,0,0,0,0,0,0
-121001,,Incoming attacks that would deal more than <color=#001100>33%</color>?of your maximum Life are reduced to deal?<color=#001100>33%</color>?of your maximum Life instead.,RoleAttrImpactPassive,PassiveDamageLimit,3,,10000,500,0,0,0,0,0,0,0,0
-121002,,While below 50% HP get Super Armor and and all damage taken is reduced by 90%; Buff Duration <color=#001100>{0}</color> sec.,RoleAttrImpactPassiveSubLastTime,PassiveHPLowIron,3,,30000,5000,100000,0,0,0,0,0,0,0
-121003,,Increase Max HP by <color=#001100>{0}%</color>.,RoleAttrImpactPassiveAddAttr,PassiveAddHP,3,,2000,500,100000,0,0,0,0,0,0,0
-121004,,Increase Defence by <color=#001100>{0}%</color>.,RoleAttrImpactPassiveAddAttr,PassiveAddDefence,3,,2000,500,100000,0,0,0,0,0,0,0
-121005,,"absorbs the damage of a single attack,cd:<color=#001100>{0}</color> sec.",RoleAttrImpactPassiveActCD,PassiveBlockOne,3,,300000,-20000,100000,5000,0,0,0,0,0,0
-121006,,"When receiving fatal damage, you instead restore <color=#001100>{0}%</color> HP and get Camouflage buff <color=#001100>{1}</color> sec",RoleAttrImpactPassiveRelive,PassiveRelive,3,,1000,400,5000,10000,2000,30000,0,0,0,0
-121007,,"While below 50% HP healing you for <color=#001100>{0}%</color>HP per second.Buff Duration 5 sec, CD <color=#001100>{1}</color> sec.",RoleAttrImpactPassiveHPResume,PassiveHPLowResumeHP,3,,1000,100,2000,600000,-30000,300000,0,0,0,0
-121008,,While below 50% HP get Shield Of Dao; Buff Duration <color=#001100>{0}</color> sec.,RoleAttrImpactPassiveSubLastTime,PassiveHPLowInt,3,,30000,5000,100000,500,0,0,0,0,0,0
-121009,,While below 50% HP get Camouflage; Buff Duration <color=#001100>{0}</color> sec.,RoleAttrImpactPassiveSubLastTime,PassiveHPLowDex,3,,30000,5000,100000,500,0,0,0,0,0,0
-121010,,"While takes attack,the anemy will get <color=#001100>{0}%</color> damage.",RoleAttrImpactPassiveThorn,PassiveThorn,3,,10000,2000,30000,100,0,0,0,0,0,0
-122001,,Absorbing Cold Damage.,RoleAttrImpactPassiveAddAttr,PassiveResistCold,3,,999990000,10000,999990000,0,0,0,0,0,0,0
-122002,,Absorbing Lighting Damage.,RoleAttrImpactPassiveAddAttr,PassiveResistLighting,3,,999990000,10000,999990000,0,0,0,0,0,0,0
-122003,,"While takes attack,increase <color=#001100>{0}%</color> move speed in <color=#001100>{1}</color> sec.",RoleAttrImpactPassiveHitMove,PassiveHitMove,3,,1000,100,2000,50000,5000,100000,0,0,0,0
-122004,,Remove buff that decrease move speed,RoleAttrImpactPassive,PassiveResistIgnoreMove,3,,10000,0,0,100,0,0,0,0,0,0
-122005,,Absorbing Fire Damage.,RoleAttrImpactPassiveAddAttr,PassiveResistFire,3,,999990000,10000,999990000,0,0,0,0,0,0,0
-122006,,Increase Move Speed by <color=#001100>{0}%</color>.,RoleAttrImpactPassiveAddAttr,PassiveResistExMove,3,,5000000,1000000,15000000,1,0,0,0,0,0,0
-122007,,Absorbing Natural Damage.,RoleAttrImpactPassiveAddAttr,PassiveResistWind,3,,999990000,10000,999990000,0,0,0,0,0,0,0
-122008,,Increase <color=#001100>{0}%</color> Move Speed While below 50% HP,RoleAttrImpactPassiveHPLowMove,PassiveHPLowMove,3,,15000000,1500000,30000000,1500000,0,0,0,0,0,0
-123001,,Decreace <color=#001100>{0}%</color> defence to enemies within <color=#001100>{1}</color> yards.,RoleAttrImpactPassiveArea,PassiveLowDefenceArea,3,,-1000,-200,-3000,30000,3000,60000,0,0,0,0
-123002,,Increase Attack by <color=#001100>{0}%</color>.,RoleAttrImpactPassiveAddAttr,PassiveAttrStr,3,,500,100,1500,1,0,0,0,0,0,0
-123003,,Decreace <color=#001100>{0}%</color> Attack Speed to enemies within <color=#001100>{1}</color> yards.,RoleAttrImpactPassiveArea,PassiveIceArea,3,,-1000,-200,-3000,30000,3000,60000,0,0,0,0
-123004,,"While takes attack,the enemy will be struck by lightning.damage <color=#001100>{0}%</color>.",RoleAttrImpactLightRevange,PassiveHitLightRevange,3,,10000,2000,30000,100,0,0,0,0,0,0
-123005,,Increase Attack Speed by <color=#001100>{0}%</color>.,RoleAttrImpactPassiveAddAttr,PassiveAttrDec,3,,5000000,1000000,15000000,1,0,0,0,0,0,0
-123006,,While HP Full Increace attack <color=#001100>{0}%</color>.,RoleAttrImpactPassiveHPHeightAttack,PassiveHPHeightAttack,3,,1500,150,3000,100,0,0,0,0,0,0
-123007,,Increase Critical Chance by <color=#001100>{0}%</color>.,RoleAttrImpactPassiveAddAttr,PassiveAttrInt,3,,10000000,5000000,15000000,1,0,0,0,0,0,0
-123008,lack,"While takes attack, act a fire explor.damage <color=#001100>{0}%</color>, cd <color=#001100>{1}</color>",RoleAttrImpactPassiveBeHitBullet,PassiveHitCircle,3,,10000,2000,30000,200000,-5000,150000,0,0,0,0
-123009,,enemies get <color=#001100>{0}%</color> damage within <color=#001100>{1}</color> yards per sec.,RoleAttrImpactPassiveDamageArea,PassiveDamageArea,3,,2000,300,5000,30000,3000,60000,10000,0,0,0
-123010,lack,"While takes attack, act a ice explor.damage <color=#001100>{0}%</color>, cd <color=#001100>{1}</color>",RoleAttrImpactPassiveBeHitBullet,PassiveIceCircle,3,,10000,0,0,100,0,0,0,0,0,0
-124001,,"While hit enemy, <color=#001100>{1}%</color> chance send a nartural bullet take <color=#001100>{0}%</color> damage.cd 1 sec",RoleAttrImpactPassiveHitEnemy,PassiveHitWindBullet,3,,10000,2000,30000,2000,300,5000,10000,0,0,0
-124002,,While below 50% HP Increace attack <color=#001100>{0}%</color>.,RoleAttrImpactPassiveHPHeightAttack,PassiveHPLowAttack,3,,2000,200,4000,100,0,0,0,0,0,0
-124003,,Increase Cold Enhance by <color=#001100>{0}</color>.,RoleAttrImpactPassiveAddAttr,PassiveAttrIce,3,,10000000,1000000,20000000,2,0,0,0,0,0,0
-124004,,Increase Lighting Enhance by <color=#001100>{0}</color>.,RoleAttrImpactPassiveAddAttr,PassiveAttrLighting,3,,10000000,1000000,20000000,2,0,0,0,0,0,0
-124005,,"While hit enemy, <color=#001100>{1}%</color> chance send a lighting bullet take <color=#001100>{0}%</color> damage.cd 1 sec",RoleAttrImpactPassiveHitEnemy,PassiveHitLightingBullet,3,,10000,2000,30000,2000,300,5000,10000,0,0,0
-124006,,"While attack, <color=#001100>{1}%</color> chance get lighting ball s take <color=#001100>{0}%</color> damage.cd 1 sec",RoleAttrImpactPassiveLightCircleBuff,PassiveLightingBuff,3,,10000,2000,30000,2000,300,5000,10000,0,0,0
-124007,,Increase Fire Enhance by <color=#001100>{0}</color>.,RoleAttrImpactPassiveAddAttr,PassiveAttrFire,3,,10000000,1000000,20000000,2,0,0,0,0,0,0
-124008,lack,"While hit enemy, <color=#001100>{1}%</color> chance send a fire bullet take <color=#001100>{0}%</color> damage.cd 1 sec",RoleAttrImpactPassiveHitEnemy,PassiveHitFireBullet,3,,10000,2000,30000,2000,300,5000,10000,0,0,0
-124009,,Increase Natural Enhance by <color=#001100>{0}</color>.,RoleAttrImpactPassiveAddAttr,PassiveAttrWind,3,,10000000,1000000,20000000,2,0,0,0,0,0,0
-124010,,"While attack, <color=#001100>{1}%</color> chance increace <color=#001100>{0}%</color> attack",RoleAttrImpactPassiveAttackBless,PassiveBlessSelf,3,,1500,100,2500,2000,300,5000,0,0,0,0
-124011,lack,"While hit enemy, <color=#001100>{1}%</color> chance send a ice bullet take <color=#001100>{0}%</color> damage.cd 1 sec",RoleAttrImpactPassiveHitEnemy,PassiveHitIceBullet,3,,10000,2000,30000,2000,300,5000,10000,0,0,0
+120000,,,RoleAttrImpactElementBullet,ImpactAttr2_B3_Stone,3,,10000,500,0,0,0,0,0,0,0,0
+120001,,,RoleAttrImpactElementBullet,ImpactAttr4_B3_WhirlWind,3,,10000,500,0,0,0,0,0,0,0,0
+120002,,,RoleAttrImpactElementBullet,ImpactAttr6_B2_Weapon,2,,10000,500,0,0,0,0,0,0,0,0
+120003,,,RoleAttrImpactElementBullet,ImpactAttr8_B1_Ice,1,,10000,500,0,0,0,0,0,0,0,0
+120004,,,RoleAttrImpactElementBullet,ImpactAttr10_B1_FireBoom3,1,,10000,500,0,0,0,0,0,0,0,0
+120005,,,RoleAttrImpactElementBullet,ImpactAttr12_B2_LighteningHit,2,,10000,500,0,0,0,0,0,0,0,0
+120006,,,RoleAttrImpactElementBullet,ImpactAttr14_B1_WindEnhance,1,,10000,500,0,0,0,0,0,0,0,0
+120007,,,RoleAttrImpactElementBullet,ImpactAttr16_B3_Lightening3,3,,10000,500,0,0,0,0,0,0,0,0
+120008,,,RoleAttrImpactElementBullet,ImpactAttr18_B3_StoneBoom,3,,10000,500,0,0,0,0,0,0,0,0
+120009,,,RoleAttrImpactElementBullet,ImpactAttr21_B1_IceLoong,1,,10000,500,0,0,0,0,0,0,0,0
+120010,,,RoleAttrImpactElementBullet,ImpactAttr23_B2_WhirlWind,2,,10000,500,0,0,0,0,0,0,0,0
+120011,,,RoleAttrImpactElementBullet,ImpactAttr24_B2_LightEye,2,,10000,500,0,0,0,0,0,0,0,0
+120012,,,RoleAttrImpactElementBullet,ImpactAttr26_B2_IceCircle,2,,10000,500,0,0,0,0,0,0,0,0
+120013,,,RoleAttrImpactElementBullet,ImpactAttr28_B3_FireSprit,3,,10000,500,0,0,0,0,0,0,0,0
+120100,,,RoleAttrImpactElementBullet,ImpactAttr1_G1_Stone,1,,10000,500,0,0,0,0,0,0,0,0
+120101,,,RoleAttrImpactElementBullet,ImpactAttr3_G2_WindBlade,2,,10000,500,0,0,0,0,0,0,0,0
+120102,,,RoleAttrImpactElementBullet,ImpactAttr5_G2_HeartBoom,2,,10000,500,0,0,0,0,0,0,0,0
+120103,,,RoleAttrImpactElementBullet,ImpactAttr7_G2_Ice,2,,10000,500,0,0,0,0,0,0,0,0
+120104,,,RoleAttrImpactElementBullet,ImpactAttr9_G2_EnhanceFire,2,,10000,500,0,0,0,0,0,0,0,0
+120105,,,RoleAttrImpactElementBullet,ImpactAttr11_G2_LighteningHit,2,,10000,500,0,0,0,0,0,0,0,0
+120106,,,RoleAttrImpactAddSkill,ImpactAttr13_G0_Blink,0,,10000,500,0,0,0,0,0,0,0,0
+120107,,,RoleAttrImpactElementBullet,ImpactAttr15_G3_Lightening3,3,,10000,500,0,0,0,0,0,0,0,0
+120108,,,RoleAttrImpactElementBullet,ImpactAttr17_G1_FireSprite,1,,10000,500,0,0,0,0,0,0,0,0
+120109,,,RoleAttrImpactElementBullet,ImpactAttr19_G3_FireBird,3,,10000,500,0,0,0,0,0,0,0,0
+120110,,,RoleAttrImpactElementBullet,ImpactAttr20_G2_FireLoong,2,,10000,500,0,0,0,0,0,0,0,0
+120111,,,RoleAttrImpactElementBullet,ImpactAttr22_G3_WhirlWind,3,,10000,500,0,0,0,0,0,0,0,0
+120112,,,RoleAttrImpactElementBullet,ImpactAttr25_G2_IceSprit,2,,10000,500,0,0,0,0,0,0,0,0
+120113,,,RoleAttrImpactElementBullet,ImpactAttr27_G3_FireLoong,3,,10000,500,0,0,0,0,0,0,0,0
+121001,,,RoleAttrImpactPassive,PassiveDamageLimit,3,,10000,500,0,0,0,0,0,0,0,0
+121002,,,RoleAttrImpactPassiveSubLastTime,PassiveHPLowIron,3,,30000,5000,100000,0,0,0,0,0,0,0
+121003,,,RoleAttrImpactPassiveAddAttr,PassiveAddHP,3,,2000,500,100000,0,0,0,0,0,0,0
+121004,,,RoleAttrImpactPassiveAddAttr,PassiveAddDefence,3,,2000,500,100000,0,0,0,0,0,0,0
+121005,,,RoleAttrImpactPassiveActCD,PassiveBlockOne,3,,300000,-20000,100000,5000,0,0,0,0,0,0
+121006,,,RoleAttrImpactPassiveRelive,PassiveRelive,3,,1000,400,5000,10000,2000,30000,0,0,0,0
+121007,,,RoleAttrImpactPassiveHPResume,PassiveHPLowResumeHP,3,,1000,100,2000,600000,-30000,300000,0,0,0,0
+121008,,,RoleAttrImpactPassiveSubLastTime,PassiveHPLowInt,3,,30000,5000,100000,500,0,0,0,0,0,0
+121009,,,RoleAttrImpactPassiveSubLastTime,PassiveHPLowDex,3,,30000,5000,100000,500,0,0,0,0,0,0
+121010,,,RoleAttrImpactPassiveThorn,PassiveThorn,3,,10000,2000,30000,100,0,0,0,0,0,0
+122001,,,RoleAttrImpactPassiveAddAttr,PassiveResistCold,3,,999990000,10000,999990000,0,0,0,0,0,0,0
+122002,,,RoleAttrImpactPassiveAddAttr,PassiveResistLighting,3,,999990000,10000,999990000,0,0,0,0,0,0,0
+122003,,,RoleAttrImpactPassiveHitMove,PassiveHitMove,3,,1000,100,2000,50000,5000,100000,0,0,0,0
+122004,,,RoleAttrImpactPassive,PassiveResistIgnoreMove,3,,10000,0,0,100,0,0,0,0,0,0
+122005,,,RoleAttrImpactPassiveAddAttr,PassiveResistFire,3,,999990000,10000,999990000,0,0,0,0,0,0,0
+122006,,,RoleAttrImpactPassiveAddAttr,PassiveResistExMove,3,,5000000,1000000,15000000,1,0,0,0,0,0,0
+122007,,,RoleAttrImpactPassiveAddAttr,PassiveResistWind,3,,999990000,10000,999990000,0,0,0,0,0,0,0
+122008,,,RoleAttrImpactPassiveHPLowMove,PassiveHPLowMove,3,,15000000,1500000,30000000,1500000,0,0,0,0,0,0
+123001,,,RoleAttrImpactPassiveArea,PassiveLowDefenceArea,3,,-1000,-200,-3000,30000,3000,60000,0,0,0,0
+123002,,,RoleAttrImpactPassiveAddAttr,PassiveAttrStr,3,,500,100,1500,1,0,0,0,0,0,0
+123003,,,RoleAttrImpactPassiveArea,PassiveIceArea,3,,-1000,-200,-3000,30000,3000,60000,0,0,0,0
+123004,,,RoleAttrImpactLightRevange,PassiveHitLightRevange,3,,10000,2000,30000,100,0,0,0,0,0,0
+123005,,,RoleAttrImpactPassiveAddAttr,PassiveAttrDec,3,,5000000,1000000,15000000,1,0,0,0,0,0,0
+123006,,,RoleAttrImpactPassiveHPHeightAttack,PassiveHPHeightAttack,3,,1500,150,3000,100,0,0,0,0,0,0
+123007,,,RoleAttrImpactPassiveAddAttr,PassiveAttrInt,3,,10000000,5000000,15000000,1,0,0,0,0,0,0
+123008,,,RoleAttrImpactPassiveBeHitBullet,PassiveHitCircle,3,,10000,2000,30000,200000,-5000,150000,0,0,0,0
+123009,,,RoleAttrImpactPassiveDamageArea,PassiveDamageArea,3,,2000,300,5000,30000,3000,60000,10000,0,0,0
+123010,,,RoleAttrImpactPassiveBeHitBullet,PassiveIceCircle,3,,10000,0,0,100,0,0,0,0,0,0
+124001,,,RoleAttrImpactPassiveHitEnemy,PassiveHitWindBullet,3,,10000,2000,30000,2000,300,5000,10000,0,0,0
+124002,,,RoleAttrImpactPassiveHPHeightAttack,PassiveHPLowAttack,3,,2000,200,4000,100,0,0,0,0,0,0
+124003,,,RoleAttrImpactPassiveAddAttr,PassiveAttrIce,3,,10000000,1000000,20000000,2,0,0,0,0,0,0
+124004,,,RoleAttrImpactPassiveAddAttr,PassiveAttrLighting,3,,10000000,1000000,20000000,2,0,0,0,0,0,0
+124005,,,RoleAttrImpactPassiveHitEnemy,PassiveHitLightingBullet,3,,10000,2000,30000,2000,300,5000,10000,0,0,0
+124006,,,RoleAttrImpactPassiveLightCircleBuff,PassiveLightingBuff,3,,10000,2000,30000,2000,300,5000,10000,0,0,0
+124007,,,RoleAttrImpactPassiveAddAttr,PassiveAttrFire,3,,10000000,1000000,20000000,2,0,0,0,0,0,0
+124008,,,RoleAttrImpactPassiveHitEnemy,PassiveHitFireBullet,3,,10000,2000,30000,2000,300,5000,10000,0,0,0
+124009,,,RoleAttrImpactPassiveAddAttr,PassiveAttrWind,3,,10000000,1000000,20000000,2,0,0,0,0,0,0
+124010,,,RoleAttrImpactPassiveAttackBless,PassiveBlessSelf,3,,1500,100,2500,2000,300,5000,0,0,0,0
+124011,,,RoleAttrImpactPassiveHitEnemy,PassiveHitIceBullet,3,,10000,2000,30000,2000,300,5000,10000,0,0,0
 999999,,,RoleAttrImpactPassiveDamageArea,PassiveDamageArea,3,,100000,300,100000,60000,3000,60000,1000,0,0,0
 #,,,,,,,,,,,,,,,,
 70000,,,RoleAttrImpactBaseAttr,baiqi fire wind /Str,Strength +{0},,1,100,100,1,0,0,0,0,0,0

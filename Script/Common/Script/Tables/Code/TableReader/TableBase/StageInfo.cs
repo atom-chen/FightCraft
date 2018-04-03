@@ -18,6 +18,7 @@ namespace Tables
         public string FightLogicPath { get; set; }
         public List<string> ScenePath { get; set; }
         public List<Vector3> CameraOffset { get; set; }
+        public string Audio { get; set; }
         public StageInfoRecord(DataRecord dataRecord)
         {
             if (dataRecord != null)
@@ -45,6 +46,7 @@ namespace Tables
             {
                 recordStrList.Add(TableWriteBase.GetWriteStr(testTableItem));
             }
+            recordStrList.Add(TableWriteBase.GetWriteStr(Audio));
 
             return recordStrList.ToArray();
         }
@@ -122,6 +124,7 @@ namespace Tables
                 pair.Value.CameraOffset.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[12]));
                 pair.Value.CameraOffset.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[13]));
                 pair.Value.CameraOffset.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[14]));
+                pair.Value.Audio = TableReadBase.ParseString(pair.Value.ValueStr[15]);
             }
         }
     }

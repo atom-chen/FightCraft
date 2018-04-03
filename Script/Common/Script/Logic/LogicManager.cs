@@ -81,6 +81,7 @@ public class LogicManager
         {
             UIMainFun.ShowAsyn();
         }
+        GameCore.Instance._SoundManager.PlayBGMusic(GameCore.Instance._SoundManager._LogicAudio);
     }
 
     public void SaveGame()
@@ -156,6 +157,8 @@ public class LogicManager
         UIDamagePanel.ShowAsyn();
         //DamagePanel.ShowAsyn();
         AimTargetPanel.ShowAsyn();
+
+        GameCore.Instance._SoundManager.PlayBGMusic(EnterStageInfo.Audio);
     }
 
     public void ExitFight()
