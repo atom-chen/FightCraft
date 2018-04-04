@@ -7,6 +7,11 @@ public class StateDie : StateBase
     public override void StartState(params object[] args)
     {
         _MotionManager.StartCoroutine(MotionDie());
+
+        if (_MotionManager._DeadAudio != null)
+        {
+            _MotionManager.PlayAudio(_MotionManager._DeadAudio);
+        }
     }
 
     #region 

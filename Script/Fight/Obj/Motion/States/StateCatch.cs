@@ -20,6 +20,11 @@ public class StateCatch : StateBase
         //base.StartState(args);
         MotionHit((float)args[0], (int)args[1], (MotionManager)args[2]);
         SetHitMove((Vector3)args[4], (float)args[5]);
+
+        if (_MotionManager._BehitAudio != null)
+        {
+            _MotionManager.PlayAudio(_MotionManager._BehitAudio);
+        }
     }
 
 

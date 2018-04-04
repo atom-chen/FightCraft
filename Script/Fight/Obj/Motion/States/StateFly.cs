@@ -28,6 +28,11 @@ public class StateFly : StateBase
         //base.StartState(args);
         MotionFly((float)args[0], (int)args[1], (MotionManager)args[2]);
         SetHitMove((Vector3)args[4], (float)args[5]);
+
+        if (_MotionManager._BehitAudio != null)
+        {
+            _MotionManager.PlayAudio(_MotionManager._BehitAudio);
+        }
     }
 
     public override void StateOpt(MotionOpt opt, params object[] args)

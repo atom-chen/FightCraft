@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class SelectCollider : SelectBase
 {
-    
 
     public List<int> _ColliderFinishFrame;
 
@@ -27,6 +26,11 @@ public class SelectCollider : SelectBase
     }
 
     public bool _SelectLieObj;
+
+    public int _HittedAudio = -1;
+    public int _NonHittedAudio = -1;
+    private float _PlayHittedTime = 0;
+    private bool _IsPlayedNonHitAudio = false;
 
     public override void Init()
     {
@@ -74,14 +78,24 @@ public class SelectCollider : SelectBase
         }
         _Collider.enabled = true;
         base.ColliderStart();
-
+        _IsPlayedNonHitAudio = false;
         //Debug.Log("ColliderStart:" + _ColliderID);
     }
 
     public override void ColliderFinish()
     {
         base.ColliderFinish();
-        if(_Collider != null)
+
+        if (!_IsPlayedNonHitAudio)
+        {
+            if (_NonHittedAudio > 0)
+            {
+                _ObjMotion.PlayAudio(ResourcePool.Instance._CommonAudio[_NonHittedAudio]);
+                _IsPlayedNonHitAudio = true;
+            }
+        }
+
+        if (_Collider != null)
             _Collider.enabled = false;
         _TrigMotions.Clear();
     }
@@ -98,6 +112,22 @@ public class SelectCollider : SelectBase
             return;
 
         TriggerMotion(motion);
+
+        //if (_PlayHittedTime != Time.time)
+        {
+            if (motion.IsContainsBuff(typeof(ImpactBuffSuperArmor)))
+            {
+                _ObjMotion.PlayAudio(ResourcePool.Instance._CommonAudio[ResourcePool.Instance._HitSuperArmor]);
+            }
+            else
+            {
+                if (_PlayHittedTime != Time.time && _HittedAudio > 0)
+                {
+                    _ObjMotion.PlayAudio(ResourcePool.Instance._CommonAudio[_HittedAudio]);
+                    _PlayHittedTime = Time.time;
+                }
+            }
+        }
     }
 
     protected virtual void TriggerMotion(MotionManager motion)

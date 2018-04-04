@@ -69,7 +69,7 @@ public class FightManager : InstanceBase<FightManager>
         sceneCamera.transform.localPosition = Vector3.zero;
         sceneCamera.transform.localRotation = Quaternion.Euler(Vector3.zero);
         sceneCamera.cullingMask &= ~(1 << LayerMask.NameToLayer("UI"));
-        cameraRoot.AddComponent<AudioListener>();
+        //cameraRoot.AddComponent<AudioListener>();
 
         var subUICamera = ResourceManager.Instance.GetInstanceGameObject("Common/SubUICamera");
         subUICamera.transform.SetParent(sceneCamera.transform);

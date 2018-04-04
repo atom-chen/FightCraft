@@ -432,6 +432,18 @@ public class MotionManager : MonoBehaviour
         return newBuff;
     }
 
+    public bool IsContainsBuff(Type buffType)
+    {
+        for (int i = 0; i < _ImpactBuffs.Count; ++i)
+        {
+            if (_ImpactBuffs[i].GetType() == buffType)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public bool IsCanAddBuff(ImpactBuff newBuff)
     {
         foreach (var buff in _ImpactBuffs)
@@ -1226,6 +1238,13 @@ public class MotionManager : MonoBehaviour
     {
         StateOpt(StateBase.MotionOpt.Stop_Move);
     }
+
+    #endregion
+
+    #region audio
+
+    public AudioClip _BehitAudio;
+    public AudioClip _DeadAudio;
 
     #endregion
 }

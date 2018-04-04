@@ -9,6 +9,7 @@ public class ResourcePool : InstanceBase<ResourcePool>
     {
         SetInstance(this);
         InitEffect();
+        InitAutio();
     }
 
     void Destory()
@@ -315,6 +316,34 @@ public class ResourcePool : InstanceBase<ResourcePool>
     {
         _IdleUIItems = new Dictionary<string, Stack<GameObject>>();
     }
+
+    #endregion
+
+    #region audio
+
+    public List<AudioClip> _CommonAudio;
+    public int _HitSuperArmor = 4;
+
+    private void InitAutio()
+    {
+        _CommonAudio = new List<AudioClip>();
+        var audio1 = ResourceManager.Instance.GetAudioClip("common/hit-1");
+        _CommonAudio.Add(audio1);
+
+        var audio2 = ResourceManager.Instance.GetAudioClip("common/hit-2");
+        _CommonAudio.Add(audio2);
+
+        var audio3 = ResourceManager.Instance.GetAudioClip("common/hit-3");
+        _CommonAudio.Add(audio3);
+
+        var audio4 = ResourceManager.Instance.GetAudioClip("common/hit-4");
+        _CommonAudio.Add(audio4);
+
+        var audio5 = ResourceManager.Instance.GetAudioClip("common/hit-5");
+        _CommonAudio.Add(audio5);
+        
+    }
+
 
     #endregion
 

@@ -18,4 +18,9 @@ public class SoundManager : MonoBehaviour
         _AudioSource.PlayOneShot(_LogicAudio);
     }
 
+    public void PlayEffectSound(AudioClip soundEffect)
+    {
+
+    }
+
 }
