@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class SelectLastHit : SelectBase
 {
+
+    public int _HittedAudio;
     
     public override void ColliderStart()
     {
@@ -20,6 +22,14 @@ public class SelectLastHit : SelectBase
                 GlobalEffect.Instance.Pause(_ObjMotion._RoleHitTime);
             }
 
+        }
+
+        if (_ObjMotion.ActingSkill._SkillHitMotions.Count > 0)
+        {
+            if (_HittedAudio > 0)
+            {
+                _ObjMotion.PlayAudio(ResourcePool.Instance._CommonAudio[_HittedAudio]);
+            }
         }
     }
 

@@ -29,7 +29,7 @@ public class SelectCollider : SelectBase
 
     public int _HittedAudio = -1;
     public int _NonHittedAudio = -1;
-    private float _PlayHittedTime = 0;
+    private bool _IsPlayHitAudio = false;
     private bool _IsPlayedNonHitAudio = false;
 
     public override void Init()
@@ -79,6 +79,7 @@ public class SelectCollider : SelectBase
         _Collider.enabled = true;
         base.ColliderStart();
         _IsPlayedNonHitAudio = false;
+        _IsPlayHitAudio = false;
         //Debug.Log("ColliderStart:" + _ColliderID);
     }
 
@@ -86,7 +87,7 @@ public class SelectCollider : SelectBase
     {
         base.ColliderFinish();
 
-        if (!_IsPlayedNonHitAudio)
+        if (!_IsPlayedNonHitAudio && _TrigMotions.Count == 0)
         {
             if (_NonHittedAudio > 0)
             {
@@ -94,8 +95,12 @@ public class SelectCollider : SelectBase
                 _IsPlayedNonHitAudio = true;
             }
         }
+        else if (_TrigMotions.Count != 0)
+        {
+            _IsPlayedNonHitAudio = true;
+        }
 
-        if (_Collider != null)
+            if (_Collider != null)
             _Collider.enabled = false;
         _TrigMotions.Clear();
     }
@@ -113,18 +118,20 @@ public class SelectCollider : SelectBase
 
         TriggerMotion(motion);
 
-        //if (_PlayHittedTime != Time.time)
+        if (!_IsPlayHitAudio)
         {
             if (motion.IsContainsBuff(typeof(ImpactBuffSuperArmor)))
             {
+
                 _ObjMotion.PlayAudio(ResourcePool.Instance._CommonAudio[ResourcePool.Instance._HitSuperArmor]);
+                _IsPlayHitAudio = true;
             }
             else
             {
-                if (_PlayHittedTime != Time.time && _HittedAudio > 0)
+                if (_HittedAudio > 0)
                 {
                     _ObjMotion.PlayAudio(ResourcePool.Instance._CommonAudio[_HittedAudio]);
-                    _PlayHittedTime = Time.time;
+                    _IsPlayHitAudio = true;
                 }
             }
         }
