@@ -47,7 +47,7 @@ public class GameDataValue
     private static int _MaxLv = 100;
     private static float _AttackPerLevel = 136.0f;
     private static float _AttackIncreaseLevel = 1.2f;
-    private static float _HPPerLevel = 128.0f;
+    private static float _HPPerLevel = 286.0f;
     private static float _DefencePerLevel = 68.0f;
     private static float _ValuePerLevel = 50;
     private static float _ValuePerAttack = 1;

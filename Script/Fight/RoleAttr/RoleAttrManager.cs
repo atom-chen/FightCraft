@@ -515,8 +515,8 @@ public class RoleAttrManager : MonoBehaviour
     {
         var baseAttr = new RoleAttrStruct();
         int hpMax = (int)(roleLv * roleLv * 0.012f * monsterBase.BaseAttr[0] + monsterBase.BaseAttr[0]);
-        int attackStep = monsterBase.BaseAttr[1];
-        int defenceStep = monsterBase.BaseAttr[2];
+        int attackStep = (int)(roleLv * roleLv * 0.012f * monsterBase.BaseAttr[0] + monsterBase.BaseAttr[0]);
+        int defenceStep = roleLv;
         int level = roleLv;
         
         baseAttr.SetValue(RoleAttrEnum.HPMax, hpMax);

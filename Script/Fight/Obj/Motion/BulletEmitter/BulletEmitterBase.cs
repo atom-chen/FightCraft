@@ -9,6 +9,7 @@ public class BulletEmitterBase : ImpactBase
     public bool _SenderPos = true;
     public Vector3 _EmitterOffset;
     public float _Damage;
+    public ElementType _DamageType = ElementType.Physic;
 
     protected MotionManager _SenderManager;
 
@@ -37,11 +38,17 @@ public class BulletEmitterBase : ImpactBase
         bulletObj.transform.rotation = transform.rotation;
         bulletObj.gameObject.layer = FightLayerCommon.GetBulletLayer(_SenderManager);
         bulletObj.Init(_SenderManager, this);
-        var bulletHits= bulletObj.GetComponentsInChildren<ImpactHit>();
-        foreach (var impactHit in bulletHits)
+        var bulletHits= bulletObj.GetComponentsInChildren<ImpactDamage>();
+        foreach (var impactDamage in bulletHits)
         {
-            impactHit._DamageRate = _Damage;
-            impactHit._IsBulletHit = true;
+            impactDamage._DamageRate = _Damage;
+            impactDamage._DamageType = _DamageType;
+
+            if (impactDamage is ImpactHit)
+            {
+                ImpactHit impactHit = impactDamage as ImpactHit;
+                impactHit._IsBulletHit = true;
+            }
         }
         return bulletObj as T;
     }

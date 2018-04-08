@@ -91,6 +91,7 @@ public class UITestEquip : UIBase
         public int gold;
         public int levelExp;
         public int atk;
+        public int def;
         public int hp;
     }
 
@@ -129,7 +130,8 @@ public class UITestEquip : UIBase
                 passInfo.gold = gold;
                 passInfo.levelExp = GameDataValue.GetLvUpExp(passInfo.level, 0);
                 passInfo.atk = RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Attack);
-                passInfo.hp = (int)(passInfo.level * passInfo.level * 0.012f * 4000 + 4000);
+                passInfo.def = RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Defense);
+                passInfo.hp = RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax);
 
                 _PassInfoList.Add(passInfo);
             }
@@ -141,7 +143,7 @@ public class UITestEquip : UIBase
         var streamWriter = new StreamWriter(fileStream);
         foreach (var passInfo in _PassInfoList)
         {
-            streamWriter.WriteLine(passInfo.diff + "\t" + passInfo.stateIdx + "\t" + passInfo.level + "\t" + passInfo.exp + "\t" + passInfo.gold + "\t" + passInfo.levelExp + "\t" + passInfo.atk + "\t" + passInfo.hp);
+            streamWriter.WriteLine(passInfo.diff + "\t" + passInfo.stateIdx + "\t" + passInfo.level + "\t" + passInfo.exp + "\t" + passInfo.gold + "\t" + passInfo.levelExp + "\t" + passInfo.def + "\t" + passInfo.hp);
         }
         streamWriter.Close();
     }
