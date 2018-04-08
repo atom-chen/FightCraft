@@ -10,3 +10,18 @@ F:\资源\APK资源7\黑瞳圣女-卡牌\assets\res\icon\skill
 F:\资源\APK资源7\黑瞳圣女-卡牌\assets\res\uilayout
 F:\资源\APK资源7\幻世英雄-卡牌\assets\res\UI
 F:\资源\APK资源7\幻游猎人-2d骨骼\assets\res\ui
+I:\资源\APK资源3\彩虹物语\assets\ui\battle
+
+simple icon
+I:\资源\APK资源\艾尔战记\Texture2D 2dbuff
+I:\资源\APK资源\崩坏童年\res_publish\icon\skill
+I:\资源\APK资源\黑石\Texture2D
+I:\资源\APK资源\乱轰三国志\res\icon\skill
+I:\资源\APK资源\切切大作战\Texture2D
+I:\资源\APK资源2\SD机战\res\skill
+I:\资源\APK资源2\赤壁争霸\Texture
+I:\资源\APK资源3\冰火战姬\assets\art\icon
+I:\资源\APK资源3\彩虹物语\assets\icon\skill
+I:\资源\APK资源3\苍空物语\assets\Icon\Buff
+I:\资源\APK资源3\封魔大陆\assets\skill
+I:\资源\APK资源3\龙骑士传\res\language_com\ui\battle\buff

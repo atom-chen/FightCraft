@@ -321,27 +321,36 @@ public class ResourcePool : InstanceBase<ResourcePool>
 
     #region audio
 
-    public List<AudioClip> _CommonAudio;
-    public int _HitSuperArmor = 4;
+    public Dictionary<int, AudioClip> _CommonAudio;
+    public int _HitSuperArmor = 0;
 
     private void InitAutio()
     {
-        _CommonAudio = new List<AudioClip>();
-        var audio1 = ResourceManager.Instance.GetAudioClip("common/hit-1");
-        _CommonAudio.Add(audio1);
+        _CommonAudio = new Dictionary<int, AudioClip>();
+        var audio1 = ResourceManager.Instance.GetAudioClip("common/HitArmor");
+        _CommonAudio.Add(0, audio1);
 
-        var audio2 = ResourceManager.Instance.GetAudioClip("common/hit-2");
-        _CommonAudio.Add(audio2);
+        var audio2 = ResourceManager.Instance.GetAudioClip("common/HitSwordNone");
+        _CommonAudio.Add(1,audio2);
 
-        var audio3 = ResourceManager.Instance.GetAudioClip("common/hit-3");
-        _CommonAudio.Add(audio3);
+        var audio3 = ResourceManager.Instance.GetAudioClip("common/HitSwordBody");
+        _CommonAudio.Add(2,audio3);
 
-        var audio4 = ResourceManager.Instance.GetAudioClip("common/hit-4");
-        _CommonAudio.Add(audio4);
+        var audio4 = ResourceManager.Instance.GetAudioClip("common/HitSwordSlap");
+        _CommonAudio.Add(3,audio4);
 
-        var audio5 = ResourceManager.Instance.GetAudioClip("common/hit-5");
-        _CommonAudio.Add(audio5);
-        
+        var audio5 = ResourceManager.Instance.GetAudioClip("common/HitSwordSlap2");
+        _CommonAudio.Add(4,audio5);
+
+        var audio10 = ResourceManager.Instance.GetAudioClip("common/HitHwNone");
+        _CommonAudio.Add(10, audio10);
+
+        var audio11 = ResourceManager.Instance.GetAudioClip("common/HitHwBody");
+        _CommonAudio.Add(11, audio11);
+
+        var audio12 = ResourceManager.Instance.GetAudioClip("common/HwAtk");
+        _CommonAudio.Add(12, audio12);
+
     }
 
 

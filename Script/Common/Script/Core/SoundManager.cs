@@ -13,9 +13,10 @@ public class SoundManager : MonoBehaviour
         PlayBGMusic(audio);
     }
 
-    public void PlayBGMusic(AudioClip _LogicAudio)
+    public void PlayBGMusic(AudioClip logicAudio)
     {
-        _AudioSource.PlayOneShot(_LogicAudio);
+        _AudioSource.clip = (logicAudio);
+        _AudioSource.Play();
     }
 
     public void PlayEffectSound(AudioClip soundEffect)
