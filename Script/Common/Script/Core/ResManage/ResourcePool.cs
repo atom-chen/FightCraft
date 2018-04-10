@@ -351,6 +351,38 @@ public class ResourcePool : InstanceBase<ResourcePool>
         var audio12 = ResourceManager.Instance.GetAudioClip("common/HwAtk");
         _CommonAudio.Add(12, audio12);
 
+        var audioEle = ResourceManager.Instance.GetAudioClip("common/AtkFire");
+        _CommonAudio.Add(100, audioEle);
+
+        audioEle = ResourceManager.Instance.GetAudioClip("common/AtkIce");
+        _CommonAudio.Add(101, audioEle);
+
+        audioEle = ResourceManager.Instance.GetAudioClip("common/AtkLighting");
+        _CommonAudio.Add(102, audioEle);
+
+        audioEle = ResourceManager.Instance.GetAudioClip("common/AtkStone");
+        _CommonAudio.Add(103, audioEle);
+
+        audioEle = ResourceManager.Instance.GetAudioClip("common/AtkWind");
+        _CommonAudio.Add(104, audioEle);
+
+        audioEle = ResourceManager.Instance.GetAudioClip("common/HitFire");
+        _CommonAudio.Add(110, audioEle);
+
+        audioEle = ResourceManager.Instance.GetAudioClip("common/HitIce");
+        _CommonAudio.Add(111, audioEle);
+
+        audioEle = ResourceManager.Instance.GetAudioClip("common/HitLighting");
+        _CommonAudio.Add(112, audioEle);
+
+        audioEle = ResourceManager.Instance.GetAudioClip("common/HitStone");
+        _CommonAudio.Add(113, audioEle);
+
+        audioEle = ResourceManager.Instance.GetAudioClip("common/HitWind");
+        _CommonAudio.Add(114, audioEle);
+
+        var audioMon = ResourceManager.Instance.GetAudioClip("common/AtkBow");
+        _CommonAudio.Add(200, audioMon);
     }
 
 

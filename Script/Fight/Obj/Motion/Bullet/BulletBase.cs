@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class BulletBase : MonoBehaviour
 {
     public bool _IsBulletHitLie;
+    public int _BornAudio;
     protected ImpactBase[] _ImpactList;
     protected MotionManager _SkillMotion;
     public MotionManager SkillMotion
@@ -23,6 +24,11 @@ public class BulletBase : MonoBehaviour
         _SkillMotion = senderMotion;
         _ImpactList = gameObject.GetComponents<ImpactBase>();
         _EmitterBase = emitterBase;
+
+        if (_BornAudio > 0)
+        {
+            _SkillMotion.PlayAudio(ResourcePool.Instance._CommonAudio[_BornAudio]);
+        }
     }
 
     protected virtual void BulletHit(MotionManager hitMotion)

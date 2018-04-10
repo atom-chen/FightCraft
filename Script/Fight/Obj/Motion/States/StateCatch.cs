@@ -18,7 +18,7 @@ public class StateCatch : StateBase
     public override void StartState(params object[] args)
     {
         //base.StartState(args);
-        MotionHit((float)args[0], (int)args[1], (MotionManager)args[2]);
+        MotionHit((float)args[0], (int)args[1], (int)args[6], (MotionManager)args[2]);
         SetHitMove((Vector3)args[4], (float)args[5]);
 
         if (_MotionManager._BehitAudio != null)
@@ -36,7 +36,7 @@ public class StateCatch : StateBase
                 DispatchHitEvent(args[0] as string, args[1]);
                 break;
             case MotionOpt.Catch:
-                MotionHit((float)args[0], (int)args[1], (MotionManager)args[2]);
+                MotionHit((float)args[0], (int)args[1], (int)args[6], (MotionManager)args[2]);
                 SetHitMove((Vector3)args[4], (float)args[5]);
                 break;
             case MotionOpt.Stop_Catch:
@@ -80,9 +80,10 @@ public class StateCatch : StateBase
         _MotionManager.SetMove(moveDirect, moveTime);
     }
 
-    public void MotionHit(float hitTime, int hitEffect, MotionManager impactSender)
+    public void MotionHit(float hitTime, int hitEffect, int audioID, MotionManager impactSender)
     {
         _MotionManager.PlayHitEffect(impactSender, hitEffect);
+        _MotionManager.PlayAudio(ResourcePool.Instance._CommonAudio[audioID]);
         if (hitTime <= 0)
             return;
 

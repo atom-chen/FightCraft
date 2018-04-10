@@ -5,6 +5,7 @@ public class ImpactHit : ImpactDamage
 {
     public float _HitTime = 0.6f;
     public int _HitEffect = 0;
+    public int _HitAudio = -1;
     public bool _IsBulletHit = false;
 
     public override void ActImpact(MotionManager senderManager, MotionManager reciverManager)
@@ -27,7 +28,7 @@ public class ImpactHit : ImpactDamage
     protected virtual void HitMotion(MotionManager senderManager, MotionManager reciverManager)
     {
         //reciverManager.BaseMotionManager.HitEvent(_HitTime, _HitEffect, senderManager, this);
-        reciverManager.HitEvent(_HitTime, _HitEffect, senderManager, this, Vector3.zero, 0);
+        reciverManager.HitEvent(_HitTime, _HitEffect, _HitAudio,  senderManager, this, Vector3.zero, 0);
     }
 
     protected virtual void HitMotion(MotionManager senderManager, MotionManager reciverManager, Vector3 moveDirect, float moveTime)
@@ -35,11 +36,11 @@ public class ImpactHit : ImpactDamage
         //reciverManager.BaseMotionManager.HitEvent(_HitTime, _HitEffect, senderManager, this);
         if (senderManager.ActingSkill != null)
         {
-            reciverManager.HitEvent(_HitTime, _HitEffect, senderManager, this, moveDirect, moveTime / senderManager.ActingSkill.SkillSpeed);
+            reciverManager.HitEvent(_HitTime, _HitEffect, _HitAudio,  senderManager, this, moveDirect, moveTime / senderManager.ActingSkill.SkillSpeed);
         }
         else
         {
-            reciverManager.HitEvent(_HitTime, _HitEffect, senderManager, this, moveDirect, moveTime);
+            reciverManager.HitEvent(_HitTime, _HitEffect, _HitAudio,  senderManager, this, moveDirect, moveTime);
         }
     }
 
@@ -47,7 +48,7 @@ public class ImpactHit : ImpactDamage
     {
 
         {
-            reciverManager.HitEvent(_HitTime, _HitEffect, senderManager, this, moveDirect, moveTime);
+            reciverManager.HitEvent(_HitTime, _HitEffect, _HitAudio,  senderManager, this, moveDirect, moveTime);
         }
     }
 }

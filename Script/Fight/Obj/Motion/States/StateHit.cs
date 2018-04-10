@@ -33,7 +33,7 @@ public class StateHit : StateBase
         }
         else
         {
-            MotionHit((float)args[0], (int)args[1], (MotionManager)args[2]);
+            MotionHit((float)args[0], (int)args[1], (int)args[6], (MotionManager)args[2]);
             SetHitMove((Vector3)args[4], (float)args[5]);
         }
 
@@ -61,7 +61,7 @@ public class StateHit : StateBase
                 break;
             case MotionOpt.Hit:
                 //_MotionManager.TryEnterState(_MotionManager._StateHit, args);
-                MotionHit((float)args[0], (int)args[1], (MotionManager)args[2]);
+                MotionHit((float)args[0], (int)args[1], (int)args[6], (MotionManager)args[2]);
                 SetHitMove((Vector3)args[4], (float)args[5]);
                 break;
             case MotionOpt.Fly:
@@ -112,9 +112,10 @@ public class StateHit : StateBase
         _MotionManager.SetMove(moveDirect, moveTime);
     }
 
-    public void MotionHit(float hitTime, int hitEffect, MotionManager impactSender)
+    public void MotionHit(float hitTime, int hitEffect, int hitAudio, MotionManager impactSender)
     {
         _MotionManager.PlayHitEffect(impactSender, hitEffect);
+        _MotionManager.PlayAudio(ResourcePool.Instance._CommonAudio[hitAudio]);
         if (hitTime <= 0)
             return;
 

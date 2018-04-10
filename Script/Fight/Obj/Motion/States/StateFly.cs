@@ -26,7 +26,7 @@ public class StateFly : StateBase
     public override void StartState(params object[] args)
     {
         //base.StartState(args);
-        MotionFly((float)args[0], (int)args[1], (MotionManager)args[2]);
+        MotionFly((float)args[0], (int)args[1], (int)args[6], (MotionManager)args[2]);
         SetHitMove((Vector3)args[4], (float)args[5]);
 
         if (_MotionManager._BehitAudio != null)
@@ -53,11 +53,11 @@ public class StateFly : StateBase
                 break;
             case MotionOpt.Hit:
                 //_MotionManager.TryEnterState(_MotionManager._StateHit, args);
-                MotionFlyStay((float)args[0], (int)args[1], (MotionManager)args[2]);
+                MotionFlyStay((float)args[0], (int)args[1], (int)args[6], (MotionManager)args[2]);
                 SetHitMove((Vector3)args[4], (float)args[5]);
                 break;
             case MotionOpt.Fly:
-                MotionFly((float)args[0], (int)args[1], (MotionManager)args[2]);
+                MotionFly((float)args[0], (int)args[1], (int)args[6], (MotionManager)args[2]);
                 SetHitMove((Vector3)args[4], (float)args[5]);
                 break;
             case MotionOpt.Catch:
@@ -128,10 +128,12 @@ public class StateFly : StateBase
         IsFlyEnd = true;
     }
 
-    public void MotionFly(float flyHeight, int effectID, MotionManager impactSender)
+    public void MotionFly(float flyHeight, int effectID, int audioID, MotionManager impactSender)
     {
         //Debug.Log("MotionFly");
         _MotionManager.PlayHitEffect(impactSender, effectID);
+        _MotionManager.PlayAudio(ResourcePool.Instance._CommonAudio[audioID]);
+
         _MotionManager.SetLookAt(impactSender.transform.position);
         _FlyHeight = flyHeight;
 
@@ -141,10 +143,11 @@ public class StateFly : StateBase
         _MotionManager.RePlayAnimation(_Animation, 1);
     }
 
-    public void MotionFlyStay(float time, int effectID, MotionManager impactSender)
+    public void MotionFlyStay(float time, int effectID, int audioID, MotionManager impactSender)
     {
         //Debug.Log("MotionFlyStay");
         _MotionManager.PlayHitEffect(impactSender, effectID);
+        _MotionManager.PlayAudio(ResourcePool.Instance._CommonAudio[audioID]);
 
         _MotionManager.RePlayAnimation(_Animation, 1);
 

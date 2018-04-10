@@ -359,7 +359,7 @@ public class MotionManager : MonoBehaviour
             //Hashtable hash = new Hashtable();
             //hash.Add("HitEffect", -1);
 
-            FlyEvent(0.1f, -1, this, null, Vector3.zero, 0);
+            FlyEvent(0.1f, -1, -1, this, null, Vector3.zero, 0);
             //_EventController.PushEvent(GameBase.EVENT_TYPE.EVENT_MOTION_FLY, this, new Hashtable());
             //_BaseMotionManager.FlyEvent(0.1f, -1, this, null);
         }
@@ -1195,14 +1195,14 @@ public class MotionManager : MonoBehaviour
         StateOpt(StateBase.MotionOpt.Anim_Event, function, param);
     }
 
-    public void HitEvent(float hitTime, int hitEffect, MotionManager impactSender, ImpactHit hitImpact, Vector3 moveDirect, float moveTime)
+    public void HitEvent(float hitTime, int hitEffect, int hitAudio, MotionManager impactSender, ImpactHit hitImpact, Vector3 moveDirect, float moveTime)
     {
         if (!IsBuffCanHit(impactSender, hitImpact))
         {
             return;
         }
         BuffBeHit(impactSender, hitImpact);
-        StateOpt(StateBase.MotionOpt.Hit, hitTime, hitEffect, impactSender, hitImpact, moveDirect, moveTime);
+        StateOpt(StateBase.MotionOpt.Hit, hitTime, hitEffect, impactSender, hitImpact, moveDirect, moveTime, hitAudio);
     }
 
     public void FrozenEvent()
@@ -1210,7 +1210,7 @@ public class MotionManager : MonoBehaviour
 
     }
 
-    public void FlyEvent(float flyHeight, int hitEffect, MotionManager impactSender, ImpactHit hitImpact, Vector3 moveDirect, float moveTime)
+    public void FlyEvent(float flyHeight, int hitEffect, int hitAudio, MotionManager impactSender, ImpactHit hitImpact, Vector3 moveDirect, float moveTime)
     {
         //Debug.Log("FlyEvent");
         if (!IsBuffCanHit(impactSender, hitImpact))
@@ -1218,17 +1218,17 @@ public class MotionManager : MonoBehaviour
             return;
         }
         BuffBeHit(impactSender, hitImpact);
-        StateOpt(StateBase.MotionOpt.Fly, flyHeight, hitEffect, impactSender, hitImpact, moveDirect, moveTime);
+        StateOpt(StateBase.MotionOpt.Fly, flyHeight, hitEffect, impactSender, hitImpact, moveDirect, moveTime, hitAudio);
     }
 
-    public void CatchEvent(float catchTime, int hitEffect, MotionManager impactSender, ImpactHit hitImpact, Vector3 moveDirect, float moveTime)
+    public void CatchEvent(float catchTime, int hitEffect, int hitAudio, MotionManager impactSender, ImpactHit hitImpact, Vector3 moveDirect, float moveTime)
     {
         if (!IsBuffCanCatch(impactSender, hitImpact as ImpactCatch))
         {
             return;
         }
         BuffBeHit(impactSender, hitImpact);
-        StateOpt(StateBase.MotionOpt.Catch, catchTime, hitEffect, impactSender, hitImpact, moveDirect, moveTime);
+        StateOpt(StateBase.MotionOpt.Catch, catchTime, hitEffect, impactSender, hitImpact, moveDirect, moveTime, hitAudio);
     }
 
     public void StopCatch()

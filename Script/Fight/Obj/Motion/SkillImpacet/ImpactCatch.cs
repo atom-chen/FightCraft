@@ -15,14 +15,14 @@ public class ImpactCatch : ImpactHit
 
     protected virtual void CatchMotion(MotionManager senderManager, MotionManager reciverManager)
     {
-        reciverManager.CatchEvent(_HitTime, _HitEffect, senderManager, this, Vector3.zero, 0);
+        reciverManager.CatchEvent(_HitTime, _HitEffect, _HitAudio, senderManager, this, Vector3.zero, 0);
         //reciverManager.BaseMotionManager.CatchEvent(_HitTime, _HitEffect, senderManager, this);
     }
 
     protected virtual void CatchMotion(MotionManager senderManager, MotionManager reciverManager, Vector3 moveDirect, float moveTime)
     {
         //reciverManager.BaseMotionManager.CatchEvent(_HitTime, _HitEffect, senderManager, this);
-        reciverManager.CatchEvent(_HitTime, _HitEffect, senderManager, this, moveDirect, moveTime);
+        reciverManager.CatchEvent(_HitTime, _HitEffect, _HitAudio, senderManager, this, moveDirect, moveTime);
     }
 
 }

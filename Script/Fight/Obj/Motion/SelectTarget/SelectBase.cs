@@ -9,6 +9,7 @@ public class SelectBase : MonoBehaviour
     public bool _IsRemindSelected = false;
     public AnimationClip _EventAnim;
     public List<int> _EventFrame;
+    public int _AudioID = -1;
     
     protected MotionManager _ObjMotion;
     protected ObjMotionSkillBase _SkillMotion;
@@ -53,6 +54,11 @@ public class SelectBase : MonoBehaviour
         if (!_IsColliderFinish)
         {
             StartCoroutine(AutoFinish());
+        }
+
+        if (_AudioID > 0)
+        {
+            _ObjMotion.PlayAudio(ResourcePool.Instance._CommonAudio[_AudioID]);
         }
     }
 
