@@ -633,7 +633,7 @@ public class GameDataValue
     {
         float eleDamage = phyAtk * damageRate * (1 + enhance / 1000.0f);
         float resistRate = 1;
-        if (defence > 0)
+        if (defence > 0 && roleLevel > 0)
         {
             resistRate = (1 - defence / (defence + _DefencePerLevel * roleLevel * 1.5f));
         }
@@ -1094,7 +1094,7 @@ public class GameDataValue
 
     #endregion
 
-    #region other
+    #region monster attr
 
     public static int _BossStageStarLevel;
 
@@ -1112,6 +1112,21 @@ public class GameDataValue
         }
 
         return level;
+    }
+
+    public static float _MonsterHPParam = 0.012f;
+    public static float _MonsterAtkParam = 0.006f;
+
+    public static int GetMonsterHP(MonsterBaseRecord monsterBase, int roleLv, MOTION_TYPE monsterType)
+    {
+        int hpMax = (int)(roleLv * roleLv * _MonsterHPParam * monsterBase.BaseAttr[0] + monsterBase.BaseAttr[0]);
+        return hpMax;
+    }
+
+    public static int GetMonsterAtk(MonsterBaseRecord monsterBase, int roleLv, MOTION_TYPE monsterType)
+    {
+        int atk = (int)(roleLv * roleLv * _MonsterAtkParam * monsterBase.BaseAttr[1] + monsterBase.BaseAttr[1]);
+        return atk;
     }
 
     #endregion

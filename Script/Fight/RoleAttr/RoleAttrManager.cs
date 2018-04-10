@@ -514,10 +514,10 @@ public class RoleAttrManager : MonoBehaviour
     private RoleAttrStruct GetMonsterAttr(MonsterBaseRecord monsterBase, int roleLv, MOTION_TYPE monsterType)
     {
         var baseAttr = new RoleAttrStruct();
-        int hpMax = (int)(roleLv * roleLv * 0.012f * monsterBase.BaseAttr[0] + monsterBase.BaseAttr[0]);
-        int attackStep = (int)(roleLv * roleLv * 0.012f * monsterBase.BaseAttr[0] + monsterBase.BaseAttr[0]);
+        int hpMax = GameDataValue.GetMonsterHP(monsterBase, roleLv, monsterType);
+        int attackStep = GameDataValue.GetMonsterAtk(monsterBase, roleLv, monsterType);
         int defenceStep = roleLv;
-        int level = roleLv;
+        _Level = roleLv;
         
         baseAttr.SetValue(RoleAttrEnum.HPMax, hpMax);
         baseAttr.SetValue(RoleAttrEnum.Attack, attackStep);
@@ -688,7 +688,7 @@ public class RoleAttrManager : MonoBehaviour
         if (damageType == ElementType.Physic)
         {
             int phyEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.PhysicDamageEnhance);
-            var phyDamage = GameDataValue.GetPhyDamage(attackValue, damageRate, attackValue, defenceValue, Level);
+            var phyDamage = GameDataValue.GetPhyDamage(attackValue, damageRate, attackValue, defenceValue, sender.Level);
             damageClass.NormalDamageValue = Mathf.Max(phyDamage, 0);
             
         }

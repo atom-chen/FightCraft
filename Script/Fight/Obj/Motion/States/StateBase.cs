@@ -24,6 +24,7 @@ public class StateBase
         Act_Skill,
         Stop_Skill,
         Pause_State,
+        Resume_State,
         Anim_Event,
         Catch,
         Stop_Catch,

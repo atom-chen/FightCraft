@@ -377,7 +377,10 @@ public class MotionManager : MonoBehaviour
         NavAgent.enabled = false;
         FightManager.Instance.ObjCorpse(this);
 
-        MonsterDrop.MonsterDropItems(this);
+        if (RoleAttrManager.MotionType != Tables.MOTION_TYPE.MainChar)
+        {
+            MonsterDrop.MonsterDropItems(this);
+        }
     }
 
     public void MotionDisappear()
@@ -1180,6 +1183,11 @@ public class MotionManager : MonoBehaviour
     public void ActionPause(float time)
     {
         StateOpt(StateBase.MotionOpt.Pause_State, time);
+    }
+
+    public void ActionResume()
+    {
+        StateOpt(StateBase.MotionOpt.Resume_State);
     }
 
     public void NotifyAnimEvent(string function, object param)

@@ -98,9 +98,24 @@ public class SelectCollider : SelectBase
         else if (_TrigMotions.Count != 0)
         {
             _IsPlayedNonHitAudio = true;
+            foreach (var trigMotion in _TrigMotions)
+            {
+                if (trigMotion.IsContainsBuff(typeof(ImpactBuffSuperArmor)))
+                {
+
+                    _ObjMotion.PlayAudio(ResourcePool.Instance._CommonAudio[ResourcePool.Instance._HitSuperArmor]);
+                }
+                else
+                {
+                    if (_HittedAudio > 0)
+                    {
+                        _ObjMotion.PlayAudio(ResourcePool.Instance._CommonAudio[_HittedAudio]);
+                    }
+                }
+            }
         }
 
-            if (_Collider != null)
+        if (_Collider != null)
             _Collider.enabled = false;
         _TrigMotions.Clear();
     }
@@ -117,24 +132,6 @@ public class SelectCollider : SelectBase
             return;
 
         TriggerMotion(motion);
-
-        if (!_IsPlayHitAudio)
-        {
-            if (motion.IsContainsBuff(typeof(ImpactBuffSuperArmor)))
-            {
-
-                _ObjMotion.PlayAudio(ResourcePool.Instance._CommonAudio[ResourcePool.Instance._HitSuperArmor]);
-                _IsPlayHitAudio = true;
-            }
-            else
-            {
-                if (_HittedAudio > 0)
-                {
-                    _ObjMotion.PlayAudio(ResourcePool.Instance._CommonAudio[_HittedAudio]);
-                    _IsPlayHitAudio = true;
-                }
-            }
-        }
     }
 
     protected virtual void TriggerMotion(MotionManager motion)

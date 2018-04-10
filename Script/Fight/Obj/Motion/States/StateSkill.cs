@@ -86,6 +86,13 @@ public class StateSkill : StateBase
                     _MotionManager.PauseAnimation(curAnim, (float)args[0]);
                 }
                 break;
+            case MotionOpt.Resume_State:
+                var resumeAnim = _ActingSkill.GetCurAnim();
+                if (resumeAnim != null)
+                {
+                    _MotionManager.ResumeAnimation(resumeAnim);
+                }
+                break;
             default:
                 break;
         }

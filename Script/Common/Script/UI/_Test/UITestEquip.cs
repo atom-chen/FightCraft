@@ -129,7 +129,7 @@ public class UITestEquip : UIBase
                 passInfo.exp = exp;
                 passInfo.gold = gold;
                 passInfo.levelExp = GameDataValue.GetLvUpExp(passInfo.level, 0);
-                passInfo.atk = RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Attack);
+                passInfo.atk = (int)(passInfo.level * passInfo.level * 0.006f * 450 + 450);
                 passInfo.def = RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Defense);
                 passInfo.hp = RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax);
 
@@ -143,7 +143,7 @@ public class UITestEquip : UIBase
         var streamWriter = new StreamWriter(fileStream);
         foreach (var passInfo in _PassInfoList)
         {
-            streamWriter.WriteLine(passInfo.diff + "\t" + passInfo.stateIdx + "\t" + passInfo.level + "\t" + passInfo.exp + "\t" + passInfo.gold + "\t" + passInfo.levelExp + "\t" + passInfo.def + "\t" + passInfo.hp);
+            streamWriter.WriteLine(passInfo.level + "\t" + passInfo.atk + "\t" + passInfo.gold + "\t" + passInfo.levelExp + "\t" + passInfo.def + "\t" + passInfo.hp);
         }
         streamWriter.Close();
     }

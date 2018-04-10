@@ -14,7 +14,7 @@ public class ObjMotionSkillDefence : ObjMotionSkillBase
         _DefenceTime -= Time.deltaTime;
         if (_DefenceTime <= 0 && !InputManager.Instance.IsKeyHold("7"))
         {
-            PlayerNextAnim();
+            ResumeKeyFrame();
         }
     }
 
@@ -48,6 +48,23 @@ public class ObjMotionSkillDefence : ObjMotionSkillBase
             case AnimEventManager.COLLIDER_END:
                 ColliderEnd(param);
                 break;
+            case AnimEventManager.KEY_FRAME:
+                break;
         }
+    }
+
+    private void KeyFrame()
+    {
+        if (!InputManager.Instance.IsKeyHold("7"))
+        {
+            return;
+        }
+
+        MotionManager.ActionPause(-1);
+    }
+
+    private void ResumeKeyFrame()
+    {
+        MotionManager.ActionResume(); 
     }
 }
