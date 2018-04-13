@@ -83,7 +83,10 @@ public class StateCatch : StateBase
     public void MotionHit(float hitTime, int hitEffect, int audioID, MotionManager impactSender)
     {
         _MotionManager.PlayHitEffect(impactSender, hitEffect);
-        _MotionManager.PlayAudio(ResourcePool.Instance._CommonAudio[audioID]);
+        if (audioID > 0)
+        {
+            _MotionManager.PlayAudio(ResourcePool.Instance._CommonAudio[audioID]);
+        }
         if (hitTime <= 0)
             return;
 

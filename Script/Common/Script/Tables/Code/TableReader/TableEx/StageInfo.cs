@@ -33,5 +33,28 @@ namespace Tables
 
     public partial class StageInfo : TableFileBase
     {
+
+        private int _MaxNormalStageID = -1;
+
+        public int GetMaxNormalStageID()
+        {
+            if (_MaxNormalStageID > 0)
+                return _MaxNormalStageID;
+
+            foreach (var stageRecord in Records)
+            {
+                if (stageRecord.Value.StageType == STAGE_TYPE.NORMAL)
+                {
+                    int stageID = int.Parse(stageRecord.Key);
+                    if (stageID > _MaxNormalStageID)
+                    {
+                        _MaxNormalStageID = stageID;
+                    }
+                }
+            }
+
+            return _MaxNormalStageID;
+        }
+
     }
 }

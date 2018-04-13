@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 public enum ShowDamageEnum
 {
-    Normal,
+    Normal = 0,
     Critical,
     Hurt,
     Heal,
@@ -22,6 +22,8 @@ public class DamageItem : MonoBehaviour
     public Transform _SubNumTransform;
     public float offsetX;
     public float _AnimAlpha;
+    public Image _ElementImage;
+    public Sprite[] _ElementSprites;
 
     private static Color _NormalColor = Color.yellow;
     private static Color _CriticalColor = new Color(1,1,0,1);

@@ -25,32 +25,38 @@ public class UIStageSelect : UIBase
     {
         base.Show(hash);
 
-        InitContainer();
+        InitDiffs();
     }
 
     #region difficult panel
 
-    public List<Toggle> _DiffToggles;
-    public Text _SelectedDiffText;
+    public UIContainerSelect _DiffContainer;
 
     private int _SelectedDiff;
 
-    public void OnDiffSelect(bool isOn)
+    public void InitDiffs()
     {
-        if (!isOn)
-            return;
-
-        for (int i = 0; i < _DiffToggles.Count; ++i)
+        int maxDiff = ActData.Instance._NormalStageDiff;
+        int maxStage = TableReader.StageInfo.GetMaxNormalStageID();
+        if (ActData.Instance._NormalStageDiff == 0 || ActData.Instance._NormalStageDiff == maxStage)
         {
-            if (_DiffToggles[i].isOn)
-            {
-                _SelectedDiff = i;
-                _SelectedDiffText.text = "Diff" + i;
-                break;
-            }
+            ++maxDiff;
         }
+
+        List<int> diffList = new List<int>();
+        for (int i = 1; i < maxDiff + 1; ++i)
+        {
+            diffList.Add(i);
+        }
+        _DiffContainer.InitSelectContent(diffList, new List<int>() { maxDiff }, OnDiffSelect);
     }
 
+    public void OnDiffSelect(object diffObj)
+    {
+        _SelectedDiff = (int)diffObj;
+        InitStages();
+    }
+    
     #endregion
 
     #region stagePanel
@@ -59,9 +65,19 @@ public class UIStageSelect : UIBase
 
     private StageInfoRecord _SelectedStage;
 
-    public void InitContainer()
+    public void InitStages()
     {
-        _StageContainer.InitSelectContent(TableReader.StageInfo.Records.Values, null, OnSelectStage);
+        List<StageInfoRecord> stageList = new List<StageInfoRecord>();
+        int maxStage = ActData.Instance._NormalStageIdx;
+        if (ActData.Instance._NormalStageIdx == 0 || ActData.Instance._NormalStageIdx == TableReader.StageInfo.GetMaxNormalStageID())
+        {
+            maxStage = 1;
+        }
+        for (int i = 1; i < maxStage + 1; ++i)
+        {
+            stageList.Add(TableReader.StageInfo.GetRecord(i.ToString()));
+        }
+        _StageContainer.InitSelectContent(stageList, new List<StageInfoRecord>() { stageList[stageList.Count - 1] }, OnSelectStage);
     }
 
     private void OnSelectStage(object stageObj)

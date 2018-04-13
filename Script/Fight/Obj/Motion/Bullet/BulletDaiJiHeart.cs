@@ -7,6 +7,7 @@ public class BulletDaiJiHeart : BulletBase
     public float _GravityModifier;
     public float _TrackAccelate;
     public EffectController _SubEffect;
+    public int _BulletDestoryAudio;
 
     private MotionManager _TargetMotion;
     private Vector3 _UpSpeed;
@@ -69,6 +70,11 @@ public class BulletDaiJiHeart : BulletBase
     protected override void BulletFinish()
     {
         base.BulletFinish();
+
+        if (_BulletDestoryAudio > 0)
+        {
+            SkillMotion.PlayAudio(ResourcePool.Instance._CommonAudio[_BulletDestoryAudio]);
+        }
     }
 
     void OnTriggerEnter(Collider other)

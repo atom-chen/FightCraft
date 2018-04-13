@@ -23,15 +23,6 @@ public class StateHit : StateBase
 
     public override void StartState(params object[] args)
     {
-        //base.StartState(args);
-        if (args.Length > 6)
-        {
-            if ((bool)args[6])
-            {
-                _MotionManager.PauseAnimation();
-            }
-        }
-        else
         {
             MotionHit((float)args[0], (int)args[1], (int)args[6], (MotionManager)args[2]);
             SetHitMove((Vector3)args[4], (float)args[5]);
@@ -115,7 +106,9 @@ public class StateHit : StateBase
     public void MotionHit(float hitTime, int hitEffect, int hitAudio, MotionManager impactSender)
     {
         _MotionManager.PlayHitEffect(impactSender, hitEffect);
-        _MotionManager.PlayAudio(ResourcePool.Instance._CommonAudio[hitAudio]);
+
+        if (hitAudio > 0)
+            _MotionManager.PlayAudio(ResourcePool.Instance._CommonAudio[hitAudio]);
         if (hitTime <= 0)
             return;
 

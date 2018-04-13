@@ -84,9 +84,9 @@ public class ActData : DataPackBase
     #region normal 
 
     [SaveField(1)]
-    public int _NormalStageDiff = 1;
+    public int _NormalStageDiff = 0;
     [SaveField(2)]
-    public int _NormalStageIdx = 1;
+    public int _NormalStageIdx = 0;
 
     public void SetPassNormalStage(int diff, int stageIdx)
     {
@@ -96,7 +96,10 @@ public class ActData : DataPackBase
         SaveClass(false);
     }
 
+    public void GetNextNormalStateId()
+    {
 
+    }
 
     #endregion
 

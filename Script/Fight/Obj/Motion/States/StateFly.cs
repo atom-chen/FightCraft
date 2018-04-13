@@ -132,7 +132,10 @@ public class StateFly : StateBase
     {
         //Debug.Log("MotionFly");
         _MotionManager.PlayHitEffect(impactSender, effectID);
-        _MotionManager.PlayAudio(ResourcePool.Instance._CommonAudio[audioID]);
+        if (audioID > 0)
+        {
+            _MotionManager.PlayAudio(ResourcePool.Instance._CommonAudio[audioID]);
+        }
 
         _MotionManager.SetLookAt(impactSender.transform.position);
         _FlyHeight = flyHeight;
@@ -147,7 +150,9 @@ public class StateFly : StateBase
     {
         //Debug.Log("MotionFlyStay");
         _MotionManager.PlayHitEffect(impactSender, effectID);
-        _MotionManager.PlayAudio(ResourcePool.Instance._CommonAudio[audioID]);
+
+        if (audioID > 0)
+            _MotionManager.PlayAudio(ResourcePool.Instance._CommonAudio[audioID]);
 
         _MotionManager.RePlayAnimation(_Animation, 1);
 

@@ -74,6 +74,33 @@ public class UITestEquip : UIBase
 
     #region 
 
+    public InputField _TargetLevel;
+
+    public void AutoLevel()
+    {
+        int targetLevel = int.Parse(_TargetLevel.text);
+        while (true)
+        {
+            var level = RoleData.SelectRole._RoleLevel;
+            if (level >= targetLevel)
+                break;
+
+            int nextDiff = ActData.Instance._NormalStageDiff;
+            int nextStage = ActData.Instance._NormalStageIdx;
+            if (nextStage == TableReader.StageInfo.GetMaxNormalStageID() || nextStage == 0)
+            {
+                ++nextDiff;
+                nextStage = 1;
+            }
+
+            int gold = 0;
+            int exp = 0;
+            TestPassNormalStage(nextStage, nextDiff, ref exp, ref gold);
+            RoleData.SelectRole.AddExp(exp);
+            PlayerDataPack.Instance.AddGold(gold);
+        }
+    }
+
     int _StageIdx = 0;
     int _Diff = 1;
 
