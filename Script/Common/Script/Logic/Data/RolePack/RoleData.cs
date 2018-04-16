@@ -331,6 +331,11 @@ public class RoleData : SaveItemBase
             }
         }
 
+        Debug.Log("LevelUpExp:" + _LvUpExp);
+        if (_CurExp > _LvUpExp)
+        {
+            AddExp(0);
+        }
     }
 
     private void RoleLevelUp()

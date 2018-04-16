@@ -38,7 +38,7 @@ public class UIStageSelect : UIBase
     {
         int maxDiff = ActData.Instance._NormalStageDiff;
         int maxStage = TableReader.StageInfo.GetMaxNormalStageID();
-        if (ActData.Instance._NormalStageDiff == 0 || ActData.Instance._NormalStageDiff == maxStage)
+        if (ActData.Instance._NormalStageIdx == 0 || ActData.Instance._NormalStageIdx == maxStage)
         {
             ++maxDiff;
         }
@@ -67,12 +67,22 @@ public class UIStageSelect : UIBase
 
     public void InitStages()
     {
-        List<StageInfoRecord> stageList = new List<StageInfoRecord>();
         int maxStage = ActData.Instance._NormalStageIdx;
-        if (ActData.Instance._NormalStageIdx == 0 || ActData.Instance._NormalStageIdx == TableReader.StageInfo.GetMaxNormalStageID())
+        if (_SelectedDiff < ActData.Instance._NormalStageDiff)
+        {
+            maxStage = TableReader.StageInfo.GetMaxNormalStageID();
+        }
+        else if (_SelectedDiff > ActData.Instance._NormalStageDiff)
         {
             maxStage = 1;
         }
+        else
+        {
+            ++maxStage;
+            maxStage = Mathf.Clamp(maxStage, 1, TableReader.StageInfo.GetMaxNormalStageID());
+        }
+
+        List<StageInfoRecord> stageList = new List<StageInfoRecord>();
         for (int i = 1; i < maxStage + 1; ++i)
         {
             stageList.Add(TableReader.StageInfo.GetRecord(i.ToString()));

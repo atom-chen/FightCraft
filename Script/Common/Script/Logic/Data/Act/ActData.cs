@@ -32,16 +32,16 @@ public class ActData : DataPackBase
     public void InitActData()
     {
         if (_NormalStageDiff <= 0)
-            _NormalStageDiff = 1;
+            _NormalStageDiff = 0;
 
         if (_NormalStageIdx <= 0)
-            _NormalStageIdx = 1;
+            _NormalStageIdx = 0;
 
         if (_BossStageDiff <= 0)
-            _BossStageDiff = 1;
+            _BossStageDiff = 0;
 
         if (_BossStageIdx <= 0)
-            _BossStageIdx = 1;
+            _BossStageIdx = 0;
     }
 
     public int _ProcessStageDiff;
@@ -106,9 +106,9 @@ public class ActData : DataPackBase
     #region boss
 
     [SaveField(3)]
-    public int _BossStageDiff = 1;
+    public int _BossStageDiff = 0;
     [SaveField(4)]
-    public int _BossStageIdx = 1;
+    public int _BossStageIdx = 0;
 
     public void SetPassBossStage(int diff, int stageIdx)
     {

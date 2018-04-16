@@ -666,11 +666,11 @@ public class GameDataValue
     public static int _SpecialExpBase = 500;
     public static int _BossExpBase = 1250;
 
-    public static int _LevelExpBase = 5000;
-    public static float _Level30ExpRate = 0.1f;
-    public static float _Level60ExpRate = 0.11f;
-    public static float _Level90ExpRate = 0.12f;
-    public static float _Level100ExpRate = 0.15f;
+    public static int _LevelExpBase = 3500;
+    public static float _Level30ExpRate = 0.05f;
+    public static float _Level60ExpRate = 0.08f;
+    public static float _Level90ExpRate = 0.1f;
+    public static float _Level100ExpRate = 0.04f;
     public static float _Level999ExpRate = 0.2f;
 
     public static int GetLvUpExp(int playerLv, int attrLv)

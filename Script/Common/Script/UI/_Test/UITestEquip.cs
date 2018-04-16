@@ -86,8 +86,13 @@ public class UITestEquip : UIBase
                 break;
 
             int nextDiff = ActData.Instance._NormalStageDiff;
+            if (nextDiff < 1)
+            {
+                nextDiff = 1;
+            }
             int nextStage = ActData.Instance._NormalStageIdx;
-            if (nextStage == TableReader.StageInfo.GetMaxNormalStageID() || nextStage == 0)
+            ++nextStage;
+            if (nextStage == TableReader.StageInfo.GetMaxNormalStageID() + 1 || nextStage == 0)
             {
                 ++nextDiff;
                 nextStage = 1;
@@ -96,6 +101,7 @@ public class UITestEquip : UIBase
             int gold = 0;
             int exp = 0;
             TestPassNormalStage(nextStage, nextDiff, ref exp, ref gold);
+            ActData.Instance.SetPassNormalStage(nextDiff, nextStage);
             RoleData.SelectRole.AddExp(exp);
             PlayerDataPack.Instance.AddGold(gold);
         }

@@ -20,6 +20,7 @@ public class UIRoleSelect : UIBase
 
     public Text _RoleLevel;
     public Text _AttrLevel;
+    public Text _Desc;
 
     public override void Show(Hashtable hash)
     {
@@ -40,6 +41,8 @@ public class UIRoleSelect : UIBase
         Debug.Log("_RoleList.Count:" + PlayerDataPack.Instance._RoleList.Count);
         _RoleLevel.text = PlayerDataPack.Instance._RoleList[_SelectRoleID]._RoleLevel.ToString();
         _AttrLevel.text = PlayerDataPack.Instance._RoleList[_SelectRoleID]._AttrLevel.ToString();
+
+        _Desc.text = Tables.StrDictionary.GetFormatStr(1010 + roleID);
     }
 
     public void OnBtnOK()
