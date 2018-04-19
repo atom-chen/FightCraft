@@ -2,10 +2,8 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
-
- 
- 
-
+using System;
+using Tables;
 
 public class UISkillLevelUp : UIBase
 {
@@ -41,15 +39,17 @@ public class UISkillLevelUp : UIBase
     private void InitSkillClass()
     {
         _SkillClasses.Clear();
-        foreach (var skillItem in RoleData.SelectRole.ProfessionSkills)
+        foreach (var skillItem in SkillData.Instance.ProfessionSkills)
         {
-            if (!_SkillClasses.ContainsKey(skillItem.SkillRecord.SkillType))
+            string dicStr = Tables.StrDictionary.GetFormatStr(skillItem.SkillRecord.SkillType);
+
+            if (!_SkillClasses.ContainsKey(dicStr))
             {
-                _SkillClasses.Add(skillItem.SkillRecord.SkillType, new List<ItemSkill>());
-                _SkillClass.PushMenu(skillItem.SkillRecord.SkillType);
+                _SkillClasses.Add(dicStr, new List<ItemSkill>());
+                _SkillClass.PushMenu(dicStr);
             }
 
-            _SkillClasses[skillItem.SkillRecord.SkillType].Add(skillItem);
+            _SkillClasses[dicStr].Add(skillItem);
         }
         _SkillClass.ShowDefaultFirst();
     }
@@ -78,6 +78,10 @@ public class UISkillLevelUp : UIBase
     #region skill lv up
 
     public Text _Desc;
+    public Text _NeedRoleLv;
+    public Text _NeedSkillLv;
+    public UICurrencyItem _MoneyCost;
+    public Text _MoneyText;
     public Button _LevelUp;
 
     private void ShowSkillInfo()
@@ -85,22 +89,85 @@ public class UISkillLevelUp : UIBase
         if (_SelectedSkill == null)
         {
             _Desc.text = "";
-            _LevelUp.interactable = false;
+            _NeedRoleLv.text = "";
+            _NeedSkillLv.text = "";
+            _MoneyCost.ShowCurrency(MONEYTYPE.GOLD, 0);
+            //_LevelUp.interactable = false;
             return;
         }
 
         var skillTab = Tables.TableReader.SkillInfo.GetRecord(_SelectedSkill.SkillID);
-        string skillDesc = skillTab.Desc;
-        skillDesc += " +" + skillTab.EffectValue[0] * _SelectedSkill.SkillLevel;
-        _Desc.text = skillDesc;
-
-        if (_SelectedSkill.SkillLevel >= skillTab.MaxLevel)
+        var impactType = Type.GetType(_SelectedSkill.SkillRecord.SkillAttr);
+        if (impactType != null)
         {
-            _LevelUp.interactable = false;
+
+            var method = impactType.GetMethod("GetAttrDesc");
+            if (method != null)
+            {
+                string skillDesc = method.Invoke(null, new object[] { new List<int>() { int.Parse(_SelectedSkill.SkillID), _SelectedSkill.SkillLevel } }) as string;
+                _Desc.text = skillDesc;
+            }
+        }
+
+        string roleLvStr = StrDictionary.GetFormatStr(62000);
+        int nextLv = skillTab.StartRoleLevel + (_SelectedSkill.SkillActureLevel) * skillTab.NextLvInterval;
+        if (RoleData.SelectRole._RoleLevel >= nextLv)
+        {
+            roleLvStr += StrDictionary.GetFormatStr(201, nextLv);
         }
         else
         {
-            _LevelUp.interactable = true;
+            roleLvStr += StrDictionary.GetFormatStr(200, nextLv);
+        }
+        _NeedRoleLv.text = roleLvStr;
+
+        if (skillTab.StartPreSkill > 0)
+        {
+            string skillLv = StrDictionary.GetFormatStr(62001);
+            var preSkillTab = TableReader.SkillInfo.GetRecord(skillTab.StartPreSkill.ToString());
+            string nextSkill = StrDictionary.GetFormatStr(62005, StrDictionary.GetFormatStr(preSkillTab.NameStrDict), skillTab.StartPreSkillLv);
+            var skillItem = SkillData.Instance.GetSkillInfo(preSkillTab.Id);
+            if (skillItem.SkillActureLevel >= skillTab.StartPreSkillLv)
+            {
+                skillLv += StrDictionary.GetFormatStr(201, nextSkill);
+            }
+            else
+            {
+                skillLv += StrDictionary.GetFormatStr(200, nextSkill);
+            }
+            _NeedSkillLv.text = skillLv;
+
+        }
+        else
+        {
+            _NeedSkillLv.text = "";
+        }
+
+        if (skillTab.CostStep[0] == (int)MONEYTYPE.GOLD)
+        {
+            int costValue = GameDataValue.GetSkillLvUpGold(skillTab.CostStep[1], _SelectedSkill.SkillLevel);
+            _MoneyCost.ShowCurrency(MONEYTYPE.GOLD, costValue);
+            if (costValue > PlayerDataPack.Instance.Gold)
+            {
+                _MoneyText.color = Color.red;
+            }
+            else
+            {
+                _MoneyText.color = Color.green;
+            }
+        }
+        else
+        {
+            int costValue = skillTab.CostStep[1];
+            _MoneyCost.ShowCurrency(MONEYTYPE.DIAMOND, costValue);
+            if (costValue > PlayerDataPack.Instance.Diamond)
+            {
+                _MoneyText.color = Color.red;
+            }
+            else
+            {
+                _MoneyText.color = Color.green;
+            }
         }
     }
 
@@ -109,8 +176,42 @@ public class UISkillLevelUp : UIBase
         if (_SelectedSkill == null)
             return;
 
-        RoleData.SelectRole.SkillLevelUp(_SelectedSkill.SkillID);
+        var skillTab = Tables.TableReader.SkillInfo.GetRecord(_SelectedSkill.SkillID);
+        int nextLv = skillTab.StartRoleLevel + (_SelectedSkill.SkillActureLevel) * skillTab.NextLvInterval;
+        if (RoleData.SelectRole._RoleLevel < nextLv)
+        {
+            UIMessageTip.ShowMessageTip(62002);
+            return;
+        }
+
+        if (skillTab.StartPreSkill > 0)
+        {
+            var preSkillTab = TableReader.SkillInfo.GetRecord(skillTab.StartPreSkill.ToString());
+            var skillItem = SkillData.Instance.GetSkillInfo(preSkillTab.Id);
+            if (skillItem.SkillActureLevel < skillTab.StartPreSkillLv)
+            {
+                UIMessageTip.ShowMessageTip(62003);
+                return;
+            }
+
+        }
+
+        if (skillTab.CostStep[0] == (int)MONEYTYPE.GOLD)
+        {
+            int costValue = GameDataValue.GetSkillLvUpGold(skillTab.CostStep[1], _SelectedSkill.SkillLevel);
+            if (!PlayerDataPack.Instance.DecGold(costValue))
+                return;
+        }
+        else
+        {
+            int costValue = skillTab.CostStep[1];
+            if (!PlayerDataPack.Instance.DecDiamond(costValue))
+                return;
+        }
+
+        SkillData.Instance.SkillLevelUp(_SelectedSkill.SkillID);
         RefreshSkillInfos();
+        ShowSkillInfo();
     }
 
     private void RefreshSkillInfos()

@@ -606,7 +606,9 @@ public class GameDataValue
 
     public static int GetSkillDamageRate(int skillLv, List<int> skillParam)
     {
-        return skillParam[0] + skillLv * skillParam[1];
+        var levelRate = GameDataValue.ConfigIntToFloat(10000 + skillParam[1]);
+        var levelVal = Mathf.Pow(levelRate, skillLv);
+        return (int)(levelVal * skillParam[0]);
     }
 
     #endregion

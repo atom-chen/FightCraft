@@ -39,6 +39,26 @@
     <constructRepeat>1</constructRepeat>
   </constructColumn>
   <constructColumn>
+    <constructName>NameStrDict</constructName>
+    <constructCode>NameStrDict</constructCode>
+    <constructType1>基本类型</constructType1>
+    <constructType2>
+      <constructType2>整数</constructType2>
+    </constructType2>
+    <constructDefault>0</constructDefault>
+    <constructRepeat>1</constructRepeat>
+  </constructColumn>
+  <constructColumn>
+    <constructName>DescStrDict</constructName>
+    <constructCode>DescStrDict</constructCode>
+    <constructType1>基本类型</constructType1>
+    <constructType2>
+      <constructType2>整数</constructType2>
+    </constructType2>
+    <constructDefault>0</constructDefault>
+    <constructRepeat>1</constructRepeat>
+  </constructColumn>
+  <constructColumn>
     <constructName>Profession</constructName>
     <constructCode>Profession</constructCode>
     <constructType1>基本类型</constructType1>
@@ -82,6 +102,46 @@
     <constructRepeat>1</constructRepeat>
   </constructColumn>
   <constructColumn>
+    <constructName>StartRoleLevel</constructName>
+    <constructCode>StartRoleLevel</constructCode>
+    <constructType1>基本类型</constructType1>
+    <constructType2>
+      <constructType2>整数</constructType2>
+    </constructType2>
+    <constructDefault>0</constructDefault>
+    <constructRepeat>1</constructRepeat>
+  </constructColumn>
+  <constructColumn>
+    <constructName>StartPreSkill</constructName>
+    <constructCode>StartPreSkill</constructCode>
+    <constructType1>基本类型</constructType1>
+    <constructType2>
+      <constructType2>整数</constructType2>
+    </constructType2>
+    <constructDefault>0</constructDefault>
+    <constructRepeat>1</constructRepeat>
+  </constructColumn>
+  <constructColumn>
+    <constructName>StartPreSkillLv</constructName>
+    <constructCode>StartPreSkillLv</constructCode>
+    <constructType1>基本类型</constructType1>
+    <constructType2>
+      <constructType2>整数</constructType2>
+    </constructType2>
+    <constructDefault>0</constructDefault>
+    <constructRepeat>1</constructRepeat>
+  </constructColumn>
+  <constructColumn>
+    <constructName>NextLvInterval</constructName>
+    <constructCode>NextLvInterval</constructCode>
+    <constructType1>基本类型</constructType1>
+    <constructType2>
+      <constructType2>整数</constructType2>
+    </constructType2>
+    <constructDefault>0</constructDefault>
+    <constructRepeat>1</constructRepeat>
+  </constructColumn>
+  <constructColumn>
     <constructName>MaxLevel</constructName>
     <constructCode>MaxLevel</constructCode>
     <constructType1>基本类型</constructType1>
@@ -106,10 +166,10 @@
     <constructCode>CostStep</constructCode>
     <constructType1>基本类型</constructType1>
     <constructType2>
-      <constructType2>附点数</constructType2>
+      <constructType2>整数</constructType2>
     </constructType2>
     <constructDefault>0</constructDefault>
-    <constructRepeat>1</constructRepeat>
+    <constructRepeat>3</constructRepeat>
   </constructColumn>
   <constructColumn>
     <constructName>Pos</constructName>

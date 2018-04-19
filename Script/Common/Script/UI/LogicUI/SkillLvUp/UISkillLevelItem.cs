@@ -26,7 +26,9 @@ public class UISkillLevelItem : UIItemSelect
         if (_SkillItem == null)
             return;
 
-        _SkillNameText.text = Tables.TableReader.SkillInfo.GetRecord(_SkillItem.SkillID).Name;
+        var skillRecord = Tables.TableReader.SkillInfo.GetRecord(_SkillItem.SkillID);
+        string skillName = Tables.StrDictionary.GetFormatStr(skillRecord.NameStrDict);
+        _SkillNameText.text = skillName;
         _SkillLevelText.text = "Lv." + _SkillItem.SkillActureLevel;
     }
 

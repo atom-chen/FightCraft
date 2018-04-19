@@ -15,6 +15,7 @@ public class RoleAttrImpactSkillDamage : RoleAttrImpactBase
     public override List<int> GetSkillImpactVal(ItemSkill skillInfo)
     {
         var valList = new List<int>();
+
         valList.Add(GameDataValue.GetSkillDamageRate(skillInfo.SkillActureLevel, skillInfo.SkillRecord.EffectValue));
 
         return valList;
@@ -36,13 +37,13 @@ public class RoleAttrImpactSkillDamage : RoleAttrImpactBase
         }
     }
 
-    public new static string GetAttrDesc(List<int> attrParams)
+    public static string GetAttrDesc(List<int> attrParams)
     {
         List<int> copyAttrs = new List<int>(attrParams);
         int attrDescID = copyAttrs[0];
         var skillRecord = Tables.TableReader.SkillInfo.GetRecord(attrDescID.ToString());
         var damageModify = GameDataValue.GetSkillDamageRate(attrParams[1], skillRecord.EffectValue);
-        var strFormat = StrDictionary.GetFormatStr(attrDescID, GameDataValue.ConfigIntToPersent((int)(damageModify)));
+        var strFormat = StrDictionary.GetFormatStr(skillRecord.DescStrDict, GameDataValue.ConfigIntToPersent((int)(damageModify)));
         return strFormat;
     }
 

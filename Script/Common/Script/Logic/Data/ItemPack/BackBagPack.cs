@@ -29,7 +29,7 @@ public class BackBagPack : DataPackBase
 
     #endregion
 
-    public const int _BAG_PAGE_SLOT_CNT = 25;
+    public const int _BAG_PAGE_SLOT_CNT = 50;
 
     [SaveField(1)]
     private List<ItemEquip> _PageEquips = new List<ItemEquip>();

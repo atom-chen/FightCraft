@@ -170,7 +170,7 @@ public class FightManager : InstanceBase<FightManager>
         //PlayerDataPack.Instance._SelectedRole.InitExAttrs();
         var motionTran = mainBase.transform.FindChild("Motion");
 
-        List<string> skillMotions = RoleData.SelectRole.GetRoleSkills();
+        List<string> skillMotions = SkillData.Instance.GetRoleSkills();
 
         foreach (var skillMotion in skillMotions)
         {

@@ -14,13 +14,19 @@ namespace Tables
 
         public override string Id { get; set; }        public string Name { get; set; }
         public string Desc { get; set; }
+        public int NameStrDict { get; set; }
+        public int DescStrDict { get; set; }
         public int Profession { get; set; }
         public string SkillInput { get; set; }
         public string SkillType { get; set; }
         public string SkillAttr { get; set; }
+        public int StartRoleLevel { get; set; }
+        public int StartPreSkill { get; set; }
+        public int StartPreSkillLv { get; set; }
+        public int NextLvInterval { get; set; }
         public int MaxLevel { get; set; }
         public List<int> EffectValue { get; set; }
-        public float CostStep { get; set; }
+        public List<int> CostStep { get; set; }
         public int Pos { get; set; }
         public SkillInfoRecord(DataRecord dataRecord)
         {
@@ -31,6 +37,7 @@ namespace Tables
 
             }
             EffectValue = new List<int>();
+            CostStep = new List<int>();
         }
         public override string[] GetRecordStr()
         {
@@ -38,16 +45,25 @@ namespace Tables
             recordStrList.Add(TableWriteBase.GetWriteStr(Id));
             recordStrList.Add(TableWriteBase.GetWriteStr(Name));
             recordStrList.Add(TableWriteBase.GetWriteStr(Desc));
+            recordStrList.Add(TableWriteBase.GetWriteStr(NameStrDict));
+            recordStrList.Add(TableWriteBase.GetWriteStr(DescStrDict));
             recordStrList.Add(TableWriteBase.GetWriteStr(Profession));
             recordStrList.Add(TableWriteBase.GetWriteStr(SkillInput));
             recordStrList.Add(TableWriteBase.GetWriteStr(SkillType));
             recordStrList.Add(TableWriteBase.GetWriteStr(SkillAttr));
+            recordStrList.Add(TableWriteBase.GetWriteStr(StartRoleLevel));
+            recordStrList.Add(TableWriteBase.GetWriteStr(StartPreSkill));
+            recordStrList.Add(TableWriteBase.GetWriteStr(StartPreSkillLv));
+            recordStrList.Add(TableWriteBase.GetWriteStr(NextLvInterval));
             recordStrList.Add(TableWriteBase.GetWriteStr(MaxLevel));
             foreach (var testTableItem in EffectValue)
             {
                 recordStrList.Add(TableWriteBase.GetWriteStr(testTableItem));
             }
-            recordStrList.Add(TableWriteBase.GetWriteStr(CostStep));
+            foreach (var testTableItem in CostStep)
+            {
+                recordStrList.Add(TableWriteBase.GetWriteStr(testTableItem));
+            }
             recordStrList.Add(TableWriteBase.GetWriteStr(Pos));
 
             return recordStrList.ToArray();
@@ -114,16 +130,24 @@ namespace Tables
             {
                 pair.Value.Name = TableReadBase.ParseString(pair.Value.ValueStr[1]);
                 pair.Value.Desc = TableReadBase.ParseString(pair.Value.ValueStr[2]);
-                pair.Value.Profession = TableReadBase.ParseInt(pair.Value.ValueStr[3]);
-                pair.Value.SkillInput = TableReadBase.ParseString(pair.Value.ValueStr[4]);
-                pair.Value.SkillType = TableReadBase.ParseString(pair.Value.ValueStr[5]);
-                pair.Value.SkillAttr = TableReadBase.ParseString(pair.Value.ValueStr[6]);
-                pair.Value.MaxLevel = TableReadBase.ParseInt(pair.Value.ValueStr[7]);
-                pair.Value.EffectValue.Add(TableReadBase.ParseInt(pair.Value.ValueStr[8]));
-                pair.Value.EffectValue.Add(TableReadBase.ParseInt(pair.Value.ValueStr[9]));
-                pair.Value.EffectValue.Add(TableReadBase.ParseInt(pair.Value.ValueStr[10]));
-                pair.Value.CostStep = TableReadBase.ParseFloat(pair.Value.ValueStr[11]);
-                pair.Value.Pos = TableReadBase.ParseInt(pair.Value.ValueStr[12]);
+                pair.Value.NameStrDict = TableReadBase.ParseInt(pair.Value.ValueStr[3]);
+                pair.Value.DescStrDict = TableReadBase.ParseInt(pair.Value.ValueStr[4]);
+                pair.Value.Profession = TableReadBase.ParseInt(pair.Value.ValueStr[5]);
+                pair.Value.SkillInput = TableReadBase.ParseString(pair.Value.ValueStr[6]);
+                pair.Value.SkillType = TableReadBase.ParseString(pair.Value.ValueStr[7]);
+                pair.Value.SkillAttr = TableReadBase.ParseString(pair.Value.ValueStr[8]);
+                pair.Value.StartRoleLevel = TableReadBase.ParseInt(pair.Value.ValueStr[9]);
+                pair.Value.StartPreSkill = TableReadBase.ParseInt(pair.Value.ValueStr[10]);
+                pair.Value.StartPreSkillLv = TableReadBase.ParseInt(pair.Value.ValueStr[11]);
+                pair.Value.NextLvInterval = TableReadBase.ParseInt(pair.Value.ValueStr[12]);
+                pair.Value.MaxLevel = TableReadBase.ParseInt(pair.Value.ValueStr[13]);
+                pair.Value.EffectValue.Add(TableReadBase.ParseInt(pair.Value.ValueStr[14]));
+                pair.Value.EffectValue.Add(TableReadBase.ParseInt(pair.Value.ValueStr[15]));
+                pair.Value.EffectValue.Add(TableReadBase.ParseInt(pair.Value.ValueStr[16]));
+                pair.Value.CostStep.Add(TableReadBase.ParseInt(pair.Value.ValueStr[17]));
+                pair.Value.CostStep.Add(TableReadBase.ParseInt(pair.Value.ValueStr[18]));
+                pair.Value.CostStep.Add(TableReadBase.ParseInt(pair.Value.ValueStr[19]));
+                pair.Value.Pos = TableReadBase.ParseInt(pair.Value.ValueStr[20]);
             }
         }
     }

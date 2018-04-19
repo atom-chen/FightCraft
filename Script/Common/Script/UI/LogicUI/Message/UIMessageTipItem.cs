@@ -9,11 +9,13 @@ public class UIMessageTipItem : UIItemBase
     #region 
 
     public Text ShowText;
+    public Animator _Animator;
 
     public void SetMessage(string tip)
     {
         ShowText.text = tip;
         StartCoroutine(HideItem());
+        _Animator.Play("MessageTip");
     }
 
     public IEnumerator HideItem()
