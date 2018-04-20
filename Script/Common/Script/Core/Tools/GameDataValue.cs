@@ -667,42 +667,70 @@ public class GameDataValue
     public static int _EliteExpBase = 250;
     public static int _SpecialExpBase = 500;
     public static int _BossExpBase = 1250;
+    public static float _Level30ExpRate = 0.1f;
+    public static float _Level60ExpRate = 0.12f;
+    public static float _Level90ExpRate = 0.15f;
+    public static float _Level100ExpRate = 0.2f;
+    public static float _Level999ExpRate = 0.1f;
 
-    public static int _LevelExpBase = 3500;
-    public static float _Level30ExpRate = 0.05f;
-    public static float _Level60ExpRate = 0.08f;
-    public static float _Level90ExpRate = 0.1f;
-    public static float _Level100ExpRate = 0.04f;
-    public static float _Level999ExpRate = 0.2f;
+    public static int _LevelExpBase30 = 4000;
+    public static int _LevelExpBase60 = 6000;
+    public static int _LevelExpBase90 = 8000;
+    public static int _LevelExpBase100 = 12000;
+    public static int _LevelExpStep999 = 3000;
+    public static int _LevelExpBase999 = 100000;
+    public static float _LvUp30ExpRate = 0.25f;
+    public static float _LvUp60ExpRate = 0.4f;
+    public static float _LvUp90ExpRate = 0.6f;
+    public static float _LvUp100ExpRate = 1.0f;
+    public static float _LvUp999ExpRate = 1f;
+
+    private static int _Lv30UpTotalVal = 0;
+    private static int _Lv60UpTotalVal = 0;
+    private static int _Lv90UpTotalVal = 0;
+    private static int _Lv100UpTotalVal = 0;
 
     public static int GetLvUpExp(int playerLv, int attrLv)
     {
+        if (_Lv30UpTotalVal == 0)
+        {
+            _Lv30UpTotalVal = Mathf.CeilToInt(_LvUp30ExpRate * 30 * _LevelExpBase30);
+            _Lv60UpTotalVal = Mathf.CeilToInt(_Lv30UpTotalVal + _LvUp60ExpRate * 30 * _LevelExpBase60);
+            _Lv90UpTotalVal = Mathf.CeilToInt(_Lv60UpTotalVal + _LvUp90ExpRate * 30 * _LevelExpBase90);
+            _Lv100UpTotalVal = Mathf.CeilToInt(_Lv90UpTotalVal + _LvUp100ExpRate * 10 * _LevelExpBase100);
+
+        }
+
         int realLv = playerLv + attrLv;
         int levelExp = 0;
-        float rate = realLv * realLv * 0.1f;
         if (realLv <= 30)
         {
-            levelExp = Mathf.CeilToInt((1 + _Level30ExpRate * rate) * _LevelExpBase);
+            levelExp = Mathf.CeilToInt((1 + _LvUp30ExpRate * realLv) * _LevelExpBase30);
         }
         else if (realLv <= 60)
         {
-            levelExp = Mathf.CeilToInt((1 + _Level60ExpRate * rate) * _LevelExpBase);
+            levelExp = Mathf.CeilToInt((1 + _LvUp60ExpRate * (realLv - 30)) * _LevelExpBase60) + _Lv30UpTotalVal;
         }
         else if (realLv <= 90)
         {
-            levelExp = Mathf.CeilToInt((1 + _Level90ExpRate * rate) * _LevelExpBase);
+            levelExp = Mathf.CeilToInt((1 + _LvUp90ExpRate * (realLv - 60)) * _LevelExpBase90) + _Lv60UpTotalVal;
         }
         else if (realLv <= 100)
         {
-            levelExp = Mathf.CeilToInt((1 + _Level100ExpRate * rate) * _LevelExpBase);
+            levelExp = Mathf.CeilToInt((1 + _LvUp100ExpRate * (realLv - 90)) * _LevelExpBase100 + _Lv90UpTotalVal);
         }
         else
         {
-            levelExp = Mathf.CeilToInt((1 + _Level999ExpRate * rate) * _LevelExpBase);
+            levelExp = Mathf.CeilToInt((1 + _LvUp999ExpRate * (realLv)) * _LevelExpBase999);
         }
 
         return levelExp;
     }
+
+    private static float _Lv30TotalRate = 0;
+    private static float _Lv60TotalRate = 0;
+    private static float _Lv90TotalRate = 0;
+    private static float _Lv100TotalRate = 0;
 
     public static int GetMonsterExp(MOTION_TYPE motionType, int level, int playerLv)
     {
@@ -721,6 +749,16 @@ public class GameDataValue
                 expBase = _BossExpBase;
                 break;
         }
+
+        if (_Lv30TotalRate == 0)
+        {
+            _Lv30TotalRate = _Level30ExpRate * 30;
+            _Lv60TotalRate = _Lv30TotalRate + _Level60ExpRate * 30;
+            _Lv90TotalRate = _Lv60TotalRate + _Level90ExpRate * 30;
+            _Lv100TotalRate = _Lv90TotalRate + _Level100ExpRate * 10;
+
+        }
+
         int levelExp = 0;
         if (monExpLevel <= 30)
         {
@@ -728,19 +766,19 @@ public class GameDataValue
         }
         else if (monExpLevel <= 60)
         {
-            levelExp = Mathf.CeilToInt((1 + _Level60ExpRate * monExpLevel) * expBase);
+            levelExp = Mathf.CeilToInt((1 + _Lv30TotalRate +  _Level60ExpRate * (monExpLevel - 30)) * expBase);
         }
         else if (monExpLevel <= 90)
         {
-            levelExp = Mathf.CeilToInt((1 + _Level90ExpRate * monExpLevel) * expBase);
+            levelExp = Mathf.CeilToInt((1 + _Lv60TotalRate + _Level90ExpRate * (monExpLevel - 60)) * expBase);
         }
         else if (monExpLevel <= 100)
         {
-            levelExp = Mathf.CeilToInt((1 + _Level100ExpRate * monExpLevel) * expBase);
+            levelExp = Mathf.CeilToInt((1 + _Lv90TotalRate + _Level100ExpRate * (monExpLevel - 90)) * expBase);
         }
         else
         {
-            levelExp = Mathf.CeilToInt((1 + _Level999ExpRate * monExpLevel) * expBase);
+            levelExp = Mathf.CeilToInt((1 + _Lv100TotalRate + _Level999ExpRate * (monExpLevel - 100)) * expBase);
         }
 
         var deltaRate = Mathf.Clamp(levelDelta * 0.03f, -0.3f, 0.2f);

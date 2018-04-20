@@ -92,7 +92,7 @@ public class ItemEquip : ItemBase
 
     #region equipData
 
-    private static int MAX_INT_CNT = 4;
+    private static int MAX_INT_CNT = 5;
     public List<int> DynamicDataInt
     {
         get
@@ -128,6 +128,24 @@ public class ItemEquip : ItemBase
                 _EquipItemRecord = TableReader.EquipItem.GetRecord(_ItemDataID);
             }
             return _EquipItemRecord;
+        }
+    }
+
+    public override CommonItemRecord CommonItemRecord
+    {
+        get
+        {
+            if (_CommonItemRecord == null)
+            {
+                if (string.IsNullOrEmpty(CommonItemDataID.ToString()))
+                    return null;
+
+                if (_ItemDataID == "-1")
+                    return null;
+
+                _CommonItemRecord = TableReader.CommonItem.GetRecord(CommonItemDataID.ToString());
+            }
+            return _CommonItemRecord;
         }
     }
 
@@ -176,6 +194,18 @@ public class ItemEquip : ItemBase
         set
         {
             DynamicDataInt[3] = value;
+        }
+    }
+
+    public int CommonItemDataID
+    {
+        get
+        {
+            return DynamicDataInt[4];
+        }
+        set
+        {
+            DynamicDataInt[4] = value;
         }
     }
 
@@ -472,25 +502,25 @@ public class ItemEquip : ItemBase
         }
 
         EquipItemRecord baseEquip = null;
-        if (legencyEquip != null)
+        CommonItemRecord commonItemRecord = null;
+
+        if (equipSlotIdx < 0)
         {
-            baseEquip = legencyEquip;
+            var equipSlot = GameDataValue.GetRandomItemSlot(quality);
+            baseEquip = GetRandomItem(equipSlot, level);
         }
         else
         {
+            EQUIP_SLOT equipSlot = (EQUIP_SLOT)equipSlotIdx;
+            baseEquip = GetRandomItem(equipSlot, level);
+        }
+        if (baseEquip == null)
+            return null;
 
-            if (equipSlotIdx < 0)
-            {
-                var equipSlot = GameDataValue.GetRandomItemSlot(quality);
-                baseEquip = GetRandomItem(equipSlot, level);
-            }
-            else
-            {
-                EQUIP_SLOT equipSlot = (EQUIP_SLOT)equipSlotIdx;
-                baseEquip = GetRandomItem(equipSlot, level);
-            }
-            if (baseEquip == null)
-                return null;
+        commonItemRecord = TableReader.CommonItem.GetRecord(baseEquip.Id);
+        if (legencyEquip != null)
+        {
+            baseEquip = legencyEquip;
         }
 
         ItemEquip itemEquip = new ItemEquip(baseEquip.Id);
@@ -498,6 +528,7 @@ public class ItemEquip : ItemBase
         itemEquip.EquipQuality = equipQuality;
         itemEquip.EquipValue = value;
         itemEquip.RequireLevel = level;
+        itemEquip.CommonItemDataID = int.Parse(commonItemRecord.Id);
 
         //RandomEquipAttr(itemEquip);
         itemEquip.AddExAttr(RandomAttrs.GetRandomEquipExAttrs(baseEquip.Slot, level, value, equipQuality, RoleData.SelectRole.Profession));
@@ -527,54 +558,13 @@ public class ItemEquip : ItemBase
         Dictionary<int, EquipItemRecord> professionEquips = new Dictionary<int, EquipItemRecord>();
         foreach (var equipRecord in TableReader.EquipItem.ClassedEquips[equipSlot])
         {
-            if (!professionEquips.ContainsKey(equipRecord.ProfessionLimit))
+            if (equipRecord.LevelLimit > level)
             {
-                professionEquips.Add(equipRecord.ProfessionLimit, equipRecord);
-                continue;
-            }
-
-            if (equipRecord.LevelLimit <= level
-                && equipRecord.LevelLimit > professionEquips[equipRecord.ProfessionLimit].LevelLimit)
-            {
-                professionEquips[equipRecord.ProfessionLimit] = equipRecord;
-            }
-        }
-
-        float singleRate = 0;
-        if (professionEquips.Count == 1)
-        {
-            singleRate = 1;
-
-        }
-        else
-        {
-            if (professionEquips.ContainsKey((int)PROFESSION.NONE))
-            {
-                singleRate = (1 - 0.5f) / (professionEquips.Count - 1);
-            }
-            else
-            {
-                singleRate = 1.0f / (professionEquips.Count);
-            }
-        }
-
-        float randomRate = UnityEngine.Random.Range(0, 1.0f);
-        float rateTotal = 0;
-        foreach (var equipRecord in professionEquips.Values)
-        {
-            //if (equipRecord.ProfessionLimit == (int)PROFESSION.NONE)
-            //{
-            //    rateTotal += 0.5f;
-            //}
-            //else
-            {
-                rateTotal += singleRate;
-            }
-
-            if (rateTotal >= randomRate)
                 return equipRecord;
+            }
         }
-        return null;
+
+        return TableReader.EquipItem.ClassedEquips[equipSlot][0];
     }
 
     

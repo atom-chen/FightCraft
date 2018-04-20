@@ -6,7 +6,7 @@ using System.Collections;
 using UnityEngine.EventSystems;
 using System;
 
-public class UIGemItem : UIDragableItemBase
+public class UIGemItem : /*UIDragableItemBase*/ UIPackItemBase
 {
     public GameObject _UsingGO;
 
@@ -86,17 +86,17 @@ public class UIGemItem : UIDragableItemBase
 
     #region 
 
-    public override void OnItemClick()
-    {
-        base.OnItemClick();
-    }
+    //public override void OnItemClick()
+    //{
+    //    base.OnItemClick();
+    //}
 
-    protected override bool IsCanDrag()
-    {
-        if (_ShowedItem.IsVolid() && _ShowedItem.ItemStackNum > 0)
-            return true;
-        return false;
-    }
+    //protected override bool IsCanDrag()
+    //{
+    //    if (_ShowedItem.IsVolid() && _ShowedItem.ItemStackNum > 0)
+    //        return true;
+    //    return false;
+    //}
 
     #endregion
 }

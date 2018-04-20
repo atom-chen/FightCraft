@@ -79,6 +79,7 @@ public class UITestEquip : UIBase
     public void AutoLevel()
     {
         int targetLevel = int.Parse(_TargetLevel.text);
+        int fightTimes = 0;
         while (true)
         {
             var level = RoleData.SelectRole._RoleLevel;
@@ -104,7 +105,9 @@ public class UITestEquip : UIBase
             ActData.Instance.SetPassNormalStage(nextDiff, nextStage);
             RoleData.SelectRole.AddExp(exp);
             PlayerDataPack.Instance.AddGold(gold);
+            ++fightTimes;
         }
+        Debug.Log("FightTimes:" + fightTimes);
     }
 
     int _StageIdx = 0;
@@ -176,7 +179,7 @@ public class UITestEquip : UIBase
         var streamWriter = new StreamWriter(fileStream);
         foreach (var passInfo in _PassInfoList)
         {
-            streamWriter.WriteLine(passInfo.level + "\t" + passInfo.atk + "\t" + passInfo.gold + "\t" + passInfo.levelExp + "\t" + passInfo.def + "\t" + passInfo.hp);
+            streamWriter.WriteLine(passInfo.level + "\t" + passInfo.atk + "\t" + passInfo.gold + "\t" + passInfo.exp + "\t" + passInfo.levelExp + "\t" + passInfo.hp);
         }
         streamWriter.Close();
     }
@@ -260,7 +263,7 @@ public class UITestEquip : UIBase
         //{
         //    Debug.Log("Drop Item :" + dropItem.Key + "," + dropItem.Value);
         //}
-        Debug.Log("Drop Exp:" + exp + ", Gold:" + gold);
+        //Debug.Log("Drop Exp:" + exp + ", Gold:" + gold);
     }
 
     #endregion

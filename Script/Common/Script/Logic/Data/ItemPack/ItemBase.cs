@@ -42,8 +42,8 @@ public class ItemBase : SaveItemBase
         }
     }
 
-    private CommonItemRecord _CommonItemRecord;
-    public CommonItemRecord CommonItemRecord
+    protected CommonItemRecord _CommonItemRecord;
+    public virtual CommonItemRecord CommonItemRecord
     {
         get
         {

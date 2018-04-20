@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 using System;
 
 
-public class UIBackPackItem : UIDragableItemBase
+public class UIBackPackItem : /*UIDragableItemBase*/ UIPackItemBase
 {
   
     public override void ShowItem(ItemBase showItem)
