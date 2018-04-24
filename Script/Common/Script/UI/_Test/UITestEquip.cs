@@ -82,7 +82,7 @@ public class UITestEquip : UIBase
         int fightTimes = 0;
         while (true)
         {
-            var level = RoleData.SelectRole._RoleLevel;
+            var level = RoleData.SelectRole._RoleLevel + RoleData.SelectRole._AttrLevel;
             if (level >= targetLevel)
                 break;
 
@@ -150,7 +150,7 @@ public class UITestEquip : UIBase
         //    Debug.Log("TotalDrop stage:" + _StageIdx  + " Exp:" + _TotalExp + ", Gold:" + _TotalGold);
         //    Debug.Log("Role Atk:" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Attack) + ", Def:" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Defense) + ", HP:" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax));
 
-        for (int diff = 1; diff < 6; ++diff)
+        for (int diff = 1; diff < 11; ++diff)
         {
             for (int stageid = 1; stageid < 21; ++stageid)
             {

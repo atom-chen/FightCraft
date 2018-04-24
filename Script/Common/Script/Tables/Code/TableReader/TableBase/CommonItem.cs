@@ -13,9 +13,9 @@ namespace Tables
         public DataRecord ValueStr;
 
         public override string Id { get; set; }        public string Name { get; set; }
+        public string Desc { get; set; }
         public int NameStrDict { get; set; }
         public int DescStrDict { get; set; }
-        public string Desc { get; set; }
         public string Icon { get; set; }
         public string Model { get; set; }
         public ITEM_QUALITY Quality { get; set; }
@@ -34,9 +34,9 @@ namespace Tables
             List<string> recordStrList = new List<string>();
             recordStrList.Add(TableWriteBase.GetWriteStr(Id));
             recordStrList.Add(TableWriteBase.GetWriteStr(Name));
+            recordStrList.Add(TableWriteBase.GetWriteStr(Desc));
             recordStrList.Add(TableWriteBase.GetWriteStr(NameStrDict));
             recordStrList.Add(TableWriteBase.GetWriteStr(DescStrDict));
-            recordStrList.Add(TableWriteBase.GetWriteStr(Desc));
             recordStrList.Add(TableWriteBase.GetWriteStr(Icon));
             recordStrList.Add(TableWriteBase.GetWriteStr(Model));
             recordStrList.Add(((int)Quality).ToString());
@@ -105,9 +105,9 @@ namespace Tables
             foreach (var pair in Records)
             {
                 pair.Value.Name = TableReadBase.ParseString(pair.Value.ValueStr[1]);
-                pair.Value.NameStrDict = TableReadBase.ParseInt(pair.Value.ValueStr[2]);
-                pair.Value.DescStrDict = TableReadBase.ParseInt(pair.Value.ValueStr[3]);
-                pair.Value.Desc = TableReadBase.ParseString(pair.Value.ValueStr[4]);
+                pair.Value.Desc = TableReadBase.ParseString(pair.Value.ValueStr[2]);
+                pair.Value.NameStrDict = TableReadBase.ParseInt(pair.Value.ValueStr[3]);
+                pair.Value.DescStrDict = TableReadBase.ParseInt(pair.Value.ValueStr[4]);
                 pair.Value.Icon = TableReadBase.ParseString(pair.Value.ValueStr[5]);
                 pair.Value.Model = TableReadBase.ParseString(pair.Value.ValueStr[6]);
                 pair.Value.Quality =  (ITEM_QUALITY)TableReadBase.ParseInt(pair.Value.ValueStr[7]);

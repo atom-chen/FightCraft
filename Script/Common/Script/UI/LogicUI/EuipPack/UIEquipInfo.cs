@@ -32,7 +32,7 @@ public class UIEquipInfo : UIBase
             _ShowItem = null;
             return;
         }
-
+        //itemEquip.CalculateCombatValue();
         _ShowItem = itemEquip;
         _Name.text = _ShowItem.GetEquipNameWithColor();
         if (_ShowItem.RequireLevel > RoleData.SelectRole._RoleLevel)
@@ -43,7 +43,7 @@ public class UIEquipInfo : UIBase
         {
             _Level.text = StrDictionary.GetFormatStr(10000) + " " + _ShowItem.RequireLevel;
         }
-        _Value.text = StrDictionary.GetFormatStr(10001) + " " + _ShowItem.EquipValue;
+        _Value.text = StrDictionary.GetFormatStr(10001) + " " + _ShowItem.CombatValue;
         string attrStr = _ShowItem.GetBaseAttrStr();
         if (string.IsNullOrEmpty(attrStr))
         {

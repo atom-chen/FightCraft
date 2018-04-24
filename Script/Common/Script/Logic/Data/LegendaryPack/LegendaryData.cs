@@ -88,6 +88,10 @@ public class LegendaryData : SaveItemBase
                 continue;
 
             _LegendaryEquipDict.Add(equipTab.Value, _LegendaryEquips[idx]);
+            if (_LegendaryEquips[idx].IsVolid())
+            {
+                _LegendaryEquips[idx].CalculateCombatValue();
+            }
             ++idx;
         }
     }

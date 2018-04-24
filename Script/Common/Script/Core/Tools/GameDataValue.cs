@@ -207,7 +207,7 @@ public class GameDataValue
                 break;
         }
 
-        return value * _ValuePerAttack;
+        return value;
     }
 
     public static int GetValueAttr(RoleAttrEnum roleAttr, int value)
@@ -241,6 +241,22 @@ public class GameDataValue
                 attrValue = Mathf.Max(attrValue, 1);
             }
         }
+        return attrValue;
+    }
+
+    public static int GetAttrValue(RoleAttrEnum roleAttr, int value)
+    {
+        int attrValue = 1;
+        var attrToValue = GetAttrToValue(roleAttr);
+        if (attrToValue == 0)
+        {
+            attrValue = 0;
+        }
+        else
+        {
+            attrValue = (int)(value / attrToValue);
+        }
+
         return attrValue;
     }
     #endregion
@@ -677,8 +693,9 @@ public class GameDataValue
     public static int _LevelExpBase60 = 6000;
     public static int _LevelExpBase90 = 8000;
     public static int _LevelExpBase100 = 12000;
-    public static int _LevelExpStep999 = 3000;
+    public static int _LevelExpStep999 = 1600;
     public static int _LevelExpBase999 = 100000;
+    public static int _LevelExpMax999 = 180000;
     public static float _LvUp30ExpRate = 0.25f;
     public static float _LvUp60ExpRate = 0.4f;
     public static float _LvUp90ExpRate = 0.6f;
@@ -721,7 +738,8 @@ public class GameDataValue
         }
         else
         {
-            levelExp = Mathf.CeilToInt((1 + _LvUp999ExpRate * (realLv)) * _LevelExpBase999);
+            levelExp = Mathf.CeilToInt((1 + _LvUp999ExpRate * (realLv - 100)) * _LevelExpStep999 + _LevelExpBase999);
+            levelExp = Mathf.Clamp(levelExp, _LevelExpBase999, _LevelExpMax999);
         }
 
         return levelExp;
@@ -731,11 +749,12 @@ public class GameDataValue
     private static float _Lv60TotalRate = 0;
     private static float _Lv90TotalRate = 0;
     private static float _Lv100TotalRate = 0;
+    public static int _MAX_MONSTER_EXP_LEVEL = 120;
 
     public static int GetMonsterExp(MOTION_TYPE motionType, int level, int playerLv)
     {
         int levelDelta = Mathf.Clamp(playerLv - level,0, 10);
-        int monExpLevel = Mathf.Clamp(level, 1, 100);
+        int monExpLevel = Mathf.Clamp(level, 1, _MAX_MONSTER_EXP_LEVEL);
         int expBase = 0;
         switch (motionType)
         {
@@ -882,7 +901,7 @@ public class GameDataValue
         var dropEquipQualitys = GetDropQualitys(motionType, monsterRecord, level, dropActType);
         if (dropEquipQualitys.Count == 0)
             return dropEquipList;
-        
+
         for (int i = 0; i < dropEquipQualitys.Count; ++i)
         {
             if (dropEquipQualitys[i] == ITEM_QUALITY.ORIGIN)
@@ -894,7 +913,7 @@ public class GameDataValue
                 var dropItem = monsterRecord.ValidSpDrops[dropIdx];
                 var dropEquipTab = TableReader.EquipItem.GetRecord(dropItem.Id);
                 var equipLevel = GetEquipLv(dropEquipTab.Slot, level);
-                var equipValue = CalLvValue(level);
+                var equipValue = CalLvValue(equipLevel);
                 var dropEquip = ItemEquip.CreateEquip(equipLevel, dropEquipQualitys[i], equipValue, int.Parse(dropItem.Id), (int)dropEquipTab.Slot);
                 dropEquipList.Add(dropEquip);
             }
@@ -902,13 +921,46 @@ public class GameDataValue
             {
                 var equipSlot = GetRandomItemSlot(dropEquipQualitys[i]);
                 var equipLevel = GetEquipLv(equipSlot, level);
-                var equipValue = CalLvValue(level);
+                var equipValue = CalLvValue(equipLevel);
                 var dropEquip = ItemEquip.CreateEquip(equipLevel, dropEquipQualitys[i], equipValue, -1, (int)equipSlot);
                 dropEquipList.Add(dropEquip);
             }
         }
 
         return dropEquipList;
+    }
+
+    public static int GetLegencyLv(int equipLv)
+    {
+        int randomLv = GameRandom.GetRandomLevel(3, 5, 2);
+        int baseLv = 1;
+        if (equipLv < 30)
+        {
+            baseLv = 1;
+        }
+        else if (equipLv < 50)
+        {
+            baseLv = 2;
+        }
+        else if (equipLv < 70)
+        {
+            baseLv = 3;
+        }
+        else if (equipLv < 90)
+        {
+            baseLv = 4;
+        }
+        else
+        {
+            baseLv = 5;
+        }
+
+        int delta = (equipLv - 100) / 10;
+        baseLv += delta;
+
+        baseLv += (randomLv - 1);
+        baseLv = Mathf.Max(baseLv, 1);
+        return baseLv;
     }
 
     public static EQUIP_SLOT GetRandomItemSlot(ITEM_QUALITY itemQuality)

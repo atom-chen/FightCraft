@@ -76,6 +76,7 @@ public class BackBagPack : DataPackBase
                 if (_PageEquips[i].IsVolid())
                 {
                     _PageEquips[i].CalculateSet();
+                    _PageEquips[i].CalculateCombatValue();
                 }
             }
         }

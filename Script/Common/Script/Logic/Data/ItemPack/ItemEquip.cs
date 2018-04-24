@@ -57,7 +57,14 @@ public class EquipExAttr
         if (method == null)
             return "";
 
-        return method.Invoke(null, new object[] { AttrParams }) as string;
+        var attrStr = method.Invoke(null, new object[] { AttrParams }) as string;
+
+        if (!AttrType.Equals("RoleAttrImpactBaseAttr") && !AttrType.Equals("RoleAttrImpactSetAttrByEquip"))
+        {
+            attrStr += " Lv." + AttrParams[1];
+        }
+
+        return attrStr;
     }
 
     public bool Add(EquipExAttr d)
@@ -209,6 +216,40 @@ public class ItemEquip : ItemBase
         }
     }
 
+    private int _CombatValue = 0;
+    public int CombatValue
+    {
+        get
+        {
+            return _CombatValue;
+        }
+    }
+
+    public void CalculateCombatValue()
+    {
+        _CombatValue = 0;
+        _CombatValue += GameDataValue.GetAttrValue(RoleAttrEnum.Attack, BaseAttack);
+        _CombatValue += GameDataValue.GetAttrValue(RoleAttrEnum.HPMax, BaseHP);
+        _CombatValue += GameDataValue.GetAttrValue(RoleAttrEnum.Defense, BaseDefence);
+
+        foreach (var exAttrs in EquipExAttr)
+        {
+            if (exAttrs.AttrType == "RoleAttrImpactBaseAttr")
+            {
+                _CombatValue += GameDataValue.GetAttrValue((RoleAttrEnum)exAttrs.AttrParams[0], exAttrs.AttrParams[1]);
+            }
+            else
+            {
+                _CombatValue += 0;
+            }
+        }
+
+        if (EquipQuality == ITEM_QUALITY.ORIGIN)
+        {
+            _CombatValue = Mathf.CeilToInt(_CombatValue * 1.2f);
+        }
+    }
+
     private List<EquipExAttr> _EquipExAttr;
     public List<EquipExAttr> EquipExAttr
     {
@@ -240,7 +281,7 @@ public class ItemEquip : ItemBase
 
     public string GetEquipNameWithColor()
     {
-        string equipName = EquipItemRecord.CommonItem.Name;
+        string equipName = StrDictionary.GetFormatStr(EquipItemRecord.NameStrDict);
         if (SpSetRecord != null)
         {
             equipName = SpSetRecord.Name + equipName;
@@ -291,6 +332,11 @@ public class ItemEquip : ItemBase
         _BaseAttack = -1;
         _BaseHP = -1;
         _BaseDefence = -1;
+
+        if (EquipItemRecord != null)
+        {
+            CalculateCombatValue();
+        }
     }
 
     public override void ResetItem()
@@ -388,6 +434,7 @@ public class ItemEquip : ItemBase
         {
             if (_BaseHP < 0)
             {
+                _BaseHP = 0;
                 if (EquipItemRecord.Slot == EQUIP_SLOT.TORSO)
                 {
                     _BaseHP = GameDataValue.CalEquipTorsoHP(EquipLevel);
@@ -414,6 +461,7 @@ public class ItemEquip : ItemBase
         {
             if (_BaseDefence < 0)
             {
+                _BaseDefence = 0;
                 if (EquipItemRecord.Slot == EQUIP_SLOT.TORSO)
                 {
                     _BaseDefence = GameDataValue.CalEquipTorsoDefence(EquipLevel);
@@ -437,19 +485,19 @@ public class ItemEquip : ItemBase
     {
         get
         {
-            //if (_RequireLevel < 0)
-            //{
-            //    int exValue = 0;
-            //    _RequireLevel = EquipItemRecord.LevelLimit;
-            //    //foreach (var exAttr in _DynamicDataVector)
-            //    //{
-            //    //    if (exAttr.AttrID == FightAttr.FightAttrType.LEVEL_REQUIRE)
-            //    //    {
-            //    //        exValue += exAttr.AttrValue1;
-            //    //    }
-            //    //}
-            //    _RequireLevel -= exValue;
-            //}
+            if (_RequireLevel < 0)
+            {
+                int exValue = 0;
+                _RequireLevel = EquipLevel;
+                //foreach (var exAttr in _DynamicDataVector)
+                //{
+                //    if (exAttr.AttrID == FightAttr.FightAttrType.LEVEL_REQUIRE)
+                //    {
+                //        exValue += exAttr.AttrValue1;
+                //    }
+                //}
+                _RequireLevel -= exValue;
+            }
             return _RequireLevel;
         }
         set
@@ -504,16 +552,37 @@ public class ItemEquip : ItemBase
         EquipItemRecord baseEquip = null;
         CommonItemRecord commonItemRecord = null;
 
+        EQUIP_SLOT equipSlot = EQUIP_SLOT.AMULET;
+        int profession = -1;
         if (equipSlotIdx < 0)
         {
-            var equipSlot = GameDataValue.GetRandomItemSlot(quality);
-            baseEquip = GetRandomItem(equipSlot, level);
+            equipSlot = GameDataValue.GetRandomItemSlot(quality);
         }
         else
         {
-            EQUIP_SLOT equipSlot = (EQUIP_SLOT)equipSlotIdx;
-            baseEquip = GetRandomItem(equipSlot, level);
+            equipSlot = (EQUIP_SLOT)equipSlotIdx;
         }
+        if (legencyEquip != null)
+        {
+            profession = legencyEquip.ProfessionLimit;
+        }
+        else
+        {
+            if (equipSlot == EQUIP_SLOT.WEAPON)
+            {
+                int randomVal = GameRandom.GetRandomLevel(1, 1);
+                if (randomVal == 0)
+                {
+                    profession = 5;
+                }
+                else
+                {
+                    profession = 10;
+                }
+            }
+        }
+
+        baseEquip = GetRandomItem(equipSlot, level, profession);
         if (baseEquip == null)
             return null;
 
@@ -534,9 +603,11 @@ public class ItemEquip : ItemBase
         itemEquip.AddExAttr(RandomAttrs.GetRandomEquipExAttrs(baseEquip.Slot, level, value, equipQuality, RoleData.SelectRole.Profession));
         if (legencyEquip != null)
         {
-            EquipExAttr legencyAttr = legencyEquip.ExAttr.GetExAttr(itemEquip.EquipLevel);
+            EquipExAttr legencyAttr = legencyEquip.ExAttr.GetExAttr(GameDataValue.GetLegencyLv( itemEquip.EquipLevel));
             itemEquip.AddExAttr(legencyAttr);
         }
+
+        itemEquip.CalculateCombatValue();
 
         return itemEquip;
     }
@@ -553,18 +624,59 @@ public class ItemEquip : ItemBase
     }
 
 
-    private static EquipItemRecord GetRandomItem(EQUIP_SLOT equipSlot, int level)
+    private static EquipItemRecord GetRandomItem(EQUIP_SLOT equipSlot, int level, int profession)
     {
-        Dictionary<int, EquipItemRecord> professionEquips = new Dictionary<int, EquipItemRecord>();
-        foreach (var equipRecord in TableReader.EquipItem.ClassedEquips[equipSlot])
+        List<EquipItemRecord> randomItems = null;
+        if (equipSlot == EQUIP_SLOT.WEAPON)
         {
-            if (equipRecord.LevelLimit > level)
+            if (profession == 5)
             {
-                return equipRecord;
+                randomItems = TableReader.EquipItem.AxeWeapons;
+            }
+            else
+            {
+                randomItems = TableReader.EquipItem.SwordWeapons;
+            }
+        }
+        else
+        {
+            randomItems = TableReader.EquipItem.ClassedEquips[equipSlot];
+        }
+
+        List<int> randomVals = new List<int>();
+        if (level < 30)
+        {
+            for (int i = 0; i < 4; ++i)
+            {
+                randomVals.Add(10);
+            }
+        }
+        else if (level < 60)
+        {
+            for (int i = 0; i < 4; ++i)
+            {
+                randomVals.Add(10);
+            }
+            for (int i = 0; i < 4; ++i)
+            {
+                randomVals.Add(20);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < 8; ++i)
+            {
+                randomVals.Add(10);
+            }
+            for (int i = 7; i < randomItems.Count; ++i)
+            {
+                randomVals.Add(15);
             }
         }
 
-        return TableReader.EquipItem.ClassedEquips[equipSlot][0];
+        int randomIdx = GameRandom.GetRandomLevel(randomVals.ToArray());
+
+        return randomItems[randomIdx];
     }
 
     

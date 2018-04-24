@@ -63,7 +63,8 @@ public class RoleData : SaveItemBase
                 baseWeaponID = "1001";
             }
 
-            var equipItem = ItemEquip.GetBaseEquip(baseWeaponID, 1, ITEM_QUALITY.WHITE, 10, 0);
+            var equipItem = ItemEquip.GetBaseEquip(baseWeaponID, 1, ITEM_QUALITY.WHITE, GameDataValue.CalLvValue(1), 0);
+            equipItem.CalculateCombatValue();
             PutOnEquip(EQUIP_SLOT.WEAPON, equipItem);
 
             return true;
@@ -73,6 +74,7 @@ public class RoleData : SaveItemBase
             if (itemEquip.IsVolid())
             {
                 itemEquip.CalculateSet();
+                itemEquip.CalculateCombatValue();
             }
         }
         return false;
@@ -299,7 +301,7 @@ public class RoleData : SaveItemBase
 
     public bool InitLevel()
     {
-        if (_RoleLevel < 0)
+        if (_RoleLevel <= 0)
         {
             _RoleLevel = 1;
         }
@@ -328,7 +330,6 @@ public class RoleData : SaveItemBase
             }
         }
 
-        Debug.Log("LevelUpExp:" + _LvUpExp);
         if (_CurExp > _LvUpExp)
         {
             AddExp(0);

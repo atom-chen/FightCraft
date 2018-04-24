@@ -58,7 +58,7 @@ public class ShopData : SaveItemBase
         if (timeDelay.TotalMinutes > _RefreshMinutes)
         {
             //do refresh
-            RefreshEquip();
+            //RefreshEquip();
             RefreshShopItem();
             RefreshGamblingItem();
 
@@ -137,7 +137,7 @@ public class ShopData : SaveItemBase
     private ItemEquip RandomEquip(int level, int value)
     {
         int randomLevel = UnityEngine.Random.Range(level - 5, level + 5);
-        int randomValue = UnityEngine.Random.Range((int)(value * 0.8f), (int)(value * 1.2f));
+        int randomValue = GameDataValue.CalLvValue(randomLevel);
         int quality = GameRandom.GetRandomLevel(3,12,2);
 
         var equipItem = ItemEquip.CreateEquip(randomLevel, (ITEM_QUALITY)quality, randomValue, -1);

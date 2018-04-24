@@ -220,15 +220,16 @@ public class TestFight : MonoBehaviour
             {
                 if (itemEquip.EquipQuality == ITEM_QUALITY.ORIGIN)
                 {
-                    int levelDelta = itemEquip.EquipLevel - equipedItem.EquipLevel;
-                    if (levelDelta > 10)
-                    {
-                        changeEquip = true;
-                    }
+                    //int levelDelta = itemEquip.EquipLevel - equipedItem.EquipLevel;
+                    //if (levelDelta > 10)
+                    //{
+                    //    changeEquip = true;
+                    //}
+                    Debug.Log("Drop Origin Equip");
                 }
-                else
+                //else
                 {
-                    if (itemEquip.EquipValue > equipedItem.EquipValue)
+                    if (itemEquip.CombatValue > equipedItem.CombatValue)
                         changeEquip = true;
                 }
             }
@@ -248,7 +249,7 @@ public class TestFight : MonoBehaviour
         {
             if (itemEquip.EquipQuality == ITEM_QUALITY.ORIGIN)
             {
-                if (LegendaryData.Instance.IsCollect(itemEquip))
+                if (!LegendaryData.Instance.IsCollect(itemEquip))
                 {
                     LegendaryData.Instance.PutInEquip(itemEquip);
                     continue;

@@ -14,6 +14,8 @@ namespace Tables
 
         public override string Id { get; set; }        public string Name { get; set; }
         public string Desc { get; set; }
+        public int NameStrDict { get; set; }
+        public int DescStrDict { get; set; }
         public EQUIP_SLOT Slot { get; set; }
         public EQUIP_CLASS EquipClass { get; set; }
         public List<int> BaseAttrs { get; set; }
@@ -36,6 +38,8 @@ namespace Tables
             recordStrList.Add(TableWriteBase.GetWriteStr(Id));
             recordStrList.Add(TableWriteBase.GetWriteStr(Name));
             recordStrList.Add(TableWriteBase.GetWriteStr(Desc));
+            recordStrList.Add(TableWriteBase.GetWriteStr(NameStrDict));
+            recordStrList.Add(TableWriteBase.GetWriteStr(DescStrDict));
             recordStrList.Add(((int)Slot).ToString());
             recordStrList.Add(((int)EquipClass).ToString());
             foreach (var testTableItem in BaseAttrs)
@@ -117,15 +121,17 @@ namespace Tables
             {
                 pair.Value.Name = TableReadBase.ParseString(pair.Value.ValueStr[1]);
                 pair.Value.Desc = TableReadBase.ParseString(pair.Value.ValueStr[2]);
-                pair.Value.Slot =  (EQUIP_SLOT)TableReadBase.ParseInt(pair.Value.ValueStr[3]);
-                pair.Value.EquipClass =  (EQUIP_CLASS)TableReadBase.ParseInt(pair.Value.ValueStr[4]);
-                pair.Value.BaseAttrs.Add(TableReadBase.ParseInt(pair.Value.ValueStr[5]));
-                pair.Value.BaseAttrs.Add(TableReadBase.ParseInt(pair.Value.ValueStr[6]));
-                pair.Value.LevelLimit = TableReadBase.ParseInt(pair.Value.ValueStr[7]);
-                pair.Value.ProfessionLimit = TableReadBase.ParseInt(pair.Value.ValueStr[8]);
-                if (!string.IsNullOrEmpty(pair.Value.ValueStr[9]))
+                pair.Value.NameStrDict = TableReadBase.ParseInt(pair.Value.ValueStr[3]);
+                pair.Value.DescStrDict = TableReadBase.ParseInt(pair.Value.ValueStr[4]);
+                pair.Value.Slot =  (EQUIP_SLOT)TableReadBase.ParseInt(pair.Value.ValueStr[5]);
+                pair.Value.EquipClass =  (EQUIP_CLASS)TableReadBase.ParseInt(pair.Value.ValueStr[6]);
+                pair.Value.BaseAttrs.Add(TableReadBase.ParseInt(pair.Value.ValueStr[7]));
+                pair.Value.BaseAttrs.Add(TableReadBase.ParseInt(pair.Value.ValueStr[8]));
+                pair.Value.LevelLimit = TableReadBase.ParseInt(pair.Value.ValueStr[9]);
+                pair.Value.ProfessionLimit = TableReadBase.ParseInt(pair.Value.ValueStr[10]);
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[11]))
                 {
-                    pair.Value.ExAttr =  TableReader.AttrValue.GetRecord(pair.Value.ValueStr[9]);
+                    pair.Value.ExAttr =  TableReader.AttrValue.GetRecord(pair.Value.ValueStr[11]);
                 }
                 else
                 {

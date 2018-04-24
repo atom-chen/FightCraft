@@ -44,6 +44,7 @@ public class UIEquipPack : UIBase,IDragablePack
         _BackPack._OnItemSelectCallBack = ShowBackPackSelectItem;
         _BackPack._OnDragItemCallBack = OnDragItem;
         _BackPack._IsCanDropItemCallBack = IsCanDropItem;
+        _BackPack._TagPanel._Tags[1].gameObject.SetActive(false);
     }
 
     public override void Show(Hashtable hash)
