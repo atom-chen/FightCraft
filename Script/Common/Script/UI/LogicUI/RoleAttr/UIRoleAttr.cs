@@ -36,10 +36,16 @@ public class UIRoleAttr : UIBase
     public RoleAttrItem _UnDistrubutePoint;
     public RoleAttrItem _StrengthItem;
     public RoleAttrItem _DexterityItem;
+    public RoleAttrItem _IntelligenceItem;
     public RoleAttrItem _VitalityItem;
-    public Button _BtnAddStrength;
-    public Button _BtnDexterity;
-    public Button _BtnVitality;
+    public GameObject _BtnAddStrength;
+    public GameObject _BtnDexterity;
+    public GameObject _BtnIntelligence;
+    public GameObject _BtnVitality;
+    public GameObject _BtnAddStrength10;
+    public GameObject _BtnDexterity10;
+    public GameObject _BtnIntelligence10;
+    public GameObject _BtnVitality10;
 
     public UIContainerBase _AttrItemContainer;
 
@@ -52,50 +58,137 @@ public class UIRoleAttr : UIBase
         _DexterityItem.Show(RoleAttrEnum.Dexterity.ToString(), RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Dexterity));
         _VitalityItem.Show(RoleAttrEnum.Vitality.ToString(), RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Vitality));
 
-        if (RoleData.SelectRole.UnDistrubutePoint > 0)
+        if (RoleData.SelectRole.UnDistrubutePoint > 10)
         {
+            _BtnAddStrength10.gameObject.SetActive(true);
+            _BtnDexterity10.gameObject.SetActive(true);
+            _BtnIntelligence10.gameObject.SetActive(true);
+            _BtnVitality10.gameObject.SetActive(true);
+
             _BtnAddStrength.gameObject.SetActive(true);
             _BtnDexterity.gameObject.SetActive(true);
+            _BtnIntelligence.gameObject.SetActive(true);
+            _BtnVitality.gameObject.SetActive(true);
+        }
+        else if (RoleData.SelectRole.UnDistrubutePoint > 0)
+        {
+            _BtnAddStrength10.gameObject.SetActive(false);
+            _BtnDexterity10.gameObject.SetActive(false);
+            _BtnIntelligence10.gameObject.SetActive(false);
+            _BtnVitality10.gameObject.SetActive(false);
+
+            _BtnAddStrength.gameObject.SetActive(true);
+            _BtnDexterity.gameObject.SetActive(true);
+            _BtnIntelligence.gameObject.SetActive(true);
             _BtnVitality.gameObject.SetActive(true);
         }
         else
         {
+            _BtnAddStrength10.gameObject.SetActive(false);
+            _BtnDexterity10.gameObject.SetActive(false);
+            _BtnIntelligence10.gameObject.SetActive(false);
+            _BtnVitality10.gameObject.SetActive(false);
+
             _BtnAddStrength.gameObject.SetActive(false);
             _BtnDexterity.gameObject.SetActive(false);
+            _BtnIntelligence.gameObject.SetActive(false);
             _BtnVitality.gameObject.SetActive(false);
         }
 
         List<AttrPair> pair = new List<AttrPair>();
-        pair.Add(new AttrPair(RoleAttrEnum.Attack.ToString(), RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Attack).ToString()));
-        pair.Add(new AttrPair(RoleAttrEnum.Defense.ToString(), RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Defense).ToString()));
-        pair.Add(new AttrPair(RoleAttrEnum.HPMax.ToString(), RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax).ToString()));
 
-        float moveSpeed = RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.MoveSpeed) / 100.0f;
-        string moveSpeedStr = moveSpeed + "%";
-        pair.Add(new AttrPair(RoleAttrEnum.MoveSpeed.ToString(), moveSpeedStr));
-
-        float attackSpeed = RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.AttackSpeed) / 100.0f;
-        string attackSpeedStr = attackSpeed + "%";
-        pair.Add(new AttrPair(RoleAttrEnum.AttackSpeed.ToString(), attackSpeedStr));
-
-        float criticalHitChance = RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.CriticalHitChance) / 100.0f;
-        string criticalHitChanceStr = criticalHitChance + "%";
-        pair.Add(new AttrPair(RoleAttrEnum.CriticalHitChance.ToString(), criticalHitChanceStr));
-
-        float criticalHitDamage = RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.CriticalHitDamge) / 100.0f;
-        string criticalHitDamageStr = criticalHitDamage + "%";
-        pair.Add(new AttrPair(RoleAttrEnum.CriticalHitDamge.ToString(), criticalHitDamageStr));
-
-        float damageEnhance = RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.PhysicDamageEnhance) / 100.0f;
-        string damageEnhanceStr = damageEnhance + "%";
-        pair.Add(new AttrPair(RoleAttrEnum.PhysicDamageEnhance.ToString(), damageEnhanceStr));
+        pair.Add(new AttrPair(RoleAttrEnum.Attack));
+        pair.Add(new AttrPair(RoleAttrEnum.Defense));
+        pair.Add(new AttrPair(RoleAttrEnum.HPMax));
+        pair.Add(new AttrPair(RoleAttrEnum.AttackSpeed));
+        pair.Add(new AttrPair(RoleAttrEnum.CriticalHitChance));
+        pair.Add(new AttrPair(RoleAttrEnum.CriticalHitDamge));
+        pair.Add(new AttrPair(RoleAttrEnum.FireAttackAdd));
+        pair.Add(new AttrPair(RoleAttrEnum.ColdAttackAdd));
+        pair.Add(new AttrPair(RoleAttrEnum.LightingAttackAdd));
+        pair.Add(new AttrPair(RoleAttrEnum.WindAttackAdd));
+        pair.Add(new AttrPair(RoleAttrEnum.FireResistan));
+        pair.Add(new AttrPair(RoleAttrEnum.ColdResistan));
+        pair.Add(new AttrPair(RoleAttrEnum.LightingResistan));
+        pair.Add(new AttrPair(RoleAttrEnum.WindResistan));
+        pair.Add(new AttrPair(RoleAttrEnum.FireEnhance));
+        pair.Add(new AttrPair(RoleAttrEnum.ColdEnhance));
+        pair.Add(new AttrPair(RoleAttrEnum.LightingEnhance));
+        pair.Add(new AttrPair(RoleAttrEnum.WindEnhance));
+        pair.Add(new AttrPair(RoleAttrEnum.PhysicDamageEnhance));
+        pair.Add(new AttrPair(RoleAttrEnum.IgnoreDefenceAttack));
+        pair.Add(new AttrPair(RoleAttrEnum.FinalDamageReduse));
 
         _AttrItemContainer.InitContentItem(pair);
     }
 
-    public void OnDistrubutePoint(int idx)
+    public void OnDistrubuteStr(bool isPress)
     {
-        RoleData.SelectRole.DistributePoint(idx);
+        if (!isPress)
+            return;
+
+        RoleData.SelectRole.DistributePoint(1, 1);
+        InitRoleAttrs();
+    }
+
+    public void OnDistrubuteDex(bool isPress)
+    {
+        if (!isPress)
+            return;
+        RoleData.SelectRole.DistributePoint(2, 1);
+        InitRoleAttrs();
+    }
+
+    public void OnDistrubuteInt(bool isPress)
+    {
+        if (!isPress)
+            return;
+
+        RoleData.SelectRole.DistributePoint(3, 1);
+        InitRoleAttrs();
+    }
+
+    public void OnDistrubuteVit(bool isPress)
+    {
+        if (!isPress)
+            return;
+
+        RoleData.SelectRole.DistributePoint(4, 1);
+        InitRoleAttrs();
+    }
+
+    public void OnDistrubuteStr10(bool isPress)
+    {
+        if (!isPress)
+            return;
+
+        RoleData.SelectRole.DistributePoint(1, 10);
+        InitRoleAttrs();
+    }
+
+    public void OnDistrubuteDex10(bool isPress)
+    {
+        if (!isPress)
+            return;
+        RoleData.SelectRole.DistributePoint(2, 10);
+        InitRoleAttrs();
+    }
+
+    public void OnDistrubuteInt10(bool isPress)
+    {
+        if (!isPress)
+            return;
+
+        RoleData.SelectRole.DistributePoint(3, 10);
+        InitRoleAttrs();
+    }
+
+    public void OnDistrubuteVit10(bool isPress)
+    {
+        if (!isPress)
+            return;
+
+        RoleData.SelectRole.DistributePoint(4, 10);
         InitRoleAttrs();
     }
 
@@ -104,20 +197,5 @@ public class UIRoleAttr : UIBase
         RoleData.SelectRole.ResetPoints();
         InitRoleAttrs();
     }
-
-    #region exp text
-
-    public InputField _InputExp;
-
-    public void AddTestExp()
-    {
-        var expValue = int.Parse(_InputExp.text);
-        RoleData.SelectRole.AddExp(expValue);
-        InitRoleAttrs();
-    }
-
-
-
-    #endregion
 }
 

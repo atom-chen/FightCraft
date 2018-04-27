@@ -24,7 +24,7 @@ public class UIStageInfoItem : UIItemSelect
 
     public void ShowStage(StageInfoRecord showItem)
     {
-        _StageName.text = showItem.Name;
+        _StageName.text = StrDictionary.GetFormatStr(showItem.Name);
     }
 
 

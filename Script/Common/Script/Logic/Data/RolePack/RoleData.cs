@@ -56,15 +56,7 @@ public class RoleData : SaveItemBase
                 _EquipList.Add(newItemEquip);
             }
 
-            string baseWeaponID = "1";
-            if (Profession == PROFESSION.GIRL_DOUGE
-                || Profession == PROFESSION.GIRL_DEFENCE)
-            {
-                baseWeaponID = "1001";
-            }
-
-            var equipItem = ItemEquip.GetBaseEquip(baseWeaponID, 1, ITEM_QUALITY.WHITE, GameDataValue.CalLvValue(1), 0);
-            equipItem.CalculateCombatValue();
+            var equipItem = ItemEquip.CreateBaseWeapon(Profession);
             PutOnEquip(EQUIP_SLOT.WEAPON, equipItem);
 
             return true;
@@ -280,6 +272,16 @@ public class RoleData : SaveItemBase
     }
 
     [SaveField(8)]
+    private int _AddIntelligence = 0;
+    public int Intelligence
+    {
+        get
+        {
+            return _RoleLevel * 1 + _AddIntelligence;
+        }
+    }
+
+    [SaveField(9)]
     private int _UnDistrubutePoint = 0;
     public int UnDistrubutePoint
     {
@@ -366,19 +368,22 @@ public class RoleData : SaveItemBase
         CalculateAttr();
     }
 
-    public void DistributePoint(int distriAttr)
+    public void DistributePoint(int distriAttr, int point)
     {
         --_UnDistrubutePoint;
         switch (distriAttr)
         {
             case 1:
-                ++_AddStrength;
+                _AddStrength += point;
                 break;
             case 2:
-                ++_AddDexterity;
+                _AddDexterity += point;
                 break;
             case 3:
-                ++_AddVitality;
+                _AddIntelligence += point;
+                break;
+            case 4:
+                _AddVitality += point;
                 break;
         }
 

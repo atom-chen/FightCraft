@@ -11,6 +11,9 @@ public class UIPressBtn : MonoBehaviour, IEventSystemHandler, IPointerDownHandle
 {
     #region 
 
+    public float _PressStart = 0;
+    public float _PressInterval = 0;
+    
     [Serializable]
     public class PressAction : UnityEvent<bool>
     {
@@ -35,12 +38,50 @@ public class UIPressBtn : MonoBehaviour, IEventSystemHandler, IPointerDownHandle
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        //throw new NotImplementedException();
+        PressInvoke();
+
+        if (_PressStart > 0)
+        {
+            StartCoroutine(OnPressStart());
+        }
+        else if (_PressInterval > 0)
+        {
+            StartCoroutine(OnPressInvoke());
+        }
+        _IsPress = true;
+    }
+
+    private IEnumerator OnPressStart()
+    {
+        yield return new WaitForSeconds(_PressStart);
+        if (_PressInterval > 0)
+        {
+            StartCoroutine(OnPressInvoke());
+        }
+        else
+        {
+            PressInvoke();
+        }
+    }
+
+    private IEnumerator OnPressInvoke()
+    {
+        while (_IsPress)
+        {
+            yield return new WaitForSeconds(_PressInterval);
+            if (_PressAction != null)
+            {
+                _PressAction.Invoke(true);
+            }
+        }
+    }
+
+    private void PressInvoke()
+    {
         if (_PressAction != null)
         {
             _PressAction.Invoke(true);
         }
-        _IsPress = true;
     }
 
     #endregion

@@ -13,6 +13,7 @@ public class UIEquipInfo : UIBase
 
     #region 
 
+    public Text _LengendaryName;
     public Text _Name;
     public Text _Level;
     public Text _Value;
@@ -34,6 +35,17 @@ public class UIEquipInfo : UIBase
         }
         //itemEquip.CalculateCombatValue();
         _ShowItem = itemEquip;
+
+        if (_ShowItem.IsLegandaryEquip())
+        {
+            _LengendaryName.gameObject.SetActive(true);
+            _LengendaryName.text = _ShowItem.GetEquipLegandaryName();
+        }
+        else
+        {
+            _LengendaryName.gameObject.SetActive(false);
+        }
+
         _Name.text = _ShowItem.GetEquipNameWithColor();
         if (_ShowItem.RequireLevel > RoleData.SelectRole._RoleLevel)
         {

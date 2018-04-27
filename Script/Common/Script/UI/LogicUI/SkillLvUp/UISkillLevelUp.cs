@@ -113,11 +113,11 @@ public class UISkillLevelUp : UIBase
         int nextLv = skillTab.StartRoleLevel + (_SelectedSkill.SkillActureLevel) * skillTab.NextLvInterval;
         if (RoleData.SelectRole._RoleLevel >= nextLv)
         {
-            roleLvStr += StrDictionary.GetFormatStr(201, nextLv);
+            roleLvStr += StrDictionary.GetFormatStr(1000005, nextLv);
         }
         else
         {
-            roleLvStr += StrDictionary.GetFormatStr(200, nextLv);
+            roleLvStr += StrDictionary.GetFormatStr(1000004, nextLv);
         }
         _NeedRoleLv.text = roleLvStr;
 
@@ -129,11 +129,11 @@ public class UISkillLevelUp : UIBase
             var skillItem = SkillData.Instance.GetSkillInfo(preSkillTab.Id);
             if (skillItem.SkillActureLevel >= skillTab.StartPreSkillLv)
             {
-                skillLv += StrDictionary.GetFormatStr(201, nextSkill);
+                skillLv += StrDictionary.GetFormatStr(1000005, nextSkill);
             }
             else
             {
-                skillLv += StrDictionary.GetFormatStr(200, nextSkill);
+                skillLv += StrDictionary.GetFormatStr(1000004, nextSkill);
             }
             _NeedSkillLv.text = skillLv;
 

@@ -81,6 +81,9 @@ namespace Tables
 
             foreach (var record in Records.Values)
             {
+                if (record.ExAttr != null)
+                    continue;
+
                 if (!_ClassedEquips.ContainsKey(record.Slot))
                 {
                     _ClassedEquips.Add(record.Slot, new List<EquipItemRecord>());

@@ -1,6 +1,7 @@
-﻿ 
+﻿
 using System.Collections;
 using System.Collections.Generic;
+using Tables;
 using UnityEngine;
 
 public enum RoleAttrEnum
@@ -166,7 +167,36 @@ public class RandomAttrs
 
         return CalculateExAttr(exAttrTypes, equipValue);
     }
-    
+
+    #endregion
+
+    #region attr show
+
+    public static string GetAttrName(RoleAttrEnum attr)
+    {
+        return StrDictionary.GetFormatStr((int)attr);
+    }
+
+    public static string GetAttrValueShow(RoleAttrEnum attr, int value)
+    {
+        string valueStr = value.ToString();
+        switch ((RoleAttrEnum)attr)
+        {
+            case RoleAttrEnum.AttackPersent:
+            case RoleAttrEnum.HPMaxPersent:
+            case RoleAttrEnum.MoveSpeed:
+            case RoleAttrEnum.AttackSpeed:
+            case RoleAttrEnum.CriticalHitChance:
+            case RoleAttrEnum.PhysicDamageEnhance:
+                var persentVal = (value) * 0.01f;
+                valueStr = string.Format("{0:0.00}", persentVal);
+                valueStr += "%";
+                break;
+        }
+
+        return valueStr;
+    }
+
     #endregion
 }
 

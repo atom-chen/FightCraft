@@ -49,7 +49,6 @@ public class EquipExAttr
     public string GetAttrStr()
     {
         var impactType = Type.GetType(AttrType);
-        Debug.Log("AttrType:" + AttrType);
         if (impactType == null)
             return "";
 
@@ -147,7 +146,7 @@ public class ItemEquip : ItemBase
                 if (string.IsNullOrEmpty(CommonItemDataID.ToString()))
                     return null;
 
-                if (_ItemDataID == "-1")
+                if (CommonItemDataID < 0)
                     return null;
 
                 _CommonItemRecord = TableReader.CommonItem.GetRecord(CommonItemDataID.ToString());
@@ -279,12 +278,27 @@ public class ItemEquip : ItemBase
         }
     }
 
-    public string GetEquipNameWithColor()
+    public bool IsLegandaryEquip()
+    {
+        if (ItemDataID.Equals(CommonItemDataID.ToString()))
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public string GetEquipLegandaryName()
     {
         string equipName = StrDictionary.GetFormatStr(EquipItemRecord.NameStrDict);
+        return CommonDefine.GetQualityColorStr(EquipQuality) + equipName + "</color>";
+    }
+
+    public string GetEquipNameWithColor()
+    {
+        string equipName = StrDictionary.GetFormatStr(CommonItemRecord.NameStrDict);
         if (SpSetRecord != null)
         {
-            equipName = SpSetRecord.Name + equipName;
+            equipName = SpSetRecord.Name + "-" + equipName;
         }
         return CommonDefine.GetQualityColorStr(EquipQuality) + equipName + "</color>";
     }
@@ -536,6 +550,25 @@ public class ItemEquip : ItemBase
         return null;
     }
 
+    public static ItemEquip CreateBaseWeapon(PROFESSION profession)
+    {
+        int weapon = 1;
+        if (profession == PROFESSION.GIRL_DEFENCE || profession == PROFESSION.GIRL_DOUGE)
+        {
+            weapon = 1001;
+        }
+        ItemEquip itemEquip = new ItemEquip(weapon.ToString());
+        itemEquip.EquipLevel = 1;
+        itemEquip.EquipQuality = ITEM_QUALITY.WHITE;
+        itemEquip.EquipValue = 10;
+        itemEquip.RequireLevel = 1;
+        itemEquip.CommonItemDataID = weapon;
+
+        itemEquip.CalculateCombatValue();
+
+        return itemEquip;
+    }
+
     public static ItemEquip CreateEquip(int level, Tables.ITEM_QUALITY quality, int value, int legencyEquipID = -1, int equipSlotIdx = -1)
     {
         Tables.ITEM_QUALITY equipQuality = quality;
@@ -668,12 +701,13 @@ public class ItemEquip : ItemBase
             {
                 randomVals.Add(10);
             }
-            for (int i = 7; i < randomItems.Count; ++i)
+            for (int i = 8; i < randomItems.Count; ++i)
             {
                 randomVals.Add(15);
             }
         }
 
+        Debug.Log("GetRandomItem:" + equipSlot + "," + randomItems.Count + "," + randomVals.Count);
         int randomIdx = GameRandom.GetRandomLevel(randomVals.ToArray());
 
         return randomItems[randomIdx];

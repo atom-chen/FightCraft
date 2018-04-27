@@ -32,20 +32,17 @@ public class RoleAttrImpactBaseAttr : RoleAttrImpactBase
     public static string GetAttrDesc(List<int> attrParams)
     {
         //Debug.Log("attrParams:" + attrParams[0]);
-        string valueStr = attrParams[1].ToString();
-        switch ((RoleAttrEnum)attrParams[0])
+        string valueStr = RandomAttrs.GetAttrValueShow((RoleAttrEnum)attrParams[0], attrParams[1]);
+
+        if ((RoleAttrEnum)attrParams[0] == RoleAttrEnum.FinalDamageReduse)
         {
-            case RoleAttrEnum.AttackPersent:
-            case RoleAttrEnum.HPMaxPersent:
-            case RoleAttrEnum.MoveSpeed:
-            case RoleAttrEnum.AttackSpeed:
-            case RoleAttrEnum.CriticalHitChance:
-            case RoleAttrEnum.PhysicDamageEnhance:
-                var value = (attrParams[1]) * 0.01f;
-                valueStr = string.Format("{0:0.00}", value);
-                break;
+            valueStr = " -" + valueStr;
         }
-        var strFormat = StrDictionary.GetFormatStr(attrParams[0], valueStr);
+        else
+        {
+            valueStr = " +" + valueStr;
+        }
+        var strFormat = RandomAttrs.GetAttrName((RoleAttrEnum)attrParams[0]) + valueStr;
 
         return strFormat;
     }

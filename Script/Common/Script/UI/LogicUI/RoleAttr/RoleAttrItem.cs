@@ -7,19 +7,26 @@ using System.Collections;
 using UnityEngine.EventSystems;
 using System;
 
- 
 
-    public class AttrPair
+
+public class AttrPair
+{
+    public string AttrName;
+    public string AttrValue;
+
+    public AttrPair(string attrName, string attrValue)
     {
-        public string AttrName;
-        public string AttrValue;
-
-        public AttrPair(string attrName, string attrValue)
-        {
-            AttrName = attrName;
-            AttrValue = attrValue;
-        }
+        AttrName = attrName;
+        AttrValue = attrValue;
     }
+
+    public AttrPair(RoleAttrEnum roleAttr)
+    {
+        int value = RoleData.SelectRole._BaseAttr.GetValue(roleAttr);
+        AttrName = RandomAttrs.GetAttrName(roleAttr);
+        AttrValue = RandomAttrs.GetAttrValueShow(roleAttr, value);
+    }
+}
 
 public class RoleAttrItem : UIItemBase
 {
