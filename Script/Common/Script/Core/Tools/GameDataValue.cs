@@ -92,38 +92,43 @@ public class GameDataValue
 
     #region baseAttr -> exAttr atk
 
-    private static float _AttackPerStrength = 0.25f;
-    private static float _DmgEnhancePerStrength = 0.5f;
-    private static float _StrToAtk = 1;
+    public static int _AtkPerRoleLevel = 1;
+    public static int _AtkRoleLevelBase = 10;
+    public static int _HPPerRoleLevel = 100;
+    public static int _HPRoleLevelBase = 5000;
 
-    private static float _IgnoreAtkPerDex = 0.15f;
-    private static float _CriticalRatePerDex = 0.1f;
-    private static float _CriticalDmgPerDex = 1.5f;
-    private static float _DexToAtk = 1;
+    public static float _AttackPerStrength = 0.25f;
+    public static float _DmgEnhancePerStrength = 0.5f;
+    public static float _StrToAtk = 1;
 
-    private static float _EleAtkPerInt = 0.1f;
-    private static float _EleEnhancePerInt = 0.1f;
-    private static float _IntToAtk = 1;
+    public static float _IgnoreAtkPerDex = 0.15f;
+    public static float _CriticalRatePerDex = 0.1f;
+    public static float _CriticalDmgPerDex = 1.5f;
+    public static float _DexToAtk = 1;
 
-    private static float _HPPerVit = 3;
-    private static float _FinalDmgRedusePerVit = 0.3f;
-    private static float _VitToAtk = 1;
+    public static float _EleAtkPerInt = 0.1f;
+    public static float _EleEnhancePerInt = 0.1f;
+    public static float _IntToAtk = 1;
 
-    private static float _CriticalDmgToAtk = 2f;
+    public static float _HPPerVit = 3;
+    public static float _FinalDmgRedusePerVit = 0.3f;
+    public static float _VitToAtk = 1;
 
-    private static float _ElementToAtk = 1;
-    private static float _DmgEnhancePerElementEnhance = 10;
-    private static float _EleEnhanceToAtk = 0.3f;
-    private static float _EleResistToAtk = 0.3f;
+    public static float _CriticalDmgToAtk = 2f;
 
-    private static float _IgnoreDefenceToAtk = 0.5f;
+    public static float _ElementToAtk = 1;
+    public static float _DmgEnhancePerElementEnhance = 10;
+    public static float _EleEnhanceToAtk = 0.3f;
+    public static float _EleResistToAtk = 0.3f;
 
-    private static float _HpToAtk = 11.0f;
-    private static float _DefToAtk = 0.5f;
-    private static float _MoveSpeedToAtk = 1.35f;
-    private static float _AtkSpeedToAtk = 1;
-    private static float _CriticalChanceToAtk = 1;
-    private static float _DamageEnhance = 1;
+    public static float _IgnoreDefenceToAtk = 0.5f;
+
+    public static float _HpToAtk = 11.0f;
+    public static float _DefToAtk = 0.5f;
+    public static float _MoveSpeedToAtk = 1.35f;
+    public static float _AtkSpeedToAtk = 1;
+    public static float _CriticalChanceToAtk = 1;
+    public static float _DamageEnhance = 1;
 
     public static float GetAttrToValue(RoleAttrEnum roleAttr)
     {

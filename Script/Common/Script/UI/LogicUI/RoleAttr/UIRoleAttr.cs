@@ -56,6 +56,7 @@ public class UIRoleAttr : UIBase
         _UnDistrubutePoint.Show("UnDistributePoint", RoleData.SelectRole.UnDistrubutePoint);
         _StrengthItem.Show(RoleAttrEnum.Strength.ToString(), RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Strength));
         _DexterityItem.Show(RoleAttrEnum.Dexterity.ToString(), RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Dexterity));
+        _IntelligenceItem.Show(RoleAttrEnum.Intelligence.ToString(), RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Intelligence));
         _VitalityItem.Show(RoleAttrEnum.Vitality.ToString(), RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Vitality));
 
         if (RoleData.SelectRole.UnDistrubutePoint > 10)

@@ -5,8 +5,6 @@ using UnityEngine.EventSystems;
 using System.Collections;
 using System;
 
-
-
 public class UIPressBtn : MonoBehaviour, IEventSystemHandler, IPointerDownHandler, IPointerUpHandler
 {
     #region 
@@ -54,6 +52,9 @@ public class UIPressBtn : MonoBehaviour, IEventSystemHandler, IPointerDownHandle
     private IEnumerator OnPressStart()
     {
         yield return new WaitForSeconds(_PressStart);
+        if (!_IsPress)
+            yield break;
+
         if (_PressInterval > 0)
         {
             StartCoroutine(OnPressInvoke());

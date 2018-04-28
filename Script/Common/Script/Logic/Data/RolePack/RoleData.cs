@@ -184,9 +184,9 @@ public class RoleData : SaveItemBase
         roleAttr.SetValue(RoleAttrEnum.Strength, Strength);
         roleAttr.SetValue(RoleAttrEnum.Dexterity, Dexterity);
         roleAttr.SetValue(RoleAttrEnum.Vitality, Vitality);
-        roleAttr.SetValue(RoleAttrEnum.Attack, _RoleLevel * 1 + 10);
-        roleAttr.SetValue(RoleAttrEnum.HPMax, _RoleLevel * 100 + 5000);
-        roleAttr.SetValue(RoleAttrEnum.Defense, 10);
+        roleAttr.SetValue(RoleAttrEnum.Intelligence, Intelligence);
+        roleAttr.SetValue(RoleAttrEnum.Attack, _RoleLevel * GameDataValue._AtkPerRoleLevel + GameDataValue._AtkRoleLevelBase);
+        roleAttr.SetValue(RoleAttrEnum.HPMax, _RoleLevel * GameDataValue._HPPerRoleLevel + GameDataValue._HPRoleLevelBase);
     }
 
     public void SetEquipAttr(RoleAttrStruct roleAttr)
@@ -201,25 +201,35 @@ public class RoleData : SaveItemBase
     {
         var strength = roleAttr.GetValue(RoleAttrEnum.Strength);
         var baseAttack = roleAttr.GetValue(RoleAttrEnum.Attack);
-        float attackByStrength = (strength / 1000.0f) * baseAttack + strength * 2;
+        float attackByStrength = strength * GameDataValue._AttackPerStrength;
+        float PhyEnhanceByStrength = strength * GameDataValue._DmgEnhancePerStrength;
         roleAttr.AddValue(RoleAttrEnum.Attack, (int)attackByStrength);
+        roleAttr.AddValue(RoleAttrEnum.PhysicDamageEnhance, (int)PhyEnhanceByStrength);
 
         var dexteriry = roleAttr.GetValue(RoleAttrEnum.Dexterity);
-        int criticalRate = (int)((dexteriry / 1000.0f) * 2500);
-        int criticalDamage = (int)((dexteriry / 1000.0f) * 10000);
-        int attackSpeed = (int)((dexteriry / 1000.0f) * 1000);
-        int moveSpeed = (int)((dexteriry / 1000.0f) * 1000);
-        int ignoreAttack = (int)(dexteriry * 0.5f);
+        int criticalRate = (int)(dexteriry * GameDataValue._CriticalRatePerDex);
+        int criticalDamage = (int)(dexteriry * GameDataValue._CriticalDmgPerDex);
+        int ignoreAttack = (int)(dexteriry * GameDataValue._IgnoreAtkPerDex);
         roleAttr.AddValue(RoleAttrEnum.CriticalHitChance, criticalRate);
         roleAttr.AddValue(RoleAttrEnum.CriticalHitDamge, criticalDamage);
-        roleAttr.AddValue(RoleAttrEnum.AttackSpeed, attackSpeed);
-        roleAttr.AddValue(RoleAttrEnum.MoveSpeed, moveSpeed);
         roleAttr.AddValue(RoleAttrEnum.IgnoreDefenceAttack, ignoreAttack);
 
+        var intelligence = roleAttr.GetValue(RoleAttrEnum.Intelligence);
+        int eleAtk = (int)(intelligence * GameDataValue._EleAtkPerInt);
+        int eleEnhance = (int)(intelligence * GameDataValue._EleEnhancePerInt);
+
+        roleAttr.AddValue(RoleAttrEnum.FireAttackAdd, eleAtk);
+        roleAttr.AddValue(RoleAttrEnum.FireEnhance, eleEnhance);
+        roleAttr.AddValue(RoleAttrEnum.ColdAttackAdd, eleAtk);
+        roleAttr.AddValue(RoleAttrEnum.ColdEnhance, eleEnhance);
+        roleAttr.AddValue(RoleAttrEnum.LightingAttackAdd, eleAtk);
+        roleAttr.AddValue(RoleAttrEnum.LightingEnhance, eleEnhance);
+        roleAttr.AddValue(RoleAttrEnum.WindAttackAdd, eleAtk);
+        roleAttr.AddValue(RoleAttrEnum.WindEnhance, eleEnhance);
+
         var vitality = roleAttr.GetValue(RoleAttrEnum.Vitality);
-        int baseHP = roleAttr.GetValue(RoleAttrEnum.HPMax);
-        int hpByVitality = (int)((vitality / 500.0f) * baseHP);
-        int finalDamageReduse = (int)(vitality * 0.1f);
+        int hpByVitality = (int)(vitality * GameDataValue._HPPerVit);
+        int finalDamageReduse = (int)(vitality * GameDataValue._FinalDmgRedusePerVit);
         roleAttr.AddValue(RoleAttrEnum.HPMax, hpByVitality);
         roleAttr.AddValue(RoleAttrEnum.FinalDamageReduse, finalDamageReduse);
     }
@@ -363,6 +373,7 @@ public class RoleData : SaveItemBase
         _AddStrength = 0;
         _AddDexterity = 0;
         _AddVitality = 0;
+        _AddIntelligence = 0;
         _UnDistrubutePoint = _RoleLevel * POINT_PER_ROLE_LEVEL + _AttrLevel * POINT_PER_ATTR_LEVEL;
 
         CalculateAttr();
