@@ -39,7 +39,7 @@ public class UIEquipSetAttrItem : UIItemBase
 
         _ShowAttr = attr;
 
-        string attrStr = _ShowAttr.SetAttr.GetAttrStr();
+        string attrStr = _ShowAttr.SetAttr.GetAttrStr(false);
 
         if (_ShowAttr.IsEnable)
         {

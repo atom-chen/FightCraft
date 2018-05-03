@@ -3,6 +3,7 @@ guid: 1d3d10f4eba446847a530431704a77ee
 timeCreated: 1487032811
 licenseType: Pro
 NativeFormatImporter:
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: scene/depend_stage_01_02_waimian
+  assetBundleVariant: common

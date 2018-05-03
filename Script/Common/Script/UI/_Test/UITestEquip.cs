@@ -103,8 +103,7 @@ public class UITestEquip : UIBase
             int exp = 0;
             TestPassNormalStage(nextStage, nextDiff, ref exp, ref gold);
             ActData.Instance.SetPassNormalStage(nextDiff, nextStage);
-            RoleData.SelectRole.AddExp(exp);
-            PlayerDataPack.Instance.AddGold(gold);
+            
             ++fightTimes;
         }
         Debug.Log("FightTimes:" + fightTimes);
@@ -129,6 +128,9 @@ public class UITestEquip : UIBase
         public int atk;
         public int def;
         public int hp;
+        public int monValue;
+        public int equipMat;
+        public int equipGem;
     }
 
     public void OnTestPassStage()
@@ -150,7 +152,7 @@ public class UITestEquip : UIBase
         //    Debug.Log("TotalDrop stage:" + _StageIdx  + " Exp:" + _TotalExp + ", Gold:" + _TotalGold);
         //    Debug.Log("Role Atk:" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Attack) + ", Def:" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Defense) + ", HP:" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax));
 
-        for (int diff = 1; diff < 11; ++diff)
+        for (int diff = 1; diff < 6; ++diff)
         {
             for (int stageid = 1; stageid < 21; ++stageid)
             {
@@ -168,6 +170,15 @@ public class UITestEquip : UIBase
                 passInfo.atk = (int)(passInfo.level * passInfo.level * 0.006f * 450 + 450);
                 passInfo.def = RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Defense);
                 passInfo.hp = RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax);
+                passInfo.monValue = GameDataValue.GetMonsterHP(TableReader.MonsterBase.GetRecord("21"), passInfo.level, MOTION_TYPE.Normal);
+                passInfo.equipMat = BackBagPack.Instance.GetItemCnt(EquipRefresh._RefreshMatDataID);
+                int gemCnt = 0;
+                for (int i = 0; i < GemData._GemMaterialDataIDs.Count; ++i)
+                {
+                    gemCnt += BackBagPack.Instance.GetItemCnt(GemData._GemMaterialDataIDs[i]);
+                }
+                passInfo.equipGem = gemCnt;
+
 
                 _PassInfoList.Add(passInfo);
             }
@@ -179,7 +190,10 @@ public class UITestEquip : UIBase
         var streamWriter = new StreamWriter(fileStream);
         foreach (var passInfo in _PassInfoList)
         {
-            streamWriter.WriteLine(passInfo.level + "\t" + passInfo.atk + "\t" + passInfo.gold + "\t" + passInfo.exp + "\t" + passInfo.levelExp + "\t" + passInfo.hp);
+            //attr
+            //streamWriter.WriteLine(passInfo.level + "\t" + passInfo.atk + "\t" + passInfo.monValue + "\t" + passInfo.exp + "\t" + passInfo.monValue + "\t" + passInfo.hp);
+            //drop
+            streamWriter.WriteLine(passInfo.level + "\t" + passInfo.exp + "\t" + passInfo.gold + "\t" + passInfo.equipMat + "\t" + passInfo.equipGem);
         }
         streamWriter.Close();
     }
@@ -236,28 +250,14 @@ public class UITestEquip : UIBase
             var monsterDrops = MonsterDrop.GetMonsterDrops(monRecord, monRecord.MotionType, level);
             foreach (var dropItem in monsterDrops)
             {
-                if (dropItem._DropGold > 0)
-                {
-                    //Debug.Log("drop gold:" + dropItem._DropGold);
-                    gold += dropItem._DropGold;
-                }
-                else if(dropItem._ItemBase != null)
-                {
-                    //Debug.Log("drop item:" + dropItem._ItemBase.ItemDataID + "," + dropItem._ItemBase.ItemStackNum);
-                    if (!items.ContainsKey(dropItem._ItemBase.ItemDataID))
-                    {
-                        items.Add(dropItem._ItemBase.ItemDataID, 0);
-                    }
-                    items[dropItem._ItemBase.ItemDataID] += dropItem._ItemBase.ItemStackNum;
-                }
-                else if (dropItem._ItemEquip != null)
-                {
-                    MonsterDrop.PickItem(dropItem);
-                }
+                gold += dropItem._DropGold;
+                MonsterDrop.PickItem(dropItem);
             }
             int dropExp = GameDataValue.GetMonsterExp(monRecord.MotionType, level, level);
             exp += dropExp;
+            RoleData.SelectRole.AddExp(dropExp);
         }
+        
         TestFight.DelAllEquip();
         //foreach (var dropItem in items)
         //{

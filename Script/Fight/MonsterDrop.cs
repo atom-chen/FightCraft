@@ -235,7 +235,7 @@ public class MonsterDrop
         }
         else if (dropItemData._ItemBase != null)
         {
-            if (!BackBagPack.Instance.AddItem(dropItemData._ItemBase))
+            if (!BackBagPack.Instance.AddItem(dropItemData._ItemBase.CommonItemRecord.Id, dropItemData._ItemBase.ItemStackNum))
                 return;
         }
         else

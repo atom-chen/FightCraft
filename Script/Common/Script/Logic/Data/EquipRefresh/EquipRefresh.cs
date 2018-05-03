@@ -59,108 +59,9 @@ public class EquipRefresh : DataPackBase
     public EquipRefreshCost GetEquipRefreshCost(ItemEquip itemEquip)
     {
         EquipRefreshCost costRecord = new EquipRefreshCost();
-        if (itemEquip.EquipItemRecord.Slot == EQUIP_SLOT.WEAPON)
-        {
-            if (itemEquip.EquipLevel < 40)
-            {
-                costRecord._MatCnt = 3;
-                costRecord._CostGold = 1000;
-                costRecord._CostDiamond = 100;
-            }
-            else if (itemEquip.EquipLevel < 70)
-            {
-                costRecord._MatCnt = 3;
-                costRecord._CostGold = 1000;
-                costRecord._CostDiamond = 100;
-            }
-            else if (itemEquip.EquipLevel < 90)
-            {
-                costRecord._MatCnt = 3;
-                costRecord._CostGold = 1000;
-                costRecord._CostDiamond = 100;
-            }
-            else if (itemEquip.EquipLevel < 100)
-            {
-                costRecord._MatCnt = 3;
-                costRecord._CostGold = 1000;
-                costRecord._CostDiamond = 100;
-            }
-            else
-            {
-                costRecord._MatCnt = 3;
-                costRecord._CostGold = 1000;
-                costRecord._CostDiamond = 100;
-            }
-        }
-        else if (itemEquip.EquipItemRecord.Slot == EQUIP_SLOT.TORSO
-            || itemEquip.EquipItemRecord.Slot == EQUIP_SLOT.LEGS)
-        {
-            if (itemEquip.EquipLevel < 40)
-            {
-                costRecord._MatCnt = 3;
-                costRecord._CostGold = 1000;
-                costRecord._CostDiamond = 100;
-            }
-            else if (itemEquip.EquipLevel < 70)
-            {
-                costRecord._MatCnt = 3;
-                costRecord._CostGold = 1000;
-                costRecord._CostDiamond = 100;
-            }
-            else if (itemEquip.EquipLevel < 90)
-            {
-                costRecord._MatCnt = 3;
-                costRecord._CostGold = 1000;
-                costRecord._CostDiamond = 100;
-            }
-            else if (itemEquip.EquipLevel < 100)
-            {
-                costRecord._MatCnt = 3;
-                costRecord._CostGold = 1000;
-                costRecord._CostDiamond = 100;
-            }
-            else
-            {
-                costRecord._MatCnt = 3;
-                costRecord._CostGold = 1000;
-                costRecord._CostDiamond = 100;
-            }
-        }
-        else if (itemEquip.EquipItemRecord.Slot == EQUIP_SLOT.AMULET
-            || itemEquip.EquipItemRecord.Slot == EQUIP_SLOT.RING)
-        {
-            if (itemEquip.EquipLevel < 40)
-            {
-                costRecord._MatCnt = 3;
-                costRecord._CostGold = 1000;
-                costRecord._CostDiamond = 100;
-            }
-            else if (itemEquip.EquipLevel < 70)
-            {
-                costRecord._MatCnt = 3;
-                costRecord._CostGold = 1000;
-                costRecord._CostDiamond = 100;
-            }
-            else if (itemEquip.EquipLevel < 90)
-            {
-                costRecord._MatCnt = 3;
-                costRecord._CostGold = 1000;
-                costRecord._CostDiamond = 100;
-            }
-            else if (itemEquip.EquipLevel < 100)
-            {
-                costRecord._MatCnt = 3;
-                costRecord._CostGold = 1000;
-                costRecord._CostDiamond = 100;
-            }
-            else
-            {
-                costRecord._MatCnt = 3;
-                costRecord._CostGold = 1000;
-                costRecord._CostDiamond = 100;
-            }
-        }
-
+        costRecord._MatCnt = GameDataValue.GetEquipLvUpConsume(itemEquip);
+        costRecord._CostDiamond = GameDataValue.GetEquipLvUpConsumeDiamond(itemEquip);
+       
         return costRecord;
     }
 
@@ -244,16 +145,10 @@ public class EquipRefresh : DataPackBase
 
     public int GetDestoryMatCnt(ItemEquip itemEquip)
     {
-        int destoryMatCnt = Mathf.CeilToInt(itemEquip.EquipRefreshCostMatrial * 0.8f);
-        destoryMatCnt = Mathf.Max(destoryMatCnt, 1);
-        if (itemEquip.EquipQuality == ITEM_QUALITY.PURPER)
-        {
-            destoryMatCnt += 10;
-        }
-        else if (itemEquip.EquipQuality == ITEM_QUALITY.ORIGIN)
-        {
-            destoryMatCnt += 50;
-        }
+        if (itemEquip.EquipLevel < GameDataValue._DropMatLevel)
+            return 0;
+
+        int destoryMatCnt = GameDataValue.GetDestoryGetMatCnt(itemEquip);
         return destoryMatCnt;
     }
 

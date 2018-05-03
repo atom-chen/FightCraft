@@ -256,10 +256,13 @@ public class TestFight : MonoBehaviour
                 }
             }
 
-            if (itemEquip.EquipQuality != ITEM_QUALITY.WHITE)
+            if (itemEquip.EquipLevel > GameDataValue._DropMatLevel)
             {
-                EquipRefresh.Instance.DestoryMatCnt(itemEquip, false);
-                continue;
+                if (itemEquip.EquipQuality != ITEM_QUALITY.WHITE)
+                {
+                    EquipRefresh.Instance.DestoryMatCnt(itemEquip, false);
+                    continue;
+                }
             }
 
             ShopData.Instance.SellItem(itemEquip, false);

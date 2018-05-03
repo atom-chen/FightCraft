@@ -252,6 +252,11 @@ public class UIEquipRefresh : UIBase
                 destoryEquipList.Add(itemEquip);
             }
         }
+        for (int i = destoryEquipList.Count; i < BackBagPack._BAG_PAGE_SLOT_CNT; ++i)
+        {
+            destoryEquipList.Add(new ItemEquip());
+        }
+
         _EquipPack.InitContentItem(destoryEquipList, ShowEquipPackTooltips);
     }
 

@@ -46,7 +46,7 @@ public class EquipExAttr
         AttrParams = copyInstance.AttrParams;
     }
 
-    public string GetAttrStr()
+    public string GetAttrStr(bool eqiupAttr = true)
     {
         var impactType = Type.GetType(AttrType);
         if (impactType == null)
@@ -58,9 +58,12 @@ public class EquipExAttr
 
         var attrStr = method.Invoke(null, new object[] { AttrParams }) as string;
 
-        if (!AttrType.Equals("RoleAttrImpactBaseAttr") && !AttrType.Equals("RoleAttrImpactSetAttrByEquip"))
+        if (eqiupAttr)
         {
-            attrStr += " Lv." + AttrParams[1];
+            if (!AttrType.Equals("RoleAttrImpactBaseAttr") && !AttrType.Equals("RoleAttrImpactSetAttrByEquip"))
+            {
+                attrStr += " Lv." + AttrParams[1];
+            }
         }
 
         return attrStr;
@@ -298,7 +301,7 @@ public class ItemEquip : ItemBase
         string equipName = StrDictionary.GetFormatStr(CommonItemRecord.NameStrDict);
         if (SpSetRecord != null)
         {
-            equipName = SpSetRecord.Name + "-" + equipName;
+            equipName = StrDictionary.GetFormatStr(SpSetRecord.Name) + "-" + equipName;
         }
         return CommonDefine.GetQualityColorStr(EquipQuality) + equipName + "</color>";
     }
@@ -313,7 +316,7 @@ public class ItemEquip : ItemBase
             {
                 attackValue = CommonDefine.GetQualityColorStr(EquipQuality) + attackValue + "</color>";
             }
-            attrStr = StrDictionary.GetFormatStr((int)RoleAttrEnum.Attack, attackValue);
+            attrStr = RandomAttrs.GetAttrName(RoleAttrEnum.Attack) + " + " + attackValue;
         }
         else if (EquipItemRecord.Slot == EQUIP_SLOT.TORSO || EquipItemRecord.Slot == EQUIP_SLOT.LEGS)
         {
@@ -322,14 +325,14 @@ public class ItemEquip : ItemBase
             {
                 hpValue = CommonDefine.GetQualityColorStr(EquipQuality) + hpValue + "</color>";
             }
-            attrStr = StrDictionary.GetFormatStr((int)RoleAttrEnum.HPMax, hpValue); 
+            attrStr = RandomAttrs.GetAttrName(RoleAttrEnum.HPMax) + " + " + hpValue;
 
             string defenceValue = BaseDefence.ToString();
             if (_ExBaseDef)
             {
                 defenceValue = CommonDefine.GetQualityColorStr(EquipQuality) + defenceValue + "</color>";
             }
-            attrStr += "\n" + StrDictionary.GetFormatStr((int)RoleAttrEnum.Defense, defenceValue);
+            attrStr += "\n" + RandomAttrs.GetAttrName(RoleAttrEnum.Defense) + " + " + defenceValue;
         }
         return attrStr;
 

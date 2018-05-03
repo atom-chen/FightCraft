@@ -42,6 +42,9 @@ public enum RoleAttrEnum
     IgnoreDefenceAttack,
     FinalDamageReduse,
 
+    AllEleAtk,
+    AllResistan,
+    AllEnhance,
 
     BASE_ATTR_MAX,
 }

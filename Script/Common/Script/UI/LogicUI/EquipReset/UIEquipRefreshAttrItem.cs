@@ -105,7 +105,7 @@ public class UIEquipRefreshAttrItem : UIItemBase
         }
 
         string setCnt = string.Format(" ({0}/5)", spAttrInfo.SetEquipCnt);
-        _AttrText.text = CommonDefine.GetQualityColorStr(ITEM_QUALITY.ORIGIN) + _ItemEquip.SpSetRecord.Name + setCnt + "</color>";
+        _AttrText.text = CommonDefine.GetQualityColorStr(ITEM_QUALITY.ORIGIN) + StrDictionary.GetFormatStr(_ItemEquip.SpSetRecord.Name) + setCnt + "</color>";
     }
 
     private void ClearItem()

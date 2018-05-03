@@ -3,6 +3,7 @@ guid: 9e225432e6fd5834ca6c740b5069eb23
 timeCreated: 1495678969
 licenseType: Pro
 NativeFormatImporter:
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: scene/depend_navmesh manager
+  assetBundleVariant: common

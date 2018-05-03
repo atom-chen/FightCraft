@@ -103,4 +103,14 @@ public class RoleAttrImpactSetAttrByEquip : RoleAttrImpactBase
         }
         return equipEx;
     }
+
+    public static string GetAttrDesc(List<int> attrParams)
+    {
+        List<int> copyAttrs = new List<int>(attrParams);
+        int attrDescID = copyAttrs[0];
+        var attrTab = Tables.TableReader.AttrValue.GetRecord(attrDescID.ToString());
+        var value1 = GameDataValue.ConfigIntToFloat(attrTab.AttrParams[1]);
+        var strFormat = StrDictionary.GetFormatStr(160000, GameDataValue.ConfigFloatToPersent(value1));
+        return strFormat;
+    }
 }

@@ -232,6 +232,31 @@ public class RoleData : SaveItemBase
         int finalDamageReduse = (int)(vitality * GameDataValue._FinalDmgRedusePerVit);
         roleAttr.AddValue(RoleAttrEnum.HPMax, hpByVitality);
         roleAttr.AddValue(RoleAttrEnum.FinalDamageReduse, finalDamageReduse);
+
+        var allEleAtk = roleAttr.GetValue(RoleAttrEnum.AllEleAtk);
+        if (allEleAtk > 0)
+        {
+            roleAttr.AddValue(RoleAttrEnum.FireAttackAdd, allEleAtk);
+            roleAttr.AddValue(RoleAttrEnum.ColdAttackAdd, allEleAtk);
+            roleAttr.AddValue(RoleAttrEnum.LightingAttackAdd, allEleAtk);
+            roleAttr.AddValue(RoleAttrEnum.WindAttackAdd, allEleAtk);
+        }
+        var allEleResist = roleAttr.GetValue(RoleAttrEnum.AllResistan);
+        if (allEleResist > 0)
+        {
+            roleAttr.AddValue(RoleAttrEnum.FireResistan, allEleResist);
+            roleAttr.AddValue(RoleAttrEnum.ColdResistan, allEleResist);
+            roleAttr.AddValue(RoleAttrEnum.LightingResistan, allEleResist);
+            roleAttr.AddValue(RoleAttrEnum.WindResistan, allEleResist);
+        }
+        var allEleEnhance = roleAttr.GetValue(RoleAttrEnum.AllEnhance);
+        if (allEleEnhance > 0)
+        {
+            roleAttr.AddValue(RoleAttrEnum.FireEnhance, allEleEnhance);
+            roleAttr.AddValue(RoleAttrEnum.ColdEnhance, allEleEnhance);
+            roleAttr.AddValue(RoleAttrEnum.LightingEnhance, allEleEnhance);
+            roleAttr.AddValue(RoleAttrEnum.WindEnhance, allEleEnhance);
+        }
     }
 
     #endregion

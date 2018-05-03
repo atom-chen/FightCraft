@@ -21,6 +21,9 @@ public class GameCore : MonoBehaviour
     {
         Tables.TableReader.ReadTables();
         UILogin.ShowAsyn();
+
+        AssetBundles.AssetBundleManager.SetAssetBundlePath();
+        AssetBundles.AssetBundleManager.Initialize();
     }
 
     public void Update()

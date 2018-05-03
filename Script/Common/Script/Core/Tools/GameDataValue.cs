@@ -986,7 +986,9 @@ public class GameDataValue
 
     public static int _EquipMatDropBase = 100;
     public static int _DropMatLevel = 50;
-    public static int _ConsumeOnTime = 50;
+    public static int _ConsumeOneTime = 6;
+    public static int _DestoryEquipMat = 5;
+    public static float _ComsumeDiamondFixed = 0.1f;
 
     public static float _LevelParam = 0.01f;
     public static int _NormalMatBase = 2500;
@@ -1036,7 +1038,12 @@ public class GameDataValue
 
     public static int GetEquipLvUpConsume(ItemEquip equip)
     {
-        return _ConsumeOnTime;
+        return Mathf.CeilToInt(_ConsumeOneTime * equip.EquipLevel * 0.1f);
+    }
+
+    public static int GetEquipLvUpConsumeDiamond(ItemEquip equip)
+    {
+        return Mathf.CeilToInt(GetEquipLvUpConsume(equip) * _ComsumeDiamondFixed);
     }
 
     public static int GetDestoryGetMatCnt(ItemEquip equip)
@@ -1044,22 +1051,28 @@ public class GameDataValue
         if (equip.EquipLevel < _DropMatLevel)
             return 0;
 
+        int destoryMatCnt = _DestoryEquipMat * equip.EquipLevel;
+
         if (equip.EquipLevel < 100)
         {
             if (equip.EquipQuality == ITEM_QUALITY.PURPER)
-                return Mathf.CeilToInt(_ConsumeOnTime * 0.8f);
+                destoryMatCnt = Mathf.CeilToInt(destoryMatCnt * 0.08f);
             else if (equip.EquipQuality == ITEM_QUALITY.ORIGIN)
-                return _ConsumeOnTime * 3;
+                destoryMatCnt = Mathf.CeilToInt(destoryMatCnt * 0.3f);
+            else
+                destoryMatCnt = Mathf.CeilToInt(destoryMatCnt * 0.03f);
         }
         else
         {
             if (equip.EquipQuality == ITEM_QUALITY.PURPER)
-                return _ConsumeOnTime;
+                destoryMatCnt = Mathf.CeilToInt(destoryMatCnt * 0.1f);
             else if (equip.EquipQuality == ITEM_QUALITY.ORIGIN)
-                return _ConsumeOnTime * 5;
+                destoryMatCnt = Mathf.CeilToInt(destoryMatCnt * 0.5f);
+            else
+                destoryMatCnt = Mathf.CeilToInt(destoryMatCnt * 0.04f);
         }
 
-        return 0;
+        return destoryMatCnt;
     }
     #endregion
 
@@ -1101,13 +1114,13 @@ public class GameDataValue
         switch (motionType)
         {
             case MOTION_TYPE.Normal:
-                dropCnt = GetDropCnt(Mathf.CeilToInt(_NormalGemBase * level * _LevelParam));
+                dropCnt = GetDropCnt(Mathf.CeilToInt(_NormalGemBase * level * _LevelGemParam));
                 break;
             case MOTION_TYPE.Elite:
-                dropCnt = GetDropCnt(Mathf.CeilToInt(_EliteGemBase * level * _LevelParam));
+                dropCnt = GetDropCnt(Mathf.CeilToInt(_EliteGemBase * level * _LevelGemParam));
                 break;
             case MOTION_TYPE.Hero:
-                dropCnt = GetDropCnt(Mathf.CeilToInt(_BossGemBase * level * _LevelParam));
+                dropCnt = GetDropCnt(Mathf.CeilToInt(_BossGemBase * level * _LevelGemParam));
                 break;
         }
 
@@ -1116,7 +1129,20 @@ public class GameDataValue
 
     public static int GetGemConsume(int level)
     {
-        int consumeCnt = Mathf.CeilToInt( _GemConsumeV  + _GemConsumeA * level);
+        int consumeCnt = 0;
+        if (level <= 5)
+        {
+            consumeCnt = Mathf.CeilToInt(_GemConsumeV + _GemConsumeA * level);
+        }
+        else
+        {
+            int pow = (level - 5);
+            int preConsumeBase = Mathf.CeilToInt(_GemConsumeV + _GemConsumeA * 5);
+            float prePow = Mathf.Pow(1.5f, pow);
+            consumeCnt = Mathf.CeilToInt(preConsumeBase * prePow);
+
+        }
+        //consumeCnt = Mathf.CeilToInt( _GemConsumeV  + _GemConsumeA * level);
         return consumeCnt;
     }
 
