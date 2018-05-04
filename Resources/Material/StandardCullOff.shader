@@ -324,5 +324,5 @@ Shader "TYImage/Standard(Specular)CullOff"
 	}
 
 	FallBack "VertexLit"
-	CustomEditor "StandardShaderGUI"
+	//CustomEditor "StandardShaderGUI"
 }

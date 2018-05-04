@@ -4,9 +4,15 @@ using Tables;
 using UnityEngine;
 
 public class TestFight : MonoBehaviour
-{	
-	// Update is called once per frame
-	void Update ()
+{
+    #region 
+
+    public TestFight _Instance = null;
+
+    #endregion
+
+    // Update is called once per frame
+    void Update ()
     {
         //if (_EnemyMotion == null)
         {
@@ -29,6 +35,8 @@ public class TestFight : MonoBehaviour
         InputManager.Instance._EmulateMode = true;
         _NormalAttack = gameObject.GetComponentInChildren<ObjMotionSkillAttack>();
         InitDefence();
+
+        _Instance = this;
     }
 
     #region find target
@@ -82,6 +90,26 @@ public class TestFight : MonoBehaviour
     private float _CloseRange = 2.0f;
     private int _RandomSkillIdx = 0;
     private ObjMotionSkillAttack _NormalAttack;
+    private int _WeaponSkill = -1;
+
+    private void InitWeaponSkill()
+    {
+        if (_WeaponSkill != -1)
+            return;
+
+        var weaponItem = RoleData.SelectRole.GetEquipItem(EQUIP_SLOT.WEAPON);
+        if (weaponItem == null || !weaponItem.IsVolid())
+            return;
+
+        foreach (var exAttrItem in weaponItem.EquipExAttr)
+        {
+            if (exAttrItem.AttrType != "RoleAttrImpactBaseAttr")
+            {
+                var attrTab = TableReader.AttrValue.GetRecord(exAttrItem.AttrParams[0].ToString());
+                _WeaponSkill = int.Parse(attrTab.StrParam[1]);
+            }
+        }
+    }
 
     private void CloseUpdate()
     {
@@ -126,6 +154,8 @@ public class TestFight : MonoBehaviour
         if (_EnemyMotion.IsMotionDie)
             return false;
 
+        InitWeaponSkill();
+
         if (FightManager.Instance.MainChatMotion.ActingSkill == null)
         {
             ++_RandomSkillIdx;
@@ -140,7 +170,14 @@ public class TestFight : MonoBehaviour
 
         else if (FightManager.Instance.MainChatMotion.ActingSkill == _NormalAttack)
         {
-            if (_NormalAttack.CurStep > 0 && _NormalAttack.CurStep == _RandomSkillIdx)
+            if (_WeaponSkill > 0)
+            {
+                if (_NormalAttack.CurStep > 0 && _NormalAttack.CurStep == _WeaponSkill)
+                {
+                    InputManager.Instance.SetEmulatePress("k");
+                }
+            }
+            else if (_NormalAttack.CurStep > 0 && _NormalAttack.CurStep == _RandomSkillIdx)
             {
                 //if (_NormalAttack.CanNextInput)
                 {
@@ -270,4 +307,5 @@ public class TestFight : MonoBehaviour
     }
 
     #endregion
+
 }

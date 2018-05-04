@@ -53,6 +53,9 @@ public class SkillData : SaveItemBase
 
     private bool InitSkill()
     {
+        if (Tables.TableReader.SkillInfo == null)
+            return false;
+
         Debug.Log("_SkillItems:" + _SkillItems.Count);
         bool isNeedSave = false;
         _ProfessionSkills = new List<ItemSkill>();

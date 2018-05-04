@@ -12,7 +12,7 @@ public class ObjMotionSkillDefence : ObjMotionSkillBase
     void Update()
     {
         _DefenceTime -= Time.deltaTime;
-        if (_DefenceTime <= 0 && !InputManager.Instance.IsKeyHold("7"))
+        if (_DefenceTime <= 0 && !InputManager.Instance.IsKeyHold("l"))
         {
             ResumeKeyFrame();
         }
@@ -39,9 +39,9 @@ public class ObjMotionSkillDefence : ObjMotionSkillBase
     {
         switch (function)
         {
-            //case AnimEventManager.ANIMATION_END:
-            //    PlayerNextAnim();
-            //    break;
+            case AnimEventManager.ANIMATION_END:
+                PlayerNextAnim();
+                break;
             case AnimEventManager.COLLIDER_START:
                 ColliderStart(param);
                 break;
@@ -49,13 +49,14 @@ public class ObjMotionSkillDefence : ObjMotionSkillBase
                 ColliderEnd(param);
                 break;
             case AnimEventManager.KEY_FRAME:
+                KeyFrame();
                 break;
         }
     }
 
     private void KeyFrame()
     {
-        if (!InputManager.Instance.IsKeyHold("7"))
+        if (!InputManager.Instance.IsKeyHold("l"))
         {
             return;
         }

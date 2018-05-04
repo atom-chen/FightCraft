@@ -5,7 +5,9 @@ using System.Collections.Generic;
 public class BulletBase : MonoBehaviour
 {
     public bool _IsBulletHitLie;
-    public int _BornAudio;
+    public int _BornAudio = -1;
+    public int _HitAudio = -1;
+    public int _NoHitAudio = -1;
     protected ImpactBase[] _ImpactList;
     protected MotionManager _SkillMotion;
     public MotionManager SkillMotion
@@ -43,4 +45,25 @@ public class BulletBase : MonoBehaviour
     {
         ResourcePool.Instance.RecvIldeBullet(this);
     }
+
+    #region autio
+
+    private AudioSource _AudioSource;
+    public AudioSource AudioSource
+    {
+        get
+        {
+            if (_AudioSource == null)
+            {
+                _AudioSource = gameObject.GetComponent<AudioSource>();
+                if (_AudioSource == null)
+                {
+                    _AudioSource = gameObject.AddComponent<AudioSource>();
+                }
+            }
+            return _AudioSource;
+        }
+    }
+
+    #endregion
 }

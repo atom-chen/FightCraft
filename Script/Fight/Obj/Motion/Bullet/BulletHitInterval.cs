@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class BulletHitInterval : BulletBase
 {
+
     public GameObject _HitObj;
     public float _AlertTime = 0.6f;
     public float _AlertSize = 0.6f;
@@ -25,6 +26,7 @@ public class BulletHitInterval : BulletBase
         _Collider = gameObject.GetComponent<Collider>();
         _LiftTime = _StayTime;
         _LastHitTime = 0;
+        ClearHitFlag();
 
         StartCoroutine(StartHit());
     }
@@ -78,6 +80,7 @@ public class BulletHitInterval : BulletBase
 
     IEnumerator CalculateHit()
     {
+        ClearHitFlag();
         _Collider.enabled = true;
         if (_RestartHitObj)
         {
@@ -87,6 +90,7 @@ public class BulletHitInterval : BulletBase
 
         yield return new WaitForFixedUpdate();
 
+        PlayNoHitAudio();
         _Collider.enabled = false;
     }
     
@@ -100,6 +104,41 @@ public class BulletHitInterval : BulletBase
             return;
 
         BulletHit(targetMotion);
+        PlayHitAudio();
     }
 
+    #region hit autio
+
+    public bool _IsPlayedHitAudio = false;
+
+    public void PlayHitAudio()
+    {
+        if (_IsPlayedHitAudio)
+            return;
+
+        if (_HitAudio < 0)
+            return;
+
+        AudioSource.PlayOneShot(ResourcePool.Instance._CommonAudio[_HitAudio]);
+        _IsPlayedHitAudio = true;
+    }
+
+    public void PlayNoHitAudio()
+    {
+        if (_IsPlayedHitAudio)
+            return;
+
+        if (_NoHitAudio < 0)
+            return;
+
+        AudioSource.PlayOneShot(ResourcePool.Instance._CommonAudio[_NoHitAudio]);
+        _IsPlayedHitAudio = true;
+    }
+
+    public void ClearHitFlag()
+    {
+        _IsPlayedHitAudio = false;
+    }
+
+    #endregion
 }
