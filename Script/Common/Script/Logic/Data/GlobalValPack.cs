@@ -28,5 +28,48 @@ public class GlobalValPack : DataPackBase
 
     #endregion
 
+    #region sys setting
+
+    [SaveField(1)]
+    private bool _IsShowShadow = true;
+    public bool IsShowShadow
+    {
+        get
+        {
+            return _IsShowShadow;
+        }
+        set
+        {
+            if (_IsShowShadow != value)
+            {
+                _IsShowShadow = value;
+                GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_SYSTEMSETTING_CHANGE, this, null);
+                SaveClass(false);
+            }
+        }
+    }
+
+    [SaveField(2)]
+    private float _Volume = 1;
+    public float Volume
+    {
+        get
+        {
+            return _Volume;
+        }
+        set
+        {
+            if (_Volume != value)
+            {
+                _Volume = value;
+                GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_SYSTEMSETTING_CHANGE, this, null);
+                SaveClass(false);
+            }
+        }
+    }
+    
+
+    #endregion
+
 }
 

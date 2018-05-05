@@ -126,6 +126,11 @@ public class UIMainFun : UIBase
     {
         UIAchievement.ShowAsyn();
     }
+
+    public void BtnSetting()
+    {
+        UISystemSetting.ShowAsyn();
+    }
     #endregion
 }
 

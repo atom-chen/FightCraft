@@ -31,6 +31,8 @@ public class UIFuncInFight : UIBase
 
     public override void Destory()
     {
+        base.Destory();
+
         GameCore.Instance.EventController.UnRegisteEvent(EVENT_TYPE.EVENT_LOGIC_PASS_STAGE, EventDelegate);
     }
 
