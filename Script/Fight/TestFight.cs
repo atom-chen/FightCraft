@@ -255,16 +255,12 @@ public class TestFight : MonoBehaviour
             bool changeEquip = false;
             if (equipedItem.IsVolid())
             {
-                if (itemEquip.EquipQuality == ITEM_QUALITY.ORIGIN)
+                if (itemEquip.EquipItemRecord.Slot == EQUIP_SLOT.WEAPON)
                 {
-                    //int levelDelta = itemEquip.EquipLevel - equipedItem.EquipLevel;
-                    //if (levelDelta > 10)
-                    //{
-                    //    changeEquip = true;
-                    //}
-                    Debug.Log("Drop Origin Equip");
+                    if (itemEquip.BaseAttack > equipedItem.BaseAttack)
+                        changeEquip = true;
                 }
-                //else
+                else
                 {
                     if (itemEquip.CombatValue > equipedItem.CombatValue)
                         changeEquip = true;
@@ -282,8 +278,12 @@ public class TestFight : MonoBehaviour
         }
 
         //destory
+        ItemEquip storeWeapon = null;
         foreach (var itemEquip in BackBagPack.Instance.PageEquips)
         {
+            if (!itemEquip.IsVolid())
+                continue;
+
             if (itemEquip.EquipQuality == ITEM_QUALITY.ORIGIN)
             {
                 if (!LegendaryData.Instance.IsCollect(itemEquip))
@@ -302,8 +302,127 @@ public class TestFight : MonoBehaviour
                 }
             }
 
+            if (itemEquip.EquipItemRecord.Slot == EQUIP_SLOT.WEAPON && itemEquip.RequireLevel > RoleData.SelectRole._RoleLevel)
+            {
+                if (storeWeapon == null)
+                {
+                    storeWeapon = itemEquip;
+                    continue;
+                }
+                else if(storeWeapon.BaseAttack < itemEquip.BaseAttack)
+                {
+                    ShopData.Instance.SellItem(storeWeapon, false);
+                    storeWeapon = itemEquip;
+                    continue;
+                }
+            }
+
             ShopData.Instance.SellItem(itemEquip, false);
         }
+    }
+
+    public static void DelLevel()
+    {
+        while (RoleData.SelectRole.UnDistrubutePoint > 0)
+        {
+            RoleData.SelectRole.DistributePoint(1, 1);
+        }
+
+        //SkillData.Instance.SkillLevelUp
+    }
+
+    public static void DelSkill(int type)
+    {
+        var skillID = GetTestSkill(type);
+        var skillData = SkillData.Instance.GetSkillInfo(skillID.ToString());
+        if (skillData.SkillRecord.CostStep[0] == (int)MONEYTYPE.GOLD)
+        {
+            int costValue = GameDataValue.GetSkillLvUpGold(skillData.SkillRecord.CostStep[1], skillData.SkillLevel);
+            if (!PlayerDataPack.Instance.DecGold(costValue))
+                return;
+        }
+        else
+        {
+            int costValue = skillData.SkillRecord.CostStep[1];
+            if (!PlayerDataPack.Instance.DecDiamond(costValue))
+                return;
+        }
+        skillData.LevelUp();
+    }
+
+    public static int GetTestSkill(int type)
+    {
+        int skillID = 0;
+        if (RoleData.SelectRole.Profession == PROFESSION.BOY_DEFENCE
+            || RoleData.SelectRole.Profession == PROFESSION.BOY_DOUGE)
+        {
+            switch (type)
+            {
+                case 0:
+                    skillID = 10001;
+                    break;
+                case 1:
+                    skillID = 10002;
+                    break;
+                case 2:
+                    skillID = 10003;
+                    break;
+                case 3:
+                    skillID = 10004;
+                    break;
+            }
+        }
+        else
+        {
+            switch (type)
+            {
+                case 0:
+                    skillID = 10005;
+                    break;
+                case 1:
+                    skillID = 10006;
+                    break;
+                case 2:
+                    skillID = 10007;
+                    break;
+                case 3:
+                    skillID = 10008;
+                    break;
+            }
+        }
+
+        return skillID;
+    }
+
+    public static void DelRefresh()
+    {
+        var weaponItem = RoleData.SelectRole.GetEquipItem(EQUIP_SLOT.WEAPON);
+        if (weaponItem == null)
+            return;
+
+        EquipRefresh.Instance.EquipRefreshMat(weaponItem, true);
+    }
+
+    public static void DelGem()
+    {
+        var gemInfo = GemData.Instance.GetGemInfo("70000");
+        GemData.Instance.GemLevelUp(gemInfo);
+
+        gemInfo = GemData.Instance.GetGemInfo("70009");
+        GemData.Instance.GemLevelUp(gemInfo);
+
+        gemInfo = GemData.Instance.GetGemInfo("70011");
+        GemData.Instance.GemLevelUp(gemInfo);
+
+        gemInfo = GemData.Instance.GetGemInfo("70007");
+        GemData.Instance.GemLevelUp(gemInfo);
+
+        gemInfo = GemData.Instance.GetGemInfo("70016");
+        GemData.Instance.GemLevelUp(gemInfo);
+
+        gemInfo = GemData.Instance.GetGemInfo("70004");
+        GemData.Instance.GemLevelUp(gemInfo);
+
     }
 
     #endregion

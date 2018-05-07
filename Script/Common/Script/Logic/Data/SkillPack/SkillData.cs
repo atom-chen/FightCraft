@@ -237,6 +237,19 @@ public class SkillData : SaveItemBase
         return skillItem;
     }
 
+    public ItemSkill GetSkillByInput(string skillInput)
+    {
+        var skillItem = ProfessionSkills.Find((skillInfo) =>
+        {
+            if (skillInfo.SkillRecord.SkillInput == skillInput)
+            {
+                return true;
+            }
+            return false;
+        });
+        return skillItem;
+    }
+
     public void SkillLevelUp(string skillID)
     {
         //cost

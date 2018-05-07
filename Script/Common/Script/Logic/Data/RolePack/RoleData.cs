@@ -89,7 +89,10 @@ public class RoleData : SaveItemBase
             return false;
 
         if (equipItem.RequireLevel > _RoleLevel)
+        {
+            Debug.Log("EquipLevel:"+ equipItem.RequireLevel + ", " + _RoleLevel);
             return false;
+        }
 
         if (equipItem.EquipItemRecord.ProfessionLimit > 0 &&
             ((equipItem.EquipItemRecord.ProfessionLimit >> (int)Profession) & 1) == 0)

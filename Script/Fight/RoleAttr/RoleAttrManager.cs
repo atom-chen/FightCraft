@@ -602,6 +602,8 @@ public class RoleAttrManager : MonoBehaviour
             //DamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, ShowDamageType.Normal, 1);
         }
 
+        Debug.Log("DamageValue:" + damageClass.TotalDamageValue);
+
         DamageHP(damageClass.TotalDamageValue + damageClass.AttachDamageValue);
 
         if (sender == FightManager.Instance.MainChatMotion.RoleAttrManager)
@@ -610,7 +612,7 @@ public class RoleAttrManager : MonoBehaviour
         }
     }
 
-    private void CalculateNormalDamage(RoleAttrManager sender, Hashtable resultHash, DamageClass damageClass)
+    public void CalculateNormalDamage(RoleAttrManager sender, Hashtable resultHash, DamageClass damageClass)
     {
         var impactDamage = (ImpactBase)resultHash["ImpactBase"] as ImpactDamage;
         float damageRate = (float)resultHash["SkillDamageRate"];
@@ -646,7 +648,7 @@ public class RoleAttrManager : MonoBehaviour
         int coldAttack = sender._BaseAttr.GetValue(RoleAttrEnum.ColdAttackAdd);
         if (damageType == ElementType.Cold)
         {
-            coldAttack += (int)(attackValue * damageRate);
+            coldAttack += (int)(attackValue);
             damageClass.NormalDamageValue = 0;
         }
         if (coldAttack > 0)
@@ -660,7 +662,7 @@ public class RoleAttrManager : MonoBehaviour
         int lightingAttack = sender._BaseAttr.GetValue(RoleAttrEnum.LightingAttackAdd);
         if (damageType == ElementType.Lighting)
         {
-            lightingAttack += (int)(attackValue * damageRate);
+            lightingAttack += (int)(attackValue);
             damageClass.NormalDamageValue = 0;
         }
         if (lightingAttack > 0)
@@ -674,7 +676,7 @@ public class RoleAttrManager : MonoBehaviour
         int windAttack = sender._BaseAttr.GetValue(RoleAttrEnum.WindAttackAdd);
         if (damageType == ElementType.Wind)
         {
-            windAttack += (int)(attackValue * damageRate);
+            windAttack += (int)(attackValue);
             damageClass.NormalDamageValue = 0;
         }
         if (windAttack > 0)
@@ -688,7 +690,7 @@ public class RoleAttrManager : MonoBehaviour
         if (damageType == ElementType.Physic)
         {
             int phyEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.PhysicDamageEnhance);
-            var phyDamage = GameDataValue.GetPhyDamage(attackValue, damageRate, attackValue, defenceValue, sender.Level);
+            var phyDamage = GameDataValue.GetPhyDamage(attackValue, damageRate, phyEnhance, defenceValue, sender.Level);
             damageClass.NormalDamageValue = Mathf.Max(phyDamage, 0);
             
         }
@@ -698,7 +700,7 @@ public class RoleAttrManager : MonoBehaviour
         damageClass.NormalDamageValue += ignoreDaamge;
     }
 
-    private bool CaculateCriticleHit(RoleAttrManager sender, Hashtable resultHash, DamageClass damageClass)
+    public bool CaculateCriticleHit(RoleAttrManager sender, Hashtable resultHash, DamageClass damageClass)
     {
         var criticleRate = _BaseAttr.GetValue(RoleAttrEnum.CriticalHitChance);
         var criticleDamage = _BaseAttr.GetValue(RoleAttrEnum.CriticalHitDamge);
@@ -731,14 +733,14 @@ public class RoleAttrManager : MonoBehaviour
         return false;
     }
 
-    private void CaculateFinalDamage(RoleAttrManager sender, Hashtable resultHash, DamageClass damageClass)
+    public void CaculateFinalDamage(RoleAttrManager sender, Hashtable resultHash, DamageClass damageClass)
     {
         damageClass.TotalDamageValue = damageClass.FireDamage + damageClass.IceDamage + damageClass.LightingDamage + damageClass.WindDamage + damageClass.NormalDamageValue;
         damageClass.TotalDamageValue -= _BaseAttr.GetValue(RoleAttrEnum.FinalDamageReduse);
         damageClass.TotalDamageValue = Mathf.Max(damageClass.TotalDamageValue, 0);
     }
 
-    private void CaculateAttachDamage(RoleAttrManager sender, Hashtable resultHash, DamageClass damageClass)
+    public void CaculateAttachDamage(RoleAttrManager sender, Hashtable resultHash, DamageClass damageClass)
     {
         //if (!resultHash.ContainsKey("ImpactBase"))
         //    return;

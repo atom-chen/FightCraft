@@ -1072,7 +1072,7 @@ public class GameDataValue
                 destoryMatCnt = Mathf.CeilToInt(destoryMatCnt * 0.04f);
         }
 
-        return destoryMatCnt;
+        return destoryMatCnt + equip.EquipRefreshCostMatrial;
     }
     #endregion
 
@@ -1250,6 +1250,36 @@ public class GameDataValue
     {
         int atk = (int)(roleLv * roleLv * _MonsterAtkParam * monsterBase.BaseAttr[1] + monsterBase.BaseAttr[1]);
         return atk;
+    }
+
+    #endregion
+
+    #region test 
+
+    public static float GetSkillDamageRate(int skillIdx)
+    {
+        var attackRecord = Tables.TableReader.SkillInfo.GetRecord("10001");
+        var skillRecord = Tables.TableReader.SkillInfo.GetRecord(skillIdx.ToString());
+        var atkData = SkillData.Instance.GetSkillInfo("10001");
+        var skillData = SkillData.Instance.GetSkillInfo(skillIdx.ToString());
+        var atkDamage = GameDataValue.ConfigIntToFloat(GameDataValue.GetSkillDamageRate(atkData.SkillLevel, attackRecord.EffectValue));
+        var skillDamage = GameDataValue.ConfigIntToFloat(GameDataValue.GetSkillDamageRate(skillData.SkillLevel, skillRecord.EffectValue));
+
+        if (skillIdx == 1)
+        {
+            atkDamage *= 0.33f;
+        }
+        else if (skillIdx == 2)
+        {
+            atkDamage *= 0.54f;
+        }
+        else if (skillIdx == 3)
+        {
+            atkDamage *= 0.75f;
+        }
+
+        float damage = atkDamage + skillDamage;
+        return damage;
     }
 
     #endregion

@@ -65,14 +65,18 @@ public class EquipRefresh : DataPackBase
         return costRecord;
     }
 
-    public void EquipRefreshMat(ItemEquip itemEquip)
+    public void EquipRefreshMat(ItemEquip itemEquip, bool needTip = true)
     {
         var refreshCost = GetEquipRefreshCost(itemEquip);
 
         var matCnt = BackBagPack.Instance.GetItemCnt(_RefreshMatDataID);
-        if (matCnt < refreshCost._MatCnt)
+        if ( matCnt < refreshCost._MatCnt)
         {
-            UIMessageTip.ShowMessageTip(30003);
+            if (needTip)
+            {
+                UIMessageTip.ShowMessageTip(30003);
+            }
+            return;
         }
 
         if (!PlayerDataPack.Instance.DecGold(refreshCost._CostGold))
