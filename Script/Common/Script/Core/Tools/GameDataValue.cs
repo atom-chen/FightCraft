@@ -477,6 +477,8 @@ public class GameDataValue
             valueAttrs[i].AttrParams[1] = GetValueAttr(attrEnums[i], valueAttrs[i].Value);
             increaseValue -= randomIncValue;
         }
+
+        itemEquip.RefreshEquip();
     }
 
     public static float GetExAttrPersent(ItemEquip itemEquip, EquipExAttr exAttr)
@@ -883,21 +885,27 @@ public class GameDataValue
         if (dropLevel > _MaxLv)
             return _MaxLv;
         var levelGroup = dropLevel / 5;
-        var baseLevel = levelGroup * 5;
+        var baseLevel = (levelGroup - 1) * 5;
+        int equipLv = 0;
         switch (equipSlot)
         {
             case EQUIP_SLOT.WEAPON:
-                return baseLevel + _EqiupLvWeapon;
+                equipLv = baseLevel + _EqiupLvWeapon;
+                break;
             case EQUIP_SLOT.TORSO:
-                return baseLevel + _EqiupLvTorso;
+                equipLv = baseLevel + _EqiupLvTorso;
+                break;
             case EQUIP_SLOT.LEGS:
-                return baseLevel + _EqiupLvShoes;
+                equipLv = baseLevel + _EqiupLvShoes;
+                break;
             case EQUIP_SLOT.RING:
-                return baseLevel + _EqiupLvRing;
+                equipLv = baseLevel + _EqiupLvRing;
+                break;
             case EQUIP_SLOT.AMULET:
-                return baseLevel + _EqiupLvAmulate;
+                equipLv = baseLevel + _EqiupLvAmulate;
+                break;
         }
-        return dropLevel;
+        return Mathf.Clamp(equipLv, 1, _MaxLv);
     }
 
     public static List<ItemEquip> GetMonsterDropEquip(MOTION_TYPE motionType, MonsterBaseRecord monsterRecord, int level, int dropActType = 1)
@@ -985,7 +993,7 @@ public class GameDataValue
     #region equip material
 
     public static int _EquipMatDropBase = 100;
-    public static int _DropMatLevel = 50;
+    public static int _DropMatLevel = 30;
     public static int _ConsumeOneTime = 6;
     public static int _DestoryEquipMat = 5;
     public static float _ComsumeDiamondFixed = 0.1f;
@@ -1080,7 +1088,7 @@ public class GameDataValue
 
     public static float _GemConsumeV = 10;
     public static float _GemConsumeA = 5;
-    public static int _DropGemLevel = 30;
+    public static int _DropGemLevel = 10;
 
     public static float _LevelGemParam = 0.01f;
     public static int _NormalGemBase = 800;

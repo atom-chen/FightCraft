@@ -226,7 +226,7 @@ public class GemData : SaveItemBase
 
         GemLevelInfo lvInfo = new GemLevelInfo();
         lvInfo.MaterialData = gemRecord.LevelUpParam.ToString();
-        lvInfo.MaterialCnt = (2 ^ gemItemBase.ItemStackNum) * 6;
+        lvInfo.MaterialCnt = GameDataValue.GetGemConsume(gemItemBase.Level);
         lvInfo.CostMoney = (2 ^ gemItemBase.ItemStackNum) * 1200;
 
         return lvInfo;
@@ -273,11 +273,21 @@ public class GemData : SaveItemBase
         if (lvInfo == null)
             lvInfo = GetGemLevelUpInfo(gemItemBase);
 
+        var matItempre = BackBagPack.Instance.GetItem(lvInfo.MaterialData);
+        if (matItempre == null)
+        {
+            //Debug.Log("matItempre is null");
+        }
+
         if (!IsCanLevelUp(gemItemBase, lvInfo))
             return false;
 
         PlayerDataPack.Instance.DecGold(lvInfo.CostMoney);
         var matItem = BackBagPack.Instance.GetItem(lvInfo.MaterialData);
+        if (matItem == null)
+        {
+            Debug.Log("matItempre is null: " + lvInfo.MaterialData + "," + BackBagPack.Instance.GetItemCnt(lvInfo.MaterialData) + "," + lvInfo.MaterialCnt);
+        }
         matItem.DecStackNum(lvInfo.MaterialCnt);
 
         lvUpGem.LevelUp();

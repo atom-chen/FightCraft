@@ -65,8 +65,11 @@ public class EquipRefresh : DataPackBase
         return costRecord;
     }
 
-    public void EquipRefreshMat(ItemEquip itemEquip, bool needTip = true)
+    public bool EquipRefreshMat(ItemEquip itemEquip, bool needTip = true)
     {
+        if (itemEquip.EquipQuality == ITEM_QUALITY.WHITE)
+            return false;
+
         var refreshCost = GetEquipRefreshCost(itemEquip);
 
         var matCnt = BackBagPack.Instance.GetItemCnt(_RefreshMatDataID);
@@ -76,12 +79,12 @@ public class EquipRefresh : DataPackBase
             {
                 UIMessageTip.ShowMessageTip(30003);
             }
-            return;
+            return false;
         }
 
         if (!PlayerDataPack.Instance.DecGold(refreshCost._CostGold))
         {
-            return;
+            return false;
         }
         BackBagPack.Instance.DecItem(_RefreshMatDataID, refreshCost._MatCnt);
 
@@ -91,6 +94,8 @@ public class EquipRefresh : DataPackBase
         Hashtable hash = new Hashtable();
         hash.Add("EquipInfo", itemEquip);
         GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_EQUIP_REFRESH, this, hash);
+
+        return true;
     }
 
     public void EquipRefreshDiamond(ItemEquip itemEquip)

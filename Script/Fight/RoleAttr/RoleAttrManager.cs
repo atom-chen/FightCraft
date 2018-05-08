@@ -698,6 +698,7 @@ public class RoleAttrManager : MonoBehaviour
         int ignoreDAttack = sender._BaseAttr.GetValue(RoleAttrEnum.IgnoreDefenceAttack);
         int ignoreDaamge = Mathf.CeilToInt(ignoreDAttack * damageRate);
         damageClass.NormalDamageValue += ignoreDaamge;
+
     }
 
     public bool CaculateCriticleHit(RoleAttrManager sender, Hashtable resultHash, DamageClass damageClass)

@@ -106,6 +106,24 @@ public class CommonTool : Editor
         }
     }
 
+    [MenuItem("TyTools/Test/GemMat")]
+    public static void GemMat()
+    {
+        List<int> _GemMat = new List<int>();
+        foreach (var gemSetRecordA in Tables.TableReader.GemSet.Records.Values)
+        {
+            _GemMat.Clear();
+            foreach (var gemRecord in gemSetRecordA.Gems)
+            {
+                if (!_GemMat.Contains(gemRecord.LevelUpParam))
+                {
+                    _GemMat.Add(gemRecord.LevelUpParam);
+                }
+            }
+            Debug.Log("GemSet cost mat typeCnt:" + _GemMat.Count);
+        }
+    }
+
     public static void GemSetCriticTableTest(Tables.GemSetRecord gemSetA, Tables.GemSetRecord gemSetB)
     {
         foreach (var gem in gemSetA.Gems)

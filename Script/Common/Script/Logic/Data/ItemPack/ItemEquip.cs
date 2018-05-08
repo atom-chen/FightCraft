@@ -497,6 +497,13 @@ public class ItemEquip : ItemBase
         }
     }
 
+    public void RefreshEquip()
+    {
+        _BaseAttack = -1;
+        _BaseHP = -1;
+        _BaseDefence = -1;
+    }
+
     private int _RequireLevel = -1;
     public int RequireLevel
     {

@@ -257,8 +257,15 @@ public class TestFight : MonoBehaviour
             {
                 if (itemEquip.EquipItemRecord.Slot == EQUIP_SLOT.WEAPON)
                 {
-                    if (itemEquip.BaseAttack > equipedItem.BaseAttack)
+                    if (itemEquip.EquipLevel > equipedItem.EquipLevel)
+                    {
                         changeEquip = true;
+                    }
+                    else if(itemEquip.EquipQuality > equipedItem.EquipQuality)
+                    {
+                        changeEquip = true;
+                    }
+                    
                 }
                 else
                 {
@@ -400,7 +407,12 @@ public class TestFight : MonoBehaviour
         if (weaponItem == null)
             return;
 
-        EquipRefresh.Instance.EquipRefreshMat(weaponItem, true);
+        while (true)
+        {
+            bool isSucess = EquipRefresh.Instance.EquipRefreshMat(weaponItem, false);
+            if (!isSucess)
+                break;
+        }
     }
 
     public static void DelGem()

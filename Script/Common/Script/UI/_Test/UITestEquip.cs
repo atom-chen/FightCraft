@@ -155,13 +155,34 @@ public class UITestEquip : UIBase
         //    Debug.Log("TotalDrop stage:" + _StageIdx  + " Exp:" + _TotalExp + ", Gold:" + _TotalGold);
         //    Debug.Log("Role Atk:" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Attack) + ", Def:" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Defense) + ", HP:" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax));
 
-        for (int diff = 1; diff < 7; ++diff)
+        for (int diff = 1; diff < 6; ++diff)
         {
             for (int stageid = 1; stageid < 21; ++stageid)
             {
                 int exp = 0;
                 int gold = 0;
                 TestPassNormalStage(stageid, diff, ref exp, ref gold);
+
+                var level = GameDataValue.GetStageLevel(diff, stageid, STAGE_TYPE.NORMAL);
+
+                RoleAttrManager roleAttr = new RoleAttrManager();
+                roleAttr.InitMainRoleAttr();
+
+                RoleAttrManager monAttr = new RoleAttrManager();
+                monAttr.InitEnemyAttr(TableReader.MonsterBase.GetRecord("21"), level);
+
+                Hashtable resultHash = new Hashtable();
+                resultHash.Add("SkillDamageRate", GameDataValue.GetSkillDamageRate(TestFight.GetTestSkill(1)));
+                resultHash.Add("DamagePos", Vector3.zero);
+                resultHash.Add("ImpactBase", new ImpactDamage() { _DamageType = ElementType.Physic});
+                resultHash.Add("DamageType", ElementType.Physic);
+
+                //damage
+                RoleAttrManager.DamageClass damageClass = new RoleAttrManager.DamageClass();
+                monAttr.CalculateNormalDamage(roleAttr, resultHash, damageClass);
+                //final
+                monAttr.CaculateFinalDamage(roleAttr, resultHash, damageClass);
+
 
                 PassStageInfo passInfo = new PassStageInfo();
                 passInfo.diff = diff;
@@ -170,17 +191,14 @@ public class UITestEquip : UIBase
                 passInfo.exp = exp;
                 passInfo.gold = gold;
                 passInfo.levelExp = GameDataValue.GetLvUpExp(passInfo.level, 0);
-                passInfo.atk = GameDataValue.GetPhyDamage(RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Attack), 1, RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.PhysicDamageEnhance), 0, passInfo.level);
-                passInfo.atk += GameDataValue.GetEleDamage(RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.FireAttackAdd), 1, RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.FireEnhance), 0);
-                passInfo.atk += GameDataValue.GetEleDamage(RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.ColdAttackAdd), 1, RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.ColdEnhance), 0); ;
-                passInfo.atk += GameDataValue.GetEleDamage(RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.LightingAttackAdd), 1, RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.LightingEnhance), 0); ;
-                passInfo.atk += GameDataValue.GetEleDamage(RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.WindAttackAdd), 1, RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.WindEnhance), 0); ;
-                passInfo.damage1 = (int)(GameDataValue.GetSkillDamageRate(TestFight.GetTestSkill(1)) * passInfo.atk);
-                passInfo.damage2 = (int)(GameDataValue.GetSkillDamageRate(TestFight.GetTestSkill(2)) * passInfo.atk);
-                passInfo.damage3 = (int)(GameDataValue.GetSkillDamageRate(TestFight.GetTestSkill(3)) * passInfo.atk);
+                passInfo.atk = RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Attack);
+                Debug.Log("Atk:" + passInfo.atk);
+                passInfo.damage1 = damageClass.TotalDamageValue;
+                passInfo.damage2 = 1;
+                passInfo.damage3 = 1;
                 passInfo.def = RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Defense);
-                passInfo.hp = RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax);
-                passInfo.monValue = GameDataValue.GetMonsterHP(TableReader.MonsterBase.GetRecord("21"), passInfo.level, MOTION_TYPE.Normal);
+                passInfo.hp = monAttr.HP;
+                passInfo.monValue = monAttr.HP;
                 passInfo.equipMat = BackBagPack.Instance.GetItemCnt(EquipRefresh._RefreshMatDataID);
                 int gemCnt = 0;
                 for (int i = 0; i < GemData._GemMaterialDataIDs.Count; ++i)
@@ -203,7 +221,7 @@ public class UITestEquip : UIBase
             //attr
             //streamWriter.WriteLine(passInfo.level + "\t" + passInfo.atk + "\t" + passInfo.monValue + "\t" + passInfo.exp + "\t" + passInfo.monValue + "\t" + passInfo.hp);
             //drop
-            streamWriter.WriteLine(passInfo.level + "\t" + passInfo.atk + "\t" + passInfo.monValue + "\t" + ((float)passInfo.monValue / passInfo.damage1) + "\t" + ((float)passInfo.monValue / passInfo.damage2) + "\t" + ((float)passInfo.monValue / passInfo.damage3));
+            streamWriter.WriteLine(passInfo.level + "\t" + passInfo.atk + "\t" + passInfo.monValue + "\t" + passInfo.damage1 + "\t" + ((float)passInfo.monValue / passInfo.damage1) + "\t" + ((float)passInfo.monValue / passInfo.damage2) + "\t" + ((float)passInfo.monValue / passInfo.damage3));
         }
         streamWriter.Close();
     }
