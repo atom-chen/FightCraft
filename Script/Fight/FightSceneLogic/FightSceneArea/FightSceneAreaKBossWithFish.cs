@@ -53,6 +53,7 @@ public class FightSceneAreaKBossWithFish : FightSceneAreaBase
 
     private void StartStep()
     {
+        _BossStepEnemyInterval = 30;
         var bossMotion = FightManager.Instance.InitEnemy(_BossMotionID, _BossBornPos.position, _BossBornPos.rotation.eulerAngles);
         AI_Base ai = bossMotion.GetComponent<AI_Base>();
         if (ai != null)

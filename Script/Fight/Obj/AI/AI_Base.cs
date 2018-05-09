@@ -26,6 +26,8 @@ public class AI_Base : MonoBehaviour
     {
         StartCoroutine(InitDelay());
         AIManager.Instance.RegistAI(this);
+
+        StartCoroutine(AIFixedUpdate());
     }
 
     void OnDisable()
@@ -33,15 +35,24 @@ public class AI_Base : MonoBehaviour
         AIManager.Instance.RemoveAI(this);
     }
 
-    void FixedUpdate()
+    private IEnumerator AIFixedUpdate()
     {
-        if (!_Init)
-            return;
+        yield return new WaitForSeconds(0.1f);
 
-        if (_SelfMotion == null || _SelfMotion.IsMotionDie)
-            return;
+        while (true)
+        {
+            yield return new WaitForSeconds(0.1f);
 
-        AIUpdate();
+            if (!_Init)
+                continue;
+
+            if (_SelfMotion == null || _SelfMotion.IsMotionDie)
+            {
+                yield break;
+            }
+
+            AIUpdate();
+        }
     }
 
     private IEnumerator InitDelay()
@@ -177,8 +188,10 @@ public class AI_Base : MonoBehaviour
     }
 
     int _ActValue = -1;
+    float _AtkRate = -1;
     protected bool IsRandomActSkill()
     {
+        
         var actRandom = Random.Range(0, 10000);
 
         if (_ActValue < 0)
@@ -188,16 +201,24 @@ public class AI_Base : MonoBehaviour
 
             if (_SelfMotion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.Normal)
             {
-                _ActValue = aiLevel * 3 + 40;
+                _ActValue = aiLevel * 6 + 100;
             }
             else if (_SelfMotion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.Elite)
             {
-                _ActValue = aiLevel * 7 + 70;
+                _ActValue = aiLevel * 7 + 125;
             }
             else if (_SelfMotion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.Hero)
             {
-                _ActValue = aiLevel * 40 + 100;
+                _ActValue = aiLevel * 10 + 200;
             }
+            if (_AtkRate < 0)
+            {
+                if (_SelfMotion.MonsterBase != null)
+                    _AtkRate = _SelfMotion.MonsterBase.AtkRate;
+                else
+                    _AtkRate = 1;
+            }
+            _ActValue = (int)(_ActValue * _AtkRate);
         }
 
         if (_ActValue >= actRandom)

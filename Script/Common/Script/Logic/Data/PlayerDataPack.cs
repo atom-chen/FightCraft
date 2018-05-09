@@ -169,10 +169,11 @@ public class PlayerDataPack : DataPackBase
 
         _SelectedRole.LoadClass(true);
         _SelectedRole.InitRoleData();
-        _SelectedRole.CalculateAttr();
 
         SkillData.Instance.LoadClass(true);
         SkillData.Instance.InitSkills();
+
+        _SelectedRole.CalculateAttr();
     }
 
     #endregion
