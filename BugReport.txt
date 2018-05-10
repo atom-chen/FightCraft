@@ -1,12 +1,4 @@
 
-alert effect/ui direct
+auto pick gold
 
-role use the same equip
-strbuff error: anim pause
-dexbuff error: still can be atk
-stage 4 cant move in android
-ai too hard
-dex and str effect collect
-riseup time
-sound atk armor first
 

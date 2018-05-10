@@ -216,6 +216,8 @@ public class FightManager : InstanceBase<FightManager>
 
     #region scene obj
 
+    List<MotionManager> _MonMotion = new List<MotionManager>();
+
     private int _SceneEnemyCnt = 0;
     public int SceneEnemyCnt
     {
@@ -247,6 +249,8 @@ public class FightManager : InstanceBase<FightManager>
         AI_Base aiBase = mainBase.GetComponent<AI_Base>();
         aiBase.SetCombatLevel(10);
 
+        _MonMotion.Add(mainBase);
+
         ++_SceneEnemyCnt;
 
         return mainBase;
@@ -254,8 +258,10 @@ public class FightManager : InstanceBase<FightManager>
 
     public void ObjDisapear(MotionManager objMotion)
     {
-        ResourcePool.Instance.RecvIldeMotion(objMotion);
+        _MonMotion.Remove(objMotion);
 
+        ResourcePool.Instance.RecvIldeMotion(objMotion);
+        
         --_SceneEnemyCnt;
     }
 
@@ -270,6 +276,15 @@ public class FightManager : InstanceBase<FightManager>
             Hashtable hash = new Hashtable();
             hash.Add("MonsterInfo", objMotion);
             GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_KILL_MONSTER, this, hash);
+        }
+    }
+
+    public void KillAllMotion()
+    {
+        foreach (var motion in _MonMotion)
+        {
+            if(!motion.IsMotionDie)
+                motion.MotionDie();
         }
     }
 

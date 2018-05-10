@@ -12,7 +12,7 @@ public class ObjMotionSkillBuff : ObjMotionSkillBase
             if (InputManager.Instance.IsKeyHold("k") || InputManager.Instance.IsKeyHold(_ActSkillInput))
             {
                 _SkillProcess = 1.1f;
-                InputManager.Instance.AutoRotate();
+                InputManager.Instance.SetRotate();
                 MotionManager.FinishSkill(this);
                 MotionManager.ActSkill(MotionManager._StateSkill._SkillMotions[_ActSkillInput]);
             }

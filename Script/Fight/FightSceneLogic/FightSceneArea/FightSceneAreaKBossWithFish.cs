@@ -89,6 +89,7 @@ public class FightSceneAreaKBossWithFish : FightSceneAreaBase
         if (motion.MonsterBase.Id == _BossMotionID)
         {
             FinishArea();
+            FightManager.Instance.KillAllMotion();
         }
         
         --_LivingEnemyCnt;

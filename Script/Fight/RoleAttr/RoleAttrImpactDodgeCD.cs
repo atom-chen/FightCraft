@@ -16,7 +16,7 @@ public class RoleAttrImpactDodgeCD : RoleAttrImpactBase
     public override List<int> GetSkillImpactVal(ItemSkill skillInfo)
     {
         var valList = new List<int>();
-        valList.Add(skillInfo.SkillActureLevel * skillInfo.SkillRecord.EffectValue[0]);
+        valList.Add(skillInfo.SkillRecord.EffectValue[0]);
 
         return valList;
     }

@@ -29,6 +29,20 @@ public class AI_StrengthHeroBase : AI_HeroBase
 
     protected bool _Stage2Started = false;
 
+    private ImpactBuff[] _Strtage2Buff;
+    public ImpactBuff[] StrStage2Buff
+    {
+        get
+        {
+            if (_Strtage2Buff == null)
+            {
+                var buffGO = ResourceManager.Instance.GetGameObject("SkillMotion/CommonImpact/StrBuff");
+                _Strtage2Buff = buffGO.GetComponents<ImpactBuff>();
+            }
+            return _Strtage2Buff;
+        }
+    }
+
     protected override void AIUpdate()
     {
         base.AIUpdate();
@@ -45,7 +59,10 @@ public class AI_StrengthHeroBase : AI_HeroBase
             return;
 
         _Stage2Started = true;
-        SuperArmorPrefab.ActBuffInstance(_SelfMotion, _SelfMotion, Stage2SuperTime);
+        for (int i = 0; i < StrStage2Buff.Length; ++i)
+        {
+            StrStage2Buff[i].ActBuffInstance(_SelfMotion, _SelfMotion, Stage2SuperTime);
+        }
     }
 
     #endregion

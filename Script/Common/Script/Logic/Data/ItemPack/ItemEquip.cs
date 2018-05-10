@@ -613,7 +613,7 @@ public class ItemEquip : ItemBase
         {
             if (equipSlot == EQUIP_SLOT.WEAPON)
             {
-                int randomVal = GameRandom.GetRandomLevel(1, 1);
+                int randomVal = UnityEngine.Random.Range(0, 2);
                 if (randomVal == 0)
                 {
                     profession = 5;

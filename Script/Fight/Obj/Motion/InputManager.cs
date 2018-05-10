@@ -190,7 +190,7 @@ public class InputManager : InstanceBase<InputManager>
                 string inputKey = (_NormalAttack.CurStep).ToString();
                 if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
                 {
-                    AutoRotate();
+                    SetRotate();
                     _InputMotion.ActSkill(_InputMotion._StateSkill._SkillMotions[inputKey]);
                 }
             }
@@ -206,7 +206,7 @@ public class InputManager : InstanceBase<InputManager>
                     string inputKey = "k";
                     if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
                     {
-                        AutoRotate();
+                        SetRotate();
                         _InputMotion.ActSkill(_InputMotion._StateSkill._SkillMotions[inputKey]);
                     }
                 }
@@ -268,7 +268,7 @@ public class InputManager : InstanceBase<InputManager>
         }
     }
 
-    public void AutoRotate()
+    public void SetRotate()
     {
         if (AimTarget.Instance == null)
             return;
@@ -276,6 +276,10 @@ public class InputManager : InstanceBase<InputManager>
         if (AimTarget.Instance.LockTarget != null)
         {
             _InputMotion.SetLookAt(AimTarget.Instance.LockTarget.transform.position);
+        }
+        else
+        {
+            _InputMotion.SetLookRotate(new Vector3(CameraAxis.x, 0, CameraAxis.y));
         }
     }
 

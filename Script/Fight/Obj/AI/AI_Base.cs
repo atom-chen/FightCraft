@@ -27,7 +27,7 @@ public class AI_Base : MonoBehaviour
         StartCoroutine(InitDelay());
         AIManager.Instance.RegistAI(this);
 
-        StartCoroutine(AIFixedUpdate());
+        //StartCoroutine(AIFixedUpdate());
     }
 
     void OnDisable()
@@ -35,24 +35,39 @@ public class AI_Base : MonoBehaviour
         AIManager.Instance.RemoveAI(this);
     }
 
-    private IEnumerator AIFixedUpdate()
+    //private IEnumerator AIFixedUpdate()
+    //{
+    //    yield return new WaitForSeconds(0.1f);
+
+    //    while (true)
+    //    {
+    //        yield return new WaitForSeconds(0.1f);
+
+    //        if (!_Init)
+    //            continue;
+
+    //        if (_SelfMotion == null || _SelfMotion.IsMotionDie)
+    //        {
+    //            yield break;
+    //        }
+
+    //        AIUpdate();
+    //    }
+    //}
+
+    void FixedUpdate()
     {
-        yield return new WaitForSeconds(0.1f);
 
-        while (true)
+        if (!_Init)
+            return;
+
+        if (_SelfMotion == null || _SelfMotion.IsMotionDie)
         {
-            yield return new WaitForSeconds(0.1f);
-
-            if (!_Init)
-                continue;
-
-            if (_SelfMotion == null || _SelfMotion.IsMotionDie)
-            {
-                yield break;
-            }
-
-            AIUpdate();
+            return;
         }
+
+        AIUpdate();
+
     }
 
     private IEnumerator InitDelay()
@@ -201,15 +216,15 @@ public class AI_Base : MonoBehaviour
 
             if (_SelfMotion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.Normal)
             {
-                _ActValue = aiLevel * 6 + 100;
+                _ActValue = aiLevel * 60 + 1000;
             }
             else if (_SelfMotion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.Elite)
             {
-                _ActValue = aiLevel * 7 + 125;
+                _ActValue = aiLevel * 70 + 1250;
             }
             else if (_SelfMotion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.Hero)
             {
-                _ActValue = aiLevel * 10 + 200;
+                _ActValue = aiLevel * 100 + 2000;
             }
             if (_AtkRate < 0)
             {
@@ -219,6 +234,7 @@ public class AI_Base : MonoBehaviour
                     _AtkRate = 1;
             }
             _ActValue = (int)(_ActValue * _AtkRate);
+            _ActValue = (int)(_ActValue * Time.fixedDeltaTime);
         }
 
         if (_ActValue >= actRandom)

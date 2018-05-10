@@ -140,7 +140,14 @@ public class DataPackSave
                         else if (valueList[j] is SaveItemBase)
                         {
                             var saveItem = (SaveItemBase)valueList[j];
-                            saveItem._SaveFileName = dataObj.ToString() + fieldInfo.Name + j.ToString();
+                            if (dataObj is SaveItemBase)
+                            {
+                                saveItem._SaveFileName = ((SaveItemBase)dataObj)._SaveFileName + fieldInfo.Name + j.ToString();
+                            }
+                            else
+                            {
+                                saveItem._SaveFileName = dataObj.ToString() + fieldInfo.Name + j.ToString();
+                            }
                             saveChilds.Add(saveItem);
                             childNode._SaveValue = saveItem._SaveFileName;
                         }

@@ -143,7 +143,7 @@ public class ObjMotionSkillAttack : ObjMotionSkillBase
             //{
             //    _MotionManager.SetRotate(new Vector3(InputManager.Instance._Axis.x, 0, InputManager.Instance._Axis.y));
             //}
-            InputManager.Instance.AutoRotate();
+            InputManager.Instance.SetRotate();
             PlayAnimation(_NextAnim[_CurStep]);
             if (_NextEffect.Count > _CurStep && _NextEffect[_CurStep] != null)
             {
