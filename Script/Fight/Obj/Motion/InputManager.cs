@@ -279,7 +279,10 @@ public class InputManager : InstanceBase<InputManager>
         }
         else
         {
-            _InputMotion.SetLookRotate(new Vector3(CameraAxis.x, 0, CameraAxis.y));
+            if (CameraAxis != Vector2.zero)
+            {
+                _InputMotion.SetLookRotate(new Vector3(CameraAxis.x, 0, CameraAxis.y));
+            }
         }
     }
 

@@ -80,7 +80,9 @@ public class ItemGem : ItemBase
             return _GemAttr;
         }
     }
+
     
+
     #endregion
 
 }

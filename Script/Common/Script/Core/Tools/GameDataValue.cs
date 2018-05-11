@@ -586,7 +586,7 @@ public class GameDataValue
     #region gem
 
     public static float _GemAttrV = 10;
-    public static float _GemAttrA = 5;
+    public static float _GemAttrA = 20;
 
     public static int GetGemValue(int level)
     {
@@ -596,7 +596,9 @@ public class GameDataValue
 
     public static EquipExAttr GetGemAttr(RoleAttrEnum attr, int level)
     {
-        int value = Mathf.CeilToInt( level * _GemAttrV + 0.5f * level * level * _GemAttrA);
+        int value = Mathf.CeilToInt(_GemAttrV + level * _GemAttrA);
+        if (level == 0)
+            value = 0;
         EquipExAttr exAttr = EquipExAttr.GetBaseExAttr(attr, value);
         return exAttr;
     }
@@ -987,6 +989,18 @@ public class GameDataValue
         return (EQUIP_SLOT)randomSlot;
     }
 
+    public static int GetEquipSellGold(ItemEquip itemEquip)
+    {
+        int gold = (itemEquip.EquipLevel + itemEquip.EquipExAttr.Count) * ((int)itemEquip.EquipQuality + 2);
+        return gold;
+    }
+
+    public static int GetEquipBuyGold(ItemEquip itemEquip)
+    {
+        int gold = GetEquipSellGold(itemEquip) * 8;
+        return gold;
+    }
+
 
     #endregion
 
@@ -1086,11 +1100,11 @@ public class GameDataValue
 
     #region gem
 
-    public static float _GemConsumeV = 10;
-    public static float _GemConsumeA = 5;
+    public static float _GemConsumeV = 1;
+    public static float _GemConsumeA = 2;
     public static int _DropGemLevel = 10;
 
-    public static float _LevelGemParam = 0.01f;
+    public static float _LevelGemParam = 0.02f;
     public static int _NormalGemBase = 800;
     public static int _EliteGemBase = 5000;
     public static int _SpecialGemBase = 5000;
@@ -1099,6 +1113,9 @@ public class GameDataValue
     //public static int _EliteGemBase = 0;
     //public static int _SpecialGemBase = 0;
     //public static int _BossGemBase = 150000;
+
+    public static int _GemConsumeGoldBase = 200;
+    public static float _GemConsumeGoldStep = 300;
 
     public static string GetGemMatDropItemID(MonsterBaseRecord monsterRecord)
     {
@@ -1138,20 +1155,26 @@ public class GameDataValue
     public static int GetGemConsume(int level)
     {
         int consumeCnt = 0;
-        if (level <= 5)
+        //if (level <= 5)
         {
-            consumeCnt = Mathf.CeilToInt(_GemConsumeV + _GemConsumeA * level);
+            consumeCnt = Mathf.CeilToInt(_GemConsumeV + _GemConsumeA * (level));
         }
-        else
-        {
-            int pow = (level - 5);
-            int preConsumeBase = Mathf.CeilToInt(_GemConsumeV + _GemConsumeA * 5);
-            float prePow = Mathf.Pow(1.5f, pow);
-            consumeCnt = Mathf.CeilToInt(preConsumeBase * prePow);
+        //else
+        //{
+        //    int pow = (level - 5) / 10 + 1;
+        //    int preConsumeBase = Mathf.CeilToInt(_GemConsumeV + _GemConsumeA * pow + level);
+        //    consumeCnt = Mathf.CeilToInt(preConsumeBase);
 
-        }
+        //}
         //consumeCnt = Mathf.CeilToInt( _GemConsumeV  + _GemConsumeA * level);
         return consumeCnt;
+    }
+
+    public static int GetGemGoldConsume(int level)
+    {
+        int gold = (int)(_GemConsumeGoldBase + _GemConsumeGoldStep * (level));
+
+        return gold;
     }
 
     #endregion

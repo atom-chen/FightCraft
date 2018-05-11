@@ -38,9 +38,12 @@ public class ShopData : SaveItemBase
     {
         get
         {
-            if (_LastRefreshTime == null)
+            if (_LastRefreshTime.Year < 2000)
             {
-                _LastRefreshTime = DateTime.Parse(_LastRefreshTimeStr);
+                if (!string.IsNullOrEmpty(_LastRefreshTimeStr))
+                {
+                    _LastRefreshTime = DateTime.Parse(_LastRefreshTimeStr);
+                }
             }
             return _LastRefreshTime;
         }
@@ -58,13 +61,14 @@ public class ShopData : SaveItemBase
         if (timeDelay.TotalMinutes > _RefreshMinutes)
         {
             //do refresh
-            //RefreshEquip();
+            RefreshEquip();
             RefreshShopItem();
             RefreshGamblingItem();
 
             LastRefreshTime = DateTime.Now;
+
+            SaveClass(true);
         }
-        SaveClass(true);
     }
 
     public void SellItem(ItemBase sellItem, bool isNeedEnsure = true)
@@ -95,8 +99,13 @@ public class ShopData : SaveItemBase
 
     public void SellItemOK(ItemBase sellItem)
     {
+        int gold = 1;
+        if (sellItem is ItemEquip)
+        {
+            gold = GameDataValue.GetEquipSellGold((ItemEquip)sellItem);
+        }
         sellItem.ResetItem();
-        PlayerDataPack.Instance.AddGold(1);
+        PlayerDataPack.Instance.AddGold(gold);
         sellItem.SaveClass(true);
     }
 
@@ -156,21 +165,13 @@ public class ShopData : SaveItemBase
         if (emptyPos == null)
             return;
 
-        if (!PlayerDataPack.Instance.DecGold(GetEuqipBuyPrice(_EquipList[equipIdx])))
+        int gold = GameDataValue.GetEquipBuyGold(_EquipList[equipIdx]);
+        if (!PlayerDataPack.Instance.DecGold(gold))
             return;
 
         BackBagPack.Instance.AddEquip(_EquipList[equipIdx]);
     }
 
-    public static int GetEquipSellPrice(ItemEquip equip)
-    {
-        return 0;
-    }
-
-    public static int GetEuqipBuyPrice(ItemEquip equip)
-    {
-        return 0;
-    }
     #endregion
 
     #region item shop

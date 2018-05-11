@@ -200,6 +200,11 @@ public class RoleData : SaveItemBase
         }
     }
 
+    public void SetGemAttr(RoleAttrStruct roleAttr)
+    {
+        GemData.Instance.SetGemAttr(roleAttr);
+    }
+
     public void CalculateSecondAttr(RoleAttrStruct roleAttr)
     {
         var strength = roleAttr.GetValue(RoleAttrEnum.Strength);

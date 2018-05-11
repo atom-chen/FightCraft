@@ -237,10 +237,10 @@ public class TestFight : MonoBehaviour
         if (!UIDropNamePanel.Instance)
             return;
 
-        foreach (var dropItem in UIDropNamePanel.Instance._DropItems)
-        {
-            dropItem.OnItemClick();
-        }
+        //foreach (var dropItem in UIDropNamePanel.Instance._DropItems)
+        //{
+        //    dropItem.OnItemClick();
+        //}
     }
 
     public static void DelAllEquip()

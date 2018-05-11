@@ -60,6 +60,15 @@ public class GemSuit
         }
     }
 
+    private int _ActSetAttrCnt = 0;
+    public int ActSetAttrCnt
+    {
+        get
+        {
+            return _ActSetAttrCnt;
+        }
+    }
+
     public bool IsGemSetCanUse(GemSetRecord gemSet)
     {
         foreach (var gemRecord in gemSet.Gems)
@@ -140,6 +149,45 @@ public class GemSuit
         if (_ActSet != null)
         {
             _ActSetAttrs = GameDataValue.GetGemSetAttr(_ActSet, _ActLevel);
+            if (_ActLevel >= 20)
+            {
+                _ActSetAttrCnt = 5;
+            }
+            else if (_ActLevel >= 15)
+            {
+                _ActSetAttrCnt = 4;
+            }
+            else if (_ActLevel >= 10)
+            {
+                _ActSetAttrCnt = 3;
+            }
+            else if (_ActLevel >= 6)
+            {
+                _ActSetAttrCnt = 2;
+            }
+            else if (_ActLevel >= 3)
+            {
+                _ActSetAttrCnt = 1;
+            }
+            else
+            {
+                _ActSetAttrCnt = 0;
+            }
+        }
+    }
+
+    public void SetGemSetAttr(RoleAttrStruct roleAttr)
+    {
+        for (int i = 0; i < _ActSetAttrCnt; ++i)
+        {
+            if (ActSetAttrs[i].AttrType == "RoleAttrImpactBaseAttr")
+            {
+                roleAttr.AddValue((RoleAttrEnum)ActSetAttrs[i].AttrParams[0], ActSetAttrs[i].AttrParams[1]);
+            }
+            else
+            {
+                roleAttr.AddExAttr(RoleAttrImpactManager.GetAttrImpact(ActSetAttrs[i]));
+            }
         }
     }
 }

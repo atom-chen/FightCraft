@@ -50,7 +50,7 @@ public class DropItem : MonoBehaviour
         {
             InitGoldModel(dropData._DropGold);
             _DropName = dropData._DropGold.ToString();
-            Collider.enabled = true;
+            Collider.enabled = false;
         }
         else if (dropData._ItemEquip != null)
         {
@@ -72,7 +72,7 @@ public class DropItem : MonoBehaviour
         transform.position = dropData._MonsterPos;
         _DropSpeed = (dropData._DropPos - dropData._MonsterPos) / _DropTime;
         _MoveTime = 0;
-        _AutoPickTime = Time.time;
+        _StartTime = Time.time;
 
         UIDropNamePanel.ShowDropItem(this);
     }
@@ -121,7 +121,7 @@ public class DropItem : MonoBehaviour
     public void PickDropItem()
     {
         MonsterDrop.PickItem(_DropData);
-
+        PlayEffect();
         ResourceManager.Instance.DestoryObj(gameObject);
     }
 
@@ -129,7 +129,7 @@ public class DropItem : MonoBehaviour
 
     #region update auto pick
 
-    private float _AutoPickTime = 1.2f;
+    private float _AutoPickTime = 2.2f;
 
     private float _StartTime = 0;
     private void UpdateAutoPick()
@@ -151,6 +151,7 @@ public class DropItem : MonoBehaviour
     {
         _EffectInstance = ResourcePool.Instance.GetIdleEffect(_EffectPrefab);
         _EffectInstance.transform.position = transform.position;
+        _EffectInstance.gameObject.SetActive(true);
     }
 
     #endregion

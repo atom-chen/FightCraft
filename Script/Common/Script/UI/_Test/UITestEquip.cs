@@ -124,6 +124,7 @@ public class UITestEquip : UIBase
         public int level;
         public int exp;
         public int gold;
+        public int goldDrop;
         public int levelExp;
         public int atk;
         public int damage1;
@@ -134,6 +135,9 @@ public class UITestEquip : UIBase
         public int monValue;
         public int equipMat;
         public int equipGem;
+        public int equipPoint;
+        public int gemCost1;
+        public int gemCost2;
     }
 
     public void OnTestPassStage()
@@ -154,14 +158,21 @@ public class UITestEquip : UIBase
 
         //    Debug.Log("TotalDrop stage:" + _StageIdx  + " Exp:" + _TotalExp + ", Gold:" + _TotalGold);
         //    Debug.Log("Role Atk:" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Attack) + ", Def:" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Defense) + ", HP:" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax));
-
+        int lastGem = 0;
         for (int diff = 1; diff < 6; ++diff)
         {
             for (int stageid = 1; stageid < 21; ++stageid)
             {
                 int exp = 0;
                 int gold = 0;
+                int equipPointTotal = 0;
                 TestPassNormalStage(stageid, diff, ref exp, ref gold);
+                //foreach (var itemEquip in BackBagPack.Instance.PageEquips)
+                //{
+                //    int equipPoint = GameDataValue.GetEquipSellGold(itemEquip);
+                //    equipPointTotal += equipPoint;
+                //}
+                //TestFight.DelAllEquip();
 
                 var level = GameDataValue.GetStageLevel(diff, stageid, STAGE_TYPE.NORMAL);
 
@@ -189,7 +200,8 @@ public class UITestEquip : UIBase
                 passInfo.stateIdx = stageid;
                 passInfo.level = GameDataValue.GetStageLevel(diff, stageid, STAGE_TYPE.NORMAL);
                 passInfo.exp = exp;
-                passInfo.gold = gold;
+                passInfo.gold = PlayerDataPack.Instance.Gold;
+                passInfo.goldDrop = gold;
                 passInfo.levelExp = GameDataValue.GetLvUpExp(passInfo.level, 0);
                 passInfo.atk = RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Attack);
                 Debug.Log("Atk:" + passInfo.atk);
@@ -205,7 +217,13 @@ public class UITestEquip : UIBase
                 {
                     gemCnt += BackBagPack.Instance.GetItemCnt(GemData._GemMaterialDataIDs[i]);
                 }
-                passInfo.equipGem = gemCnt;
+                
+                passInfo.equipGem = gemCnt - lastGem;
+                lastGem = gemCnt;
+                passInfo.equipPoint = equipPointTotal;
+
+                passInfo.gemCost1 = GameDataValue.GetGemConsume(passInfo.level);
+                passInfo.gemCost2 = GameDataValue.GetGemGoldConsume(passInfo.level);
 
 
                 _PassInfoList.Add(passInfo);
@@ -221,7 +239,7 @@ public class UITestEquip : UIBase
             //attr
             //streamWriter.WriteLine(passInfo.level + "\t" + passInfo.atk + "\t" + passInfo.monValue + "\t" + passInfo.exp + "\t" + passInfo.monValue + "\t" + passInfo.hp);
             //drop
-            streamWriter.WriteLine(passInfo.level + "\t" + passInfo.atk + "\t" + passInfo.monValue + "\t" + passInfo.damage1 + "\t" + ((float)passInfo.monValue / passInfo.damage1) + "\t" + ((float)passInfo.monValue / passInfo.damage2) + "\t" + ((float)passInfo.monValue / passInfo.damage3));
+            streamWriter.WriteLine(passInfo.level + "\t" + passInfo.gold + "\t" + passInfo.goldDrop + "\t" + passInfo.equipPoint + "\t" + passInfo.equipMat + "\t" + passInfo.equipGem + "\t" + passInfo.gemCost1 + "\t" + passInfo.gemCost2);
         }
         streamWriter.Close();
     }
@@ -290,7 +308,7 @@ public class UITestEquip : UIBase
         TestFight.DelLevel();
         TestFight.DelSkill(1);
         TestFight.DelRefresh();
-        TestFight.DelGem();
+        //TestFight.DelGem();
         //foreach (var dropItem in items)
         //{
         //    Debug.Log("Drop Item :" + dropItem.Key + "," + dropItem.Value);

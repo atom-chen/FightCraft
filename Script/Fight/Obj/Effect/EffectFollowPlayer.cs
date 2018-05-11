@@ -25,11 +25,20 @@ public class EffectFollowPlayer : MonoBehaviour
     {
         _Speed = _Speed + _Accelate * Time.deltaTime;
         _Speed = Mathf.Min(_Speed, _MaxSpeed);
-        var direct = (FightManager.Instance.MainChatMotion.transform.position - transform.position);
-        transform.position += direct.normalized * _Speed;
-        if (Vector3.Distance(transform.position, FightManager.Instance.MainChatMotion.transform.position) < 0.2f)
+        Vector3 pickPos = FightManager.Instance.MainChatMotion.transform.position + new Vector3(0, 1, 0);
+        var direct = (pickPos - transform.position);
+        if (direct.magnitude < 0.5f)
         {
             RevEffect();
+        }
+        else
+        {
+            transform.position += direct.normalized * _Speed;
+            transform.LookAt(pickPos);
+            //if (Vector3.Distance(transform.position, FightManager.Instance.MainChatMotion.transform.position) <= 0.5f)
+            //{
+            //    RevEffect();
+            //}
         }
 
         if (_EffectLastTime > 0 && Time.time - _StartTime > _EffectLastTime)
@@ -40,6 +49,7 @@ public class EffectFollowPlayer : MonoBehaviour
 
     public void RevEffect()
     {
+        gameObject.SetActive(false);
         ResourcePool.Instance.RecvIldeEffect(_BindEffect);
     }
 }

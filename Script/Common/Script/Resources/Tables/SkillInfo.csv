@@ -7,8 +7,8 @@
 10006,S.Damage,Add Ex Skill Damage,60006,60106,10,1,61000,RoleAttrImpactSkillDamage,0,0,0,5,20,10000,1000,0,0,2200,0,0
 10007,S.Damage,Add Ex Skill Damage,60007,60107,10,2,61000,RoleAttrImpactSkillDamage,2,0,0,5,20,13000,1000,0,0,2600,0,0
 10008,S.Damage,Add Ex Skill Damage,60008,60108,10,3,61000,RoleAttrImpactSkillDamage,3,0,0,5,20,18000,1000,0,0,3200,0,0
-10009,S.BuffRate,Add buff effect,60009,60109,15,5,61000,RoleAttrImpactBuffRate,10,0,0,5,20,50,50,0,0,2800,0,0
-10010,S.BuffRate,Add buff effect,60010,60110,15,6,61000,RoleAttrImpactBuffRate,10,0,0,5,20,-50,-50,0,0,3600,0,0
+10009,S.BuffRate,Add buff effect,60009,60109,15,5,61000,RoleAttrImpactBuffRate,5,0,0,5,20,50,50,0,0,2800,0,0
+10010,S.BuffRate,Add buff effect,60010,60110,15,6,61000,RoleAttrImpactBuffRate,5,0,0,5,20,-50,-50,0,0,3600,0,0
 10011,NA.NormalRange,Add Normal Attack Damage,60011,60111,15,j,61001,RoleAttrImpactSkillRange,20,0,0,5,1,1000,0,0,1,120,0,0
 10012,NA.NormalSpeed,Add Normal Attack Damage,60012,60112,15,j,61001,RoleAttrImpactSkillSpeed,20,0,0,5,1,1000,0,0,1,120,0,0
 10013,S.SpSkill,Ex skill back range,60013,60113,2,1,61001,RoleAttrImpactSP,30,10006,6,5,1,100,0,0,1,80,0,5

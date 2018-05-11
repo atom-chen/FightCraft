@@ -52,31 +52,46 @@ public class GemData : SaveItemBase
     public const int MAX_GEM_EQUIP = 6;
 
     [SaveField(1)]
+    public List<string> _EquipedGemDatas;
+
     public List<ItemGem> _EquipedGems;
+
+    public void SaveEquipGem()
+    {
+        _EquipedGemDatas.Clear();
+        for (int i = 0; i < MAX_GEM_EQUIP; ++i)
+        {
+            _EquipedGemDatas.Add(_EquipedGems[i].ItemDataID);
+        }
+    }
 
     public bool InitGemPack()
     {
-        if (_EquipedGems == null || _EquipedGems.Count < MAX_GEM_EQUIP)
+        if (_EquipedGemDatas == null || _EquipedGemDatas.Count < MAX_GEM_EQUIP)
         {
-            if (_EquipedGems == null)
+            if (_EquipedGemDatas == null)
             {
-                _EquipedGems = new List<ItemGem>();
+                _EquipedGemDatas = new List<string>();
             }
-            int startIdx = _EquipedGems.Count;
+            int startIdx = _EquipedGemDatas.Count;
             for (int i = startIdx; i < MAX_GEM_EQUIP; ++i)
             {
-                _EquipedGems.Add(new ItemGem("-1"));
+                _EquipedGemDatas.Add("-1");
             }
-            return true;
+            //return true;
         }
 
-        foreach (var gemEquiped in _EquipedGems)
+        _EquipedGems = new List<ItemGem>();
+
+        for (int i = 0; i< _EquipedGemDatas.Count; ++i)
         {
+            _EquipedGems.Add(new ItemGem("-1"));
             foreach (var gemInPack in _GemContainer)
             {
-                if (gemEquiped.ItemDataID == gemInPack.ItemDataID)
+                if (_EquipedGemDatas[i] == gemInPack.ItemDataID)
                 {
-                    gemEquiped.CopyFrom(gemInPack);
+                    _EquipedGems[i].CopyFrom(gemInPack);
+                    break;
                 }
             }
         }
@@ -121,15 +136,17 @@ public class GemData : SaveItemBase
             return false;
         }
 
-        if (gem.ItemStackNum < 1)
-        {
-            UIMessageTip.ShowMessageTip(30002);
-            return false;
-        }
+        //if (gem.ItemStackNum < 1)
+        //{
+        //    UIMessageTip.ShowMessageTip(30002);
+        //    return false;
+        //}
 
         _EquipedGems[putOnSlot].CopyFrom(gem);
 
         GemSuit.Instance.IsActSet();
+        SaveEquipGem();
+        SaveClass(false);
         return true;
     }
 
@@ -139,6 +156,8 @@ public class GemData : SaveItemBase
             return false;
 
         gem.ResetItem();
+        SaveEquipGem();
+        SaveClass(false);
         return true;
     }
 
@@ -151,6 +170,8 @@ public class GemData : SaveItemBase
             return;
 
         gem1.ExchangeInfo(gem2);
+        SaveEquipGem();
+        SaveClass(false);
         GemSuit.Instance.IsActSet();
     }
 
@@ -227,7 +248,7 @@ public class GemData : SaveItemBase
         GemLevelInfo lvInfo = new GemLevelInfo();
         lvInfo.MaterialData = gemRecord.LevelUpParam.ToString();
         lvInfo.MaterialCnt = GameDataValue.GetGemConsume(gemItemBase.Level);
-        lvInfo.CostMoney = (2 ^ gemItemBase.ItemStackNum) * 1200;
+        lvInfo.CostMoney = GameDataValue.GetGemGoldConsume(gemItemBase.Level) ;
 
         return lvInfo;
     }
@@ -297,6 +318,31 @@ public class GemData : SaveItemBase
         GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_GEM_LEVEL_UP, this, hash);
 
         return true;
+    }
+
+    #endregion
+
+    #region 
+
+    public void SetGemAttr(RoleAttrStruct roleAttr)
+    {
+        for (int i = 0; i < _EquipedGems.Count; ++i)
+        {
+            if (!_EquipedGems[i].IsVolid())
+                continue;
+
+            if (_EquipedGems[i].GemAttr.AttrType == "RoleAttrImpactBaseAttr")
+            {
+                roleAttr.AddValue((RoleAttrEnum)_EquipedGems[i].GemAttr.AttrParams[0], _EquipedGems[i].GemAttr.AttrParams[1]);
+            }
+            else
+            {
+                roleAttr.AddExAttr(RoleAttrImpactManager.GetAttrImpact(_EquipedGems[i].GemAttr));
+            }
+        }
+
+        GemSuit.Instance.SetGemSetAttr(roleAttr);
+       
     }
 
     #endregion
