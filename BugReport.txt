@@ -1,4 +1,10 @@
+stage jump to selected
+boss rise up speed too slow
+20s buff error inc dec
+shader forge
+ai face to me
+skill3 another use bug
+android return btn
 
-auto pick gold
 
 
