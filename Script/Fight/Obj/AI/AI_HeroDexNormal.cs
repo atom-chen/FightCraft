@@ -14,7 +14,7 @@ public class AI_HeroDexNormal : AI_DexHeroBase
 
     public float _AlertRange = 15;
     public float _CloseRange = 2;
-    public float _CloseInterval = 1;
+    protected  float _CloseInterval = 0.5f;
 
     private float _CloseWait;
 

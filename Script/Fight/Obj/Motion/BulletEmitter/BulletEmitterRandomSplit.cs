@@ -29,6 +29,5 @@ public class BulletEmitterRandomSplit : BulletEmitterBase
 
         Vector3 destPos = new Vector3(randomX * _SplitRange, 0, randomY * _SplitRange);
         bullet.transform.position = _SenderManager.transform.position + destPos;
-        Debug.Log("bullet position:" + bullet.transform.position);
     }
 }

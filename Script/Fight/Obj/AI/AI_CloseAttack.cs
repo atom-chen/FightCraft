@@ -5,7 +5,7 @@ public class AI_CloseAttack : AI_Base
 {
     public float _AlertRange = 15;
     public float _CloseRange = 2;
-    public float _CloseInterval = 1;
+    protected float _CloseInterval = 0.5f;
 
     private float _CloseWait;
 
@@ -66,6 +66,8 @@ public class AI_CloseAttack : AI_Base
             StartSkill();
             _CloseWait = _CloseInterval;
         }
+
+        
     }
 
     public override void OnStateChange(StateBase orgState, StateBase newState)
@@ -94,4 +96,5 @@ public class AI_CloseAttack : AI_Base
     }
 
     #endregion
+    
 }

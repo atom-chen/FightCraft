@@ -252,4 +252,5 @@ public class AI_HeroBase : AI_Base
     }
 
     #endregion
+
 }

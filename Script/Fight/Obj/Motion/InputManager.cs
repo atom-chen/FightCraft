@@ -393,7 +393,7 @@ public class InputManager : InstanceBase<InputManager>
     {
         foreach (var skillInfo in SkillData.Instance.ProfessionSkills)
         {
-            if (skillInfo.SkillRecord.SkillAttr == "RoleAttrImpactAnotherUse")
+            if (skillInfo.SkillRecord.SkillAttr == "RoleAttrImpactAnotherUse" && skillInfo.SkillLevel > 0)
             {
                 _ReuseSkillInput = skillInfo.SkillRecord.SkillInput;
                 break;

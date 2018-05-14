@@ -47,7 +47,7 @@ public class AI_IntHeroBase : AI_HeroBase
     {
         base.AIUpdate();
 
-        if (_SelfMotion.RoleAttrManager.HPPersent < 0.5f)
+        if (_SelfMotion.RoleAttrManager.HPPersent < 2)
         {
             StartStage2();
         }

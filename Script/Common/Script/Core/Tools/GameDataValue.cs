@@ -586,7 +586,7 @@ public class GameDataValue
     #region gem
 
     public static float _GemAttrV = 10;
-    public static float _GemAttrA = 20;
+    public static float _GemAttrA = 10;
 
     public static int GetGemValue(int level)
     {

@@ -7,8 +7,8 @@ using System;
 
 public class UIContainerSelect : UIContainerBase
 {
-    public bool _IsMultiSelect = false;
-    private List<ContentPos> _Selecteds = new List<ContentPos>();
+    public bool _IsMultiSelect = false;                                 // 是否可多选，默认单选
+    protected List<ContentPos> _Selecteds = new List<ContentPos>();       // 选中的物品列表
 
     public T GetSelected<T>()
     {
@@ -17,6 +17,82 @@ public class UIContainerSelect : UIContainerBase
             return (T)_Selecteds[0].Obj;
         }
         return default(T);
+    }
+
+    public void SelectIndex(int index)
+    {
+        if (_Selecteds.Count <= index || index<0)
+            return;
+        if (_Selecteds.Count <= 0)
+        {
+            if (_ValueList.Count > 0)
+            {
+                OnSelectedObj(_ValueList[0].Obj);
+            }
+            return;
+        }
+    }
+
+    public void SelectNext()
+    {
+        if (_Selecteds.Count > 1)
+            return;
+        if(_Selecteds.Count<=0)
+        {
+            if(_ValueList.Count>0)
+            {
+                OnSelectedObj(_ValueList[0].Obj);
+            }
+            return;
+        }
+        ContentPos sel = _Selecteds[0];
+        for (int i=0;i<_ValueList.Count;i++)
+        {
+            if(_ValueList[i] == sel)
+            {
+                if(i==_ValueList.Count-1)
+                {
+                    OnSelectedObj(_ValueList[0].Obj);
+                    return;
+                }
+                if(i< _ValueList.Count - 1)
+                {
+                    OnSelectedObj(_ValueList[i+1].Obj);
+                    return;
+                }
+            }
+        }
+    }
+
+    public void SelectLast()
+    {
+        if (_Selecteds.Count > 1)
+            return;
+        if (_Selecteds.Count <= 0)
+        {
+            if (_ValueList.Count > 0)
+            {
+                OnSelectedObj(_ValueList[_ValueList.Count - 1].Obj);
+            }
+            return;
+        }
+        ContentPos sel = _Selecteds[0];
+        for (int i = 0; i < _ValueList.Count; i++)
+        {
+            if (_ValueList[i] == sel)
+            {
+                if (i == 0)
+                {
+                    OnSelectedObj(_ValueList[_ValueList.Count - 1].Obj);
+                    return;
+                }
+                if (i > 0)
+                {
+                    OnSelectedObj(_ValueList[i - 1].Obj);
+                    return;
+                }
+            }
+        }
     }
 
     public UIItemBase GetSelectedItem()
@@ -39,17 +115,17 @@ public class UIContainerSelect : UIContainerBase
     }
 
     public delegate void SelectedObjCallBack(object obj);
-    private SelectedObjCallBack _SelectedCallBack;
-    private SelectedObjCallBack _DisSelectedCallBack;
+    protected SelectedObjCallBack _SelectedCallBack;
+    protected SelectedObjCallBack _DisSelectedCallBack;
 
-    public void OnSelectedObj(object obj)
+    public virtual void OnSelectedObj(object obj)
     {
         ContentPos selectPos = _ValueList.Find((pos) =>
         {
             if (pos.Obj == obj)
                 return true;
             return false;
-        });
+        }); 
 
         if (selectPos == null)
             return;
@@ -105,34 +181,23 @@ public class UIContainerSelect : UIContainerBase
 
     #region 
 
-    public void InitSelectContent(IEnumerable list, IEnumerable selectedList, SelectedObjCallBack onSelect = null, SelectedObjCallBack onDisSelect = null, Hashtable exhash = null)
+    private IEnumerable _SelectedList = null;
+
+    public virtual void InitSelectContent(IEnumerable list, IEnumerable selectedList, SelectedObjCallBack onSelect = null, SelectedObjCallBack onDisSelect = null, Hashtable exhash = null)
     {
         _SelectedCallBack = onSelect;
         _DisSelectedCallBack = onDisSelect;
 
+        gameObject.SetActive(true);
+
+        _SelectedList = selectedList;
+
         base.InitContentItem(list, OnSelectedObj, exhash);
 
-        _Selecteds.Clear();
-        if (selectedList != null)
-        {
-            foreach (var selectItem in selectedList)
-            {
-                ContentPos selectPos = _ValueList.Find((pos) =>
-                {
-                    if (pos.Obj.Equals(selectItem))
-                        return true;
-                    return false;
-                });
-                if (selectPos != null)
-                {
-                    _Selecteds.Add(selectPos);
-                }
-            }
-        }
         ShowItems();
     }
 
-    public void ClearSelect()
+    public virtual void ClearSelect()
     {
         foreach (var selectPos in _Selecteds)
         {
@@ -147,8 +212,9 @@ public class UIContainerSelect : UIContainerBase
         _Selecteds.Clear();
     }
 
-    public void SetSelect(ICollection selectedList)
+    public void SetSelect(IEnumerable selectedList)
     {
+        _SelectedList = selectedList;
         _Selecteds.Clear();
         if (selectedList != null)
         {
@@ -156,7 +222,7 @@ public class UIContainerSelect : UIContainerBase
             {
                 ContentPos selectPos = _ValueList.Find((pos) =>
                 {
-                    if (pos.Obj == selectItem)
+                    if (pos.Obj.Equals( selectItem))
                         return true;
                     return false;
                 });
@@ -165,12 +231,13 @@ public class UIContainerSelect : UIContainerBase
             }
         }
 
+       
         foreach (var shoItem in _ItemPrefabList)
         {
             var showObj = shoItem._InitInfo;
             ContentPos selectPos = _Selecteds.Find((pos) =>
             {
-                if (pos.Obj == showObj)
+                if (pos.Obj.Equals(showObj))
                     return true;
                 return false;
             });
@@ -187,63 +254,120 @@ public class UIContainerSelect : UIContainerBase
             {
                 ((UIItemSelect)shoItem).UnSelected();
             }
+        }
+
+        if (_Selecteds.Count > 0)
+        {
+            StartCoroutine(ShowSelectContainPos(_Selecteds[0].ShowItem));
         }
     }
 
     public override void ShowItemsFinish()
     {
-        int index = 0;
-        foreach (var shoItem in _ItemPrefabList)
-        {
-            var showObj = shoItem._InitInfo;
-            ContentPos selectPos = _Selecteds.Find((pos) =>
-            {
-                if (pos.Obj == showObj)
-                    return true;
-                return false;
-            });
+        SetSelect(_SelectedList);
+        //int index = 0;
+        //foreach (var shoItem in _ItemPrefabList)
+        //{
+        //    var showObj = shoItem._InitInfo;
+        //    ContentPos selectPos = _Selecteds.Find((pos) =>
+        //    {
+        //        if (pos.Obj == showObj)
+        //            return true;
+        //        return false;
+        //    });
 
-            if (selectPos != null)
+        //    if (selectPos != null)
+        //    {
+        //        ((UIItemSelect)shoItem).Selected();
+        //        if (_SelectedCallBack != null)
+        //        {
+        //            _SelectedCallBack(selectPos.Obj);
+        //        }
+        //        if (index > 0)
+        //        {
+        //            StartCoroutine(ShowSelectContainPos(shoItem));
+        //        }
+        //        else
+        //        {
+        //            ResetSelectContainPos();
+        //        }
+        //    }
+        //    else
+        //    {
+        //        ((UIItemSelect)shoItem).UnSelected();
+        //    }
+        //    ++index;
+        //}
+    }
+
+    public delegate void ShowContainerPosCallFunc();
+    protected ShowContainerPosCallFunc callFunc;
+    public void ShowContainerPos(UIItemBase selectPos, ShowContainerPosCallFunc callFunc = null)
+    {
+        if (selectPos == null)
+            return;
+        Hashtable hash = new Hashtable();
+        if (callFunc != null)
+        {
+            hash.Add("callFunc", callFunc);
+        }
+        StartCoroutine(ShowSelectContainPos(selectPos, hash));
+    }
+
+    private IEnumerator ShowSelectContainPos(UIItemBase selectPos, Hashtable hash = null)
+    {
+        yield return new WaitForFixedUpdate();
+        if (_ScrollRect != null)
+        {
+            if (_ScrollTransform.rect.width < _ContainerObj.rect.width)
             {
-                ((UIItemSelect)shoItem).Selected();
-                if (_SelectedCallBack != null)
+                if (_ScrollRect.horizontal == true)
                 {
-                    _SelectedCallBack(selectPos.Obj);
-                }
-                if (index > 0)
-                {
-                    StartCoroutine(ShowSelectContainPos(shoItem));
+                    float containerMaxX = _ContainerObj.sizeDelta.x;
+                    float containPosX = -selectPos.GetComponent<RectTransform>().anchoredPosition.x - _ScrollTransform.rect.width * 0.5f;
+                    containPosX = Mathf.Clamp(containPosX, -(containerMaxX - _ScrollTransform.rect.width), 0);
+                    _ContainerObj.anchoredPosition = new Vector2(containPosX, _ContainerObj.anchoredPosition.y);
                 }
             }
-            else
+
+            if (_ScrollTransform.rect.height < _ContainerObj.rect.height)
             {
-                ((UIItemSelect)shoItem).UnSelected();
+                if (_ScrollRect.vertical == true)
+                {
+                    float containerMaxY = _ContainerObj.rect.height;
+                    float containPosY = -selectPos.GetComponent<RectTransform>().anchoredPosition.y - _ScrollTransform.rect.height * 0.5f;
+                    containPosY = Mathf.Clamp(containPosY, 0, containerMaxY - _ScrollTransform.rect.height);
+                    Debug.Log("containPosY:" + containPosY);
+                    _ContainerObj.anchoredPosition = new Vector2(_ContainerObj.anchoredPosition.x, containPosY);
+                }
             }
-            ++index;
+        }
+
+        if(hash != null && hash.ContainsKey("callFunc"))
+        {
+            var callFunc = (ShowContainerPosCallFunc)hash["callFunc"];
+            callFunc();
         }
     }
 
-    private IEnumerator ShowSelectContainPos(UIItemBase selectPos)
+    private void ResetSelectContainPos()
     {
-        yield return new WaitForFixedUpdate();
-
         if (_ScrollRect != null)
         {
-            if (_ScrollRect.horizontal == true)
+            if (_ScrollTransform.rect.width < _ContainerObj.rect.width)
             {
-                float containerMaxX = _ContainerObj.sizeDelta.x;
-                float containPosX = -selectPos.GetComponent<RectTransform>().anchoredPosition.x - _ScrollTransform.rect.width * 0.5f;
-                containPosX = Mathf.Clamp(containPosX, 0, containerMaxX - _ScrollTransform.sizeDelta.x);
-                _ContainerObj.anchoredPosition = new Vector2(containPosX, _ContainerObj.anchoredPosition.y);
+                if (_ScrollRect.horizontal == true)
+                {
+                    _ContainerObj.anchoredPosition = new Vector2(0, _ContainerObj.anchoredPosition.y);
+                }
             }
 
-            if (_ScrollRect.vertical == true)
+            if (_ScrollTransform.rect.height < _ContainerObj.rect.height)
             {
-                float containerMaxY = _ContainerObj.sizeDelta.y;
-                float containPosY = -selectPos.GetComponent<RectTransform>().anchoredPosition.y - _ScrollTransform.rect.height * 0.5f;
-                containPosY = Mathf.Clamp(containPosY, 0, containerMaxY - _ScrollTransform.sizeDelta.y);
-                Debug.Log("containPosY:" + containPosY);
-                _ContainerObj.anchoredPosition = new Vector2(_ContainerObj.anchoredPosition.x, containPosY);
+                if (_ScrollRect.vertical == true)
+                {
+                    _ContainerObj.anchoredPosition = new Vector2(_ContainerObj.anchoredPosition.x, 0);
+                }
             }
         }
     }

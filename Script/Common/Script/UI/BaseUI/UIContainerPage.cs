@@ -21,9 +21,9 @@ public class UIContainerPage : UIContainerBase
 
     #region 
 
-    public override void InitContentItem(IEnumerable list, UIItemBase.ItemClick onClick = null, Hashtable exhash = null)
+    public override void InitContentItem(IEnumerable list, UIItemBase.ItemClick onClick = null, Hashtable exhash = null, UIItemBase.PanelClick onPanelClick = null)
     {
-        base.InitContentItem(list, onClick, exhash);
+        base.InitContentItem(list, onClick, exhash, onPanelClick);
 
         //_MaxPage = (int)(_ActivedItems.Count / _ItemCountPrePage);
         //if (_ActivedItems.Count % _ItemCountPrePage > 0)

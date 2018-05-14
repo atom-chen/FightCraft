@@ -33,9 +33,9 @@ public class UIContainerSlideStep : UIContainerBase
 
     #endregion
 
-    public override void InitContentItem(IEnumerable valueList, UIItemBase.ItemClick onClick = null, Hashtable exhash = null)
+    public override void InitContentItem(IEnumerable valueList, UIItemBase.ItemClick onClick = null, Hashtable exhash = null, UIItemBase.PanelClick onPanelClick = null)
     {
-        base.InitContentItem(valueList, onClick, exhash);
+        base.InitContentItem(valueList, onClick, exhash, onPanelClick);
 
         _StepHeight = _LayoutGroup.cellSize.y + _LayoutGroup.spacing.y;
         _StepHeightHalf = _LayoutGroup.cellSize.y * 0.5f;

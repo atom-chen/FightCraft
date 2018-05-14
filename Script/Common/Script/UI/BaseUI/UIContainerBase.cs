@@ -7,12 +7,12 @@ using System;
 
 public class UIContainerBase : UIBase
 {
+    // 容器每个Item的内容和位置
     public class ContentPos
     {
-        public Vector2 Pos;
-        public object Obj;
-
-        public UIItemBase ShowItem;
+        public Vector2 Pos;             // 位置
+        public object Obj;              // 显示信息
+        public UIItemBase ShowItem;     // 显示脚本 - 内包含和 Obj 一样的显示信息
     }
 
     void OnDisable()
@@ -22,6 +22,7 @@ public class UIContainerBase : UIBase
 
     void OnEnable()
     {
+        // 仅当Conten内容被重新设置过才执行初始化。
         if (!_HasInit)
         {
             StartInitContainer();
@@ -147,17 +148,33 @@ public class UIContainerBase : UIBase
 
     #endregion
 
-    public ScrollRect _ScrollRect;
-    public RectTransform _ScrollTransform;
-    public GridLayoutGroup _LayoutGroup;
-    public GameObject _ContainItemPre;
-    public RectTransform _ContainerObj;
+    public ScrollRect _ScrollRect;              // 滑动框组件
+    public RectTransform _ScrollTransform;      // 滑动框组件Rt
+    public GridLayoutGroup _LayoutGroup;        // 自动布局组件
+    public GameObject _ContainItemPre;          // Item预设体
+    public RectTransform _ContainerObj;         // 自身容器Rt
     public Image _BG;
     public bool _ContainerBaseLarge = false;
 
     protected List<UIItemBase> _ItemPrefabList = new List<UIItemBase>();
-    protected List<ContentPos> _ValueList = new List<ContentPos>();
-    protected UIItemBase.ItemClick _OnClickItem;
+    protected List<ContentPos> _ValueList = new List<ContentPos>();         // 内容的数组
+    protected UIItemBase.ItemClick _OnClickItem;        // 单个内容Item点击回调
+    protected UIItemBase.PanelClick _OnClickPanel;      // ...
+
+    public delegate void ShowItemFinish();
+    protected ShowItemFinish m_ShowItemFinish = null;
+    public void SetShowItemFinishCallFun(ShowItemFinish fun)
+    {
+        m_ShowItemFinish = fun;
+    }
+
+    public void SetLayoutPosotion(int index)
+    {
+        if(_LayoutGroup!=null)
+        {
+            _LayoutGroup.transform.localPosition = new Vector3(_LayoutGroup.transform.position.x, _LayoutGroup.cellSize.y * index, _LayoutGroup.transform.position.z);
+        }
+    }
 
     public int GetItemCount()
     {
@@ -167,7 +184,7 @@ public class UIContainerBase : UIBase
     protected Hashtable _ExHash;
     private bool _HasInit = false;
 
-    public virtual void InitContentItem(IEnumerable valueList, UIItemBase.ItemClick onClick = null, Hashtable exhash = null)
+    public virtual void InitContentItem(IEnumerable valueList, UIItemBase.ItemClick onClick = null, Hashtable exhash = null, UIItemBase.PanelClick onPanelClick = null)
     {
         //CalculateRect(valueList);
         _ValueList.Clear();
@@ -189,8 +206,12 @@ public class UIContainerBase : UIBase
             ++i;
         }
 
+        _InitItemCount = 30;
+        _InitItemCount = Math.Min(_InitItemCount, _ValueList.Count);
+
         _HasInit = false;
         _OnClickItem = onClick;
+        _OnClickPanel = onPanelClick;
         _ExHash = exhash;
         if (isActiveAndEnabled)
         {
@@ -222,9 +243,9 @@ public class UIContainerBase : UIBase
 
     public virtual void ShowItemsFinish()
     {
-
+        if (m_ShowItemFinish != null)
+            m_ShowItemFinish.Invoke();
     }
-
 
     private bool IsPosInView(ContentPos pos)
     {
@@ -249,11 +270,13 @@ public class UIContainerBase : UIBase
             {
                 hash = new Hashtable(exhash);
             }
+
             hash.Add("InitObj", contentItem.Obj);
-            preItem.Init();
             preItem.Show(hash);
             preItem._InitInfo = contentItem.Obj;
+
             preItem._ClickEvent = _OnClickItem;
+            preItem._PanelClickEvent = _OnClickPanel;
             contentItem.ShowItem = preItem;
         }
     }
@@ -311,10 +334,19 @@ public class UIContainerBase : UIBase
                 //_EmpeyItemPrefab.Enqueue(itemScript);
             }
         }
+        
 
         for (int i = 0; i < _InitItemCount; ++i)
         {
             InitItem(_ValueList[i], _ItemPrefabList[i], exhash);
+        }
+
+        if (_ItemPrefabList.Count > _ValueList.Count)
+        {
+            for (int i = _ValueList.Count; i < _ItemPrefabList.Count; ++i)
+            {
+                _ItemPrefabList[i].Hide();
+            }
         }
 
         if (_InitItemCount >= _ValueList.Count)
@@ -323,7 +355,6 @@ public class UIContainerBase : UIBase
             yield break;
         }
 
-        
         yield return new WaitForFixedUpdate();
 
         int nextNeedCount = _ValueList.Count - _InitItemCount;

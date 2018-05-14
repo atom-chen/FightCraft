@@ -32,8 +32,12 @@ public class GameCore : MonoBehaviour
         || Application.platform == RuntimePlatform.WindowsPlayer
         || Application.platform == RuntimePlatform.WindowsEditor) && (Input.GetKeyDown(KeyCode.Escape)))
         {
-            LogicManager.Instance.QuitGame();
-            Debug.Log("save data");
+            UIMessageBox.Show(1000006, () =>
+            {
+                LogicManager.Instance.QuitGame();
+                Debug.Log("save data");
+            }, null);
+            
         }
 
 #if UNITY_EDITOR

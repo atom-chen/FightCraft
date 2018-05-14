@@ -90,7 +90,7 @@ public class TestFight : MonoBehaviour
     private float _CloseRange = 2.0f;
     private int _RandomSkillIdx = 0;
     private ObjMotionSkillAttack _NormalAttack;
-    private int _WeaponSkill = -1;
+    private int _WeaponSkill = 3;
 
     private void InitWeaponSkill()
     {
