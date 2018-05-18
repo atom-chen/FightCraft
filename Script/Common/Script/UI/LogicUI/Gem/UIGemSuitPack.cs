@@ -32,6 +32,7 @@ public class UIGemSuitPack : UIBase
     #region 
 
     public Text _GemSuitName;
+    public Text _GemSuitLevel;
     public UIContainerBase _AttrContainer;
 
     public UIContainerSelect _GemSuitContainer;
@@ -63,20 +64,9 @@ public class UIGemSuitPack : UIBase
         if (gemSet == null)
             return;
 
-        _GemSuitName.text = gemSet.Name;
-        List<EquipExAttr> exAttrs = new List<EquipExAttr>();
-        int level = gemSet.MinGemLv;
-        if (gemSet == GemSuit.Instance.ActSet)
-        {
-            level = GemSuit.Instance.ActLevel;
-        }
-        foreach (var setAttr in gemSet.Attrs)
-        {
-            if(setAttr != null)
-                exAttrs.Add(setAttr.GetExAttr(level));
-        }
-
-        _AttrContainer.InitContentItem(exAttrs);
+        //_GemSuitName.text = GemSuit.Instance.ActLevel.ToString();
+        _GemSuitLevel.text = StrDictionary.GetFormatStr(30004, GemSuit.Instance.ActLevel);
+        _AttrContainer.InitContentItem(GemSuit.Instance.ActSetAttrs);
     }
 }
 

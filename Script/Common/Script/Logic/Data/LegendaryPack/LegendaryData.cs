@@ -120,6 +120,8 @@ public class LegendaryData : SaveItemBase
         hash.Add("EquipInfo", equip);
         GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_EQUIP_STORE, this, hash);
 
+        RoleData.SelectRole.CalculateAttr();
+
         return true;
     }
 
@@ -131,6 +133,8 @@ public class LegendaryData : SaveItemBase
 
         emptyPos.ExchangeInfo(equip);
         CalculateAttrs();
+
+        RoleData.SelectRole.CalculateAttr();
 
         return true;
     }
@@ -150,6 +154,21 @@ public class LegendaryData : SaveItemBase
         CalculateValue();
         _ExAttrs.Add(EquipExAttr.GetBaseExAttr(RoleAttrEnum.Attack, _LegendaryValue));
         _ExAttrs.Add(EquipExAttr.GetBaseExAttr(RoleAttrEnum.HPMax, _LegendaryValue));
+    }
+
+    public void SetAttr(RoleAttrStruct roleAttr)
+    {
+        for (int i = 0; i < ExAttrs.Count; ++i)
+        {
+            if (ExAttrs[i].AttrType == "RoleAttrImpactBaseAttr")
+            {
+                roleAttr.AddValue((RoleAttrEnum)ExAttrs[i].AttrParams[0], ExAttrs[i].AttrParams[1]);
+            }
+            else
+            {
+                roleAttr.AddExAttr(RoleAttrImpactManager.GetAttrImpact(ExAttrs[i]));
+            }
+        }
     }
 
     public static bool IsEquipLegendary(ItemEquip equip)

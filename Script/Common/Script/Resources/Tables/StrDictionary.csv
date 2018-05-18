@@ -74,6 +74,8 @@
 30001,gem,,No empty gem pos,,
 30002,gem,,gem has not created,,
 30003,gem,,lack materials,,
+30004,gem,,Level:{0},,
+30005,gem,,(Lv.{0}),,
 40000,equipRefersh,,"not enough times, watch a video?",,
 40001,equipRefersh,,"destory it will get {0}*{1}, a u sure?",,
 40002,equipRefersh,,the same equip,,

@@ -22,7 +22,8 @@ public class RoleAttrImpactElementBullet : RoleAttrImpactBase
         var skillMotion = roleMotion._StateSkill._SkillMotions[_SkillInput];
         var impactGO = ResourceManager.Instance.GetInstanceGameObject("Bullet\\Emitter\\Element\\" + _ImpactName);
         impactGO.transform.SetParent(skillMotion.transform);
-
+        impactGO.transform.localPosition = Vector3.zero;
+        impactGO.transform.localRotation = Quaternion.Euler(Vector3.zero);
         var bulletEmitterEle = impactGO.GetComponentsInChildren<BulletEmitterElement>();
         foreach (var bulletEmitter in bulletEmitterEle)
         {

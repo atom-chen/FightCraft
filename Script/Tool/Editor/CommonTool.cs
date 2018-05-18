@@ -67,12 +67,191 @@ public class CommonTool : Editor
     [MenuItem("TyTools/Test/GemSetTest")]
     public static void GemSetTest()
     {
-        foreach (var gemSetRecord in Tables.TableReader.GemSet.Records.Values)
+        //foreach (var gemSetRecord in Tables.TableReader.GemSet.Records.Values)
+        //{
+        //    GemSetGemsCriticSelf(gemSetRecord);
+        //}
+        int gemCnt = Tables.TableReader.GemTable.Records.Count;
+        var gemList = new List<Tables.GemTableRecord>(Tables.TableReader.GemTable.Records.Values);
+        List<Tables.GemTableRecord> gemSuit = new List<Tables.GemTableRecord>() { null, null, null, null, null, null};
+        List<string> gemSuitStrs = new List<string>();
+        for (int slot1 = 0; slot1 < gemCnt; ++slot1)
         {
-            GemSetGemsCriticSelf(gemSetRecord);
+            //gemSuit.Clear();
+            gemSuit[0] = (gemList[slot1]);
+            for (int slot2 = slot1 + 1; slot2 < gemCnt; ++slot2)
+            {
+                gemSuit[1] = (gemList[slot2]);
+                for (int slot3 = slot2 + 1; slot3 < gemCnt; ++slot3)
+                {
+                    gemSuit[2] = (gemList[slot3]);
+                    for (int slot4 = slot3 + 1; slot4 < gemCnt; ++slot4)
+                    {
+                        gemSuit[3] = (gemList[slot4]);
+                        for (int slot5 = slot4 + 1; slot5 < gemCnt; ++slot5)
+                        {
+                            gemSuit[4] = (gemList[slot5]);
+                            for (int slot6 = slot5 + 1; slot6 < gemCnt; ++slot6)
+                            {
+                                gemSuit[5] = (gemList[slot6]);
+
+                                string gemSuitStr = IsGemSuitFit(gemSuit);
+                                if (!string.IsNullOrEmpty(gemSuitStr))
+                                {
+                                    gemSuitStrs.Add(gemSuitStr);
+                                    Debug.Log("Gemsuit:" + GemSuitIdx + "," + gemSuitStr);
+                                    ++GemSuitIdx;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        string fileName = "GemSuitGems";
+        string path = Application.dataPath + fileName + ".txt";
+        var fileStream = File.Create(path);
+        var streamWriter = new StreamWriter(fileStream);
+
+        for (int i = 0; i < _PreIdxs.Count; ++i)
+        {
+
+            streamWriter.WriteLine(gemSuitStrs[_PreIdxs[i]]);
         }
 
+        streamWriter.Close();
     }
+
+    private static List<string> _GemDefence = new List<string>() { "70003", "70004", "70014" };
+    private static List<List<string>> _GemConflict = new List<List<string>>()
+    {
+        new List<string>() { "70005", "70019"},
+        new List<string>() { "70007", "70016"},
+        new List<string>() { "70008", "70017"},
+        new List<string>() { "70010", "70018"},
+    };
+    private static List<List<string>> _BaseAttrConflict = new List<List<string>>()
+    {
+        new List<string>() { "70000", "70011"},
+        new List<string>() { "70001", "70012"},
+        new List<string>() { "70002", "70013"},
+    };
+    private static int GemSuitIdx = 0;
+    private static List<int> _PreIdxs = new List<int>() { 23, 83, 28, 145, 102, 138, 105, 86, 24, 155, 149, 107, 111, 13, 25, 84, 156, 159, 104, 139, 106, 87, 15, 134, 148, 150, 115, 18, 0, 19, 20, 30, 40, 50, 60, 70, 80, 90, 110, 120, 130, 140, 151, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260, 270, 280, 290, 300, 306, 301, 291, 281, 271, 261, 251, 241, 231, 221 };
+    private static string IsGemSuitFit(List<Tables.GemTableRecord> gemSuit)
+    {
+        string gemSuitNames = "";
+        if (gemSuit.Count == 6)
+        {
+            List<int> levelMat = new List<int>();
+            int defenceCnt = 0;
+            int conflictEle = -1;
+            int conflictBase = -1;
+            for (int i = 0; i < gemSuit.Count; ++i)
+            {
+                if (gemSuit[i] == null)
+                    break;
+
+                if (!levelMat.Contains(gemSuit[i].LevelUpParam))
+                {
+                    levelMat.Add(gemSuit[i].LevelUpParam);
+                }
+                gemSuitNames += "\t" + gemSuit[i].Id;
+
+                if (_GemDefence.Contains(gemSuit[i].Id))
+                {
+                    ++defenceCnt;
+                }
+
+                for (int j = 0; j < _GemConflict.Count; ++j)
+                {
+                    if (_GemConflict[j].Contains(gemSuit[i].Id))
+                    {
+                        if (conflictEle < 0)
+                        {
+                            conflictEle = j;
+                        }
+                        else if(conflictEle != j)
+                        {
+                            conflictEle = 5;
+                        }
+                    }
+                }
+
+                for (int j = 0; j < _BaseAttrConflict.Count; ++j)
+                {
+                    if (_BaseAttrConflict[j].Contains(gemSuit[i].Id))
+                    {
+                        if (conflictBase < 0)
+                        {
+                            conflictBase = j;
+                        }
+                        else if (conflictBase != j)
+                        {
+                            conflictBase = 5;
+                        }
+                    }
+                }
+            }
+            if (levelMat.Count < 4)
+            {
+                gemSuitNames = "";
+                //Debug.Log("Gemsuit:" + gemStr);
+            }
+            if (defenceCnt != 1)
+            {
+                gemSuitNames = "";
+            }
+            if (conflictEle == 5)
+            {
+                gemSuitNames = "";
+            }
+            else if(!string.IsNullOrEmpty(gemSuitNames))
+            {
+                gemSuitNames += "\t";
+                if (conflictEle == 0)
+                {
+                    gemSuitNames += " Fire";
+                }
+                else if (conflictEle == 1)
+                {
+                    gemSuitNames += " Wind";
+                }
+                else if (conflictEle == 2)
+                {
+                    gemSuitNames += " Light";
+                }
+                else if (conflictEle == 3)
+                {
+                    gemSuitNames += " Cold";
+                }
+            }
+
+            if (conflictBase == 5)
+            {
+                gemSuitNames = "";
+            }
+            else if(!string.IsNullOrEmpty(gemSuitNames))
+            {
+                gemSuitNames += "\t";
+                if (conflictBase == 0)
+                {
+                    gemSuitNames += " Str";
+                }
+                else if (conflictBase == 1)
+                {
+                    gemSuitNames += " Dex";
+                }
+                else if (conflictBase == 2)
+                {
+                    gemSuitNames += " Int";
+                }
+            }
+        }
+
+        return gemSuitNames;
+    }
+
 
     private static void GemSetGemsCriticSelf(Tables.GemSetRecord gemSet)
     {

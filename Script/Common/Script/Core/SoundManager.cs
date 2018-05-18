@@ -15,12 +15,13 @@ public class SoundManager : MonoBehaviour
     public void PlayBGMusic(string music)
     {
         var audio = ResourceManager.Instance.GetAudioClip(music);
-        PlayBGMusic(audio);
+        PlayBGMusic(audio, 0.5f);
     }
 
-    public void PlayBGMusic(AudioClip logicAudio)
+    public void PlayBGMusic(AudioClip logicAudio, float volumn = 0.5f)
     {
         _AudioSource.clip = (logicAudio);
+        _AudioSource.volume = volumn;
         _AudioSource.Play();
     }
 

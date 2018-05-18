@@ -42,13 +42,19 @@ public class BulletHitInterval : BulletBase
         }
 
         yield return new WaitForSeconds(_AlertTime);
-        
+
         //_Collider.enabled = true;
 
         yield return new WaitForSeconds(_ShowHitObjDelay);
         _HitObj.SetActive(true);
 
         yield return new WaitForSeconds(_FirstHitDelay);
+
+        if (_BornAudio > 0)
+        {
+            _SkillMotion.PlayAudio(ResourcePool.Instance._CommonAudio[_BornAudio]);
+        }
+
         _StartHit = true;
     }
 
@@ -106,39 +112,5 @@ public class BulletHitInterval : BulletBase
         BulletHit(targetMotion);
         PlayHitAudio();
     }
-
-    #region hit autio
-
-    public bool _IsPlayedHitAudio = false;
-
-    public void PlayHitAudio()
-    {
-        if (_IsPlayedHitAudio)
-            return;
-
-        if (_HitAudio < 0)
-            return;
-
-        AudioSource.PlayOneShot(ResourcePool.Instance._CommonAudio[_HitAudio]);
-        _IsPlayedHitAudio = true;
-    }
-
-    public void PlayNoHitAudio()
-    {
-        if (_IsPlayedHitAudio)
-            return;
-
-        if (_NoHitAudio < 0)
-            return;
-
-        AudioSource.PlayOneShot(ResourcePool.Instance._CommonAudio[_NoHitAudio]);
-        _IsPlayedHitAudio = true;
-    }
-
-    public void ClearHitFlag()
-    {
-        _IsPlayedHitAudio = false;
-    }
-
-    #endregion
+    
 }

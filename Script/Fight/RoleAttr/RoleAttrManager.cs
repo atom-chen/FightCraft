@@ -469,6 +469,7 @@ public class RoleAttrManager : MonoBehaviour
             _BaseMoveSpeed = 4.5f;
         }
 
+        _Level = roleData._RoleLevel;
         RefreshMoveSpeed();
         RefreshAttackSpeed();
         AddHPPersent(1);
@@ -516,7 +517,7 @@ public class RoleAttrManager : MonoBehaviour
         var baseAttr = new RoleAttrStruct();
         int hpMax = GameDataValue.GetMonsterHP(monsterBase, roleLv, monsterType);
         int attackStep = GameDataValue.GetMonsterAtk(monsterBase, roleLv, monsterType);
-        int defenceStep = roleLv;
+        int defenceStep = GameDataValue.GetMonsterDef(monsterBase, roleLv, monsterType); ;
         _Level = roleLv;
         
         baseAttr.SetValue(RoleAttrEnum.HPMax, hpMax);
@@ -601,8 +602,6 @@ public class RoleAttrManager : MonoBehaviour
             UIDamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, ShowDamageType.Normal, 1);
             //DamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, ShowDamageType.Normal, 1);
         }
-
-        Debug.Log("DamageValue:" + damageClass.TotalDamageValue);
 
         DamageHP(damageClass.TotalDamageValue + damageClass.AttachDamageValue);
 

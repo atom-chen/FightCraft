@@ -38,6 +38,12 @@ public class LogicManager
 
     public void StartLoadRole(int idx)
     {
+        GemData.Instance.LoadClass(true);
+        GemData.Instance.InitGemData();
+
+        LegendaryData.Instance.LoadClass(true);
+        LegendaryData.Instance.InitLegendaryEquips();
+
         PlayerDataPack.Instance.SelectRole(idx);
 
         BackBagPack.Instance.LoadClass(true);
@@ -46,14 +52,10 @@ public class LogicManager
         ShopData.Instance.LoadClass(true);
         ShopData.Instance.RefreshShop();
 
-        GemData.Instance.LoadClass(true);
-        GemData.Instance.InitGemData();
-
         EquipRefresh.Instance.LoadClass(true);
         EquipRefresh.Instance.InitEquipRefresh();
 
-        LegendaryData.Instance.LoadClass(true);
-        LegendaryData.Instance.InitLegendaryEquips();
+        
 
         ActData.Instance.LoadClass(true);
         ActData.Instance.InitActData();

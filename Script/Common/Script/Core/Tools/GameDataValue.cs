@@ -97,26 +97,26 @@ public class GameDataValue
     public static int _HPPerRoleLevel = 100;
     public static int _HPRoleLevelBase = 5000;
 
-    public static float _AttackPerStrength = 0.25f;
-    public static float _DmgEnhancePerStrength = 0.5f;
-    public static float _StrToAtk = 1;
+    public static float _AttackPerStrength = 1f;
+    public static float _DmgEnhancePerStrength = 0.25f;
+    public static float _StrToAtk = 0.25f;
 
-    public static float _IgnoreAtkPerDex = 0.15f;
-    public static float _CriticalRatePerDex = 0.1f;
-    public static float _CriticalDmgPerDex = 1.5f;
-    public static float _DexToAtk = 1;
+    public static float _IgnoreAtkPerDex = 0.6f;
+    public static float _CriticalRatePerDex = 0.4f;
+    public static float _CriticalDmgPerDex = 6f;
+    public static float _DexToAtk = 0.25f;
 
-    public static float _EleAtkPerInt = 0.1f;
-    public static float _EleEnhancePerInt = 0.1f;
-    public static float _IntToAtk = 1;
+    public static float _EleAtkPerInt = 0.15f;
+    public static float _EleEnhancePerInt = 0.15f;
+    public static float _IntToAtk = 0.25f;
 
-    public static float _HPPerVit = 3;
-    public static float _FinalDmgRedusePerVit = 0.3f;
-    public static float _VitToAtk = 1;
+    public static float _HPPerVit = 12;
+    public static float _FinalDmgRedusePerVit = 0.5f;
+    public static float _VitToAtk = 0.25f;
 
     public static float _CriticalDmgToAtk = 2f;
 
-    public static float _ElementToAtk = 1;
+    public static float _ElementToAtk = 0.65f;
     public static float _DmgEnhancePerElementEnhance = 10;
     public static float _EleEnhanceToAtk = 0.3f;
     public static float _EleResistToAtk = 0.3f;
@@ -126,8 +126,8 @@ public class GameDataValue
     public static float _HpToAtk = 11.0f;
     public static float _DefToAtk = 0.5f;
     public static float _MoveSpeedToAtk = 1.35f;
-    public static float _AtkSpeedToAtk = 1;
-    public static float _CriticalChanceToAtk = 1;
+    public static float _AtkSpeedToAtk = 0.8f;
+    public static float _CriticalChanceToAtk = 0.8f;
     public static float _DamageEnhance = 1;
 
     public static float GetAttrToValue(RoleAttrEnum roleAttr)
@@ -273,22 +273,17 @@ public class GameDataValue
     private static float _LvValueV = 10;
     private static float _LvValueA = 0.8f;
 
-    public static int CalLvValue(int level)
+    public static int CalLvValue(int level, EQUIP_SLOT equipSlot)
     {
         var exValue = _LvValueV * level + level * level * 0.5f * _LvValueA + _LvValueBase;
+        if (equipSlot == EQUIP_SLOT.AMULET || equipSlot == EQUIP_SLOT.RING)
+        {
+            exValue *= 2;
+
+        }
         return Mathf.CeilToInt(exValue);
     }
 
-    public static int CalExValue(int level)
-    {
-        var exValue = CalLvValue(level) * _ExToBase;
-        return Mathf.CeilToInt(exValue);
-    }
-
-    public static int GetMaxValue()
-    {
-        return Mathf.CeilToInt( CalExValue(_MaxLv) * 1.2f);
-    }
     #endregion
 
     #region equip
@@ -298,11 +293,11 @@ public class GameDataValue
         var randomValue = Random.Range(lowPersent, upPersent);
         if (roleAttr == RoleAttrEnum.AttackPersent)
         {
-            return Mathf.CeilToInt(10000 * randomValue);
+            return Mathf.CeilToInt(5000 * randomValue);
         }
         else if (roleAttr == RoleAttrEnum.HPMaxPersent)
         {
-            return Mathf.CeilToInt(10000 * randomValue);
+            return Mathf.CeilToInt(5000 * randomValue);
         }
         //else if (roleAttr == RoleAttrEnum.MoveSpeed)
         //{
@@ -371,7 +366,7 @@ public class GameDataValue
                     {
                         exAttrCnt = Random.Range(1, 3);
                     }
-                    return CalRandomAttrs(_AmuletExAttrs, exAttrCnt);
+                    return CalRandomAttrs(_RingExAttrs, exAttrCnt);
             }
         }
         else
@@ -433,8 +428,8 @@ public class GameDataValue
 
             if (equipExAttr.AttrParams[0] == (int)RoleAttrEnum.AttackPersent || equipExAttr.AttrParams[0] == (int)RoleAttrEnum.HPMaxPersent)
             {
-                var randomPersent = Random.Range(20, 30);
-                equipExAttr.Value = Mathf.Min(10000, equipExAttr.Value + randomPersent);
+                var randomPersent = Random.Range(10, 15);
+                equipExAttr.Value = Mathf.Min(5000, equipExAttr.Value + randomPersent);
                 equipExAttr.AttrParams[1] = GetValueAttr((RoleAttrEnum)equipExAttr.AttrParams[0], equipExAttr.Value);
             }
             else if (equipExAttr.AttrParams[0] == (int)RoleAttrEnum.MoveSpeed)
@@ -562,8 +557,28 @@ public class GameDataValue
         new EquipExAttrRandom(RoleAttrEnum.HPMax, true, -1, 100),
         new EquipExAttrRandom(RoleAttrEnum.Attack, true, -1, 100),
         new EquipExAttrRandom(RoleAttrEnum.Defense, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.AttackSpeed, false, 300, 100),
         new EquipExAttrRandom(RoleAttrEnum.CriticalHitChance, false, 300, 100),
+        new EquipExAttrRandom(RoleAttrEnum.CriticalHitDamge, true, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.FireAttackAdd, true, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.ColdAttackAdd, true, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.LightingAttackAdd, true, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.WindAttackAdd, true, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.FireResistan, true, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.ColdResistan, true, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.LightingResistan, true, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.WindResistan, true, -1, 100),
+    };
+
+    public static List<EquipExAttrRandom> _RingExAttrs = new List<EquipExAttrRandom>()
+    {
+        new EquipExAttrRandom(RoleAttrEnum.Strength, true, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Dexterity, true, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Intelligence, true, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Vitality, true, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.HPMax, true, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Attack, true, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Defense, true, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.AttackSpeed, false, 300, 100),
         new EquipExAttrRandom(RoleAttrEnum.CriticalHitDamge, true, -1, 100),
         new EquipExAttrRandom(RoleAttrEnum.FireAttackAdd, true, -1, 100),
         new EquipExAttrRandom(RoleAttrEnum.ColdAttackAdd, true, -1, 100),
@@ -579,14 +594,14 @@ public class GameDataValue
 
     #region equip set
 
-    
+
 
     #endregion
 
     #region gem
 
     public static float _GemAttrV = 10;
-    public static float _GemAttrA = 10;
+    public static float _GemAttrA = 13;
 
     public static int GetGemValue(int level)
     {
@@ -631,9 +646,9 @@ public class GameDataValue
 
     public static int GetSkillDamageRate(int skillLv, List<int> skillParam)
     {
-        var levelRate = GameDataValue.ConfigIntToFloat(10000 + skillParam[1]);
-        var levelVal = Mathf.Pow(levelRate, skillLv);
-        return (int)(levelVal * skillParam[0]);
+        var levelRate = skillParam[1];
+        var levelVal = levelRate * skillLv;
+        return (int)(levelVal + skillParam[0]);
     }
 
     #endregion
@@ -928,16 +943,16 @@ public class GameDataValue
                 var dropItem = monsterRecord.ValidSpDrops[dropIdx];
                 var dropEquipTab = TableReader.EquipItem.GetRecord(dropItem.Id);
                 var equipLevel = GetEquipLv(dropEquipTab.Slot, level);
-                var equipValue = CalLvValue(equipLevel);
-                var dropEquip = ItemEquip.CreateEquip(equipLevel, dropEquipQualitys[i], equipValue, int.Parse(dropItem.Id), (int)dropEquipTab.Slot);
+                var equipValue = CalLvValue(equipLevel, dropEquipTab.Slot);
+                var dropEquip = ItemEquip.CreateEquip(equipLevel, dropEquipQualitys[i], int.Parse(dropItem.Id), (int)dropEquipTab.Slot);
                 dropEquipList.Add(dropEquip);
             }
             else
             {
                 var equipSlot = GetRandomItemSlot(dropEquipQualitys[i]);
                 var equipLevel = GetEquipLv(equipSlot, level);
-                var equipValue = CalLvValue(equipLevel);
-                var dropEquip = ItemEquip.CreateEquip(equipLevel, dropEquipQualitys[i], equipValue, -1, (int)equipSlot);
+                var equipValue = CalLvValue(equipLevel, equipSlot);
+                var dropEquip = ItemEquip.CreateEquip(equipLevel, dropEquipQualitys[i], -1, (int)equipSlot);
                 dropEquipList.Add(dropEquip);
             }
         }
@@ -1273,7 +1288,63 @@ public class GameDataValue
 
     public static int GetMonsterHP(MonsterBaseRecord monsterBase, int roleLv, MOTION_TYPE monsterType)
     {
-        int hpMax = (int)(roleLv * roleLv * _MonsterHPParam * monsterBase.BaseAttr[0] + monsterBase.BaseAttr[0]);
+        int hpMax = 0;
+        float hpBase = ConfigIntToFloat(monsterBase.BaseAttr[0]);
+        if (roleLv <= 10)
+        {
+            hpMax = (int)(CalWeaponAttack(roleLv) * hpBase * 0.6f + roleLv * 20);
+        }
+        else if (roleLv <= 20)
+        {
+            var hpTemp = GetMonsterHP(monsterBase, 10, monsterType) * 1.5f;
+            hpMax = (int)(hpTemp + (roleLv - 10) * 30);
+        }
+        else if (roleLv <= 30)
+        {
+            var hpTemp = GetMonsterHP(monsterBase, 20, monsterType) * 1.5f;
+            hpMax = (int)(hpTemp + (roleLv - 20) * 60);
+        }
+        else if (roleLv <= 40)
+        {
+            var hpTemp = GetMonsterHP(monsterBase, 30, monsterType);
+            hpMax = (int)(hpTemp + (roleLv - 30) * 80);
+        }
+        else if (roleLv <= 50)
+        {
+            var hpTemp = GetMonsterHP(monsterBase, 40, monsterType);
+            hpMax = (int)(hpTemp + (roleLv - 40) * 150);
+        }
+        else if (roleLv <= 60)
+        {
+            var hpTemp = GetMonsterHP(monsterBase, 50, monsterType);
+            hpMax = (int)(hpTemp + (roleLv - 50) * 200);
+        }
+        else if (roleLv <= 70)
+        {
+            var hpTemp = GetMonsterHP(monsterBase, 60, monsterType);
+            hpMax = (int)(hpTemp + (roleLv - 60) * 280);
+        }
+        else if (roleLv <= 80)
+        {
+            var hpTemp = GetMonsterHP(monsterBase, 70, monsterType);
+            hpMax = (int)(hpTemp + (roleLv - 70) * 400);
+        }
+        else if (roleLv <= 90)
+        {
+            var hpTemp = GetMonsterHP(monsterBase, 80, monsterType);
+            hpMax = (int)(hpTemp + (roleLv - 80) * 600);
+        }
+        else if (roleLv <= 100)
+        {
+            var hpTemp = GetMonsterHP(monsterBase, 90, monsterType);
+            hpMax = (int)(hpTemp + (roleLv - 90) * 900);
+        }
+        else
+        {
+            var hpTemp = GetMonsterHP(monsterBase, 100, monsterType);
+            hpMax = (int)(hpTemp + (roleLv - 100) * 1500);
+        }
+        
         return hpMax;
     }
 
@@ -1283,16 +1354,22 @@ public class GameDataValue
         return atk;
     }
 
+    public static int GetMonsterDef(MonsterBaseRecord monsterBase, int roleLv, MOTION_TYPE monsterType)
+    {
+        int def = (int)(CalEquipTorsoDefence(roleLv) * 1.5f);
+        return def;
+    }
+
     #endregion
 
     #region test 
 
-    public static float GetSkillDamageRate(int skillIdx)
+    public static float GetSkillDamageRate(int skillIdx, bool isEnhance = false)
     {
         var attackRecord = Tables.TableReader.SkillInfo.GetRecord("10001");
-        var skillRecord = Tables.TableReader.SkillInfo.GetRecord(skillIdx.ToString());
+        var skillRecord = Tables.TableReader.SkillInfo.GetRecord(TestFight.GetTestSkill(skillIdx).ToString());
         var atkData = SkillData.Instance.GetSkillInfo("10001");
-        var skillData = SkillData.Instance.GetSkillInfo(skillIdx.ToString());
+        var skillData = SkillData.Instance.GetSkillInfo(TestFight.GetTestSkill(skillIdx).ToString());
         var atkDamage = GameDataValue.ConfigIntToFloat(GameDataValue.GetSkillDamageRate(atkData.SkillLevel, attackRecord.EffectValue));
         var skillDamage = GameDataValue.ConfigIntToFloat(GameDataValue.GetSkillDamageRate(skillData.SkillLevel, skillRecord.EffectValue));
 
@@ -1309,7 +1386,18 @@ public class GameDataValue
             atkDamage *= 0.75f;
         }
 
-        float damage = atkDamage + skillDamage;
+        float damage = 0;
+
+        if (isEnhance)
+        {
+            int eleLevel = (atkData.SkillLevel / 2) + 1;
+            damage = atkDamage + 0.5f + (0.05f * eleLevel) + skillDamage * 1.5f;
+        }
+        else
+        {
+            damage = atkDamage + skillDamage;
+        }
+
         return damage;
     }
 

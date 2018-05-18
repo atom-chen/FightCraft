@@ -90,7 +90,6 @@ public class RoleData : SaveItemBase
 
         if (equipItem.RequireLevel > _RoleLevel)
         {
-            Debug.Log("EquipLevel:"+ equipItem.RequireLevel + ", " + _RoleLevel);
             return false;
         }
 
@@ -178,6 +177,8 @@ public class RoleData : SaveItemBase
         SetRoleLevelAttr(_BaseAttr);
         SkillData.Instance.SetSkillAttr(_BaseAttr);
         SetEquipAttr(_BaseAttr);
+        GemData.Instance.SetGemAttr(_BaseAttr);
+        LegendaryData.Instance.SetAttr(_BaseAttr);
 
         CalculateSecondAttr(_BaseAttr);
     }

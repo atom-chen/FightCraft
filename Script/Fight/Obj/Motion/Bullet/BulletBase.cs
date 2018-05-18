@@ -26,11 +26,6 @@ public class BulletBase : MonoBehaviour
         _SkillMotion = senderMotion;
         _ImpactList = gameObject.GetComponents<ImpactBase>();
         _EmitterBase = emitterBase;
-
-        if (_BornAudio > 0)
-        {
-            _SkillMotion.PlayAudio(ResourcePool.Instance._CommonAudio[_BornAudio]);
-        }
     }
 
     protected virtual void BulletHit(MotionManager hitMotion)
@@ -63,6 +58,41 @@ public class BulletBase : MonoBehaviour
             }
             return _AudioSource;
         }
+    }
+
+    #endregion
+
+    #region hit autio
+
+    public bool _IsPlayedHitAudio = false;
+
+    public void PlayHitAudio()
+    {
+        if (_IsPlayedHitAudio)
+            return;
+
+        if (_HitAudio < 0)
+            return;
+
+        AudioSource.PlayOneShot(ResourcePool.Instance._CommonAudio[_HitAudio]);
+        _IsPlayedHitAudio = true;
+    }
+
+    public void PlayNoHitAudio()
+    {
+        if (_IsPlayedHitAudio)
+            return;
+
+        if (_NoHitAudio < 0)
+            return;
+
+        AudioSource.PlayOneShot(ResourcePool.Instance._CommonAudio[_NoHitAudio]);
+        _IsPlayedHitAudio = true;
+    }
+
+    public void ClearHitFlag()
+    {
+        _IsPlayedHitAudio = false;
     }
 
     #endregion

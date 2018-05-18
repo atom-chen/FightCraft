@@ -44,9 +44,9 @@ public class CommonDefine
         switch (isEnable)
         {
             case 1:
-                return "<color=#00ff00>";
+                return "<color=#ffffff>";
             case 0:
-                return "<color=#77777777>";
+                return "<color=#777777>";
         }
         return "<color=#ffffff>";
     }

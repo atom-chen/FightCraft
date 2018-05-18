@@ -67,11 +67,11 @@ public class UICurrencyItem : UIItemBase
 
     public void OnBtnAddClick()
     {
-#if UNITY_EDITOR
+
         PlayerDataPack.Instance.AddGold(1000);
         PlayerDataPack.Instance.AddDiamond(1000);
         UIMainFun.UpdateMoney();
-#endif
+
     }
 }
 

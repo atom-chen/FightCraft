@@ -58,7 +58,7 @@ public class UITestEquip : UIBase
         {
             legencyID = 0;
         }
-        var equipItem = ItemEquip.CreateEquip(level, quality, value, legencyID);
+        var equipItem = ItemEquip.CreateEquip(level, quality, legencyID);
         var newEquip = BackBagPack.Instance.AddNewEquip(equipItem);
         //UIEquipTooltips.ShowAsyn(newEquip);
         Debug.Log("test equip :" + newEquip.EquipItemRecord.Id);
@@ -80,6 +80,11 @@ public class UITestEquip : UIBase
     {
         int targetLevel = int.Parse(_TargetLevel.text);
         int fightTimes = 0;
+        string fileName = "StagePassInfos";
+        string path = Application.dataPath + fileName + ".txt";
+        var fileStream = File.Create(path);
+        var streamWriter = new StreamWriter(fileStream);
+
         while (true)
         {
             var level = RoleData.SelectRole._RoleLevel + RoleData.SelectRole._AttrLevel;
@@ -99,14 +104,68 @@ public class UITestEquip : UIBase
                 nextStage = 1;
             }
 
+            GetLevelStage(level, ref nextDiff, ref nextStage);
+
             int gold = 0;
             int exp = 0;
             TestPassNormalStage(nextStage, nextDiff, ref exp, ref gold);
             ActData.Instance.SetPassNormalStage(nextDiff, nextStage);
-            
+
             ++fightTimes;
+
+            RoleAttrManager roleAttr = new RoleAttrManager();
+            roleAttr.InitMainRoleAttr();
+
+            RoleAttrManager monAttr = new RoleAttrManager();
+            monAttr.InitEnemyAttr(TableReader.MonsterBase.GetRecord("21"), level);
+
+            Hashtable resultHash = new Hashtable();
+            float damageRage = GameDataValue.GetSkillDamageRate(1);
+            resultHash.Add("SkillDamageRate", damageRage);
+            resultHash.Add("DamagePos", Vector3.zero);
+            resultHash.Add("ImpactBase", new ImpactDamage() { _DamageType = ElementType.Physic });
+            resultHash.Add("DamageType", ElementType.Physic);
+
+            //damage
+            RoleAttrManager.DamageClass damageClass = new RoleAttrManager.DamageClass();
+            monAttr.CalculateNormalDamage(roleAttr, resultHash, damageClass);
+            //final
+            monAttr.CaculateFinalDamage(roleAttr, resultHash, damageClass);
+
+            Hashtable resultHash2 = new Hashtable();
+            float damageRage2 = GameDataValue.GetSkillDamageRate(1, true);
+            resultHash2.Add("SkillDamageRate", damageRage2);
+            resultHash2.Add("DamagePos", Vector3.zero);
+            resultHash2.Add("ImpactBase", new ImpactDamage() { _DamageType = ElementType.Physic });
+            resultHash2.Add("DamageType", ElementType.Physic);
+
+            //damage
+            RoleAttrManager.DamageClass damageClass2 = new RoleAttrManager.DamageClass();
+            monAttr.CalculateNormalDamage(roleAttr, resultHash2, damageClass2);
+            //final
+            monAttr.CaculateFinalDamage(roleAttr, resultHash2, damageClass2);
+
+            //attr
+            streamWriter.WriteLine(fightTimes + "\t" + level + "\t" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Attack)
+                + "\t" + monAttr.HP + "\t" + damageClass.TotalDamageValue
+                + "\t" +  damageRage  + "\t" + ((float)monAttr.HP / damageClass.TotalDamageValue)
+                + "\t" + damageRage2 + "\t" + ((float)monAttr.HP / damageClass2.TotalDamageValue));
+            //drop
+            //streamWriter.WriteLine(passInfo.level + "\t" + passInfo.gold + "\t" + passInfo.goldDrop + "\t" + passInfo.equipPoint + "\t" + passInfo.equipMat + "\t" + passInfo.equipGem + "\t" + passInfo.gemCost1 + "\t" + passInfo.gemCost2);
+
         }
+
+        streamWriter.Close();
         Debug.Log("FightTimes:" + fightTimes);
+    }
+
+    private void GetLevelStage(int level, ref int diff, ref int stageIdx)
+    {
+        diff = level / 20 + 1;
+        diff = Math.Max(diff, 1);
+
+        stageIdx = level % 20 + 1;
+        stageIdx = Math.Max(stageIdx, 1);
     }
 
     int _StageIdx = 0;
@@ -159,7 +218,7 @@ public class UITestEquip : UIBase
         //    Debug.Log("TotalDrop stage:" + _StageIdx  + " Exp:" + _TotalExp + ", Gold:" + _TotalGold);
         //    Debug.Log("Role Atk:" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Attack) + ", Def:" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Defense) + ", HP:" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax));
         int lastGem = 0;
-        for (int diff = 1; diff < 6; ++diff)
+        for (int diff = 1; diff < 7; ++diff)
         {
             for (int stageid = 1; stageid < 21; ++stageid)
             {
@@ -204,7 +263,6 @@ public class UITestEquip : UIBase
                 passInfo.goldDrop = gold;
                 passInfo.levelExp = GameDataValue.GetLvUpExp(passInfo.level, 0);
                 passInfo.atk = RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Attack);
-                Debug.Log("Atk:" + passInfo.atk);
                 passInfo.damage1 = damageClass.TotalDamageValue;
                 passInfo.damage2 = 1;
                 passInfo.damage3 = 1;
@@ -237,9 +295,9 @@ public class UITestEquip : UIBase
         foreach (var passInfo in _PassInfoList)
         {
             //attr
-            //streamWriter.WriteLine(passInfo.level + "\t" + passInfo.atk + "\t" + passInfo.monValue + "\t" + passInfo.exp + "\t" + passInfo.monValue + "\t" + passInfo.hp);
+            streamWriter.WriteLine(passInfo.level + "\t" + passInfo.atk + "\t" + passInfo.monValue + "\t" + passInfo.damage1 + "\t" + ((float)passInfo.monValue / passInfo.damage1));
             //drop
-            streamWriter.WriteLine(passInfo.level + "\t" + passInfo.gold + "\t" + passInfo.goldDrop + "\t" + passInfo.equipPoint + "\t" + passInfo.equipMat + "\t" + passInfo.equipGem + "\t" + passInfo.gemCost1 + "\t" + passInfo.gemCost2);
+            //streamWriter.WriteLine(passInfo.level + "\t" + passInfo.gold + "\t" + passInfo.goldDrop + "\t" + passInfo.equipPoint + "\t" + passInfo.equipMat + "\t" + passInfo.equipGem + "\t" + passInfo.gemCost1 + "\t" + passInfo.gemCost2);
         }
         streamWriter.Close();
     }
@@ -308,7 +366,7 @@ public class UITestEquip : UIBase
         TestFight.DelLevel();
         TestFight.DelSkill(1);
         TestFight.DelRefresh();
-        //TestFight.DelGem();
+        TestFight.DelGem();
         //foreach (var dropItem in items)
         //{
         //    Debug.Log("Drop Item :" + dropItem.Key + "," + dropItem.Value);

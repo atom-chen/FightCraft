@@ -24,6 +24,11 @@ public class BulletLineHitInterval : BulletBase
         _Collider = gameObject.GetComponent<Collider>();
         _NextSpeed = _MoveSpeed;
         _LiftTime = _StayTime;
+
+        if (_BornAudio > 0)
+        {
+            _SkillMotion.PlayAudio(ResourcePool.Instance._CommonAudio[_BornAudio]);
+        }
     }
 
     void FixedUpdate()
@@ -49,12 +54,15 @@ public class BulletLineHitInterval : BulletBase
 
     protected IEnumerator CalculateHit()
     {
+        ClearHitFlag();
+
         _Collider.enabled = true;
 
         yield return new WaitForFixedUpdate();
 
         _NextSpeed = _MoveSpeed;
         _Collider.enabled = false;
+        PlayNoHitAudio();
     }
     
     void OnTriggerEnter(Collider other)
@@ -67,7 +75,9 @@ public class BulletLineHitInterval : BulletBase
             return;
 
         _NextSpeed = 0;
+
         BulletHit(targetMotion);
+        PlayHitAudio();
     }
 
     private void ActSubImpacts()

@@ -46,6 +46,9 @@ public class GemSuit
         }
     }
 
+    public static List<int> _ActAttrLevel = new List<int>() { 5, 10, 15, 20, 25 };
+
+
     private List<EquipExAttr> _ActSetAttrs = new List<EquipExAttr>();
     public List<EquipExAttr> ActSetAttrs
     {
@@ -105,16 +108,27 @@ public class GemSuit
         var gemSuitTabs = Tables.TableReader.GemSet.Records;
 
         _ActSet = null;
-        _ActLevel = 10;
+        _ActLevel = -1;
         foreach (var gemSuit in gemSuitTabs)
         {
-            _ActLevel = 10;
+            _ActLevel = -1;
             for (int i = 0; i < gemSuit.Value.Gems.Count; ++i)
             {
+                if (GemData.Instance._EquipedGems[i] == null)
+                {
+                    break;
+                }
                 if (GemData.Instance._EquipedGems[i].ItemDataID == gemSuit.Value.Gems[i].Id
                     && GemData.Instance._EquipedGems[i].Level >= gemSuit.Value.MinGemLv)
                 {
-                    _ActLevel = Mathf.Min(_ActLevel, GemData.Instance._EquipedGems[i].Level);
+                    if (_ActLevel < 0)
+                    {
+                        _ActLevel = GemData.Instance._EquipedGems[i].Level;
+                    }
+                    else
+                    {
+                        _ActLevel = Mathf.Min(_ActLevel, GemData.Instance._EquipedGems[i].Level);
+                    }
                 }
                 else
                 {
@@ -130,7 +144,6 @@ public class GemSuit
             if (_ActSet != null)
             {
                 CalculateSetAttrs();
-
                 Hashtable hash = new Hashtable();
                 hash.Add("ActGemSet", _ActSet);
                 GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_GEM_ACT_SUIT, this, hash);
@@ -138,40 +151,24 @@ public class GemSuit
                 return true;
             }
         }
+        CalculateSetAttrs();
 
-        
         return false;
     }
 
     private void CalculateSetAttrs()
     {
         _ActSetAttrs.Clear();
+        _ActSetAttrCnt = 0;
         if (_ActSet != null)
         {
             _ActSetAttrs = GameDataValue.GetGemSetAttr(_ActSet, _ActLevel);
-            if (_ActLevel >= 20)
+            for (int i = 0; i < _ActAttrLevel.Count; ++i)
             {
-                _ActSetAttrCnt = 5;
-            }
-            else if (_ActLevel >= 15)
-            {
-                _ActSetAttrCnt = 4;
-            }
-            else if (_ActLevel >= 10)
-            {
-                _ActSetAttrCnt = 3;
-            }
-            else if (_ActLevel >= 6)
-            {
-                _ActSetAttrCnt = 2;
-            }
-            else if (_ActLevel >= 3)
-            {
-                _ActSetAttrCnt = 1;
-            }
-            else
-            {
-                _ActSetAttrCnt = 0;
+                if (_ActLevel >= _ActAttrLevel[i])
+                {
+                    _ActSetAttrCnt = i + 1;
+                }
             }
         }
     }

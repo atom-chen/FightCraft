@@ -61,7 +61,14 @@ public class GemData : SaveItemBase
         _EquipedGemDatas.Clear();
         for (int i = 0; i < MAX_GEM_EQUIP; ++i)
         {
-            _EquipedGemDatas.Add(_EquipedGems[i].ItemDataID);
+            if (_EquipedGems[i] != null)
+            {
+                _EquipedGemDatas.Add(_EquipedGems[i].ItemDataID);
+            }
+            else
+            {
+                _EquipedGemDatas.Add("-1");
+            }
         }
     }
 
@@ -81,16 +88,15 @@ public class GemData : SaveItemBase
             //return true;
         }
 
-        _EquipedGems = new List<ItemGem>();
+        _EquipedGems = new List<ItemGem>() { null, null, null, null, null, null};
 
         for (int i = 0; i< _EquipedGemDatas.Count; ++i)
         {
-            _EquipedGems.Add(new ItemGem("-1"));
             foreach (var gemInPack in _GemContainer)
             {
                 if (_EquipedGemDatas[i] == gemInPack.ItemDataID)
                 {
-                    _EquipedGems[i].CopyFrom(gemInPack);
+                    _EquipedGems[i] = gemInPack;
                     break;
                 }
             }
@@ -105,6 +111,9 @@ public class GemData : SaveItemBase
     {
         for (int i = 0; i < _EquipedGems.Count; ++i)
         {
+            if (_EquipedGems[i] == null)
+                return i;
+
             if (!_EquipedGems[i].IsVolid())
                 return i;
         }
@@ -142,11 +151,13 @@ public class GemData : SaveItemBase
         //    return false;
         //}
 
-        _EquipedGems[putOnSlot].CopyFrom(gem);
+        _EquipedGems[putOnSlot] = (gem);
 
         GemSuit.Instance.IsActSet();
         SaveEquipGem();
         SaveClass(false);
+
+        RoleData.SelectRole.CalculateAttr();
         return true;
     }
 
@@ -155,9 +166,14 @@ public class GemData : SaveItemBase
         if (!_EquipedGems.Contains(gem))
             return false;
 
-        gem.ResetItem();
+        int idx = _EquipedGems.IndexOf(gem);
+        _EquipedGems[idx] = null;
         SaveEquipGem();
         SaveClass(false);
+
+        GemSuit.Instance.IsActSet();
+
+        RoleData.SelectRole.CalculateAttr();
         return true;
     }
 
@@ -169,16 +185,22 @@ public class GemData : SaveItemBase
         if (!_EquipedGems.Contains(gem2))
             return;
 
-        gem1.ExchangeInfo(gem2);
+        int idx = _EquipedGems.IndexOf(gem1);
+        _EquipedGems[idx] = gem2;
         SaveEquipGem();
         SaveClass(false);
         GemSuit.Instance.IsActSet();
+
+        RoleData.SelectRole.CalculateAttr();
     }
 
     public bool IsEquipedGem(string gemDataID)
     {
         foreach (var gem in _EquipedGems)
         {
+            if (gem == null)
+                continue;
+
             if (gem.ItemDataID == gemDataID)
                 return true;
         }
@@ -276,23 +298,23 @@ public class GemData : SaveItemBase
     public bool GemLevelUp(ItemGem gemItemBase, GemLevelInfo lvInfo = null)
     {
         ItemGem lvUpGem = gemItemBase;
-        if (_EquipedGems.Contains(gemItemBase))
-        {
-            foreach (var gem in _GemContainer)
-            {
-                if (gem.ItemDataID == gemItemBase.ItemDataID)
-                {
-                    lvUpGem = gem;
-                    break;
-                }
-            }
-        }
+        //if (_EquipedGems.Contains(gemItemBase))
+        //{
+        //    foreach (var gem in _GemContainer)
+        //    {
+        //        if (gem.ItemDataID == gemItemBase.ItemDataID)
+        //        {
+        //            lvUpGem = gem;
+        //            break;
+        //        }
+        //    }
+        //}
 
         if (lvUpGem == null)
             return false;
 
         if (lvInfo == null)
-            lvInfo = GetGemLevelUpInfo(gemItemBase);
+            lvInfo = GetGemLevelUpInfo(lvUpGem);
 
         var matItempre = BackBagPack.Instance.GetItem(lvInfo.MaterialData);
         if (matItempre == null)
@@ -300,7 +322,7 @@ public class GemData : SaveItemBase
             //Debug.Log("matItempre is null");
         }
 
-        if (!IsCanLevelUp(gemItemBase, lvInfo))
+        if (!IsCanLevelUp(lvUpGem, lvInfo))
             return false;
 
         PlayerDataPack.Instance.DecGold(lvInfo.CostMoney);
@@ -313,10 +335,14 @@ public class GemData : SaveItemBase
 
         lvUpGem.LevelUp();
 
+        GemSuit.Instance.IsActSet();
+        //gemItemBase.CopyFrom(lvUpGem);
+
         Hashtable hash = new Hashtable();
         hash.Add("GemInfo", lvUpGem);
         GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_GEM_LEVEL_UP, this, hash);
 
+        RoleData.SelectRole.CalculateAttr();
         return true;
     }
 
@@ -328,6 +354,9 @@ public class GemData : SaveItemBase
     {
         for (int i = 0; i < _EquipedGems.Count; ++i)
         {
+            if (_EquipedGems[i] == null)
+                continue;
+
             if (!_EquipedGems[i].IsVolid())
                 continue;
 

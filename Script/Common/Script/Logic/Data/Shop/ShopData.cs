@@ -146,10 +146,10 @@ public class ShopData : SaveItemBase
     private ItemEquip RandomEquip(int level, int value)
     {
         int randomLevel = UnityEngine.Random.Range(level - 5, level + 5);
-        int randomValue = GameDataValue.CalLvValue(randomLevel);
+        
         int quality = GameRandom.GetRandomLevel(3,12,2);
 
-        var equipItem = ItemEquip.CreateEquip(randomLevel, (ITEM_QUALITY)quality, randomValue, -1);
+        var equipItem = ItemEquip.CreateEquip(randomLevel, (ITEM_QUALITY)quality, -1);
         return equipItem;
     }
 

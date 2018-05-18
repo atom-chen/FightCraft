@@ -30,6 +30,7 @@ public class ItemGem : ItemBase
     public int LevelUp()
     {
         ++Level;
+        RefreshGemAttr();
         SaveClass(true);
         return Level;
     }
@@ -81,7 +82,10 @@ public class ItemGem : ItemBase
         }
     }
 
-    
+    public void RefreshGemAttr()
+    {
+        _GemAttr = GameDataValue.GetGemAttr((RoleAttrEnum)GemRecord.AttrValue.AttrParams[0], Level);
+    }
 
     #endregion
 

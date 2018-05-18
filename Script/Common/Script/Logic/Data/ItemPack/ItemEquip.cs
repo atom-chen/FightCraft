@@ -579,7 +579,7 @@ public class ItemEquip : ItemBase
         return itemEquip;
     }
 
-    public static ItemEquip CreateEquip(int level, Tables.ITEM_QUALITY quality, int value, int legencyEquipID = -1, int equipSlotIdx = -1)
+    public static ItemEquip CreateEquip(int level, Tables.ITEM_QUALITY quality, int legencyEquipID = -1, int equipSlotIdx = -1)
     {
         Tables.ITEM_QUALITY equipQuality = quality;
         EquipItemRecord legencyEquip = null;
@@ -625,6 +625,7 @@ public class ItemEquip : ItemBase
             }
         }
 
+        int value = GameDataValue.CalLvValue(level, equipSlot);
         baseEquip = GetRandomItem(equipSlot, level, profession);
         if (baseEquip == null)
             return null;
@@ -717,7 +718,6 @@ public class ItemEquip : ItemBase
             }
         }
 
-        Debug.Log("GetRandomItem:" + equipSlot + "," + randomItems.Count + "," + randomVals.Count);
         int randomIdx = GameRandom.GetRandomLevel(randomVals.ToArray());
 
         return randomItems[randomIdx];
@@ -822,7 +822,6 @@ public class ItemEquip : ItemBase
             _SpSetRecord = TableReader.EquipSpAttr.GetRecord(_DefauletSpSetID);
         }
         EquipSet.Instance.ActingSpAttr(_SpSetRecord, EquipValue);
-        Debug.Log("SPSet:" + _SpSetRecord.Id);
     }
 
     public static bool IsAttrSpToEquip(EquipExAttr exAttr)

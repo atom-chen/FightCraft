@@ -35,6 +35,8 @@ public class UIGemPack : UIBase, IDragablePack
 
     public UIGemItem[] _GemPack;
 
+    private int _SelectGemSlot = -1;
+
     #endregion
 
     #region 
@@ -90,7 +92,7 @@ public class UIGemPack : UIBase, IDragablePack
         _MaterialContainer.RefreshItems();
         for (int i = 0; i < _GemPack.Length; ++i)
         {
-            _GemPack[i].Refresh();
+            _GemPack[i].ShowGem(GemData.Instance._EquipedGems[i]);
         }
         //_EquipContainer.RefreshItems();
         //_BackPack.RefreshItems();
@@ -98,6 +100,18 @@ public class UIGemPack : UIBase, IDragablePack
 
     private void ShowGemTooltipsLeft(object equipObj)
     {
+        for (int i = 0; i < _GemPack.Length; ++i)
+        {
+            if (_GemPack[i]._InitInfo == equipObj)
+            {
+                _GemPack[i].Selected();
+                _SelectGemSlot = i;
+            }
+            else
+            {
+                _GemPack[i].UnSelected();
+            }
+        }
         ItemGem gemItem = equipObj as ItemGem;
         if (gemItem == null || !gemItem.IsVolid())
             return;
@@ -153,8 +167,15 @@ public class UIGemPack : UIBase, IDragablePack
         if (!itemGem.IsVolid())
             return;
 
-        var idx = GemData.Instance.GetPutOnIdx();
-        PunchOn(itemGem, idx);
+        if (_SelectGemSlot >= 0)
+        {
+            PunchOn(itemGem, _SelectGemSlot);
+        }
+        else
+        {
+            var idx = GemData.Instance.GetPutOnIdx();
+            PunchOn(itemGem, idx);
+        }
     }
 
     private void PunchOff(ItemBase itemBase)

@@ -107,7 +107,7 @@ public class MonsterDrop
         {
             DropItemData drop = new DropItemData();
             int quality = GameRandom.GetRandomLevel(8000, 1900, 99, 1);
-            var dropItem = ItemEquip.CreateEquip(monsterMotion.RoleAttrManager.Level, (Tables.ITEM_QUALITY)quality, monsterMotion.RoleAttrManager.MonsterValue);
+            var dropItem = ItemEquip.CreateEquip(monsterMotion.RoleAttrManager.Level, (Tables.ITEM_QUALITY)quality);
             drop._ItemEquip = dropItem;
             dropList.Add(drop);
         }
@@ -130,7 +130,7 @@ public class MonsterDrop
         {
             DropItemData drop = new DropItemData();
             int quality = GameRandom.GetRandomLevel(8000, 1800, 195, 5);
-            var dropItem = ItemEquip.CreateEquip(monsterMotion.RoleAttrManager.Level, (Tables.ITEM_QUALITY)quality, monsterMotion.RoleAttrManager.MonsterValue);
+            var dropItem = ItemEquip.CreateEquip(monsterMotion.RoleAttrManager.Level, (Tables.ITEM_QUALITY)quality);
             drop._ItemEquip = dropItem;
             dropList.Add(drop);
         }
@@ -154,7 +154,7 @@ public class MonsterDrop
         {
             DropItemData drop = new DropItemData();
             int quality = GameRandom.GetRandomLevel(4000, 5500, 450, 50);
-            var dropItem = ItemEquip.CreateEquip(monsterMotion.RoleAttrManager.Level, (Tables.ITEM_QUALITY)quality, monsterMotion.RoleAttrManager.MonsterValue);
+            var dropItem = ItemEquip.CreateEquip(monsterMotion.RoleAttrManager.Level, (Tables.ITEM_QUALITY)quality);
             drop._ItemEquip = dropItem;
             dropList.Add(drop);
         }

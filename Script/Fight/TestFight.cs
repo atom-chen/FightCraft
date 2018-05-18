@@ -88,9 +88,10 @@ public class TestFight : MonoBehaviour
     #region control
 
     private float _CloseRange = 2.0f;
+    private float _SkillRange = 3.0f;
     private int _RandomSkillIdx = 0;
     private ObjMotionSkillAttack _NormalAttack;
-    private int _WeaponSkill = 3;
+    private int _WeaponSkill = -1;
 
     private void InitWeaponSkill()
     {
@@ -133,7 +134,7 @@ public class TestFight : MonoBehaviour
             return;
 
         float distance = Vector3.Distance(transform.position, destPos);
-        if (distance > _CloseRange)
+        if (FightManager.Instance.MainChatMotion._ActionState != FightManager.Instance.MainChatMotion._StateSkill && distance > _CloseRange)
         {
             FightManager.Instance.MainChatMotion.StartMoveState(destPos);
             ReleaseSkill();
@@ -142,11 +143,11 @@ public class TestFight : MonoBehaviour
         {
             FightManager.Instance.MainChatMotion.StopMoveState();
             
-            StartSkill();
+            StartSkill(destPos);
         }
     }
 
-    private bool StartSkill()
+    private bool StartSkill(Vector3 destPos)
     {
         if (_EnemyMotion == null)
             return false;
@@ -174,6 +175,7 @@ public class TestFight : MonoBehaviour
             {
                 if (_NormalAttack.CurStep > 0 && _NormalAttack.CurStep == _WeaponSkill)
                 {
+                    transform.LookAt(_EnemyMotion.transform.position);
                     InputManager.Instance.SetEmulatePress("k");
                 }
             }
@@ -181,6 +183,7 @@ public class TestFight : MonoBehaviour
             {
                 //if (_NormalAttack.CanNextInput)
                 {
+                    transform.LookAt(_EnemyMotion.transform.position);
                     InputManager.Instance.SetEmulatePress("k");
                     Debug.Log("emulate key k:" + _RandomSkillIdx);
                     ++_RandomSkillIdx;
@@ -255,7 +258,7 @@ public class TestFight : MonoBehaviour
             bool changeEquip = false;
             if (equipedItem.IsVolid())
             {
-                if (itemEquip.EquipItemRecord.Slot == EQUIP_SLOT.WEAPON)
+                //if (itemEquip.EquipItemRecord.Slot == EQUIP_SLOT.WEAPON)
                 {
                     if (itemEquip.EquipLevel > equipedItem.EquipLevel)
                     {
@@ -267,11 +270,11 @@ public class TestFight : MonoBehaviour
                     }
                     
                 }
-                else
-                {
-                    if (itemEquip.CombatValue > equipedItem.CombatValue)
-                        changeEquip = true;
-                }
+                //else
+                //{
+                //    if (itemEquip.CombatValue > equipedItem.CombatValue)
+                //        changeEquip = true;
+                //}
             }
             else
             {
@@ -417,24 +420,14 @@ public class TestFight : MonoBehaviour
 
     public static void DelGem()
     {
-        var gemInfo = GemData.Instance.GetGemInfo("70000");
-        GemData.Instance.GemLevelUp(gemInfo);
+        var gemSetTab = TableReader.GemSet.GetRecord("120000");
+        GemSuit.Instance.UseGemSet(gemSetTab);
 
-        gemInfo = GemData.Instance.GetGemInfo("70009");
-        GemData.Instance.GemLevelUp(gemInfo);
-
-        gemInfo = GemData.Instance.GetGemInfo("70011");
-        GemData.Instance.GemLevelUp(gemInfo);
-
-        gemInfo = GemData.Instance.GetGemInfo("70007");
-        GemData.Instance.GemLevelUp(gemInfo);
-
-        gemInfo = GemData.Instance.GetGemInfo("70016");
-        GemData.Instance.GemLevelUp(gemInfo);
-
-        gemInfo = GemData.Instance.GetGemInfo("70004");
-        GemData.Instance.GemLevelUp(gemInfo);
-
+        foreach (var gemLv in gemSetTab.Gems)
+        {
+            var gemInfo = GemData.Instance.GetGemInfo(gemLv.Id);
+            GemData.Instance.GemLevelUp(gemInfo);
+        }
     }
 
     #endregion

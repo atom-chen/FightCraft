@@ -381,6 +381,9 @@ public class ResourcePool : InstanceBase<ResourcePool>
         audioEle = ResourceManager.Instance.GetAudioClip("common/HitWind");
         _CommonAudio.Add(114, audioEle);
 
+        audioEle = ResourceManager.Instance.GetAudioClip("common/AtkFire2");
+        _CommonAudio.Add(120, audioEle);
+
         var audioMon = ResourceManager.Instance.GetAudioClip("common/AtkBow");
         _CommonAudio.Add(200, audioMon);
     }
