@@ -3,10 +3,6 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
- 
- 
-
-
 public class UIRoleAttr : UIBase
 {
 
@@ -198,5 +194,35 @@ public class UIRoleAttr : UIBase
         RoleData.SelectRole.ResetPoints();
         InitRoleAttrs();
     }
+
+    #region show attr tips
+
+    public Vector3[] _ShowPoses;
+
+    public void OnShowBaseAttr(int type)
+    {
+        RoleAttrEnum attr = (RoleAttrEnum)type;
+        string showTips = "";
+        int value = RoleData.SelectRole._BaseAttr.GetValue(attr);
+        switch (attr)
+        {
+            case RoleAttrEnum.Strength:
+                showTips = Tables.StrDictionary.GetFormatStr(1001000, value * GameDataValue._AttackPerStrength, value * GameDataValue._DmgEnhancePerStrength);
+                break;
+            case RoleAttrEnum.Dexterity:
+                showTips = Tables.StrDictionary.GetFormatStr(1001001, value * GameDataValue._IgnoreAtkPerDex, GameDataValue.ConfigIntToPersent((int)(value * GameDataValue._CriticalRatePerDex)), GameDataValue.ConfigIntToPersent((int)(value * GameDataValue._CriticalDmgPerDex)));
+                break;
+            case RoleAttrEnum.Intelligence:
+                showTips = Tables.StrDictionary.GetFormatStr(1001002, value * GameDataValue._EleAtkPerInt, value * GameDataValue._EleEnhancePerInt);
+                break;
+            case RoleAttrEnum.Vitality:
+                showTips = Tables.StrDictionary.GetFormatStr(1001003, value * GameDataValue._HPPerVit, value * GameDataValue._FinalDmgRedusePerVit);
+                break;
+        }
+
+        UITextTip.ShowMessageTip(showTips, _ShowPoses[type - 1]);
+    }
+
+    #endregion
 }
 

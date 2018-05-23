@@ -148,8 +148,10 @@ public class UITestEquip : UIBase
             //attr
             streamWriter.WriteLine(fightTimes + "\t" + level + "\t" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Attack)
                 + "\t" + monAttr.HP + "\t" + damageClass.TotalDamageValue
-                + "\t" +  damageRage  + "\t" + ((float)monAttr.HP / damageClass.TotalDamageValue)
+                + "\t" + damageRage + "\t" + ((float)monAttr.HP / damageClass.TotalDamageValue)
                 + "\t" + damageRage2 + "\t" + ((float)monAttr.HP / damageClass2.TotalDamageValue));
+            //streamWriter.WriteLine(fightTimes + "\t" + level + "\t" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax)
+            //    + "\t" + monAttr.GetBaseAttr(RoleAttrEnum.Attack) + "\t" + ((float)RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax) / monAttr.GetBaseAttr(RoleAttrEnum.Attack)));
             //drop
             //streamWriter.WriteLine(passInfo.level + "\t" + passInfo.gold + "\t" + passInfo.goldDrop + "\t" + passInfo.equipPoint + "\t" + passInfo.equipMat + "\t" + passInfo.equipGem + "\t" + passInfo.gemCost1 + "\t" + passInfo.gemCost2);
 

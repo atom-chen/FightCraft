@@ -380,6 +380,8 @@ public class RoleData : SaveItemBase
         {
             AddExp(0);
         }
+
+        SaveClass(false);
     }
 
     private void RoleLevelUp()

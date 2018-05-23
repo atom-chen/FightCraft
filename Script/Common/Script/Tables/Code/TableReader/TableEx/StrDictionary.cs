@@ -28,7 +28,8 @@ namespace Tables
             {
                 return "StrDictionary Error:" + idx;
             }
-            return string.Format(strRecord.Value[GameCore.Instance._StrVersion], param);
+            string formatStr = strRecord.Value[GameCore.Instance._StrVersion].Replace("\\n", "\n");
+            return string.Format(formatStr, param);
         }
     }
 

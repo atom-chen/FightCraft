@@ -25,3 +25,6 @@ I:\资源\APK资源3\彩虹物语\assets\icon\skill
 I:\资源\APK资源3\苍空物语\assets\Icon\Buff
 I:\资源\APK资源3\封魔大陆\assets\skill
 I:\资源\APK资源3\龙骑士传\res\language_com\ui\battle\buff
+
+UI
+F:\资源\APK资源8\天龙传奇-卡牌\assets\res

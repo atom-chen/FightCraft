@@ -102,8 +102,8 @@ public class GameDataValue
     public static float _StrToAtk = 0.25f;
 
     public static float _IgnoreAtkPerDex = 0.6f;
-    public static float _CriticalRatePerDex = 0.4f;
-    public static float _CriticalDmgPerDex = 6f;
+    public static float _CriticalRatePerDex = 1f;
+    public static float _CriticalDmgPerDex = 5f;
     public static float _DexToAtk = 0.25f;
 
     public static float _EleAtkPerInt = 0.15f;
@@ -1290,68 +1290,133 @@ public class GameDataValue
     {
         int hpMax = 0;
         float hpBase = ConfigIntToFloat(monsterBase.BaseAttr[0]);
-        if (roleLv <= 10)
+        //float levelStep = roleLv / 5 + 1.5f;
+        //hpMax = (int)(CalWeaponAttack(roleLv) * hpBase);
+        if (roleLv <= 5)
         {
-            hpMax = (int)(CalWeaponAttack(roleLv) * hpBase * 0.6f + roleLv * 20);
+            hpMax = (int)(CalWeaponAttack(roleLv) * hpBase + roleLv * 15 * hpBase);
+        }
+        else if (roleLv <= 10)
+        {
+            var hpTemp = GetMonsterHP(monsterBase, 5, monsterType);
+            hpMax = (int)(hpTemp + (roleLv - 5) * 20 * hpBase);
         }
         else if (roleLv <= 20)
         {
-            var hpTemp = GetMonsterHP(monsterBase, 10, monsterType) * 1.5f;
-            hpMax = (int)(hpTemp + (roleLv - 10) * 30);
+            var hpTemp = GetMonsterHP(monsterBase, 10, monsterType);
+            hpMax = (int)(hpTemp + (roleLv - 10) * 40 * hpBase);
         }
         else if (roleLv <= 30)
         {
-            var hpTemp = GetMonsterHP(monsterBase, 20, monsterType) * 1.5f;
-            hpMax = (int)(hpTemp + (roleLv - 20) * 60);
+            var hpTemp = GetMonsterHP(monsterBase, 20, monsterType);
+            hpMax = (int)(hpTemp + (roleLv - 20) * 80 * hpBase);
         }
         else if (roleLv <= 40)
         {
             var hpTemp = GetMonsterHP(monsterBase, 30, monsterType);
-            hpMax = (int)(hpTemp + (roleLv - 30) * 80);
+            hpMax = (int)(hpTemp + (roleLv - 30) * 80 * hpBase);
         }
         else if (roleLv <= 50)
         {
             var hpTemp = GetMonsterHP(monsterBase, 40, monsterType);
-            hpMax = (int)(hpTemp + (roleLv - 40) * 150);
+            hpMax = (int)(hpTemp + (roleLv - 40) * 150 * hpBase);
         }
         else if (roleLv <= 60)
         {
             var hpTemp = GetMonsterHP(monsterBase, 50, monsterType);
-            hpMax = (int)(hpTemp + (roleLv - 50) * 200);
+            hpMax = (int)(hpTemp + (roleLv - 50) * 200 * hpBase);
         }
         else if (roleLv <= 70)
         {
             var hpTemp = GetMonsterHP(monsterBase, 60, monsterType);
-            hpMax = (int)(hpTemp + (roleLv - 60) * 280);
+            hpMax = (int)(hpTemp + (roleLv - 60) * 280 * hpBase);
         }
         else if (roleLv <= 80)
         {
             var hpTemp = GetMonsterHP(monsterBase, 70, monsterType);
-            hpMax = (int)(hpTemp + (roleLv - 70) * 400);
+            hpMax = (int)(hpTemp + (roleLv - 70) * 400 * hpBase);
         }
         else if (roleLv <= 90)
         {
             var hpTemp = GetMonsterHP(monsterBase, 80, monsterType);
-            hpMax = (int)(hpTemp + (roleLv - 80) * 600);
+            hpMax = (int)(hpTemp + (roleLv - 80) * 600 * hpBase);
         }
         else if (roleLv <= 100)
         {
             var hpTemp = GetMonsterHP(monsterBase, 90, monsterType);
-            hpMax = (int)(hpTemp + (roleLv - 90) * 900);
+            hpMax = (int)(hpTemp + (roleLv - 90) * 900 * hpBase);
         }
         else
         {
             var hpTemp = GetMonsterHP(monsterBase, 100, monsterType);
-            hpMax = (int)(hpTemp + (roleLv - 100) * 1500);
+            hpMax = (int)(hpTemp + (roleLv - 100) * 1500 * hpBase);
         }
-        
+
         return hpMax;
     }
 
     public static int GetMonsterAtk(MonsterBaseRecord monsterBase, int roleLv, MOTION_TYPE monsterType)
     {
-        int atk = (int)(roleLv * roleLv * _MonsterAtkParam * monsterBase.BaseAttr[1] + monsterBase.BaseAttr[1]);
-        return atk;
+        int atkValue = 0;
+        float atkBase = ConfigIntToFloat(monsterBase.BaseAttr[1]);
+        float levelRate = (float)roleLv / 10;
+        var hpValue = (int)(CalEquipTorsoHP(roleLv) * levelRate + _HPRoleLevelBase);
+        atkValue = (int)(hpValue / atkBase);
+        //if (roleLv <= 10)
+        //{
+        //    atkValue = (int)(CalEquipTorsoHP(roleLv) * 2.0f + _HPRoleLevelBase);
+        //}
+        //else if (roleLv <= 20)
+        //{
+        //    var hpTemp = GetMonsterAtk(monsterBase, 10, monsterType);
+        //    atkValue = (int)(hpTemp + (roleLv - 10) * 30);
+        //}
+        //else if (roleLv <= 30)
+        //{
+        //    var hpTemp = GetMonsterAtk(monsterBase, 20, monsterType);
+        //    atkValue = (int)(hpTemp + (roleLv - 20) * 60);
+        //}
+        //else if (roleLv <= 40)
+        //{
+        //    var hpTemp = GetMonsterAtk(monsterBase, 30, monsterType);
+        //    atkValue = (int)(hpTemp + (roleLv - 30) * 80);
+        //}
+        //else if (roleLv <= 50)
+        //{
+        //    var hpTemp = GetMonsterAtk(monsterBase, 40, monsterType);
+        //    atkValue = (int)(hpTemp + (roleLv - 40) * 150);
+        //}
+        //else if (roleLv <= 60)
+        //{
+        //    var hpTemp = GetMonsterAtk(monsterBase, 50, monsterType);
+        //    atkValue = (int)(hpTemp + (roleLv - 50) * 200);
+        //}
+        //else if (roleLv <= 70)
+        //{
+        //    var hpTemp = GetMonsterAtk(monsterBase, 60, monsterType);
+        //    atkValue = (int)(hpTemp + (roleLv - 60) * 280);
+        //}
+        //else if (roleLv <= 80)
+        //{
+        //    var hpTemp = GetMonsterAtk(monsterBase, 70, monsterType);
+        //    atkValue = (int)(hpTemp + (roleLv - 70) * 400);
+        //}
+        //else if (roleLv <= 90)
+        //{
+        //    var hpTemp = GetMonsterAtk(monsterBase, 80, monsterType);
+        //    atkValue = (int)(hpTemp + (roleLv - 80) * 600);
+        //}
+        //else if (roleLv <= 100)
+        //{
+        //    var hpTemp = GetMonsterAtk(monsterBase, 90, monsterType);
+        //    atkValue = (int)(hpTemp + (roleLv - 90) * 900);
+        //}
+        //else
+        //{
+        //    var hpTemp = GetMonsterAtk(monsterBase, 100, monsterType);
+        //    atkValue = (int)(hpTemp + (roleLv - 100) * 1500);
+        //}
+        return atkValue;
     }
 
     public static int GetMonsterDef(MonsterBaseRecord monsterBase, int roleLv, MOTION_TYPE monsterType)
