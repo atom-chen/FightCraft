@@ -65,6 +65,9 @@ public class AI_HeroWuZeTian : AI_IntHeroBase
             if (!_AISkills[i].IsSkillCD())
                 continue;
 
+            if (!IsCommonCD())
+                continue;
+
             if (_AISkills[i].SkillRange < dis)
                 continue;
 

@@ -76,6 +76,9 @@ public class AI_HeroStrNormal : AI_StrengthHeroBase
             if (!_AISkills[i].IsSkillCD())
                 continue;
 
+            if (!IsCommonCD())
+                continue;
+
             {
                 StartSkill(_AISkills[i]);
                 return true;

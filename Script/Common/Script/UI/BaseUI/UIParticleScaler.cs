@@ -58,7 +58,7 @@ public class ParticleSystemData
         this.radius = shapeModule.radius * localSizeInvert;
         this.length = shapeModule.length * localSizeInvert;
         this.normalOffset = shapeModule.normalOffset * localSizeInvert;
-        this.box = shapeModule.box * localSizeInvert;
+        this.box = shapeModule.scale * localSizeInvert;
     }
     public void ApplyScale()
     {
@@ -72,6 +72,6 @@ public class ParticleSystemData
         shapeModule.radius = radius * ratio;
         shapeModule.length = length * ratio;
         shapeModule.normalOffset = normalOffset * ratio;
-        shapeModule.box = box * ratio;
+        shapeModule.scale = box * ratio;
     }
 }

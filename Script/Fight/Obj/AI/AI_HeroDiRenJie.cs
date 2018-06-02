@@ -77,6 +77,9 @@ public class AI_HeroDiRenJie : AI_DexHeroBase
             if (!_AISkills[i].IsSkillCD())
                 continue;
 
+            if (!IsCommonCD())
+                continue;
+
             if (_AISkills[i].SkillRange < dis)
                 continue;
 

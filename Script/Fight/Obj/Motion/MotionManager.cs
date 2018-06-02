@@ -663,14 +663,14 @@ public class MotionManager : MonoBehaviour
         {
             if (!_BindTransform.ContainsKey(_Animaton.name))
             {
-                var bindTran = transform.FindChild(_Animaton.name);
+                var bindTran = transform.Find(_Animaton.name);
                 _BindTransform.Add(_Animaton.name, bindTran);
             }
         }
 
         if (!_BindTransform.ContainsKey(bindName))
         {
-            var bindTran = transform.FindChild(_Animaton.name + "/" + bindName);
+            var bindTran = transform.Find(_Animaton.name + "/" + bindName);
             _BindTransform.Add(bindName, bindTran);
         }
 
@@ -1036,10 +1036,10 @@ public class MotionManager : MonoBehaviour
                 _TriggerCollider = AnimationEvent.GetComponentInChildren<Collider>();
                 if (_TriggerCollider == null)
                 {
-                    var sole = AnimationEvent.transform.FindChild("center/sole");
+                    var sole = AnimationEvent.transform.Find("center/sole");
                     if (sole == null)
                     {
-                        sole = AnimationEvent.transform.FindChild("Bip001/sole");
+                        sole = AnimationEvent.transform.Find("Bip001/sole");
                     }
                     var collider = sole.gameObject.AddComponent<CapsuleCollider>();
                     collider.radius = _ColliderInfo.x;

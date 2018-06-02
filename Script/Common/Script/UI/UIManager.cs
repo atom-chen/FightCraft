@@ -56,7 +56,7 @@ public class UIManager : MonoBehaviour
     {
         foreach (var layerEnum in Enum.GetValues(typeof(UILayer)))
         {
-            Transform layerTrans = transform.FindChild(((UILayer)layerEnum).ToString());
+            Transform layerTrans = transform.Find(((UILayer)layerEnum).ToString());
             if (layerTrans != null)
             {
                 _UILayers.Add((UILayer)layerEnum, layerTrans.GetComponent<RectTransform>());

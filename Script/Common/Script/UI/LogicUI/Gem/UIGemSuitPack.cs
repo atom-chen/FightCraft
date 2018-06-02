@@ -31,9 +31,7 @@ public class UIGemSuitPack : UIBase
 
     #region 
 
-    public Text _GemSuitName;
-    public Text _GemSuitLevel;
-    public UIContainerBase _AttrContainer;
+    public UIGemSuitAttr _GemSuitAttr;
 
     public UIContainerSelect _GemSuitContainer;
 
@@ -54,8 +52,7 @@ public class UIGemSuitPack : UIBase
 
     private void ClearSuitInfo()
     {
-        _GemSuitName.text = "";
-        _AttrContainer.InitContentItem(null);
+        _GemSuitAttr.ClearSuitInfo();
     }
 
     private void SuitSelect(object suitObj)
@@ -64,9 +61,7 @@ public class UIGemSuitPack : UIBase
         if (gemSet == null)
             return;
 
-        //_GemSuitName.text = GemSuit.Instance.ActLevel.ToString();
-        _GemSuitLevel.text = StrDictionary.GetFormatStr(30004, GemSuit.Instance.ActLevel);
-        _AttrContainer.InitContentItem(GemSuit.Instance.ActSetAttrs);
+        _GemSuitAttr.SuitSelect(gemSet);
     }
 }
 

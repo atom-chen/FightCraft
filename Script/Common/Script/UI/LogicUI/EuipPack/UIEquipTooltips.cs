@@ -7,6 +7,12 @@ using UnityEngine.EventSystems;
 using System;
 using Tables;
 
+public enum TooltipType
+{
+    Compare,
+    Single,
+    GemSuitAttr
+}
 
 public class UIEquipTooltips : UIItemTooltips
 {
@@ -18,6 +24,15 @@ public class UIEquipTooltips : UIItemTooltips
         Hashtable hash = new Hashtable();
         hash.Add("ItemEquip", itemEquip);
         hash.Add("ToolTipFun", funcs);
+        GameCore.Instance.UIManager.ShowUI("LogicUI/BagPack/UIEquipTooltips", UILayer.MessageUI, hash);
+    }
+
+    public static void ShowAsynInType(ItemEquip itemEquip, TooltipType toolTipType, params ToolTipFunc[] funcs)
+    {
+        Hashtable hash = new Hashtable();
+        hash.Add("ItemEquip", itemEquip);
+        hash.Add("ToolTipFun", funcs);
+        hash.Add("TooltipType", toolTipType);
         GameCore.Instance.UIManager.ShowUI("LogicUI/BagPack/UIEquipTooltips", UILayer.MessageUI, hash);
     }
 
@@ -54,7 +69,23 @@ public class UIEquipTooltips : UIItemTooltips
         {
             _EquipSetInfo.gameObject.SetActive(false);
         }
-        ShowCompare();
+
+        if (hash.Contains("TooltipType"))
+        {
+            var toolTipType = (TooltipType)hash["TooltipType"];
+            if (toolTipType == TooltipType.Compare)
+            {
+                ShowCompare();
+            }
+            else
+            {
+                HideCompare();
+            }
+        }
+        else
+        {
+            ShowCompare();
+        }
         ShowFuncs(funcs);
     }
     

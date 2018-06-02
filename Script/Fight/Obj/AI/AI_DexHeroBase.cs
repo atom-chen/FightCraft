@@ -81,7 +81,7 @@ public class AI_DexHeroBase : AI_HeroBase
     private void InitBlockSkill()
     {
         var blockSkill = ResourceManager.Instance.GetInstanceGameObject("SkillMotion/BlockSkill");
-        var motionTrans = _SelfMotion.transform.FindChild("Motion");
+        var motionTrans = _SelfMotion.transform.Find("Motion");
         blockSkill.transform.SetParent(motionTrans);
         _SkillBlock = blockSkill.GetComponent<ObjMotionSkillBase>();
         _SkillBlock._NextAnim[0] = _BlockAnim;

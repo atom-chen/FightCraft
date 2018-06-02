@@ -133,8 +133,6 @@ namespace AssetBundles
 		{
 			if (Application.isEditor)
 				return "file:///" +  System.Environment.CurrentDirectory.Replace("\\", "/") + "/Assets/StreamingAssets/"; // Use the build output folder directly.
-			else if (Application.isWebPlayer)
-				return System.IO.Path.GetDirectoryName(Application.absoluteURL).Replace("\\", "/")+ "/StreamingAssets/";
             else if(Application.platform == RuntimePlatform.IPhonePlayer)
                 return "file://" + Application.streamingAssetsPath + "/";
             else if (Application.isMobilePlatform || Application.isConsolePlatform)

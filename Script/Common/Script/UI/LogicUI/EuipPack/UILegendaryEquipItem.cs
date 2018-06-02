@@ -28,18 +28,27 @@ public class UILegendaryEquipItem : UIItemBase
 
     private void ShowItem(EquipItemRecord legendaryEquip, UIBase dragPanel)
     {
+        _EquipItem = LegendaryData.Instance._LegendaryEquipDict[legendaryEquip];
         _LegendaryRecord = legendaryEquip;
         _DragPanel = dragPanel;
-        _Name.text = legendaryEquip.Name;
-        _BackpackItem.ShowItem(LegendaryData.Instance._LegendaryEquipDict[legendaryEquip]);
 
-        _EquipItem = LegendaryData.Instance._LegendaryEquipDict[legendaryEquip];
+        if (_EquipItem.IsVolid())
+        {
+            _Name.text = _EquipItem.GetEquipLegandaryName() + CommonDefine.GetQualityColorStr(ITEM_QUALITY.ORIGIN) + " · " + "</color>" + _EquipItem.GetEquipNameWithColor();
+        }
+        else
+        {
+            _Name.text = StrDictionary.GetFormatStr(legendaryEquip.NameStrDict);
+        }
+        _BackpackItem.ShowItem(_EquipItem);
+
+        
 
         Hashtable hash = new Hashtable();
-        hash.Add("InitObj", LegendaryData.Instance._LegendaryEquipDict[legendaryEquip]);
+        hash.Add("InitObj", _EquipItem);
         hash.Add("DragPack", dragPanel);
         _BackpackItem.Show(hash);
-        _BackpackItem._InitInfo = LegendaryData.Instance._LegendaryEquipDict[legendaryEquip];
+        _BackpackItem._InitInfo = _EquipItem;
         _BackpackItem._ClickEvent += OnEquipItemClick;
     }
 

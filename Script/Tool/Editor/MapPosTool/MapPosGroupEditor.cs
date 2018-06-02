@@ -108,7 +108,7 @@ namespace NavMeshExtension
             RaycastHit hitInfo;
             Event e = Event.current;
 
-            if (e.type == EventType.mouseDown && e.control)
+            if (e.type == EventType.MouseDown && e.control)
             {
                 Physics.Raycast(worldRay, out hitInfo);
                 if (Physics.Raycast(worldRay, out hitInfo))

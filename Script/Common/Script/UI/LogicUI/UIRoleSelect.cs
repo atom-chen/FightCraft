@@ -92,7 +92,7 @@ public class UIRoleSelect : UIBase
         model.transform.localRotation = Quaternion.Euler(Vector3.zero);
 
         var weapon = ResourceManager.Instance.GetInstanceGameObject("Model/" + weaponName);
-        var weaponTrans = model.transform.FindChild("center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon");
+        var weaponTrans = model.transform.Find("center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon");
         var weaponTransChild = weaponTrans.GetComponentsInChildren<Transform>();
         for (int i = weapon.transform.childCount - 1; i >= 0; --i)
         {

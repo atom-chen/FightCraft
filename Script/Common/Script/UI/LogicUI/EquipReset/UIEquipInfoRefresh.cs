@@ -13,6 +13,7 @@ public class UIEquipInfoRefresh : UIBase
 
     #region 
 
+    public UIBackPackItem _ItemIcon;
     public Text _Name;
     public Text _Level;
     public Text _Value;
@@ -33,6 +34,7 @@ public class UIEquipInfoRefresh : UIBase
             return;
         }
 
+        _ItemIcon.ShowItem(_ShowItem);
         _ShowItem = itemEquip;
         _Name.text = _ShowItem.GetEquipNameWithColor();
         if (_ShowItem.RequireLevel > RoleData.SelectRole._RoleLevel)

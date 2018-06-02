@@ -116,7 +116,7 @@ public class UIGemPack : UIBase, IDragablePack
         if (gemItem == null || !gemItem.IsVolid())
             return;
 
-        UIGemTooltips.ShowAsyn(gemItem, new ToolTipFunc[2] { new ToolTipFunc(10008, PunchOff), new ToolTipFunc(10009, LevelUp) });
+        UIGemTooltips.ShowAsynInType(gemItem, TooltipType.GemSuitAttr, new ToolTipFunc[2] { new ToolTipFunc(10008, PunchOff), new ToolTipFunc(10009, LevelUp) });
         //UIEquipTooltips.ShowAsyn(equipItem, ToolTipsShowType.ShowInEquipPack);
     }
 
@@ -128,11 +128,11 @@ public class UIGemPack : UIBase, IDragablePack
 
         if (gemItem.ItemStackNum == 0)
         {
-            UIGemTooltips.ShowAsyn(gemItem, new ToolTipFunc[1] { new ToolTipFunc(10012, LevelUp) });
+            UIGemTooltips.ShowAsynInType(gemItem, TooltipType.Single, new ToolTipFunc[1] { new ToolTipFunc(10012, LevelUp) });
         }
         else
         {
-            UIGemTooltips.ShowAsyn(gemItem, new ToolTipFunc[2] { new ToolTipFunc(10007, PunchOn), new ToolTipFunc(10009, LevelUp) });
+            UIGemTooltips.ShowAsynInType(gemItem, TooltipType.Single, new ToolTipFunc[2] { new ToolTipFunc(10007, PunchOn), new ToolTipFunc(10009, LevelUp) });
         }
         //UIEquipTooltips.ShowAsyn(equipItem, ToolTipsShowType.ShowInEquipPack);
     }

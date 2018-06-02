@@ -85,6 +85,7 @@ public class UITestEquip : UIBase
         var fileStream = File.Create(path);
         var streamWriter = new StreamWriter(fileStream);
 
+        int lastLevel = -1;
         while (true)
         {
             var level = RoleData.SelectRole._RoleLevel + RoleData.SelectRole._AttrLevel;
@@ -113,43 +114,50 @@ public class UITestEquip : UIBase
 
             ++fightTimes;
 
-            RoleAttrManager roleAttr = new RoleAttrManager();
-            roleAttr.InitMainRoleAttr();
+            if (level != lastLevel)
+            {
+                lastLevel = level;
+                RoleAttrManager roleAttr = new RoleAttrManager();
+                roleAttr.InitMainRoleAttr();
 
-            RoleAttrManager monAttr = new RoleAttrManager();
-            monAttr.InitEnemyAttr(TableReader.MonsterBase.GetRecord("21"), level);
+                RoleAttrManager monAttr = new RoleAttrManager();
+                monAttr.InitEnemyAttr(TableReader.MonsterBase.GetRecord("21"), level);
 
-            Hashtable resultHash = new Hashtable();
-            float damageRage = GameDataValue.GetSkillDamageRate(1);
-            resultHash.Add("SkillDamageRate", damageRage);
-            resultHash.Add("DamagePos", Vector3.zero);
-            resultHash.Add("ImpactBase", new ImpactDamage() { _DamageType = ElementType.Physic });
-            resultHash.Add("DamageType", ElementType.Physic);
+                Hashtable resultHash = new Hashtable();
+                float damageRage = GameDataValue.GetSkillDamageRate(2);
+                resultHash.Add("SkillDamageRate", damageRage);
+                resultHash.Add("DamagePos", Vector3.zero);
+                resultHash.Add("ImpactBase", new ImpactDamage() { _DamageType = ElementType.Physic });
+                resultHash.Add("DamageType", ElementType.Physic);
 
-            //damage
-            RoleAttrManager.DamageClass damageClass = new RoleAttrManager.DamageClass();
-            monAttr.CalculateNormalDamage(roleAttr, resultHash, damageClass);
-            //final
-            monAttr.CaculateFinalDamage(roleAttr, resultHash, damageClass);
+                //damage
+                RoleAttrManager.DamageClass damageClass = new RoleAttrManager.DamageClass();
+                monAttr.CalculateNormalDamage(roleAttr, resultHash, damageClass);
+                //final
+                monAttr.CaculateFinalDamage(roleAttr, resultHash, damageClass);
 
-            Hashtable resultHash2 = new Hashtable();
-            float damageRage2 = GameDataValue.GetSkillDamageRate(1, true);
-            resultHash2.Add("SkillDamageRate", damageRage2);
-            resultHash2.Add("DamagePos", Vector3.zero);
-            resultHash2.Add("ImpactBase", new ImpactDamage() { _DamageType = ElementType.Physic });
-            resultHash2.Add("DamageType", ElementType.Physic);
+                Hashtable resultHash2 = new Hashtable();
+                float damageRage2 = GameDataValue.GetSkillDamageRate(2, true);
+                resultHash2.Add("SkillDamageRate", damageRage2);
+                resultHash2.Add("DamagePos", Vector3.zero);
+                resultHash2.Add("ImpactBase", new ImpactDamage() { _DamageType = ElementType.Physic });
+                resultHash2.Add("DamageType", ElementType.Physic);
 
-            //damage
-            RoleAttrManager.DamageClass damageClass2 = new RoleAttrManager.DamageClass();
-            monAttr.CalculateNormalDamage(roleAttr, resultHash2, damageClass2);
-            //final
-            monAttr.CaculateFinalDamage(roleAttr, resultHash2, damageClass2);
+                //damage
+                RoleAttrManager.DamageClass damageClass2 = new RoleAttrManager.DamageClass();
+                monAttr.CalculateNormalDamage(roleAttr, resultHash2, damageClass2);
+                //final
+                monAttr.CaculateFinalDamage(roleAttr, resultHash2, damageClass2);
 
-            //attr
-            streamWriter.WriteLine(fightTimes + "\t" + level + "\t" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Attack)
-                + "\t" + monAttr.HP + "\t" + damageClass.TotalDamageValue
-                + "\t" + damageRage + "\t" + ((float)monAttr.HP / damageClass.TotalDamageValue)
-                + "\t" + damageRage2 + "\t" + ((float)monAttr.HP / damageClass2.TotalDamageValue));
+                //attr
+                streamWriter.WriteLine(fightTimes + "\t" + level + "\t" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Attack)
+                    + "\t" + monAttr.HP + "\t" + damageClass.TotalDamageValue
+                    + "\t" + damageRage + "\t" + ((float)monAttr.HP / damageClass.TotalDamageValue)
+                    + "\t" + damageRage2 + "\t" + ((float)monAttr.HP / damageClass2.TotalDamageValue));
+
+                //streamWriter.WriteLine(fightTimes + "\t" + level + "\t" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax)
+                //    + "\t" + monAttr.GetBaseAttr(RoleAttrEnum.Attack));
+            }
             //streamWriter.WriteLine(fightTimes + "\t" + level + "\t" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax)
             //    + "\t" + monAttr.GetBaseAttr(RoleAttrEnum.Attack) + "\t" + ((float)RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax) / monAttr.GetBaseAttr(RoleAttrEnum.Attack)));
             //drop
@@ -366,7 +374,7 @@ public class UITestEquip : UIBase
         
         TestFight.DelAllEquip();
         TestFight.DelLevel();
-        TestFight.DelSkill(1);
+        TestFight.DelSkill(2);
         TestFight.DelRefresh();
         TestFight.DelGem();
         //foreach (var dropItem in items)

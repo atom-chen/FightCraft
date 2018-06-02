@@ -255,7 +255,7 @@ public class UIContainerBase : UIBase
                 && -_ContainerObj.localPosition.y - pos.Pos.y <= _ViewPortHeight + _LayoutGroup.cellSize.y * 0.5f);
     }
 
-    private void InitItem(ContentPos contentItem, UIItemBase preItem, Hashtable exhash)
+    private void InitItem(ContentPos contentItem, UIItemBase preItem, Hashtable exhash, int idx)
     {
         preItem.gameObject.SetActive(true);
         //preItem.transform.localPosition = new Vector3(contentItem.Pos.x, contentItem.Pos.y, 0);
@@ -272,6 +272,7 @@ public class UIContainerBase : UIBase
             }
 
             hash.Add("InitObj", contentItem.Obj);
+            hash.Add("InitIdx", idx);
             preItem.Show(hash);
             preItem._InitInfo = contentItem.Obj;
 
@@ -338,7 +339,7 @@ public class UIContainerBase : UIBase
 
         for (int i = 0; i < _InitItemCount; ++i)
         {
-            InitItem(_ValueList[i], _ItemPrefabList[i], exhash);
+            InitItem(_ValueList[i], _ItemPrefabList[i], exhash, i);
         }
 
         if (_ItemPrefabList.Count > _ValueList.Count)
@@ -375,7 +376,7 @@ public class UIContainerBase : UIBase
 
             for (int i = _InitItemCount; i < _ValueList.Count; ++i)
             {
-                InitItem(_ValueList[i], _ItemPrefabList[i], exhash);
+                InitItem(_ValueList[i], _ItemPrefabList[i], exhash, i);
             }
         }
 

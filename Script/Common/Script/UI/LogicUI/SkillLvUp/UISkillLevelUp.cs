@@ -108,6 +108,11 @@ public class UISkillLevelUp : UIBase
                 _Desc.text = skillDesc;
             }
         }
+        else
+        {
+            var skillDesc = StrDictionary.GetFormatStr(skillTab.DescStrDict);
+            _Desc.text = skillDesc;
+        }
 
         string roleLvStr = StrDictionary.GetFormatStr(62000);
         int nextLv = skillTab.StartRoleLevel + (_SelectedSkill.SkillActureLevel) * skillTab.NextLvInterval;

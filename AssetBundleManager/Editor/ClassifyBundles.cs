@@ -35,6 +35,11 @@ public class ClassifyBundles : MonoBehaviour
             {
                 prefabImporter.assetBundleName = "scene/" + fileName.ToLower();
                 prefabImporter.assetBundleVariant = "common";
+
+                if (prefabImporter.assetBundleName.Contains(" "))
+                {
+                    Debug.LogError("File name contains space!! " + fileName);
+                }
             }
 
             Object assetData = AssetDatabase.LoadAssetAtPath<Object>(dataFile);
@@ -111,6 +116,11 @@ public class ClassifyBundles : MonoBehaviour
 
                     dependImporter.assetBundleName = bundleName;
                     dependImporter.assetBundleVariant = "common";
+
+                    if (dependImporter.assetBundleName.Contains(" "))
+                    {
+                        Debug.LogError("File name contains space!! " + dependObj.name);
+                    }
                 }
 
                 //AssetDatabase.ImportAsset(dependObjPath, ImportAssetOptions.ForceUpdate);
@@ -160,6 +170,11 @@ public class ClassifyBundles : MonoBehaviour
                 {
                     dependImporter.assetBundleName = className + "/" + assetData.name;
                     dependImporter.assetBundleVariant = "common";
+
+                    if (dependImporter.assetBundleName.Contains(" "))
+                    {
+                        Debug.LogError("File name contains space!! " + assetData.name);
+                    }
                 }
             }
 
@@ -189,6 +204,11 @@ public class ClassifyBundles : MonoBehaviour
                 {
                     dependImporter.assetBundleName = className;
                     dependImporter.assetBundleVariant = "common";
+
+                    if (dependImporter.assetBundleName.Contains(" "))
+                    {
+                        Debug.LogError("File name contains space!! " + className);
+                    }
                 }
             }
 

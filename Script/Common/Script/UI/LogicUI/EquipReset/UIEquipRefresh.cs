@@ -38,6 +38,7 @@ public class UIEquipRefresh : UIBase
 
     #region 
 
+    public UIBackPack _BackPack;
     public UITagPanel _TagPanel;
     public UIContainerSelect _EquipContainer;
     public Text _EquipTag;
@@ -51,7 +52,8 @@ public class UIEquipRefresh : UIBase
 
         _TagPanel.ShowPage(0);
         InitEquipInPack();
-        UpdateRefreshPanel();
+        _EuipInfo.gameObject.SetActive(false);
+        //UpdateRefreshPanel();
     }
 
     private void InitEquipInPack()
@@ -80,13 +82,15 @@ public class UIEquipRefresh : UIBase
             return -1;
         });
         equipList.AddRange(equipInBackPack);
-
-        List<ItemEquip> selectedEquip = new List<ItemEquip>();
-        if (equipList.Count > 0)
+        if (equipList.Count < BackBagPack._BAG_PAGE_SLOT_CNT)
         {
-            selectedEquip.Add(equipList[0]);
+            for (int i = equipList.Count; i < BackBagPack._BAG_PAGE_SLOT_CNT; ++i)
+            {
+                equipList.Add(new ItemEquip());
+            }
         }
-        _EquipContainer.InitSelectContent(equipList, selectedEquip, OnSelectedEquip);
+
+        _EquipContainer.InitSelectContent(equipList, null, OnSelectedEquip);
     }
 
     private void OnSelectedEquip(object equipObj)
@@ -95,8 +99,7 @@ public class UIEquipRefresh : UIBase
         if (equipItem == null)
             return;
 
-        _SelectedEuqip = equipItem;
-        ShowEquipInfo(equipItem, null);
+        //ShowEquipInfo(equipItem, null);
 
         if (PlayerDataPack.Instance._SelectedRole._EquipList.Contains(equipItem))
         {
@@ -107,20 +110,36 @@ public class UIEquipRefresh : UIBase
             _EquipTag.text = "";
         }
 
-
-
         if (_TagPanel.GetShowingPage() == 0)
         {
-            UpdateRefreshPanel();
+            //if (RoleData.SelectRole._EquipList.Contains(equipItem))
+            //{
+            //    UIEquipTooltips.ShowAsynInType(equipItem, TooltipType.Single, new ToolTipFunc[1] { new ToolTipFunc(10015, PutEnhance) });
+            //}
+            //else
+            //{
+            //    UIEquipTooltips.ShowAsynInType(equipItem, TooltipType.Single, new ToolTipFunc[2] { new ToolTipFunc(10015, PutEnhance), new ToolTipFunc(10014, PutDecompose) });
+            //}
+            PutEnhance(equipItem);
         }
-        else if(_TagPanel.GetShowingPage() == 2)
+        else if(_TagPanel.GetShowingPage() == 1)
         {
             InitExchangeEquip();
         }
     }
 
+    private void PutEnhance(ItemBase itemBase)
+    {
+        _SelectedEuqip = itemBase as ItemEquip;
+        UpdateRefreshPanel();
+        ShowEquipInfo(_SelectedEuqip, null);
+    }
+
+
+
     private void ShowEquipInfo(ItemEquip equipItem, ItemEquip orgEquip)
     {
+        _EuipInfo.gameObject.SetActive(true);
         _EuipInfo.ShowTips(equipItem, orgEquip);
     }
 
@@ -129,13 +148,9 @@ public class UIEquipRefresh : UIBase
         switch (page)
         {
             case 0:
-                
-                UpdateRefreshPanel();
+                InitEquipInPack();
                 break;
             case 1:
-                UpdateEquipPack();
-                break;
-            case 2:
                 InitExchangeEquip();
                 break;
         }
@@ -157,6 +172,8 @@ public class UIEquipRefresh : UIBase
 
     private void UpdateRefreshPanel()
     {
+        
+
         if (_SelectedEuqip == null)
         {
             _MaterialBtn.SetActive(false);
@@ -237,66 +254,38 @@ public class UIEquipRefresh : UIBase
     #endregion
 
     #region equip destory
-
-    public UIContainerSelect _EquipPack;
-
-    private ItemEquip _DestorySelectedEquip;
-
-    public void UpdateEquipPack()
+    
+    public void DetoryEquip()
     {
-        List<ItemEquip> destoryEquipList = new List<ItemEquip>();
-        foreach (var itemEquip in BackBagPack.Instance.PageEquips)
+        
+        if (_SelectedEuqip != null && _SelectedEuqip.IsVolid())
         {
-            if (itemEquip.EquipQuality == ITEM_QUALITY.PURPER || itemEquip.EquipQuality == ITEM_QUALITY.ORIGIN || itemEquip.EquipRefreshCostMatrial > 0)
+            if (RoleData.SelectRole._EquipList.Contains(_SelectedEuqip))
             {
-                destoryEquipList.Add(itemEquip);
+                UIMessageTip.ShowMessageTip(40003);
             }
-        }
-        for (int i = destoryEquipList.Count; i < BackBagPack._BAG_PAGE_SLOT_CNT; ++i)
-        {
-            destoryEquipList.Add(new ItemEquip());
-        }
-
-        _EquipPack.InitContentItem(destoryEquipList, ShowEquipPackTooltips);
-    }
-
-    private void ShowEquipPackTooltips(object equipObj)
-    {
-        ItemEquip equipItem = equipObj as ItemEquip;
-        if (equipItem == null || !equipItem.IsVolid())
-            return;
-
-        _DestorySelectedEquip = equipItem;
-        UIEquipTooltips.ShowAsyn(equipItem, new ToolTipFunc[1] { new ToolTipFunc(10014, DetoryEquip) });
-    }
-
-    private void DetoryEquip(ItemBase itemBase)
-    {
-        if (!itemBase.IsVolid())
-            return;
-
-        var itemEquip = itemBase as ItemEquip;
-        if (itemEquip != null)
-        {
-            var commonTab = TableReader.CommonItem.GetRecord(EquipRefresh._RefreshMatDataID);
-            var destoryGetCnt = EquipRefresh.Instance.GetDestoryMatCnt(itemEquip);
-            string tips = StrDictionary.GetFormatStr(40001, commonTab.Name, destoryGetCnt);
-            UIMessageBox.Show(tips, DestoryEquipOk, null);
+            else
+            {
+                var commonTab = TableReader.CommonItem.GetRecord(EquipRefresh._RefreshMatDataID);
+                var destoryGetCnt = EquipRefresh.Instance.GetDestoryMatCnt(_SelectedEuqip);
+                string tips = StrDictionary.GetFormatStr(40001, commonTab.Name, destoryGetCnt);
+                UIMessageBox.Show(tips, DestoryEquipOk, null);
+            }
         }
     }
 
     private void DestoryEquipOk()
     {
-        EquipRefresh.Instance.DestoryMatCnt(_DestorySelectedEquip);
-        UpdateEquipPack();
-
+        EquipRefresh.Instance.DestoryMatCnt(_SelectedEuqip);
         InitEquipInPack();
+
+        //InitEquipInPack();
     }
     #endregion
 
     #region exAttrExchange
 
-    public UIContainerSelect _ExchangeEquipContainer;
+    //public UIContainerSelect _ExchangeEquipContainer;
     public Text _ExchangeEquipTag;
     public UIEquipInfoRefresh _ExchangeEuipInfo;
     public Text _ExchangeCost;
@@ -339,11 +328,11 @@ public class UIEquipRefresh : UIBase
         {
             List<ItemEquip> selectedEquip = new List<ItemEquip>();
             selectedEquip.Add(equipList[0]);
-            _ExchangeEquipContainer.InitSelectContent(equipList, selectedEquip, OnExchangeSelectedEquip);
+            _EquipContainer.InitSelectContent(equipList, selectedEquip, OnExchangeSelectedEquip);
         }
         else
         {
-            _ExchangeEquipContainer.InitSelectContent(equipList, null, OnExchangeSelectedEquip);
+            _EquipContainer.InitSelectContent(equipList, null, OnExchangeSelectedEquip);
             OnExchangeSelectedEquip(null);
         }
     }

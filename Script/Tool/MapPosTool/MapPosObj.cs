@@ -58,7 +58,7 @@ public class MapPosObj : MonoBehaviour
             GameObject.DestroyImmediate(collider);
         }
 
-        var showChil = transform.FindChild("ShowChil");
+        var showChil = transform.Find("ShowChil");
         if (showChil != null)
         {
             GameObject.DestroyImmediate(showChil.gameObject);

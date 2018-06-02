@@ -30,7 +30,7 @@ public class AI_HeroBase : AI_Base
     private void InitRise()
     {
         var riseBoom = ResourceManager.Instance.GetInstanceGameObject("SkillMotion/CommonImpact/RiseBoomSkill");
-        var motionTrans = transform.FindChild("Motion");
+        var motionTrans = transform.Find("Motion");
         riseBoom.transform.SetParent(motionTrans);
         riseBoom.transform.localPosition = Vector3.zero;
         riseBoom.transform.localRotation = Quaternion.Euler(Vector3.zero);

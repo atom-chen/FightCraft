@@ -145,6 +145,9 @@ public class AI_Base : MonoBehaviour
     }
     public List<AI_Skill_Info> _AISkills;
 
+    private float _ComondSkillCD = 0;
+    private float _LastUseSkillTime = 0;
+
     public void InitSkillGoes(MotionManager mainMotion)
     {
         GameObject motionObj = new GameObject("Motion");
@@ -157,6 +160,7 @@ public class AI_Base : MonoBehaviour
             skillBase.transform.SetParent(motionObj.transform);
             skillInfo.SkillBase = skillBase;
         }
+        
     }
 
     protected void InitSkillInfos()
@@ -167,6 +171,16 @@ public class AI_Base : MonoBehaviour
     protected void SetSkillCD(AI_Skill_Info skillInfo, float cdTime)
     {
         skillInfo.LastUseSkillTime = Time.time;
+        _LastUseSkillTime = Time.time;
+    }
+
+    protected bool IsCommonCD()
+    {
+        if (Time.time - _LastUseSkillTime < _ComondSkillCD)
+        {
+            return true;
+        }
+        return false;
     }
 
     protected virtual void StartSkill(AI_Skill_Info skillInfo, bool isIgnoreCD = false)
@@ -189,6 +203,9 @@ public class AI_Base : MonoBehaviour
         for (int i = _AISkills.Count - 1; i >= 0; --i)
         {
             if (!_AISkills[i].IsSkillCD())
+                continue;
+
+            if (!IsCommonCD())
                 continue;
 
             if (_AISkills[i].SkillRange < dis)
@@ -220,11 +237,11 @@ public class AI_Base : MonoBehaviour
             }
             else if (_SelfMotion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.Elite)
             {
-                _ActValue = aiLevel * 70 + 1250;
+                _ActValue = 10000;
             }
             else if (_SelfMotion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.Hero)
             {
-                _ActValue = aiLevel * 100 + 2000;
+                _ActValue = 10000;
             }
             if (_AtkRate < 0)
             {
@@ -235,6 +252,15 @@ public class AI_Base : MonoBehaviour
             }
             _ActValue = (int)(_ActValue * _AtkRate);
             _ActValue = (int)(_ActValue * Time.fixedDeltaTime);
+
+            foreach (var skillInfo in _AISkills)
+            {
+                if (_SelfMotion.RoleAttrManager.Level < 100)
+                {
+                    skillInfo.SkillInterval += 2 * (100 - _SelfMotion.RoleAttrManager.Level) / 100;
+                    _ComondSkillCD = 2 * (100 - _SelfMotion.RoleAttrManager.Level);
+                }
+            }
         }
 
         if (_ActValue >= actRandom)

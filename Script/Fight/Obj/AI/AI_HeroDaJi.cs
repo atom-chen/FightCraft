@@ -51,30 +51,7 @@ public class AI_HeroDaJi : AI_IntHeroBase
             _CloseWait = _CloseInterval;
         }
     }
-
-    protected override bool StartSkill()
-    {
-
-        if (!IsRandomActSkill())
-            return false;
-
-        float dis = Vector3.Distance(_SelfMotion.transform.position, _TargetMotion.transform.position);
-
-        for (int i = _AISkills.Count - 1; i >= 0; --i)
-        {
-            if (!_AISkills[i].IsSkillCD())
-                continue;
-
-            if (_AISkills[i].SkillRange < dis)
-                continue;
-
-            StartSkill(_AISkills[i]);
-            return true;
-
-        }
-
-        return false;
-    }
+    
 
     #endregion
 }

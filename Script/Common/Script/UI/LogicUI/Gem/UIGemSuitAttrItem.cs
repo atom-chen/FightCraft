@@ -3,26 +3,25 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
- 
 using UnityEngine.EventSystems;
 using System;
 using Tables;
-
-
 
 public class UIGemSuitAttrItem : UIItemBase
 {
     public Text _AttrText;
 
-    private ItemEquip _ItemEquip;
+    private GemSetRecord _GemSetRecord;
     private EquipExAttr _ShowAttr;
+    private int _Idx;
 
     public override void Show(Hashtable hash)
     {
         base.Show();
 
         var showItem = (EquipExAttr)hash["InitObj"];
-        _ItemEquip = (ItemEquip)hash["ItemEquip"];
+        _GemSetRecord = (GemSetRecord)hash["GetSetRecord"];
+        _Idx = (int)hash["InitIdx"];
 
         ShowAttr(showItem);
     }
@@ -41,10 +40,9 @@ public class UIGemSuitAttrItem : UIItemBase
 
         string attrStr = _ShowAttr.GetAttrStr();
 
-        int suitAttrIdx = GemSuit.Instance.ActSetAttrs.IndexOf(attr);
-        int actLevel = GemSuit._ActAttrLevel[suitAttrIdx];
+        int actLevel = GemSuit._ActAttrLevel[_Idx];
 
-        if (suitAttrIdx < GemSuit.Instance.ActSetAttrCnt)
+        if (_GemSetRecord == GemSuit.Instance.ActSet && _Idx < GemSuit.Instance.ActSetAttrCnt)
         {
             attrStr = CommonDefine.GetEnableGrayStr(1) + attrStr + "</color>";
             attrStr += CommonDefine.GetEnableRedStr(1) + StrDictionary.GetFormatStr(30005, actLevel) + "</color>";

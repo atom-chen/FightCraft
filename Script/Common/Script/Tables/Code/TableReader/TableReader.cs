@@ -45,6 +45,8 @@ namespace Tables
 //
         public static Mission Mission { get; internal set; }
 //
+        public static MonsterAttr MonsterAttr { get; internal set; }
+//
         public static MonsterBase MonsterBase { get; internal set; }
 //
         public static RoleExp RoleExp { get; internal set; }
@@ -72,6 +74,7 @@ namespace Tables
             GemSet = new GemSet(TableReadBase.GetTableText("GemSet"), false);
             GemTable = new GemTable(TableReadBase.GetTableText("GemTable"), false);
             Mission = new Mission(TableReadBase.GetTableText("Mission"), false);
+            MonsterAttr = new MonsterAttr(TableReadBase.GetTableText("MonsterAttr"), false);
             MonsterBase = new MonsterBase(TableReadBase.GetTableText("MonsterBase"), false);
             RoleExp = new RoleExp(TableReadBase.GetTableText("RoleExp"), false);
             ShopItem = new ShopItem(TableReadBase.GetTableText("ShopItem"), false);
@@ -91,6 +94,7 @@ namespace Tables
             GemSet.CoverTableContent();
             GemTable.CoverTableContent();
             Mission.CoverTableContent();
+            MonsterAttr.CoverTableContent();
             MonsterBase.CoverTableContent();
             RoleExp.CoverTableContent();
             ShopItem.CoverTableContent();

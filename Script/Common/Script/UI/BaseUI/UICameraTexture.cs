@@ -42,7 +42,7 @@ public class UICameraTexture : UIBase, IDragHandler
         fakeObj._ObjCamera = cameraGO.GetComponent<Camera>();
         cameraGO.transform.position = new Vector3(1000 + 100 * _CallTimes, -1000, 0);
         cameraGO.transform.rotation = Camera.main.transform.rotation;
-        fakeObj._ObjTransorm = cameraGO.transform.FindChild("GameObject");
+        fakeObj._ObjTransorm = cameraGO.transform.Find("GameObject");
         fakeObj._ObjTexture = new RenderTexture(1024, 1024, 16, RenderTextureFormat.ARGB32, RenderTextureReadWrite.sRGB);
         fakeObj._ObjCamera.orthographicSize = (cameraSize <= 0 ? 1 : cameraSize);
         fakeObj._ObjCamera.targetTexture = fakeObj._ObjTexture;

@@ -454,6 +454,7 @@ public class GameDataValue
         increaseValue = Mathf.Max(increaseValue, Mathf.CeilToInt(deltaValue / 100 + 1));
 
         var attrEnums = GetRandomEquipAttrsType(itemEquip.EquipItemRecord.Slot, itemEquip.EquipQuality, valueAttrs.Count);
+        //var attrEnums = itemEquip.EquipExAttr;
         for (int i = 0; i < valueAttrs.Count; ++i)
         {
             int randomIncValue = Random.Range(0, increaseValue);
@@ -469,7 +470,7 @@ public class GameDataValue
             }
             valueAttrs[i].AttrParams[0] = (int)attrEnums[i];
             valueAttrs[i].Value += randomIncValue;
-            valueAttrs[i].AttrParams[1] = GetValueAttr(attrEnums[i], valueAttrs[i].Value);
+            valueAttrs[i].AttrParams[1] = GetValueAttr((RoleAttrEnum)valueAttrs[i].AttrParams[0], valueAttrs[i].Value);
             increaseValue -= randomIncValue;
         }
 
@@ -874,8 +875,10 @@ public class GameDataValue
                 bool isOringe = false;
                 for (int i = 0; i < dropCnt; ++i)
                 {
-                    if(level <= 30)
-                        dropQuality = GameRandom.GetRandomLevel(0, 60, 30, 10);
+                    if (level <= 20)
+                        dropQuality = GameRandom.GetRandomLevel(0, 80, 20);
+                    if (level <= 40)
+                        dropQuality = GameRandom.GetRandomLevel(0, 80, 15, 5);
                     else
                         dropQuality = GameRandom.GetRandomLevel(0, 60, 35, 5);
                     if (dropQuality == (int)ITEM_QUALITY.ORIGIN)
@@ -1290,67 +1293,82 @@ public class GameDataValue
     {
         int hpMax = 0;
         float hpBase = ConfigIntToFloat(monsterBase.BaseAttr[0]);
-        //float levelStep = roleLv / 5 + 1.5f;
-        //hpMax = (int)(CalWeaponAttack(roleLv) * hpBase);
-        if (roleLv <= 5)
+        MonsterAttrRecord attrRecord = null;
+        if (!TableReader.MonsterAttr.ContainsKey(roleLv.ToString()))
         {
-            hpMax = (int)(CalWeaponAttack(roleLv) * hpBase + roleLv * 15 * hpBase);
-        }
-        else if (roleLv <= 10)
-        {
-            var hpTemp = GetMonsterHP(monsterBase, 5, monsterType);
-            hpMax = (int)(hpTemp + (roleLv - 5) * 20 * hpBase);
-        }
-        else if (roleLv <= 20)
-        {
-            var hpTemp = GetMonsterHP(monsterBase, 10, monsterType);
-            hpMax = (int)(hpTemp + (roleLv - 10) * 40 * hpBase);
-        }
-        else if (roleLv <= 30)
-        {
-            var hpTemp = GetMonsterHP(monsterBase, 20, monsterType);
-            hpMax = (int)(hpTemp + (roleLv - 20) * 80 * hpBase);
-        }
-        else if (roleLv <= 40)
-        {
-            var hpTemp = GetMonsterHP(monsterBase, 30, monsterType);
-            hpMax = (int)(hpTemp + (roleLv - 30) * 80 * hpBase);
-        }
-        else if (roleLv <= 50)
-        {
-            var hpTemp = GetMonsterHP(monsterBase, 40, monsterType);
-            hpMax = (int)(hpTemp + (roleLv - 40) * 150 * hpBase);
-        }
-        else if (roleLv <= 60)
-        {
-            var hpTemp = GetMonsterHP(monsterBase, 50, monsterType);
-            hpMax = (int)(hpTemp + (roleLv - 50) * 200 * hpBase);
-        }
-        else if (roleLv <= 70)
-        {
-            var hpTemp = GetMonsterHP(monsterBase, 60, monsterType);
-            hpMax = (int)(hpTemp + (roleLv - 60) * 280 * hpBase);
-        }
-        else if (roleLv <= 80)
-        {
-            var hpTemp = GetMonsterHP(monsterBase, 70, monsterType);
-            hpMax = (int)(hpTemp + (roleLv - 70) * 400 * hpBase);
-        }
-        else if (roleLv <= 90)
-        {
-            var hpTemp = GetMonsterHP(monsterBase, 80, monsterType);
-            hpMax = (int)(hpTemp + (roleLv - 80) * 600 * hpBase);
-        }
-        else if (roleLv <= 100)
-        {
-            var hpTemp = GetMonsterHP(monsterBase, 90, monsterType);
-            hpMax = (int)(hpTemp + (roleLv - 90) * 900 * hpBase);
+            if (roleLv <= 0)
+            {
+                attrRecord = TableReader.MonsterAttr.GetRecord("1");
+            }
+            else
+            {
+                attrRecord = TableReader.MonsterAttr.GetRecord("200");
+            }
         }
         else
         {
-            var hpTemp = GetMonsterHP(monsterBase, 100, monsterType);
-            hpMax = (int)(hpTemp + (roleLv - 100) * 1500 * hpBase);
+            attrRecord = TableReader.MonsterAttr.GetRecord(roleLv.ToString());
         }
+        hpMax = (int)(attrRecord.Attrs[0] * hpBase);
+        //if (roleLv <= 5)
+        //{
+        //    hpMax = (int)(CalWeaponAttack(roleLv) * hpBase + roleLv * 15 * hpBase);
+        //}
+        //else if (roleLv <= 10)
+        //{
+        //    var hpTemp = GetMonsterHP(monsterBase, 5, monsterType);
+        //    hpMax = (int)(hpTemp + (roleLv - 5) * 20 * hpBase);
+        //}
+        //else if (roleLv <= 20)
+        //{
+        //    var hpTemp = GetMonsterHP(monsterBase, 10, monsterType);
+        //    hpMax = (int)(hpTemp + (roleLv - 10) * 40 * hpBase);
+        //}
+        //else if (roleLv <= 30)
+        //{
+        //    var hpTemp = GetMonsterHP(monsterBase, 20, monsterType);
+        //    hpMax = (int)(hpTemp + (roleLv - 20) * 80 * hpBase);
+        //}
+        //else if (roleLv <= 40)
+        //{
+        //    var hpTemp = GetMonsterHP(monsterBase, 30, monsterType);
+        //    hpMax = (int)(hpTemp + (roleLv - 30) * 80 * hpBase);
+        //}
+        //else if (roleLv <= 50)
+        //{
+        //    var hpTemp = GetMonsterHP(monsterBase, 40, monsterType);
+        //    hpMax = (int)(hpTemp + (roleLv - 40) * 150 * hpBase);
+        //}
+        //else if (roleLv <= 60)
+        //{
+        //    var hpTemp = GetMonsterHP(monsterBase, 50, monsterType);
+        //    hpMax = (int)(hpTemp + (roleLv - 50) * 200 * hpBase);
+        //}
+        //else if (roleLv <= 70)
+        //{
+        //    var hpTemp = GetMonsterHP(monsterBase, 60, monsterType);
+        //    hpMax = (int)(hpTemp + (roleLv - 60) * 280 * hpBase);
+        //}
+        //else if (roleLv <= 80)
+        //{
+        //    var hpTemp = GetMonsterHP(monsterBase, 70, monsterType);
+        //    hpMax = (int)(hpTemp + (roleLv - 70) * 400 * hpBase);
+        //}
+        //else if (roleLv <= 90)
+        //{
+        //    var hpTemp = GetMonsterHP(monsterBase, 80, monsterType);
+        //    hpMax = (int)(hpTemp + (roleLv - 80) * 600 * hpBase);
+        //}
+        //else if (roleLv <= 100)
+        //{
+        //    var hpTemp = GetMonsterHP(monsterBase, 90, monsterType);
+        //    hpMax = (int)(hpTemp + (roleLv - 90) * 900 * hpBase);
+        //}
+        //else
+        //{
+        //    var hpTemp = GetMonsterHP(monsterBase, 100, monsterType);
+        //    hpMax = (int)(hpTemp + (roleLv - 100) * 1500 * hpBase);
+        //}
 
         return hpMax;
     }
@@ -1361,7 +1379,7 @@ public class GameDataValue
         float atkBase = ConfigIntToFloat(monsterBase.BaseAttr[1]);
         float levelRate = (float)roleLv / 10;
         var hpValue = (int)(CalEquipTorsoHP(roleLv) * levelRate + _HPRoleLevelBase);
-        atkValue = (int)(hpValue / atkBase);
+        atkValue = (int)((hpValue / atkBase) * 1.4f);
         //if (roleLv <= 10)
         //{
         //    atkValue = (int)(CalEquipTorsoHP(roleLv) * 2.0f + _HPRoleLevelBase);
@@ -1456,7 +1474,7 @@ public class GameDataValue
         if (isEnhance)
         {
             int eleLevel = (atkData.SkillLevel / 2) + 1;
-            damage = atkDamage + 0.5f + (0.05f * eleLevel) + skillDamage * 1.5f;
+            damage = atkDamage + 0.5f + (0.05f * eleLevel) + skillDamage * 1.26f;
         }
         else
         {

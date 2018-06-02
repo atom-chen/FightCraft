@@ -189,7 +189,7 @@ namespace NavMeshExtension
             //find index of closest vertex, if any
             dragIndex = FindClosest();
 
-            if (!placing && e.type == EventType.keyDown && e.keyCode == KeyCode.Backspace)
+            if (!placing && e.type == EventType.KeyDown && e.keyCode == KeyCode.Backspace)
             {
                 e.Use();
                 Undo.RegisterCompleteObjectUndo(script, "Delete Vertex");
@@ -215,7 +215,7 @@ namespace NavMeshExtension
                     mousePosition = hitInfo.point;
 
                     //place new point if the left mouse button was clicked
-                    if (e.type == EventType.mouseUp && e.button == 0 && !e.alt)
+                    if (e.type == EventType.MouseUp && e.button == 0 && !e.alt)
                     {
                         Undo.RegisterCompleteObjectUndo(script, "Add Vertex");
 
@@ -264,7 +264,7 @@ namespace NavMeshExtension
                 Handles.EndGUI();
 
                 //clicking near vertices will select them and show handles
-                if (e.type == EventType.mouseUp && e.button == 0 && !e.alt)
+                if (e.type == EventType.MouseUp && e.button == 0 && !e.alt)
                 {
                     //select/unselect vertex point
                     if (dragIndex >= 0)
@@ -280,7 +280,7 @@ namespace NavMeshExtension
                         Selection.activeObject = null;
                 }
                 //unselect all vertices
-                else if (e.type == EventType.mouseUp && e.button == 1 && !e.alt)
+                else if (e.type == EventType.MouseUp && e.button == 1 && !e.alt)
                 {
                     selected.Clear();
                 }
