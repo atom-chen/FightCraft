@@ -15,9 +15,9 @@ namespace Tables
         public override string Id { get; set; }        public string Name { get; set; }
         public string Desc { get; set; }
         public int PriceBuy { get; set; }
-        public int PriceSell { get; set; }
-        public int ShopRate { get; set; }
-        public int ShopMaxNum { get; set; }
+        public int MoneyType { get; set; }
+        public int DailyLimit { get; set; }
+        public string Script { get; set; }
         public ShopItemRecord(DataRecord dataRecord)
         {
             if (dataRecord != null)
@@ -34,9 +34,9 @@ namespace Tables
             recordStrList.Add(TableWriteBase.GetWriteStr(Name));
             recordStrList.Add(TableWriteBase.GetWriteStr(Desc));
             recordStrList.Add(TableWriteBase.GetWriteStr(PriceBuy));
-            recordStrList.Add(TableWriteBase.GetWriteStr(PriceSell));
-            recordStrList.Add(TableWriteBase.GetWriteStr(ShopRate));
-            recordStrList.Add(TableWriteBase.GetWriteStr(ShopMaxNum));
+            recordStrList.Add(TableWriteBase.GetWriteStr(MoneyType));
+            recordStrList.Add(TableWriteBase.GetWriteStr(DailyLimit));
+            recordStrList.Add(TableWriteBase.GetWriteStr(Script));
 
             return recordStrList.ToArray();
         }
@@ -103,9 +103,9 @@ namespace Tables
                 pair.Value.Name = TableReadBase.ParseString(pair.Value.ValueStr[1]);
                 pair.Value.Desc = TableReadBase.ParseString(pair.Value.ValueStr[2]);
                 pair.Value.PriceBuy = TableReadBase.ParseInt(pair.Value.ValueStr[3]);
-                pair.Value.PriceSell = TableReadBase.ParseInt(pair.Value.ValueStr[4]);
-                pair.Value.ShopRate = TableReadBase.ParseInt(pair.Value.ValueStr[5]);
-                pair.Value.ShopMaxNum = TableReadBase.ParseInt(pair.Value.ValueStr[6]);
+                pair.Value.MoneyType = TableReadBase.ParseInt(pair.Value.ValueStr[4]);
+                pair.Value.DailyLimit = TableReadBase.ParseInt(pair.Value.ValueStr[5]);
+                pair.Value.Script = TableReadBase.ParseString(pair.Value.ValueStr[6]);
             }
         }
     }

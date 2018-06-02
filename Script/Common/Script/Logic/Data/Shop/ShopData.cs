@@ -54,7 +54,7 @@ public class ShopData : SaveItemBase
         }
     }
 
-    public static int _RefreshMinutes = 240;
+    public static int _RefreshMinutes = 30;
     public void RefreshShop()
     {
         var timeDelay = DateTime.Now - LastRefreshTime;

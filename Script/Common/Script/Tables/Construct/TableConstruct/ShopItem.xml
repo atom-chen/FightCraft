@@ -49,8 +49,8 @@
     <constructRepeat>1</constructRepeat>
   </constructColumn>
   <constructColumn>
-    <constructName>PriceSell</constructName>
-    <constructCode>PriceSell</constructCode>
+    <constructName>MoneyType</constructName>
+    <constructCode>MoneyType</constructCode>
     <constructType1>基本类型</constructType1>
     <constructType2>
       <constructType2>整数</constructType2>
@@ -59,8 +59,8 @@
     <constructRepeat>1</constructRepeat>
   </constructColumn>
   <constructColumn>
-    <constructName>ShopRate</constructName>
-    <constructCode>ShopRate</constructCode>
+    <constructName>DailyLimit</constructName>
+    <constructCode>DailyLimit</constructCode>
     <constructType1>基本类型</constructType1>
     <constructType2>
       <constructType2>整数</constructType2>
@@ -69,13 +69,14 @@
     <constructRepeat>1</constructRepeat>
   </constructColumn>
   <constructColumn>
-    <constructName>ShopMaxNum</constructName>
-    <constructCode>ShopMaxNum</constructCode>
+    <constructName>Script</constructName>
+    <constructCode>Script</constructCode>
     <constructType1>基本类型</constructType1>
     <constructType2>
-      <constructType2>整数</constructType2>
+      <constructType2>字符串</constructType2>
     </constructType2>
-    <constructDefault>0</constructDefault>
+    <constructDefault>
+    </constructDefault>
     <constructRepeat>1</constructRepeat>
   </constructColumn>
 </root>

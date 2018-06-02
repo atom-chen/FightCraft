@@ -134,19 +134,21 @@ public class UIFightWarning : UIBase
         var positionTo = UIManager.Instance.WorldToScreenPoint(_DirectTo.position);
         //var positionFrom = _DirectFrom.position;
         //var positionTo = _DirectTo.position;
+        _DirectGO.transform.position = positionFrom;
+        _DirectGO.transform.LookAt(positionTo);
 
-        var direct = new Vector2(positionTo.x, positionTo.y) - new Vector2(positionFrom.x, positionFrom.y);
-        float atan = Mathf.Atan(direct.x / direct.y) * Mathf.Rad2Deg;
-        if (positionTo.y >= positionFrom.y)
-        {
-            atan = -atan;
-        }
-        else
-        {
-            atan += 180;
-            atan = -atan;
-        }
-        _DirectGO.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, atan));
+        //var direct = new Vector2(positionTo.x, positionTo.y) - new Vector2(positionFrom.x, positionFrom.y);
+        //float atan = Mathf.Atan(direct.x / direct.y) * Mathf.Rad2Deg;
+        //if (positionTo.y >= positionFrom.y)
+        //{
+        //    atan = -atan;
+        //}
+        //else
+        //{
+        //    atan += 180;
+        //    atan = -atan;
+        //}
+        //_DirectGO.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, atan));
     }
 
     private void ShowDirect(Transform directFrom, Transform directTo)
