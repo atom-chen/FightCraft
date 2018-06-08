@@ -42,9 +42,11 @@ public class UIShopPack : UIBase,IDragablePack
 
     #region 
 
+    public UISubScollMenu _TagMenu;
     public UIContainerBase _ShopItemContainer;
-    public UITagPanel _TagPanel;
     public UIBackPack _BackPack;
+
+    public static int _MAX_PAGE_ITEM_CNT = 25;
 
     #endregion
 
@@ -53,6 +55,12 @@ public class UIShopPack : UIBase,IDragablePack
     public override void Init()
     {
         base.Init();
+
+        foreach (var shopItem in ShopData.Instance._ShopItems)
+        {
+            _TagMenu.PushMenu(shopItem.Key);
+        }
+        _TagMenu.ShowDefaultFirst();
 
         _BackPack = UIBackPack.GetUIBackPackInstance(transform);
         _BackPack._OnItemSelectCallBack = ShowBackPackSelectItem;
@@ -64,7 +72,8 @@ public class UIShopPack : UIBase,IDragablePack
     {
         base.Show(hash);
 
-        ShowPackItems(0);
+        _BackPack.Show(null);
+        _TagMenu.ShowDefaultFirst();
     }
 
     public override void Hide()
@@ -72,62 +81,19 @@ public class UIShopPack : UIBase,IDragablePack
         base.Hide();
     }
 
-    public void ShowPackItems(int page)
+    public void OnMenu(object menuObj)
     {
-        Hashtable exHash = new Hashtable();
-        exHash.Add("DragPack", this);
+        string tagStr = menuObj as string;
 
-        if (page == 0)
+        List<ItemShop> itemShow = new List<ItemShop>(ShopData.Instance._ShopItems[tagStr]);
+        for (int i = itemShow.Count; i < _MAX_PAGE_ITEM_CNT; ++i)
         {
-            var itemList = new List<ItemEquip>( ShopData.Instance._EquipList);
-            ExtendList(itemList);
-            _ShopItemContainer.InitContentItem(itemList, ShowShopPackTooltips, exHash);
-            _BackPack._TagPanel.ShowPage(0);
-            _BackPack.OnShowPage(0);
+            itemShow.Add(new ItemShop());
         }
-        else if (page == 1)
-        {
-            var itemList = new List<ItemBase>(ShopData.Instance._ItemList);
-            ExtendList(itemList);
-            _ShopItemContainer.InitContentItem(itemList, ShowShopPackTooltips, exHash);
-            _BackPack._TagPanel.ShowPage(1);
-            _BackPack.OnShowPage(1);
-        }
-        else if (page == 2)
-        {
-            var itemList = new List<ItemBase>(ShopData.Instance._GamblingItems);
-            ExtendList(itemList);
-            _ShopItemContainer.InitContentItem(itemList, ShowShopPackTooltips, exHash);
-            _BackPack._TagPanel.ShowPage(0);
-            _BackPack.OnShowPage(0);
-        }
-        
+
+        _ShopItemContainer.InitContentItem(itemShow, ShowShopPackTooltips);
     }
-
-    private void ExtendList(List<ItemBase> itemList)
-    {
-        int needExtend = 25 - itemList.Count;
-        for (int i = 0; i < needExtend; ++i)
-        {
-            itemList.Add(new ItemBase(""));
-        }
-    }
-
-    private void ExtendList(List<ItemEquip> itemList)
-    {
-        int needExtend = 25 - itemList.Count;
-        for (int i = 0; i < needExtend; ++i)
-        {
-            itemList.Add(new ItemEquip(""));
-        }
-    }
-
-    public void RefreshItems()
-    {
-        ShowPackItems(_TagPanel.GetShowingPage());
-        _BackPack.RefreshItems();
-    }
-
+    
     public void ShowBackPackSelectItem(ItemBase itemObj)
     {
         ItemEquip equipItem = itemObj as ItemEquip;
@@ -161,37 +127,18 @@ public class UIShopPack : UIBase,IDragablePack
         }
     }
 
+    public void RefreshItems()
+    {
+        _BackPack.RefreshItems();
+    }
+
     #endregion
 
     #region buy item
 
     public void BuyItem(ItemBase itemBase)
     {
-        int page = _TagPanel.GetShowingPage();
-        if (page == 0)
-        {
-            var shopIdx = ShopData.Instance._EquipList.IndexOf(itemBase as ItemEquip);
-            if (shopIdx < 0)
-                return;
-
-            ShopData.Instance.BuyEquip(shopIdx);
-        }
-        else if (page == 1)
-        {
-            var shopIdx = ShopData.Instance._ItemList.IndexOf(itemBase);
-            if (shopIdx < 0)
-                return;
-
-            ShopData.Instance.BuyItem(shopIdx);
-        } 
-        else if (page == 2)
-        {
-            var shopIdx = ShopData.Instance._GamblingItems.IndexOf(itemBase);
-            if (shopIdx < 0)
-                return;
-
-            ShopData.Instance.Gambling(shopIdx);
-        }
+        ShopData.Instance.BuyItem(itemBase as ItemShop);
         RefreshItems();
     }
 

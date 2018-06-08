@@ -123,12 +123,12 @@ public class UIFightWarning : UIBase
             return;
         }
 
-        if (Vector3.Distance(_DirectFrom.position, _DirectTo.position) < 10)
-        {
-            _GOLabel.SetActive(false);
-            _DirectGO.SetActive(false);
-            return;
-        }
+        //if (Vector3.Distance(_DirectFrom.position, _DirectTo.position) < 10)
+        //{
+        //    _GOLabel.SetActive(false);
+        //    _DirectGO.SetActive(false);
+        //    return;
+        //}
 
         var positionFrom = UIManager.Instance.WorldToScreenPoint(_DirectFrom.position);
         var positionTo = UIManager.Instance.WorldToScreenPoint(_DirectTo.position);

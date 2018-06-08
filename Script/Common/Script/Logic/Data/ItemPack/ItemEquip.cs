@@ -579,7 +579,7 @@ public class ItemEquip : ItemBase
         return itemEquip;
     }
 
-    public static ItemEquip CreateEquip(int level, Tables.ITEM_QUALITY quality, int legencyEquipID = -1, int equipSlotIdx = -1)
+    public static ItemEquip CreateEquip(int level, Tables.ITEM_QUALITY quality, int legencyEquipID = -1, int equipSlotIdx = -1, int prePro = -1)
     {
         Tables.ITEM_QUALITY equipQuality = quality;
         EquipItemRecord legencyEquip = null;
@@ -596,7 +596,7 @@ public class ItemEquip : ItemBase
         CommonItemRecord commonItemRecord = null;
 
         EQUIP_SLOT equipSlot = EQUIP_SLOT.AMULET;
-        int profession = -1;
+        int profession = prePro;
         if (equipSlotIdx < 0)
         {
             equipSlot = GameDataValue.GetRandomItemSlot(quality);
@@ -609,7 +609,8 @@ public class ItemEquip : ItemBase
         {
             profession = legencyEquip.ProfessionLimit;
         }
-        else
+
+        if(profession <= 0)
         {
             if (equipSlot == EQUIP_SLOT.WEAPON)
             {

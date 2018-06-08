@@ -69,6 +69,17 @@
     <constructRepeat>1</constructRepeat>
   </constructColumn>
   <constructColumn>
+    <constructName>Class</constructName>
+    <constructCode>Class</constructCode>
+    <constructType1>基本类型</constructType1>
+    <constructType2>
+      <constructType2>字符串</constructType2>
+    </constructType2>
+    <constructDefault>
+    </constructDefault>
+    <constructRepeat>1</constructRepeat>
+  </constructColumn>
+  <constructColumn>
     <constructName>Script</constructName>
     <constructCode>Script</constructCode>
     <constructType1>基本类型</constructType1>
@@ -78,5 +89,15 @@
     <constructDefault>
     </constructDefault>
     <constructRepeat>1</constructRepeat>
+  </constructColumn>
+  <constructColumn>
+    <constructName>ScriptParam</constructName>
+    <constructCode>ScriptParam</constructCode>
+    <constructType1>基本类型</constructType1>
+    <constructType2>
+      <constructType2>整数</constructType2>
+    </constructType2>
+    <constructDefault>1</constructDefault>
+    <constructRepeat>3</constructRepeat>
   </constructColumn>
 </root>

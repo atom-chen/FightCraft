@@ -18,6 +18,7 @@ public class UIEquipInfo : UIBase
     public Text _Level;
     public Text _Value;
     public Text _BaseAttr;
+    public GameObject _Price;
     public UIContainerBase _AttrContainer;
 
     #endregion

@@ -50,7 +50,7 @@ public class LogicManager
         BackBagPack.Instance.InitBackPack();
 
         ShopData.Instance.LoadClass(true);
-        ShopData.Instance.RefreshShop();
+        ShopData.Instance.InitShop();
 
         EquipRefresh.Instance.LoadClass(true);
         EquipRefresh.Instance.InitEquipRefresh();

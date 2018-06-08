@@ -54,21 +54,17 @@ public class ShopData : SaveItemBase
         }
     }
 
-    public static int _RefreshMinutes = 30;
-    public void RefreshShop()
+    public void InitShop()
     {
-        var timeDelay = DateTime.Now - LastRefreshTime;
-        if (timeDelay.TotalMinutes > _RefreshMinutes)
+        if (DateTime.Now.Day != LastRefreshTime.Day)
         {
-            //do refresh
-            RefreshEquip();
             RefreshShopItem();
-            RefreshGamblingItem();
-
+            
             LastRefreshTime = DateTime.Now;
 
             SaveClass(true);
         }
+        InitShopItem();
     }
 
     public void SellItem(ItemBase sellItem, bool isNeedEnsure = true)
@@ -111,142 +107,73 @@ public class ShopData : SaveItemBase
 
     #endregion
 
-    #region equip shop
-
-    [SaveField(2)]
-    public List<ItemEquip> _EquipList;
-
-    public static int _MaxRefreshEquipCnt = 20;
-
-    public void RefreshEquip()
-    {
-        int maxRoleLv = 0;
-        int maxRoleAttrLv = 0;
-        foreach (var role in PlayerDataPack.Instance._RoleList)
-        {
-            if (role._RoleLevel > maxRoleLv)
-            {
-                maxRoleLv = role._RoleLevel;
-            }
-
-            if (role._AttrLevel > maxRoleAttrLv)
-            {
-                maxRoleAttrLv = role._AttrLevel;
-            }
-        }
-
-        _EquipList = new List<ItemEquip>();
-        for (int i = 0; i < _MaxRefreshEquipCnt; ++i)
-        {
-            var equip = RandomEquip(maxRoleLv, maxRoleLv + maxRoleAttrLv);
-            _EquipList.Add(equip);
-        }
-    }
-
-    private ItemEquip RandomEquip(int level, int value)
-    {
-        int randomLevel = UnityEngine.Random.Range(level - 5, level + 5);
-        
-        int quality = GameRandom.GetRandomLevel(3,12,2);
-
-        var equipItem = ItemEquip.CreateEquip(randomLevel, (ITEM_QUALITY)quality, -1);
-        return equipItem;
-    }
-
-    public void BuyEquip(int equipIdx)
-    {
-        if (_EquipList.Count < equipIdx)
-            return;
-
-        if (!_EquipList[equipIdx].IsVolid())
-            return;
-
-        var emptyPos = BackBagPack.Instance.GetEmptyPageEquip();
-        if (emptyPos == null)
-            return;
-
-        int gold = GameDataValue.GetEquipBuyGold(_EquipList[equipIdx]);
-        if (!PlayerDataPack.Instance.DecGold(gold))
-            return;
-
-        BackBagPack.Instance.AddEquip(_EquipList[equipIdx]);
-    }
-
-    #endregion
-
     #region item shop
 
-    [SaveField(3)]
-    public List<ItemBase> _ItemList;
+    [SaveField(2)]
+    public List<int> _ShopLimit;
+
+    public Dictionary<string, List<ItemShop>> _ShopItems;
+
+    public void InitShopItem()
+    {
+        _ShopItems = new Dictionary<string, List<ItemShop>>();
+        int i = 0; 
+        foreach (var shopItem in TableReader.ShopItem.Records.Values)
+        {
+            ItemShop itemShop = new ItemShop(shopItem.Id);
+            itemShop.BuyTimes = _ShopLimit[i];
+
+            if (!_ShopItems.ContainsKey(itemShop.ShopRecord.Class))
+            {
+                _ShopItems.Add(itemShop.ShopRecord.Class, new List<ItemShop>());
+            }
+            _ShopItems[itemShop.ShopRecord.Class].Add(itemShop);
+            ++i;
+        }
+    }
 
     public void RefreshShopItem()
     {
-        _ItemList = new List<ItemBase>();
+        _ShopLimit = new List<int>();
         foreach (var shopItem in TableReader.ShopItem.Records.Values)
         {
-            var item = new ItemBase(shopItem.Id, 3);
-            _ItemList.Add(item);
+            _ShopLimit.Add(shopItem.DailyLimit);
         }
     }
 
-    public void BuyItem(int itemIdx)
+    public void BuyItem(ItemShop shopItem)
     {
-        if (_ItemList.Count < itemIdx)
-            return;
-
-        if (!_ItemList[itemIdx].IsVolid())
-            return;
-
-        var emptyPos = BackBagPack.Instance.GetItemPos(_ItemList[itemIdx].ItemDataID);
-        if (emptyPos == null)
-            return;
-
-        int buyPrice = TableReader.ShopItem.GetRecord(_ItemList[itemIdx].ItemDataID).PriceBuy * _ItemList[itemIdx].ItemStackNum;
-        if (!PlayerDataPack.Instance.DecGold(buyPrice))
-            return;
-
-        BackBagPack.Instance.AddItem(_EquipList[itemIdx].ItemDataID, _ItemList[itemIdx].ItemStackNum);
-        _ItemList[itemIdx].ItemDataID = "";
-    }
-
-    #endregion
-
-    #region gambling
-
-    [SaveField(4)]
-    public List<ItemBase> _GamblingItems;
-
-    public void RefreshGamblingItem()
-    {
-        _GamblingItems = new List<ItemBase>();
-        ItemBase gamblingItem = new ItemBase("60000", 1);
-        _GamblingItems.Add(gamblingItem);
-
-        gamblingItem = new ItemBase("60001", 1);
-        _GamblingItems.Add(gamblingItem);
-
-        gamblingItem = new ItemBase("60002", 1);
-        _GamblingItems.Add(gamblingItem);
-
-        gamblingItem = new ItemBase("60003", 1);
-        _GamblingItems.Add(gamblingItem);
-    }
-
-    public void Gambling(int itemIdx)
-    {
-        if (_GamblingItems.Count < itemIdx)
-            return;
-
-        //if (itemIdx == 0)
+        var shopItemTab = shopItem.ShopRecord;
+        if (shopItem.BuyTimes == 0)
         {
-            Debug.Log("buy gambling:" + itemIdx);
+            UIMessageTip.ShowMessageTip(20004);
+            return;
+        }
+        if (BackBagPack.Instance.GetEmptyPageEquip() == null)
+        {
+            return;
+        }
+        if (shopItemTab.MoneyType == 0)
+        {
+            if (!PlayerDataPack.Instance.DecGold(shopItem.BuyPrice))
+                return;
+        }
+        else
+        {
+            if (!PlayerDataPack.Instance.DecDiamond(shopItem.BuyPrice))
+                return;
         }
 
-        Hashtable hash = new Hashtable();
-        //hash.Add("EquipInfo", equip);
-        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_GAMBLING, this, hash);
+        var scriptType = Type.GetType(shopItemTab.Script);
+        var buyMethod = scriptType.GetMethod("BuyItem", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
+        buyMethod.Invoke(null, new object[1] { shopItem} );
+
+        if (shopItem.BuyTimes > 0)
+            --shopItem.BuyTimes;
+        Debug.Log("BuyItem:" + shopItem.ItemDataID);
     }
 
     #endregion
+    
 
 }

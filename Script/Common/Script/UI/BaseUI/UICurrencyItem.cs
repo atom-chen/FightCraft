@@ -68,7 +68,7 @@ public class UICurrencyItem : UIItemBase
     public void OnBtnAddClick()
     {
 
-        PlayerDataPack.Instance.AddGold(1000);
+        PlayerDataPack.Instance.AddGold(50000);
         PlayerDataPack.Instance.AddDiamond(1000);
         UIMainFun.UpdateMoney();
 
