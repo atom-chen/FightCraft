@@ -61,6 +61,16 @@ public class ItemBase : SaveItemBase
         }
     }
 
+    public virtual string GetName()
+    {
+        return StrDictionary.GetFormatStr(CommonItemRecord.Name);
+    }
+
+    public virtual string GetDesc()
+    {
+        return StrDictionary.GetFormatStr(CommonItemRecord.DescStrDict);
+    }
+
     public bool IsVolid()
     {
         if (string.IsNullOrEmpty(_ItemDataID) || _ItemDataID == "-1")

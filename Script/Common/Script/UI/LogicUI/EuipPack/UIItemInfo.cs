@@ -35,9 +35,13 @@ public class UIItemInfo : UIBase
 
         if (_Desc != null)
         {
-            _Desc.text = _ShowItem.CommonItemRecord.Desc;
+            _Desc.text = _ShowItem.GetDesc();
         }
     }
+
+    public virtual void ShowPrice()
+    { }
+
     #endregion
 
 

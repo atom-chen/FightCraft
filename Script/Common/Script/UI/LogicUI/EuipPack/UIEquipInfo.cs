@@ -8,56 +8,55 @@ using UnityEngine.EventSystems;
 using System;
 using Tables;
 
-public class UIEquipInfo : UIBase
+public class UIEquipInfo : UIItemInfo
 {
 
     #region 
 
     public Text _LengendaryName;
-    public Text _Name;
-    public Text _Level;
     public Text _Value;
     public Text _BaseAttr;
-    public GameObject _Price;
+    public UICurrencyItem _Price;
+    public Text _ShopOpt;
     public UIContainerBase _AttrContainer;
 
     #endregion
 
     #region 
 
-    private ItemEquip _ShowItem;
+    private ItemEquip _ShowEquip;
 
     public void ShowTips(ItemEquip itemEquip)
     {
         if (itemEquip == null || !itemEquip.IsVolid())
         {
-            _ShowItem = null;
+            _ShowEquip = null;
             return;
         }
         //itemEquip.CalculateCombatValue();
-        _ShowItem = itemEquip;
+        _ShowEquip = itemEquip;
 
-        if (_ShowItem.IsLegandaryEquip())
+        if (_ShowEquip.IsLegandaryEquip())
         {
             _LengendaryName.gameObject.SetActive(true);
-            _LengendaryName.text = _ShowItem.GetEquipLegandaryName();
+            _LengendaryName.text = _ShowEquip.GetEquipLegandaryName();
         }
         else
         {
             _LengendaryName.gameObject.SetActive(false);
         }
 
-        _Name.text = _ShowItem.GetEquipNameWithColor();
-        if (_ShowItem.RequireLevel > RoleData.SelectRole._RoleLevel)
+        _Name.text = _ShowEquip.GetEquipNameWithColor();
+        if (_ShowEquip.RequireLevel > RoleData.SelectRole._RoleLevel)
         {
-            _Level.text = StrDictionary.GetFormatStr(10000) + " " + CommonDefine.GetEnableRedStr(0) + _ShowItem.RequireLevel + "</color>";
+            _Level.text = StrDictionary.GetFormatStr(10000) + " " + CommonDefine.GetEnableRedStr(0) + _ShowEquip.RequireLevel + "</color>";
         }
         else
         {
-            _Level.text = StrDictionary.GetFormatStr(10000) + " " + _ShowItem.RequireLevel;
+            _Level.text = StrDictionary.GetFormatStr(10000) + " " + _ShowEquip.RequireLevel;
         }
-        _Value.text = StrDictionary.GetFormatStr(10001) + " " + _ShowItem.CombatValue;
-        string attrStr = _ShowItem.GetBaseAttrStr();
+        _Value.text = StrDictionary.GetFormatStr(10001) + " " + _ShowEquip.CombatValue;
+        string attrStr = _ShowEquip.GetBaseAttrStr();
         if (string.IsNullOrEmpty(attrStr))
         {
             _BaseAttr.gameObject.SetActive(false);
@@ -68,7 +67,7 @@ public class UIEquipInfo : UIBase
             _BaseAttr.text = attrStr;
         }
         Hashtable hash = new Hashtable();
-        hash.Add("ItemEquip", _ShowItem);
+        hash.Add("ItemEquip", _ShowEquip);
         _AttrContainer.InitContentItem(itemEquip.EquipExAttr, null, hash);
     }
     #endregion
