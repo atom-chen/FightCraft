@@ -15,6 +15,9 @@ public class UIItemInfo : UIBase
     public Text _Name;
     public Text _Level;
     public Text _Desc;
+    public Text _ShopOpt;
+    public UICurrencyItem _ShopPrice;
+    public UIContainerBase _AttrContainer;
 
     #endregion
 
@@ -39,8 +42,21 @@ public class UIItemInfo : UIBase
         }
     }
 
-    public virtual void ShowPrice()
-    { }
+    public virtual void ShowPrice(bool isBuy, MONEYTYPE priceType, int priceValue)
+    {
+        string buyStr = "";
+        if (isBuy)
+        {
+            buyStr = StrDictionary.GetFormatStr(10006) + ":";
+        }
+        else
+        {
+            buyStr = StrDictionary.GetFormatStr(10005) + ":";
+        }
+
+        _ShopOpt.text = buyStr;
+        _ShopPrice.ShowCurrency(priceType, priceValue);
+    }
 
     #endregion
 

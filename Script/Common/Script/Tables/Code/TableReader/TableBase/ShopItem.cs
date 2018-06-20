@@ -17,6 +17,7 @@ namespace Tables
         public int PriceBuy { get; set; }
         public int MoneyType { get; set; }
         public int DailyLimit { get; set; }
+        public bool MutiBuy { get; set; }
         public string Class { get; set; }
         public string Script { get; set; }
         public List<int> ScriptParam { get; set; }
@@ -39,6 +40,7 @@ namespace Tables
             recordStrList.Add(TableWriteBase.GetWriteStr(PriceBuy));
             recordStrList.Add(TableWriteBase.GetWriteStr(MoneyType));
             recordStrList.Add(TableWriteBase.GetWriteStr(DailyLimit));
+            recordStrList.Add(TableWriteBase.GetWriteStr(MutiBuy));
             recordStrList.Add(TableWriteBase.GetWriteStr(Class));
             recordStrList.Add(TableWriteBase.GetWriteStr(Script));
             foreach (var testTableItem in ScriptParam)
@@ -113,11 +115,12 @@ namespace Tables
                 pair.Value.PriceBuy = TableReadBase.ParseInt(pair.Value.ValueStr[3]);
                 pair.Value.MoneyType = TableReadBase.ParseInt(pair.Value.ValueStr[4]);
                 pair.Value.DailyLimit = TableReadBase.ParseInt(pair.Value.ValueStr[5]);
-                pair.Value.Class = TableReadBase.ParseString(pair.Value.ValueStr[6]);
-                pair.Value.Script = TableReadBase.ParseString(pair.Value.ValueStr[7]);
-                pair.Value.ScriptParam.Add(TableReadBase.ParseInt(pair.Value.ValueStr[8]));
+                pair.Value.MutiBuy = TableReadBase.ParseBool(pair.Value.ValueStr[6]);
+                pair.Value.Class = TableReadBase.ParseString(pair.Value.ValueStr[7]);
+                pair.Value.Script = TableReadBase.ParseString(pair.Value.ValueStr[8]);
                 pair.Value.ScriptParam.Add(TableReadBase.ParseInt(pair.Value.ValueStr[9]));
                 pair.Value.ScriptParam.Add(TableReadBase.ParseInt(pair.Value.ValueStr[10]));
+                pair.Value.ScriptParam.Add(TableReadBase.ParseInt(pair.Value.ValueStr[11]));
             }
         }
     }

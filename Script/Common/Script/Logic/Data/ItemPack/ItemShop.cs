@@ -68,7 +68,7 @@ public class ItemShop : ItemBase
         string baseDesc =  base.GetDesc();
         if (ShopRecord.DailyLimit > 0)
         {
-            string limit = StrDictionary.GetFormatStr("#{20005}", BuyTimes, ShopRecord.DailyLimit);
+            string limit = StrDictionary.GetFormatStr(20005, BuyTimes, ShopRecord.DailyLimit);
             if (BuyTimes >= ShopRecord.DailyLimit)
             {
                 limit = CommonDefine.GetEnableRedStr(1) + limit + "</color>";

@@ -36,6 +36,17 @@ public class UIEquipTooltips : UIItemTooltips
         GameCore.Instance.UIManager.ShowUI("LogicUI/BagPack/UIEquipTooltips", UILayer.MessageUI, hash);
     }
 
+    public new static void ShowShopAsyn(ItemBase itembase, bool isBuy, MONEYTYPE priceType, int priceValue, params ToolTipFunc[] funcs)
+    {
+        Hashtable hash = new Hashtable();
+        hash.Add("ItemEquip", itembase);
+        hash.Add("IsBuy", isBuy);
+        hash.Add("PriceType", priceType);
+        hash.Add("PriceValue", priceValue);
+        hash.Add("ToolTipFun", funcs);
+        GameCore.Instance.UIManager.ShowUI("LogicUI/BagPack/UIEquipTooltips", UILayer.MessageUI, hash);
+    }
+
     public new static void HideAsyn()
     {
         UIManager.Instance.HideUI("LogicUI/BagPack/UIEquipTooltips");
@@ -87,6 +98,14 @@ public class UIEquipTooltips : UIItemTooltips
             ShowCompare();
         }
         ShowFuncs(funcs);
+
+        if (hash.ContainsKey("IsBuy"))
+        {
+            var isBuy = (bool)hash["IsBuy"];
+            var priceType = (MONEYTYPE)hash["PriceType"];
+            var priceValue = (int)hash["PriceValue"];
+            _UIEquipInfo.ShowPrice(isBuy, priceType, priceValue);
+        }
     }
     
     private void ShowTips(ItemEquip itemEquip)

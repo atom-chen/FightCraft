@@ -33,6 +33,17 @@ public class UIItemTooltips : UIBase
         GameCore.Instance.UIManager.ShowUI("LogicUI/BagPack/UIItemTooltips", UILayer.MessageUI, hash);
     }
 
+    public static void ShowShopAsyn(ItemBase itembase, bool isBuy, MONEYTYPE priceType, int priceValue,  params ToolTipFunc[] funcs)
+    {
+        Hashtable hash = new Hashtable();
+        hash.Add("ItemBase", itembase);
+        hash.Add("IsBuy", isBuy);
+        hash.Add("PriceType", priceType);
+        hash.Add("PriceValue", priceValue);
+        hash.Add("ToolTipFun", funcs);
+        GameCore.Instance.UIManager.ShowUI("LogicUI/BagPack/UIItemTooltips", UILayer.MessageUI, hash);
+    }
+
     public static void HideAsyn()
     {
         UIManager.Instance.HideUI("LogicUI/BagPack/UIItemTooltips");
@@ -63,6 +74,17 @@ public class UIItemTooltips : UIBase
         ToolTipFunc[] showType = (ToolTipFunc[])hash["ToolTipFun"];
         ShowTips(_ShowItem);
         ShowFuncs(showType);
+
+        if (_UIItemInfo != null)
+        {
+            if (hash.ContainsKey("IsBuy"))
+            {
+                var isBuy = (bool)hash["IsBuy"];
+                var priceType = (MONEYTYPE)hash["PriceType"];
+                var priceValue = (int)hash["PriceValue"];
+                _UIItemInfo.ShowPrice(isBuy, priceType, priceValue);
+            }
+        }
     }
 
     protected virtual void ShowFuncs(ToolTipFunc[] funcs)
@@ -99,7 +121,10 @@ public class UIItemTooltips : UIBase
         }
         _ShowItem = itemBase;
 
-        _UIItemInfo.ShowTips(_ShowItem);
+        if (_UIItemInfo != null)
+        {
+            _UIItemInfo.ShowTips(_ShowItem);
+        }
     }
 
     #endregion

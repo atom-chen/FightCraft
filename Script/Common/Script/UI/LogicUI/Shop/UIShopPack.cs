@@ -96,34 +96,34 @@ public class UIShopPack : UIBase,IDragablePack
     
     public void ShowBackPackSelectItem(ItemBase itemObj)
     {
-        ItemEquip equipItem = itemObj as ItemEquip;
-        if (equipItem != null && equipItem.IsVolid())
+        if (itemObj is ItemEquip)
         {
-            UIEquipTooltips.ShowAsyn(equipItem, new ToolTipFunc[1] { new ToolTipFunc(10005, SellItem) });
+            ItemEquip equipItem = itemObj as ItemEquip;
+            if (equipItem == null || !equipItem.IsVolid())
+                return;
+
+            var price = GameDataValue.GetEquipSellGold(equipItem);
+
+            UIEquipTooltips.ShowShopAsyn(equipItem, false, MONEYTYPE.GOLD, price, new ToolTipFunc[1] { new ToolTipFunc(10005, SellItem) });
         }
-        else if(itemObj.IsVolid())
+        else if (itemObj is ItemBase)
         {
-            UIItemTooltips.ShowAsyn(itemObj, new ToolTipFunc[1] { new ToolTipFunc(10005, SellItem) });
+            ItemBase equipItem = itemObj as ItemBase;
+            if (equipItem == null || !equipItem.IsVolid())
+                return;
+
+            UIItemTooltips.ShowAsyn(equipItem, new ToolTipFunc[1] { new ToolTipFunc(10005, SellItem) });
         }
     }
 
-    private void ShowShopPackTooltips(object equipObj)
+    private void ShowShopPackTooltips(object itemObj)
     {
-        if (equipObj is ItemEquip)
-        {
-            ItemEquip equipItem = equipObj as ItemEquip;
-            if (equipItem == null || !equipItem.IsVolid())
-                return;
+        ItemShop shopItem = itemObj as ItemShop;
 
-            UIEquipTooltips.ShowAsyn(equipItem, new ToolTipFunc[1] { new ToolTipFunc(10006, BuyItem) });
-        }
-        else if (equipObj is ItemBase)
+        if (shopItem != null)
         {
-            ItemBase equipItem = equipObj as ItemBase;
-            if (equipItem == null || !equipItem.IsVolid())
-                return;
-
-            UIItemTooltips.ShowAsyn(equipItem, new ToolTipFunc[1] { new ToolTipFunc(10006, BuyItem) });
+            MONEYTYPE moneyType = shopItem.ShopRecord.MoneyType > 0 ? MONEYTYPE.GOLD : MONEYTYPE.DIAMOND;
+            UIItemTooltips.ShowShopAsyn(shopItem, true, moneyType, shopItem.BuyPrice, new ToolTipFunc[1] { new ToolTipFunc(10006, BuyItem) });
         }
     }
 
@@ -138,7 +138,25 @@ public class UIShopPack : UIBase,IDragablePack
 
     public void BuyItem(ItemBase itemBase)
     {
-        ShopData.Instance.BuyItem(itemBase as ItemShop);
+        var shopItem = itemBase as ItemShop;
+        if (!shopItem.ShopRecord.MutiBuy)
+        {
+            ShopData.Instance.BuyItem(shopItem);
+            RefreshItems();
+        }
+        else
+        {
+            UIShopNum.ShowAsyn(shopItem, MutiBuyCallBack);
+        }
+        
+    }
+
+    public void MutiBuyCallBack(ItemShop shopItem, int num)
+    {
+        for (int i = 0; i < num; ++i)
+        {
+            ShopData.Instance.BuyItem(shopItem);
+        }
         RefreshItems();
     }
 

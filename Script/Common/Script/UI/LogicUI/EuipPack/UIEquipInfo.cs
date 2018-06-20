@@ -17,8 +17,7 @@ public class UIEquipInfo : UIItemInfo
     public Text _Value;
     public Text _BaseAttr;
     public UICurrencyItem _Price;
-    public Text _ShopOpt;
-    public UIContainerBase _AttrContainer;
+    
 
     #endregion
 
