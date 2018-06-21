@@ -43,11 +43,12 @@ public class UICameraTexture : UIBase, IDragHandler
         cameraGO.transform.position = new Vector3(1000 + 100 * _CallTimes, -1000, 0);
         cameraGO.transform.rotation = Camera.main.transform.rotation;
         fakeObj._ObjTransorm = cameraGO.transform.Find("GameObject");
-        fakeObj._ObjTexture = new RenderTexture(1024, 1024, 16, RenderTextureFormat.ARGB32, RenderTextureReadWrite.sRGB);
+        fakeObj._ObjTexture = new RenderTexture(1024, 1024, 16, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Default);
+        fakeObj._ObjTexture.depth = 32;
         fakeObj._ObjCamera.orthographicSize = (cameraSize <= 0 ? 1 : cameraSize);
         fakeObj._ObjCamera.targetTexture = fakeObj._ObjTexture;
         //fakeObj._ObjCamera.cullingMask = _CameraPrefab.layer;
-        fakeObj._ObjCamera.depthTextureMode = DepthTextureMode.None;
+        fakeObj._ObjCamera.depthTextureMode = DepthTextureMode.MotionVectors;
         ++_CallTimes;
 
         return fakeObj;
