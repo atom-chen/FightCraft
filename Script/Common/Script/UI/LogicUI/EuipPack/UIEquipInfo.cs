@@ -16,8 +16,6 @@ public class UIEquipInfo : UIItemInfo
     public Text _LengendaryName;
     public Text _Value;
     public Text _BaseAttr;
-    public UICurrencyItem _Price;
-    
 
     #endregion
 
@@ -34,6 +32,11 @@ public class UIEquipInfo : UIItemInfo
         }
         //itemEquip.CalculateCombatValue();
         _ShowEquip = itemEquip;
+
+        if (_ShopPrice != null)
+        {
+            _ShopPrice.gameObject.SetActive(false);
+        }
 
         if (_ShowEquip.IsLegandaryEquip())
         {

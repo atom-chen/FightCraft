@@ -36,6 +36,8 @@ public class UIItemInfo : UIBase
         _ShowItem = itemBase;
         _Name.text = _ShowItem.CommonItemRecord.Name;
 
+        _ShopPrice.gameObject.SetActive(false);
+
         if (_Desc != null)
         {
             _Desc.text = _ShowItem.GetDesc();
@@ -55,6 +57,7 @@ public class UIItemInfo : UIBase
         }
 
         _ShopOpt.text = buyStr;
+        _ShopPrice.gameObject.SetActive(true);
         _ShopPrice.ShowCurrency(priceType, priceValue);
     }
 

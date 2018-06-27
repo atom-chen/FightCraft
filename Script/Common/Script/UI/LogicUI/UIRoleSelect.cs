@@ -21,6 +21,7 @@ public class UIRoleSelect : UIBase
     public Text _RoleLevel;
     public Text _AttrLevel;
     public UICameraTexture[] _UICameraTexture;
+    public GameObject[] _GrayImgs;
     public AnimationClip[] _Anims;
 
     public override void Show(Hashtable hash)
@@ -72,11 +73,13 @@ public class UIRoleSelect : UIBase
             if (i != idx)
             {
                 _UICameraTexture[i].gameObject.SetActive(false);
+                _GrayImgs[i].SetActive(true);
             }
             else
             {
                 _UICameraTexture[i].gameObject.SetActive(true);
                 _ShowAnims[i].PlayAnim();
+                _GrayImgs[i].SetActive(false);
             }
         }
     }

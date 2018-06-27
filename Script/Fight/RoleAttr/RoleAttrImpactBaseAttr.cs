@@ -42,7 +42,18 @@ public class RoleAttrImpactBaseAttr : RoleAttrImpactBase
         {
             valueStr = " +" + valueStr;
         }
-        var strFormat = RandomAttrs.GetAttrName((RoleAttrEnum)attrParams[0]) + valueStr;
+        string strFormat = "";
+        if ((RoleAttrEnum)attrParams[0] == RoleAttrEnum.ExGoldDrop
+            || (RoleAttrEnum)attrParams[0] == RoleAttrEnum.ExMatDrop
+            || (RoleAttrEnum)attrParams[0] == RoleAttrEnum.ExGemDrop
+            || (RoleAttrEnum)attrParams[0] == RoleAttrEnum.ExEquipDrop)
+        {
+            strFormat = CommonDefine.GetQualityColorStr(ITEM_QUALITY.ORIGIN) + StrDictionary.GetFormatStr(attrParams[0], valueStr) + "</color>";
+        }
+        else
+        {
+            strFormat = RandomAttrs.GetAttrName((RoleAttrEnum)attrParams[0]) + valueStr;
+        }
 
         return strFormat;
     }

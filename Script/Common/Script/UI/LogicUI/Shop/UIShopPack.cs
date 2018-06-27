@@ -120,7 +120,7 @@ public class UIShopPack : UIBase,IDragablePack
     {
         ItemShop shopItem = itemObj as ItemShop;
 
-        if (shopItem != null)
+        if (shopItem != null && shopItem.IsVolid())
         {
             MONEYTYPE moneyType = shopItem.ShopRecord.MoneyType > 0 ? MONEYTYPE.GOLD : MONEYTYPE.DIAMOND;
             UIItemTooltips.ShowShopAsyn(shopItem, true, moneyType, shopItem.BuyPrice, new ToolTipFunc[1] { new ToolTipFunc(10006, BuyItem) });

@@ -46,6 +46,11 @@ public enum RoleAttrEnum
     AllResistan,
     AllEnhance,
 
+    ExGoldDrop,
+    ExMatDrop,
+    ExGemDrop,
+    ExEquipDrop,
+
     BASE_ATTR_MAX,
 }
 
@@ -196,6 +201,13 @@ public class RandomAttrs
                 var persentVal = (value) * 0.01f;
                 valueStr = string.Format("{0:0.00}", persentVal);
                 valueStr += "%";
+                break;
+            case RoleAttrEnum.ExEquipDrop:
+            case RoleAttrEnum.ExGemDrop:
+            case RoleAttrEnum.ExGoldDrop:
+            case RoleAttrEnum.ExMatDrop:
+                var persentVal2 = (value) * 0.01f;
+                valueStr = string.Format("{0:0.00}", persentVal2);
                 break;
         }
 
