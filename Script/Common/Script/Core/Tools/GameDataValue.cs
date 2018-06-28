@@ -845,13 +845,14 @@ public class GameDataValue
         List<ITEM_QUALITY> dropEquipQualitys = new List<ITEM_QUALITY>();
         int dropCnt = 0;
         int dropQuality = 0;
+        float exEquipRate = ConfigIntToFloat(RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.ExEquipDrop)) + 1;
         switch (motionType)
         {
             case MOTION_TYPE.Normal:
                 dropCnt = GameRandom.GetRandomLevel(95, 5);
                 for (int i = 0; i < dropCnt; ++i)
                 {
-                    dropQuality = GameRandom.GetRandomLevel(70, 30);
+                    dropQuality = GameRandom.GetRandomLevel(7000, (int)(3000 * exEquipRate));
                     dropEquipQualitys.Add((ITEM_QUALITY)dropQuality);
                 }
                 
@@ -860,7 +861,7 @@ public class GameDataValue
                 dropCnt = GameRandom.GetRandomLevel(10, 70, 20);
                 for (int i = 0; i < dropCnt; ++i)
                 {
-                    dropQuality = GameRandom.GetRandomLevel(30, 65, 5);
+                    dropQuality = GameRandom.GetRandomLevel(3000, (int)(6500 * exEquipRate), (int)(500 * exEquipRate));
                     dropEquipQualitys.Add((ITEM_QUALITY)dropQuality);
                 }
 
@@ -876,11 +877,11 @@ public class GameDataValue
                 for (int i = 0; i < dropCnt; ++i)
                 {
                     if (level <= 20)
-                        dropQuality = GameRandom.GetRandomLevel(0, 80, 20);
+                        dropQuality = GameRandom.GetRandomLevel(0, 80, (int)(2000 * exEquipRate));
                     if (level <= 40)
-                        dropQuality = GameRandom.GetRandomLevel(0, 80, 15, 5);
+                        dropQuality = GameRandom.GetRandomLevel(0, 80, (int)(1500 * exEquipRate), (int)(500 * exEquipRate));
                     else
-                        dropQuality = GameRandom.GetRandomLevel(0, 60, 35, 5);
+                        dropQuality = GameRandom.GetRandomLevel(0, 60, (int)(3500 * exEquipRate), (int)(500 * exEquipRate));
                     if (dropQuality == (int)ITEM_QUALITY.ORIGIN)
                     {
                         if (!isOringe)
@@ -1046,16 +1047,17 @@ public class GameDataValue
         if (level < _DropMatLevel)
             return dropCnt;
 
+        float modifyRate = (ConfigIntToFloat(RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.ExMatDrop)) + 1);
         switch (motionType)
         {
             case MOTION_TYPE.Normal:
-                dropCnt = GetDropCnt(Mathf.CeilToInt( _NormalMatBase * level * _LevelParam));
+                dropCnt = GetDropCnt(Mathf.CeilToInt( _NormalMatBase * level * _LevelParam * modifyRate));
                 break;
             case MOTION_TYPE.Elite:
-                dropCnt = GetDropCnt(Mathf.CeilToInt(_EliteMatBase * level * _LevelParam));
+                dropCnt = GetDropCnt(Mathf.CeilToInt(_EliteMatBase * level * _LevelParam * modifyRate));
                 break;
             case MOTION_TYPE.Hero:
-                dropCnt = GetDropCnt(Mathf.CeilToInt(_BossMatBase * level * _LevelParam));
+                dropCnt = GetDropCnt(Mathf.CeilToInt(_BossMatBase * level * _LevelParam * modifyRate));
                 break;
         }
 
@@ -1064,9 +1066,18 @@ public class GameDataValue
 
     private static int GetDropCnt(int rate)
     {
+        
         if (rate >= GetMaxRate())
         {
-            return Mathf.CeilToInt(rate / GetMaxRate());
+            int baseDrop = Mathf.CeilToInt(rate / GetMaxRate());
+            int exRate = (rate - GetMaxRate() * baseDrop) / GetMaxRate();
+            if (exRate > 0)
+            {
+                var exRandom = Random.Range(0, GetMaxRate());
+                if (exRandom < exRate)
+                    baseDrop = baseDrop + 1;
+            }
+            return baseDrop;
         }
 
         var random = Random.Range(0, GetMaxRate());
@@ -1154,16 +1165,17 @@ public class GameDataValue
         if (level < _DropGemLevel)
             return dropCnt;
 
+        float modifyRate = (ConfigIntToFloat(RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.ExGemDrop)) + 1);
         switch (motionType)
         {
             case MOTION_TYPE.Normal:
-                dropCnt = GetDropCnt(Mathf.CeilToInt(_NormalGemBase * level * _LevelGemParam));
+                dropCnt = GetDropCnt(Mathf.CeilToInt(_NormalGemBase * level * _LevelGemParam * modifyRate));
                 break;
             case MOTION_TYPE.Elite:
-                dropCnt = GetDropCnt(Mathf.CeilToInt(_EliteGemBase * level * _LevelGemParam));
+                dropCnt = GetDropCnt(Mathf.CeilToInt(_EliteGemBase * level * _LevelGemParam * modifyRate));
                 break;
             case MOTION_TYPE.Hero:
-                dropCnt = GetDropCnt(Mathf.CeilToInt(_BossGemBase * level * _LevelGemParam));
+                dropCnt = GetDropCnt(Mathf.CeilToInt(_BossGemBase * level * _LevelGemParam * modifyRate));
                 break;
         }
 
@@ -1232,7 +1244,9 @@ public class GameDataValue
             dropNum *= 0.5f;
 
         float random = Random.Range(0.6f, 1.4f);
-        return Mathf.CeilToInt(dropNum * random);
+        var exGoldDrop = RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.ExGoldDrop);
+        float rate = ConfigIntToFloat(exGoldDrop) + 1;
+        return Mathf.CeilToInt(dropNum * random * rate);
     }
 
     public static int GetGoldDropCnt(params int[] rates)

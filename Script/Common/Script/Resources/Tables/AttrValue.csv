@@ -66,10 +66,10 @@
 124009,,,RoleAttrImpactPassiveAddAttr,PassiveAttrWind,3,,10000000,1000000,20000000,2,0,0,0,0,0,0
 124010,,,RoleAttrImpactPassiveAttackBless,PassiveBlessSelf,3,,1500,100,2500,2000,300,5000,0,0,0,0
 124011,,,RoleAttrImpactPassiveHitEnemy,PassiveHitIceBullet,3,,10000,2000,30000,2000,300,5000,10000,0,0,0
-125000,,,RoleAttrImpactBaseAttr,gold,,,33,500,50,0,0,0,0,0,0,0
-126000,,,RoleAttrImpactBaseAttr,mat,,,34,500,50,0,0,0,0,0,0,0
-127000,,,RoleAttrImpactBaseAttr,gem,,,35,500,50,0,0,0,0,0,0,0
-128000,,,RoleAttrImpactBaseAttr,equip,,,36,500,50,0,0,0,0,0,0,0
+125000,,,RoleAttrImpactBaseAttr,gold,,,33,1000,100,0,0,0,0,0,0,0
+126000,,,RoleAttrImpactBaseAttr,mat,,,34,2500,250,0,0,0,0,0,0,0
+127000,,,RoleAttrImpactBaseAttr,gem,,,35,1000,100,0,0,0,0,0,0,0
+128000,,,RoleAttrImpactBaseAttr,equip,,,36,1000,100,0,0,0,0,0,0,0
 999999,,,RoleAttrImpactPassiveDamageArea,PassiveDamageArea,3,,100000,300,100000,60000,3000,60000,1000,0,0,0
 #,,,,,,,,,,,,,,,,
 70000,,,RoleAttrImpactBaseAttr,baiqi fire wind /Str,Strength +{0},,1,100,100,1,0,0,0,0,0,0

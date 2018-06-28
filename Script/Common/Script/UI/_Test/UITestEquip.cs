@@ -86,6 +86,7 @@ public class UITestEquip : UIBase
         var streamWriter = new StreamWriter(fileStream);
         int preGold = 0;
         int lastLevel = -1;
+        int monCnt = 0;
         while (true)
         {
             var level = RoleData.SelectRole._RoleLevel + RoleData.SelectRole._AttrLevel;
@@ -109,7 +110,7 @@ public class UITestEquip : UIBase
 
             int gold = 0;
             int exp = 0;
-            TestPassNormalStage(nextStage, nextDiff, ref exp, ref gold);
+            var passStage = TestPassNormalStage(nextStage, nextDiff, ref exp, ref gold);
             ActData.Instance.SetPassNormalStage(nextDiff, nextStage);
             
             ++fightTimes;
@@ -165,7 +166,13 @@ public class UITestEquip : UIBase
             //streamWriter.WriteLine(fightTimes + "\t" + level + "\t" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax)
             //    + "\t" + monAttr.GetBaseAttr(RoleAttrEnum.Attack) + "\t" + ((float)RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax) / monAttr.GetBaseAttr(RoleAttrEnum.Attack)));
             //drop
-            streamWriter.WriteLine(fightTimes + "\t" + level + "\t" + PlayerDataPack.Instance.Gold + "\t" + gold);
+            int matCnt = BackBagPack.Instance.GetItemCnt(EquipRefresh._RefreshMatDataID);
+            int gemCnt = BackBagPack.Instance.GetItemCnt(GemData._GemMaterialDataIDs[0])
+                + BackBagPack.Instance.GetItemCnt(GemData._GemMaterialDataIDs[1])
+                + BackBagPack.Instance.GetItemCnt(GemData._GemMaterialDataIDs[2])
+                + BackBagPack.Instance.GetItemCnt(GemData._GemMaterialDataIDs[3]);
+            monCnt += passStage._MonsterCnt;
+            streamWriter.WriteLine(fightTimes + "\t" + level + "\t" + PlayerDataPack.Instance.Gold + "\t" + matCnt + "\t" + gemCnt + "\t" + passStage._Gold + "\t" + monCnt);
 
         }
 
@@ -213,6 +220,13 @@ public class UITestEquip : UIBase
         public int gemCost2;
     }
 
+    class PassNormalInfo
+    {
+        public int _Gold;
+        public int _Exp;
+        public int _MonsterCnt;
+    }
+
     public void OnTestPassStage()
     {
         //    int exp = 0;
@@ -239,7 +253,7 @@ public class UITestEquip : UIBase
                 int exp = 0;
                 int gold = 0;
                 int equipPointTotal = 0;
-                TestPassNormalStage(stageid, diff, ref exp, ref gold);
+                var passStage = TestPassNormalStage(stageid, diff, ref exp, ref gold);
                 //foreach (var itemEquip in BackBagPack.Instance.PageEquips)
                 //{
                 //    int equipPoint = GameDataValue.GetEquipSellGold(itemEquip);
@@ -321,8 +335,10 @@ public class UITestEquip : UIBase
         TestFight.DelAllEquip();
     }
 
-    private void TestPassNormalStage(int stageIdx, int diff, ref int exp, ref int gold)
+    private PassNormalInfo TestPassNormalStage(int stageIdx, int diff, ref int exp, ref int gold)
     {
+        PassNormalInfo passInfo = new PassNormalInfo();
+
         var stageRecord = TableReader.StageInfo.GetRecord(stageIdx.ToString());
         int level = GameDataValue.GetStageLevel(diff, stageIdx, STAGE_TYPE.NORMAL);
         var sceneGO = ResourceManager.Instance.GetGameObject("FightSceneLogic/" + stageRecord.FightLogicPath);
@@ -359,8 +375,8 @@ public class UITestEquip : UIBase
                 monsterIds.Add(bossArea._BossMotionID);
             }
         }
-        
 
+        
         Dictionary<string, int> items = new Dictionary<string, int>();
         foreach (var monId in monsterIds)
         {
@@ -369,13 +385,17 @@ public class UITestEquip : UIBase
             foreach (var dropItem in monsterDrops)
             {
                 gold += dropItem._DropGold;
+                passInfo._Gold += dropItem._DropGold;
                 MonsterDrop.PickItem(dropItem);
             }
             int dropExp = GameDataValue.GetMonsterExp(monRecord.MotionType, level, level);
             exp += dropExp;
+            passInfo._Exp += dropExp;
             RoleData.SelectRole.AddExp(dropExp);
+            
         }
-        
+        passInfo._MonsterCnt = monsterIds.Count;
+
         TestFight.DelAllEquip();
         TestFight.DelLevel();
         TestFight.DelSkill(2);
@@ -386,6 +406,8 @@ public class UITestEquip : UIBase
         //    Debug.Log("Drop Item :" + dropItem.Key + "," + dropItem.Value);
         //}
         //Debug.Log("Drop Exp:" + exp + ", Gold:" + gold);
+
+        return passInfo;
     }
 
     #endregion
