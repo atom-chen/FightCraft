@@ -30,7 +30,8 @@ public class UIDailyMissionItem : UIItemSelect
     public void ShowMissionItem(MissionItem showItem)
     {
         _MissionItem = showItem;
-        _MissionDesc.text = showItem.MissionRecord.Desc;
+        //_MissionDesc.text = StrDictionary.GetFormatStr(showItem.MissionRecord.Desc, showItem.MissionRecord.ConditionNum);
+        _MissionDesc.text = showItem.MissionRecord.ConditionScript + showItem.MissionRecord.ConditionNum;
         _MissionProcess.value = showItem._MissionCondition.GetConditionProcess();
         _MissionProcessText.text = showItem._MissionCondition.GetConditionProcessText();
 

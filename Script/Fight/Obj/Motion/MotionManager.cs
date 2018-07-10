@@ -314,6 +314,10 @@ public class MotionManager : MonoBehaviour
         {
             return _RoleAttrManager;
         }
+        set
+        {
+            _RoleAttrManager = value;
+        }
     }
 
     public void InitRoleAttr(Tables.MonsterBaseRecord monsterBase)

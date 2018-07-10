@@ -877,11 +877,11 @@ public class GameDataValue
                 for (int i = 0; i < dropCnt; ++i)
                 {
                     if (level <= 20)
-                        dropQuality = GameRandom.GetRandomLevel(0, 80, (int)(2000 * exEquipRate));
-                    if (level <= 40)
-                        dropQuality = GameRandom.GetRandomLevel(0, 80, (int)(1500 * exEquipRate), (int)(500 * exEquipRate));
+                        dropQuality = GameRandom.GetRandomLevel(0, 8000, (int)(2000 * exEquipRate), 0);
+                    else if (level <= 40)
+                        dropQuality = GameRandom.GetRandomLevel(0, 8000, (int)(1500 * exEquipRate), (int)(500 * exEquipRate));
                     else
-                        dropQuality = GameRandom.GetRandomLevel(0, 60, (int)(3500 * exEquipRate), (int)(500 * exEquipRate));
+                        dropQuality = GameRandom.GetRandomLevel(0, 6000, (int)(3500 * exEquipRate), (int)(500 * exEquipRate));
                     if (dropQuality == (int)ITEM_QUALITY.ORIGIN)
                     {
                         if (!isOringe)

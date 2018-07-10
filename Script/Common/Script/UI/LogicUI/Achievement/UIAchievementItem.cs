@@ -17,22 +17,21 @@ public class UIAchievementItem : UIItemSelect
     public GameObject _BtnGetAward;
     public GameObject _AwardGettedGO;
 
-    private MissionItem _MissionItem;
+    private AchievementGroup _AchieveGroup;
 
     public override void Show(Hashtable hash)
     {
         base.Show();
 
-        _MissionItem = (MissionItem)hash["InitObj"];
-        _MissionItem.RefreshMissionState();
-        ShowMissionItem(_MissionItem);
+        _AchieveGroup = (AchievementGroup)hash["InitObj"];
+        ShowAchieveItem(_AchieveGroup);
     }
 
-    private void ShowMissionItem(MissionItem showItem)
+    private void ShowAchieveItem(AchievementGroup showItem)
     {
-        _MissionDesc.text = showItem.MissionRecord.Name;
-        _MissionProcess.value = showItem._MissionCondition.GetConditionProcess();
-        _MissionProcessText.text = showItem._MissionCondition.GetConditionProcessText();
+        _MissionDesc.text = showItem._ActingAchieve.MissionRecord.SubClass + ": " + showItem._ActingAchieve.MissionRecord.ConditionNum;
+        _MissionProcess.value = showItem.GetConditionProcess();
+        _MissionProcessText.text = showItem.GetConditionProcessText();
 
         UpdateMissionState();
 
@@ -43,15 +42,15 @@ public class UIAchievementItem : UIItemSelect
         _BtnGetAward.SetActive(false);
         _AwardGettedGO.SetActive(false);
         _BtnGoto.SetActive(false);
-        if (_MissionItem._MissionState == MissionState.Done)
+        if (_AchieveGroup._ActingAchieve.MissionState == MissionState.Done)
         {
             _BtnGetAward.SetActive(true);
         }
-        else if (_MissionItem._MissionState == MissionState.Finish)
+        else if (_AchieveGroup._ActingAchieve.MissionState == MissionState.Finish)
         {
             _AwardGettedGO.SetActive(true);
         }
-        else if (_MissionItem._MissionState == MissionState.Accepted)
+        else if (_AchieveGroup._ActingAchieve.MissionState == MissionState.Accepted)
         {
             _BtnGoto.SetActive(true);
         }
@@ -59,13 +58,14 @@ public class UIAchievementItem : UIItemSelect
 
     public void OnBtnGoto()
     {
-        _MissionItem._MissionCondition.ConditionGoto();
+        //_MissionItem._MissionCondition.ConditionGoto();
     }
 
     public void OnBtnGetAward()
     {
-        _MissionItem.MissionGetAward();
-        UpdateMissionState();
+        _AchieveGroup.GetAward();
+        //UpdateMissionState();
+        ShowAchieveItem(_AchieveGroup);
     }
 
     

@@ -81,12 +81,16 @@ public class UITestEquip : UIBase
         int targetLevel = int.Parse(_TargetLevel.text);
         int fightTimes = 0;
         string fileName = "StagePassInfos";
+
+#if UNITY_EDITOR
         string path = Application.dataPath + fileName + ".txt";
         var fileStream = File.Create(path);
         var streamWriter = new StreamWriter(fileStream);
+#endif
         int preGold = 0;
         int lastLevel = -1;
         int monCnt = 0;
+        int equipDropCnt = 0;
         while (true)
         {
             var level = RoleData.SelectRole._RoleLevel + RoleData.SelectRole._AttrLevel;
@@ -111,7 +115,9 @@ public class UITestEquip : UIBase
             int gold = 0;
             int exp = 0;
             var passStage = TestPassNormalStage(nextStage, nextDiff, ref exp, ref gold);
-            ActData.Instance.SetPassNormalStage(nextDiff, nextStage);
+            ActData.Instance._ProcessStageDiff = nextDiff;
+            ActData.Instance._ProcessStageIdx = nextStage;
+            ActData.Instance.PassStage( STAGE_TYPE.NORMAL);
             
             ++fightTimes;
 
@@ -172,11 +178,16 @@ public class UITestEquip : UIBase
                 + BackBagPack.Instance.GetItemCnt(GemData._GemMaterialDataIDs[2])
                 + BackBagPack.Instance.GetItemCnt(GemData._GemMaterialDataIDs[3]);
             monCnt += passStage._MonsterCnt;
-            streamWriter.WriteLine(fightTimes + "\t" + level + "\t" + PlayerDataPack.Instance.Gold + "\t" + matCnt + "\t" + gemCnt + "\t" + passStage._Gold + "\t" + monCnt);
+            equipDropCnt += passStage._DropEquipCnt;
+#if UNITY_EDITOR
+            streamWriter.WriteLine(fightTimes + "\t" + level + "\t" + PlayerDataPack.Instance.Gold + "\t" + matCnt + "\t" + gemCnt + "\t" + passStage._Gold + "\t" + monCnt + "\t" + equipDropCnt);
+#endif
 
         }
 
+#if UNITY_EDITOR
         streamWriter.Close();
+#endif
         Debug.Log("FightTimes:" + fightTimes);
     }
 
@@ -225,6 +236,7 @@ public class UITestEquip : UIBase
         public int _Gold;
         public int _Exp;
         public int _MonsterCnt;
+        public int _DropEquipCnt;
     }
 
     public void OnTestPassStage()
@@ -280,6 +292,9 @@ public class UITestEquip : UIBase
                 monAttr.CalculateNormalDamage(roleAttr, resultHash, damageClass);
                 //final
                 monAttr.CaculateFinalDamage(roleAttr, resultHash, damageClass);
+
+                //event
+                
 
 
                 PassStageInfo passInfo = new PassStageInfo();
@@ -387,12 +402,24 @@ public class UITestEquip : UIBase
                 gold += dropItem._DropGold;
                 passInfo._Gold += dropItem._DropGold;
                 MonsterDrop.PickItem(dropItem);
+
+                if (dropItem._ItemEquip != null)
+                {
+                    ++passInfo._DropEquipCnt;
+                }
             }
             int dropExp = GameDataValue.GetMonsterExp(monRecord.MotionType, level, level);
             exp += dropExp;
             passInfo._Exp += dropExp;
             RoleData.SelectRole.AddExp(dropExp);
-            
+
+            Hashtable hash = new Hashtable();
+            MotionManager objMotion = new MotionManager();
+            objMotion.RoleAttrManager = new RoleAttrManager();
+            objMotion.RoleAttrManager.InitEnemyAttr(monRecord, level);
+            hash.Add("MonsterInfo", objMotion);
+            GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_KILL_MONSTER, this, hash);
+
         }
         passInfo._MonsterCnt = monsterIds.Count;
 

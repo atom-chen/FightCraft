@@ -61,6 +61,20 @@ public class LegendaryData : SaveItemBase
         }
     }
 
+    public int GetLegendatyCnt()
+    {
+        int cnt = 0;
+        foreach (var equip in _LegendaryEquips)
+        {
+            if (equip.IsVolid())
+            {
+                ++cnt;
+            }
+        }
+
+        return cnt;
+    }
+
     public void InitLegendaryEquips()
     {
         var equipTabs = TableReader.EquipItem.Records;
@@ -133,6 +147,12 @@ public class LegendaryData : SaveItemBase
 
         emptyPos.ExchangeInfo(equip);
         CalculateAttrs();
+
+        RoleData.SelectRole.CalculateAttr();
+
+        Hashtable hash = new Hashtable();
+        hash.Add("EquipInfo", equip);
+        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_EQUIP_STORE, this, hash);
 
         RoleData.SelectRole.CalculateAttr();
 

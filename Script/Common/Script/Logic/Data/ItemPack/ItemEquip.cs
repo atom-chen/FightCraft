@@ -509,7 +509,7 @@ public class ItemEquip : ItemBase
     {
         get
         {
-            if (_RequireLevel < 0)
+            //if (_RequireLevel < 0)
             {
                 int exValue = 0;
                 _RequireLevel = EquipLevel;
