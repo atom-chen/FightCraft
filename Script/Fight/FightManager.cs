@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class FightManager : InstanceBase<FightManager>
 {
@@ -18,18 +19,19 @@ public class FightManager : InstanceBase<FightManager>
     {
         InitResourcePool();
         _InitProcess = 0.2f;
+        yield return new WaitForFixedUpdate();
 
         InitScene();
         _InitProcess = 0.2f;
-        yield return new WaitForFixedUpdate();
 
         InitMainRole();
         _InitProcess = 0.4f;
-        yield return new WaitForFixedUpdate();
 
         InitCamera();
         _InitProcess = 0.7f;
-        yield return new WaitForFixedUpdate();
+
+        UIDamagePanel.ShowAsyn();
+        AimTargetPanel.ShowAsyn();
 
         InitMonsterPrefab();
         _InitProcess = 1f;
@@ -38,7 +40,7 @@ public class FightManager : InstanceBase<FightManager>
 
     #region Init
 
-    private CameraFollow _CameraFollow;
+    public CameraFollow _CameraFollow;
     private int _ActingRegion;
     private List<GameObject> _SceneSPObj = new List<GameObject>();
 
@@ -96,7 +98,11 @@ public class FightManager : InstanceBase<FightManager>
                 _SceneSPObj[i].SetActive(false);
             }
         }
-        _SceneSPObj[0].SetActive(true);
+        if (_SceneSPObj.Count > 0)
+        {
+            _SceneSPObj[0].SetActive(true);
+        }
+
 
         _FightLevel = ActData.Instance.GetStageLevel();
     }
@@ -201,7 +207,7 @@ public class FightManager : InstanceBase<FightManager>
 
         _MainChatMotion.InitMotion();
         FightLayerCommon.SetPlayerLayer(_MainChatMotion);
-        UIHPPanel.ShowHPItem(_MainChatMotion);
+        //UIHPPanel.ShowHPItem(_MainChatMotion);
 
         GameCore.Instance.EventController.RegisteEvent( EVENT_TYPE.EVENT_LOGIC_ROLE_LEVEL_UP, RoleLevelUp);
     }
@@ -245,7 +251,6 @@ public class FightManager : InstanceBase<FightManager>
         mainBase.InitMotion();
         FightLayerCommon.SetEnemyLayer(mainBase);
 
-        UIHPPanel.ShowHPItem(mainBase);
         AI_Base aiBase = mainBase.GetComponent<AI_Base>();
         aiBase.SetCombatLevel(10);
 
@@ -288,6 +293,7 @@ public class FightManager : InstanceBase<FightManager>
         }
     }
 
+
     #endregion
 
     #region scene
@@ -296,15 +302,25 @@ public class FightManager : InstanceBase<FightManager>
 
     private void InitScene()
     {
-        var sceneGO = ResourceManager.Instance.GetInstanceGameObject("FightSceneLogic/" + LogicManager.Instance.EnterStageInfo.FightLogicPath);
+        var sceneGO = ResourcePool.Instance.CreateFightSceneObj("FightSceneLogic/" + LogicManager.Instance.EnterStageInfo.FightLogicPath);
         sceneGO.SetActive(true);
         _FightScene = sceneGO.GetComponent<FightSceneLogicBase>();
+        if (_FightScene is FightSceneLogicRandomArea)
+        { }
+        else
+        {
+            var areaGroups = GameObject.FindObjectsOfType<AreaGroup>();
+            foreach (var area in areaGroups)
+            {
+                area.gameObject.SetActive(false);
+            }
+        }
         StartCoroutine(StartSceneLogic());
     }
 
     private IEnumerator StartSceneLogic()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForFixedUpdate();
         _FightScene.StartLogic();
     }
 
@@ -329,6 +345,8 @@ public class FightManager : InstanceBase<FightManager>
 
         GameCore.Instance.EventController.UnRegisteEvent(EVENT_TYPE.EVENT_LOGIC_ROLE_LEVEL_UP, RoleLevelUp);
     }
+
+
 
     #endregion
 
@@ -378,6 +396,23 @@ public class FightManager : InstanceBase<FightManager>
         var effectInstance = FightManager.Instance.MainChatMotion.PlayDynamicEffect(effectSingle);
         effectInstance.transform.position = FightManager.Instance.MainChatMotion.transform.position;
 
+    }
+
+    public void MoveToNewScene(string sceneName)
+    {
+        var sceneCnt = SceneManager.sceneCount;
+        for (int i = 0; i < sceneCnt; ++i)
+        {
+            var sceneInfo = SceneManager.GetSceneAt(i);
+            if (sceneInfo.name == sceneName)
+            {
+                SceneManager.MoveGameObjectToScene(_CameraFollow.gameObject, sceneInfo);
+                SceneManager.MoveGameObjectToScene(MainChatMotion.gameObject, sceneInfo);
+                SceneManager.MoveGameObjectToScene(gameObject, sceneInfo);
+
+                SceneManager.SetActiveScene(sceneInfo);
+            }
+        }
     }
 
     #endregion

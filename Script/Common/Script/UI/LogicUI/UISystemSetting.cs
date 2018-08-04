@@ -22,11 +22,13 @@ public class UISystemSetting : UIBase
 
     public Toggle _Shadow;
     public Slider _Volumn;
+    public Toggle _AimTarget;
 
     public void InitSetting()
     {
         _Shadow.isOn = GlobalValPack.Instance.IsShowShadow;
         _Volumn.value = GlobalValPack.Instance.Volume;
+        _AimTarget.isOn = GlobalValPack.Instance.IsRotToAnimTarget;
     }
 
     public void OnTrigShadow(bool isTrig)
@@ -37,6 +39,11 @@ public class UISystemSetting : UIBase
     public void OnSlider()
     {
         GlobalValPack.Instance.Volume = _Volumn.value;
+    }
+
+    public void OnTrigAimTarget(bool isTrig)
+    {
+        GlobalValPack.Instance.IsRotToAnimTarget = isTrig;
     }
 
     #endregion

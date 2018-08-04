@@ -55,7 +55,7 @@ public class UIRoleAttr : UIBase
         _IntelligenceItem.Show(RoleAttrEnum.Intelligence.ToString(), RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Intelligence));
         _VitalityItem.Show(RoleAttrEnum.Vitality.ToString(), RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Vitality));
 
-        if (RoleData.SelectRole.UnDistrubutePoint > 10)
+        if (RoleData.SelectRole.UnDistrubutePoint >= 10)
         {
             _BtnAddStrength10.gameObject.SetActive(true);
             _BtnDexterity10.gameObject.SetActive(true);

@@ -1,10 +1,11 @@
-stage jump to selected
-boss rise up speed too slow
-20s buff error inc dec
-shader forge
-ai face to me
-skill3 another use bug
-android return btn
+func:
+shop sell all
 
-
+fight:
+boss effect
+boss stage light direct
+easy boss AI
+name board
+UI direct
+new enemy AI/random stage map
 

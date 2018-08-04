@@ -90,6 +90,12 @@ public class ActData : DataPackBase
 
     public void SetPassNormalStage(int diff, int stageIdx)
     {
+        if (diff < _NormalStageDiff)
+            return;
+
+        if (diff == _NormalStageDiff && stageIdx <= _NormalStageIdx)
+            return;
+
         _NormalStageDiff = diff;
         _NormalStageIdx = stageIdx;
 

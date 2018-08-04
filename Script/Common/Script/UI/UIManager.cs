@@ -112,6 +112,10 @@ public class UIManager : MonoBehaviour
             {
                 obj.transform.SetParent(_UILayers[uilayer]);
             }
+            else
+            {
+                obj.transform.SetParent(ResourcePool.Instance.transform);
+            }
             var trans = obj.GetComponent<RectTransform>();
             if (trans != null)
             {
@@ -255,6 +259,7 @@ public class UIManager : MonoBehaviour
     #region cameraPos
 
     private RectTransform _UICanvasRect;
+    private Vector3 _UICameraScale;
 
     public Vector3 WorldToScreenPoint(Vector3 worldPos)
     {
@@ -266,9 +271,13 @@ public class UIManager : MonoBehaviour
             _UICanvasRect = gameObject.GetComponent<RectTransform>();
         }
 
-        Vector3 screenPos = Camera.main.WorldToViewportPoint(worldPos);//1024
-                                                                       //screenPos -= new Vector3(0.5f, 0.5f, 0.5f);
+        //Vector3 screenPos = Camera.main.WorldToScreenPoint(worldPos);
+        //return screenPos;
+        Vector3 screenPos = Camera.main.WorldToViewportPoint(worldPos);
+        //1024
+        //screenPos -= new Vector3(0.5f, 0.5f, 0.5f);
         return new Vector3(screenPos.x * _UICanvasRect.sizeDelta.x, screenPos.y * _UICanvasRect.sizeDelta.y, screenPos.z * 1);
+
     }
 
     #endregion

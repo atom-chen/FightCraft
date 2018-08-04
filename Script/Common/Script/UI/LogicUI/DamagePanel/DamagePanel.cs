@@ -26,7 +26,7 @@ public class DamagePanel : InstanceBase<DamagePanel>
 
     public static void ShowAsyn()
     {
-        var gameobj = ResourceManager.Instance.GetInstanceGameObject("UI/LogicUI/DamagePanel/DamagePanel");
+        var gameobj = ResourcePool.Instance.CreateFightSceneObj("UI/LogicUI/DamagePanel/DamagePanel");
     }
 
     public static void ShowItem(Vector3 showWorldPos, int showValue1, int showValue2, ShowDamageType showType, int baseSize)

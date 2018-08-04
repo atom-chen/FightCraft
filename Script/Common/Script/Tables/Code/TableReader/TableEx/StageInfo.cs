@@ -29,6 +29,21 @@ namespace Tables
                 return _ValidScenePath;
             }
         }
+
+        public List<string> GetValidScenePath()
+        {
+            if (ValidScenePath.Count == 0)
+            {
+                List<string> randomScenes = new List<string>();
+                //randomScenes.Add("Stage_ShaMo_09");
+                randomScenes.Add(FightSceneLogicRandomArea.GetRandomScene());
+                return randomScenes;
+            }
+            else
+            {
+                return ValidScenePath;
+            }
+        }
     }
 
     public partial class StageInfo : TableFileBase

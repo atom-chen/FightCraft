@@ -28,7 +28,7 @@ public class AI_KeepDistance : AI_CloseAttack
                 return;
 
             _AIAwake = true;
-            AIManager.Instance.GroupAwake();
+            AIManager.Instance.GroupAwake(GroupID);
         }
 
         CloseUpdate();

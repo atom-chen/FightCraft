@@ -92,18 +92,18 @@ public class RandomAttrs
     private static List<EquipExAttr> GetWeaponRandomAttr(int level, int equipValue, Tables.ITEM_QUALITY quality, Tables.PROFESSION profession)
     {
         List<RoleAttrEnum> exAttrTypes = GameDataValue.GetRandomEquipAttrsType(Tables.EQUIP_SLOT.WEAPON, quality);
-        if (quality == Tables.ITEM_QUALITY.BLUE)
-        {
-            //exAttrTypes = GameDataValue.GetRandomEquipAttrsType(Tables.EQUIP_SLOT.WEAPON, quality);
-        }
-        else if (quality == Tables.ITEM_QUALITY.PURPER)
-        {
-            exAttrTypes.Insert(0, RoleAttrEnum.AttackPersent);
-        }
-        else if (quality == Tables.ITEM_QUALITY.ORIGIN)
-        {
-            exAttrTypes.Insert(0, RoleAttrEnum.AttackPersent);
-        }
+        //if (quality == Tables.ITEM_QUALITY.BLUE)
+        //{
+        //    //exAttrTypes = GameDataValue.GetRandomEquipAttrsType(Tables.EQUIP_SLOT.WEAPON, quality);
+        //}
+        //else if (quality == Tables.ITEM_QUALITY.PURPER)
+        //{
+        //    exAttrTypes.Insert(0, RoleAttrEnum.AttackPersent);
+        //}
+        //else if (quality == Tables.ITEM_QUALITY.ORIGIN)
+        //{
+        //    exAttrTypes.Insert(0, RoleAttrEnum.AttackPersent);
+        //}
 
         return CalculateExAttr(exAttrTypes, equipValue);
     }
@@ -132,18 +132,18 @@ public class RandomAttrs
     private static List<EquipExAttr> GetTorseRandomAttr(int level, int equipValue, Tables.ITEM_QUALITY quality, Tables.PROFESSION profession)
     {
         List<RoleAttrEnum> exAttrTypes = GameDataValue.GetRandomEquipAttrsType(Tables.EQUIP_SLOT.TORSO, quality);
-        if (quality == Tables.ITEM_QUALITY.BLUE)
-        {
-            //exAttrTypes = GameDataValue.GetRandomEquipAttrsType(Tables.EQUIP_SLOT.WEAPON, quality);
-        }
-        else if (quality == Tables.ITEM_QUALITY.PURPER)
-        {
-            exAttrTypes.Insert(0, RoleAttrEnum.HPMaxPersent);
-        }
-        else if (quality == Tables.ITEM_QUALITY.ORIGIN)
-        {
-            exAttrTypes.Insert(0, RoleAttrEnum.HPMaxPersent);
-        }
+        //if (quality == Tables.ITEM_QUALITY.BLUE)
+        //{
+        //    //exAttrTypes = GameDataValue.GetRandomEquipAttrsType(Tables.EQUIP_SLOT.WEAPON, quality);
+        //}
+        //else if (quality == Tables.ITEM_QUALITY.PURPER)
+        //{
+        //    exAttrTypes.Insert(0, RoleAttrEnum.HPMaxPersent);
+        //}
+        //else if (quality == Tables.ITEM_QUALITY.ORIGIN)
+        //{
+        //    exAttrTypes.Insert(0, RoleAttrEnum.HPMaxPersent);
+        //}
 
         return CalculateExAttr(exAttrTypes, equipValue);
     }
@@ -151,18 +151,18 @@ public class RandomAttrs
     private static List<EquipExAttr> GetLegsRandomAttr(int level, int equipValue, Tables.ITEM_QUALITY quality, Tables.PROFESSION profession)
     {
         List<RoleAttrEnum> exAttrTypes = GameDataValue.GetRandomEquipAttrsType(Tables.EQUIP_SLOT.LEGS, quality);
-        if (quality == Tables.ITEM_QUALITY.BLUE)
-        {
-            //exAttrTypes = GameDataValue.GetRandomEquipAttrsType(Tables.EQUIP_SLOT.WEAPON, quality);
-        }
-        else if (quality == Tables.ITEM_QUALITY.PURPER)
-        {
-            exAttrTypes.Insert(0, RoleAttrEnum.MoveSpeed);
-        }
-        else if (quality == Tables.ITEM_QUALITY.ORIGIN)
-        {
-            exAttrTypes.Insert(0, RoleAttrEnum.MoveSpeed);
-        }
+        //if (quality == Tables.ITEM_QUALITY.BLUE)
+        //{
+        //    //exAttrTypes = GameDataValue.GetRandomEquipAttrsType(Tables.EQUIP_SLOT.WEAPON, quality);
+        //}
+        //else if (quality == Tables.ITEM_QUALITY.PURPER)
+        //{
+        //    exAttrTypes.Insert(0, RoleAttrEnum.MoveSpeed);
+        //}
+        //else if (quality == Tables.ITEM_QUALITY.ORIGIN)
+        //{
+        //    exAttrTypes.Insert(0, RoleAttrEnum.MoveSpeed);
+        //}
 
         return CalculateExAttr(exAttrTypes, equipValue);
     }

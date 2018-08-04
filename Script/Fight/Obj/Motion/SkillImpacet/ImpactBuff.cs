@@ -198,6 +198,11 @@ public class ImpactBuff : ImpactBase
 
     }
 
+    public virtual void HitEnemy(ImpactHit hitImpact, List<MotionManager> hittedMotions)
+    {
+
+    }
+
     public virtual void Attack()
     {
 

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.AI;
 
 public class AI_Base : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class AI_Base : MonoBehaviour
 
     bool _Init = false;
 
-    protected MotionManager _SelfMotion;
+    public MotionManager _SelfMotion;
     protected bool _AIAwake = false;
     public bool AIWake
     {
@@ -21,6 +22,7 @@ public class AI_Base : MonoBehaviour
             _AIAwake = value;
         }
     }
+    public int GroupID;
 
     void Start()
     {
@@ -92,11 +94,13 @@ public class AI_Base : MonoBehaviour
 
         ModifyInitSkill();
         InitSkillInfos();
+
+        _BornPos = transform.position;
     }
 
     protected virtual void AIUpdate()
     {
-
+        HpItemUpdate();
     }
 
     public virtual void OnStateChange(StateBase orgState, StateBase newState)
@@ -154,11 +158,20 @@ public class AI_Base : MonoBehaviour
         motionObj.transform.SetParent(mainMotion.transform);
         motionObj.transform.localPosition = Vector3.zero;
         motionObj.transform.localRotation = Quaternion.Euler(Vector3.zero);
-        foreach (var skillInfo in _AISkills)
+        for(int i = 0; i< _AISkills.Count; ++i)
         {
+            var skillInfo = _AISkills[i];
             var skillBase = GameObject.Instantiate(skillInfo.SkillBase);
             skillBase.transform.SetParent(motionObj.transform);
             skillInfo.SkillBase = skillBase;
+            if (i == 0)
+            {
+                skillInfo.LastUseSkillTime = -1;
+            }
+            else
+            {
+                skillInfo.LastUseSkillTime = Time.time - skillInfo.SkillInterval * 0.6f;
+            }
         }
         
     }
@@ -176,11 +189,12 @@ public class AI_Base : MonoBehaviour
 
     protected bool IsCommonCD()
     {
-        if (Time.time - _LastUseSkillTime < _ComondSkillCD)
-        {
-            return true;
-        }
-        return false;
+        //if (Time.time - _LastUseSkillTime < _ComondSkillCD)
+        //{
+        //    return true;
+        //}
+        //return false;
+        return true;
     }
 
     protected virtual void StartSkill(AI_Skill_Info skillInfo, bool isIgnoreCD = false)
@@ -205,8 +219,8 @@ public class AI_Base : MonoBehaviour
             if (!_AISkills[i].IsSkillCD())
                 continue;
 
-            if (!IsCommonCD())
-                continue;
+            //if (!IsCommonCD())
+            //    continue;
 
             if (_AISkills[i].SkillRange < dis)
                 continue;
@@ -273,16 +287,16 @@ public class AI_Base : MonoBehaviour
 
     #region Move radius
 
-    public float _MoveRadius = 0;
-    public float _NormalRadius = 0;
+    private float _MoveRadius = 0;
+    private float _HitRadius = 0.1f;
 
     protected void MoveState(StateBase orgState, StateBase newState)
     {
 
-        if (_MoveRadius <= 0 || _NormalRadius <= 0)
+        if (_HitRadius <= 0)
             return;
 
-        if (_MoveRadius == _NormalRadius)
+        if (_MoveRadius == _HitRadius)
             return;
 
         if (_SelfMotion == null)
@@ -291,13 +305,167 @@ public class AI_Base : MonoBehaviour
         if (_SelfMotion.NavAgent == null)
             return;
 
-        if (newState is StateMove)
+        if (_MoveRadius <= 0)
         {
-            _SelfMotion.NavAgent.radius = _MoveRadius;
+            _MoveRadius = _SelfMotion.NavAgent.radius;
+        }
+
+        if (newState is StateHit 
+            || newState is StateFly
+            || newState is StateLie
+            || newState is StateCatch
+            || newState is StateRise)
+        {
+            _SelfMotion.NavAgent.radius = _HitRadius;
         }
         else
         {
-            _SelfMotion.NavAgent.radius = _NormalRadius;
+            _SelfMotion.NavAgent.radius = _MoveRadius;
+        }
+    }
+
+    #endregion
+
+    #region move
+
+    public float _AlertRange = 7;
+    public float _CloseRange = 2;
+    public float _HuntRange = 10;
+    public float _ReHuntRange = 5;
+
+    protected float _CloseInterval = 0.5f;
+    protected Vector3 _BornPos;
+    protected bool _IsReturnToBornPos = false;
+
+    private float _CloseWait;
+
+    public bool IsActMove()
+    {
+        if (_SelfMotion._ActionState != _SelfMotion._StateIdle
+            && _SelfMotion._ActionState != _SelfMotion._StateMove)
+        {
+            _IsReturnToBornPos = false;
+        }
+
+        if (!(_SelfMotion._ActionState is StateIdle || _SelfMotion._ActionState is StateMove))
+        {
+            return false;
+        }
+
+        //float distance = Vector3.Distance(transform.position, _TargetMotion.transform.position);
+        //float bornDis = Vector3.Distance(transform.position, _BornPos);
+        var pathToTarget = GetPath(transform.position, _TargetMotion.transform.position);
+        var pathToBorn = GetPath(transform.position, _BornPos);
+        if (pathToTarget == null || pathToBorn == null)
+            return false;
+
+        float distance = GetPathLength(pathToTarget);
+        float bornDis = GetPathLength(pathToBorn);
+
+        if (_CloseWait > 0)
+        {
+            _CloseWait -= Time.deltaTime;
+            return false;
+        }
+
+        //alert hunt
+        if (!_IsReturnToBornPos)
+        {
+            //too far
+            if (bornDis > _HuntRange)
+            {
+                _IsReturnToBornPos = true;
+                _SelfMotion.StartMoveState(_BornPos);
+                return true;
+            }
+            //close enough
+            else if (distance < _CloseRange)
+            {
+                _SelfMotion.StopMoveState();
+                _CloseWait = _CloseInterval;
+                return false;
+            }
+            else //hunt
+            {
+                _SelfMotion.StartMoveState(_TargetMotion.transform.position);
+                return true;
+            }
+        }
+        else
+        {
+            //rehunt
+            if (distance < _ReHuntRange)
+            {
+                //rehunt in back
+                if (bornDis < _HuntRange * 0.5f)
+                {
+                    _IsReturnToBornPos = false;
+                    _SelfMotion.StartMoveState(_TargetMotion.transform.position);
+                    return true;
+                }
+                else
+                {
+                    _SelfMotion.StartMoveState(_BornPos);
+                    return true;
+                }
+            }
+            else if (bornDis < 1.0f) //back close
+            {
+                _IsReturnToBornPos = false;
+                _CloseWait = _CloseInterval;
+                _SelfMotion.StopMoveState();
+                _AIAwake = false;
+                return false;
+            }
+            else
+            {
+                _SelfMotion.StartMoveState(_BornPos);
+                return true;
+            }
+        }
+        
+    }
+
+    public static NavMeshPath GetPath(Vector3 fromPos, Vector3 toPos)
+    {
+        NavMeshPath path = new NavMeshPath();
+
+        if (NavMesh.CalculatePath(fromPos, toPos, NavMesh.AllAreas, path) == false)
+            return null;
+
+        return path;
+    }
+
+    public static float GetPathLength(NavMeshPath path)
+    {
+        float lng = 0.0f;
+
+        if ((path.status != NavMeshPathStatus.PathInvalid) && (path.corners.Length > 1))
+        {
+            for (int i = 1; i < path.corners.Length; ++i)
+            {
+                lng += Vector3.Distance(path.corners[i - 1], path.corners[i]);
+            }
+        }
+
+        return lng;
+    }
+    #endregion
+
+    #region show hp item
+
+    protected bool _IsShowHP = false;
+
+    protected virtual void HpItemUpdate()
+    {
+        if (_IsShowHP)
+            return;
+
+        if (_SelfMotion._ActionState != _SelfMotion._StateIdle
+            && _SelfMotion._ActionState != _SelfMotion._StateMove)
+        {
+            _IsShowHP = true;
+            UIHPPanel.ShowHPItem(_SelfMotion);
         }
     }
 

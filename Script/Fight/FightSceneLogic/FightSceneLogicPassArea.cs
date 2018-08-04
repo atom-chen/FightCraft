@@ -107,7 +107,8 @@ public class FightSceneLogicPassArea : FightSceneLogicBase
                 AreaStart(_FightArea[_RunningIdx]);
             }
 
-            UIFightWarning.ShowDirectAsyn(FightManager.Instance.MainChatMotion.transform, _FightArea[_RunningIdx].GetAreaTransform());
+            if(FightManager.Instance.MainChatMotion != null)
+                UIFightWarning.ShowDirectAsyn(FightManager.Instance.MainChatMotion.transform, _FightArea[_RunningIdx].GetAreaTransform());
         }
         else
         {

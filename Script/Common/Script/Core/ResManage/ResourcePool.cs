@@ -391,4 +391,18 @@ public class ResourcePool : InstanceBase<ResourcePool>
 
     #endregion
 
+    #region fight scene obj
+
+    public GameObject CreateFightSceneObj(string path)
+    {
+        var gameobj = ResourceManager.Instance.GetInstanceGameObject(path);
+        if(gameobj != null)
+        {
+            gameobj.transform.SetParent(transform);
+        }
+        return gameobj;
+    }
+
+    #endregion
+
 }

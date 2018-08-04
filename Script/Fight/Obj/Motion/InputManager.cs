@@ -273,7 +273,7 @@ public class InputManager : InstanceBase<InputManager>
         if (AimTarget.Instance == null)
             return;
 
-        if (AimTarget.Instance.LockTarget != null)
+        if (GlobalValPack.Instance.IsRotToAnimTarget && AimTarget.Instance.LockTarget != null)
         {
             _InputMotion.SetLookAt(AimTarget.Instance.LockTarget.transform.position);
         }

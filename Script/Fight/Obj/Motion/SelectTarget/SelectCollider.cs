@@ -115,6 +115,21 @@ public class SelectCollider : SelectBase
             }
         }
 
+        ImpactHit hitImpact = null;
+        foreach (var impact in _ImpactList)
+        {
+            if (impact is ImpactHit)
+            {
+                hitImpact = impact as ImpactHit;
+                break;
+            }
+        }
+        if (hitImpact != null)
+        {
+            _ObjMotion.BuffHitEnemy(hitImpact, _TrigMotions);
+        }
+        
+
         if (_Collider != null)
             _Collider.enabled = false;
         _TrigMotions.Clear();

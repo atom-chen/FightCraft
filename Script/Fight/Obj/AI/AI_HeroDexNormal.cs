@@ -12,12 +12,6 @@ public class AI_HeroDexNormal : AI_DexHeroBase
 
     #region
 
-    public float _AlertRange = 15;
-    public float _CloseRange = 2;
-    protected  float _CloseInterval = 0.5f;
-
-    private float _CloseWait;
-
     protected override void AIUpdate()
     {
         base.AIUpdate();
@@ -37,24 +31,19 @@ public class AI_HeroDexNormal : AI_DexHeroBase
         if (_SelfMotion.ActingSkill!= null)
             return;
 
+        //specil:do not attack when target lie on floor
+        if (_TargetMotion.MotionPrior == BaseMotionManager.LIE_PRIOR
+            || _TargetMotion.MotionPrior == BaseMotionManager.RISE_PRIOR
+            || _TargetMotion.MotionPrior == BaseMotionManager.FLY_PRIOR
+            || _TargetMotion.MotionPrior == BaseMotionManager.HIT_PRIOR)
+            return;
+
         if (StartSkill())
             return;
 
-        float distance = Vector3.Distance(transform.position, _TargetMotion.transform.position);
-        if (distance > _CloseRange)
+        if (!IsActMove())
         {
-            if (_CloseWait > 0)
-            {
-                _CloseWait -= Time.fixedDeltaTime;
-                return;
-            }
-            _SelfMotion.StartMoveState(_TargetMotion.transform.position);
-        }
-        else
-        {
-            _SelfMotion.StopMoveState();
             StartSkill();
-            _CloseWait = _CloseInterval;
         }
     }
 

@@ -114,6 +114,8 @@ public class UIFightWarning : UIBase
     public Transform _DirectFrom;
     public Transform _DirectTo;
 
+    public static Vector3 _Axis = Vector3.zero;
+
     private void ShowDirectUpdate()
     {
         if (_DirectFrom == null || _DirectTo == null)
@@ -123,23 +125,34 @@ public class UIFightWarning : UIBase
             return;
         }
 
-        //if (Vector3.Distance(_DirectFrom.position, _DirectTo.position) < 10)
+        if (_Axis == Vector3.zero)
+        {
+            _Axis = new Vector3(Screen.width * 0.5f, Screen.height, 0);
+        }
+
+        //if (Vector3.Distance(_DirectFrom.position, _DirectTo.position) < 6)
         //{
         //    _GOLabel.SetActive(false);
         //    _DirectGO.SetActive(false);
         //    return;
         //}
 
-        var positionFrom = UIManager.Instance.WorldToScreenPoint(_DirectFrom.position);
-        var positionTo = UIManager.Instance.WorldToScreenPoint(_DirectTo.position);
-        //var positionFrom = _DirectFrom.position;
-        //var positionTo = _DirectTo.position;
-        _DirectGO.transform.position = positionFrom;
-        _DirectGO.transform.LookAt(positionTo);
+        _DirectGO.SetActive(true);
+        var forward = Camera.main.transform.forward.normalized;
+        forward.y = 0;
+        var direct = _DirectTo.position - _DirectFrom.position;
+        direct = direct.normalized;
+        direct.y = 0;
 
-        //var direct = new Vector2(positionTo.x, positionTo.y) - new Vector2(positionFrom.x, positionFrom.y);
-        //float atan = Mathf.Atan(direct.x / direct.y) * Mathf.Rad2Deg;
-        //if (positionTo.y >= positionFrom.y)
+        //var angle = Vector3.Angle(direct, forward);
+        var angle = AngleSigned(direct, forward, Vector3.up);
+
+        _DirectGO.transform.localRotation = Quaternion.Euler(0, 0, angle);
+
+
+        //var direct2D = new Vector2(direct.x, direct.z) - new Vector2(forward.x, forward.z);
+        //float atan = Mathf.Atan(direct2D.x / direct2D.y) * Mathf.Rad2Deg;
+        //if (direct.y >= forward.y)
         //{
         //    atan = -atan;
         //}
@@ -148,7 +161,15 @@ public class UIFightWarning : UIBase
         //    atan += 180;
         //    atan = -atan;
         //}
+
         //_DirectGO.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, atan));
+    }
+
+    public static float AngleSigned(Vector3 v1, Vector3 v2, Vector3 n)
+    {
+        return Mathf.Atan2(
+            Vector3.Dot(n, Vector3.Cross(v1, v2)),
+            Vector3.Dot(v1, v2)) * Mathf.Rad2Deg;
     }
 
     private void ShowDirect(Transform directFrom, Transform directTo)

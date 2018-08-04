@@ -125,11 +125,19 @@ public class UISkillBar : UIBase
 
     #region emulate
 
+    public TestFight _TestFight;
+
     public void OnEmulate()
     {
-        var testFight = FightManager.Instance.MainChatMotion.gameObject.GetComponent<TestFight>();
-        if (testFight == null)
-            FightManager.Instance.MainChatMotion.gameObject.AddComponent<TestFight>();
+        if (_TestFight == null)
+        {
+            _TestFight = FightManager.Instance.MainChatMotion.gameObject.GetComponent<TestFight>();
+            if (_TestFight == null)
+                FightManager.Instance.MainChatMotion.gameObject.AddComponent<TestFight>();
+            return;
+        }
+
+        _TestFight.enabled = !_TestFight.enabled;
     }
 
     #endregion

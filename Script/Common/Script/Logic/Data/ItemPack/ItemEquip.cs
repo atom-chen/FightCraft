@@ -732,7 +732,8 @@ public class ItemEquip : ItemBase
 
     public static string _DefauletSpSetID = "1";
     public static int _ActSetLeastExCnt = 2;
-    public static float _ActSetValPersent = 0.9f;
+    public static float _ActSetValPersent = 1.1f;
+    public static int _MinLv = 25;
 
     private EquipSpAttrRecord _SpSetRecord;
     public EquipSpAttrRecord SpSetRecord
@@ -754,6 +755,8 @@ public class ItemEquip : ItemBase
         {
             return;
         }
+        if (EquipLevel < _MinLv)
+            return;
 
         int valAttrCnt = 0;
         List<EquipExAttr> randomAttrs = new List<global::EquipExAttr>();
@@ -768,7 +771,7 @@ public class ItemEquip : ItemBase
             var valuePersent = GameDataValue.GetExAttrPersent(this, exAttr);
             if (valuePersent > _ActSetValPersent)
             {
-                exAttr.AttrQuality = ITEM_QUALITY.ORIGIN;
+                exAttr.AttrQuality = ITEM_QUALITY.PURPER;
                 ++valAttrCnt;
             }
             else

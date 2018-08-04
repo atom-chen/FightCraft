@@ -44,7 +44,7 @@ public class GameDataValue
 
     #region level -> baseAttr
 
-    private static int _MaxLv = 100;
+    private static int _MaxLv = 50;
     private static float _AttackPerLevel = 136.0f;
     private static float _AttackIncreaseLevel = 1.2f;
     private static float _HPPerLevel = 286.0f;
@@ -57,29 +57,35 @@ public class GameDataValue
 
     public static int CalWeaponAttack(int equiplevel)
     {
-        int power = equiplevel / 5;
-        var attackValue = _AttackPerLevel* Mathf.Pow(_AttackIncreaseLevel, power);
-        return Mathf.CeilToInt(attackValue);
+        var attrRecord = TableReader.EquipBaseAttr.GetEquipBaseAttr(equiplevel);
+        return attrRecord.Atk;
+        //int power = equiplevel / 5;
+        //var attackValue = _AttackPerLevel* Mathf.Pow(_AttackIncreaseLevel, power);
+        //return Mathf.CeilToInt(attackValue);
     }
 
     public static int CalEquipTorsoHP(int equiplevel)
     {
-        int power = equiplevel / 5;
-        var value = _HPPerLevel * Mathf.Pow(_AttackIncreaseLevel, power);
+        //int power = equiplevel / 5;
+        //var value = _HPPerLevel * Mathf.Pow(_AttackIncreaseLevel, power);
+        //return Mathf.CeilToInt(value);
+        var value = CalEquipLegsHP(equiplevel) * 0.5f;
         return Mathf.CeilToInt(value);
     }
 
     public static int CalEquipTorsoDefence(int equiplevel)
     {
-        int power = equiplevel / 5;
-        var value = _DefencePerLevel * Mathf.Pow(_AttackIncreaseLevel, power);
-        return Mathf.CeilToInt(value);
+        //int power = equiplevel / 5;
+        //var value = _DefencePerLevel * Mathf.Pow(_AttackIncreaseLevel, power);
+        //return Mathf.CeilToInt(value);
+        var attrRecord = TableReader.EquipBaseAttr.GetEquipBaseAttr(equiplevel);
+        return attrRecord.Defence;
     }
 
     public static int CalEquipLegsHP(int equiplevel)
     {
-        var value = CalEquipTorsoHP(equiplevel) * 0.5f;
-        return Mathf.CeilToInt(value);
+        var attrRecord = TableReader.EquipBaseAttr.GetEquipBaseAttr(equiplevel);
+        return attrRecord.HP;
     }
 
     public static int CalEquipLegsDefence(int equiplevel)
@@ -97,37 +103,37 @@ public class GameDataValue
     public static int _HPPerRoleLevel = 100;
     public static int _HPRoleLevelBase = 5000;
 
-    public static float _AttackPerStrength = 1f;
-    public static float _DmgEnhancePerStrength = 0.25f;
-    public static float _StrToAtk = 0.25f;
+    public static float _AttackPerStrength = 0.25f;
+    public static float _DmgEnhancePerStrength = 0.05f;
+    public static float _StrToAtk = 1f;
 
-    public static float _IgnoreAtkPerDex = 0.6f;
-    public static float _CriticalRatePerDex = 1f;
-    public static float _CriticalDmgPerDex = 5f;
-    public static float _DexToAtk = 0.25f;
+    public static float _IgnoreAtkPerDex = 0.125f;
+    public static float _CriticalRatePerDex = 0.25f;
+    public static float _CriticalDmgPerDex = 1.2f;
+    public static float _DexToAtk = 1f;
 
-    public static float _EleAtkPerInt = 0.15f;
-    public static float _EleEnhancePerInt = 0.15f;
-    public static float _IntToAtk = 0.25f;
+    public static float _EleAtkPerInt = 0.04f;
+    public static float _EleEnhancePerInt = 0.04f;
+    public static float _IntToAtk = 1f;
 
-    public static float _HPPerVit = 12;
-    public static float _FinalDmgRedusePerVit = 0.5f;
-    public static float _VitToAtk = 0.25f;
+    public static float _HPPerVit = 3;
+    public static float _FinalDmgRedusePerVit = 0.12f;
+    public static float _VitToAtk = 1f;
 
     public static float _CriticalDmgToAtk = 2f;
 
-    public static float _ElementToAtk = 0.65f;
+    public static float _ElementToAtk = 1f;
     public static float _DmgEnhancePerElementEnhance = 10;
-    public static float _EleEnhanceToAtk = 0.3f;
-    public static float _EleResistToAtk = 0.3f;
+    public static float _EleEnhanceToAtk = 1f;
+    public static float _EleResistToAtk = 1f;
 
     public static float _IgnoreDefenceToAtk = 0.5f;
 
-    public static float _HpToAtk = 11.0f;
-    public static float _DefToAtk = 0.5f;
-    public static float _MoveSpeedToAtk = 1.35f;
-    public static float _AtkSpeedToAtk = 0.8f;
-    public static float _CriticalChanceToAtk = 0.8f;
+    public static float _HpToAtk = 4.0f;
+    public static float _DefToAtk = 0.4f;
+    public static float _MoveSpeedToAtk = 18f;
+    public static float _AtkSpeedToAtk = 8f;
+    public static float _CriticalChanceToAtk = 8f;
     public static float _DamageEnhance = 1;
 
     public static float GetAttrToValue(RoleAttrEnum roleAttr)
@@ -275,20 +281,29 @@ public class GameDataValue
 
     public static int CalLvValue(int level, EQUIP_SLOT equipSlot)
     {
-        var exValue = _LvValueV * level + level * level * 0.5f * _LvValueA + _LvValueBase;
+        //var exValue = _LvValueV * level + level * level * 0.5f * _LvValueA + _LvValueBase;
+        //if (equipSlot == EQUIP_SLOT.AMULET || equipSlot == EQUIP_SLOT.RING)
+        //{
+        //    exValue *= 2;
+
+        //}
+        //return Mathf.CeilToInt(exValue);
+
+        var attrRecord = TableReader.EquipBaseAttr.GetEquipBaseAttr(level);
+        int equipValue = attrRecord.Value;
         if (equipSlot == EQUIP_SLOT.AMULET || equipSlot == EQUIP_SLOT.RING)
         {
-            exValue *= 2;
+            equipValue *= 2;
 
         }
-        return Mathf.CeilToInt(exValue);
+        return equipValue;
     }
 
     #endregion
 
     #region equip
 
-    public static int GetExAttrRandomValue(RoleAttrEnum roleAttr, int baseValue, float lowPersent = 0.2f, float upPersent = 0.3f)
+    public static int GetExAttrRandomValue(RoleAttrEnum roleAttr, int baseValue, float lowPersent = 0.8f, float upPersent = 1.2f)
     {
         var randomValue = Random.Range(lowPersent, upPersent);
         if (roleAttr == RoleAttrEnum.AttackPersent)
@@ -333,21 +348,21 @@ public class GameDataValue
             switch (equipSlot)
             {
                 case Tables.EQUIP_SLOT.WEAPON:
-                    exAttrCnt = 2;
+                    exAttrCnt = 3;
                     if (quality == Tables.ITEM_QUALITY.BLUE)
                     {
                         exAttrCnt = Random.Range(1, 3);
                     }
                     return CalRandomAttrs(_WeaponExAttrs, exAttrCnt);
                 case Tables.EQUIP_SLOT.TORSO:
-                    exAttrCnt = 2;
+                    exAttrCnt = 3;
                     if (quality == Tables.ITEM_QUALITY.BLUE)
                     {
                         exAttrCnt = Random.Range(1, 3);
                     }
                     return CalRandomAttrs(_DefenceExAttrs, exAttrCnt);
                 case Tables.EQUIP_SLOT.LEGS:
-                    exAttrCnt = 2;
+                    exAttrCnt = 3;
                     if (quality == Tables.ITEM_QUALITY.BLUE)
                     {
                         exAttrCnt = Random.Range(1, 3);
@@ -905,27 +920,9 @@ public class GameDataValue
     {
         if (dropLevel > _MaxLv)
             return _MaxLv;
-        var levelGroup = dropLevel / 5;
-        var baseLevel = (levelGroup - 1) * 5;
-        int equipLv = 0;
-        switch (equipSlot)
-        {
-            case EQUIP_SLOT.WEAPON:
-                equipLv = baseLevel + _EqiupLvWeapon;
-                break;
-            case EQUIP_SLOT.TORSO:
-                equipLv = baseLevel + _EqiupLvTorso;
-                break;
-            case EQUIP_SLOT.LEGS:
-                equipLv = baseLevel + _EqiupLvShoes;
-                break;
-            case EQUIP_SLOT.RING:
-                equipLv = baseLevel + _EqiupLvRing;
-                break;
-            case EQUIP_SLOT.AMULET:
-                equipLv = baseLevel + _EqiupLvAmulate;
-                break;
-        }
+
+        var randomValue = Random.Range(-1, 4);
+        int equipLv = dropLevel + randomValue;
         return Mathf.Clamp(equipLv, 1, _MaxLv);
     }
 

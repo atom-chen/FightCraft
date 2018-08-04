@@ -26,7 +26,7 @@ public class AimTargetPanel : InstanceBase<AimTargetPanel>
 
     public static void ShowAsyn()
     {
-        var gameobj = ResourceManager.Instance.GetInstanceGameObject("UI/LogicUI/AimTarget/AimTargetPanel");
+        var gameobj = ResourcePool.Instance.CreateFightSceneObj("UI/LogicUI/AimTarget/AimTargetPanel");
     }
 
     public static void ShowAimTarget(MotionManager target, AimType aimType)

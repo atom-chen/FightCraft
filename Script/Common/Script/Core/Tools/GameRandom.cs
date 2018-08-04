@@ -6,6 +6,13 @@ using System.Collections.Generic;
 
 public class GameRandom
 {
+    /// <summary>
+    /// get a list of random idx from[include] to[exclude]
+    /// </summary>
+    /// <param name="from">include</param>
+    /// <param name="to">exclude</param>
+    /// <param name="num"></param>
+    /// <returns></returns>
     public static List<int> GetIndependentRandoms(int from, int to, int num)
     {
         List<int> randoms = new List<int>();

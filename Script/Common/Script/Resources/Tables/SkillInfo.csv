@@ -32,6 +32,6 @@
 10031,D.NoDamage,NoDamage When using dodge,60031,60131,6,4,61001,RoleAttrImpactDodgeNoDamage,60,0,0,5,1,102,2,2,1,120,0,3
 10032,D.DodgeCD,decrease dodge cd,60032,60132,6,4,61001,RoleAttrImpactDodgeCD,40,0,0,5,1,12000,2,2,1,120,0,3
 10033,D.DefenceSuper,reduse damage when defence,60033,60133,9,7,61001,RoleAttrImpactDefenceArmor,60,0,0,5,1,2500,0,0,1,120,0,5
-10034,D.DefenceCD,decrease defence cd,60034,60134,9,7,61001,RoleAttrImpactDefenceRate,40,0,0,5,1,4000,10000,0,1,120,0,5
+10034,D.DefenceCD,decrease defence cd,60034,60134,9,7,61001,RoleAttrImpactDefenceRate,40,0,0,5,1,4000,0,0,1,120,0,5
 10035,D.ActHitted,reduse damage when defence,60035,60135,15,-1,61001,RoleAttrImpactBuffInHit,25,0,0,5,1,2500,0,0,1,200,0,5
 10036,D.ActingSkillSuperArmor,reduse damage when defence,60036,60136,15,-1,61001,RoleAttrImpactSkillArmor,50,0,0,5,1,2500,0,0,1,200,0,5

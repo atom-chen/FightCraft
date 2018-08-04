@@ -60,6 +60,8 @@ namespace Tables
         public static StrDictionary StrDictionary { get; internal set; }
 //
         public static StrTable StrTable { get; internal set; }
+//
+        public static EquipBaseAttr EquipBaseAttr { get; internal set; }
 
         public static void ReadTables()
         {
@@ -82,6 +84,7 @@ namespace Tables
             StageInfo = new StageInfo(TableReadBase.GetTableText("StageInfo"), false);
             StrDictionary = new StrDictionary(TableReadBase.GetTableText("StrDictionary"), false);
             StrTable = new StrTable(TableReadBase.GetTableText("StrTable"), false);
+            EquipBaseAttr = new EquipBaseAttr(TableReadBase.GetTableText("EquipBaseAttr"), false);
 
             //初始化所有表
             Achievement.CoverTableContent();
@@ -102,6 +105,7 @@ namespace Tables
             StageInfo.CoverTableContent();
             StrDictionary.CoverTableContent();
             StrTable.CoverTableContent();
+            EquipBaseAttr.CoverTableContent();
         }
 
         #endregion

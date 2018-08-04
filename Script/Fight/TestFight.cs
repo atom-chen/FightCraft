@@ -55,7 +55,7 @@ public class TestFight : MonoBehaviour
 
         _EnemyMotion = null;
         var motions = GameObject.FindObjectsOfType<MotionManager>();
-        float tarDistance = 10;
+        float tarDistance = 20;
         foreach (var motion in motions)
         {
             if (motion.RoleAttrManager.MotionType != MOTION_TYPE.MainChar && !motion.IsMotionDie)
@@ -75,7 +75,18 @@ public class TestFight : MonoBehaviour
     private bool FindNextArea()
     {
         var fightManager = GameObject.FindObjectOfType<FightSceneLogicPassArea>();
-        _NextAreaPos = fightManager.GetNextAreaPos();
+        if (fightManager != null)
+        {
+            _NextAreaPos = fightManager.GetNextAreaPos();
+            if (_NextAreaPos == Vector3.zero)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        var fightRandom = GameObject.FindObjectOfType<AreaGateRandom>();
+        _NextAreaPos = fightRandom.transform.position;
         if (_NextAreaPos == Vector3.zero)
         {
             return false;

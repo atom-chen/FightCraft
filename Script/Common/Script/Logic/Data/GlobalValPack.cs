@@ -67,7 +67,26 @@ public class GlobalValPack : DataPackBase
             }
         }
     }
-    
+
+    [SaveField(3)]
+    private bool _IsRotToAnimTarget = false;
+    public bool IsRotToAnimTarget
+    {
+        get
+        {
+            return _IsRotToAnimTarget;
+        }
+        set
+        {
+            if (_IsRotToAnimTarget != value)
+            {
+                _IsRotToAnimTarget = value;
+                GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_SYSTEMSETTING_CHANGE, this, null);
+                SaveClass(false);
+            }
+        }
+    }
+
 
     #endregion
 

@@ -3,10 +3,6 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
- 
-
-
-
 public class UIHPItem : UIItemBase
 {
     public Slider _HPProcess;

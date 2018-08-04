@@ -2,11 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AreaGate : MonoBehaviour {
+public class AreaGate : MonoBehaviour
+{
 
-	
-	// Update is called once per frame
-	void Update ()
+    private void Start()
+    {
+        StartAtNavMesh();
+    }
+
+    // Update is called once per frame
+    void Update ()
     {
         TeleportUpdate();
     }
@@ -18,10 +23,10 @@ public class AreaGate : MonoBehaviour {
     public static float _TeleDistance = 3;
     public static float _TeleProcessTime = 1;
 
-    private bool _Teleporting = false;
-    private float _StartingTime = 0;
+    protected bool _Teleporting = false;
+    protected float _StartingTime = 0;
 
-    private void TeleportUpdate()
+    protected virtual void TeleportUpdate()
     {
         if (FightManager.Instance == null)
             return;
@@ -54,7 +59,7 @@ public class AreaGate : MonoBehaviour {
 
     }
 
-    private void UpdateTeleProcesing()
+    protected virtual void UpdateTeleProcesing()
     {
         if (_Teleporting)
         {
@@ -73,12 +78,19 @@ public class AreaGate : MonoBehaviour {
         }
     }
 
-    private void TeleportAct()
+    protected virtual void TeleportAct()
     {
         if (_DestPos == null)
             return;
 
         FightManager.Instance.TeleportToNextRegion(_DestPos, _IsTransScene);
+    }
+
+    private void StartAtNavMesh()
+    {
+        UnityEngine.AI.NavMeshHit navMeshHit = new UnityEngine.AI.NavMeshHit();
+        if (UnityEngine.AI.NavMesh.SamplePosition(transform.position, out navMeshHit, 10, UnityEngine.AI.NavMesh.AllAreas))
+            transform.position = navMeshHit.position;
     }
 
     #endregion

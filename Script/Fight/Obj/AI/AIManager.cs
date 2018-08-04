@@ -44,13 +44,16 @@ public class AIManager
 
     #region group target
 
-    public void GroupAwake()
+    public void GroupAwake(int groupID)
     {
         foreach (var ai in _ActAIs)
         {
-            if (!ai.AIWake)
+            if (ai.GroupID == groupID)
             {
-                ai.AIWake = true;
+                if (!ai.AIWake)
+                {
+                    ai.AIWake = true;
+                }
             }
         }
     }    

@@ -32,6 +32,17 @@ public class GameCore : MonoBehaviour
         || Application.platform == RuntimePlatform.WindowsPlayer
         || Application.platform == RuntimePlatform.WindowsEditor) && (Input.GetKeyDown(KeyCode.Escape)))
         {
+            if (FightManager.Instance != null)
+            {
+                if (InputManager.Instance != null && InputManager.Instance.Axis != Vector2.zero)
+                {
+                    UIMessageBox.Show(1000007, () =>
+                    {
+                        FightManager.Instance.LogicFinish(true);
+                        Debug.Log("save data");
+                    }, null);
+                }
+            }
             UIMessageBox.Show(1000006, () =>
             {
                 LogicManager.Instance.QuitGame();

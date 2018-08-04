@@ -15,7 +15,7 @@ Shader "TYImage/Particles/Additive" {
 		 }
 		 ZWrite Off
 		 Cull Off
-		 ZTest Always
+
 		Fog{ Mode Off }
 		Blend SrcAlpha One
 

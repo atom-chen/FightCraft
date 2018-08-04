@@ -156,9 +156,9 @@ public class LogicManager
         UITargetFrame.ShowAsyn();
         UIFuncInFight.ShowAsyn();
 
-        UIDamagePanel.ShowAsyn();
+        //UIDamagePanel.ShowAsyn();
         //DamagePanel.ShowAsyn();
-        AimTargetPanel.ShowAsyn();
+        //AimTargetPanel.ShowAsyn();
 
         GameCore.Instance._SoundManager.PlayBGMusic(EnterStageInfo.Audio);
     }

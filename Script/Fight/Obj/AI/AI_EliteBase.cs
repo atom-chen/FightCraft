@@ -3,11 +3,6 @@ using System.Collections;
 
 public class AI_EliteBase : AI_HeroBase
 {
-    public float _AlertRange = 15;
-    public float _CloseRange = 2;
-    public float _CloseInterval = 1;
-
-    private float _CloseWait;
 
     protected override void Init()
     {
@@ -29,7 +24,7 @@ public class AI_EliteBase : AI_HeroBase
                 return;
 
             _AIAwake = true;
-            AIManager.Instance.GroupAwake();
+            AIManager.Instance.GroupAwake(GroupID);
         }
 
         CloseUpdate();
@@ -50,22 +45,9 @@ public class AI_EliteBase : AI_HeroBase
         if (StartSkill())
             return;
 
-        float distance = Vector3.Distance(transform.position, _TargetMotion.transform.position);
-        if (distance > _CloseRange)
+        if (!IsActMove())
         {
-            if (_CloseWait > 0)
-            {
-                _CloseWait -= Time.fixedDeltaTime;
-                return;
-            }
-            _SelfMotion.StartMoveState(_TargetMotion.transform.position);
-        }
-        else
-        {
-            _SelfMotion.StopMoveState();
-
             StartSkill();
-            _CloseWait = _CloseInterval;
         }
     }
 
@@ -73,14 +55,6 @@ public class AI_EliteBase : AI_HeroBase
     {
         if (_TargetMotion == null)
             return false;
-
-        if (_TargetMotion._ActionState is StateCatch
-            || _TargetMotion._ActionState is StateFly
-            || _TargetMotion._ActionState is StateHit
-            || _TargetMotion._ActionState is StateLie)
-        {
-            return false;
-        }
 
         return base.StartSkill();
     }

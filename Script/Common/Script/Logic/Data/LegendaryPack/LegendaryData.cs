@@ -172,8 +172,11 @@ public class LegendaryData : SaveItemBase
     {
         _ExAttrs = new List<EquipExAttr>();
         CalculateValue();
+
         _ExAttrs.Add(EquipExAttr.GetBaseExAttr(RoleAttrEnum.Attack, _LegendaryValue));
         _ExAttrs.Add(EquipExAttr.GetBaseExAttr(RoleAttrEnum.HPMax, _LegendaryValue));
+
+        _ExAttrs.Add(new EquipExAttr("RoleAttrImpactPassiveShadowHit", 0, new int[] { 1, 1000}));
     }
 
     public void SetAttr(RoleAttrStruct roleAttr)

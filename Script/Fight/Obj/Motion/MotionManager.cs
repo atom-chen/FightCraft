@@ -356,6 +356,7 @@ public class MotionManager : MonoBehaviour
     public void MotionDie()
     {
         Profiler.BeginSample("MotionDie");
+        NavAgent.obstacleAvoidanceType = UnityEngine.AI.ObstacleAvoidanceType.NoObstacleAvoidance;
         if (IsBuffCanDie())
         {
             _IsMotionDie = true;
@@ -554,6 +555,14 @@ public class MotionManager : MonoBehaviour
         for (int i = 0; i < _ImpactBuffs.Count; ++i)
         {
             _ImpactBuffs[i].HitEnemy();
+        }
+    }
+
+    public void BuffHitEnemy(ImpactHit hitImpact, List<MotionManager> hittedMotions)
+    {
+        for (int i = 0; i < _ImpactBuffs.Count; ++i)
+        {
+            _ImpactBuffs[i].HitEnemy(hitImpact, hittedMotions);
         }
     }
 
@@ -783,7 +792,7 @@ public class MotionManager : MonoBehaviour
     public void SetPosition(Vector3 position)
     {
         UnityEngine.AI.NavMeshHit navHit = new UnityEngine.AI.NavMeshHit();
-        if (!UnityEngine.AI.NavMesh.SamplePosition(position, out navHit, 5, UnityEngine.AI.NavMesh.AllAreas))
+        if (!UnityEngine.AI.NavMesh.SamplePosition(position, out navHit, 1000, UnityEngine.AI.NavMesh.AllAreas))
         {
             return;
         }
@@ -883,7 +892,7 @@ public class MotionManager : MonoBehaviour
         _NavAgent.speed = RoleAttrManager.MoveSpeed;
         _NavAgent.SetDestination(targetPos);
 
-        transform.LookAt(targetPos);
+        //transform.LookAt(targetPos);
     }
 
     public void StopMove()

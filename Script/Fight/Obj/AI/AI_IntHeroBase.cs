@@ -25,9 +25,11 @@ public class AI_IntHeroBase : AI_HeroBase
 
     #region stage 2
 
-    public float Stage2BuffTime = 60;
+    public float Stage2BuffTime = 20;
+    public float Stage2HP = 0;
+    public float Stage2BuffCD = 180;
 
-    protected bool _Stage2Started = false;
+    protected float _Stage2Started = 0;
 
     private ImpactBuff[] _IntStage2Buff;
     public ImpactBuff[] IntStage2Buff
@@ -47,7 +49,7 @@ public class AI_IntHeroBase : AI_HeroBase
     {
         base.AIUpdate();
 
-        if (_SelfMotion.RoleAttrManager.HPPersent < 2)
+        if (_SelfMotion.RoleAttrManager.HPPersent < Stage2HP)
         {
             StartStage2();
         }
@@ -55,10 +57,10 @@ public class AI_IntHeroBase : AI_HeroBase
 
     protected virtual void StartStage2()
     {
-        if (_Stage2Started)
+        if (Time.time -  _Stage2Started < Stage2BuffCD)
             return;
 
-        _Stage2Started = true;
+        _Stage2Started = Time.time;
         for (int i = 0; i < IntStage2Buff.Length; ++i)
         {
             IntStage2Buff[i].ActBuffInstance(_SelfMotion, _SelfMotion, Stage2BuffTime);

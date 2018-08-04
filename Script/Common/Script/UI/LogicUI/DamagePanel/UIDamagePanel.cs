@@ -55,9 +55,14 @@ public class UIDamagePanel : UIBase
 
     private void ShowItemInner(Vector3 showWorldPos, int showValue1, int showValue2, ShowDamageType showType, int baseSize)
     {
-        var itemBase = ResourcePool.Instance.GetIdleUIItem<UIDamageItem>(_UIHPItemPrefab.gameObject);
-        itemBase.transform.SetParent(transform);
-        itemBase.Show(showWorldPos, showValue1, showValue2, showType, baseSize);
+        if (showType == ShowDamageType.Critical ||
+            showType == ShowDamageType.Heal ||
+            showType == ShowDamageType.Hurt)
+        {
+            var itemBase = ResourcePool.Instance.GetIdleUIItem<UIDamageItem>(_UIHPItemPrefab.gameObject);
+            itemBase.transform.SetParent(transform);
+            itemBase.Show(showWorldPos, showValue1, showValue2, showType, baseSize);
+        }
     }
 
     private void HideItem(object sender, Hashtable args)

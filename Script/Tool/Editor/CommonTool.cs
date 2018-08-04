@@ -385,7 +385,7 @@ public class CommonTool : Editor
     [MenuItem("TyTools/Particle/ChangeScene")]
     public static void ParticleChangeShader()
     {
-        var selections = Selection.GetFiltered(typeof(UnityEngine.GameObject), SelectionMode.DeepAssets);
+        var selections = Selection.GetFiltered(typeof(Object), SelectionMode.DeepAssets);
         var paricleShader = Shader.Find("TYImage/Particles/Additive");
 
         foreach (var selected in selections)
@@ -401,8 +401,15 @@ public class CommonTool : Editor
             foreach (var particle in partList)
             {
                 var renderer = particle.GetComponent<Renderer>();
+                
                 if (renderer != null)
                 {
+                    if (renderer.sharedMaterial == null)
+                        continue;
+
+                    if (renderer.sharedMaterial.shader == null)
+                        continue;
+
                     renderer.sharedMaterial.shader = paricleShader;
                 }
             }

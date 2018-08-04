@@ -118,7 +118,10 @@ public class UITestEquip : UIBase
             ActData.Instance._ProcessStageDiff = nextDiff;
             ActData.Instance._ProcessStageIdx = nextStage;
             ActData.Instance.PassStage( STAGE_TYPE.NORMAL);
-            
+
+            var plantGO = GameObject.CreatePrimitive(PrimitiveType.Plane);
+            plantGO.AddComponent<MeshCollider>();
+
             ++fightTimes;
 
             if (level != lastLevel)
@@ -156,11 +159,12 @@ public class UITestEquip : UIBase
                 //final
                 monAttr.CaculateFinalDamage(roleAttr, resultHash2, damageClass2);
 
+#if UNITY_EDITOR
                 //attr
-                //streamWriter.WriteLine(fightTimes + "\t" + level + "\t" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Attack)
-                //    + "\t" + monAttr.HP + "\t" + damageClass.TotalDamageValue
-                //    + "\t" + damageRage + "\t" + ((float)monAttr.HP / damageClass.TotalDamageValue)
-                //    + "\t" + damageRage2 + "\t" + ((float)monAttr.HP / damageClass2.TotalDamageValue));
+                streamWriter.WriteLine(fightTimes + "\t" + level + "\t" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Attack)
+                    + "\t" + monAttr.HP + "\t" + damageClass.TotalDamageValue
+                    + "\t" + damageRage + "\t" + ((float)monAttr.HP / damageClass.TotalDamageValue)
+                    + "\t" + damageRage2 + "\t" + ((float)monAttr.HP / damageClass2.TotalDamageValue));
 
                 //streamWriter.WriteLine(fightTimes + "\t" + level + "\t" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax)
                 //    + "\t" + monAttr.GetBaseAttr(RoleAttrEnum.Attack));
@@ -168,9 +172,9 @@ public class UITestEquip : UIBase
 
                 //streamWriter.WriteLine(fightTimes + "\t" + level + "\t" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax)
                 //    + "\t" + monAttr.GetBaseAttr(RoleAttrEnum.Attack));
+#endif
             }
-            //streamWriter.WriteLine(fightTimes + "\t" + level + "\t" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax)
-            //    + "\t" + monAttr.GetBaseAttr(RoleAttrEnum.Attack) + "\t" + ((float)RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax) / monAttr.GetBaseAttr(RoleAttrEnum.Attack)));
+
             //drop
             int matCnt = BackBagPack.Instance.GetItemCnt(EquipRefresh._RefreshMatDataID);
             int gemCnt = BackBagPack.Instance.GetItemCnt(GemData._GemMaterialDataIDs[0])
@@ -180,7 +184,9 @@ public class UITestEquip : UIBase
             monCnt += passStage._MonsterCnt;
             equipDropCnt += passStage._DropEquipCnt;
 #if UNITY_EDITOR
-            streamWriter.WriteLine(fightTimes + "\t" + level + "\t" + PlayerDataPack.Instance.Gold + "\t" + matCnt + "\t" + gemCnt + "\t" + passStage._Gold + "\t" + monCnt + "\t" + equipDropCnt);
+            //streamWriter.WriteLine(fightTimes + "\t" + level + "\t" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax)
+            //    + "\t" + monAttr.GetBaseAttr(RoleAttrEnum.Attack) + "\t" + ((float)RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax) / monAttr.GetBaseAttr(RoleAttrEnum.Attack)));
+            //streamWriter.WriteLine(fightTimes + "\t" + level + "\t" + PlayerDataPack.Instance.Gold + "\t" + matCnt + "\t" + gemCnt + "\t" + passStage._Gold + "\t" + monCnt + "\t" + equipDropCnt);
 #endif
 
         }

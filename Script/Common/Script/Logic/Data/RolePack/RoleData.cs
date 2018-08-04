@@ -155,12 +155,12 @@ public class RoleData : SaveItemBase
 
     public int GetBaseAttack()
     {
-        return _RoleLevel * 10 + 10;
+        return 10;
     }
 
     public int GetBaseHP()
     {
-        return _RoleLevel * 100 + 100;
+        return _RoleLevel * 10 + 100;
     }
 
     public int GetBaseDefence()
@@ -272,8 +272,8 @@ public class RoleData : SaveItemBase
 
     #region attr Points
 
-    public static int MAX_ROLE_LEVEL = 100;
-    public static int POINT_PER_ROLE_LEVEL = 5;
+    public static int MAX_ROLE_LEVEL = 50;
+    public static int POINT_PER_ROLE_LEVEL = 4;
     public static int POINT_PER_ATTR_LEVEL = 1;
 
     [SaveField(2)]
@@ -387,7 +387,7 @@ public class RoleData : SaveItemBase
     private void RoleLevelUp()
     {
         ++_RoleLevel;
-        _UnDistrubutePoint += 5;
+        _UnDistrubutePoint += POINT_PER_ROLE_LEVEL;
 
         CalculateAttr();
 
@@ -398,7 +398,7 @@ public class RoleData : SaveItemBase
     private void AttrLevelUp()
     {
         ++_AttrLevel;
-        _UnDistrubutePoint += 1;
+        _UnDistrubutePoint += POINT_PER_ATTR_LEVEL;
 
         _LvUpExp = GameDataValue.GetLvUpExp(_RoleLevel, _AttrLevel);
         GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_ROLE_LEVEL_UP, this, null);
@@ -417,7 +417,7 @@ public class RoleData : SaveItemBase
 
     public void DistributePoint(int distriAttr, int point)
     {
-        --_UnDistrubutePoint;
+        _UnDistrubutePoint -= point;
         switch (distriAttr)
         {
             case 1:

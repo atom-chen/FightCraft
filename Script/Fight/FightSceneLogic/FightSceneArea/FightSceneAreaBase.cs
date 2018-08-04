@@ -59,7 +59,7 @@ public class FightSceneAreaBase : MonoBehaviour
         TRIG_EVENT,
     }
 
-    public float _EnemyAlertDistance;
+    protected float _EnemyAlertDistance = 8;
     public GameObject[] _AreaDoors;
     public TrigType _TrigAreaType;
 

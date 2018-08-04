@@ -78,8 +78,9 @@ public class UILoadingScene : UIBase
             _LoadStageInfo = (StageInfoRecord)hash["StageInfo"];
             //LoadStageLevel(_LoadStageInfo, hash);
             //StartCoroutine(InitializeLevelAsync(_LoadStageInfo.ScenePath[0], true, LoadSceneResFinish, hash));
-            var asyncOpt = SceneManager.LoadSceneAsync(_LoadStageInfo.ScenePath[0]);
-            _LoadedSceneName.Add(_LoadStageInfo.ScenePath[0]);
+            var validScenes = _LoadStageInfo.GetValidScenePath();
+            var asyncOpt = SceneManager.LoadSceneAsync(validScenes[0]);
+            _LoadedSceneName.Add(validScenes[0]);
             _LoadSceneOperation.Add(asyncOpt);
             _LoadSceneStep = LoadSceneStep.LoadSceneRes;
         }
@@ -169,7 +170,7 @@ public class UILoadingScene : UIBase
         {
             if (_LoadSceneOperation[0] == null || _LoadSceneOperation[0].isDone)
             {
-                if (_LoadSceneOperation.Count == _LoadStageInfo.ValidScenePath.Count)
+                if (_LoadSceneOperation.Count >= _LoadStageInfo.ValidScenePath.Count)
                 {
                     float loadStageProcess = 0;
                     foreach (var asyncOpt in _LoadSceneOperation)
@@ -184,7 +185,7 @@ public class UILoadingScene : UIBase
                         }
                     }
                     _LoadProcess.value = loadStageProcess / _LoadStageInfo.ValidScenePath.Count;
-                    if (loadStageProcess == _LoadStageInfo.ValidScenePath.Count)
+                    if (loadStageProcess >= _LoadStageInfo.ValidScenePath.Count)
                     {
                         LogicManager.Instance.EnterFightFinish();
                         _LoadSceneStep = LoadSceneStep.InitScene;

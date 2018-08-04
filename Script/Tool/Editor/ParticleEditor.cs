@@ -30,9 +30,12 @@ public class ParticleEditor : Editor
     [MenuItem("TyTools/Editor/ChangeShaders")]
     public static void ChangeShanders()
     {
-        var selects = Selection.GetFiltered(typeof(GameObject), SelectionMode.TopLevel);
+        var selects = Selection.GetFiltered(typeof(Object), SelectionMode.DeepAssets);
         foreach (var selectGO in selects)
         {
+            if (!(selectGO is GameObject))
+                continue;
+
             ParticleChangeShadersInner(selectGO as GameObject);
         }
     }
@@ -100,12 +103,19 @@ public class ParticleEditor : Editor
 
     private static void ParticleChangeShadersInner(GameObject particleObj)
     {
-        var renders = particleObj.GetComponentsInChildren<Renderer>();
+        var renders = particleObj.GetComponentsInChildren<Renderer>(true);
         foreach (var render in renders)
         {
+            if (render.sharedMaterial == null)
+                continue;
+
+            if (render.sharedMaterial.shader == null)
+                continue;
+
             if (render.sharedMaterial.shader.name.Contains("TDGame"))
             {
                 render.sharedMaterial.shader = Shader.Find("Mobile/Particles/Additive");
+                Debug.Log("Change shader:" + particleObj.name);
             }
         }
     }
