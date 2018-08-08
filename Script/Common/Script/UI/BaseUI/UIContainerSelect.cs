@@ -324,7 +324,7 @@ public class UIContainerSelect : UIContainerBase
                 if (_ScrollRect.horizontal == true)
                 {
                     float containerMaxX = _ContainerObj.sizeDelta.x;
-                    float containPosX = -selectPos.GetComponent<RectTransform>().anchoredPosition.x - _ScrollTransform.rect.width * 0.5f;
+                    float containPosX = -selectPos.GetComponent<RectTransform>().anchoredPosition.x + _ScrollTransform.rect.width * 0.5f;
                     containPosX = Mathf.Clamp(containPosX, -(containerMaxX - _ScrollTransform.rect.width), 0);
                     _ContainerObj.anchoredPosition = new Vector2(containPosX, _ContainerObj.anchoredPosition.y);
                 }

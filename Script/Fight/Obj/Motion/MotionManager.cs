@@ -269,7 +269,18 @@ public class MotionManager : MonoBehaviour
 
     #region skill
 
-    public float _SkillProcessing;
+    private float _SkillProcessing;
+    public float SkillProcessing
+    {
+        get
+        {
+            return _SkillProcessing;
+        }
+        set
+        {
+            _SkillProcessing = value;
+        }
+    }
 
     #endregion
 
@@ -792,7 +803,7 @@ public class MotionManager : MonoBehaviour
     public void SetPosition(Vector3 position)
     {
         UnityEngine.AI.NavMeshHit navHit = new UnityEngine.AI.NavMeshHit();
-        if (!UnityEngine.AI.NavMesh.SamplePosition(position, out navHit, 1000, UnityEngine.AI.NavMesh.AllAreas))
+        if (!UnityEngine.AI.NavMesh.SamplePosition(position, out navHit, 1000, NavAgent.areaMask))
         {
             return;
         }
@@ -863,7 +874,7 @@ public class MotionManager : MonoBehaviour
             }
         }
         UnityEngine.AI.NavMeshHit navHit = new UnityEngine.AI.NavMeshHit();
-        if (!UnityEngine.AI.NavMesh.SamplePosition(destPoint, out navHit, 5, UnityEngine.AI.NavMesh.AllAreas))
+        if (!UnityEngine.AI.NavMesh.SamplePosition(destPoint, out navHit, 5, NavAgent.areaMask))
         {
             return;
         }

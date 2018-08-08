@@ -36,8 +36,8 @@ public class AI_EliteHeroYangJian : AI_HeroStrNormal
         {
             if (_AutoStartTime != 0)
             {
-                _AutoInterval = Time.time - _AutoStartTime;
-                _TargetMotion._SkillProcessing = _AutoInterval / _BulletInterval;
+                _AutoInterval = _AutoInterval + Time.fixedDeltaTime;
+                _SelfMotion.SkillProcessing = _AutoInterval / _BulletInterval;
                 if (_AutoInterval > _BulletInterval)
                 {
                     ActImpact();
@@ -45,14 +45,14 @@ public class AI_EliteHeroYangJian : AI_HeroStrNormal
             }
             else
             {
-                _TargetMotion._SkillProcessing = 0;
+                _TargetMotion.SkillProcessing = 0;
                 _AutoStartTime = Time.time;
                 _AutoInterval = 0;
             }
         }
         else
         {
-            _TargetMotion._SkillProcessing = 0;
+            _TargetMotion.SkillProcessing = 0;
             _AutoStartTime = 0;
             _AutoInterval = 0;
         }

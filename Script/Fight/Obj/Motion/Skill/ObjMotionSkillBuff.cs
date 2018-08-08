@@ -19,7 +19,7 @@ public class ObjMotionSkillBuff : ObjMotionSkillBase
         }
 
         _SkillProcess += Time.deltaTime;
-        MotionManager._SkillProcessing = _SkillProcess / GetTotalAnimLength();
+        MotionManager.SkillProcessing = _SkillProcess / GetTotalAnimLength();
     }
 
     private bool _IsCanActAfterBuff = true;

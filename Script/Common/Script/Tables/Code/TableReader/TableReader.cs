@@ -33,11 +33,15 @@ namespace Tables
 //
         public static CommonItem CommonItem { get; internal set; }
 //
+        public static EquipBaseAttr EquipBaseAttr { get; internal set; }
+//
         public static EquipItem EquipItem { get; internal set; }
 //
         public static EquipSpAttr EquipSpAttr { get; internal set; }
 //
         public static FightAttr FightAttr { get; internal set; }
+//
+        public static GemBaseAttr GemBaseAttr { get; internal set; }
 //
         public static GemSet GemSet { get; internal set; }
 //
@@ -60,8 +64,6 @@ namespace Tables
         public static StrDictionary StrDictionary { get; internal set; }
 //
         public static StrTable StrTable { get; internal set; }
-//
-        public static EquipBaseAttr EquipBaseAttr { get; internal set; }
 
         public static void ReadTables()
         {
@@ -70,9 +72,11 @@ namespace Tables
             AttrValue = new AttrValue(TableReadBase.GetTableText("AttrValue"), false);
             BossStage = new BossStage(TableReadBase.GetTableText("BossStage"), false);
             CommonItem = new CommonItem(TableReadBase.GetTableText("CommonItem"), false);
+            EquipBaseAttr = new EquipBaseAttr(TableReadBase.GetTableText("EquipBaseAttr"), false);
             EquipItem = new EquipItem(TableReadBase.GetTableText("EquipItem"), false);
             EquipSpAttr = new EquipSpAttr(TableReadBase.GetTableText("EquipSpAttr"), false);
             FightAttr = new FightAttr(TableReadBase.GetTableText("FightAttr"), false);
+            GemBaseAttr = new GemBaseAttr(TableReadBase.GetTableText("GemBaseAttr"), false);
             GemSet = new GemSet(TableReadBase.GetTableText("GemSet"), false);
             GemTable = new GemTable(TableReadBase.GetTableText("GemTable"), false);
             Mission = new Mission(TableReadBase.GetTableText("Mission"), false);
@@ -84,16 +88,17 @@ namespace Tables
             StageInfo = new StageInfo(TableReadBase.GetTableText("StageInfo"), false);
             StrDictionary = new StrDictionary(TableReadBase.GetTableText("StrDictionary"), false);
             StrTable = new StrTable(TableReadBase.GetTableText("StrTable"), false);
-            EquipBaseAttr = new EquipBaseAttr(TableReadBase.GetTableText("EquipBaseAttr"), false);
 
             //初始化所有表
             Achievement.CoverTableContent();
             AttrValue.CoverTableContent();
             BossStage.CoverTableContent();
             CommonItem.CoverTableContent();
+            EquipBaseAttr.CoverTableContent();
             EquipItem.CoverTableContent();
             EquipSpAttr.CoverTableContent();
             FightAttr.CoverTableContent();
+            GemBaseAttr.CoverTableContent();
             GemSet.CoverTableContent();
             GemTable.CoverTableContent();
             Mission.CoverTableContent();
@@ -105,7 +110,6 @@ namespace Tables
             StageInfo.CoverTableContent();
             StrDictionary.CoverTableContent();
             StrTable.CoverTableContent();
-            EquipBaseAttr.CoverTableContent();
         }
 
         #endregion

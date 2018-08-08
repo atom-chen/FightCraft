@@ -368,32 +368,37 @@ public class UITestEquip : UIBase
         //var bossAreas = sceneGO.GetComponentInChildren<FightSceneAreaKBossWithFish>(true);
         List<string> monsterIds = new List<string>();
         int eliteCnt = 0;
-        foreach (var enemyArea in areaPass._FightArea)
+        if (stageRecord.FightLogicPath == "")
+        { }
+        else
         {
-            if (enemyArea is FightSceneAreaKAllEnemy)
+            foreach (var enemyArea in areaPass._FightArea)
             {
-                var kenemyArea = enemyArea as FightSceneAreaKAllEnemy;
-                for (int i = 0; i < kenemyArea._EnemyBornPos.Length - 1; ++i)
+                if (enemyArea is FightSceneAreaKAllEnemy)
                 {
-                    monsterIds.Add(kenemyArea._EnemyBornPos[i]._EnemyDataID);
-                }
+                    var kenemyArea = enemyArea as FightSceneAreaKAllEnemy;
+                    for (int i = 0; i < kenemyArea._EnemyBornPos.Length - 1; ++i)
+                    {
+                        monsterIds.Add(kenemyArea._EnemyBornPos[i]._EnemyDataID);
+                    }
 
-                var monLastId = kenemyArea._EnemyBornPos[kenemyArea._EnemyBornPos.Length - 1]._EnemyDataID;
-                if (diff > 1)
-                {
-                    var monId = TableReader.MonsterBase.GetGroupElite(TableReader.MonsterBase.GetRecord(monLastId));
-                    monsterIds.Add(monId.Id);
-                    ++eliteCnt;
+                    var monLastId = kenemyArea._EnemyBornPos[kenemyArea._EnemyBornPos.Length - 1]._EnemyDataID;
+                    if (diff > 1)
+                    {
+                        var monId = TableReader.MonsterBase.GetGroupElite(TableReader.MonsterBase.GetRecord(monLastId));
+                        monsterIds.Add(monId.Id);
+                        ++eliteCnt;
+                    }
+                    else
+                    {
+                        monsterIds.Add(monLastId);
+                    }
                 }
-                else
+                else if (enemyArea is FightSceneAreaKBossWithFish)
                 {
-                    monsterIds.Add(monLastId);
+                    var bossArea = enemyArea as FightSceneAreaKBossWithFish;
+                    monsterIds.Add(bossArea._BossMotionID);
                 }
-            }
-            else if (enemyArea is FightSceneAreaKBossWithFish)
-            {
-                var bossArea = enemyArea as FightSceneAreaKBossWithFish;
-                monsterIds.Add(bossArea._BossMotionID);
             }
         }
 
@@ -432,8 +437,9 @@ public class UITestEquip : UIBase
         TestFight.DelAllEquip();
         TestFight.DelLevel();
         TestFight.DelSkill(2);
-        TestFight.DelRefresh();
+        //TestFight.DelRefresh();
         TestFight.DelGem();
+
         //foreach (var dropItem in items)
         //{
         //    Debug.Log("Drop Item :" + dropItem.Key + "," + dropItem.Value);

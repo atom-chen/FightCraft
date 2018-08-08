@@ -25,7 +25,7 @@ public class AI_EliteHeroBaiQi : AI_HeroStrNormal
         if (_PassiveBuff == null)
             return;
 
-        _SelfMotion._SkillProcessing = _PassiveBuff.GetCDProcess();
+        _SelfMotion.SkillProcessing = _PassiveBuff.GetCDProcess();
     }
 
     #endregion

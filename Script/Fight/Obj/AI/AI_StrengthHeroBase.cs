@@ -12,14 +12,7 @@ public class AI_StrengthHeroBase : AI_HeroBase
 
     #region super armor
 
-    private void InitSkills()
-    {
-        for (int i = 0; i < _AISkills.Count; ++i)
-        {
-            InitSuperArmorSkill(_AISkills[i].SkillBase);
-            InitReadySkillSpeed(_AISkills[i]);
-        }
-    }
+    
 
     #endregion
 

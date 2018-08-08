@@ -168,16 +168,7 @@ public class LegendaryData : SaveItemBase
         }
     }
 
-    private void CalculateAttrs()
-    {
-        _ExAttrs = new List<EquipExAttr>();
-        CalculateValue();
-
-        _ExAttrs.Add(EquipExAttr.GetBaseExAttr(RoleAttrEnum.Attack, _LegendaryValue));
-        _ExAttrs.Add(EquipExAttr.GetBaseExAttr(RoleAttrEnum.HPMax, _LegendaryValue));
-
-        _ExAttrs.Add(new EquipExAttr("RoleAttrImpactPassiveShadowHit", 0, new int[] { 1, 1000}));
-    }
+    
 
     public void SetAttr(RoleAttrStruct roleAttr)
     {
@@ -197,6 +188,49 @@ public class LegendaryData : SaveItemBase
     public static bool IsEquipLegendary(ItemEquip equip)
     {
         return equip.EquipItemRecord.EquipClass == EQUIP_CLASS.Legendary;
+    }
+
+    #endregion
+
+    #region 
+
+    public class LegendaryShadowAttrInfo
+    {
+        public int _NeedValue;
+        public int _ShadowCnt;
+        public int _ShadowDmg;
+    }
+
+    public List<LegendaryShadowAttrInfo> _ShadowInfos = new List<LegendaryShadowAttrInfo>()
+    {
+        new LegendaryShadowAttrInfo() { _NeedValue = 3600, _ShadowCnt=2, _ShadowDmg=1000},
+        new LegendaryShadowAttrInfo() { _NeedValue = 2800, _ShadowCnt=2, _ShadowDmg=500},
+        new LegendaryShadowAttrInfo() { _NeedValue = 2240, _ShadowCnt=1, _ShadowDmg=500},
+    };
+
+    public float _AtkParam = 0.06f;
+    public float _HpParam = 0.25f;
+
+    private void CalculateAttrs()
+    {
+        _ExAttrs = new List<EquipExAttr>();
+        CalculateValue();
+        if (_LegendaryValue == 0)
+            return;
+
+        int atkValue = Mathf.Max(1, Mathf.CeilToInt(_AtkParam * _LegendaryValue));
+        int hpValue = Mathf.Max(1, Mathf.CeilToInt(_HpParam * _LegendaryValue));
+        _ExAttrs.Add(EquipExAttr.GetBaseExAttr(RoleAttrEnum.Attack, atkValue));
+        _ExAttrs.Add(EquipExAttr.GetBaseExAttr(RoleAttrEnum.HPMax, hpValue));
+
+        foreach (var shadowInfo in _ShadowInfos)
+        {
+            if (_LegendaryValue >= shadowInfo._NeedValue)
+            {
+                _ExAttrs.Add(new EquipExAttr("RoleAttrImpactPassiveShadowHit", 0, new int[] { shadowInfo._ShadowCnt, shadowInfo._ShadowDmg }));
+                break;
+            }
+        }
     }
 
     #endregion

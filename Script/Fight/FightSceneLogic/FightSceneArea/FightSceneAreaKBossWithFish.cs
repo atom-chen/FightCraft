@@ -111,6 +111,7 @@ public class FightSceneAreaKBossWithFish : FightSceneAreaBase
             enemyMotion = FightManager.Instance.InitEnemy(GetRandomEnmeyID(), GetFishRandomPos(), Vector3.zero);
         }
         AI_CloseAttack ai = enemyMotion.GetComponent<AI_CloseAttack>();
+        ai._HuntRange = 999;
         if (ai != null)
         {
             ai._TargetMotion = FightManager.Instance.MainChatMotion;

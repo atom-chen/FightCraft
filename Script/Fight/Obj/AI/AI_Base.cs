@@ -461,8 +461,8 @@ public class AI_Base : MonoBehaviour
         if (_IsShowHP)
             return;
 
-        if (_SelfMotion._ActionState != _SelfMotion._StateIdle
-            && _SelfMotion._ActionState != _SelfMotion._StateMove)
+        //if (_SelfMotion._ActionState != _SelfMotion._StateIdle
+        //    && _SelfMotion._ActionState != _SelfMotion._StateMove)
         {
             _IsShowHP = true;
             UIHPPanel.ShowHPItem(_SelfMotion);

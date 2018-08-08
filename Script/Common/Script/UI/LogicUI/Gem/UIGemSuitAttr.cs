@@ -31,7 +31,7 @@ public class UIGemSuitAttr : UIBase
         Hashtable hash = new Hashtable();
         hash.Add("GetSetRecord", gemSet);
 
-        List<EquipExAttr> exAttrs = GameDataValue.GetGemSetAttr(gemSet, 0);
+        List<EquipExAttr> exAttrs = GameDataValue.GetGemSetAttr(gemSet, GemSuit.Instance.ActLevel);
 
         _AttrContainer.InitContentItem(exAttrs, null, hash);
     }

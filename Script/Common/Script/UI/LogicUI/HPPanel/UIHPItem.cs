@@ -9,7 +9,7 @@ public class UIHPItem : UIItemBase
     public Slider _MPProcess;
 
     private RectTransform _RectTransform;
-    private MotionManager _ObjMotion;
+    public MotionManager _ObjMotion;
     private Transform _FollowTransform;
     private Vector3 _HeightDelta;
 
@@ -21,6 +21,11 @@ public class UIHPItem : UIItemBase
         _RectTransform = GetComponent<RectTransform>();
         _FollowTransform = _ObjMotion.AnimationEvent.transform;
         var transform = _FollowTransform.Find("center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck");
+        if (transform == null)
+        {
+            transform = _FollowTransform.Find("Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck");
+        }
+
 
         _HeightDelta = transform.position - _FollowTransform.position;
         _HeightDelta.x = 0;
@@ -38,20 +43,54 @@ public class UIHPItem : UIItemBase
             return;
         }
 
-        _HPProcess.value = _ObjMotion.RoleAttrManager.HPPersent;
+        //_HPProcess.value = _ObjMotion.RoleAttrManager.HPPersent;
+        ActHPProcess();
 
-        if (_ObjMotion._SkillProcessing > 0 && _ObjMotion._SkillProcessing < 1)
+        ActMPProcess();
+
+        _RectTransform.anchoredPosition = UIManager.Instance.WorldToScreenPoint(_FollowTransform.position + _HeightDelta);
+    }
+
+    #region act hp process
+
+    private static float _ShowHpTimeStatic = 3.0f;
+    private float _ShowHpTime;
+
+    private void ActHPProcess()
+    {
+        if (_ObjMotion._ActionState != _ObjMotion._StateIdle
+            && _ObjMotion._ActionState != _ObjMotion._StateMove)
+        {
+            _ShowHpTime = _ShowHpTimeStatic;
+        }
+
+        if (_ShowHpTime <= 0)
+        {
+            return;
+        }
+
+        _ShowHpTime -= Time.deltaTime;
+        _HPProcess.gameObject.SetActive(true);
+        _HPProcess.value = _ObjMotion.RoleAttrManager.HPPersent;
+    }
+
+    #endregion
+
+    #region act mp process
+
+    private void ActMPProcess()
+    {
+        if (_ObjMotion.SkillProcessing > 0 && _ObjMotion.SkillProcessing < 1)
         {
             _MPProcess.gameObject.SetActive(true);
-            _MPProcess.value = _ObjMotion._SkillProcessing;
+            _MPProcess.value = _ObjMotion.SkillProcessing;
         }
         else
         {
             _MPProcess.gameObject.SetActive(false);
         }
-
-        _RectTransform.anchoredPosition = UIManager.Instance.WorldToScreenPoint(_FollowTransform.position + _HeightDelta);
     }
 
+    #endregion
 }
 

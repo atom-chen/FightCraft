@@ -98,22 +98,22 @@ public class GameDataValue
 
     #region baseAttr -> exAttr atk
 
-    public static int _AtkPerRoleLevel = 1;
+    public static int _AtkPerRoleLevel = 0;
     public static int _AtkRoleLevelBase = 10;
-    public static int _HPPerRoleLevel = 100;
-    public static int _HPRoleLevelBase = 5000;
+    public static int _HPPerRoleLevel = 0;
+    public static int _HPRoleLevelBase = 65;
 
-    public static float _AttackPerStrength = 0.25f;
-    public static float _DmgEnhancePerStrength = 0.05f;
+    public static float _AttackPerStrength = 0.5f;
+    public static float _DmgEnhancePerStrength = 0.5f;
     public static float _StrToAtk = 1f;
 
     public static float _IgnoreAtkPerDex = 0.125f;
-    public static float _CriticalRatePerDex = 0.25f;
-    public static float _CriticalDmgPerDex = 1.2f;
+    public static float _CriticalRatePerDex = 1f;
+    public static float _CriticalDmgPerDex = 10f;
     public static float _DexToAtk = 1f;
 
-    public static float _EleAtkPerInt = 0.04f;
-    public static float _EleEnhancePerInt = 0.04f;
+    public static float _EleAtkPerInt = 0.1f;
+    public static float _EleEnhancePerInt = 0.4f;
     public static float _IntToAtk = 1f;
 
     public static float _HPPerVit = 3;
@@ -625,11 +625,8 @@ public class GameDataValue
         return value;
     }
 
-    public static EquipExAttr GetGemAttr(RoleAttrEnum attr, int level)
+    public static EquipExAttr GetGemAttr(RoleAttrEnum attr, int value)
     {
-        int value = Mathf.CeilToInt(_GemAttrV + level * _GemAttrA);
-        if (level == 0)
-            value = 0;
         EquipExAttr exAttr = EquipExAttr.GetBaseExAttr(attr, value);
         return exAttr;
     }
@@ -644,12 +641,24 @@ public class GameDataValue
 
             if (attrValue.AttrImpact == "RoleAttrImpactBaseAttr")
             {
-                var exAttr = GetGemAttr((RoleAttrEnum)attrValue.AttrParams[0], level);
+                int levelID = Mathf.Clamp(level, 0, 200);
+                var gemAttrRecord = TableReader.GemBaseAttr.GetRecord(levelID.ToString());
+                if (gemAttrRecord == null)
+                {
+                    gemAttrRecord = TableReader.GemBaseAttr.GetRecord("200");
+                }
+                var exAttr = GetGemAttr((RoleAttrEnum)attrValue.AttrParams[0], gemAttrRecord.SetAttrValue);
                 attrList.Add(exAttr);
             }
             else
             {
-                var exAttr = attrValue.GetExAttr(level);
+                int spAttrLv = GemSuit._ActAttrLevel[GemSuit._ActAttrLevel.Count - 1];
+                int attrLv = 0;
+                if (level > spAttrLv)
+                {
+                    attrLv = Mathf.CeilToInt((level - spAttrLv) / 5 + 1);
+                }
+                var exAttr = attrValue.GetExAttr(attrLv);
                 attrList.Add(exAttr);
             }
         }
@@ -663,7 +672,7 @@ public class GameDataValue
     public static int GetSkillDamageRate(int skillLv, List<int> skillParam)
     {
         var levelRate = skillParam[1];
-        var levelVal = levelRate * skillLv;
+        var levelVal = levelRate * (skillLv - 1);
         return (int)(levelVal + skillParam[0]);
     }
 
@@ -749,6 +758,18 @@ public class GameDataValue
 
     public static int GetLvUpExp(int playerLv, int attrLv)
     {
+        int totalLv = playerLv + attrLv;
+        RoleExpRecord expRecord = null;
+        if (totalLv > 200)
+        {
+            expRecord = TableReader.RoleExp.GetRecord("200");
+        }
+        else
+        {
+            expRecord = TableReader.RoleExp.GetRecord(totalLv.ToString());
+        }
+        return expRecord.ExpValue;
+
         if (_Lv30UpTotalVal == 0)
         {
             _Lv30UpTotalVal = Mathf.CeilToInt(_LvUp30ExpRate * 30 * _LevelExpBase30);
@@ -793,6 +814,26 @@ public class GameDataValue
 
     public static int GetMonsterExp(MOTION_TYPE motionType, int level, int playerLv)
     {
+        MonsterAttrRecord monAttrRecord = null;
+        if (level > 200)
+        {
+            monAttrRecord = TableReader.MonsterAttr.GetRecord("200");
+        }
+        else
+        {
+            monAttrRecord = TableReader.MonsterAttr.GetRecord(level.ToString());
+        }
+        int exp= monAttrRecord.Attrs[3];
+        if (motionType == MOTION_TYPE.Elite)
+        {
+            exp = exp * 2;
+        }
+        else if (motionType == MOTION_TYPE.Hero)
+        {
+            exp = exp * 10;
+        }
+        return exp;
+
         int levelDelta = Mathf.Clamp(playerLv - level,0, 10);
         int monExpLevel = Mathf.Clamp(level, 1, _MAX_MONSTER_EXP_LEVEL);
         int expBase = 0;
@@ -1007,7 +1048,7 @@ public class GameDataValue
 
     public static int GetEquipSellGold(ItemEquip itemEquip)
     {
-        int gold = (itemEquip.EquipLevel + itemEquip.EquipExAttr.Count) * ((int)itemEquip.EquipQuality + 2);
+        int gold = Mathf.CeilToInt((itemEquip.EquipLevel * 0.5f + itemEquip.EquipExAttr.Count) * ((int)itemEquip.EquipQuality + 1));
         return gold;
     }
 
@@ -1131,10 +1172,10 @@ public class GameDataValue
     public static int _DropGemLevel = 10;
 
     public static float _LevelGemParam = 0.02f;
-    public static int _NormalGemBase = 800;
-    public static int _EliteGemBase = 5000;
-    public static int _SpecialGemBase = 5000;
-    public static int _BossGemBase = 150000;
+    public static int _NormalGemBase = 1;
+    public static int _EliteGemBase = 2;
+    public static int _SpecialGemBase = 2;
+    public static int _BossGemBase = 10;
     //public static int _NormalGemBase = 0;
     //public static int _EliteGemBase = 0;
     //public static int _SpecialGemBase = 0;
@@ -1158,50 +1199,78 @@ public class GameDataValue
 
     public static int GetGemMatDropCnt(MOTION_TYPE motionType, MonsterBaseRecord monsterRecord, int level)
     {
-        int dropCnt = 0;
-        if (level < _DropGemLevel)
-            return dropCnt;
+        //int dropCnt = 0;
+        //if (level < _DropGemLevel)
+        //    return dropCnt;
 
-        float modifyRate = (ConfigIntToFloat(RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.ExGemDrop)) + 1);
+        //float modifyRate = (ConfigIntToFloat(RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.ExGemDrop)) + 1);
+        //switch (motionType)
+        //{
+        //    case MOTION_TYPE.Normal:
+        //        dropCnt = GetDropCnt(Mathf.CeilToInt(_NormalGemBase * level * _LevelGemParam * modifyRate));
+        //        break;
+        //    case MOTION_TYPE.Elite:
+        //        dropCnt = GetDropCnt(Mathf.CeilToInt(_EliteGemBase * level * _LevelGemParam * modifyRate));
+        //        break;
+        //    case MOTION_TYPE.Hero:
+        //        dropCnt = GetDropCnt(Mathf.CeilToInt(_BossGemBase * level * _LevelGemParam * modifyRate));
+        //        break;
+        //}
+
+        //return dropCnt;
+
+        var monAttrRecord = TableReader.MonsterAttr.GetRecord(level.ToString());
+        if (monAttrRecord == null)
+        {
+            monAttrRecord = TableReader.MonsterAttr.GetRecord("200");
+        }
+        int dropCnt = 0;
+        var rate = monAttrRecord.Attrs[5];
         switch (motionType)
         {
             case MOTION_TYPE.Normal:
-                dropCnt = GetDropCnt(Mathf.CeilToInt(_NormalGemBase * level * _LevelGemParam * modifyRate));
+                dropCnt = GetDropCnt(Mathf.CeilToInt(_NormalGemBase * rate));
                 break;
             case MOTION_TYPE.Elite:
-                dropCnt = GetDropCnt(Mathf.CeilToInt(_EliteGemBase * level * _LevelGemParam * modifyRate));
+                dropCnt = GetDropCnt(Mathf.CeilToInt(_EliteGemBase * rate));
                 break;
             case MOTION_TYPE.Hero:
-                dropCnt = GetDropCnt(Mathf.CeilToInt(_BossGemBase * level * _LevelGemParam * modifyRate));
+                dropCnt = GetDropCnt(Mathf.CeilToInt(_BossGemBase * rate));
                 break;
         }
-
         return dropCnt;
     }
 
     public static int GetGemConsume(int level)
     {
-        int consumeCnt = 0;
-        //if (level <= 5)
-        {
-            consumeCnt = Mathf.CeilToInt(_GemConsumeV + _GemConsumeA * (level));
-        }
-        //else
-        //{
-        //    int pow = (level - 5) / 10 + 1;
-        //    int preConsumeBase = Mathf.CeilToInt(_GemConsumeV + _GemConsumeA * pow + level);
-        //    consumeCnt = Mathf.CeilToInt(preConsumeBase);
+        //int consumeCnt = 0;
+        //consumeCnt = Mathf.CeilToInt(_GemConsumeV + _GemConsumeA * (level));
+        //return consumeCnt;
 
-        //}
-        //consumeCnt = Mathf.CeilToInt( _GemConsumeV  + _GemConsumeA * level);
-        return consumeCnt;
+        int levelID = Mathf.Clamp(level, 0, 200);
+        var gemAttrRecord = TableReader.GemBaseAttr.GetRecord(levelID.ToString());
+        if (gemAttrRecord == null)
+        {
+            gemAttrRecord = TableReader.GemBaseAttr.GetRecord("200");
+        }
+
+        return gemAttrRecord.LvUpCost;
     }
 
     public static int GetGemGoldConsume(int level)
     {
-        int gold = (int)(_GemConsumeGoldBase + _GemConsumeGoldStep * (level));
+        //int gold = (int)(_GemConsumeGoldBase + _GemConsumeGoldStep * (level));
 
-        return gold;
+        //return gold;
+
+        int levelID = Mathf.Clamp(level, 0, 200);
+        var gemAttrRecord = TableReader.GemBaseAttr.GetRecord(levelID.ToString());
+        if (gemAttrRecord == null)
+        {
+            gemAttrRecord = TableReader.GemBaseAttr.GetRecord("200");
+        }
+
+        return gemAttrRecord.LvUpCostGold;
     }
 
     #endregion
@@ -1209,10 +1278,10 @@ public class GameDataValue
     #region gold
 
     public static float _GoldLevelParam = 10f;
-    public static int _NormalGoldBase = 2000;
-    public static int _EliteGoldBase = 8000;
-    public static int _SpecialGoldBase = 8000;
-    public static int[] _BossGoldBase = {0, 6000, 3000, 1000};
+    public static int _NormalGoldBase = 3500;
+    public static int _EliteGoldBase = 10000;
+    public static int _SpecialGoldBase = 10000;
+    public static int[] _BossGoldBase = {0, 0, 3000, 3000, 4000};
     
 
     public static int GetGoldDropCnt(MOTION_TYPE motionType, int level)
@@ -1236,13 +1305,17 @@ public class GameDataValue
 
     public static int GetGoldDropNum(MOTION_TYPE motionType, int level)
     {
-        float dropNum = level * _GoldLevelParam;
-        if (motionType == MOTION_TYPE.Normal)
-            dropNum *= 0.5f;
+        var monAttrRecord = TableReader.MonsterAttr.GetRecord(level.ToString());
+        if (monAttrRecord == null)
+        {
+            monAttrRecord = TableReader.MonsterAttr.GetRecord("200");
+        }
 
-        float random = Random.Range(0.6f, 1.4f);
+        float random = Random.Range(0.6f, 1.5f);
         var exGoldDrop = RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.ExGoldDrop);
         float rate = ConfigIntToFloat(exGoldDrop) + 1;
+        float dropNum = ConfigIntToFloat(monAttrRecord.Attrs[4]);
+
         return Mathf.CeilToInt(dropNum * random * rate);
     }
 
@@ -1267,10 +1340,12 @@ public class GameDataValue
 
     #region skill
 
-    public static int GetSkillLvUpGold(int costBase, int skillLv)
+    public static int GetSkillLvUpGold(SkillInfoRecord skillRecord, int skillLv)
     {
-        int goldCost = (int)(Mathf.Pow(1.35f, skillLv) * costBase);
-        return goldCost;
+        if (skillLv == 1)
+            return skillRecord.CostStep[0];
+        else
+            return skillRecord.CostStep[1] * skillLv;
     }
 
     #endregion

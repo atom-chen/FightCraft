@@ -15,18 +15,18 @@ public class AreaGateRandom : AreaGate
             if (_AsyncLoad != null)
             {
                 var process = Mathf.Min(_AsyncLoad.progress, timeDelta / _TeleProcessTime);
-                FightManager.Instance.MainChatMotion._SkillProcessing = process;
-                if (FightManager.Instance.MainChatMotion._SkillProcessing >= 1)
+                FightManager.Instance.MainChatMotion.SkillProcessing = process;
+                if (FightManager.Instance.MainChatMotion.SkillProcessing >= 1)
                 {
                     TeleportAct();
-                    FightManager.Instance.MainChatMotion._SkillProcessing = 0;
+                    FightManager.Instance.MainChatMotion.SkillProcessing = 0;
                     _Teleporting = false;
                 }
             }
         }
         else
         {
-            FightManager.Instance.MainChatMotion._SkillProcessing = 0;
+            FightManager.Instance.MainChatMotion.SkillProcessing = 0;
         }
     }
 

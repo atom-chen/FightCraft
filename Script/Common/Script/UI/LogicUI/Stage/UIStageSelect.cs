@@ -19,6 +19,15 @@ public class UIStageSelect : UIBase
         GameCore.Instance.UIManager.ShowUI("LogicUI/Stage/UIStageSelect", UILayer.PopUI, hash);
     }
 
+    public static int GetMaxStageID()
+    {
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIStageSelect>("LogicUI/Stage/UIStageSelect");
+        if (instance == null)
+            return -1;
+
+        return instance.MaxStageId;
+    }
+
     #endregion
 
     public override void Show(Hashtable hash)
@@ -63,6 +72,20 @@ public class UIStageSelect : UIBase
 
     public UIContainerSelect _StageContainer;
 
+    private int _MaxStageId = 0;
+    public int MaxStageId
+    {
+        get
+        {
+            return _MaxStageId;
+        }
+    }
+
+    private int _NormalMinID = 1;
+    private int _NormalMaxID = 21;
+    private int _RandomMinID = 21;
+    private int _RandomMaxID = 41;
+
     private StageInfoRecord _SelectedStage;
 
     public void InitStages()
@@ -71,23 +94,43 @@ public class UIStageSelect : UIBase
         if (_SelectedDiff < ActData.Instance._NormalStageDiff)
         {
             maxStage = TableReader.StageInfo.GetMaxNormalStageID();
+            if (maxStage < _RandomMaxID)
+            {
+                maxStage = maxStage - _RandomMinID;
+            }
+            else
+            {
+                maxStage = maxStage - _NormalMinID;
+            }
         }
         else if (_SelectedDiff > ActData.Instance._NormalStageDiff)
         {
-            maxStage = 1;
+            maxStage = 0;
         }
         else
         {
             ++maxStage;
-            maxStage = Mathf.Clamp(maxStage, 1, TableReader.StageInfo.GetMaxNormalStageID());
+            maxStage = Mathf.Clamp(maxStage, 0, 19);
         }
 
         List<StageInfoRecord> stageList = new List<StageInfoRecord>();
-        for (int i = 1; i < maxStage + 1; ++i)
+        if (_SelectedDiff == 1)
         {
-            stageList.Add(TableReader.StageInfo.GetRecord(i.ToString()));
+            for (int i = _NormalMinID; i < _NormalMaxID; ++i)
+            {
+                stageList.Add(TableReader.StageInfo.GetRecord(i.ToString()));
+            }
         }
-        _StageContainer.InitSelectContent(stageList, new List<StageInfoRecord>() { stageList[stageList.Count - 1] }, OnSelectStage);
+        else
+        {
+            for (int i = _RandomMinID; i < _RandomMaxID; ++i)
+            {
+                stageList.Add(TableReader.StageInfo.GetRecord(i.ToString()));
+            }
+        }
+        _MaxStageId = int.Parse(stageList[maxStage].Id);
+        //_MaxStageId = 2;
+        _StageContainer.InitSelectContent(stageList, new List<StageInfoRecord>() { stageList[maxStage] }, OnSelectStage);
     }
 
     private void OnSelectStage(object stageObj)

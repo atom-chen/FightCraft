@@ -36,7 +36,10 @@ public class UIItemInfo : UIBase
         _ShowItem = itemBase;
         _Name.text = _ShowItem.CommonItemRecord.Name;
 
-        _ShopPrice.gameObject.SetActive(false);
+        if (_ShopPrice != null)
+        {
+            _ShopPrice.gameObject.SetActive(false);
+        }
 
         if (_Desc != null)
         {

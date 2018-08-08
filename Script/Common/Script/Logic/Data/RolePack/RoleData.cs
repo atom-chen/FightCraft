@@ -160,12 +160,12 @@ public class RoleData : SaveItemBase
 
     public int GetBaseHP()
     {
-        return _RoleLevel * 10 + 100;
+        return 65;
     }
 
     public int GetBaseDefence()
     {
-        return _RoleLevel * 5 + 5;
+        return 5;
     }
 
     //baseAttrs
@@ -335,7 +335,7 @@ public class RoleData : SaveItemBase
         }
     }
 
-    private static int MAX_LEVEL = 100;
+    private static int MAX_LEVEL = 50;
     private int _LvUpExp = 0;
     public int LvUpExp
     {

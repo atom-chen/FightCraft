@@ -131,11 +131,12 @@ public class UIManager : MonoBehaviour
 
             var script = obj.GetComponent<UIBase>();
             obj.name = script.GetType().Name;
-            script.Show(hashtable);
             script.UIPath = uiPath;
             script.UILayer = uilayer;
 
             _UIObjs.Add(uiPath, script);
+
+            script.Show(hashtable);
         }
 
         //UIShowed(uiPath, uilayer, _UIObjs[uiPath]);

@@ -33,16 +33,19 @@ public class UIHPPanel : UIInstanceBase<UIHPPanel>
 
     private void ShowItem(Hashtable args)
     {
+
         var itemBase = ResourcePool.Instance.GetIdleUIItem<UIHPItem>(_UIHPItemPrefab.gameObject);
         itemBase.Show(args);
         itemBase.transform.SetParent(transform);
         itemBase.transform.localScale = Vector3.one;
+
     }
 
     private void HideItem(Hashtable args)
     {
         UIHPItem hideItem = args["HideItem"] as UIHPItem;
         ResourcePool.Instance.RecvIldeUIItem(hideItem.gameObject);
+
     }
 
 

@@ -78,7 +78,17 @@ public class UILoadingScene : UIBase
             _LoadStageInfo = (StageInfoRecord)hash["StageInfo"];
             //LoadStageLevel(_LoadStageInfo, hash);
             //StartCoroutine(InitializeLevelAsync(_LoadStageInfo.ScenePath[0], true, LoadSceneResFinish, hash));
-            var validScenes = _LoadStageInfo.GetValidScenePath();
+            List<string> validScenes = null;
+            if (_LoadStageInfo.FightLogicPath == "FightLogic_Random")
+            {
+                int sceneType = _LoadStageInfo.ExParam[0];
+                validScenes = new List<string>();
+                validScenes.Add(FightSceneLogicRandomArea.GetRandomScene(sceneType));
+            }
+            else
+            {
+                validScenes = _LoadStageInfo.GetValidScenePath();
+            }
             var asyncOpt = SceneManager.LoadSceneAsync(validScenes[0]);
             _LoadedSceneName.Add(validScenes[0]);
             _LoadSceneOperation.Add(asyncOpt);

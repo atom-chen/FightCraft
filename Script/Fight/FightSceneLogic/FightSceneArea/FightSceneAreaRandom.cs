@@ -175,6 +175,14 @@ public class FightSceneAreaRandom : FightSceneAreaBase
 
             var enemyAI = enemy.gameObject.GetComponent<AI_Base>();
             enemyAI.GroupID = AreaID;
+            if (enemy.MonsterBase.MotionType == Tables.MOTION_TYPE.Hero)
+            {
+                var heroAi = enemyAI as AI_HeroBase;
+                if (heroAi != null)
+                {
+                    heroAi._IsRiseBoom = true;
+                }
+            }
             _EnemyAI.Add(enemyAI);
         }
     }

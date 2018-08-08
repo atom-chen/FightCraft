@@ -19,6 +19,7 @@ namespace Tables
         public List<string> ScenePath { get; set; }
         public List<Vector3> CameraOffset { get; set; }
         public string Audio { get; set; }
+        public List<int> ExParam { get; set; }
         public StageInfoRecord(DataRecord dataRecord)
         {
             if (dataRecord != null)
@@ -29,6 +30,7 @@ namespace Tables
             }
             ScenePath = new List<string>();
             CameraOffset = new List<Vector3>();
+            ExParam = new List<int>();
         }
         public override string[] GetRecordStr()
         {
@@ -47,6 +49,10 @@ namespace Tables
                 recordStrList.Add(TableWriteBase.GetWriteStr(testTableItem));
             }
             recordStrList.Add(TableWriteBase.GetWriteStr(Audio));
+            foreach (var testTableItem in ExParam)
+            {
+                recordStrList.Add(TableWriteBase.GetWriteStr(testTableItem));
+            }
 
             return recordStrList.ToArray();
         }
@@ -125,6 +131,9 @@ namespace Tables
                 pair.Value.CameraOffset.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[13]));
                 pair.Value.CameraOffset.Add(TableReadBase.ParseVector3(pair.Value.ValueStr[14]));
                 pair.Value.Audio = TableReadBase.ParseString(pair.Value.ValueStr[15]);
+                pair.Value.ExParam.Add(TableReadBase.ParseInt(pair.Value.ValueStr[16]));
+                pair.Value.ExParam.Add(TableReadBase.ParseInt(pair.Value.ValueStr[17]));
+                pair.Value.ExParam.Add(TableReadBase.ParseInt(pair.Value.ValueStr[18]));
             }
         }
     }

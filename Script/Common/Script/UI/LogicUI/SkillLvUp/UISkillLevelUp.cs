@@ -150,7 +150,7 @@ public class UISkillLevelUp : UIBase
 
         if (skillTab.CostStep[0] == (int)MONEYTYPE.GOLD)
         {
-            int costValue = GameDataValue.GetSkillLvUpGold(skillTab.CostStep[1], _SelectedSkill.SkillLevel);
+            int costValue = GameDataValue.GetSkillLvUpGold(skillTab, _SelectedSkill.SkillLevel);
             _MoneyCost.ShowCurrency(MONEYTYPE.GOLD, costValue);
             if (costValue > PlayerDataPack.Instance.Gold)
             {
@@ -203,7 +203,7 @@ public class UISkillLevelUp : UIBase
 
         if (skillTab.CostStep[0] == (int)MONEYTYPE.GOLD)
         {
-            int costValue = GameDataValue.GetSkillLvUpGold(skillTab.CostStep[1], _SelectedSkill.SkillLevel);
+            int costValue = GameDataValue.GetSkillLvUpGold(skillTab, _SelectedSkill.SkillLevel);
             if (!PlayerDataPack.Instance.DecGold(costValue))
                 return;
         }

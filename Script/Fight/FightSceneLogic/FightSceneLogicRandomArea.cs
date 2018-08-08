@@ -19,7 +19,7 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
 
     #region motion die
 
-    public static int _FindBossKillCnt = 100;
+    public static int _FindBossKillCnt = 200;
     private int _KillCnt = 0;
     private bool _IsChangeToBoss = false;
     public bool IsChangeToBoss
@@ -145,6 +145,7 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
     {
         if (IsChangeToBoss)
         {
+            int bossID = LogicManager.Instance.EnterStageInfo.ExParam[1];
             NormalMonster = new List<int>() { GetRandomBoss() };
         }
         else
@@ -255,8 +256,6 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
         //{
         //    return "Stage_DiXiaCheng_03";
         //}
-        List<string> includeScenes = new List<string>();
-        List<string> baseScene = null;
         int type = 0;
         if (excludeScene != null && excludeScene.Count > 0)
         {
@@ -274,6 +273,14 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
             type = Random.Range(1, 5);
             //type = 1;
         }
+
+        return GetRandomScene(type, excludeScene);
+    }
+
+    public static string GetRandomScene(int type, List<string> excludeScene = null)
+    {
+        List<string> includeScenes = new List<string>();
+        List<string> baseScene = null;
         switch (type)
         {
             case 1:
@@ -331,6 +338,8 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
 
         return _BossScene[type];
     }
+
+    
 
     public static List<int> GetRandomNormalMon()
     {

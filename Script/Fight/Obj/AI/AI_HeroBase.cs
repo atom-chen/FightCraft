@@ -22,6 +22,7 @@ public class AI_HeroBase : AI_Base
 
     #region rise
 
+    public bool _IsRiseBoom = false;
     private ImpactBase _RiseBoom;
 
     private float _RiseTime = 1f;
@@ -91,6 +92,22 @@ public class AI_HeroBase : AI_Base
     }
 
     private ImpactBuffSuperArmor _BuffInstance;
+
+    public bool _IsContainsNormalAtk = false;
+
+    protected void InitSkills()
+    {
+        int startIdx = 0;
+        if (!_IsContainsNormalAtk)
+        {
+            startIdx = 1;
+        }
+        for (int i = startIdx; i < _AISkills.Count; ++i)
+        {
+            InitSuperArmorSkill(_AISkills[i].SkillBase);
+            InitReadySkillSpeed(_AISkills[i]);
+        }
+    }
 
     protected void InitSuperArmorSkill(ObjMotionSkillBase objMotionSkill)
     {

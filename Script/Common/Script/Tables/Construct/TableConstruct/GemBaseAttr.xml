@@ -17,7 +17,7 @@
     <constructRepeat>1</constructRepeat>
   </constructColumn>
   <constructColumn>
-    <constructName>Name</constructName>
+    <constructName>名称</constructName>
     <constructCode>Name</constructCode>
     <constructType1>基本类型</constructType1>
     <constructType2>
@@ -28,7 +28,7 @@
     <constructRepeat>1</constructRepeat>
   </constructColumn>
   <constructColumn>
-    <constructName>Desc</constructName>
+    <constructName>描述</constructName>
     <constructCode>Desc</constructCode>
     <constructType1>基本类型</constructType1>
     <constructType2>
@@ -39,66 +39,43 @@
     <constructRepeat>1</constructRepeat>
   </constructColumn>
   <constructColumn>
-    <constructName>StageType</constructName>
-    <constructCode>StageType</constructCode>
-    <constructType1>自定义枚举</constructType1>
-    <constructType2>
-      <constructType2>STAGE_TYPE</constructType2>
-    </constructType2>
-    <constructDefault>0</constructDefault>
-    <constructRepeat>1</constructRepeat>
-  </constructColumn>
-  <constructColumn>
-    <constructName>FightLogicPath</constructName>
-    <constructCode>FightLogicPath</constructCode>
-    <constructType1>基本类型</constructType1>
-    <constructType2>
-      <constructType2>字符串</constructType2>
-    </constructType2>
-    <constructDefault>
-    </constructDefault>
-    <constructRepeat>1</constructRepeat>
-  </constructColumn>
-  <constructColumn>
-    <constructName>ScenePath</constructName>
-    <constructCode>ScenePath</constructCode>
-    <constructType1>基本类型</constructType1>
-    <constructType2>
-      <constructType2>字符串</constructType2>
-    </constructType2>
-    <constructDefault>
-    </constructDefault>
-    <constructRepeat>5</constructRepeat>
-  </constructColumn>
-  <constructColumn>
-    <constructName>CameraOffset</constructName>
-    <constructCode>CameraOffset</constructCode>
-    <constructType1>基本类型</constructType1>
-    <constructType2>
-      <constructType2>三元组</constructType2>
-    </constructType2>
-    <constructDefault>0;0;0</constructDefault>
-    <constructRepeat>5</constructRepeat>
-  </constructColumn>
-  <constructColumn>
-    <constructName>Audio</constructName>
-    <constructCode>Audio</constructCode>
-    <constructType1>基本类型</constructType1>
-    <constructType2>
-      <constructType2>字符串</constructType2>
-    </constructType2>
-    <constructDefault>
-    </constructDefault>
-    <constructRepeat>1</constructRepeat>
-  </constructColumn>
-  <constructColumn>
-    <constructName>ExParam</constructName>
-    <constructCode>ExParam</constructCode>
+    <constructName>Value</constructName>
+    <constructCode>Value</constructCode>
     <constructType1>基本类型</constructType1>
     <constructType2>
       <constructType2>整数</constructType2>
     </constructType2>
     <constructDefault>0</constructDefault>
-    <constructRepeat>3</constructRepeat>
+    <constructRepeat>1</constructRepeat>
+  </constructColumn>
+  <constructColumn>
+    <constructName>LvUpCost</constructName>
+    <constructCode>LvUpCost</constructCode>
+    <constructType1>基本类型</constructType1>
+    <constructType2>
+      <constructType2>整数</constructType2>
+    </constructType2>
+    <constructDefault>0</constructDefault>
+    <constructRepeat>1</constructRepeat>
+  </constructColumn>
+  <constructColumn>
+    <constructName>LvUpCostGold</constructName>
+    <constructCode>LvUpCostGold</constructCode>
+    <constructType1>基本类型</constructType1>
+    <constructType2>
+      <constructType2>整数</constructType2>
+    </constructType2>
+    <constructDefault>0</constructDefault>
+    <constructRepeat>1</constructRepeat>
+  </constructColumn>
+  <constructColumn>
+    <constructName>SetAttrValue</constructName>
+    <constructCode>SetAttrValue</constructCode>
+    <constructType1>基本类型</constructType1>
+    <constructType2>
+      <constructType2>整数</constructType2>
+    </constructType2>
+    <constructDefault>0</constructDefault>
+    <constructRepeat>1</constructRepeat>
   </constructColumn>
 </root>

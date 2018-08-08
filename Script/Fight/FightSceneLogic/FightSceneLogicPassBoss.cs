@@ -70,11 +70,11 @@ public class FightSceneLogicPassBoss : FightSceneLogicPassArea
             return;
 
         var timeDelta = Time.time - _StartingTime;
-        FightManager.Instance.MainChatMotion._SkillProcessing = timeDelta / _TeleProcessTime;
-        if (FightManager.Instance.MainChatMotion._SkillProcessing >= 1)
+        FightManager.Instance.MainChatMotion.SkillProcessing = timeDelta / _TeleProcessTime;
+        if (FightManager.Instance.MainChatMotion.SkillProcessing >= 1)
         {
             FightManager.Instance.TeleportToNextRegion(_PlayerTeleportPoses[_RunningIdx + 1], true);
-            FightManager.Instance.MainChatMotion._SkillProcessing = 0;
+            FightManager.Instance.MainChatMotion.SkillProcessing = 0;
             _Teleporting = false;
         }
     }
