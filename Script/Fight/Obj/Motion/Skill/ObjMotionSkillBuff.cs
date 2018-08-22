@@ -5,22 +5,22 @@ using System.Collections.Generic;
 public class ObjMotionSkillBuff : ObjMotionSkillBase
 {
 
-    void Update()
-    {
-        if (_CanNextInput && _IsCanActAfterBuff)
-        {
-            if (InputManager.Instance.IsKeyHold("k") || InputManager.Instance.IsKeyHold(_ActSkillInput))
-            {
-                _SkillProcess = 1.1f;
-                InputManager.Instance.SetRotate();
-                MotionManager.FinishSkill(this);
-                MotionManager.ActSkill(MotionManager._StateSkill._SkillMotions[_ActSkillInput]);
-            }
-        }
+    //void Update()
+    //{
+    //    if (_CanNextInput && _IsCanActAfterBuff)
+    //    {
+    //        if (InputManager.Instance.IsKeyHold("k") || InputManager.Instance.IsKeyHold(_ActSkillInput))
+    //        {
+    //            _SkillProcess = 1.1f;
+    //            InputManager.Instance.SetRotate();
+    //            MotionManager.FinishSkill(this);
+    //            MotionManager.ActSkill(MotionManager._StateSkill._SkillMotions[_ActSkillInput]);
+    //        }
+    //    }
 
-        _SkillProcess += Time.deltaTime;
-        MotionManager.SkillProcessing = _SkillProcess / GetTotalAnimLength();
-    }
+    //    _SkillProcess += Time.deltaTime;
+    //    MotionManager.SkillProcessing = _SkillProcess / GetTotalAnimLength();
+    //}
 
     private bool _IsCanActAfterBuff = true;
     public bool IsCanActAfterBuff
@@ -38,7 +38,6 @@ public class ObjMotionSkillBuff : ObjMotionSkillBase
 
     private int _AttackStep = 0;
     private string _ActSkillInput = "";
-    private bool _CanNextInput = false;
 
     public override void AnimEvent(string function, object param)
     {
@@ -48,6 +47,7 @@ public class ObjMotionSkillBuff : ObjMotionSkillBase
         {
             case AnimEventManager.NEXT_INPUT_START:
                 _CanNextInput = true;
+                StartNextInput();
                 break;
             case AnimEventManager.NEXT_INPUT_END:
                 _CanNextInput = false;
@@ -57,7 +57,23 @@ public class ObjMotionSkillBuff : ObjMotionSkillBase
 
     public override bool IsCanActSkill()
     {
-        return base.IsCanActSkill();
+        bool baseAct = base.IsCanActSkill();
+
+        if (!baseAct && _MotionManager.ActingSkill != null)
+        {
+            if (_MotionManager.ActingSkill._ActInput == "1"
+                || _MotionManager.ActingSkill._ActInput == "2"
+                || _MotionManager.ActingSkill._ActInput == "3"
+                || _MotionManager.ActingSkill._ActInput == "e")
+            {
+                if (_MotionManager.ActingSkill.CanNextInput)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return baseAct;
     }
 
     public override bool ActSkill(Hashtable exHash = null)
@@ -74,5 +90,10 @@ public class ObjMotionSkillBuff : ObjMotionSkillBase
         }
         _SkillProcess = 0;
         return true;
+    }
+
+    public void StartNextInput()
+    {
+        InputManager.Instance.SetReuseSkill(_ActSkillInput);
     }
 }

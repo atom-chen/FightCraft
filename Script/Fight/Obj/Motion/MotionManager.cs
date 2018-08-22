@@ -1198,10 +1198,10 @@ public class MotionManager : MonoBehaviour
     {
         StateOpt(StateBase.MotionOpt.Stop_Skill, skillMotion);
 
-        if (InputManager.Instance._InputMotion == this)
-        {
-            InputManager.Instance.SkillFinish(skillMotion);
-        }
+        //if (InputManager.Instance._InputMotion == this)
+        //{
+        //    InputManager.Instance.SkillFinish(skillMotion);
+        //}
     }
 
     public void ActionPause(float time)
@@ -1219,14 +1219,18 @@ public class MotionManager : MonoBehaviour
         StateOpt(StateBase.MotionOpt.Anim_Event, function, param);
     }
 
-    public void HitEvent(float hitTime, int hitEffect, int hitAudio, MotionManager impactSender, ImpactHit hitImpact, Vector3 moveDirect, float moveTime)
+    public void HitEvent(float hitTime, int hitEffect, int hitAudio, MotionManager impactSender, ImpactHit hitImpact, Vector3 moveDirect, float moveTime, bool isPauseFly = false)
     {
         if (!IsBuffCanHit(impactSender, hitImpact))
         {
             return;
         }
         BuffBeHit(impactSender, hitImpact);
-        StateOpt(StateBase.MotionOpt.Hit, hitTime, hitEffect, impactSender, hitImpact, moveDirect, moveTime, hitAudio);
+        foreach (var aiBase in _AIBases)
+        {
+            aiBase.OnBeHit(hitImpact);
+        }
+        StateOpt(StateBase.MotionOpt.Hit, hitTime, hitEffect, impactSender, hitImpact, moveDirect, moveTime, hitAudio, isPauseFly);
     }
 
     public void FrozenEvent()
@@ -1242,6 +1246,10 @@ public class MotionManager : MonoBehaviour
             return;
         }
         BuffBeHit(impactSender, hitImpact);
+        foreach (var aiBase in _AIBases)
+        {
+            aiBase.OnBeHit(hitImpact);
+        }
         StateOpt(StateBase.MotionOpt.Fly, flyHeight, hitEffect, impactSender, hitImpact, moveDirect, moveTime, hitAudio);
     }
 
@@ -1252,6 +1260,10 @@ public class MotionManager : MonoBehaviour
             return;
         }
         BuffBeHit(impactSender, hitImpact);
+        foreach (var aiBase in _AIBases)
+        {
+            aiBase.OnBeHit(hitImpact);
+        }
         StateOpt(StateBase.MotionOpt.Catch, catchTime, hitEffect, impactSender, hitImpact, moveDirect, moveTime, hitAudio);
     }
 

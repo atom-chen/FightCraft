@@ -8,8 +8,9 @@ public class ImpactAccumulate : ImpactBase
     {
         if (_IsActingImpact)
         {
-            if (!InputManager.Instance.IsAnyHold())
+            if (!InputManager.Instance.IsKeyHold("k"))
             {
+                Debug.Log("ReleaseAccumulate");
                 ReleaseAccumulate();
             }
             else if (Time.time - _HoldTime >= _AccumulateTime)
@@ -51,6 +52,7 @@ public class ImpactAccumulate : ImpactBase
         _HoldTime = Time.time;
 
         reciverManager.RoleAttrManager.AccumulateDamageRate = 0;
+        PlayEffect();
     }
 
     public override void FinishImpact(MotionManager reciverManager)
@@ -73,5 +75,28 @@ public class ImpactAccumulate : ImpactBase
         ReciveMotion.RoleAttrManager.AccumulateDamageRate = accumulateRate * _AccumulateDamage;
 
         SkillMotion.PlayerNextAnim();
+        StopEffect();
     }
+
+    #region play effect
+
+    public EffectController _EffectController;
+
+    private EffectController _DynamicEffect;
+
+    public void PlayEffect()
+    {
+        _DynamicEffect = SenderMotion.PlayDynamicEffect(_EffectController);
+    }
+
+    public void StopEffect()
+    {
+        if (_DynamicEffect != null)
+        {
+            SenderMotion.StopDynamicEffect(_DynamicEffect);
+            _DynamicEffect = null;
+        }
+    }
+
+    #endregion
 }

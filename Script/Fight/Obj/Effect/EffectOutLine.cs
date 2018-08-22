@@ -45,13 +45,22 @@ public class EffectOutLine : EffectController
         if (_SkinnedMesh == null)
         {
             var motion = gameObject.GetComponentInParent<MotionManager>();
-            var objMeshes = motion.GetComponentsInChildren<SkinnedMeshRenderer>();
-            foreach (var objMesh in objMeshes)
-            {
-                if (objMesh.name.Contains("Weapon"))
-                    continue;
 
-                _SkinnedMesh = objMesh;
+            var go = transform.Find("ForCharRim");
+            if (go != null)
+            {
+                _SkinnedMesh = gameObject.GetComponent<SkinnedMeshRenderer>();
+            }
+            else
+            {
+                var objMeshes = motion.GetComponentsInChildren<SkinnedMeshRenderer>();
+                foreach (var objMesh in objMeshes)
+                {
+                    if (objMesh.name.Contains("Weapon"))
+                        continue;
+
+                    _SkinnedMesh = objMesh;
+                }
             }
             //_SkinnedMesh = motion.GetComponentInChildren<SkinnedMeshRenderer>();
         }
@@ -65,7 +74,7 @@ public class EffectOutLine : EffectController
             _MatInstance = GameObject.Instantiate<Material>(_OutLineMaterial);
             Material[] newMaterialArray = new Material[_SkinnedMesh.materials.Length + 1];
             newMaterialArray[0] = _MatInstance;
-            for (int i = 0; i < _SkinnedMesh.materials.Length; i++)
+            for (int i = 1; i < _SkinnedMesh.materials.Length + 1; i++)
             {
                 //if (_SkinnedMesh.materials[i].name.Contains("Outline"))
                 //{
@@ -73,9 +82,9 @@ public class EffectOutLine : EffectController
                 //}
                 //else
                 {
-                    newMaterialArray[i + 1] = _SkinnedMesh.materials[i];
-                    newMaterialArray[i + 1].SetInt("_ZWrite", 1);
-                    newMaterialArray[i + 1].renderQueue = 2450;
+                    newMaterialArray[i] = _SkinnedMesh.materials[i - 1];
+                    newMaterialArray[i].SetInt("_ZWrite", 1);
+                    newMaterialArray[i].renderQueue = 2450;
                 }
             }
 
@@ -95,7 +104,7 @@ public class EffectOutLine : EffectController
             int newMaterialArrayCount = 0;
             for (int i = 0; i < _SkinnedMesh.materials.Length; i++)
             {
-                if (_SkinnedMesh.materials[i].name.Contains("Outline"))
+                if (!_SkinnedMesh.materials[i].name.Contains("Outline"))
                 {
                     newMaterialArrayCount++;
                 }

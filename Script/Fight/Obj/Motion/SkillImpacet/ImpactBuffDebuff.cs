@@ -20,21 +20,21 @@ public class ImpactBuffDebuff : ImpactBuffAttrAdd
 
     public override bool IsCanAddBuff(ImpactBuff newBuff)
     {
-        if (newBuff.GetType() == this.GetType())
-        {
-            if (_Stack < MaxStack)
-                return true;
-            else
-            {
-                ImpactFlyAway impact = new ImpactFlyAway();
-                impact._FlyHeight = 1;
-                impact._Time = 0.5f;
-                impact._Speed = 10;
-                impact._DamageRate = 0;
-                impact.ActImpact(_BuffSender, _BuffOwner);
-                return false;
-            }
-        }
+        //if (newBuff.GetType() == this.GetType())
+        //{
+        //    if (_Stack < MaxStack)
+        //        return true;
+        //    else
+        //    {
+        //        ImpactFlyAway impact = new ImpactFlyAway();
+        //        impact._FlyHeight = 1;
+        //        impact._Time = 0.5f;
+        //        impact._Speed = 10;
+        //        impact._DamageRate = 0;
+        //        impact.ActImpact(_BuffSender, _BuffOwner);
+        //        return false;
+        //    }
+        //}
         return true;
     }
 }

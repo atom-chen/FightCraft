@@ -70,6 +70,13 @@ public class StateHit : StateBase
         }
     }
 
+    public override void StateUpdate()
+    {
+        base.StateUpdate();
+
+        ConsumeAnimUpdate();
+    }
+
     #region 
 
     Hashtable _BuffArg = new Hashtable();
@@ -123,7 +130,7 @@ public class StateHit : StateBase
             speed = (_Animation.length / hitTime);
         }
 
-        _MotionManager.StopCoroutine("ComsumeAnim");
+        _StopFramTime = 0;
         _MotionManager.RePlayAnimation(_Animation, speed);
         //_MotionManager.SetLookAt(impactSender.transform.position);
     }
@@ -133,7 +140,20 @@ public class StateHit : StateBase
         if (_StopKeyFrameTime > 0)
         {
             _MotionManager.PauseAnimation(_Animation, -1);
-            _MotionManager.StartCoroutine(ComsumeAnim());
+            _StopFramTime = _StopKeyFrameTime;
+        }
+    }
+
+    private float _StopFramTime = 0;
+    public void ConsumeAnimUpdate()
+    {
+        if (_StopFramTime > 0)
+        {
+            _StopFramTime -= Time.fixedDeltaTime;
+            if (_StopFramTime <= 0)
+            {
+                _MotionManager.ResumeAnimation(_Animation);
+            }
         }
     }
 

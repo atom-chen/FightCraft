@@ -36,7 +36,10 @@ public class SelectBase : MonoBehaviour
         for (int i = 0; i < _EventFrame.Count; ++i)
         {
             var anim = _ObjMotion.Animation.GetClip(_EventAnim.name);
-            _ObjMotion.AnimationEvent.AddSelectorEvent(anim, _EventFrame[i], _ColliderID);
+            if (anim != null)
+            {
+                _ObjMotion.AnimationEvent.AddSelectorEvent(anim, _EventFrame[i], _ColliderID);
+            }
         }
     }
 

@@ -10,6 +10,8 @@ public class BulletLiuSha : BulletBase
     private ImpactDamage _ImpactDamage;
     private float _LastDamageTime;
 
+    private List<MotionManager> _EffectMotions = new List<MotionManager>();
+
     public override void Init(MotionManager senderMotion, BulletEmitterBase emitterBase)
     {
         base.Init(senderMotion,emitterBase);
@@ -17,6 +19,13 @@ public class BulletLiuSha : BulletBase
         _ImpactDamage = gameObject.GetComponent<ImpactDamage>();
 
         StartCoroutine(StartHit());
+    }
+
+    protected override void BulletFinish()
+    {
+        base.BulletFinish();
+
+        DisableAll();
     }
 
     IEnumerator StartHit()
@@ -46,7 +55,14 @@ public class BulletLiuSha : BulletBase
             return;
 
         _LastDamageTime = Time.time;
-        _ImpactDamage.ActImpact(_SkillMotion, targetMotion);
+        if (_ImpactDamage != null)
+        {
+            _ImpactDamage.ActImpact(_SkillMotion, targetMotion);
+        }
+        if (!_EffectMotions.Contains(targetMotion))
+        {
+            _EffectMotions.Add(targetMotion);
+        }
     }
 
     void OnTriggerExit(Collider other)
@@ -59,6 +75,21 @@ public class BulletLiuSha : BulletBase
         {
             impact.FinishImpact(targetMotion);
         }
+    }
+
+    private void DisableAll()
+    {
+        foreach (var effectMotion in _EffectMotions)
+        {
+            if (!effectMotion.IsMotionDie)
+            {
+                foreach (var impact in _ImpactList)
+                {
+                    impact.FinishImpact(effectMotion);
+                }
+            }
+        }
+        _EffectMotions.Clear();
     }
 
 }

@@ -95,23 +95,6 @@ public class ObjMotionSkillAttack : ObjMotionSkillBase
 
     public SelectBase[] _Collider;
 
-    private bool _CanNextInput = false;
-    public bool CanNextInput
-    {
-        get
-        {
-            return _CanNextInput;
-        }
-    }
-
-    public int CurStep
-    {
-        get
-        {
-            return _CurStep;
-        }
-    }
-
     public override bool ActSkill(Hashtable exhash)
     {
         bool isActSkill = base.ActSkill(exhash);
@@ -121,6 +104,7 @@ public class ObjMotionSkillAttack : ObjMotionSkillBase
         _CanNextInput = false;
         _CurStep = -1;
         ContinueAttack();
+        InputManager.Instance.ResetReuseSkill();
 
         return true;
     }

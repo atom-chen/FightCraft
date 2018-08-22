@@ -25,6 +25,9 @@ public class ImpactBuffSuperArmor : ImpactBuff
     {
         //GlobalEffect.Instance.Pause(0.1f);
 
+        if (impactHit._ForceHit)
+            return true;
+
         if (_BlockTime > 0)
         {
             _BuffOwner.ResetMove();

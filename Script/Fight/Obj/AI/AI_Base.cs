@@ -106,6 +106,12 @@ public class AI_Base : MonoBehaviour
     public virtual void OnStateChange(StateBase orgState, StateBase newState)
     {
         MoveState(orgState, newState);
+        HitProtectStateChange(newState);
+    }
+
+    public virtual void OnBeHit(ImpactHit impactHit)
+    {
+        OnHitProtect(impactHit);
     }
 
     #region combatLevel
@@ -471,4 +477,93 @@ public class AI_Base : MonoBehaviour
 
     #endregion
 
+    #region hit protect
+
+    public class HitSkillInfo
+    {
+        public ObjMotionSkillBase SkillBase;
+        public int SkillActTimes;
+        public int HitTimes;
+    }
+
+    protected ImpactBuff _HitProtectedPrefab;
+    public ImpactBuff HitProtectedPrefab
+    {
+        get
+        {
+            if (_HitProtectedPrefab == null)
+            {
+                var buffGO = ResourceManager.Instance.GetGameObject("SkillMotion/CommonImpact/HitProtectedBuff");
+                _HitProtectedPrefab = buffGO.GetComponent<ImpactBuff>();
+            }
+            return _HitProtectedPrefab;
+        }
+    }
+
+    protected Dictionary<ObjMotionSkillBase, HitSkillInfo> _HitDict = new Dictionary<ObjMotionSkillBase, HitSkillInfo>();
+    protected const int _ReleaseSkillTimes = 2;
+    protected const int _ReleaseBuffTimes = 3;
+
+    private void OnHitProtect(ImpactHit impactHit)
+    {
+        if (impactHit.SkillMotion is ObjMotionSkillAttack)
+            return;
+
+        if (impactHit.SkillMotion == null)
+            return;
+
+        if (!_HitDict.ContainsKey(impactHit.SkillMotion))
+        {
+            _HitDict.Add(impactHit.SkillMotion, new HitSkillInfo() { SkillBase = impactHit.SkillMotion , SkillActTimes= -1, HitTimes=0});
+        }
+
+        if (_HitDict[impactHit.SkillMotion].SkillActTimes != impactHit.SkillMotion._SkillActTimes)
+        {
+            _HitDict[impactHit.SkillMotion].SkillActTimes = impactHit.SkillMotion._SkillActTimes;
+            ++_HitDict[impactHit.SkillMotion].HitTimes;
+            if (impactHit.SkillMotion is ObjMotionSkillBuff)
+            {
+                if (_HitDict[impactHit.SkillMotion].HitTimes > _ReleaseBuffTimes)
+                {
+                    ReleaseHit();
+                }
+            }
+            else
+            {
+                if (_HitDict[impactHit.SkillMotion].HitTimes > _ReleaseSkillTimes)
+                {
+                    ReleaseHit();
+                }
+            }
+        }
+        
+    }
+
+    private void ReleaseHit()
+    {
+        Debug.Log("ReleaseHit ");
+        ImpactFlyAway impact = new ImpactFlyAway();
+        impact._FlyHeight = 1;
+        impact._Time = 0.5f;
+        impact._Speed = 10;
+        impact._DamageRate = 0;
+        impact.ActImpact(_SelfMotion, _SelfMotion);
+        HitProtectedPrefab.ActBuffInstance(_SelfMotion, _SelfMotion);
+    }
+
+    private void HitProtectStateChange(StateBase newState)
+    {
+        if (newState is StateFly
+            || newState is StateCatch
+            || newState is StateHit
+            || newState is StateLie)
+            return;
+
+        _HitDict.Clear();
+        Debug.Log("HitProtectStateChange " + newState);
+    }
+
+    #endregion
 }
+
+

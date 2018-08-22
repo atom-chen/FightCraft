@@ -39,6 +39,7 @@ public class UISkillLevelUp : UIBase
     private void InitSkillClass()
     {
         _SkillClasses.Clear();
+        _SkillClass.Clear();
         foreach (var skillItem in SkillData.Instance.ProfessionSkills)
         {
             string dicStr = Tables.StrDictionary.GetFormatStr(skillItem.SkillRecord.SkillType);

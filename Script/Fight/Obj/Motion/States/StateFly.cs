@@ -53,7 +53,7 @@ public class StateFly : StateBase
                 break;
             case MotionOpt.Hit:
                 //_MotionManager.TryEnterState(_MotionManager._StateHit, args);
-                MotionFlyStay((float)args[0], (int)args[1], (int)args[6], (MotionManager)args[2]);
+                MotionFlyStay((float)args[0], (int)args[1], (int)args[6], (MotionManager)args[2], (bool)args[7]);
                 SetHitMove((Vector3)args[4], (float)args[5]);
                 break;
             case MotionOpt.Fly:
@@ -146,7 +146,7 @@ public class StateFly : StateBase
         _MotionManager.RePlayAnimation(_Animation, 1);
     }
 
-    public void MotionFlyStay(float time, int effectID, int audioID, MotionManager impactSender)
+    public void MotionFlyStay(float time, int effectID, int audioID, MotionManager impactSender, bool isPauseFly)
     {
         //Debug.Log("MotionFlyStay");
         _MotionManager.PlayHitEffect(impactSender, effectID);
@@ -154,9 +154,18 @@ public class StateFly : StateBase
         if (audioID > 0)
             _MotionManager.PlayAudio(ResourcePool.Instance._CommonAudio[audioID]);
 
-        _MotionManager.RePlayAnimation(_Animation, 1);
+        if (isPauseFly)
+        {
+            _MotionManager.PauseAnimation(_Animation, time);
+            _StayTime = time;
+        }
+        else
+        {
+            _MotionManager.RePlayAnimation(_Animation, 1);
+            _StayTime = 0.15f;
+        }
 
-        _StayTime = 0.15f;
+        
     }
 
     public void ResetFly()
@@ -169,6 +178,10 @@ public class StateFly : StateBase
         if (_StayTime > 0)
         {
             _StayTime -= Time.fixedDeltaTime;
+            if (_StayTime <= 0)
+            {
+                _MotionManager.ResumeAnimation(_Animation);
+            }
         }
         else if (_FlyHeight > 0)
         {

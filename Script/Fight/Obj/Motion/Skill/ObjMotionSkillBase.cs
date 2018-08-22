@@ -45,12 +45,22 @@ public class ObjMotionSkillBase : MonoBehaviour
     public List<AudioClip> _NextAudio;
     public string _ActInput;
     public int _SkillMotionPrior = 100;
+    public bool _SkillMotionPriorSelf = false;
     public float _SkillBaseSpeed = 1;
     public float SkillSpeed
     {
         get
         {
             return (SkillActSpeed) * _SkillBaseSpeed;
+        }
+    }
+
+    protected bool _CanNextInput = false;
+    public bool CanNextInput
+    {
+        get
+        {
+            return _CanNextInput;
         }
     }
 
@@ -82,6 +92,10 @@ public class ObjMotionSkillBase : MonoBehaviour
         if (_MotionManager._ActionState == _MotionManager._StateSkill)
         {
             if (_MotionManager.ActingSkill._SkillMotionPrior < _SkillMotionPrior)
+            {
+                return true;
+            }
+            if (_SkillMotionPriorSelf && CanNextInput)
                 return true;
         }
 
@@ -135,9 +149,14 @@ public class ObjMotionSkillBase : MonoBehaviour
             case AnimEventManager.COLLIDER_END:
                 ColliderEnd(param);
                 break;
+            case AnimEventManager.NEXT_INPUT_START:
+                InputManager.Instance.SkillNextInput(this);
+                _CanNextInput = true;
+                break;
         }
     }
 
+    public int _SkillActTimes = 0;
     public virtual bool ActSkill(Hashtable exhash)
     {
         this.enabled = true;
@@ -148,6 +167,9 @@ public class ObjMotionSkillBase : MonoBehaviour
         MotionManager.BuffAttack();
 
         _LastUseTime = Time.time;
+        ++_SkillActTimes;
+
+        _CanNextInput = false;
 
         return true;
     }

@@ -7,6 +7,7 @@ public class ImpactHit : ImpactDamage
     public int _HitEffect = 0;
     public int _HitAudio = -1;
     public bool _IsBulletHit = false;
+    public bool _ForceHit = false;
 
     public override void ActImpact(MotionManager senderManager, MotionManager reciverManager)
     {

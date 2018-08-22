@@ -24,6 +24,10 @@ public class UISkillBarItem : UIItemSelect
         if (_UseTipImage.gameObject.activeInHierarchy)
         {
             _UseTipImage.fillAmount -= _Step * Time.deltaTime;
+            if (_UseTipImage.fillAmount <= 0)
+            {
+                InputManager.Instance.ResetReuseSkill();
+            }
         }
     }
 

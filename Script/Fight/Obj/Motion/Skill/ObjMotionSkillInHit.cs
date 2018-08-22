@@ -11,14 +11,17 @@ public class ObjMotionSkillInHit : ObjMotionSkillBase
 
     public override bool ActSkill(Hashtable exhash)
     {
-        return base.ActSkill(exhash);
-
         MotionManager._StateFly.ResetFly();
+        MotionManager.ResetMove();
+        return base.ActSkill(exhash);
     }
 
 
     public override bool IsCanActSkill()
     {
+        if (_MotionManager.IsMotionDie)
+            return false;
+
         if (_ActInHit && _MotionManager._ActionState == _MotionManager._StateHit)
             return true;
 
