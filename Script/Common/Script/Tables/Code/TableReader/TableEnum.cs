@@ -47,6 +47,15 @@ namespace Tables
     }
 
     //
+    public enum GLOABL_BUFF_TYPE
+    {
+        None = 0, //None,枚举必须保留0值
+        Talent = 1, //Talent,Talent
+        ExTalent = 2, //ExTalent,ExTalent
+        ExAttr = 3, //ExAttr,ExAttr
+    }
+
+    //
     public enum ITEM_QUALITY
     {
         WHITE = 0, //WHITE,枚举必须保留0值

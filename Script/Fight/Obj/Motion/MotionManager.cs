@@ -600,14 +600,20 @@ public class MotionManager : MonoBehaviour
         return true;
     }
 
-    public int BuffModifyDamage(int damageValue, ImpactBase impactBase)
+    public void BuffModifyDamage(RoleAttrManager.DamageClass damageValue, ImpactBase impactBase)
     {
-        int modifiedValue = damageValue;
         for (int i = 0; i < _ImpactBuffs.Count; ++i)
         {
-            modifiedValue = _ImpactBuffs[i].DamageModify(modifiedValue, impactBase);
+            _ImpactBuffs[i].DamageModify(damageValue, impactBase);
         }
-        return modifiedValue;
+    }
+
+    public void BuffCastDamage(RoleAttrManager.DamageClass damageValue, ImpactBase impactBase)
+    {
+        for (int i = 0; i < _ImpactBuffs.Count; ++i)
+        {
+            _ImpactBuffs[i].CastDamage(damageValue, impactBase);
+        }
     }
 
     #endregion

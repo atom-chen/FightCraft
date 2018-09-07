@@ -179,6 +179,7 @@ public class RoleData : SaveItemBase
         SetEquipAttr(_BaseAttr);
         GemData.Instance.SetGemAttr(_BaseAttr);
         LegendaryData.Instance.SetAttr(_BaseAttr);
+        GlobalBuffData.Instance.SetAttr(_BaseAttr);
 
         CalculateSecondAttr(_BaseAttr);
     }
@@ -291,7 +292,7 @@ public class RoleData : SaveItemBase
     {
         get
         {
-            return _RoleLevel * 1 + _AddStrength;
+            return _RoleLevel + _AttrLevel + _AddStrength;
         }
     }
 
@@ -301,7 +302,7 @@ public class RoleData : SaveItemBase
     {
         get
         {
-            return _RoleLevel * 1 + _AddDexterity;
+            return _RoleLevel + _AttrLevel + _AddDexterity;
         }
     }
 
@@ -311,7 +312,7 @@ public class RoleData : SaveItemBase
     {
         get
         {
-            return _RoleLevel * 1 + _AddVitality;
+            return _RoleLevel + _AttrLevel + _AddVitality;
         }
     }
 
@@ -321,7 +322,7 @@ public class RoleData : SaveItemBase
     {
         get
         {
-            return _RoleLevel * 1 + _AddIntelligence;
+            return _RoleLevel + _AttrLevel + _AddIntelligence;
         }
     }
 

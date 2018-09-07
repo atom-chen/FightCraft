@@ -18,6 +18,7 @@ namespace Tables
         public int Atk { get; set; }
         public int HP { get; set; }
         public int Defence { get; set; }
+        public int DefenceStandar { get; set; }
         public EquipBaseAttrRecord(DataRecord dataRecord)
         {
             if (dataRecord != null)
@@ -37,6 +38,7 @@ namespace Tables
             recordStrList.Add(TableWriteBase.GetWriteStr(Atk));
             recordStrList.Add(TableWriteBase.GetWriteStr(HP));
             recordStrList.Add(TableWriteBase.GetWriteStr(Defence));
+            recordStrList.Add(TableWriteBase.GetWriteStr(DefenceStandar));
 
             return recordStrList.ToArray();
         }
@@ -106,6 +108,7 @@ namespace Tables
                 pair.Value.Atk = TableReadBase.ParseInt(pair.Value.ValueStr[4]);
                 pair.Value.HP = TableReadBase.ParseInt(pair.Value.ValueStr[5]);
                 pair.Value.Defence = TableReadBase.ParseInt(pair.Value.ValueStr[6]);
+                pair.Value.DefenceStandar = TableReadBase.ParseInt(pair.Value.ValueStr[7]);
             }
         }
     }

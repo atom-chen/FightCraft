@@ -19,7 +19,7 @@ namespace Tables
         public int Profession { get; set; }
         public string SkillInput { get; set; }
         public string SkillType { get; set; }
-        public string SkillAttr { get; set; }
+        public AttrValueRecord SkillAttr { get; set; }
         public int StartRoleLevel { get; set; }
         public int StartPreSkill { get; set; }
         public int StartPreSkillLv { get; set; }
@@ -50,7 +50,14 @@ namespace Tables
             recordStrList.Add(TableWriteBase.GetWriteStr(Profession));
             recordStrList.Add(TableWriteBase.GetWriteStr(SkillInput));
             recordStrList.Add(TableWriteBase.GetWriteStr(SkillType));
-            recordStrList.Add(TableWriteBase.GetWriteStr(SkillAttr));
+            if (SkillAttr != null)
+            {
+                recordStrList.Add(SkillAttr.Id);
+            }
+            else
+            {
+                recordStrList.Add("");
+            }
             recordStrList.Add(TableWriteBase.GetWriteStr(StartRoleLevel));
             recordStrList.Add(TableWriteBase.GetWriteStr(StartPreSkill));
             recordStrList.Add(TableWriteBase.GetWriteStr(StartPreSkillLv));
@@ -135,7 +142,14 @@ namespace Tables
                 pair.Value.Profession = TableReadBase.ParseInt(pair.Value.ValueStr[5]);
                 pair.Value.SkillInput = TableReadBase.ParseString(pair.Value.ValueStr[6]);
                 pair.Value.SkillType = TableReadBase.ParseString(pair.Value.ValueStr[7]);
-                pair.Value.SkillAttr = TableReadBase.ParseString(pair.Value.ValueStr[8]);
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[8]))
+                {
+                    pair.Value.SkillAttr =  TableReader.AttrValue.GetRecord(pair.Value.ValueStr[8]);
+                }
+                else
+                {
+                    pair.Value.SkillAttr = null;
+                }
                 pair.Value.StartRoleLevel = TableReadBase.ParseInt(pair.Value.ValueStr[9]);
                 pair.Value.StartPreSkill = TableReadBase.ParseInt(pair.Value.ValueStr[10]);
                 pair.Value.StartPreSkillLv = TableReadBase.ParseInt(pair.Value.ValueStr[11]);

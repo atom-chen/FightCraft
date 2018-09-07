@@ -19,16 +19,15 @@ public class ImpactBuffBlockCD : ImpactBuffCD
             return false;
     }
 
-    public override int DamageModify(int orgDamage, ImpactBase damageImpact)
+    public override void DamageModify(RoleAttrManager.DamageClass orgDamage, ImpactBase damageImpact)
     {
         if (IsInCD())
         {
-            return base.DamageModify(orgDamage, damageImpact);
+            base.DamageModify(orgDamage, damageImpact);
         }
         else
         {
             SetCD();
-            return 0;
         }
 
     }

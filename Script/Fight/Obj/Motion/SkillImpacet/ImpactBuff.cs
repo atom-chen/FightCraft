@@ -218,9 +218,14 @@ public class ImpactBuff : ImpactBase
         return true;
     }
 
-    public virtual int DamageModify(int orgDamage, ImpactBase damageImpact)
+    public virtual void DamageModify(RoleAttrManager.DamageClass orgDamage, ImpactBase damageImpact)
     {
-        return orgDamage;
+        
+    }
+
+    public virtual void CastDamage(RoleAttrManager.DamageClass orgDamage, ImpactBase damageImpact)
+    {
+
     }
 
     #endregion

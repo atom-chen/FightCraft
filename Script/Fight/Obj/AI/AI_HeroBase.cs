@@ -30,6 +30,9 @@ public class AI_HeroBase : AI_Base
 
     private void InitRise()
     {
+        if (!_IsRiseBoom)
+            return;
+
         var riseBoom = ResourceManager.Instance.GetInstanceGameObject("SkillMotion/CommonImpact/RiseBoomSkill");
         var motionTrans = transform.Find("Motion");
         riseBoom.transform.SetParent(motionTrans);
@@ -42,6 +45,9 @@ public class AI_HeroBase : AI_Base
 
     private void RiseUpdate()
     {
+        if (!_IsRiseBoom)
+            return;
+
         if (_SelfMotion._ActionState == _SelfMotion._StateRise)
         {
             if (!_IsRiseEvent)

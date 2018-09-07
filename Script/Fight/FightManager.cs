@@ -176,6 +176,7 @@ public class FightManager : InstanceBase<FightManager>
         //PlayerDataPack.Instance._SelectedRole.InitExAttrs();
         var motionTran = mainBase.transform.Find("Motion");
 
+        GlobalBuffData.Instance.ActBuffInFight();
         List<string> skillMotions = SkillData.Instance.GetRoleSkills();
 
         foreach (var skillMotion in skillMotions)
@@ -344,6 +345,8 @@ public class FightManager : InstanceBase<FightManager>
         GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_EXIT_STAGE, this, hash);
 
         GameCore.Instance.EventController.UnRegisteEvent(EVENT_TYPE.EVENT_LOGIC_ROLE_LEVEL_UP, RoleLevelUp);
+
+        GlobalBuffData.Instance.DeactBuffOutFight();
     }
 
 

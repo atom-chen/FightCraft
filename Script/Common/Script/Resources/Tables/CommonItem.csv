@@ -188,3 +188,9 @@
 1000103,GamblingShoe,,1,1,Rings_8009,Rings_8009,1,Drop/Gem/Gem3
 1000104,GamblingNecklace,,1,1,Rings_8009,Rings_8009,1,Drop/Gem/Gem3
 1000105,GamblingRing,,1,1,Rings_8009,Rings_8009,1,Drop/Gem/Gem3
+#element material,,,,,,,,
+1100001,FiveElement1,FiveElement1,1,1,FB_005,FB_005,1,Drop/Gem/Gem1
+1100002,FiveElement2,FiveElement2,1,1,FB_005,FB_005,2,Drop/Gem/Gem2
+1100003,FiveElement3,FiveElement3,1,1,FB_005,FB_005,3,Drop/Gem/Gem3
+1100004,FiveElement4,FiveElement4,1,1,FB_005,FB_005,4,Drop/Gem/Gem4
+1100005,FiveElement5,FiveElement5,1,1,FB_005,FB_005,5,Drop/Gem/Gem5

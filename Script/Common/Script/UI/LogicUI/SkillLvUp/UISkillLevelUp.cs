@@ -98,7 +98,7 @@ public class UISkillLevelUp : UIBase
         }
 
         var skillTab = Tables.TableReader.SkillInfo.GetRecord(_SelectedSkill.SkillID);
-        var impactType = Type.GetType(_SelectedSkill.SkillRecord.SkillAttr);
+        var impactType = Type.GetType(_SelectedSkill.SkillRecord.SkillAttr.AttrImpact);
         if (impactType != null)
         {
 
@@ -175,45 +175,22 @@ public class UISkillLevelUp : UIBase
                 _MoneyText.color = Color.green;
             }
         }
+
+        if (skillTab.MaxLevel == _SelectedSkill.SkillLevel)
+        {
+            _LevelUp.interactable = false;
+            _NeedRoleLv.text = StrDictionary.GetFormatStr(62006);
+        }
+        else
+        {
+            _LevelUp.interactable = true;
+        }
     }
 
     public void OnBtnSkillLvUp()
     {
         if (_SelectedSkill == null)
             return;
-
-        var skillTab = Tables.TableReader.SkillInfo.GetRecord(_SelectedSkill.SkillID);
-        int nextLv = skillTab.StartRoleLevel + (_SelectedSkill.SkillActureLevel) * skillTab.NextLvInterval;
-        if (RoleData.SelectRole._RoleLevel < nextLv)
-        {
-            UIMessageTip.ShowMessageTip(62002);
-            return;
-        }
-
-        if (skillTab.StartPreSkill > 0)
-        {
-            var preSkillTab = TableReader.SkillInfo.GetRecord(skillTab.StartPreSkill.ToString());
-            var skillItem = SkillData.Instance.GetSkillInfo(preSkillTab.Id);
-            if (skillItem.SkillActureLevel < skillTab.StartPreSkillLv)
-            {
-                UIMessageTip.ShowMessageTip(62003);
-                return;
-            }
-
-        }
-
-        if (skillTab.CostStep[0] == (int)MONEYTYPE.GOLD)
-        {
-            int costValue = GameDataValue.GetSkillLvUpGold(skillTab, _SelectedSkill.SkillLevel);
-            if (!PlayerDataPack.Instance.DecGold(costValue))
-                return;
-        }
-        else
-        {
-            int costValue = skillTab.CostStep[1];
-            if (!PlayerDataPack.Instance.DecDiamond(costValue))
-                return;
-        }
 
         SkillData.Instance.SkillLevelUp(_SelectedSkill.SkillID);
         RefreshSkillInfos();

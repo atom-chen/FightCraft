@@ -70,5 +70,17 @@ public class ItemSkill : ItemBase
         SkillID = id;
         SkillLevel = level;
     }
+
+    public void AddExLevel(int level = 1)
+    {
+        _SkillExLevel += level;
+        _SkillExLevel = Mathf.Clamp(_SkillExLevel, 0, 9999);
+    }
+
+    public void DecExLevel(int level = 1)
+    {
+        _SkillExLevel -= level;
+        _SkillExLevel = Mathf.Clamp(_SkillExLevel, 0, 9999);
+    }
 }
 

@@ -27,7 +27,7 @@ public class RoleAttrImpactManager
 
     public static RoleAttrImpactBase GetAttrImpact(ItemSkill skillInfo)
     {
-        var impactType = Type.GetType(skillInfo.SkillRecord.SkillAttr);
+        var impactType = Type.GetType(skillInfo.SkillRecord.SkillAttr.AttrImpact);
         if (impactType == null)
             return null;
 

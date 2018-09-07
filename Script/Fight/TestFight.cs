@@ -267,30 +267,30 @@ public class TestFight : MonoBehaviour
 
             var equipedItem = RoleData.SelectRole.GetEquipItem(itemEquip.EquipItemRecord.Slot);
             bool changeEquip = false;
-            //if (equipedItem.IsVolid())
-            //{
-            //    //if (itemEquip.EquipItemRecord.Slot == EQUIP_SLOT.WEAPON)
-            //    {
-            //        if (itemEquip.EquipLevel > equipedItem.EquipLevel)
-            //        {
-            //            changeEquip = true;
-            //        }
-            //        else if(itemEquip.EquipQuality > equipedItem.EquipQuality)
-            //        {
-            //            changeEquip = true;
-            //        }
+            if (equipedItem.IsVolid())
+            {
+                //if (itemEquip.EquipItemRecord.Slot == EQUIP_SLOT.WEAPON)
+                {
+                    if (itemEquip.EquipLevel > equipedItem.EquipLevel)
+                    {
+                        changeEquip = true;
+                    }
+                    else if(itemEquip.EquipQuality > equipedItem.EquipQuality)
+                    {
+                        changeEquip = true;
+                    }
                     
-            //    }
-            //    //else
-            //    //{
-            //    //    if (itemEquip.CombatValue > equipedItem.CombatValue)
-            //    //        changeEquip = true;
-            //    //}
-            //}
-            //else
-            //{
-            //    changeEquip = true;
-            //}
+                }
+                //else
+                //{
+                //    if (itemEquip.CombatValue > equipedItem.CombatValue)
+                //        changeEquip = true;
+                //}
+            }
+            else
+            {
+                changeEquip = true;
+            }
 
             if (changeEquip)
             {
@@ -356,19 +356,7 @@ public class TestFight : MonoBehaviour
     {
         var skillID = GetTestSkill(type);
         var skillData = SkillData.Instance.GetSkillInfo(skillID.ToString());
-        if (skillData.SkillRecord.CostStep[0] == (int)MONEYTYPE.GOLD)
-        {
-            int costValue = GameDataValue.GetSkillLvUpGold(skillData.SkillRecord, skillData.SkillLevel);
-            if (!PlayerDataPack.Instance.DecGold(costValue))
-                return;
-        }
-        else
-        {
-            int costValue = skillData.SkillRecord.CostStep[1];
-            if (!PlayerDataPack.Instance.DecDiamond(costValue))
-                return;
-        }
-        skillData.LevelUp();
+        SkillData.Instance.SkillLevelUp(skillID.ToString());
     }
 
     public static int GetTestSkill(int type)

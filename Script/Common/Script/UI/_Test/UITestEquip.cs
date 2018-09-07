@@ -161,13 +161,14 @@ public class UITestEquip : UIBase
 
 #if UNITY_EDITOR
                 //attr
-                streamWriter.WriteLine(fightTimes + "\t" + level + "\t" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Attack)
-                    + "\t" + monAttr.HP + "\t" + damageClass.TotalDamageValue
-                    + "\t" + damageRage + "\t" + ((float)monAttr.HP / damageClass.TotalDamageValue)
-                    + "\t" + damageRage2 + "\t" + ((float)monAttr.HP / damageClass2.TotalDamageValue));
+                //streamWriter.WriteLine(fightTimes + "\t" + level + "\t" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Attack)
+                //    + "\t" + monAttr.HP + "\t" + damageClass.TotalDamageValue
+                //    + "\t" + damageRage + "\t" + ((float)monAttr.HP / damageClass.TotalDamageValue)
+                //    + "\t" + damageRage2 + "\t" + ((float)monAttr.HP / damageClass2.TotalDamageValue));
 
-                //streamWriter.WriteLine(fightTimes + "\t" + level + "\t" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax)
-                //    + "\t" + monAttr.GetBaseAttr(RoleAttrEnum.Attack));
+                streamWriter.WriteLine(fightTimes + "\t" + level + "\t" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax)
+                    + "\t" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Defense)
+                    + "\t" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Attack));
 
 
                 //streamWriter.WriteLine(fightTimes + "\t" + level + "\t" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax)

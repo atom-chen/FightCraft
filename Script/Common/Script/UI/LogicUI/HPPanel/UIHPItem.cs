@@ -26,6 +26,7 @@ public class UIHPItem : UIItemBase
             transform = _FollowTransform.Find("Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck");
         }
 
+        _HPProcess.value = 1;
 
         _HeightDelta = transform.position - _FollowTransform.position;
         _HeightDelta.x = 0;

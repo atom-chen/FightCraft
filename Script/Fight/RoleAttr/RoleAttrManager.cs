@@ -584,8 +584,9 @@ public class RoleAttrManager : MonoBehaviour
 
         //skill
         var impactBase = (ImpactBase)resultHash["ImpactBase"];
-        damageClass.TotalDamageValue = _MotionManager.BuffModifyDamage(damageClass.TotalDamageValue, impactBase);
-        damageClass.AttachDamageValue = _MotionManager.BuffModifyDamage(damageClass.AttachDamageValue, impactBase);
+        _MotionManager.BuffModifyDamage(damageClass, impactBase);
+        //damageClass.AttachDamageValue = _MotionManager.BuffModifyDamage(damageClass.AttachDamageValue, impactBase);
+        sender._MotionManager.BuffCastDamage(damageClass, impactBase);
 
         if (MotionType == MOTION_TYPE.MainChar)
         {
@@ -689,7 +690,7 @@ public class RoleAttrManager : MonoBehaviour
         if (damageType == ElementType.Physic)
         {
             int phyEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.PhysicDamageEnhance);
-            var phyDamage = GameDataValue.GetPhyDamage(attackValue, damageRate, phyEnhance, defenceValue, sender.Level);
+            var phyDamage = GameDataValue.GetPhyDamage(attackValue, damageRate, phyEnhance, defenceValue, Level);
             damageClass.NormalDamageValue = Mathf.Max(phyDamage, 0);
             
         }

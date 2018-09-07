@@ -30,15 +30,13 @@ public class ImpactBuffShield : ImpactBuff
         return false;
     }
 
-    public override int DamageModify(int orgDamage, ImpactBase damageImpact)
+    public override void DamageModify(RoleAttrManager.DamageClass orgDamage, ImpactBase damageImpact)
     {
-        _ShieldValue -= orgDamage;
+        _ShieldValue -= orgDamage.TotalDamageValue;
         Debug.Log("_ShieldValue:" + _ShieldValue);
         if (_ShieldValue <= 0)
         {
             _BuffOwner.RemoveBuff(this);
         }
-
-        return 0;
     }
 }

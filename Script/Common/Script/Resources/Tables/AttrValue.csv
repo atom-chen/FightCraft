@@ -71,7 +71,7 @@
 127000,,,RoleAttrImpactBaseAttr,gem,,,35,1000,100,0,0,0,0,0,0,0
 128000,,,RoleAttrImpactBaseAttr,equip,,,36,1000,100,0,0,0,0,0,0,0
 999999,,,RoleAttrImpactPassiveDamageArea,PassiveDamageArea,3,,100000,300,100000,60000,3000,60000,1000,0,0,0
-#,,,,,,,,,,,,,,,,
+#gem,,,,,,,,,,,,,,,,
 70000,,,RoleAttrImpactBaseAttr,baiqi fire wind /Str,Strength +{0},,1,100,100,1,0,0,0,0,0,0
 70001,,,RoleAttrImpactBaseAttr,caocao wind /Dec,Dexterity +{0},,2,100,100,1,0,0,0,0,0,0
 70002,,,RoleAttrImpactBaseAttr,daji ice /Int,Intelligence +{0},,3,100,100,1,0,0,0,0,0,0
@@ -111,7 +111,7 @@
 #,,,,,,,,,,,,,,,,
 90000,,,RoleAttrImpactBaseAttr,,,,4,100,100,1,0,0,0,0,0,0
 90001,,,RoleAttrImpactBaseAttr,,,,6,100,100,1,0,0,0,0,0,0
-#,,,,,,,,,,,,,,,,
+#equip set,,,,,,,,,,,,,,,,
 2000,,,RoleAttrImpactBaseAttr,,,,4,1000,100,1,0,0,0,0,0,0
 2001,,,RoleAttrImpactBaseAttr,,,,1,1000,100,1,0,0,0,0,0,0
 2002,,,RoleAttrImpactBaseAttr,,,,2,1000,100,1,0,0,0,0,0,0
@@ -128,3 +128,70 @@
 2301,,,RoleAttrImpactSkillRangeAll,,,,4,1000,100,1,0,0,0,0,0,0
 2302,,,RoleAttrImpactBaseAttr,,,,30,1000,100,1,0,0,0,0,0,0
 2303,,,RoleAttrImpactBaseAttr,,,,32,1000,100,1,0,0,0,0,0,0
+#legendary set,,,,,,,,,,,,,,,,
+3000,,,RoleAttrImpactBaseAttr,,,,14,1,1,1,0,0,0,0,0,0
+3001,,,RoleAttrImpactBaseAttr,,,,5,1,1,1,0,0,0,0,0,0
+3002,,,RoleAttrImpactPassiveShadowHit,,,,500,500,1,1,0,0,0,0,0,0
+#five element,,,,,,,,,,,,,,,,
+1000000,,,RoleAttrImpactBaseAttr,,,,1,100,100,1,0,0,0,0,0,0
+1000001,,,RoleAttrImpactBaseAttr,,,,2,100,100,1,0,0,0,0,0,0
+1000002,,,RoleAttrImpactBaseAttr,,,,3,100,100,1,0,0,0,0,0,0
+1000003,,,RoleAttrImpactBaseAttr,,,,4,100,100,1,0,0,0,0,0,0
+1000004,,,RoleAttrImpactBaseAttr,,,,6,100,100,1,0,0,0,0,0,0
+1000005,,,RoleAttrImpactBaseAttr,,,,8,100,100,1,0,0,0,0,0,0
+1000006,,,RoleAttrImpactBaseAttr,,,,13,100,100,1,0,0,0,0,0,0
+1000007,,,RoleAttrImpactBaseAttr,,,,14,100,100,1,0,0,0,0,0,0
+1000008,,,RoleAttrImpactBaseAttr,,,,15,100,100,1,0,0,0,0,0,0
+1000009,,,RoleAttrImpactBaseAttr,,,,16,100,100,1,0,0,0,0,0,0
+#skill,,,,,,,,,,,,,,,,
+1100000,,,RoleAttrImpactSkillDamage,,,,10000,1000,0,1,0,0,0,0,0,0
+1100001,,,RoleAttrImpactSkillDamage,,,,10000,1000,0,2,1,1,1,1,1,1
+1100002,,,RoleAttrImpactSkillDamage,,,,13000,1300,0,3,2,2,2,2,2,2
+1100003,,,RoleAttrImpactSkillDamage,,,,18000,1800,0,4,3,3,3,3,3,3
+1100004,,,RoleAttrImpactSkillDamage,,,,10000,1000,0,5,4,4,4,4,4,4
+1100005,,,RoleAttrImpactSkillDamage,,,,10000,1000,0,6,5,5,5,5,5,5
+1100006,,,RoleAttrImpactSkillDamage,,,,13000,1300,0,7,6,6,6,6,6,6
+1100007,,,RoleAttrImpactSkillDamage,,,,18000,1800,0,8,7,7,7,7,7,7
+1100008,,,RoleAttrImpactBuffRate,,,,20,20,0,9,8,8,8,8,8,8
+1100009,,,RoleAttrImpactBuffRate,,,,-20,-20,0,10,9,9,9,9,9,9
+1100010,,,RoleAttrImpactSkillRange,,,,500,0,0,11,10,10,10,10,10,10
+1100011,,,RoleAttrImpactSkillSpeed,,,,500,0,0,12,11,11,11,11,11,11
+1100012,,,RoleAttrImpactSP,,,,100,0,0,13,12,12,12,12,12,12
+1100013,,,RoleAttrImpactSP,,,,100,0,0,14,13,13,13,13,13,13
+1100014,,,RoleAttrImpactSP,,,,100,0,0,15,14,14,14,14,14,14
+1100015,,,RoleAttrImpactSP,,,,100,0,0,16,15,15,15,15,15,15
+1100016,,,RoleAttrImpactSP,,,,100,0,0,17,16,16,16,16,16,16
+1100017,,,RoleAttrImpactSP,,,,100,0,0,18,17,17,17,17,17,17
+1100018,,,RoleAttrImpactSP,,,,100,0,0,19,18,18,18,18,18,18
+1100019,,,RoleAttrImpactSP,,,,100,0,0,20,19,19,19,19,19,19
+1100020,,,RoleAttrImpactSP,,,,100,0,0,21,20,20,20,20,20,20
+1100021,,,RoleAttrImpactSP,,,,100,0,0,22,21,21,21,21,21,21
+1100022,,,RoleAttrImpactSP,,,,100,0,0,23,22,22,22,22,22,22
+1100023,,,RoleAttrImpactSP,,,,100,0,0,24,23,23,23,23,23,23
+1100024,,,RoleAttrImpactExAttack,,,,2000,0,0,25,24,24,24,24,24,24
+1100025,,,RoleAttrImpactBuffExEffect,,,,1000,0,0,26,25,25,25,25,25,25
+1100026,,,RoleAttrImpactBuffHit,,,,1000,0,0,27,26,26,26,26,26,26
+1100027,,,RoleAttrImpactBuffActSkill,,,,1,0,0,28,27,27,27,27,27,27
+1100028,,,RoleAttrImpactAccumulate,,,,4000,2000,0,29,28,28,28,28,28,28
+1100029,,,RoleAttrImpactDodgeNoDamage,,,,102,2,2,30,29,29,29,29,29,29
+1100030,,,RoleAttrImpactDodgeCD,,,,12000,2,2,31,30,30,30,30,30,30
+1100031,,,RoleAttrImpactDefenceArmor,,,,2500,0,0,32,31,31,31,31,31,31
+1100032,,,RoleAttrImpactDefenceRate,,,,4000,0,0,33,32,32,32,32,32,32
+1100033,,,RoleAttrImpactBuffInHit,,,,2500,0,0,34,33,33,33,33,33,33
+1100034,,,RoleAttrImpactSkillArmor,,,,2500,0,0,35,34,34,34,34,34,34
+#global buff,,,,,,,,,,,,,,,,
+1200000,,,RoleAttrImpactPassiveBloodSucking,PassiveBloodSucking,,,10000,100,0,0,0,0,0,0,0,0
+1200001,,,RoleAttrImpactPassiveCutting,PassiveCutting,,,1000,10000,0,0,1,1,1,1,1,1
+1200002,,,RoleAttrImpactPassiveAssasination,PassiveAssasination,,,100,100000,0,0,2,2,2,2,2,2
+1200100,,,RoleAttrImpactBaseAttr,,,,12,500,0,3,2,2,2,2,2,2
+1200101,,,RoleAttrImpactBaseAttr,,,,11,500,0,3,2,2,2,2,2,2
+1200102,,,RoleAttrImpactBaseAttr,,,,13,500,0,3,2,2,2,2,2,2
+1200103,,,RoleAttrImpactBaseAttr,,,,14,1000,0,3,2,2,2,2,2,2
+1200104,,,RoleAttrImpactBaseAttr,,,,33,800,0,3,2,2,2,2,2,2
+1200105,,,RoleAttrImpactBaseAttr,,,,36,800,0,3,2,2,2,2,2,2
+1200110,,,RoleAttrImpactBaseAttr,,,,12,800,0,3,2,2,2,2,2,2
+1200111,,,RoleAttrImpactBaseAttr,,,,11,800,0,4,3,3,3,3,3,3
+1200112,,,RoleAttrImpactBaseAttr,,,,13,800,0,5,4,4,4,4,4,4
+1200113,,,RoleAttrImpactBaseAttr,,,,14,1500,0,6,5,5,5,5,5,5
+1200114,,,RoleAttrImpactBaseAttr,,,,33,1500,0,6,5,5,5,5,5,5
+1200115,,,RoleAttrImpactBaseAttr,,,,36,1500,0,3,2,2,2,2,2,2

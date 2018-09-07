@@ -41,9 +41,9 @@ public class ImpactBuffDefence : ImpactBuff
         return true;
     }
 
-    public override int DamageModify(int orgDamage, ImpactBase damageImpact)
+    public override void DamageModify(RoleAttrManager.DamageClass orgDamage, ImpactBase damageImpact)
     {
-        return (int)(orgDamage * _DefenceRate);
+        orgDamage.TotalDamageValue = (int)(orgDamage.TotalDamageValue * _DefenceRate);
     }
 
 }

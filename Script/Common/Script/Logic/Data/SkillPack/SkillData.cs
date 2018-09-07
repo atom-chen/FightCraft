@@ -67,7 +67,7 @@ public class SkillData : SaveItemBase
                 var skillInfo = GetSkillInfo(skillPair.Value.Id, ref isNeedSave);
                 _ProfessionSkills.Add(skillInfo);
 
-                if (skillInfo.SkillRecord.SkillAttr == "RoleAttrImpactSkillDamage")
+                if (skillInfo.SkillRecord.SkillAttr.AttrImpact == "RoleAttrImpactSkillDamage")
                 {
                     if (skillInfo.SkillLevel == 0)
                     {
@@ -107,7 +107,7 @@ public class SkillData : SaveItemBase
             ((skillInfo.SkillRecord.Profession >> (int)RoleData.SelectRole.Profession) & 1) == 0)
                 continue;
 
-            if (skillInfo.SkillLevel == 0)
+            if (skillInfo.SkillActureLevel == 0)
                 continue;
 
             if (skillInfo.SkillRecord.SkillInput == "5")
@@ -125,7 +125,7 @@ public class SkillData : SaveItemBase
                 }
             }
 
-            if (skillInfo.SkillRecord.SkillAttr == "RoleAttrImpactSP")
+            if (skillInfo.SkillRecord.SkillAttr.AttrImpact == "RoleAttrImpactSP")
             {
                 if (skillInfo.SkillRecord.SkillInput == "1")
                 {
@@ -141,7 +141,7 @@ public class SkillData : SaveItemBase
                 }
             }
 
-            if (skillInfo.SkillRecord.SkillAttr == "RoleAttrImpactBuffInHit")
+            if (skillInfo.SkillRecord.SkillAttr.AttrImpact == "RoleAttrImpactBuffInHit")
             {
                 skillMotions.Add("BuffInHit");
             }
@@ -252,8 +252,6 @@ public class SkillData : SaveItemBase
 
     public void SkillLevelUp(string skillID)
     {
-        //cost
-
         var findSkill = _SkillItems.Find((skillInfo) =>
         {
             if (skillInfo.SkillID == skillID)
@@ -263,6 +261,46 @@ public class SkillData : SaveItemBase
             return false;
         });
 
+        var skillTab = Tables.TableReader.SkillInfo.GetRecord(skillID);
+        if (skillTab.MaxLevel <= findSkill.SkillLevel)
+        {
+            UIMessageTip.ShowMessageTip(62004);
+            return;
+        }
+
+        //cost
+        int nextLv = skillTab.StartRoleLevel + findSkill.SkillLevel * skillTab.NextLvInterval;
+        if (RoleData.SelectRole._RoleLevel < nextLv)
+        {
+            UIMessageTip.ShowMessageTip(62002);
+            return;
+        }
+
+        if (skillTab.StartPreSkill > 0)
+        {
+            var preSkillTab = TableReader.SkillInfo.GetRecord(skillTab.StartPreSkill.ToString());
+            var skillItem = SkillData.Instance.GetSkillInfo(preSkillTab.Id);
+            if (skillItem.SkillActureLevel < skillTab.StartPreSkillLv)
+            {
+                UIMessageTip.ShowMessageTip(62003);
+                return;
+            }
+
+        }
+
+        if (skillTab.CostStep[0] == (int)MONEYTYPE.GOLD)
+        {
+            int costValue = GameDataValue.GetSkillLvUpGold(skillTab, findSkill.SkillLevel);
+            if (!PlayerDataPack.Instance.DecGold(costValue))
+                return;
+        }
+        else
+        {
+            int costValue = skillTab.CostStep[1];
+            if (!PlayerDataPack.Instance.DecDiamond(costValue))
+                return;
+        }
+
         if (findSkill == null)
         {
             findSkill = new ItemSkill(skillID);
@@ -271,7 +309,6 @@ public class SkillData : SaveItemBase
             SaveClass(false);
         }
 
-        var skillTab = Tables.TableReader.SkillInfo.GetRecord(skillID);
         if (skillTab.MaxLevel > findSkill.SkillLevel)
         {
             findSkill.LevelUp();

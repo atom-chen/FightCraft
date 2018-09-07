@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Tables;
+
 public class RoleAttrImpactSkillDamage : RoleAttrImpactBase
 {
 

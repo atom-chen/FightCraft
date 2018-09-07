@@ -313,6 +313,12 @@ public class GemData : SaveItemBase
         if (lvUpGem == null)
             return false;
 
+        if (lvUpGem.Level >= ItemGem._MaxGemLevel)
+        {
+            UIMessageTip.ShowMessageTip("30006");
+            return false;
+        }
+
         if (lvInfo == null)
             lvInfo = GetGemLevelUpInfo(lvUpGem);
 

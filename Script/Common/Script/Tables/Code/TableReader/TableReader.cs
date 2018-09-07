@@ -41,11 +41,15 @@ namespace Tables
 //
         public static FightAttr FightAttr { get; internal set; }
 //
+        public static FiveElement FiveElement { get; internal set; }
+//
         public static GemBaseAttr GemBaseAttr { get; internal set; }
 //
         public static GemSet GemSet { get; internal set; }
 //
         public static GemTable GemTable { get; internal set; }
+//
+        public static GlobalBuff GlobalBuff { get; internal set; }
 //
         public static Mission Mission { get; internal set; }
 //
@@ -76,9 +80,11 @@ namespace Tables
             EquipItem = new EquipItem(TableReadBase.GetTableText("EquipItem"), false);
             EquipSpAttr = new EquipSpAttr(TableReadBase.GetTableText("EquipSpAttr"), false);
             FightAttr = new FightAttr(TableReadBase.GetTableText("FightAttr"), false);
+            FiveElement = new FiveElement(TableReadBase.GetTableText("FiveElement"), false);
             GemBaseAttr = new GemBaseAttr(TableReadBase.GetTableText("GemBaseAttr"), false);
             GemSet = new GemSet(TableReadBase.GetTableText("GemSet"), false);
             GemTable = new GemTable(TableReadBase.GetTableText("GemTable"), false);
+            GlobalBuff = new GlobalBuff(TableReadBase.GetTableText("GlobalBuff"), false);
             Mission = new Mission(TableReadBase.GetTableText("Mission"), false);
             MonsterAttr = new MonsterAttr(TableReadBase.GetTableText("MonsterAttr"), false);
             MonsterBase = new MonsterBase(TableReadBase.GetTableText("MonsterBase"), false);
@@ -98,9 +104,11 @@ namespace Tables
             EquipItem.CoverTableContent();
             EquipSpAttr.CoverTableContent();
             FightAttr.CoverTableContent();
+            FiveElement.CoverTableContent();
             GemBaseAttr.CoverTableContent();
             GemSet.CoverTableContent();
             GemTable.CoverTableContent();
+            GlobalBuff.CoverTableContent();
             Mission.CoverTableContent();
             MonsterAttr.CoverTableContent();
             MonsterBase.CoverTableContent();

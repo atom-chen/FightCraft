@@ -5,12 +5,12 @@ public class ImpactBuffDamageLimit : ImpactBuff
 {
     public float _LimitHPPersent = 0.33f;
 
-    public override int DamageModify(int orgDamage, ImpactBase damageImpact)
+    public override void DamageModify(RoleAttrManager.DamageClass orgDamage, ImpactBase damageImpact)
     {
         int hpPersent = (int)(_BuffOwner.RoleAttrManager.GetBaseAttr(RoleAttrEnum.HPMax) * _LimitHPPersent);
-        if (orgDamage > hpPersent)
-            return hpPersent;
+        if (orgDamage.TotalDamageValue > hpPersent)
+            orgDamage.TotalDamageValue = hpPersent;
 
-        return base.DamageModify(orgDamage, damageImpact);
+        base.DamageModify(orgDamage, damageImpact);
     }
 }

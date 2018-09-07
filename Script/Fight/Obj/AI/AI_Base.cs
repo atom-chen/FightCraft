@@ -506,6 +506,9 @@ public class AI_Base : MonoBehaviour
 
     private void OnHitProtect(ImpactHit impactHit)
     {
+        if (impactHit == null)
+            return;
+
         if (impactHit.SkillMotion is ObjMotionSkillAttack)
             return;
 

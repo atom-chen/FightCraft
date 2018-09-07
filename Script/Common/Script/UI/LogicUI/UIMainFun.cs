@@ -131,6 +131,16 @@ public class UIMainFun : UIBase
     {
         UISystemSetting.ShowAsyn();
     }
+
+    public void BtnBuffT()
+    {
+        UIGlobalBuff.ShowTelantAsyn();
+    }
+
+    public void BtnBuffA()
+    {
+        UIGlobalBuff.ShowAttrAsyn();
+    }
     #endregion
 }
 

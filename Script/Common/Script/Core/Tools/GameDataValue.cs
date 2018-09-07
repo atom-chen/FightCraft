@@ -101,7 +101,7 @@ public class GameDataValue
     public static int _AtkPerRoleLevel = 0;
     public static int _AtkRoleLevelBase = 10;
     public static int _HPPerRoleLevel = 0;
-    public static int _HPRoleLevelBase = 65;
+    public static int _HPRoleLevelBase = 100;
 
     public static float _AttackPerStrength = 0.5f;
     public static float _DmgEnhancePerStrength = 0.5f;
@@ -116,7 +116,7 @@ public class GameDataValue
     public static float _EleEnhancePerInt = 0.4f;
     public static float _IntToAtk = 1f;
 
-    public static float _HPPerVit = 3;
+    public static float _HPPerVit = 8;
     public static float _FinalDmgRedusePerVit = 0.12f;
     public static float _VitToAtk = 1f;
 
@@ -129,8 +129,8 @@ public class GameDataValue
 
     public static float _IgnoreDefenceToAtk = 0.5f;
 
-    public static float _HpToAtk = 4.0f;
-    public static float _DefToAtk = 0.4f;
+    public static float _HpToAtk = 10.0f;
+    public static float _DefToAtk = 3.0f;
     public static float _MoveSpeedToAtk = 18f;
     public static float _AtkSpeedToAtk = 8f;
     public static float _CriticalChanceToAtk = 8f;
@@ -680,6 +680,13 @@ public class GameDataValue
 
     #region damage
 
+    public const int _MAX_ROLE_LEVEL = 200;
+
+    public static int GetRoleLv(int level)
+    {
+        return Mathf.Clamp(level, 1, _MAX_ROLE_LEVEL);
+    }
+
     public static int GetEleDamage(int eleAtk, float damageRate, int eleEnhance, int eleResist)
     {
         float eleDamage = eleAtk * damageRate * (1 + eleEnhance / 1000.0f);
@@ -698,11 +705,12 @@ public class GameDataValue
 
     public static int GetPhyDamage(int phyAtk, float damageRate, int enhance, int defence, int roleLevel)
     {
+        var equipRecord = TableReader.EquipBaseAttr.GetRecord(GetRoleLv(roleLevel).ToString());
         float eleDamage = phyAtk * damageRate * (1 + enhance / 1000.0f);
         float resistRate = 1;
         if (defence > 0 && roleLevel > 0)
         {
-            resistRate = (1 - defence / (defence + _DefencePerLevel * roleLevel * 1.5f));
+            resistRate = (1 - defence / (defence + equipRecord.DefenceStandar));
         }
 
         int finalDamage = Mathf.CeilToInt(eleDamage * resistRate);
@@ -1342,10 +1350,10 @@ public class GameDataValue
 
     public static int GetSkillLvUpGold(SkillInfoRecord skillRecord, int skillLv)
     {
-        if (skillLv == 1)
-            return skillRecord.CostStep[0];
+        if (skillLv == 0)
+            return skillRecord.CostStep[1];
         else
-            return skillRecord.CostStep[1] * skillLv;
+            return skillRecord.CostStep[2] * skillLv;
     }
 
     #endregion
@@ -1358,10 +1366,12 @@ public class GameDataValue
 
     public static int GetStageLevel(int difficult, int stageIdx, STAGE_TYPE stageMode)
     {
+        int diffLv = (difficult - 2) * 20;
+        diffLv = Mathf.Clamp(diffLv, 0, 200);
         int level = 0;
         if (stageMode == STAGE_TYPE.NORMAL)
         {
-            level = (difficult - 1) * 20 + stageIdx;
+            level = diffLv + stageIdx;
         }
         else if (stageMode == STAGE_TYPE.BOSS)
         {
@@ -1525,7 +1535,8 @@ public class GameDataValue
 
     public static int GetMonsterDef(MonsterBaseRecord monsterBase, int roleLv, MOTION_TYPE monsterType)
     {
-        int def = (int)(CalEquipTorsoDefence(roleLv) * 1.5f);
+        var equipRecord = TableReader.EquipBaseAttr.GetRecord(GetRoleLv(roleLv).ToString());
+        int def = equipRecord.DefenceStandar;
         return def;
     }
 

@@ -9,8 +9,12 @@ public class RoleAttrImpactPassiveShadowHit : RoleAttrImpactPassive
     {
         //base.InitImpact(skillInput, args);
 
-        _ShadowHitCnt = args[0];
-        _HitDamage = GameDataValue.ConfigIntToFloat(args[1]);
+        var attrTab = Tables.TableReader.AttrValue.GetRecord(args[0].ToString());
+        _ShadowHitCnt = GetValueFromTab(attrTab, args[1]);
+        _HitDamage = GetValue2FromTab(attrTab, args[1]);
+
+        //_ShadowHitCnt = args[0];
+        //_HitDamage = GameDataValue.ConfigIntToFloat(args[1]);
        
     }
 
@@ -54,6 +58,19 @@ public class RoleAttrImpactPassiveShadowHit : RoleAttrImpactPassive
 
     private int _ShadowHitCnt;
     private float _HitDamage;
+
+    private static int GetValueFromTab(AttrValueRecord attrRecord, int level)
+    {
+        int theValue = (level) / 2 + 1;
+        return theValue;
+    }
+
+    private static float GetValue2FromTab(AttrValueRecord attrRecord, int level)
+    {
+        int stepLv = (level) / 3 + 1;
+        var theValue = GameDataValue.ConfigIntToFloat(attrRecord.AttrParams[0] + attrRecord.AttrParams[1] * stepLv);
+        return theValue;
+    }
 
     #endregion
 }

@@ -161,7 +161,7 @@ public class UIStageSelect : UIBase
 
     public void OnEnterStage()
     {
-        ActData.Instance.StartStage(1, int.Parse(_SelectedStage.Id), STAGE_TYPE.NORMAL);
+        ActData.Instance.StartStage(_SelectedDiff, int.Parse(_SelectedStage.Id), STAGE_TYPE.NORMAL);
         LogicManager.Instance.EnterFight(_SelectedStage);
     }
 

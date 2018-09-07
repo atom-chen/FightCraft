@@ -59,12 +59,10 @@ public class ImpactBuffConcealInNormal : ImpactBuff
         return true;
     }
 
-    public override int DamageModify(int orgDamage, ImpactBase damageImpact)
+    public override void DamageModify(RoleAttrManager.DamageClass orgDamage, ImpactBase damageImpact)
     {
         if (_BuffOwner._ActionState == _BuffOwner._StateIdle
             || _BuffOwner._ActionState == _BuffOwner._StateMove)
-            return 0;
-
-        return orgDamage;
+            orgDamage.TotalDamageValue = 0;
     }
 }

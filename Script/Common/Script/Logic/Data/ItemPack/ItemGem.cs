@@ -15,6 +15,9 @@ public class ItemGem : ItemBase
     }
 
     #region base attr
+
+    public const int _MaxGemLevel = 200;
+
     public int Level
     {
         get
@@ -76,7 +79,9 @@ public class ItemGem : ItemBase
         {
             if (_GemAttr == null)
             {
-                _GemAttr = GameDataValue.GetGemAttr((RoleAttrEnum)GemRecord.AttrValue.AttrParams[0], Level);
+                int recordLv = Mathf.Clamp(Level, 0, _MaxGemLevel);
+                var levelRecord = TableReader.GemBaseAttr.GetRecord(recordLv.ToString());
+                _GemAttr = GameDataValue.GetGemAttr((RoleAttrEnum)GemRecord.AttrValue.AttrParams[0], levelRecord.Value);
             }
             return _GemAttr;
         }
@@ -84,7 +89,9 @@ public class ItemGem : ItemBase
 
     public void RefreshGemAttr()
     {
-        _GemAttr = GameDataValue.GetGemAttr((RoleAttrEnum)GemRecord.AttrValue.AttrParams[0], Level);
+        int recordLv = Mathf.Clamp(Level, 0, _MaxGemLevel);
+        var levelRecord = TableReader.GemBaseAttr.GetRecord(recordLv.ToString());
+        _GemAttr = GameDataValue.GetGemAttr((RoleAttrEnum)GemRecord.AttrValue.AttrParams[0], levelRecord.Value);
     }
 
     #endregion

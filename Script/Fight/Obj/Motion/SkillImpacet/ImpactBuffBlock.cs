@@ -32,21 +32,25 @@ public class ImpactBuffBlock : ImpactBuff
         return true;
     }
 
-    public override int DamageModify(int orgDamage, ImpactBase damageImpact)
+    public override void DamageModify(RoleAttrManager.DamageClass orgDamage, ImpactBase damageImpact)
     {
         if (damageImpact == null)
-            return orgDamage;
+            return;
 
         var hitImpact = damageImpact as ImpactHit;
         if(hitImpact == null)
-            return orgDamage;
+            return;
 
         if (hitImpact._IsBulletHit && _IsBlockBullet)
-            return 0;
+        {
+            orgDamage.TotalDamageValue = 0;
+            return;
+        }
 
         if (!hitImpact._IsBulletHit && _IsBlockNotBullet)
-            return 0;
-
-        return orgDamage;
+        {
+            orgDamage.TotalDamageValue = 0;
+            return;
+        }
     }
 }

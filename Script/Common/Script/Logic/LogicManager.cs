@@ -66,6 +66,9 @@ public class LogicManager
         AchievementData.Instance.LoadClass(true);
         AchievementData.Instance.InitMissionData();
 
+        GlobalBuffData.Instance.LoadClass(true);
+        GlobalBuffData.Instance.InitGlobalBuffData();
+
         UIMainFun.ShowAsyn();
     }
 

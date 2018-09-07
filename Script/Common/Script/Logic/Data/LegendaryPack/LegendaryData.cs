@@ -197,16 +197,17 @@ public class LegendaryData : SaveItemBase
     public class LegendaryShadowAttrInfo
     {
         public int _NeedValue;
-        public int _ShadowCnt;
-        public int _ShadowDmg;
+        public int _Level;
     }
 
     public List<LegendaryShadowAttrInfo> _ShadowInfos = new List<LegendaryShadowAttrInfo>()
     {
-        new LegendaryShadowAttrInfo() { _NeedValue = 3600, _ShadowCnt=2, _ShadowDmg=1000},
-        new LegendaryShadowAttrInfo() { _NeedValue = 2800, _ShadowCnt=2, _ShadowDmg=500},
-        new LegendaryShadowAttrInfo() { _NeedValue = 2240, _ShadowCnt=1, _ShadowDmg=500},
+        new LegendaryShadowAttrInfo() { _NeedValue = 3750, _Level=3},
+        new LegendaryShadowAttrInfo() { _NeedValue = 3000, _Level=2},
+        new LegendaryShadowAttrInfo() { _NeedValue = 1875, _Level=1},
     };
+
+    public static string _SpecilImpact = "3002";
 
     public float _AtkParam = 0.06f;
     public float _HpParam = 0.25f;
@@ -219,15 +220,16 @@ public class LegendaryData : SaveItemBase
             return;
 
         int atkValue = Mathf.Max(1, Mathf.CeilToInt(_AtkParam * _LegendaryValue));
-        int hpValue = Mathf.Max(1, Mathf.CeilToInt(_HpParam * _LegendaryValue));
-        _ExAttrs.Add(EquipExAttr.GetBaseExAttr(RoleAttrEnum.Attack, atkValue));
-        _ExAttrs.Add(EquipExAttr.GetBaseExAttr(RoleAttrEnum.HPMax, hpValue));
 
+        _ExAttrs.Add(EquipExAttr.GetBaseExAttr(RoleAttrEnum.Attack, atkValue));
+        _ExAttrs.Add(EquipExAttr.GetBaseExAttr(RoleAttrEnum.HPMax, atkValue));
+
+        var attrRecord = TableReader.AttrValue.GetRecord(_SpecilImpact);
         foreach (var shadowInfo in _ShadowInfos)
         {
             if (_LegendaryValue >= shadowInfo._NeedValue)
             {
-                _ExAttrs.Add(new EquipExAttr("RoleAttrImpactPassiveShadowHit", 0, new int[] { shadowInfo._ShadowCnt, shadowInfo._ShadowDmg }));
+                _ExAttrs.Add(attrRecord.GetExAttr(shadowInfo._Level));
                 break;
             }
         }

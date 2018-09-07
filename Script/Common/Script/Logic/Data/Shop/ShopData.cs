@@ -56,7 +56,7 @@ public class ShopData : SaveItemBase
 
     public void InitShop()
     {
-        if (DateTime.Now.Day != LastRefreshTime.Day)
+        if (DateTime.Now.Day != LastRefreshTime.Day || LastRefreshTime.Year < 2000)
         {
             RefreshShopItem();
             
@@ -110,7 +110,7 @@ public class ShopData : SaveItemBase
     #region item shop
 
     [SaveField(2)]
-    public List<int> _ShopLimit;
+    public List<int> _ShopLimit=new List<int>();
 
     public Dictionary<string, List<ItemShop>> _ShopItems;
 

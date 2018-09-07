@@ -403,7 +403,7 @@ public class InputManager : InstanceBase<InputManager>
     {
         foreach (var skillInfo in SkillData.Instance.ProfessionSkills)
         {
-            if (skillInfo.SkillRecord.SkillAttr == "RoleAttrImpactAnotherUse" && skillInfo.SkillLevel > 0)
+            if (skillInfo.SkillRecord.SkillAttr.AttrImpact == "RoleAttrImpactAnotherUse" && skillInfo.SkillActureLevel > 0)
             {
                 _ReuseSkillConfig = skillInfo.SkillRecord.SkillInput;
                 break;
