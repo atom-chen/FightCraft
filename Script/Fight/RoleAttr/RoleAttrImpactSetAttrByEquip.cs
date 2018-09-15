@@ -25,7 +25,7 @@ public class RoleAttrImpactSetAttrByEquip : RoleAttrImpactBase
                 var equipItem = RoleData.SelectRole.GetEquipItem(EQUIP_SLOT.TORSO);
                 if (equipItem != null)
                 {
-                    foreach (var equipExAttr in equipItem.EquipExAttr)
+                    foreach (var equipExAttr in equipItem.EquipExAttrs)
                     {
                         if (equipExAttr.AttrType != "RoleAttrImpactBaseAttr")
                             continue;
@@ -50,7 +50,7 @@ public class RoleAttrImpactSetAttrByEquip : RoleAttrImpactBase
                 var equipWeapon = RoleData.SelectRole.GetEquipItem(EQUIP_SLOT.WEAPON);
                 if (equipWeapon != null)
                 {
-                    foreach (var equipExAttr in equipWeapon.EquipExAttr)
+                    foreach (var equipExAttr in equipWeapon.EquipExAttrs)
                     {
                         if (equipExAttr.AttrType != "RoleAttrImpactBaseAttr")
                             continue;
@@ -75,7 +75,7 @@ public class RoleAttrImpactSetAttrByEquip : RoleAttrImpactBase
                 var equipRing = RoleData.SelectRole.GetEquipItem(EQUIP_SLOT.WEAPON);
                 if (equipRing != null)
                 {
-                    foreach (var equipExAttr in equipRing.EquipExAttr)
+                    foreach (var equipExAttr in equipRing.EquipExAttrs)
                     {
                         if (equipExAttr.AttrType != "RoleAttrImpactBaseAttr")
                             continue;

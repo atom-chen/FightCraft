@@ -130,7 +130,7 @@ public class GameDataValue
     public static float _IgnoreDefenceToAtk = 0.5f;
 
     public static float _HpToAtk = 10.0f;
-    public static float _DefToAtk = 3.0f;
+    public static float _DefToAtk = 1.0f;
     public static float _MoveSpeedToAtk = 18f;
     public static float _AtkSpeedToAtk = 8f;
     public static float _CriticalChanceToAtk = 8f;
@@ -335,7 +335,7 @@ public class GameDataValue
         }
     }
 
-    public static List<RoleAttrEnum> GetRandomEquipAttrsType(Tables.EQUIP_SLOT equipSlot, Tables.ITEM_QUALITY quality, int fixNum = 0)
+    public static List<RoleAttrEnum> GetRandomEquipAttrsType(Tables.EQUIP_SLOT equipSlot, Tables.ITEM_QUALITY quality, EquipItemRecord legencyEquip, int fixNum = 0)
     {
         List<EquipExAttr> exAttrs = new List<EquipExAttr>();
 
@@ -353,12 +353,42 @@ public class GameDataValue
                     {
                         exAttrCnt = Random.Range(1, 3);
                     }
+                    else if (quality == ITEM_QUALITY.PURPER)
+                    {
+                        exAttrCnt = 3;
+                    }
+                    else if (quality == ITEM_QUALITY.ORIGIN)
+                    {
+                        if (legencyEquip == null)
+                        {
+                            exAttrCnt = 4;
+                        }
+                        else
+                        {
+                            exAttrCnt = 3;
+                        }
+                    }
                     return CalRandomAttrs(_WeaponExAttrs, exAttrCnt);
                 case Tables.EQUIP_SLOT.TORSO:
                     exAttrCnt = 3;
                     if (quality == Tables.ITEM_QUALITY.BLUE)
                     {
                         exAttrCnt = Random.Range(1, 3);
+                    }
+                    else if (quality == ITEM_QUALITY.PURPER)
+                    {
+                        exAttrCnt = 3;
+                    }
+                    else if (quality == ITEM_QUALITY.ORIGIN)
+                    {
+                        if (legencyEquip == null)
+                        {
+                            exAttrCnt = 4;
+                        }
+                        else
+                        {
+                            exAttrCnt = 3;
+                        }
                     }
                     return CalRandomAttrs(_DefenceExAttrs, exAttrCnt);
                 case Tables.EQUIP_SLOT.LEGS:
@@ -367,6 +397,21 @@ public class GameDataValue
                     {
                         exAttrCnt = Random.Range(1, 3);
                     }
+                    else if (quality == ITEM_QUALITY.PURPER)
+                    {
+                        exAttrCnt = 3;
+                    }
+                    else if (quality == ITEM_QUALITY.ORIGIN)
+                    {
+                        if (legencyEquip == null)
+                        {
+                            exAttrCnt = 4;
+                        }
+                        else
+                        {
+                            exAttrCnt = 3;
+                        }
+                    }
                     return CalRandomAttrs(_DefenceExAttrs, exAttrCnt);
                 case Tables.EQUIP_SLOT.AMULET:
                     exAttrCnt = 3;
@@ -374,12 +419,42 @@ public class GameDataValue
                     {
                         exAttrCnt = Random.Range(1, 3);
                     }
+                    else if (quality == ITEM_QUALITY.PURPER)
+                    {
+                        exAttrCnt = 3;
+                    }
+                    else if (quality == ITEM_QUALITY.ORIGIN)
+                    {
+                        if (legencyEquip == null)
+                        {
+                            exAttrCnt = 4;
+                        }
+                        else
+                        {
+                            exAttrCnt = 3;
+                        }
+                    }
                     return CalRandomAttrs(_AmuletExAttrs, exAttrCnt);
                 case Tables.EQUIP_SLOT.RING:
                     exAttrCnt = 3;
                     if (quality == Tables.ITEM_QUALITY.BLUE)
                     {
                         exAttrCnt = Random.Range(1, 3);
+                    }
+                    else if (quality == ITEM_QUALITY.PURPER)
+                    {
+                        exAttrCnt = 3;
+                    }
+                    else if (quality == ITEM_QUALITY.ORIGIN)
+                    {
+                        if (legencyEquip == null)
+                        {
+                            exAttrCnt = 4;
+                        }
+                        else
+                        {
+                            exAttrCnt = 3;
+                        }
                     }
                     return CalRandomAttrs(_RingExAttrs, exAttrCnt);
             }
@@ -436,7 +511,7 @@ public class GameDataValue
         int curTotalValue = 0;
         int singleValueMax = Mathf.CeilToInt(itemEquip.EquipValue * _ExToBase);
 
-        foreach (var equipExAttr in itemEquip.EquipExAttr)
+        foreach (var equipExAttr in itemEquip.EquipExAttrs)
         {
             if (equipExAttr.AttrType != "RoleAttrImpactBaseAttr")
                 continue;
@@ -468,7 +543,7 @@ public class GameDataValue
         int increaseValue = Mathf.CeilToInt(deltaValue * ConfigIntToFloat(randomRate));
         increaseValue = Mathf.Max(increaseValue, Mathf.CeilToInt(deltaValue / 100 + 1));
 
-        var attrEnums = GetRandomEquipAttrsType(itemEquip.EquipItemRecord.Slot, itemEquip.EquipQuality, valueAttrs.Count);
+        var attrEnums = GetRandomEquipAttrsType(itemEquip.EquipItemRecord.Slot, itemEquip.EquipQuality, null, valueAttrs.Count);
         //var attrEnums = itemEquip.EquipExAttr;
         for (int i = 0; i < valueAttrs.Count; ++i)
         {
@@ -710,7 +785,7 @@ public class GameDataValue
         float resistRate = 1;
         if (defence > 0 && roleLevel > 0)
         {
-            resistRate = (1 - defence / (defence + equipRecord.DefenceStandar));
+            resistRate = (1 - (float)defence / (defence + equipRecord.DefenceStandar));
         }
 
         int finalDamage = Mathf.CeilToInt(eleDamage * resistRate);
@@ -778,40 +853,40 @@ public class GameDataValue
         }
         return expRecord.ExpValue;
 
-        if (_Lv30UpTotalVal == 0)
-        {
-            _Lv30UpTotalVal = Mathf.CeilToInt(_LvUp30ExpRate * 30 * _LevelExpBase30);
-            _Lv60UpTotalVal = Mathf.CeilToInt(_Lv30UpTotalVal + _LvUp60ExpRate * 30 * _LevelExpBase60);
-            _Lv90UpTotalVal = Mathf.CeilToInt(_Lv60UpTotalVal + _LvUp90ExpRate * 30 * _LevelExpBase90);
-            _Lv100UpTotalVal = Mathf.CeilToInt(_Lv90UpTotalVal + _LvUp100ExpRate * 10 * _LevelExpBase100);
+        //if (_Lv30UpTotalVal == 0)
+        //{
+        //    _Lv30UpTotalVal = Mathf.CeilToInt(_LvUp30ExpRate * 30 * _LevelExpBase30);
+        //    _Lv60UpTotalVal = Mathf.CeilToInt(_Lv30UpTotalVal + _LvUp60ExpRate * 30 * _LevelExpBase60);
+        //    _Lv90UpTotalVal = Mathf.CeilToInt(_Lv60UpTotalVal + _LvUp90ExpRate * 30 * _LevelExpBase90);
+        //    _Lv100UpTotalVal = Mathf.CeilToInt(_Lv90UpTotalVal + _LvUp100ExpRate * 10 * _LevelExpBase100);
 
-        }
+        //}
 
-        int realLv = playerLv + attrLv;
-        int levelExp = 0;
-        if (realLv <= 30)
-        {
-            levelExp = Mathf.CeilToInt((1 + _LvUp30ExpRate * realLv) * _LevelExpBase30);
-        }
-        else if (realLv <= 60)
-        {
-            levelExp = Mathf.CeilToInt((1 + _LvUp60ExpRate * (realLv - 30)) * _LevelExpBase60) + _Lv30UpTotalVal;
-        }
-        else if (realLv <= 90)
-        {
-            levelExp = Mathf.CeilToInt((1 + _LvUp90ExpRate * (realLv - 60)) * _LevelExpBase90) + _Lv60UpTotalVal;
-        }
-        else if (realLv <= 100)
-        {
-            levelExp = Mathf.CeilToInt((1 + _LvUp100ExpRate * (realLv - 90)) * _LevelExpBase100 + _Lv90UpTotalVal);
-        }
-        else
-        {
-            levelExp = Mathf.CeilToInt((1 + _LvUp999ExpRate * (realLv - 100)) * _LevelExpStep999 + _LevelExpBase999);
-            levelExp = Mathf.Clamp(levelExp, _LevelExpBase999, _LevelExpMax999);
-        }
+        //int realLv = playerLv + attrLv;
+        //int levelExp = 0;
+        //if (realLv <= 30)
+        //{
+        //    levelExp = Mathf.CeilToInt((1 + _LvUp30ExpRate * realLv) * _LevelExpBase30);
+        //}
+        //else if (realLv <= 60)
+        //{
+        //    levelExp = Mathf.CeilToInt((1 + _LvUp60ExpRate * (realLv - 30)) * _LevelExpBase60) + _Lv30UpTotalVal;
+        //}
+        //else if (realLv <= 90)
+        //{
+        //    levelExp = Mathf.CeilToInt((1 + _LvUp90ExpRate * (realLv - 60)) * _LevelExpBase90) + _Lv60UpTotalVal;
+        //}
+        //else if (realLv <= 100)
+        //{
+        //    levelExp = Mathf.CeilToInt((1 + _LvUp100ExpRate * (realLv - 90)) * _LevelExpBase100 + _Lv90UpTotalVal);
+        //}
+        //else
+        //{
+        //    levelExp = Mathf.CeilToInt((1 + _LvUp999ExpRate * (realLv - 100)) * _LevelExpStep999 + _LevelExpBase999);
+        //    levelExp = Mathf.Clamp(levelExp, _LevelExpBase999, _LevelExpMax999);
+        //}
 
-        return levelExp;
+        //return levelExp;
     }
 
     private static float _Lv30TotalRate = 0;
@@ -831,10 +906,10 @@ public class GameDataValue
         {
             monAttrRecord = TableReader.MonsterAttr.GetRecord(level.ToString());
         }
-        int exp= monAttrRecord.Attrs[3];
+        int exp= monAttrRecord.Drops[0];
         if (motionType == MOTION_TYPE.Elite)
         {
-            exp = exp * 2;
+            exp = exp * 3;
         }
         else if (motionType == MOTION_TYPE.Hero)
         {
@@ -842,56 +917,56 @@ public class GameDataValue
         }
         return exp;
 
-        int levelDelta = Mathf.Clamp(playerLv - level,0, 10);
-        int monExpLevel = Mathf.Clamp(level, 1, _MAX_MONSTER_EXP_LEVEL);
-        int expBase = 0;
-        switch (motionType)
-        {
-            case MOTION_TYPE.Normal:
-                expBase = _NormalExpBase;
-                break;
-            case MOTION_TYPE.Elite:
-                expBase = _EliteExpBase;
-                break;
-            case MOTION_TYPE.Hero:
-                expBase = _BossExpBase;
-                break;
-        }
+        //int levelDelta = Mathf.Clamp(playerLv - level,0, 10);
+        //int monExpLevel = Mathf.Clamp(level, 1, _MAX_MONSTER_EXP_LEVEL);
+        //int expBase = 0;
+        //switch (motionType)
+        //{
+        //    case MOTION_TYPE.Normal:
+        //        expBase = _NormalExpBase;
+        //        break;
+        //    case MOTION_TYPE.Elite:
+        //        expBase = _EliteExpBase;
+        //        break;
+        //    case MOTION_TYPE.Hero:
+        //        expBase = _BossExpBase;
+        //        break;
+        //}
 
-        if (_Lv30TotalRate == 0)
-        {
-            _Lv30TotalRate = _Level30ExpRate * 30;
-            _Lv60TotalRate = _Lv30TotalRate + _Level60ExpRate * 30;
-            _Lv90TotalRate = _Lv60TotalRate + _Level90ExpRate * 30;
-            _Lv100TotalRate = _Lv90TotalRate + _Level100ExpRate * 10;
+        //if (_Lv30TotalRate == 0)
+        //{
+        //    _Lv30TotalRate = _Level30ExpRate * 30;
+        //    _Lv60TotalRate = _Lv30TotalRate + _Level60ExpRate * 30;
+        //    _Lv90TotalRate = _Lv60TotalRate + _Level90ExpRate * 30;
+        //    _Lv100TotalRate = _Lv90TotalRate + _Level100ExpRate * 10;
 
-        }
+        //}
 
-        int levelExp = 0;
-        if (monExpLevel <= 30)
-        {
-            levelExp = Mathf.CeilToInt((1 + _Level30ExpRate * monExpLevel) * expBase);
-        }
-        else if (monExpLevel <= 60)
-        {
-            levelExp = Mathf.CeilToInt((1 + _Lv30TotalRate +  _Level60ExpRate * (monExpLevel - 30)) * expBase);
-        }
-        else if (monExpLevel <= 90)
-        {
-            levelExp = Mathf.CeilToInt((1 + _Lv60TotalRate + _Level90ExpRate * (monExpLevel - 60)) * expBase);
-        }
-        else if (monExpLevel <= 100)
-        {
-            levelExp = Mathf.CeilToInt((1 + _Lv90TotalRate + _Level100ExpRate * (monExpLevel - 90)) * expBase);
-        }
-        else
-        {
-            levelExp = Mathf.CeilToInt((1 + _Lv100TotalRate + _Level999ExpRate * (monExpLevel - 100)) * expBase);
-        }
+        //int levelExp = 0;
+        //if (monExpLevel <= 30)
+        //{
+        //    levelExp = Mathf.CeilToInt((1 + _Level30ExpRate * monExpLevel) * expBase);
+        //}
+        //else if (monExpLevel <= 60)
+        //{
+        //    levelExp = Mathf.CeilToInt((1 + _Lv30TotalRate +  _Level60ExpRate * (monExpLevel - 30)) * expBase);
+        //}
+        //else if (monExpLevel <= 90)
+        //{
+        //    levelExp = Mathf.CeilToInt((1 + _Lv60TotalRate + _Level90ExpRate * (monExpLevel - 60)) * expBase);
+        //}
+        //else if (monExpLevel <= 100)
+        //{
+        //    levelExp = Mathf.CeilToInt((1 + _Lv90TotalRate + _Level100ExpRate * (monExpLevel - 90)) * expBase);
+        //}
+        //else
+        //{
+        //    levelExp = Mathf.CeilToInt((1 + _Lv100TotalRate + _Level999ExpRate * (monExpLevel - 100)) * expBase);
+        //}
 
-        var deltaRate = Mathf.Clamp(levelDelta * 0.03f, -0.3f, 0.2f);
-        levelExp = Mathf.CeilToInt(levelExp * (1 + deltaRate));
-        return levelExp;
+        //var deltaRate = Mathf.Clamp(levelDelta * 0.03f, -0.3f, 0.2f);
+        //levelExp = Mathf.CeilToInt(levelExp * (1 + deltaRate));
+        //return levelExp;
     }
 
     #endregion
@@ -931,21 +1006,21 @@ public class GameDataValue
 
                 break;
             case MOTION_TYPE.Hero:
-                if (level <= 30)
-                    dropCnt = GameRandom.GetRandomLevel(0, 50, 30, 10);
-                else if (level <= 60)
-                    dropCnt = GameRandom.GetRandomLevel(0, 50, 30, 10);
+                if (level <= 20)
+                    dropCnt = GameRandom.GetRandomLevel(0, 10, 50, 30);
+                else if (level <= 40)
+                    dropCnt = GameRandom.GetRandomLevel(0, 0, 50, 50,10);
                 else
-                    dropCnt = GameRandom.GetRandomLevel(0, 50, 30, 10);
+                    dropCnt = GameRandom.GetRandomLevel(0, 0, 50, 30,30);
                 bool isOringe = false;
                 for (int i = 0; i < dropCnt; ++i)
                 {
-                    if (level <= 20)
-                        dropQuality = GameRandom.GetRandomLevel(0, 8000, (int)(2000 * exEquipRate), 0);
-                    else if (level <= 40)
-                        dropQuality = GameRandom.GetRandomLevel(0, 8000, (int)(1500 * exEquipRate), (int)(500 * exEquipRate));
+                    if (level <= 10)
+                        dropQuality = GameRandom.GetRandomLevel(0, 7000, (int)(2500 * exEquipRate), (int)(500 * exEquipRate));
+                    else if (level <= 30)
+                        dropQuality = GameRandom.GetRandomLevel(0, 6000, (int)(2500 * exEquipRate), (int)(1500 * exEquipRate));
                     else
-                        dropQuality = GameRandom.GetRandomLevel(0, 6000, (int)(3500 * exEquipRate), (int)(500 * exEquipRate));
+                        dropQuality = GameRandom.GetRandomLevel(0, 4000, (int)(3500 * exEquipRate), (int)(2500 * exEquipRate));
                     if (dropQuality == (int)ITEM_QUALITY.ORIGIN)
                     {
                         if (!isOringe)
@@ -989,13 +1064,25 @@ public class GameDataValue
                 if (monsterRecord.ValidSpDrops.Count == 0)
                     continue;
 
-                int dropIdx = Random.Range(0, monsterRecord.ValidSpDrops.Count);
-                var dropItem = monsterRecord.ValidSpDrops[dropIdx];
-                var dropEquipTab = TableReader.EquipItem.GetRecord(dropItem.Id);
-                var equipLevel = GetEquipLv(dropEquipTab.Slot, level);
-                var equipValue = CalLvValue(equipLevel, dropEquipTab.Slot);
-                var dropEquip = ItemEquip.CreateEquip(equipLevel, dropEquipQualitys[i], int.Parse(dropItem.Id), (int)dropEquipTab.Slot);
-                dropEquipList.Add(dropEquip);
+                int dropIdx = GameRandom.GetRandomLevel(35, 30, 20, 15, 10, 50);
+                //int dropIdx = Random.Range(0, monsterRecord.ValidSpDrops.Count);
+                var dropItem = monsterRecord.SpDrops[dropIdx];
+                if (dropItem == null)
+                {
+                    var equipSlot = GetRandomItemSlot(dropEquipQualitys[i]);
+                    var equipLevel = GetEquipLv(equipSlot, level);
+                    var equipValue = CalLvValue(equipLevel, equipSlot);
+                    var dropEquip = ItemEquip.CreateEquip(equipLevel, dropEquipQualitys[i], -1, (int)equipSlot);
+                    dropEquipList.Add(dropEquip);
+                }
+                else
+                {
+                    var dropEquipTab = TableReader.EquipItem.GetRecord(dropItem.Id);
+                    var equipLevel = GetEquipLv(dropEquipTab.Slot, level);
+                    var equipValue = CalLvValue(equipLevel, dropEquipTab.Slot);
+                    var dropEquip = ItemEquip.CreateEquip(equipLevel, dropEquipQualitys[i], int.Parse(dropItem.Id), (int)dropEquipTab.Slot);
+                    dropEquipList.Add(dropEquip);
+                }
             }
             else
             {
@@ -1056,7 +1143,7 @@ public class GameDataValue
 
     public static int GetEquipSellGold(ItemEquip itemEquip)
     {
-        int gold = Mathf.CeilToInt((itemEquip.EquipLevel * 0.5f + itemEquip.EquipExAttr.Count) * ((int)itemEquip.EquipQuality + 1));
+        int gold = Mathf.CeilToInt((itemEquip.EquipLevel * 0.5f + itemEquip.EquipExAttrs.Count) * ((int)itemEquip.EquipQuality + 1));
         return gold;
     }
 
@@ -1233,7 +1320,7 @@ public class GameDataValue
             monAttrRecord = TableReader.MonsterAttr.GetRecord("200");
         }
         int dropCnt = 0;
-        var rate = monAttrRecord.Attrs[5];
+        var rate = monAttrRecord.Drops[2];
         switch (motionType)
         {
             case MOTION_TYPE.Normal:
@@ -1322,7 +1409,7 @@ public class GameDataValue
         float random = Random.Range(0.6f, 1.5f);
         var exGoldDrop = RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.ExGoldDrop);
         float rate = ConfigIntToFloat(exGoldDrop) + 1;
-        float dropNum = ConfigIntToFloat(monAttrRecord.Attrs[4]);
+        float dropNum = ConfigIntToFloat(monAttrRecord.Attrs[1]);
 
         return Mathf.CeilToInt(dropNum * random * rate);
     }
@@ -1388,7 +1475,7 @@ public class GameDataValue
     public static int GetMonsterHP(MonsterBaseRecord monsterBase, int roleLv, MOTION_TYPE monsterType)
     {
         int hpMax = 0;
-        float hpBase = ConfigIntToFloat(monsterBase.BaseAttr[0]);
+        float hpBase = ConfigIntToFloat(monsterBase.BaseAttr[2]);
         MonsterAttrRecord attrRecord = null;
         if (!TableReader.MonsterAttr.ContainsKey(roleLv.ToString()))
         {
@@ -1405,7 +1492,7 @@ public class GameDataValue
         {
             attrRecord = TableReader.MonsterAttr.GetRecord(roleLv.ToString());
         }
-        hpMax = (int)(attrRecord.Attrs[0] * hpBase);
+        hpMax = (int)(attrRecord.Attrs[2] * hpBase);
         //if (roleLv <= 5)
         //{
         //    hpMax = (int)(CalWeaponAttack(roleLv) * hpBase + roleLv * 15 * hpBase);
@@ -1472,10 +1559,24 @@ public class GameDataValue
     public static int GetMonsterAtk(MonsterBaseRecord monsterBase, int roleLv, MOTION_TYPE monsterType)
     {
         int atkValue = 0;
-        float atkBase = ConfigIntToFloat(monsterBase.BaseAttr[1]);
-        float levelRate = (float)roleLv / 10;
-        var hpValue = (int)(CalEquipTorsoHP(roleLv) * levelRate + _HPRoleLevelBase);
-        atkValue = (int)((hpValue / atkBase) * 1.4f);
+        float atkBase = ConfigIntToFloat(monsterBase.BaseAttr[0]);
+        MonsterAttrRecord attrRecord = null;
+        if (!TableReader.MonsterAttr.ContainsKey(roleLv.ToString()))
+        {
+            if (roleLv <= 0)
+            {
+                attrRecord = TableReader.MonsterAttr.GetRecord("1");
+            }
+            else
+            {
+                attrRecord = TableReader.MonsterAttr.GetRecord("200");
+            }
+        }
+        else
+        {
+            attrRecord = TableReader.MonsterAttr.GetRecord(roleLv.ToString());
+        }
+        atkValue = (int)(attrRecord.Attrs[0] * atkBase);
         //if (roleLv <= 10)
         //{
         //    atkValue = (int)(CalEquipTorsoHP(roleLv) * 2.0f + _HPRoleLevelBase);
@@ -1535,9 +1636,26 @@ public class GameDataValue
 
     public static int GetMonsterDef(MonsterBaseRecord monsterBase, int roleLv, MOTION_TYPE monsterType)
     {
-        var equipRecord = TableReader.EquipBaseAttr.GetRecord(GetRoleLv(roleLv).ToString());
-        int def = equipRecord.DefenceStandar;
-        return def;
+        int defValue = 0;
+        float defBase = ConfigIntToFloat(monsterBase.BaseAttr[1]);
+        MonsterAttrRecord attrRecord = null;
+        if (!TableReader.MonsterAttr.ContainsKey(roleLv.ToString()))
+        {
+            if (roleLv <= 0)
+            {
+                attrRecord = TableReader.MonsterAttr.GetRecord("1");
+            }
+            else
+            {
+                attrRecord = TableReader.MonsterAttr.GetRecord("200");
+            }
+        }
+        else
+        {
+            attrRecord = TableReader.MonsterAttr.GetRecord(roleLv.ToString());
+        }
+        defValue = (int)(attrRecord.Attrs[1] * defBase);
+        return defValue;
     }
 
     #endregion

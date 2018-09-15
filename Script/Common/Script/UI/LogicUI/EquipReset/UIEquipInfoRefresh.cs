@@ -60,13 +60,13 @@ public class UIEquipInfoRefresh : UIBase
         hash.Add("ItemEquip", _ShowItem);
 
         List<RefreshAttr> refreshAttrs = new List<RefreshAttr>();
-        for (int i = 0; i < itemEquip.EquipExAttr.Count; ++i)
+        for (int i = 0; i < itemEquip.EquipExAttrs.Count; ++i)
         {
             RefreshAttr refreshAttr = new RefreshAttr();
-            refreshAttr._ShowAttr = itemEquip.EquipExAttr[i];
+            refreshAttr._ShowAttr = itemEquip.EquipExAttrs[i];
             if (orgEquip != null)
             {
-                refreshAttr._OrgValue = orgEquip.EquipExAttr[i].Value;
+                refreshAttr._OrgValue = orgEquip.EquipExAttrs[i].Value;
             }
             else
             {

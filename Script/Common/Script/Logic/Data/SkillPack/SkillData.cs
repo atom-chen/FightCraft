@@ -71,7 +71,8 @@ public class SkillData : SaveItemBase
                 {
                     if (skillInfo.SkillLevel == 0)
                     {
-                        SkillLevelUp(skillInfo.SkillID);
+                        //SkillLevelUp(skillInfo.SkillID);
+                        skillInfo.SetStackNum(1);
                         isNeedSave = true;
                     }
                 }

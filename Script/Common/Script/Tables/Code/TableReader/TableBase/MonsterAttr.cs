@@ -15,6 +15,7 @@ namespace Tables
         public override string Id { get; set; }        public string Name { get; set; }
         public string Desc { get; set; }
         public List<int> Attrs { get; set; }
+        public List<int> Drops { get; set; }
         public MonsterAttrRecord(DataRecord dataRecord)
         {
             if (dataRecord != null)
@@ -24,6 +25,7 @@ namespace Tables
 
             }
             Attrs = new List<int>();
+            Drops = new List<int>();
         }
         public override string[] GetRecordStr()
         {
@@ -32,6 +34,10 @@ namespace Tables
             recordStrList.Add(TableWriteBase.GetWriteStr(Name));
             recordStrList.Add(TableWriteBase.GetWriteStr(Desc));
             foreach (var testTableItem in Attrs)
+            {
+                recordStrList.Add(TableWriteBase.GetWriteStr(testTableItem));
+            }
+            foreach (var testTableItem in Drops)
             {
                 recordStrList.Add(TableWriteBase.GetWriteStr(testTableItem));
             }
@@ -110,6 +116,16 @@ namespace Tables
                 pair.Value.Attrs.Add(TableReadBase.ParseInt(pair.Value.ValueStr[10]));
                 pair.Value.Attrs.Add(TableReadBase.ParseInt(pair.Value.ValueStr[11]));
                 pair.Value.Attrs.Add(TableReadBase.ParseInt(pair.Value.ValueStr[12]));
+                pair.Value.Drops.Add(TableReadBase.ParseInt(pair.Value.ValueStr[13]));
+                pair.Value.Drops.Add(TableReadBase.ParseInt(pair.Value.ValueStr[14]));
+                pair.Value.Drops.Add(TableReadBase.ParseInt(pair.Value.ValueStr[15]));
+                pair.Value.Drops.Add(TableReadBase.ParseInt(pair.Value.ValueStr[16]));
+                pair.Value.Drops.Add(TableReadBase.ParseInt(pair.Value.ValueStr[17]));
+                pair.Value.Drops.Add(TableReadBase.ParseInt(pair.Value.ValueStr[18]));
+                pair.Value.Drops.Add(TableReadBase.ParseInt(pair.Value.ValueStr[19]));
+                pair.Value.Drops.Add(TableReadBase.ParseInt(pair.Value.ValueStr[20]));
+                pair.Value.Drops.Add(TableReadBase.ParseInt(pair.Value.ValueStr[21]));
+                pair.Value.Drops.Add(TableReadBase.ParseInt(pair.Value.ValueStr[22]));
             }
         }
     }

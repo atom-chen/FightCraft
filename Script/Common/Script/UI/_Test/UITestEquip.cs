@@ -39,6 +39,8 @@ public class UITestEquip : UIBase
     public override void Show(Hashtable hash)
     {
         base.Show(hash);
+
+        StageEnemyCnts();
     }
 
     public override void Hide()
@@ -91,30 +93,21 @@ public class UITestEquip : UIBase
         int lastLevel = -1;
         int monCnt = 0;
         int equipDropCnt = 0;
+        TestFight._DropOrangeEquipCnt = 0;
         while (true)
         {
             var level = RoleData.SelectRole._RoleLevel + RoleData.SelectRole._AttrLevel;
             if (level >= targetLevel)
                 break;
 
-            int nextDiff = ActData.Instance._NormalStageDiff;
-            if (nextDiff < 1)
-            {
-                nextDiff = 1;
-            }
-            int nextStage = ActData.Instance._NormalStageIdx;
-            ++nextStage;
-            if (nextStage == TableReader.StageInfo.GetMaxNormalStageID() + 1 || nextStage == 0)
-            {
-                ++nextDiff;
-                nextStage = 1;
-            }
+            var nextDiff = level / 20;
+            var nextStage = level % 40;
+            nextStage = Mathf.Clamp(nextStage, 1, 40);
 
-            GetLevelStage(level, ref nextDiff, ref nextStage);
-
-            int gold = 0;
             int exp = 0;
-            var passStage = TestPassNormalStage(nextStage, nextDiff, ref exp, ref gold);
+            int gold = 0;
+
+            var passStage = TestPassNormalStage(level, nextDiff, ref exp, ref gold);
             ActData.Instance._ProcessStageDiff = nextDiff;
             ActData.Instance._ProcessStageIdx = nextStage;
             ActData.Instance.PassStage( STAGE_TYPE.NORMAL);
@@ -170,7 +163,7 @@ public class UITestEquip : UIBase
                     + "\t" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Defense)
                     + "\t" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Attack));
 
-
+                Debug.Log("Drop orange equip cng:" + TestFight._DropOrangeEquipCnt);
                 //streamWriter.WriteLine(fightTimes + "\t" + level + "\t" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax)
                 //    + "\t" + monAttr.GetBaseAttr(RoleAttrEnum.Attack));
 #endif
@@ -357,22 +350,27 @@ public class UITestEquip : UIBase
         TestFight.DelAllEquip();
     }
 
-    private PassNormalInfo TestPassNormalStage(int stageIdx, int diff, ref int exp, ref int gold)
+    private PassNormalInfo TestPassNormalStage(int level, int diff, ref int exp, ref int gold)
     {
         PassNormalInfo passInfo = new PassNormalInfo();
 
-        var stageRecord = TableReader.StageInfo.GetRecord(stageIdx.ToString());
-        int level = GameDataValue.GetStageLevel(diff, stageIdx, STAGE_TYPE.NORMAL);
-        var sceneGO = ResourceManager.Instance.GetGameObject("FightSceneLogic/" + stageRecord.FightLogicPath);
-        var areaPass = sceneGO.GetComponent<FightSceneLogicPassArea>();
+        
         //var areas = sceneGO.GetComponentsInChildren<FightSceneAreaKAllEnemy>(true);
         //var bossAreas = sceneGO.GetComponentInChildren<FightSceneAreaKBossWithFish>(true);
         List<string> monsterIds = new List<string>();
         int eliteCnt = 0;
-        if (stageRecord.FightLogicPath == "")
-        { }
-        else
+        if (level <= 20)
         {
+            GameObject sceneLogicGO = null;
+            if (level < 10)
+            {
+                sceneLogicGO = ResourceManager.Instance.GetGameObject("FightSceneLogic/FightLogic_Stage_0" + level);
+            }
+            else
+            {
+                sceneLogicGO = ResourceManager.Instance.GetGameObject("FightSceneLogic/FightLogic_Stage_" + level);
+            }
+            var areaPass = sceneLogicGO.GetComponent<FightSceneLogicPassArea>();
             foreach (var enemyArea in areaPass._FightArea)
             {
                 if (enemyArea is FightSceneAreaKAllEnemy)
@@ -401,6 +399,18 @@ public class UITestEquip : UIBase
                     monsterIds.Add(bossArea._BossMotionID);
                 }
             }
+        }
+        else
+        {
+            for (int i = 0; i < 120; ++i)
+            {
+                monsterIds.Add("21");
+            }
+            for (int i = 0; i < 18; ++i)
+            {
+                monsterIds.Add("22");
+            }
+            monsterIds.Add("20");
         }
 
         
@@ -448,6 +458,26 @@ public class UITestEquip : UIBase
         //Debug.Log("Drop Exp:" + exp + ", Gold:" + gold);
 
         return passInfo;
+    }
+
+    public void StageEnemyCnts()
+    {
+        for (int i = 1; i < 21; ++i)
+        {
+            var stageRecord = TableReader.StageInfo.GetRecord(i.ToString());
+            var sceneGO = ResourceManager.Instance.GetGameObject("FightSceneLogic/" + stageRecord.FightLogicPath);
+            var fightLogic = sceneGO.GetComponent<FightSceneLogicPassArea>();
+            int enemyCnt = 0;
+            foreach (var area in fightLogic._FightArea)
+            {
+                if (area is FightSceneAreaKAllEnemy)
+                {
+                    enemyCnt += (area as FightSceneAreaKAllEnemy)._EnemyBornPos.Length;
+                }
+            }
+
+            Debug.Log("Scene " + i + " area enemy cnt:" + enemyCnt);
+        }
     }
 
     #endregion

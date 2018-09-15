@@ -195,31 +195,31 @@ public class EquipRefresh : DataPackBase
         int idx1 = 0;
         int idx2 = 0;
 
-        while (idx1 < exchangeEquip1.EquipExAttr.Count && idx2 < exchangeEquip2.EquipExAttr.Count)
+        while (idx1 < exchangeEquip1.EquipExAttrs.Count && idx2 < exchangeEquip2.EquipExAttrs.Count)
         {
             if (idx1 == 0 && idx2 == 0)
             {
-                if (ItemEquip.IsAttrSpToEquip(exchangeEquip1.EquipExAttr[idx1]) && ItemEquip.IsAttrSpToEquip(exchangeEquip2.EquipExAttr[idx2]))
+                if (ItemEquip.IsAttrSpToEquip(exchangeEquip1.EquipExAttrs[idx1]) && ItemEquip.IsAttrSpToEquip(exchangeEquip2.EquipExAttrs[idx2]))
                 {
-                    ExChangeSingleAttr(exchangeEquip1, exchangeEquip1.EquipExAttr[idx1], exchangeEquip2, exchangeEquip2.EquipExAttr[idx2]);
+                    ExChangeSingleAttr(exchangeEquip1, exchangeEquip1.EquipExAttrs[idx1], exchangeEquip2, exchangeEquip2.EquipExAttrs[idx2]);
                     ++idx1;
                     ++idx2;
                 }
             }
 
-            if (ItemEquip.IsAttrSpToEquip(exchangeEquip1.EquipExAttr[idx1]) || !ItemEquip.IsAttrBaseAttr(exchangeEquip1.EquipExAttr[idx1]))
+            if (ItemEquip.IsAttrSpToEquip(exchangeEquip1.EquipExAttrs[idx1]) || !ItemEquip.IsAttrBaseAttr(exchangeEquip1.EquipExAttrs[idx1]))
             {
                 ++idx1;
                 continue;
             }
 
-            if (ItemEquip.IsAttrSpToEquip(exchangeEquip2.EquipExAttr[idx2]) || !ItemEquip.IsAttrBaseAttr(exchangeEquip2.EquipExAttr[idx2]))
+            if (ItemEquip.IsAttrSpToEquip(exchangeEquip2.EquipExAttrs[idx2]) || !ItemEquip.IsAttrBaseAttr(exchangeEquip2.EquipExAttrs[idx2]))
             {
                 ++idx2;
                 continue;
             }
 
-            ExChangeSingleAttr(exchangeEquip1, exchangeEquip1.EquipExAttr[idx1], exchangeEquip2, exchangeEquip2.EquipExAttr[idx2]);
+            ExChangeSingleAttr(exchangeEquip1, exchangeEquip1.EquipExAttrs[idx1], exchangeEquip2, exchangeEquip2.EquipExAttrs[idx2]);
             ++idx1;
             ++idx2;
         }
@@ -236,14 +236,14 @@ public class EquipRefresh : DataPackBase
 
     private void ExChangeSingleAttr(ItemEquip exchangeEquip1, EquipExAttr exAttr1, ItemEquip exchangeEquip2, EquipExAttr exAttr2)
     {
-        int idx1 = exchangeEquip1.EquipExAttr.IndexOf(exAttr1);
-        int idx2 = exchangeEquip2.EquipExAttr.IndexOf(exAttr2);
+        int idx1 = exchangeEquip1.EquipExAttrs.IndexOf(exAttr1);
+        int idx2 = exchangeEquip2.EquipExAttrs.IndexOf(exAttr2);
 
-        exchangeEquip1.EquipExAttr.Insert(idx1, exAttr2);
-        exchangeEquip2.EquipExAttr.Insert(idx2, exAttr1);
+        exchangeEquip1.EquipExAttrs.Insert(idx1, exAttr2);
+        exchangeEquip2.EquipExAttrs.Insert(idx2, exAttr1);
 
-        exchangeEquip1.EquipExAttr.Remove(exAttr1);
-        exchangeEquip2.EquipExAttr.Remove(exAttr2);
+        exchangeEquip1.EquipExAttrs.Remove(exAttr1);
+        exchangeEquip2.EquipExAttrs.Remove(exAttr2);
     }
 
 

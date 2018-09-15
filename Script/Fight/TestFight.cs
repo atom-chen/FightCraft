@@ -113,7 +113,7 @@ public class TestFight : MonoBehaviour
         if (weaponItem == null || !weaponItem.IsVolid())
             return;
 
-        foreach (var exAttrItem in weaponItem.EquipExAttr)
+        foreach (var exAttrItem in weaponItem.EquipExAttrs)
         {
             if (exAttrItem.AttrType != "RoleAttrImpactBaseAttr")
             {
@@ -257,6 +257,7 @@ public class TestFight : MonoBehaviour
         //}
     }
 
+    public static int _DropOrangeEquipCnt = 0;
     public static void DelAllEquip()
     {
         //equip
@@ -307,7 +308,8 @@ public class TestFight : MonoBehaviour
 
             if (itemEquip.EquipQuality == ITEM_QUALITY.ORIGIN)
             {
-                if (!LegendaryData.Instance.IsCollect(itemEquip))
+                ++_DropOrangeEquipCnt;
+                if (LegendaryData.Instance.IsCanCollect(itemEquip))
                 {
                     LegendaryData.Instance.PutInEquip(itemEquip);
                     continue;

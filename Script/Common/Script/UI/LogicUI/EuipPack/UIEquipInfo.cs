@@ -16,6 +16,7 @@ public class UIEquipInfo : UIItemInfo
     public Text _LengendaryName;
     public Text _Value;
     public Text _BaseAttr;
+    public Text _ModelAttr;
 
     #endregion
 
@@ -68,9 +69,19 @@ public class UIEquipInfo : UIItemInfo
             _BaseAttr.gameObject.SetActive(true);
             _BaseAttr.text = attrStr;
         }
+
+        if (_ShowEquip.BaseModelAttrs.Count > 0)
+        {
+            _ModelAttr.gameObject.SetActive(true);
+            _ModelAttr.text = _ShowEquip.BaseModelAttrs[0].GetAttrStr();
+        }
+        else
+        {
+            _ModelAttr.gameObject.SetActive(false);
+        }
         Hashtable hash = new Hashtable();
         hash.Add("ItemEquip", _ShowEquip);
-        _AttrContainer.InitContentItem(itemEquip.EquipExAttr, null, hash);
+        _AttrContainer.InitContentItem(itemEquip.EquipExAttrs, null, hash);
     }
     #endregion
 

@@ -19,7 +19,7 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
 
     #region motion die
 
-    public static int _FindBossKillCnt = 200;
+    public static int _FindBossKillCnt = 120;
     private int _KillCnt = 0;
     private bool _IsChangeToBoss = false;
     public bool IsChangeToBoss

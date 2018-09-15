@@ -81,11 +81,12 @@
   <constructColumn>
     <constructName>BaseAttrs</constructName>
     <constructCode>BaseAttrs</constructCode>
-    <constructType1>基本类型</constructType1>
+    <constructType1>表格索引</constructType1>
     <constructType2>
-      <constructType2>整数</constructType2>
+      <constructType2>AttrValue</constructType2>
     </constructType2>
-    <constructDefault>0</constructDefault>
+    <constructDefault>
+    </constructDefault>
     <constructRepeat>2</constructRepeat>
   </constructColumn>
   <constructColumn>

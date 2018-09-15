@@ -110,13 +110,16 @@ public class LegendaryData : SaveItemBase
         }
     }
 
-    public bool IsCollect(ItemEquip itemEquip)
+    public bool IsCanCollect(ItemEquip itemEquip)
     {
-        var collectItem = _LegendaryEquipDict[itemEquip.EquipItemRecord];
-        if (collectItem == null)
+        if (!_LegendaryEquipDict.ContainsKey(itemEquip.EquipItemRecord))
             return false;
 
-        return collectItem.IsVolid();
+        var collectItem = _LegendaryEquipDict[itemEquip.EquipItemRecord];
+        if (collectItem == null)
+            return true;
+
+        return !collectItem.IsVolid();
     }
 
     public bool PutInEquip(ItemEquip equip)

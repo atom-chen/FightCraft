@@ -234,7 +234,7 @@ public class ItemEquip : ItemBase
         _CombatValue += GameDataValue.GetAttrValue(RoleAttrEnum.HPMax, BaseHP);
         _CombatValue += GameDataValue.GetAttrValue(RoleAttrEnum.Defense, BaseDefence);
 
-        foreach (var exAttrs in EquipExAttr)
+        foreach (var exAttrs in EquipExAttrs)
         {
             if (exAttrs.AttrType == "RoleAttrImpactBaseAttr")
             {
@@ -252,14 +252,14 @@ public class ItemEquip : ItemBase
         }
     }
 
-    private List<EquipExAttr> _EquipExAttr;
-    public List<EquipExAttr> EquipExAttr
+    private List<EquipExAttr> _EquipExAttrs;
+    public List<EquipExAttr> EquipExAttrs
     {
         get
         {
-            if (_EquipExAttr == null)
+            if (_EquipExAttrs == null)
             {
-                _EquipExAttr = new List<global::EquipExAttr>();
+                _EquipExAttrs = new List<global::EquipExAttr>();
                 foreach (var strParam in _DynamicDataEx)
                 {
                     EquipExAttr exAttr = new global::EquipExAttr();
@@ -269,14 +269,14 @@ public class ItemEquip : ItemBase
                     {
                         exAttr.AttrParams.Add(int.Parse(strParam._StrParams[i]));
                     }
-                    _EquipExAttr.Add(exAttr);
+                    _EquipExAttrs.Add(exAttr);
                 }
             }
-            return _EquipExAttr;
+            return _EquipExAttrs;
         }
         set
         {
-            _EquipExAttr = value;
+            _EquipExAttrs = value;
             BakeExAttr();
         }
     }
@@ -345,7 +345,7 @@ public class ItemEquip : ItemBase
     {
         base.RefreshItemData();
         _EquipItemRecord = null;
-        _EquipExAttr = null;
+        _EquipExAttrs = null;
         _BaseAttack = -1;
         _BaseHP = -1;
         _BaseDefence = -1;
@@ -368,14 +368,14 @@ public class ItemEquip : ItemBase
 
     public EquipExAttr GetExAttr(int idx)
     {
-        if (EquipExAttr.Count > idx)
-            return EquipExAttr[idx];
+        if (EquipExAttrs.Count > idx)
+            return EquipExAttrs[idx];
         return null;
     }
 
     public void AddExAttr(EquipExAttr attr)
     {
-        EquipExAttr.Add(attr);
+        EquipExAttrs.Add(attr);
         ItemExData exData = new ItemExData();
         exData._StrParams.Add(attr.AttrType);
         exData._StrParams.Add(attr.Value.ToString());
@@ -397,7 +397,7 @@ public class ItemEquip : ItemBase
     public void BakeExAttr()
     {
         _DynamicDataEx.Clear();
-        foreach (var exAttr in EquipExAttr)
+        foreach (var exAttr in EquipExAttrs)
         {
             ItemExData exData = new ItemExData();
             exData._StrParams.Add(exAttr.AttrType);
@@ -427,10 +427,10 @@ public class ItemEquip : ItemBase
                 if (EquipItemRecord.Slot == EQUIP_SLOT.WEAPON)
                 {
                     _BaseAttack = GameDataValue.CalWeaponAttack(EquipLevel);
-                    if (EquipExAttr.Count > 0 && EquipExAttr[0].AttrType == "RoleAttrImpactBaseAttr" && EquipExAttr[0].AttrParams[0] == (int)RoleAttrEnum.AttackPersent)
+                    if (EquipExAttrs.Count > 0 && EquipExAttrs[0].AttrType == "RoleAttrImpactBaseAttr" && EquipExAttrs[0].AttrParams[0] == (int)RoleAttrEnum.AttackPersent)
                     {
                         _ExBaseAtk = true;
-                        _BaseAttack += Mathf.CeilToInt(_BaseAttack * GameDataValue.ConfigIntToFloatDex1(EquipExAttr[0].AttrParams[1]));
+                        _BaseAttack += Mathf.CeilToInt(_BaseAttack * GameDataValue.ConfigIntToFloatDex1(EquipExAttrs[0].AttrParams[1]));
                     }
                 }
                 else
@@ -460,10 +460,10 @@ public class ItemEquip : ItemBase
                 {
                     _BaseHP = GameDataValue.CalEquipLegsHP(EquipLevel);
                 }
-                if (EquipExAttr.Count > 0 && EquipExAttr[0].AttrType == "RoleAttrImpactBaseAttr" && EquipExAttr[0].AttrParams[0] == (int)RoleAttrEnum.AttackPersent)
+                if (EquipExAttrs.Count > 0 && EquipExAttrs[0].AttrType == "RoleAttrImpactBaseAttr" && EquipExAttrs[0].AttrParams[0] == (int)RoleAttrEnum.AttackPersent)
                 {
                     _ExBaseHp = true;
-                    _BaseHP += Mathf.CeilToInt(_BaseAttack * GameDataValue.ConfigIntToFloatDex1(EquipExAttr[0].AttrParams[1]));
+                    _BaseHP += Mathf.CeilToInt(_BaseAttack * GameDataValue.ConfigIntToFloatDex1(EquipExAttrs[0].AttrParams[1]));
                 }
             }
             return _BaseHP;
@@ -487,10 +487,10 @@ public class ItemEquip : ItemBase
                 {
                     _BaseDefence = GameDataValue.CalEquipLegsDefence(EquipLevel);
                 }
-                if (EquipExAttr.Count > 0 && EquipExAttr[0].AttrType == "RoleAttrImpactBaseAttr" && EquipExAttr[0].AttrParams[0] == (int)RoleAttrEnum.AttackPersent)
+                if (EquipExAttrs.Count > 0 && EquipExAttrs[0].AttrType == "RoleAttrImpactBaseAttr" && EquipExAttrs[0].AttrParams[0] == (int)RoleAttrEnum.AttackPersent)
                 {
                     _ExBaseDef = true;
-                    _BaseDefence += Mathf.CeilToInt(_BaseAttack * GameDataValue.ConfigIntToFloatDex1(EquipExAttr[0].AttrParams[1]));
+                    _BaseDefence += Mathf.CeilToInt(_BaseAttack * GameDataValue.ConfigIntToFloatDex1(EquipExAttrs[0].AttrParams[1]));
                 }
             }
             return _BaseDefence;
@@ -539,7 +539,7 @@ public class ItemEquip : ItemBase
         roleAttr.AddValue(RoleAttrEnum.HPMax, BaseHP);
         roleAttr.AddValue(RoleAttrEnum.Defense, BaseDefence);
 
-        foreach (var exAttrs in EquipExAttr)
+        foreach (var exAttrs in EquipExAttrs)
         {
             if (exAttrs.AttrType == "RoleAttrImpactBaseAttr")
             {
@@ -550,7 +550,45 @@ public class ItemEquip : ItemBase
                 roleAttr.AddExAttr(RoleAttrImpactManager.GetAttrImpact(exAttrs));
             }
         }
+
+        foreach (var modelAttr in BaseModelAttrs)
+        {
+            if (modelAttr.AttrType == "RoleAttrImpactBaseAttr")
+            {
+                roleAttr.AddValue((RoleAttrEnum)modelAttr.AttrParams[0], modelAttr.AttrParams[1]);
+            }
+        }
     }
+
+    public void SetBaseModelAttrs(EquipItemRecord equipRecord)
+    {
+        _BaseModelAttrs = new List<EquipExAttr>();
+        foreach (var baseAttr in equipRecord.BaseAttrs)
+        {
+            if (baseAttr == null)
+                continue;
+
+            float euiqpModelValue = GameDataValue.ConfigIntToFloat(baseAttr.AttrParams[1]) + GameDataValue.ConfigIntToFloat(baseAttr.AttrParams[2] * EquipLevel);
+            euiqpModelValue = Mathf.Clamp(euiqpModelValue, GameDataValue.ConfigIntToFloat(baseAttr.AttrParams[1]), GameDataValue.ConfigIntToFloat(baseAttr.AttrParams[3]));
+            var exAttr = EquipExAttr.GetBaseExAttr((RoleAttrEnum)baseAttr.AttrParams[0], (int)euiqpModelValue);
+            _BaseModelAttrs.Add(exAttr);
+        }
+    }
+
+    private List<EquipExAttr> _BaseModelAttrs;
+    public List<EquipExAttr> BaseModelAttrs
+    {
+        get
+        {
+            if (_BaseModelAttrs == null)
+            {
+                var record = TableReader.EquipItem.GetRecord(CommonItemDataID.ToString());
+                SetBaseModelAttrs(record);
+            }
+            return _BaseModelAttrs;
+        }
+    }
+
     #endregion
 
     #region create equip
@@ -632,20 +670,23 @@ public class ItemEquip : ItemBase
             return null;
 
         commonItemRecord = TableReader.CommonItem.GetRecord(baseEquip.Id);
+
+        string equipID = baseEquip.Id;
         if (legencyEquip != null)
         {
-            baseEquip = legencyEquip;
+            equipID = legencyEquip.Id;
         }
 
-        ItemEquip itemEquip = new ItemEquip(baseEquip.Id);
+        ItemEquip itemEquip = new ItemEquip(equipID);
         itemEquip.EquipLevel = level;
         itemEquip.EquipQuality = equipQuality;
         itemEquip.EquipValue = value;
         itemEquip.RequireLevel = level;
         itemEquip.CommonItemDataID = int.Parse(commonItemRecord.Id);
+        itemEquip.SetBaseModelAttrs(baseEquip);
 
         //RandomEquipAttr(itemEquip);
-        itemEquip.AddExAttr(RandomAttrs.GetRandomEquipExAttrs(baseEquip.Slot, level, value, equipQuality, RoleData.SelectRole.Profession));
+        itemEquip.AddExAttr(RandomAttrs.GetRandomEquipExAttrs(baseEquip.Slot, level, value, equipQuality, RoleData.SelectRole.Profession, legencyEquip));
         if (legencyEquip != null)
         {
             EquipExAttr legencyAttr = legencyEquip.ExAttr.GetExAttr(GameDataValue.GetLegencyLv( itemEquip.EquipLevel));
@@ -688,34 +729,58 @@ public class ItemEquip : ItemBase
             randomItems = TableReader.EquipItem.ClassedEquips[equipSlot];
         }
 
+        int value = randomItems.Count / 4;
         List<int> randomVals = new List<int>();
-        if (level < 30)
+        if (level < 10)
         {
-            for (int i = 0; i < 4; ++i)
+            for (int i = 0; i < value; ++i)
             {
                 randomVals.Add(10);
             }
         }
-        else if (level < 60)
+        else if (level < 20)
         {
-            for (int i = 0; i < 4; ++i)
+            for (int i = 0; i < value; ++i)
             {
                 randomVals.Add(10);
             }
-            for (int i = 0; i < 4; ++i)
+            for (int i = 0; i < value; ++i)
             {
                 randomVals.Add(20);
             }
         }
-        else
+        else if (level < 30)
         {
-            for (int i = 0; i < 8; ++i)
+            for (int i = 0; i < value; ++i)
             {
                 randomVals.Add(10);
             }
-            for (int i = 8; i < randomItems.Count; ++i)
+            for (int i = 0; i < value; ++i)
             {
-                randomVals.Add(15);
+                randomVals.Add(20);
+            }
+            for (int i = 0; i < value; ++i)
+            {
+                randomVals.Add(30);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < value; ++i)
+            {
+                randomVals.Add(10);
+            }
+            for (int i = 0; i < value; ++i)
+            {
+                randomVals.Add(20);
+            }
+            for (int i = 0; i < value; ++i)
+            {
+                randomVals.Add(30);
+            }
+            for (int i = 0; i < value; ++i)
+            {
+                randomVals.Add(20);
             }
         }
 
@@ -751,7 +816,7 @@ public class ItemEquip : ItemBase
             EquipSet.Instance.RemoveActingSpAttr(_SpSetRecord, EquipValue);
         }
         _SpSetRecord = null;
-        if (EquipExAttr.Count < _ActSetLeastExCnt)
+        if (EquipExAttrs.Count < _ActSetLeastExCnt)
         {
             return;
         }
@@ -760,7 +825,7 @@ public class ItemEquip : ItemBase
 
         int valAttrCnt = 0;
         List<EquipExAttr> randomAttrs = new List<global::EquipExAttr>();
-        foreach (var exAttr in EquipExAttr)
+        foreach (var exAttr in EquipExAttrs)
         {
             if (exAttr.AttrType != "RoleAttrImpactBaseAttr")
             {

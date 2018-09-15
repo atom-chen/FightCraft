@@ -18,7 +18,7 @@ namespace Tables
         public int DescStrDict { get; set; }
         public EQUIP_SLOT Slot { get; set; }
         public EQUIP_CLASS EquipClass { get; set; }
-        public List<int> BaseAttrs { get; set; }
+        public List<AttrValueRecord> BaseAttrs { get; set; }
         public int LevelLimit { get; set; }
         public int ProfessionLimit { get; set; }
         public AttrValueRecord ExAttr { get; set; }
@@ -30,7 +30,7 @@ namespace Tables
                 Id = ValueStr[0];
 
             }
-            BaseAttrs = new List<int>();
+            BaseAttrs = new List<AttrValueRecord>();
         }
         public override string[] GetRecordStr()
         {
@@ -44,7 +44,14 @@ namespace Tables
             recordStrList.Add(((int)EquipClass).ToString());
             foreach (var testTableItem in BaseAttrs)
             {
-                recordStrList.Add(TableWriteBase.GetWriteStr(testTableItem));
+                if (testTableItem != null)
+                {
+                    recordStrList.Add(testTableItem.Id);
+                }
+                else
+                {
+                    recordStrList.Add("");
+                }
             }
             recordStrList.Add(TableWriteBase.GetWriteStr(LevelLimit));
             recordStrList.Add(TableWriteBase.GetWriteStr(ProfessionLimit));
@@ -125,8 +132,22 @@ namespace Tables
                 pair.Value.DescStrDict = TableReadBase.ParseInt(pair.Value.ValueStr[4]);
                 pair.Value.Slot =  (EQUIP_SLOT)TableReadBase.ParseInt(pair.Value.ValueStr[5]);
                 pair.Value.EquipClass =  (EQUIP_CLASS)TableReadBase.ParseInt(pair.Value.ValueStr[6]);
-                pair.Value.BaseAttrs.Add(TableReadBase.ParseInt(pair.Value.ValueStr[7]));
-                pair.Value.BaseAttrs.Add(TableReadBase.ParseInt(pair.Value.ValueStr[8]));
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[7]))
+                {
+                    pair.Value.BaseAttrs.Add( TableReader.AttrValue.GetRecord(pair.Value.ValueStr[7]));
+                }
+                else
+                {
+                    pair.Value.BaseAttrs.Add(null);
+                }
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[8]))
+                {
+                    pair.Value.BaseAttrs.Add( TableReader.AttrValue.GetRecord(pair.Value.ValueStr[8]));
+                }
+                else
+                {
+                    pair.Value.BaseAttrs.Add(null);
+                }
                 pair.Value.LevelLimit = TableReadBase.ParseInt(pair.Value.ValueStr[9]);
                 pair.Value.ProfessionLimit = TableReadBase.ParseInt(pair.Value.ValueStr[10]);
                 if (!string.IsNullOrEmpty(pair.Value.ValueStr[11]))

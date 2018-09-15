@@ -48,4 +48,14 @@
     <constructDefault>1</constructDefault>
     <constructRepeat>10</constructRepeat>
   </constructColumn>
+  <constructColumn>
+    <constructName>Drops</constructName>
+    <constructCode>Drops</constructCode>
+    <constructType1>基本类型</constructType1>
+    <constructType2>
+      <constructType2>整数</constructType2>
+    </constructType2>
+    <constructDefault>0</constructDefault>
+    <constructRepeat>10</constructRepeat>
+  </constructColumn>
 </root>

@@ -57,22 +57,22 @@ public enum RoleAttrEnum
 public class RandomAttrs
 {
     
-    public static List<EquipExAttr> GetRandomEquipExAttrs(Tables.EQUIP_SLOT equipSlot, int level, int equipValue, Tables.ITEM_QUALITY quality, Tables.PROFESSION profession)
+    public static List<EquipExAttr> GetRandomEquipExAttrs(Tables.EQUIP_SLOT equipSlot, int level, int equipValue, Tables.ITEM_QUALITY quality, Tables.PROFESSION profession, EquipItemRecord legencyEquip)
     {
         List<EquipExAttr> exAttrs = new List<EquipExAttr>();
 
         switch (equipSlot)
         {
             case Tables.EQUIP_SLOT.WEAPON:
-                return GetWeaponRandomAttr(level, equipValue, quality, profession);
+                return GetWeaponRandomAttr(level, equipValue, quality, profession, legencyEquip);
             case Tables.EQUIP_SLOT.TORSO:
-                return GetTorseRandomAttr(level, equipValue, quality, profession);
+                return GetTorseRandomAttr(level, equipValue, quality, profession, legencyEquip);
             case Tables.EQUIP_SLOT.LEGS:
-                return GetLegsRandomAttr(level, equipValue, quality, profession);
+                return GetLegsRandomAttr(level, equipValue, quality, profession, legencyEquip);
             case Tables.EQUIP_SLOT.AMULET:
-                return GetAmuletRandomAttr(level, equipValue, quality, profession);
+                return GetAmuletRandomAttr(level, equipValue, quality, profession, legencyEquip);
             case Tables.EQUIP_SLOT.RING:
-                return GetAmuletRandomAttr(level, equipValue, quality, profession);
+                return GetAmuletRandomAttr(level, equipValue, quality, profession, legencyEquip);
         }
 
         return exAttrs;
@@ -89,9 +89,9 @@ public class RandomAttrs
     #region weapon
     
 
-    private static List<EquipExAttr> GetWeaponRandomAttr(int level, int equipValue, Tables.ITEM_QUALITY quality, Tables.PROFESSION profession)
+    private static List<EquipExAttr> GetWeaponRandomAttr(int level, int equipValue, Tables.ITEM_QUALITY quality, Tables.PROFESSION profession, EquipItemRecord legencyEquip)
     {
-        List<RoleAttrEnum> exAttrTypes = GameDataValue.GetRandomEquipAttrsType(Tables.EQUIP_SLOT.WEAPON, quality);
+        List<RoleAttrEnum> exAttrTypes = GameDataValue.GetRandomEquipAttrsType(Tables.EQUIP_SLOT.WEAPON, quality, legencyEquip);
         //if (quality == Tables.ITEM_QUALITY.BLUE)
         //{
         //    //exAttrTypes = GameDataValue.GetRandomEquipAttrsType(Tables.EQUIP_SLOT.WEAPON, quality);
@@ -129,9 +129,9 @@ public class RandomAttrs
 
     #region torse & legs
 
-    private static List<EquipExAttr> GetTorseRandomAttr(int level, int equipValue, Tables.ITEM_QUALITY quality, Tables.PROFESSION profession)
+    private static List<EquipExAttr> GetTorseRandomAttr(int level, int equipValue, Tables.ITEM_QUALITY quality, Tables.PROFESSION profession, EquipItemRecord legencyEquip)
     {
-        List<RoleAttrEnum> exAttrTypes = GameDataValue.GetRandomEquipAttrsType(Tables.EQUIP_SLOT.TORSO, quality);
+        List<RoleAttrEnum> exAttrTypes = GameDataValue.GetRandomEquipAttrsType(Tables.EQUIP_SLOT.TORSO, quality, legencyEquip);
         //if (quality == Tables.ITEM_QUALITY.BLUE)
         //{
         //    //exAttrTypes = GameDataValue.GetRandomEquipAttrsType(Tables.EQUIP_SLOT.WEAPON, quality);
@@ -148,9 +148,9 @@ public class RandomAttrs
         return CalculateExAttr(exAttrTypes, equipValue);
     }
 
-    private static List<EquipExAttr> GetLegsRandomAttr(int level, int equipValue, Tables.ITEM_QUALITY quality, Tables.PROFESSION profession)
+    private static List<EquipExAttr> GetLegsRandomAttr(int level, int equipValue, Tables.ITEM_QUALITY quality, Tables.PROFESSION profession, EquipItemRecord legencyEquip)
     {
-        List<RoleAttrEnum> exAttrTypes = GameDataValue.GetRandomEquipAttrsType(Tables.EQUIP_SLOT.LEGS, quality);
+        List<RoleAttrEnum> exAttrTypes = GameDataValue.GetRandomEquipAttrsType(Tables.EQUIP_SLOT.LEGS, quality, legencyEquip);
         //if (quality == Tables.ITEM_QUALITY.BLUE)
         //{
         //    //exAttrTypes = GameDataValue.GetRandomEquipAttrsType(Tables.EQUIP_SLOT.WEAPON, quality);
@@ -171,9 +171,9 @@ public class RandomAttrs
 
     #region amulet & ring
     
-    private static List<EquipExAttr> GetAmuletRandomAttr(int level, int equipValue, Tables.ITEM_QUALITY quality, Tables.PROFESSION profession)
+    private static List<EquipExAttr> GetAmuletRandomAttr(int level, int equipValue, Tables.ITEM_QUALITY quality, Tables.PROFESSION profession, EquipItemRecord legencyEquip)
     {
-        List<RoleAttrEnum> exAttrTypes = GameDataValue.GetRandomEquipAttrsType(Tables.EQUIP_SLOT.RING, quality);
+        List<RoleAttrEnum> exAttrTypes = GameDataValue.GetRandomEquipAttrsType(Tables.EQUIP_SLOT.RING, quality, legencyEquip);
 
         return CalculateExAttr(exAttrTypes, equipValue);
     }
