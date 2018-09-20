@@ -9,7 +9,10 @@ using System;
 
 public class UIBackPackItem : /*UIDragableItemBase*/ UIPackItemBase
 {
-  
+
+    public Toggle _SellToggle;
+
+    public ItemEquip _BackpackEquip;
     public override void ShowItem(ItemBase showItem)
     {
         base.ShowItem(showItem);
@@ -21,6 +24,7 @@ public class UIBackPackItem : /*UIDragableItemBase*/ UIPackItemBase
         {
             if (showItem is ItemEquip)
             {
+                _BackpackEquip = showItem as ItemEquip;
                 _Num.text = "";
             }
             else
@@ -42,5 +46,37 @@ public class UIBackPackItem : /*UIDragableItemBase*/ UIPackItemBase
             _Num.text = "";
         }
     }
+
+    #region interaction
+
+    public void SetSellMode(bool isSellMode, Tables.ITEM_QUALITY sellQuality = Tables.ITEM_QUALITY.WHITE)
+    {
+        if (!isSellMode)
+        {
+            _SellToggle.gameObject.SetActive(false);
+        }
+        else
+        {
+            if (_BackpackEquip == null)
+            {
+                _SellToggle.gameObject.SetActive(false);
+            }
+            else
+            {
+                _SellToggle.gameObject.SetActive(true);
+                if (_BackpackEquip.EquipQuality > sellQuality)
+                {
+                    _SellToggle.isOn = false;
+                }
+                else
+                {
+                    _SellToggle.isOn = true;
+                }
+            }
+
+        }
+    }
+
+    #endregion
 }
 

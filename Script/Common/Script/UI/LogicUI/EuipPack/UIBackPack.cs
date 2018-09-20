@@ -85,21 +85,27 @@ public class UIBackPack : UIBase, IDragablePack
         _OnItemSelectCallBack.Invoke(equipItem);
     }
 
-
-    #endregion
-
-    #region 
-
     private void ItemRefresh(object sender, Hashtable args)
     {
         RefreshItems();
     }
 
+    #endregion
 
+    #region interaction
+
+    public void OnBtnSell()
+    { }
+
+    public void OnBtnRefresh()
+    {
+        BackBagPack.Instance.SortEquip();
+        OnShowPage(_TagPanel.GetShowingPage());
+    }
 
     #endregion
 
-    #region 
+    #region drag
 
     public bool IsCanDragItem(UIDragableItemBase dragItem)
     {

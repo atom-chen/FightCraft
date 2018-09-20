@@ -237,5 +237,25 @@ public class BackBagPack : DataPackBase
         }
         return null;
     }
+
+    public void SortEquip()
+    {
+        _PageEquips.Sort((equipA, equipB) =>
+        {
+            if (equipA.EquipQuality > equipB.EquipQuality)
+                return 1;
+            else if (equipA.EquipQuality < equipB.EquipQuality)
+                return -1;
+            else
+            {
+                if (equipA.EquipLevel > equipB.EquipLevel)
+                    return 1;
+                else if (equipA.EquipLevel < equipB.EquipLevel)
+                    return -1;
+                else
+                    return 0;
+            }
+        });
+    }
 }
 

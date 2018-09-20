@@ -161,10 +161,16 @@ public class TestFight : MonoBehaviour
     private bool StartSkill(Vector3 destPos)
     {
         if (_EnemyMotion == null)
+        {
+            InputManager.Instance.ReleasePress();
             return false;
+        }
 
         if (_EnemyMotion.IsMotionDie)
+        {
+            InputManager.Instance.ReleasePress();
             return false;
+        }
 
         InitWeaponSkill();
 
@@ -251,10 +257,10 @@ public class TestFight : MonoBehaviour
         if (!UIDropNamePanel.Instance)
             return;
 
-        //foreach (var dropItem in UIDropNamePanel.Instance._DropItems)
-        //{
-        //    dropItem.OnItemClick();
-        //}
+        foreach (var dropItem in UIDropNamePanel.Instance._DropItems)
+        {
+            dropItem.OnItemClick();
+        }
     }
 
     public static int _DropOrangeEquipCnt = 0;

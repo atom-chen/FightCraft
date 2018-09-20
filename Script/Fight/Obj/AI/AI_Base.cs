@@ -215,6 +215,7 @@ public class AI_Base : MonoBehaviour
 
     protected virtual bool StartSkill()
     {
+        return false;
         if (!IsRandomActSkill())
             return false;
 
