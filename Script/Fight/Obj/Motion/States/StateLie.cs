@@ -8,6 +8,7 @@ public class StateLie : StateBase
     public override void StartState(params object[] args)
     {
         _LieStartTime = Time.time;
+        _RealLieTime = _LieTime * GameDataValue.ConfigIntToFloat(_MotionManager.RoleAttrManager.GetBaseAttr(RoleAttrEnum.RiseUpSpeed));
     }
 
     public override void StateUpdate()
@@ -43,6 +44,7 @@ public class StateLie : StateBase
 
     private static float _LieTime = 0.2f;
     private float _LieStartTime = -1;
+    private float _RealLieTime = _LieTime;
 
     private void LieUpdate()
     {
@@ -50,8 +52,10 @@ public class StateLie : StateBase
             return;
 
         float deltaTime = Time.time - _LieStartTime;
-        if(deltaTime >= _LieTime)
-        _MotionManager.TryEnterState(_MotionManager._StateRise);
+        if (deltaTime >= _RealLieTime)
+        {
+            _MotionManager.TryEnterState(_MotionManager._StateRise);
+        }
     }
 
     #endregion

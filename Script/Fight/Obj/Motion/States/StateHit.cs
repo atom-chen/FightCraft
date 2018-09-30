@@ -114,20 +114,23 @@ public class StateHit : StateBase
     {
         _MotionManager.PlayHitEffect(impactSender, hitEffect);
 
+        var realHitTime = hitTime * (GameDataValue.ConfigIntToFloat(_MotionManager.RoleAttrManager.GetBaseAttr(RoleAttrEnum.HitBack)));
+
         if (hitAudio > 0)
             _MotionManager.PlayAudio(ResourcePool.Instance._CommonAudio[hitAudio]);
-        if (hitTime <= 0)
+        if (realHitTime <= 0)
             return;
 
+        
         float speed = 1;
-        if (hitTime > _Animation.length)
+        if (realHitTime > _Animation.length)
         {
-            _StopKeyFrameTime = hitTime - _Animation.length;
+            _StopKeyFrameTime = realHitTime - _Animation.length;
         }
         else
         {
             _StopKeyFrameTime = 0;
-            speed = (_Animation.length / hitTime);
+            speed = (_Animation.length / realHitTime);
         }
 
         _StopFramTime = 0;

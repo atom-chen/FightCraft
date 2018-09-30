@@ -1153,6 +1153,12 @@ public class GameDataValue
         return gold;
     }
 
+    public static int GetBuyBackGold(ItemEquip itemEquip)
+    {
+        int gold = GetEquipSellGold(itemEquip) * 2;
+        return gold;
+    }
+
 
     #endregion
 

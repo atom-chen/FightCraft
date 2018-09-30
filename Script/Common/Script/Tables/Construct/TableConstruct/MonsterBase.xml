@@ -109,7 +109,7 @@
       <constructType2>整数</constructType2>
     </constructType2>
     <constructDefault>0</constructDefault>
-    <constructRepeat>7</constructRepeat>
+    <constructRepeat>10</constructRepeat>
   </constructColumn>
   <constructColumn>
     <constructName>SpDrops</constructName>

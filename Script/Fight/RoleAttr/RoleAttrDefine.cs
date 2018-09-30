@@ -51,6 +51,10 @@ public enum RoleAttrEnum
     ExGemDrop,
     ExEquipDrop,
 
+    FlyGravity,
+    HitBack,
+    RiseUpSpeed,
+
     BASE_ATTR_MAX,
 }
 

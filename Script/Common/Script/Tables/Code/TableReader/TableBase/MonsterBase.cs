@@ -140,30 +140,9 @@ namespace Tables
                 pair.Value.BaseAttr.Add(TableReadBase.ParseInt(pair.Value.ValueStr[13]));
                 pair.Value.BaseAttr.Add(TableReadBase.ParseInt(pair.Value.ValueStr[14]));
                 pair.Value.BaseAttr.Add(TableReadBase.ParseInt(pair.Value.ValueStr[15]));
-                if (!string.IsNullOrEmpty(pair.Value.ValueStr[16]))
-                {
-                    pair.Value.SpDrops.Add( TableReader.CommonItem.GetRecord(pair.Value.ValueStr[16]));
-                }
-                else
-                {
-                    pair.Value.SpDrops.Add(null);
-                }
-                if (!string.IsNullOrEmpty(pair.Value.ValueStr[17]))
-                {
-                    pair.Value.SpDrops.Add( TableReader.CommonItem.GetRecord(pair.Value.ValueStr[17]));
-                }
-                else
-                {
-                    pair.Value.SpDrops.Add(null);
-                }
-                if (!string.IsNullOrEmpty(pair.Value.ValueStr[18]))
-                {
-                    pair.Value.SpDrops.Add( TableReader.CommonItem.GetRecord(pair.Value.ValueStr[18]));
-                }
-                else
-                {
-                    pair.Value.SpDrops.Add(null);
-                }
+                pair.Value.BaseAttr.Add(TableReadBase.ParseInt(pair.Value.ValueStr[16]));
+                pair.Value.BaseAttr.Add(TableReadBase.ParseInt(pair.Value.ValueStr[17]));
+                pair.Value.BaseAttr.Add(TableReadBase.ParseInt(pair.Value.ValueStr[18]));
                 if (!string.IsNullOrEmpty(pair.Value.ValueStr[19]))
                 {
                     pair.Value.SpDrops.Add( TableReader.CommonItem.GetRecord(pair.Value.ValueStr[19]));
@@ -188,7 +167,31 @@ namespace Tables
                 {
                     pair.Value.SpDrops.Add(null);
                 }
-                pair.Value.AtkRate = TableReadBase.ParseFloat(pair.Value.ValueStr[22]);
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[22]))
+                {
+                    pair.Value.SpDrops.Add( TableReader.CommonItem.GetRecord(pair.Value.ValueStr[22]));
+                }
+                else
+                {
+                    pair.Value.SpDrops.Add(null);
+                }
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[23]))
+                {
+                    pair.Value.SpDrops.Add( TableReader.CommonItem.GetRecord(pair.Value.ValueStr[23]));
+                }
+                else
+                {
+                    pair.Value.SpDrops.Add(null);
+                }
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[24]))
+                {
+                    pair.Value.SpDrops.Add( TableReader.CommonItem.GetRecord(pair.Value.ValueStr[24]));
+                }
+                else
+                {
+                    pair.Value.SpDrops.Add(null);
+                }
+                pair.Value.AtkRate = TableReadBase.ParseFloat(pair.Value.ValueStr[25]);
             }
         }
     }

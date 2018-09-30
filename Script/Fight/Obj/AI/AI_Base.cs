@@ -205,6 +205,8 @@ public class AI_Base : MonoBehaviour
 
     protected virtual void StartSkill(AI_Skill_Info skillInfo, bool isIgnoreCD = false)
     {
+        return;
+
         if (!skillInfo.SkillBase.IsCanActSkill())
             return;
 
@@ -215,7 +217,6 @@ public class AI_Base : MonoBehaviour
 
     protected virtual bool StartSkill()
     {
-        return false;
         if (!IsRandomActSkill())
             return false;
 

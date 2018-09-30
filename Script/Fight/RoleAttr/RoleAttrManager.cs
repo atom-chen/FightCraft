@@ -468,6 +468,9 @@ public class RoleAttrManager : MonoBehaviour
             _BaseAttr.SetValue(RoleAttrEnum.Defense, 10);
             _BaseMoveSpeed = 4.5f;
         }
+        _BaseAttr.SetValue(RoleAttrEnum.FlyGravity, 10000);
+        _BaseAttr.SetValue(RoleAttrEnum.HitBack, 10000);
+        _BaseAttr.SetValue(RoleAttrEnum.RiseUpSpeed, 10000);
 
         _Level = roleData._RoleLevel;
         RefreshMoveSpeed();
@@ -523,6 +526,10 @@ public class RoleAttrManager : MonoBehaviour
         baseAttr.SetValue(RoleAttrEnum.HPMax, hpMax);
         baseAttr.SetValue(RoleAttrEnum.Attack, attackStep);
         baseAttr.SetValue(RoleAttrEnum.Defense, defenceStep);
+
+        baseAttr.SetValue(RoleAttrEnum.FlyGravity, monsterBase.BaseAttr[7]);
+        baseAttr.SetValue(RoleAttrEnum.HitBack, monsterBase.BaseAttr[8]);
+        baseAttr.SetValue(RoleAttrEnum.RiseUpSpeed, monsterBase.BaseAttr[9]);
 
         return baseAttr;
     }

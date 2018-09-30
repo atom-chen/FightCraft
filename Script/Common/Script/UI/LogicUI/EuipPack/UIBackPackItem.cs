@@ -36,6 +36,11 @@ public class UIBackPackItem : /*UIDragableItemBase*/ UIPackItemBase
             }
         }
         _Icon.gameObject.SetActive(true);
+
+        if (_SellToggle != null)
+        {
+            _SellToggle.gameObject.SetActive(false);
+        }
     }
 
     protected override void ClearItem()
@@ -47,10 +52,23 @@ public class UIBackPackItem : /*UIDragableItemBase*/ UIPackItemBase
         }
     }
 
+    public override void OnItemClick()
+    {
+        base.OnItemClick();
+
+        if (_SellToggle != null && _SellToggle.gameObject.activeSelf)
+        {
+            _SellToggle.isOn = !_SellToggle.isOn;
+        }
+    }
+
     #region interaction
 
     public void SetSellMode(bool isSellMode, Tables.ITEM_QUALITY sellQuality = Tables.ITEM_QUALITY.WHITE)
     {
+        if (_SellToggle == null)
+            return;
+
         if (!isSellMode)
         {
             _SellToggle.gameObject.SetActive(false);

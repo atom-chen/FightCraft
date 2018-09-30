@@ -243,19 +243,20 @@ public class BackBagPack : DataPackBase
         _PageEquips.Sort((equipA, equipB) =>
         {
             if (equipA.EquipQuality > equipB.EquipQuality)
-                return 1;
-            else if (equipA.EquipQuality < equipB.EquipQuality)
                 return -1;
+            else if (equipA.EquipQuality < equipB.EquipQuality)
+                return 1;
             else
             {
                 if (equipA.EquipLevel > equipB.EquipLevel)
-                    return 1;
-                else if (equipA.EquipLevel < equipB.EquipLevel)
                     return -1;
+                else if (equipA.EquipLevel < equipB.EquipLevel)
+                    return 1;
                 else
                     return 0;
             }
         });
+        SaveClass(true);
     }
 }
 

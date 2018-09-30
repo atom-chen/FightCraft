@@ -46,6 +46,16 @@ public class StateRise : StateBase
 
     #region 
 
+    public override void StartState(params object[] args)
+    {
+        if (_Animation != null)
+        {
+            float speed =  1 / GameDataValue.ConfigIntToFloat(_MotionManager.RoleAttrManager.GetBaseAttr(RoleAttrEnum.RiseUpSpeed));
+
+            _MotionManager.PlayAnimation(_Animation, speed);
+        }
+    }
+
     private void DispatchRiseEvent(string funcName, object param)
     {
         switch (funcName)

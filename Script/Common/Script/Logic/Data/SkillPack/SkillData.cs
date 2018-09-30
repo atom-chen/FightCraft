@@ -67,7 +67,8 @@ public class SkillData : SaveItemBase
                 var skillInfo = GetSkillInfo(skillPair.Value.Id, ref isNeedSave);
                 _ProfessionSkills.Add(skillInfo);
 
-                if (skillInfo.SkillRecord.SkillAttr.AttrImpact == "RoleAttrImpactSkillDamage")
+                if (skillInfo.SkillRecord.SkillAttr.AttrImpact == "RoleAttrImpactSkillDamage"
+                    || skillInfo.SkillRecord.SkillAttr.AttrImpact == "RoleAttrImpactBuffRate")
                 {
                     if (skillInfo.SkillLevel == 0)
                     {

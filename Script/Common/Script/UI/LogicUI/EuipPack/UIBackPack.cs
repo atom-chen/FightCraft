@@ -41,6 +41,7 @@ public class UIBackPack : UIBase, IDragablePack
 
     public UITagPanel _TagPanel;
     public UIContainerBase _ItemsContainer;
+    public GameObject _BtnSell;
 
     #endregion
 
@@ -81,6 +82,9 @@ public class UIBackPack : UIBase, IDragablePack
 
     private void ShowBackPackTooltips(object equipObj)
     {
+        if (_OnItemSelectCallBack == null)
+            return;
+
         ItemBase equipItem = equipObj as ItemBase;
         _OnItemSelectCallBack.Invoke(equipItem);
     }
@@ -95,7 +99,32 @@ public class UIBackPack : UIBase, IDragablePack
     #region interaction
 
     public void OnBtnSell()
-    { }
+    {
+        //_ItemsContainer.ForeachActiveItem<UIBackPackItem>((backPackItem) =>
+        //{
+        //    backPackItem.SetSellMode(true);
+        //});
+
+        //_BuyBackPanel.SetActive(true);
+        //_BuyBackContainer.InitContentItem(ShopData.Instance._BuyBackList);
+
+        UISellShopPack.ShowSync();
+    }
+
+    public List<ItemBase> GetSellList()
+    {
+        List<ItemBase> sellList = new List<ItemBase>();
+        _ItemsContainer.ForeachActiveItem<UIBackPackItem>((backPackItem) =>
+        {
+            if (backPackItem._SellToggle.isOn)
+            {
+                //ShopData.Instance.SellItem(backPackItem.ShowedItem, false);
+                sellList.Add(backPackItem.ShowedItem);
+            }
+        });
+
+        return sellList;
+    }
 
     public void OnBtnRefresh()
     {
@@ -103,6 +132,13 @@ public class UIBackPack : UIBase, IDragablePack
         OnShowPage(_TagPanel.GetShowingPage());
     }
 
+    public void SetBackPackSellMode(Tables.ITEM_QUALITY sellQuality)
+    {
+        _ItemsContainer.ForeachActiveItem<UIBackPackItem>((backPackItem) =>
+        {
+            backPackItem.SetSellMode(true, sellQuality);
+        });
+    }
     #endregion
 
     #region drag

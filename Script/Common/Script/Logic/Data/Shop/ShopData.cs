@@ -103,6 +103,8 @@ public class ShopData : SaveItemBase
         sellItem.ResetItem();
         PlayerDataPack.Instance.AddGold(gold);
         sellItem.SaveClass(true);
+
+        AddToBuyBack(sellItem as ItemEquip);
     }
 
     #endregion
@@ -174,6 +176,44 @@ public class ShopData : SaveItemBase
     }
 
     #endregion
-    
+
+
+    #region buy back
+
+    public const int _MaxBuyBackCnt = 25;
+    private List<ItemEquip> _BuyBackList;
+    public List<ItemEquip> BuyBackList
+    {
+        get
+        {
+            if (_BuyBackList == null)
+            {
+                _BuyBackList = new List<ItemEquip>();
+                for (int i = 0; i < _MaxBuyBackCnt; ++i)
+                {
+                    _BuyBackList.Add(new ItemEquip());
+                }
+            }
+            return _BuyBackList;
+        }
+    }
+
+
+
+    public void AddToBuyBack(ItemEquip itemBase)
+    {
+        if (itemBase == null)
+            return;
+
+        for (int i = 0; i < BuyBackList.Count; ++i)
+        {
+            if (string.IsNullOrEmpty(BuyBackList[i].ItemDataID) || BuyBackList[i].ItemDataID == "-1")
+            {
+                BuyBackList[i].ExchangeInfo(itemBase);
+            }
+        }
+    }
+
+    #endregion
 
 }

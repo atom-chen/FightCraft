@@ -138,7 +138,7 @@ public class StateFly : StateBase
         }
 
         _MotionManager.SetLookAt(impactSender.transform.position);
-        _FlyHeight = flyHeight;
+        _FlyHeight = flyHeight * (GameDataValue.ConfigIntToFloat(_MotionManager.RoleAttrManager.GetBaseAttr(RoleAttrEnum.FlyGravity)));
 
         IsFlyEnd = false;
         _MotionManager.SetCorpsePrior();
@@ -156,8 +156,9 @@ public class StateFly : StateBase
 
         if (isPauseFly)
         {
-            _MotionManager.PauseAnimation(_Animation, time);
-            _StayTime = time;
+            var flyStayTime = time * (GameDataValue.ConfigIntToFloat(_MotionManager.RoleAttrManager.GetBaseAttr(RoleAttrEnum.FlyGravity)));
+            _MotionManager.PauseAnimation(_Animation, flyStayTime);
+            _StayTime = flyStayTime;
         }
         else
         {
