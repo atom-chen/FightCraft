@@ -87,6 +87,8 @@ public class UISellShopPack : UIBase
         _BackPack.RefreshItems();
         _ItemsContainer.RefreshItems();
 
+        Hide();
+
         //UIEquipPack.RefreshBagItems();
     }
 

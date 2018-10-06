@@ -177,6 +177,7 @@ public class FightManager : InstanceBase<FightManager>
         var motionTran = mainBase.transform.Find("Motion");
 
         GlobalBuffData.Instance.ActBuffInFight();
+        UITestEquip.ActBuffInFight();
         List<string> skillMotions = SkillData.Instance.GetRoleSkills();
 
         foreach (var skillMotion in skillMotions)

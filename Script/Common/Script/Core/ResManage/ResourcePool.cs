@@ -63,6 +63,7 @@ public class ResourcePool : InstanceBase<ResourcePool>
         if (idleEffect == null)
         {
             idleEffect = GameObject.Instantiate<EffectController>(effct);
+            idleEffect.name = effct.name;
         }
 
         return idleEffect;
@@ -70,7 +71,7 @@ public class ResourcePool : InstanceBase<ResourcePool>
 
     public void RecvIldeEffect(EffectController effct)
     {
-        string effectName = effct.name.Replace("(Clone)", "");
+        string effectName = effct.name;
         if (!_IdleEffects.ContainsKey(effectName))
         {
             _IdleEffects.Add(effectName, new Stack<EffectController>());
@@ -197,7 +198,7 @@ public class ResourcePool : InstanceBase<ResourcePool>
         aiScript.InitSkillGoes(motionScript);
 
         GameObject modelObj = null;
-        if (_IdleBullets.ContainsKey(monsterTab.ModelPath))
+        if (_IdleModel.ContainsKey(monsterTab.ModelPath))
         {
             if (_IdleModel[monsterTab.ModelPath].Count > 0)
             {
@@ -207,6 +208,7 @@ public class ResourcePool : InstanceBase<ResourcePool>
         if (modelObj == null)
         {
             modelObj = ResourceManager.Instance.GetInstanceGameObject("Model/" + monsterTab.ModelPath);
+            modelObj.name = monsterTab.ModelPath;
             var animation = modelObj.GetComponent<Animation>();
             if (animation == null)
             {
@@ -246,7 +248,7 @@ public class ResourcePool : InstanceBase<ResourcePool>
     public void RecvIldeMotion(MotionManager objMotion)
     {
         var model = objMotion.AnimationEvent.gameObject;
-        string objName = model.name.Replace("(Clone)", "");
+        string objName = objMotion.MonsterBase.ModelPath;
         if (!_IdleModel.ContainsKey(objName))
         {
             _IdleModel.Add(objName, new Stack<GameObject>());

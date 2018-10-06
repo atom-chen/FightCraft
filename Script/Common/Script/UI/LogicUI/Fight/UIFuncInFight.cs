@@ -18,6 +18,16 @@ public class UIFuncInFight : UIBase
 
     }
 
+    public static void StopFightTime()
+    {
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIFuncInFight>("LogicUI/Fight/UIFuncInFight");
+        if (instance == null)
+            return;
+
+        instance.CancelInvoke("UpdateFightTime");
+        Debug.Log("FightTime:" + instance._FightSecond);
+    }
+
     #endregion
 
     public override void Show(Hashtable hash)
@@ -51,7 +61,7 @@ public class UIFuncInFight : UIBase
 
     public Text _FightTime;
 
-    private int _FightSecond = 0;
+    public int _FightSecond = 0;
 
     private void StartFightTime()
     {

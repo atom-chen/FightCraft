@@ -259,7 +259,7 @@ public class GlobalBuffData : SaveItemBase
     #region act buff
 
     private GlobalBuffItem _ActBuffItem;
-    private List<EquipExAttr> _ExAttrs = new List<EquipExAttr>();
+    public List<EquipExAttr> _ExAttrs = new List<EquipExAttr>();
 
     public void ActByAd(GlobalBuffItem buffItem)
     {

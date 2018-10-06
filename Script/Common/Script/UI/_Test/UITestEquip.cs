@@ -20,6 +20,11 @@ public class UITestEquip : UIBase
         GameCore.Instance.UIManager.ShowUI("LogicUI/BagPack/UITestEquip", UILayer.PopUI, hash);
     }
 
+    public static void ActBuffInFight()
+    {
+        ActBuffInFightInner();
+    }
+
     #endregion
 
     #region 
@@ -41,6 +46,7 @@ public class UITestEquip : UIBase
         base.Show(hash);
 
         StageEnemyCnts();
+        InitBuffAttr();
     }
 
     public override void Hide()
@@ -478,6 +484,49 @@ public class UITestEquip : UIBase
 
             Debug.Log("Scene " + i + " area enemy cnt:" + enemyCnt);
         }
+    }
+
+    #endregion
+
+    #region 
+
+    public List<string> _AttrIDs;
+    public List<Toggle> _TestBuffToggles;
+
+    public static List<EquipExAttr> _ExAttrs = new List<EquipExAttr>();
+    public static List<bool> _IsToggleOn = new List<bool>();
+
+    public void InitBuffAttr()
+    {
+        foreach (var attrID in _AttrIDs)
+        {
+            var attrRecord = Tables.TableReader.AttrValue.GetRecord(attrID);
+            _ExAttrs.Add(attrRecord.GetExAttr(1));
+        }
+
+        OnToggleChange();
+    }
+
+    public void OnToggleChange()
+    {
+        _IsToggleOn.Clear();
+        for (int i = 0; i < _TestBuffToggles.Count; ++i)
+        {
+            _IsToggleOn.Add(_TestBuffToggles[i].isOn);
+        }
+    }
+
+    public static void ActBuffInFightInner()
+    {
+        for (int i = 0; i < _IsToggleOn.Count; ++i)
+        {
+            if (_IsToggleOn[i])
+            {
+                GlobalBuffData.Instance._ExAttrs.Add(_ExAttrs[i]);
+            }
+        }
+
+        RoleData.SelectRole.CalculateAttr();
     }
 
     #endregion

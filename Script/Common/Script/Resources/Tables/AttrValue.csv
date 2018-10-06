@@ -223,3 +223,6 @@
 1300311,,,RoleAttrImpactBaseAttr,,,,4,10000,800,500000,4,4,4,4,4,4
 1300312,,,RoleAttrImpactBaseAttr,,,,4,10000,800,500000,5,5,5,5,5,5
 1300313,,,RoleAttrImpactBaseAttr,,,,4,10000,800,500000,5,5,5,5,5,5
+#test buff,,,,,,,,,,,,,,,,
+9000001,,,RoleAttrImpactPassiveDamageArea,PassiveDamageArea,3,,100000,300,100000,60000,3000,60000,1000,0,0,0
+9000002,,,RoleAttrImpactPassiveAddAttr,PassiveResistExMove,3,,100000000,1000000,15000000,1,0,0,0,0,0,3

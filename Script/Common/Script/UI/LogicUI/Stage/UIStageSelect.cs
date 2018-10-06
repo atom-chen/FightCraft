@@ -90,7 +90,7 @@ public class UIStageSelect : UIBase
 
     public void InitStages()
     {
-        int maxStage = ActData.Instance._NormalStageIdx;
+        int maxStage = ActData.Instance._NormalStageIdx - 1;
         if (_SelectedDiff < ActData.Instance._NormalStageDiff)
         {
             maxStage = TableReader.StageInfo.GetMaxNormalStageID();

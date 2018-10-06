@@ -15,6 +15,7 @@ public class UIEquipInfo : UIItemInfo
 
     public Text _LengendaryName;
     public Text _Value;
+    public Text _ProfessionLimit;
     public Text _BaseAttr;
     public Text _ModelAttr;
 
@@ -59,6 +60,20 @@ public class UIEquipInfo : UIItemInfo
             _Level.text = StrDictionary.GetFormatStr(10000) + " " + _ShowEquip.RequireLevel;
         }
         _Value.text = StrDictionary.GetFormatStr(10001) + " " + _ShowEquip.CombatValue;
+
+        if (_ProfessionLimit != null)
+        {
+            if (_ShowEquip.EquipItemRecord.ProfessionLimit > 0 &&
+                ((_ShowEquip.EquipItemRecord.ProfessionLimit >> (int)RoleData.SelectRole.Profession) & 1) == 0)
+            {
+                _ProfessionLimit.gameObject.SetActive(true);
+            }
+            else
+            {
+                _ProfessionLimit.gameObject.SetActive(false);
+            }
+        }
+
         string attrStr = _ShowEquip.GetBaseAttrStr();
         if (string.IsNullOrEmpty(attrStr))
         {

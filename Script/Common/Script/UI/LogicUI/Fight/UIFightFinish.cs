@@ -48,6 +48,8 @@ public class UIFightFinish : UIBase
             _WinGO.SetActive(false);
             _LoseGO.SetActive(true);
         }
+
+        UIFuncInFight.StopFightTime();
     }
 
     public void OnEnable()
