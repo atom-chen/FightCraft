@@ -29,6 +29,25 @@ public class SelectTargetCommon
 
     private static bool IsTargetEnemy(MotionManager selfMotion, MotionManager targetMotion)
     {
+        if (targetMotion.gameObject.layer != FightLayerCommon.CAMP_1
+            && targetMotion.gameObject.layer != FightLayerCommon.CAMP_2
+            && targetMotion.gameObject.layer != FightLayerCommon.CAMP_BULLET_1
+            && targetMotion.gameObject.layer != FightLayerCommon.CAMP_BULLET_2
+            && targetMotion.gameObject.layer != FightLayerCommon.EVIL)
+            return false;
+
+        return selfMotion.gameObject.layer != targetMotion.gameObject.layer;
+    }
+
+    private static bool IsTargetFriend(MotionManager selfMotion, MotionManager targetMotion)
+    {
+        if (targetMotion.gameObject.layer != FightLayerCommon.CAMP_1
+            && targetMotion.gameObject.layer != FightLayerCommon.CAMP_2
+            && targetMotion.gameObject.layer != FightLayerCommon.CAMP_BULLET_1
+            && targetMotion.gameObject.layer != FightLayerCommon.CAMP_BULLET_2
+            && targetMotion.gameObject.layer != FightLayerCommon.EVIL)
+            return false;
+
         return selfMotion.gameObject.layer != targetMotion.gameObject.layer;
     }
 
@@ -105,21 +124,21 @@ public class SelectTargetCommon
         public float _Angle;
         public MotionManager _SelectedMotion;
     }
-    public static List<SelectedInfo> GetFrontMotions(MotionManager selfMotion, float length, float angle, SelectSortType sortType)
+    public static List<SelectedInfo> GetFrontMotions(MotionManager selfMotion, float length, float angle, SelectSortType sortType, SelectTargetType targetType)
     {
-        return GetDirectMotions(selfMotion, selfMotion.transform.forward, length, angle, sortType);
+        return GetDirectMotions(selfMotion, selfMotion.transform.forward, length, angle, sortType, targetType);
     }
 
     public static List<SelectedInfo> GetFrontMotions(MotionManager selfMotion, float length)
     {
         var motions = GameObject.FindObjectsOfType<MotionManager>();
 
-        List<SelectedInfo> nearMotions = GetFrontMotions(selfMotion, length, 30, SelectSortType.None);
+        List<SelectedInfo> nearMotions = GetFrontMotions(selfMotion, length, 30, SelectSortType.None, SelectTargetType.Enemy);
 
         return nearMotions;
     }
 
-    public static List<SelectedInfo> GetDirectMotions(MotionManager selfMotion, Vector3 direct, float length, float angle, SelectSortType sortType)
+    public static List<SelectedInfo> GetDirectMotions(MotionManager selfMotion, Vector3 direct, float length, float angle, SelectSortType sortType, SelectTargetType targetType)
     {
         var motions = GameObject.FindObjectsOfType<MotionManager>();
 
@@ -130,6 +149,9 @@ public class SelectTargetCommon
                 continue;
 
             if (motion.IsMotionDie)
+                continue;
+
+            if (!IsTargetInType(selfMotion, motion, targetType))
                 continue;
 
             float distance = Vector3.Distance(selfMotion.transform.position, motion.transform.position);

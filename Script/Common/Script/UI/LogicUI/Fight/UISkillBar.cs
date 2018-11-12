@@ -102,19 +102,19 @@ public class UISkillBar : UIBase
             var skillBase = InputManager.Instance.GetCharSkill(skillInput[i]);
             if (skillBase == null)
             {
-                _Buttons[skillInput[i]].SetCD(0);
+                _Buttons[skillInput[i]].SetCDPro(0);
                 continue;
             }
 
             if (skillBase._SkillCD == 0)
             {
-                _Buttons[skillInput[i]].SetCD(0);
+                _Buttons[skillInput[i]].SetCDPro(0);
                 continue;
             }
 
             var cd = Time.time - skillBase.LastUseTime;
             float cdPro = (skillBase._SkillCD - cd) / skillBase._SkillCD;
-            _Buttons[skillInput[i]].SetCD(cdPro);
+            _Buttons[skillInput[i]].SetCDPro(cdPro);
 
 
             _Buttons[skillInput[i]].SetStoreTimes(skillBase.LastUseTimes);
@@ -138,6 +138,46 @@ public class UISkillBar : UIBase
         }
 
         _TestFight.enabled = !_TestFight.enabled;
+    }
+
+    #endregion
+
+    #region summon
+
+    public UISkillBarItem[] _SummonBtn;
+
+    private List<float> _SummonCDs;
+
+    private void InitSummonCD()
+    {
+        if (_SummonCDs == null)
+        {
+            _SummonCDs = new List<float>();
+            for (int i = 0; i < _SummonBtn.Length; ++i)
+            {
+                _SummonCDs.Add(0);
+            }
+        }
+    }
+
+    public void OnBtnSummon(int btnIdx)
+    {
+        if (SummonSkill.Instance.SummonAndSkill(btnIdx, FightManager.Instance.MainChatMotion))
+        {
+            for (int i = 0; i < _SummonBtn.Length; ++i)
+            {
+                if (i == btnIdx)
+                {
+                    _SummonBtn[i].SetCDTime(SummonSkillData.Instance.SummonSkillCD);
+                }
+                else if(_SummonBtn[i].CDNow == 0)
+                {
+                    _SummonBtn[i].SetCDTime(SummonSkillData._SummonCommonCD);
+                }
+            }
+        }
+        else
+        { }
     }
 
     #endregion

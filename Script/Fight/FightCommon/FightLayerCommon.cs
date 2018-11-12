@@ -14,16 +14,22 @@ public class FightLayerCommon
 
     public static void SetPlayerLayer(MotionManager playerMotion)
     {
+        SetFriendLayer(playerMotion);
+        playerMotion.gameObject.tag = "Player";
+        //playerMotion.RoleAttrManager.MotionType = MOTION_TYPE.MainChar;
+    }
+
+    public static void SetFriendLayer(MotionManager playerMotion)
+    {
         var skillColliders = playerMotion.GetComponentsInChildren<Collider>(true);
         foreach (var collider in skillColliders)
         {
             collider.gameObject.layer = CAMP_2;
-            
+
         }
 
         playerMotion.TriggerCollider.gameObject.layer = CAMP_1;
         playerMotion.gameObject.layer = CAMP_1;
-        playerMotion.gameObject.tag = "Player";
         //playerMotion.RoleAttrManager.MotionType = MOTION_TYPE.MainChar;
     }
 

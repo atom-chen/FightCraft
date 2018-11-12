@@ -89,7 +89,8 @@ public class UIMainFun : UIBase
 
     public void BtnSoul()
     {
-        UISoulPack.ShowAsyn();
+        //UISoulPack.ShowAsyn();
+        UISummonSkillPack.ShowAsyn();
     }
 
     public void BtnTestPanel()

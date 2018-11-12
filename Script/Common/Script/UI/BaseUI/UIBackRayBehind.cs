@@ -23,15 +23,15 @@ public class UIBackRayBehind : MonoBehaviour, IPointerClickHandler
         if (_BackClick != null)
             _BackClick.Invoke();
 
-        if (gameObject.activeInHierarchy)
-        {
-            enabled = false;
-            UIManager.Instance.RayCastBebind(eventData);
-            enabled = true;
-        }
-        else
-        {
-            UIManager.Instance.RayCastBebind(eventData);
-        }
+        //if (gameObject.activeInHierarchy)
+        //{
+        //    enabled = false;
+        //    UIManager.Instance.RayCastBebind(eventData);
+        //    enabled = true;
+        //}
+        //else
+        //{
+        //    UIManager.Instance.RayCastBebind(eventData);
+        //}
     }
 }

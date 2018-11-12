@@ -6,6 +6,7 @@ public enum MONEYTYPE
 {
     GOLD = 0,
     DIAMOND,
+    ITEM,
 }
 
 public class UICurrencyItem : UIItemBase
@@ -49,6 +50,15 @@ public class UICurrencyItem : UIItemBase
         _CurrencyType = currencyType;
     }
 
+    public void ShowCurrency(string itemID, long currencyValue)
+    {
+        //_CurrencyIcon.sprite = _CurrencySprite[(int)currencyType];
+
+        _CurrencyValue.text = currencyValue.ToString();
+        _CurrencyIntValue = (int)currencyValue;
+        _CurrencyType = MONEYTYPE.ITEM;
+    }
+
     public void ShowOwnCurrency(MONEYTYPE currencyType)
     {
         int Ownvalue = 0;
@@ -61,6 +71,12 @@ public class UICurrencyItem : UIItemBase
             Ownvalue = PlayerDataPack.Instance.Diamond;
         }
         ShowCurrency(currencyType, Ownvalue);
+    }
+
+    public void ShowOwnCurrency(string itemDataID)
+    {
+        int Ownvalue = BackBagPack.Instance.GetItemCnt(itemDataID);
+        ShowCurrency(itemDataID, Ownvalue);
     }
 
     #endregion

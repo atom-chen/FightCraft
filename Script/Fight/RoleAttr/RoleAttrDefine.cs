@@ -54,6 +54,7 @@ public enum RoleAttrEnum
     FlyGravity,
     HitBack,
     RiseUpSpeed,
+    RiseHandSpeed,
 
     BASE_ATTR_MAX,
 }

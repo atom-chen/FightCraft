@@ -309,6 +309,8 @@ public class MotionManager : MonoBehaviour
         }
     }
 
+    private SummonMotionData _SummonMotionData;
+
     private bool _IsMotionDie = false;
     public bool IsMotionDie
     {
@@ -336,7 +338,12 @@ public class MotionManager : MonoBehaviour
         _MonsterBase = monsterBase;
     }
 
-    private void InitRoleAttr()
+    public void InitRoleAttr(SummonMotionData summonData)
+    {
+        _SummonMotionData = summonData;
+    }
+
+    public void InitRoleAttr()
     {
         _IsMotionDie = false;
         _RoleAttrManager = GetComponent<RoleAttrManager>();
@@ -356,6 +363,11 @@ public class MotionManager : MonoBehaviour
         {
             _RoleAttrManager.InitEnemyAttr(_MonsterBase, FightManager.Instance._FightLevel);
             _MotionAnimPath = _MonsterBase.AnimPath;
+        }
+        else if (_SummonMotionData != null)
+        {
+            _RoleAttrManager.InitSummonAttr(_SummonMotionData);
+            _MotionAnimPath = _SummonMotionData.SummonRecord.MonsterBase.AnimPath;
         }
         else
         {

@@ -2,8 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 
-
-
 public class BackBagPack : DataPackBase
 {
     #region 单例
@@ -152,7 +150,12 @@ public class BackBagPack : DataPackBase
 
     public bool DecItem(string itemID, int itemCnt)
     {
+        if (itemCnt == 0)
+            return true;
+
         var item = GetItem(itemID);
+        if (item == null)
+            return false;
         if (item.ItemStackNum < itemCnt)
         {
             UIMessageTip.ShowMessageTip(30003);

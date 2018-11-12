@@ -55,7 +55,9 @@ public class LogicManager
         EquipRefresh.Instance.LoadClass(true);
         EquipRefresh.Instance.InitEquipRefresh();
 
-        
+        SummonSkillData.Instance.LoadClass(true);
+        SummonSkillData.Instance.InitSummonSkillData();
+
 
         ActData.Instance.LoadClass(true);
         ActData.Instance.InitActData();

@@ -153,7 +153,7 @@ public class FightManager : InstanceBase<FightManager>
         _MainChatMotion.SetPosition(_FightScene._MainCharBornPos.position);
         _MainChatMotion.SetRotate(_FightScene._MainCharBornPos.rotation.eulerAngles);
         mainBase.tag = "Player";
-        _MainChatMotion.InitRoleAttr(null);
+        //_MainChatMotion.InitRoleAttr();
 
         var model = ResourceManager.Instance.GetInstanceGameObject("Model/" + modelName);
         model.transform.SetParent(mainBase.transform);
@@ -178,6 +178,7 @@ public class FightManager : InstanceBase<FightManager>
 
         GlobalBuffData.Instance.ActBuffInFight();
         UITestEquip.ActBuffInFight();
+        SummonSkill.Instance.InitSummonMotions();
         List<string> skillMotions = SkillData.Instance.GetRoleSkills();
 
         foreach (var skillMotion in skillMotions)

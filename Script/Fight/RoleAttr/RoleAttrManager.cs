@@ -497,6 +497,20 @@ public class RoleAttrManager : MonoBehaviour
         InitEvent();
     }
 
+    public void InitSummonAttr(SummonMotionData summonData)
+    {
+        _BaseMoveSpeed = 4;
+        _Level = summonData.Level;
+        _MonsterValue = 1;
+
+        _BaseAttr = GetMonsterAttr(summonData, _Level, MOTION_TYPE.Elite);
+
+        RefreshMoveSpeed();
+        RefreshAttackSpeed();
+        AddHPPersent(1);
+        InitEvent();
+    }
+
     public void InitTestAttr()
     {
         _BaseMoveSpeed = 4;
@@ -520,7 +534,7 @@ public class RoleAttrManager : MonoBehaviour
         var baseAttr = new RoleAttrStruct();
         int hpMax = GameDataValue.GetMonsterHP(monsterBase, roleLv, monsterType);
         int attackStep = GameDataValue.GetMonsterAtk(monsterBase, roleLv, monsterType);
-        int defenceStep = GameDataValue.GetMonsterDef(monsterBase, roleLv, monsterType); ;
+        int defenceStep = GameDataValue.GetMonsterDef(monsterBase, roleLv, monsterType);
         _Level = roleLv;
         
         baseAttr.SetValue(RoleAttrEnum.HPMax, hpMax);
@@ -530,6 +544,20 @@ public class RoleAttrManager : MonoBehaviour
         baseAttr.SetValue(RoleAttrEnum.FlyGravity, monsterBase.BaseAttr[7]);
         baseAttr.SetValue(RoleAttrEnum.HitBack, monsterBase.BaseAttr[8]);
         baseAttr.SetValue(RoleAttrEnum.RiseUpSpeed, monsterBase.BaseAttr[9]);
+
+        return baseAttr;
+    }
+
+    private RoleAttrStruct GetMonsterAttr(SummonMotionData summonData, int roleLv, MOTION_TYPE monsterType)
+    {
+        var baseAttr = new RoleAttrStruct();
+        int hpMax = 10000;
+        _Level = roleLv;
+
+        foreach (var exAttr in summonData.SummonAttrs)
+        {
+            baseAttr.AddValue((RoleAttrEnum)exAttr.AttrParams[0], exAttr.AttrParams[1]);
+        }
 
         return baseAttr;
     }

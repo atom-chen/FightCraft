@@ -68,6 +68,12 @@ namespace Tables
         public static StrDictionary StrDictionary { get; internal set; }
 //
         public static StrTable StrTable { get; internal set; }
+//
+        public static SummonSkill SummonSkill { get; internal set; }
+//
+        public static SummonSkillAttr SummonSkillAttr { get; internal set; }
+//
+        public static SummonSkillLottery SummonSkillLottery { get; internal set; }
 
         public static void ReadTables()
         {
@@ -94,6 +100,9 @@ namespace Tables
             StageInfo = new StageInfo(TableReadBase.GetTableText("StageInfo"), false);
             StrDictionary = new StrDictionary(TableReadBase.GetTableText("StrDictionary"), false);
             StrTable = new StrTable(TableReadBase.GetTableText("StrTable"), false);
+            SummonSkill = new SummonSkill(TableReadBase.GetTableText("SummonSkill"), false);
+            SummonSkillAttr = new SummonSkillAttr(TableReadBase.GetTableText("SummonSkillAttr"), false);
+            SummonSkillLottery = new SummonSkillLottery(TableReadBase.GetTableText("SummonSkillLottery"), false);
 
             //初始化所有表
             Achievement.CoverTableContent();
@@ -118,6 +127,9 @@ namespace Tables
             StageInfo.CoverTableContent();
             StrDictionary.CoverTableContent();
             StrTable.CoverTableContent();
+            SummonSkill.CoverTableContent();
+            SummonSkillAttr.CoverTableContent();
+            SummonSkillLottery.CoverTableContent();
         }
 
         #endregion

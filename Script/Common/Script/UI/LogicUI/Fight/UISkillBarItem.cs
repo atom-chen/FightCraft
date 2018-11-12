@@ -29,6 +29,8 @@ public class UISkillBarItem : UIItemSelect
                 InputManager.Instance.ResetReuseSkill();
             }
         }
+
+        UpdateCD();
     }
 
     public void InitSkillIcon()
@@ -64,7 +66,17 @@ public class UISkillBarItem : UIItemSelect
 
     #region cd
 
-    public void SetCD(float cdProcess)
+    private float _CDOrigin;
+    private float _CDNow;
+    public float CDNow
+    {
+        get
+        {
+            return _CDNow;
+        }
+    }
+
+    public void SetCDPro(float cdProcess)
     {
         if (cdProcess > 0 && cdProcess < 1)
         {
@@ -83,6 +95,28 @@ public class UISkillBarItem : UIItemSelect
             return;
 
         _StoreTimes.text = times.ToString();
+    }
+
+    public void SetCDTime(float cdTime)
+    {
+        _CDOrigin = cdTime;
+        _CDNow = cdTime;
+    }
+
+    private void UpdateCD()
+    {
+        _CDNow -= Time.deltaTime;
+        if (_CDNow <= 0)
+        {
+            _CDNow = 0;
+            _CDOrigin = 0;
+            SetCDPro(0);
+        }
+        else
+        {
+            float cdPro = _CDNow / _CDOrigin;
+            SetCDPro(cdPro);
+        }
     }
 
     #endregion

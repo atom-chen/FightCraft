@@ -216,6 +216,9 @@ public class GameDataValue
             case RoleAttrEnum.IgnoreDefenceAttack:
                 value = _IgnoreDefenceToAtk;
                 break;
+            default:
+                value = 1;
+                break;
         }
 
         return value;

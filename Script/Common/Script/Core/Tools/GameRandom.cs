@@ -87,6 +87,29 @@ public class GameRandom
         return levelRates.Length - 1;
     }
 
+    public static int GetRandomLevel(IList<int> levelRates)
+    {
+        int totalRate = 0;
+        foreach (int levelRate in levelRates)
+        {
+            totalRate += levelRate;
+        }
+
+        int randomValue = Random.Range(0, totalRate);
+        int rateStep = 0;
+
+        for (int i = 0; i < levelRates.Count; ++i)
+        {
+            rateStep += levelRates[i];
+            if (rateStep >= randomValue)
+            {
+                return i;
+            }
+        }
+
+        return levelRates.Count - 1;
+    }
+
     public static bool IsInRate(int rate)
     {
         var random = Random.Range(0, 10001);
