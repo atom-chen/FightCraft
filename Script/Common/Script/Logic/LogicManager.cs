@@ -44,6 +44,9 @@ public class LogicManager
         LegendaryData.Instance.LoadClass(true);
         LegendaryData.Instance.InitLegendaryEquips();
 
+        FiveElementData.Instance.LoadClass(true);
+        FiveElementData.Instance.InitFiveElementData();
+
         PlayerDataPack.Instance.SelectRole(idx);
 
         BackBagPack.Instance.LoadClass(true);
@@ -57,7 +60,6 @@ public class LogicManager
 
         SummonSkillData.Instance.LoadClass(true);
         SummonSkillData.Instance.InitSummonSkillData();
-
 
         ActData.Instance.LoadClass(true);
         ActData.Instance.InitActData();

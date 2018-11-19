@@ -180,6 +180,7 @@ public class RoleData : SaveItemBase
         GemData.Instance.SetGemAttr(_BaseAttr);
         LegendaryData.Instance.SetAttr(_BaseAttr);
         GlobalBuffData.Instance.SetAttr(_BaseAttr);
+        FiveElementData.Instance.SetAttr(_BaseAttr);
 
         CalculateSecondAttr(_BaseAttr);
     }

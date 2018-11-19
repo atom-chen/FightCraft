@@ -14,9 +14,7 @@ namespace Tables
 
         public override string Id { get; set; }        public string Name { get; set; }
         public string Desc { get; set; }
-        public int Attr { get; set; }
-        public int MatCost { get; set; }
-        public int GoldCost { get; set; }
+        public FIVE_ELEMENT EvelemtType { get; set; }
         public FiveElementRecord(DataRecord dataRecord)
         {
             if (dataRecord != null)
@@ -32,9 +30,7 @@ namespace Tables
             recordStrList.Add(TableWriteBase.GetWriteStr(Id));
             recordStrList.Add(TableWriteBase.GetWriteStr(Name));
             recordStrList.Add(TableWriteBase.GetWriteStr(Desc));
-            recordStrList.Add(TableWriteBase.GetWriteStr(Attr));
-            recordStrList.Add(TableWriteBase.GetWriteStr(MatCost));
-            recordStrList.Add(TableWriteBase.GetWriteStr(GoldCost));
+            recordStrList.Add(((int)EvelemtType).ToString());
 
             return recordStrList.ToArray();
         }
@@ -100,9 +96,7 @@ namespace Tables
             {
                 pair.Value.Name = TableReadBase.ParseString(pair.Value.ValueStr[1]);
                 pair.Value.Desc = TableReadBase.ParseString(pair.Value.ValueStr[2]);
-                pair.Value.Attr = TableReadBase.ParseInt(pair.Value.ValueStr[3]);
-                pair.Value.MatCost = TableReadBase.ParseInt(pair.Value.ValueStr[4]);
-                pair.Value.GoldCost = TableReadBase.ParseInt(pair.Value.ValueStr[5]);
+                pair.Value.EvelemtType =  (FIVE_ELEMENT)TableReadBase.ParseInt(pair.Value.ValueStr[3]);
             }
         }
     }

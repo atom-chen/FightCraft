@@ -39,7 +39,7 @@ public class UITestEquip : UIBase
 
     #endregion
 
-    #region 
+    #region equip/item test
 
     public override void Show(Hashtable hash)
     {
@@ -80,7 +80,7 @@ public class UITestEquip : UIBase
     }
     #endregion
 
-    #region 
+    #region fight test
 
     public InputField _TargetLevel;
 
@@ -488,7 +488,7 @@ public class UITestEquip : UIBase
 
     #endregion
 
-    #region 
+    #region global buff test
 
     public List<string> _AttrIDs;
     public List<Toggle> _TestBuffToggles;
@@ -527,6 +527,21 @@ public class UITestEquip : UIBase
         }
 
         RoleData.SelectRole.CalculateAttr();
+    }
+
+    #endregion
+
+    #region element test
+
+    public InputField _FiveElementItemLevel;
+    public InputField _FiveElementItemType;
+
+    public void OnBtnElementItem()
+    {
+        int level = int.Parse(_FiveElementItemLevel.text);
+        int type = int.Parse(_FiveElementItemType.text);
+        var elementItem = FiveElementData.CreateElementItem(level, (FIVE_ELEMENT)type);
+        FiveElementData.Instance.AddElementItem(elementItem);
     }
 
     #endregion

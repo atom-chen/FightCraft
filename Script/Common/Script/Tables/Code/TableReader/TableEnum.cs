@@ -47,6 +47,16 @@ namespace Tables
     }
 
     //
+    public enum FIVE_ELEMENT
+    {
+        METAL = 0, //METAL,枚举必须保留0值
+        WOOD = 1, //WOOD,WOOD
+        WATER = 2, //WATER,WATER
+        FIRE = 3, //FIRE,FIRE
+        EARTH = 4, //EARTH,EARTH
+    }
+
+    //
     public enum GLOABL_BUFF_TYPE
     {
         None = 0, //None,枚举必须保留0值
@@ -59,9 +69,10 @@ namespace Tables
     public enum ITEM_QUALITY
     {
         WHITE = 0, //WHITE,枚举必须保留0值
-        BLUE = 1, //BLUE,
-        PURPER = 2, //PURPER,
-        ORIGIN = 3, //ORIGIN,
+        GREEN = 1, //GREEN,GREEN
+        BLUE = 2, //BLUE,BLUE
+        PURPER = 3, //PURPER,PURPER
+        ORIGIN = 4, //ORIGIN,ORIGIN
     }
 
     //

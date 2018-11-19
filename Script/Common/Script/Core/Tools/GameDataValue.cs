@@ -1454,6 +1454,54 @@ public class GameDataValue
 
     #endregion
 
+    #region five element
+
+    public static EquipExAttr GetFiveElementExAttr(int level, FIVE_ELEMENT eleType)
+    {
+        int attrValue = TableReader.FiveElementLevel.GetElementLevel(level).Value;
+        List<FiveElementAttrRecord> elementAttrRecord = new List<FiveElementAttrRecord>();
+        foreach (var record in TableReader.FiveElementAttr.Records)
+        {
+            if (record.Value.ElementType == eleType && record.Value.LevelLimit <= level)
+            {
+                elementAttrRecord.Add(record.Value);
+
+            }
+        }
+        var randomAttr = GetFiveElementRandomAttr(elementAttrRecord);
+        return randomAttr.Attr.GetExAttr(attrValue);
+    }
+
+    public static FiveElementAttrRecord GetFiveElementRandomAttr(List<FiveElementAttrRecord> staticList)
+    {
+        int totalRandom = 0;
+        foreach (var attrRandom in staticList)
+        {
+            totalRandom += (attrRandom.Random);
+        }
+
+        int temp = totalRandom;
+        int randomVar = Random.Range(0, temp);
+        FiveElementAttrRecord attr = null;
+        foreach (var attrRandom in staticList)
+        {
+            temp -= attrRandom.Random;
+            if (randomVar >= temp)
+            {
+                attr = attrRandom;
+                break;
+            }
+        }
+        if (attr == null)
+        {
+            attr = staticList[staticList.Count - 1];
+        }
+
+        return attr;
+    }
+
+    #endregion
+
     #endregion
 
     #region monster attr

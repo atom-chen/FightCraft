@@ -39,31 +39,11 @@
     <constructRepeat>1</constructRepeat>
   </constructColumn>
   <constructColumn>
-    <constructName>Attr</constructName>
-    <constructCode>Attr</constructCode>
-    <constructType1>基本类型</constructType1>
+    <constructName>EvelemtType</constructName>
+    <constructCode>EvelemtType</constructCode>
+    <constructType1>自定义枚举</constructType1>
     <constructType2>
-      <constructType2>整数</constructType2>
-    </constructType2>
-    <constructDefault>0</constructDefault>
-    <constructRepeat>1</constructRepeat>
-  </constructColumn>
-  <constructColumn>
-    <constructName>MatCost</constructName>
-    <constructCode>MatCost</constructCode>
-    <constructType1>基本类型</constructType1>
-    <constructType2>
-      <constructType2>整数</constructType2>
-    </constructType2>
-    <constructDefault>0</constructDefault>
-    <constructRepeat>1</constructRepeat>
-  </constructColumn>
-  <constructColumn>
-    <constructName>GoldCost</constructName>
-    <constructCode>GoldCost</constructCode>
-    <constructType1>基本类型</constructType1>
-    <constructType2>
-      <constructType2>整数</constructType2>
+      <constructType2>FIVE_ELEMENT</constructType2>
     </constructType2>
     <constructDefault>0</constructDefault>
     <constructRepeat>1</constructRepeat>

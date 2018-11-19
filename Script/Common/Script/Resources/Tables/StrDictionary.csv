@@ -76,6 +76,7 @@
 10013,,,Equiping,,
 10014,,,Decompose,,
 10015,,,Enhance,,
+10016,,,Extra,,
 20000,shop,,Have not enough gold,,
 20001,shop,,Have not enough diamond,,
 20002,shop,,Can not sell strendthed equip,,
@@ -566,3 +567,4 @@
 1200003,SummonSkill,Desc,All Attribute must add to max,,
 1200004,SummonSkill,Desc,Every Star of Hero Soul will decrease the CD of summon skill 0.1s.,,
 1200005,SummonSkill,Desc,Summon skill CD <color=#001100>{0}</color>s.,,
+1300001,FiveElement,Desc,Please select an item,,

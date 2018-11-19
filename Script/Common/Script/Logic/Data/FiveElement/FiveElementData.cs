@@ -32,7 +32,8 @@ public class FiveElementData : SaveItemBase
     {
         bool needSave = false;
 
-        needSave |= InitElementsLv();
+        needSave |= InitPackElements();
+        needSave |= InitUsingElements();
 
         if (needSave)
         {
@@ -42,124 +43,208 @@ public class FiveElementData : SaveItemBase
 
     #region element 
 
-    public const int _ElemnetCnt = 5;
-    public const int _MaxLevel = 200;
-
-    public static List<string> _MatIDs = new List<string>()
-    {
-        "1100001",
-        "1100002",
-        "1100003",
-        "1100004",
-        "1100005",
-    };
-
-    public static List<string> _ElementAttr = new List<string>()
-    {
-        "100000",
-        "100001",
-        "100002",
-        "100003",
-        "100004",
-    };
-
+    public const int _ITEM_PACKET_CNT = 50;
+    
     [SaveField(1)]
-    public List<int> _ElementsLvs;
+    public List<ItemFiveElement> _UsingElements;
 
-    private bool InitElementsLv()
+    [SaveField(2)]
+    public List<ItemFiveElement> _PackElements;
+
+    private bool InitPackElements()
     {
-        if (_ElementsLvs.Count != _ElemnetCnt)
+        if (_PackElements == null || _PackElements.Count == 0)
         {
-            _ElementsLvs = new List<int>();
-            for (int i = 0; i < _ElemnetCnt; ++i)
+            _PackElements = new List<ItemFiveElement>();
+            for (int i = 0; i < _ITEM_PACKET_CNT; ++i)
             {
-                _ElementsLvs.Add(0);
+                _PackElements.Add(new ItemFiveElement());
             }
-
             return true;
         }
 
         return false;
     }
 
-    public int GetElementLv(int idx)
+    private bool InitUsingElements()
     {
-        return _ElementsLvs[idx];
-    }
-
-    public FiveElementRecord GetEleLvRecord(int idx)
-    {
-        int level = GetElementLv(idx) + 1;
-        level = Mathf.Clamp(level, 1, _MaxLevel);
-        var record = TableReader.FiveElement.GetRecord(level.ToString());
-        return record;
-    }
-
-    public void ElementLvUp(int idx)
-    {
-        var record = GetEleLvRecord(idx);
-
-        if (PlayerDataPack.Instance.Gold < record.GoldCost)
+        if (_UsingElements == null || _UsingElements.Count == 0)
         {
-            UIMessageTip.ShowMessageTip(20000);
+            _UsingElements = new List<ItemFiveElement>();
+            for (int i = 0; i <= (int)FIVE_ELEMENT.EARTH; ++i)
+            {
+                _UsingElements.Add(new ItemFiveElement());
+            }
+            return true;
+        }
+
+        return false;
+    }
+
+    public void AddElementItem(ItemFiveElement elementItem)
+    {
+        ItemFiveElement emptySlot = FindEmptySlot();
+        if (emptySlot == null)
+        {
+            UIMessageTip.ShowMessageTip(10002);
             return;
         }
 
-        if (BackBagPack.Instance.GetItemCnt(_MatIDs[idx]) < record.MatCost)
+        emptySlot.ExchangeInfo(elementItem);
+    }
+
+    public void SortPack()
+    {
+        _PackElements.Sort((itemA, itemB) =>
         {
-            UIMessageTip.ShowMessageTip(30003);
-            return;
-        }
-
-        PlayerDataPack.Instance.DecGold(record.GoldCost);
-        var matItem = BackBagPack.Instance.GetItem(_MatIDs[idx]);
-        matItem.DecStackNum(record.MatCost);
-
-        ++_ElementsLvs[idx];
+            if (itemA.IsVolid() && !itemB.IsVolid())
+                return -1;
+            else if (!itemA.IsVolid() && itemB.IsVolid())
+                return 1;
+            else
+                return 0;
+        });
     }
 
     #endregion
 
-    #region attr
+    #region opt
 
-    public void SetGemAttr(RoleAttrStruct roleAttr)
+    public ItemFiveElement FindEmptySlot()
     {
-        //for (int i = 0; i < _ElemnetCnt; ++i)
-        //{
-        //    var level = GetElementLv(i);
-        //    if (level == 0)
-        //        continue;
+        ItemFiveElement emptySlot = null;
+        for (int i = 0; i < _PackElements.Count; ++i)
+        {
+            if (!_PackElements[i].IsVolid())
+            {
+                emptySlot = _PackElements[i];
+                break;
+            }
+        }
 
-        //    var record = GetEleLvRecord(i);
+        return emptySlot;
+    }
 
-        //    var attrValue = TableReader.AttrValue.GetRecord(_ElementAttr[i]); 
+    public void PutOnElement(ItemFiveElement itemElement)
+    {
+        if (!itemElement.IsVolid())
+            return;
 
-        //    if (attrValue.AttrImpact == "RoleAttrImpactBaseAttr")
-        //    {
-        //        int levelID = Mathf.Clamp(level, 0, 200);
-        //        var gemAttrRecord = TableReader.GemBaseAttr.GetRecord(levelID.ToString());
-        //        if (gemAttrRecord == null)
-        //        {
-        //            gemAttrRecord = TableReader.GemBaseAttr.GetRecord("200");
-        //        }
-        //        var exAttr =  GetGemAttr((RoleAttrEnum)attrValue.AttrParams[0], gemAttrRecord.SetAttrValue);
-        //        attrList.Add(exAttr);
-        //    }
-        //    else
-        //    {
-        //        int spAttrLv = GemSuit._ActAttrLevel[GemSuit._ActAttrLevel.Count - 1];
-        //        int attrLv = 0;
-        //        if (level > spAttrLv)
-        //        {
-        //            attrLv = Mathf.CeilToInt((level - spAttrLv) / 5 + 1);
-        //        }
-        //        var exAttr = attrValue.GetExAttr(attrLv);
-        //        attrList.Add(exAttr);
-        //    }
-        //}
+        _UsingElements[(int)itemElement.FiveElementRecord.EvelemtType].ExchangeInfo(itemElement);
+
+        RoleData.SelectRole.CalculateAttr();
+    }
+
+    public void PutOffElement(ItemFiveElement itemElement)
+    {
+        ItemFiveElement emptySlot = FindEmptySlot();
+        if (emptySlot == null)
+        {
+            UIMessageTip.ShowMessageTip(10002);
+            return;
+        }
+
+        emptySlot.ExchangeInfo(itemElement);
+
+        RoleData.SelectRole.CalculateAttr();
+    }
+
+    public bool Extract(ItemFiveElement itemElement)
+    {
+        ItemFiveElement usingElement = _UsingElements[(int)itemElement.FiveElementRecord.EvelemtType];
+        if (usingElement == null || !usingElement.IsVolid())
+            return false;
+
+        float extraRate = GetAddExAttrRate(usingElement.EquipExAttrs.Count);
+
+        float extraRandom = UnityEngine.Random.Range(0, 1.0f);
+        if (extraRandom < extraRate)
+        {
+            usingElement.AddExAttr(itemElement.EquipExAttrs[0]);
+        }
+        else
+        {
+            List<int> randomIdxs = new List<int>();
+            for (int i = 0; i < usingElement.EquipExAttrs.Count; ++i)
+            {
+                randomIdxs.Add(100);
+            }
+            int replaceIdx = GameRandom.GetRandomLevel(randomIdxs);
+            usingElement.ReplaceAttr(replaceIdx, itemElement.EquipExAttrs[0]);
+        }
+        itemElement.ResetItem();
+        SortPack();
+        SaveClass(true);
+        return true;
+    }
+
+    public float GetAddExAttrRate(int idx)
+    {
+        float extraRate = 0;
+        if (idx == 0)
+        {
+            extraRate = 1;
+        }
+        else if (idx == 1)
+        {
+            extraRate = 0.5f;
+        }
+        else if (idx == 2)
+        {
+            extraRate = 0.3f;
+        }
+        else if (idx == 3)
+        {
+            extraRate = 0.15f;
+        }
+        else if (idx == 4)
+        {
+            extraRate = 0.05f;
+        }
+
+        return extraRate;
+    }
+
+    public void SetAttr(RoleAttrStruct roleAttr)
+    {
+        for (int i = 0; i < _UsingElements.Count; ++i)
+        {
+            if (_UsingElements[i] == null)
+                continue;
+
+            if (!_UsingElements[i].IsVolid())
+                continue;
+
+            for (int j = 0; j < _UsingElements[i].EquipExAttrs.Count; ++j)
+            {
+                if (_UsingElements[i].EquipExAttrs[j].AttrType == "RoleAttrImpactBaseAttr")
+                {
+                    roleAttr.AddValue((RoleAttrEnum)_UsingElements[i].EquipExAttrs[j].AttrParams[0], _UsingElements[i].EquipExAttrs[j].AttrParams[1]);
+                }
+                else
+                {
+                    roleAttr.AddExAttr(RoleAttrImpactManager.GetAttrImpact(_UsingElements[i].EquipExAttrs[j]));
+                }
+            }
+        }
 
         GemSuit.Instance.SetGemSetAttr(roleAttr);
 
+    }
+
+    #endregion
+
+    #region static create
+
+    public static ItemFiveElement CreateElementItem(int level, FIVE_ELEMENT elementType = FIVE_ELEMENT.METAL)
+    {
+        var elementRecord = TableReader.FiveElement.GetFiveElementByType(elementType);
+        ItemFiveElement itemElement = new ItemFiveElement(elementRecord.Id);
+
+        //RandomEquipAttr(itemEquip);
+        itemElement.AddExAttr(GameDataValue.GetFiveElementExAttr(level, elementType));
+
+        return itemElement;
     }
 
     #endregion

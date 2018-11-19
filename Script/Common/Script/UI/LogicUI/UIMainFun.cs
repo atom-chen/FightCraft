@@ -113,6 +113,11 @@ public class UIMainFun : UIBase
         UIRoleAttr.ShowAsyn();
     }
 
+    public void BtnElement()
+    {
+        UIFiveElement.ShowAsyn();
+    }
+
     public void BtnBossStage()
     {
         UIBossStageSelect.ShowAsyn();
