@@ -121,6 +121,16 @@ public class UIFiveElement : UIBase
 
     #region 
 
+    public void OnBtnExtra()
+    {
+        UIFiveElementExtra.ShowAsyn(null);
+    }
+
+    public void OnBtnValueAttr()
+    {
+        UIFiveElementValueTip.ShowAsyn();
+    }
+
     #endregion
 
 }

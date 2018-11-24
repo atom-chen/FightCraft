@@ -41,7 +41,7 @@ public class UIGemSuitItem : UIItemSelect
         Hashtable hash = new Hashtable();
         hash.Add("MinLevel", gemSet.MinGemLv);
         hash.Add("IsClearGem", gemSet.IsEnableDefault);
-        _SuitGems.InitContentItem(gemSet.Gems, null, hash);
+        _SuitGems.InitContentItem(GemSuit.Instance.GetRecordGemRecords(gemSet), null, hash);
 
         if (GemSuit.Instance.IsGemSetCanUse(gemSet))
         {

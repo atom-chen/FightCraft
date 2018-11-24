@@ -144,11 +144,10 @@ public class LegendaryData : SaveItemBase
 
     public bool PutOffEquip(ItemEquip equip)
     {
-        var emptyPos = BackBagPack.Instance.GetEmptyPageEquip();
-        if (emptyPos == null)
+        var addEquip = BackBagPack.Instance.AddEquip(equip);
+        if (!addEquip)
             return false;
 
-        emptyPos.ExchangeInfo(equip);
         CalculateAttrs();
 
         RoleData.SelectRole.CalculateAttr();

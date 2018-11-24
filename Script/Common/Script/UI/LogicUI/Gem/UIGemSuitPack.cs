@@ -15,18 +15,6 @@ public class UIGemSuitPack : UIBase
         GameCore.Instance.UIManager.ShowUI("LogicUI/Gem/UIGemSuitPack", UILayer.SubPopUI, hash);
     }
 
-    public static void RefreshBagItems()
-    {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UIGemPack>("LogicUI/Gem/UIGemSuitPack");
-        if (instance == null)
-            return;
-
-        if (!instance.isActiveAndEnabled)
-            return;
-
-        instance.RefreshItems();
-    }
-
     #endregion
 
     #region 

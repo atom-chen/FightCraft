@@ -67,16 +67,22 @@ public class UITestEquip : UIBase
             legencyID = 0;
         }
         var equipItem = ItemEquip.CreateEquip(level, quality, legencyID);
-        var newEquip = BackBagPack.Instance.AddNewEquip(equipItem);
-        //UIEquipTooltips.ShowAsyn(newEquip);
-        Debug.Log("test equip :" + newEquip.EquipItemRecord.Id);
+        var newEquip = BackBagPack.Instance.AddEquip(equipItem);
+        
     }
 
     public void OnBtnItem()
     {
         int itemCnt = int.Parse(_ItemCnt.text);
-
-        ItemBase.CreateItemInPack(_ItemID.text, itemCnt);
+        int itemID = int.Parse(_ItemID.text);
+        if (itemID > 70000 && itemID < 80000)
+        {
+            GemData.Instance.PackGemDatas.AddItem(itemID.ToString(), itemCnt);
+        }
+        else
+        {
+            ItemBase.CreateItemInPack(itemID.ToString(), itemCnt);
+        }
     }
     #endregion
 
@@ -176,11 +182,8 @@ public class UITestEquip : UIBase
             }
 
             //drop
-            int matCnt = BackBagPack.Instance.GetItemCnt(EquipRefresh._RefreshMatDataID);
-            int gemCnt = BackBagPack.Instance.GetItemCnt(GemData._GemMaterialDataIDs[0])
-                + BackBagPack.Instance.GetItemCnt(GemData._GemMaterialDataIDs[1])
-                + BackBagPack.Instance.GetItemCnt(GemData._GemMaterialDataIDs[2])
-                + BackBagPack.Instance.GetItemCnt(GemData._GemMaterialDataIDs[3]);
+            int matCnt = BackBagPack.Instance.PageItems.GetItemCnt(EquipRefresh._RefreshMatDataID);
+            int gemCnt = 0;
             monCnt += passStage._MonsterCnt;
             equipDropCnt += passStage._DropEquipCnt;
 #if UNITY_EDITOR
@@ -247,108 +250,7 @@ public class UITestEquip : UIBase
 
     public void OnTestPassStage()
     {
-        //    int exp = 0;
-        //    int gold = 0;
-
-        //    ++_StageIdx;
-        //    if (_StageIdx > 20)
-        //    {
-        //        _StageIdx = 1;
-        //        ++_Diff;
-        //    }
-        //    TestPassNormalStage(_StageIdx, _Diff, ref exp, ref gold);
-
-        //    _TotalExp += exp;
-        //    _TotalGold += gold;
-
-        //    Debug.Log("TotalDrop stage:" + _StageIdx  + " Exp:" + _TotalExp + ", Gold:" + _TotalGold);
-        //    Debug.Log("Role Atk:" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Attack) + ", Def:" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Defense) + ", HP:" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax));
-        int lastGem = 0;
-        for (int diff = 1; diff < 7; ++diff)
-        {
-            for (int stageid = 1; stageid < 21; ++stageid)
-            {
-                int exp = 0;
-                int gold = 0;
-                int equipPointTotal = 0;
-                var passStage = TestPassNormalStage(stageid, diff, ref exp, ref gold);
-                //foreach (var itemEquip in BackBagPack.Instance.PageEquips)
-                //{
-                //    int equipPoint = GameDataValue.GetEquipSellGold(itemEquip);
-                //    equipPointTotal += equipPoint;
-                //}
-                //TestFight.DelAllEquip();
-
-                var level = GameDataValue.GetStageLevel(diff, stageid, STAGE_TYPE.NORMAL);
-
-                RoleAttrManager roleAttr = new RoleAttrManager();
-                roleAttr.InitMainRoleAttr();
-
-                RoleAttrManager monAttr = new RoleAttrManager();
-                monAttr.InitEnemyAttr(TableReader.MonsterBase.GetRecord("21"), level);
-
-                Hashtable resultHash = new Hashtable();
-                resultHash.Add("SkillDamageRate", GameDataValue.GetSkillDamageRate(TestFight.GetTestSkill(1)));
-                resultHash.Add("DamagePos", Vector3.zero);
-                resultHash.Add("ImpactBase", new ImpactDamage() { _DamageType = ElementType.Physic});
-                resultHash.Add("DamageType", ElementType.Physic);
-
-                //damage
-                RoleAttrManager.DamageClass damageClass = new RoleAttrManager.DamageClass();
-                monAttr.CalculateNormalDamage(roleAttr, resultHash, damageClass);
-                //final
-                monAttr.CaculateFinalDamage(roleAttr, resultHash, damageClass);
-
-                //event
-                
-
-
-                PassStageInfo passInfo = new PassStageInfo();
-                passInfo.diff = diff;
-                passInfo.stateIdx = stageid;
-                passInfo.level = GameDataValue.GetStageLevel(diff, stageid, STAGE_TYPE.NORMAL);
-                passInfo.exp = exp;
-                passInfo.gold = PlayerDataPack.Instance.Gold;
-                passInfo.goldDrop = gold;
-                passInfo.levelExp = GameDataValue.GetLvUpExp(passInfo.level, 0);
-                passInfo.atk = RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Attack);
-                passInfo.damage1 = damageClass.TotalDamageValue;
-                passInfo.damage2 = 1;
-                passInfo.damage3 = 1;
-                passInfo.def = RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Defense);
-                passInfo.hp = monAttr.HP;
-                passInfo.monValue = monAttr.HP;
-                passInfo.equipMat = BackBagPack.Instance.GetItemCnt(EquipRefresh._RefreshMatDataID);
-                int gemCnt = 0;
-                for (int i = 0; i < GemData._GemMaterialDataIDs.Count; ++i)
-                {
-                    gemCnt += BackBagPack.Instance.GetItemCnt(GemData._GemMaterialDataIDs[i]);
-                }
-                
-                passInfo.equipGem = gemCnt - lastGem;
-                lastGem = gemCnt;
-                passInfo.equipPoint = equipPointTotal;
-
-                passInfo.gemCost1 = GameDataValue.GetGemConsume(passInfo.level);
-                passInfo.gemCost2 = GameDataValue.GetGemGoldConsume(passInfo.level);
-
-
-                _PassInfoList.Add(passInfo);
-            }
-        }
-
-        string fileName = "StagePassInfos";
-        string path = Application.dataPath + fileName + ".txt";
-        var fileStream = File.Create(path);
-        var streamWriter = new StreamWriter(fileStream);
-        foreach (var passInfo in _PassInfoList)
-        {
-            //attr
-            streamWriter.WriteLine(passInfo.level + "\t" + passInfo.atk + "\t" + passInfo.monValue + "\t" + passInfo.damage1 + "\t" + ((float)passInfo.monValue / passInfo.damage1));
-            //drop
-            //streamWriter.WriteLine(passInfo.level + "\t" + passInfo.gold + "\t" + passInfo.goldDrop + "\t" + passInfo.equipPoint + "\t" + passInfo.equipMat + "\t" + passInfo.equipGem + "\t" + passInfo.gemCost1 + "\t" + passInfo.gemCost2);
-        }
-        streamWriter.Close();
+        ItemPackTest.Instance.SaveClass(true);
     }
 
     public void OnTestDelEquips()

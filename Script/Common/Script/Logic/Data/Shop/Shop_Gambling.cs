@@ -32,12 +32,12 @@ public class Shop_Gambling
             var legendaryList = _LegendaryDict[(Tables.EQUIP_SLOT)itemShop.ShopRecord.ScriptParam[0]];
             int idx = Random.Range(0, legendaryList.Count - 1);
             var equipItem = ItemEquip.CreateEquip(level, (Tables.ITEM_QUALITY)quality, legendaryList[idx], itemShop.ShopRecord.ScriptParam[0], itemShop.ShopRecord.ScriptParam[1]);
-            var newEquip = BackBagPack.Instance.AddNewEquip(equipItem);
+            var newEquip = BackBagPack.Instance.AddEquip(equipItem);
         }
         else
         {
             var equipItem = ItemEquip.CreateEquip(level, (Tables.ITEM_QUALITY)quality, -1, itemShop.ShopRecord.ScriptParam[0], itemShop.ShopRecord.ScriptParam[1]);
-            var newEquip = BackBagPack.Instance.AddNewEquip(equipItem);
+            var newEquip = BackBagPack.Instance.AddEquip(equipItem);
         }
     }
 }

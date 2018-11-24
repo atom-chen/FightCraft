@@ -76,8 +76,8 @@ public class GemSuit
     {
         foreach (var gemRecord in gemSet.Gems)
         {
-            var gemInfo = GemData.Instance.GetGemInfo(gemRecord.Id);
-            if (gemInfo.Level < gemSet.MinGemLv)
+            var gemInfo = GemData.Instance.GetGemClassMax(gemRecord.Class, gemSet.MinGemLv);
+            if (gemInfo == null || !gemInfo.IsVolid() || gemInfo.GemRecord.Level < gemSet.MinGemLv)
                 return false;
         }
 
@@ -93,7 +93,7 @@ public class GemSuit
 
         for (int i = 0; i < gemSet.Gems.Count; ++i)
         {
-            var gemInfo = GemData.Instance.GetGemInfo(gemSet.Gems[i].Id);
+            var gemInfo = GemData.Instance.GetGemClassMax(gemSet.Gems[i].Class, gemSet.MinGemLv);
             if (gemInfo == null)
             {
                 Debug.LogError("Get geminfo error");
@@ -114,20 +114,24 @@ public class GemSuit
             _ActLevel = -1;
             for (int i = 0; i < gemSuit.Value.Gems.Count; ++i)
             {
-                if (GemData.Instance._EquipedGems[i] == null)
+                if (gemSuit.Value.Gems[i] == null)
+                {
+                    continue;
+                }
+                if (GemData.Instance.EquipedGemDatas._PackItems[i] == null || !GemData.Instance.EquipedGemDatas._PackItems[i].IsVolid())
                 {
                     break;
                 }
-                if (GemData.Instance._EquipedGems[i].ItemDataID == gemSuit.Value.Gems[i].Id
-                    && GemData.Instance._EquipedGems[i].Level >= gemSuit.Value.MinGemLv)
+                if (GemData.Instance.EquipedGemDatas._PackItems[i].GemRecord.Class == gemSuit.Value.Gems[i].Class
+                    && GemData.Instance.EquipedGemDatas._PackItems[i].GemRecord.Level >= gemSuit.Value.MinGemLv)
                 {
                     if (_ActLevel < 0)
                     {
-                        _ActLevel = GemData.Instance._EquipedGems[i].Level;
+                        _ActLevel = GemData.Instance.EquipedGemDatas._PackItems[i].GemRecord.Level;
                     }
                     else
                     {
-                        _ActLevel = Mathf.Min(_ActLevel, GemData.Instance._EquipedGems[i].Level);
+                        _ActLevel = Mathf.Min(_ActLevel, GemData.Instance.EquipedGemDatas._PackItems[i].GemRecord.Level);
                     }
                 }
                 else
@@ -187,4 +191,45 @@ public class GemSuit
             }
         }
     }
+
+    #region suit gems
+
+    private Dictionary<GemSetRecord, List<GemTableRecord>> _SuitGemRecordDict;
+
+    private void InitSuitGems()
+    {
+        if (_SuitGemRecordDict != null)
+            return;
+
+        _SuitGemRecordDict = new Dictionary<GemSetRecord, List<GemTableRecord>>();
+        foreach (var suitRecord in TableReader.GemSet.Records.Values)
+        {
+            List<GemTableRecord> gemList = new List<GemTableRecord>();
+            foreach (var suitGem in suitRecord.Gems)
+            {
+                if (suitGem == null)
+                    continue;
+
+                foreach (var gemRecord in TableReader.GemTable.Records.Values)
+                {
+                    if (suitGem.Class == gemRecord.Class && gemRecord.Level == suitRecord.MinGemLv)
+                    {
+                        gemList.Add(suitGem);
+                    }
+                }
+            }
+            _SuitGemRecordDict.Add(suitRecord, gemList);
+        }
+    }
+
+    public List<GemTableRecord> GetRecordGemRecords(GemSetRecord gemSetRecord)
+    {
+        InitSuitGems();
+
+        return _SuitGemRecordDict[gemSetRecord];
+    }
+
+    #endregion
+
+
 }

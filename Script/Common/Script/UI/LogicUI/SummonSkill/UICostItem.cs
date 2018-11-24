@@ -15,7 +15,7 @@ public class UICostItem : UIItemBase
 
     public void ShowCost(string costItem, int costNum)
     {
-        int itemCnt = BackBagPack.Instance.GetItemCnt(costItem);
+        int itemCnt = BackBagPack.Instance.PageItems.GetItemCnt(costItem);
         if (itemCnt > costNum)
         {
             _Num.text = CommonDefine.GetEnableRedStr(1) +  "*" + costNum.ToString() + "</color>";

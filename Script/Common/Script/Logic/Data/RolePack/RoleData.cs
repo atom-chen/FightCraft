@@ -116,8 +116,8 @@ public class RoleData : SaveItemBase
 
     public void PutOffEquip(EQUIP_SLOT equipSlot, ItemEquip equipItem)
     {
-        var backPackPos = BackBagPack.Instance.GetEmptyPageEquip();
-        backPackPos.ExchangeInfo(equipItem);
+
+        var backPackPos = BackBagPack.Instance.AddEquip(equipItem);
 
         UIEquipPack.RefreshBagItems();
 

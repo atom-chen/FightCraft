@@ -66,11 +66,11 @@ public class UIBackPack : UIBase, IDragablePack
         hash.Add("DragPack", this);
         if (page == 0)
         {
-            _ItemsContainer.InitContentItem(BackBagPack.Instance.PageEquips, ShowBackPackTooltips, hash);
+            _ItemsContainer.InitContentItem(BackBagPack.Instance.PageEquips._PackItems, ShowBackPackTooltips, hash);
         }
         else
         {
-            _ItemsContainer.InitContentItem(BackBagPack.Instance.PageItems, ShowBackPackTooltips, hash);
+            _ItemsContainer.InitContentItem(BackBagPack.Instance.PageItems._PackItems, ShowBackPackTooltips, hash);
         }
 
     }
@@ -128,7 +128,14 @@ public class UIBackPack : UIBase, IDragablePack
 
     public void OnBtnRefresh()
     {
-        BackBagPack.Instance.SortEquip();
+        if (_TagPanel.GetShowingPage() == 0)
+        {
+            BackBagPack.Instance.SortEquip();
+        }
+        else if (_TagPanel.GetShowingPage() == 1)
+        {
+            BackBagPack.Instance.SortItem();
+        }
         OnShowPage(_TagPanel.GetShowingPage());
     }
 

@@ -68,7 +68,7 @@ public class UIEquipRefresh : UIBase
         }
 
         List<ItemEquip> equipInBackPack = new List<ItemEquip>();
-        foreach (var equipItem in BackBagPack.Instance.PageEquips)
+        foreach (var equipItem in BackBagPack.Instance.PageEquips._PackItems)
         {
             if (equipItem.IsVolid())
             {
@@ -182,7 +182,7 @@ public class UIEquipRefresh : UIBase
         }
 
         var refreshCost = EquipRefresh.Instance.GetEquipRefreshCost(_SelectedEuqip);
-        var matCnt = BackBagPack.Instance.GetItemCnt(EquipRefresh._RefreshMatDataID);
+        var matCnt = BackBagPack.Instance.PageItems.GetItemCnt(EquipRefresh._RefreshMatDataID);
         if (matCnt > refreshCost._MatCnt)
         {
             _MaterialBtn.SetActive(true);
@@ -306,7 +306,7 @@ public class UIEquipRefresh : UIBase
         }
 
         List<ItemEquip> equipInBackPack = new List<ItemEquip>();
-        foreach (var equipItem in BackBagPack.Instance.PageEquips)
+        foreach (var equipItem in BackBagPack.Instance.PageEquips._PackItems)
         {
             if (equipItem.IsVolid() 
                 && equipItem.EquipItemRecord.Slot == _SelectedEuqip.EquipItemRecord.Slot

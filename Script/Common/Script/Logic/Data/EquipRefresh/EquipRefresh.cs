@@ -72,7 +72,7 @@ public class EquipRefresh : DataPackBase
 
         var refreshCost = GetEquipRefreshCost(itemEquip);
 
-        var matCnt = BackBagPack.Instance.GetItemCnt(_RefreshMatDataID);
+        var matCnt = BackBagPack.Instance.PageItems.GetItemCnt(_RefreshMatDataID);
         if ( matCnt < refreshCost._MatCnt)
         {
             if (needTip)
@@ -86,7 +86,7 @@ public class EquipRefresh : DataPackBase
         {
             return false;
         }
-        BackBagPack.Instance.DecItem(_RefreshMatDataID, refreshCost._MatCnt);
+        BackBagPack.Instance.PageItems.DecItem(_RefreshMatDataID, refreshCost._MatCnt);
 
         RandomAttrs.LvUpEquipExAttr(itemEquip);
         itemEquip.EquipRefreshCostMatrial += refreshCost._MatCnt;
@@ -180,7 +180,7 @@ public class EquipRefresh : DataPackBase
         int destoryGetCnt = GetDestoryMatCnt(itemEquip);
         itemEquip.ResetItem();
         itemEquip.SaveClass(true);
-        BackBagPack.Instance.AddItem(_RefreshMatDataID, destoryGetCnt);
+        BackBagPack.Instance.PageItems.AddItem(_RefreshMatDataID, destoryGetCnt);
 
         Hashtable hash = new Hashtable();
         hash.Add("EquipInfo", itemEquip);

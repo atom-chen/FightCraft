@@ -267,7 +267,7 @@ public class TestFight : MonoBehaviour
     public static void DelAllEquip()
     {
         //equip
-        foreach (var itemEquip in BackBagPack.Instance.PageEquips)
+        foreach (var itemEquip in BackBagPack.Instance.PageEquips._PackItems)
         {
             if (!itemEquip.IsVolid())
                 continue;
@@ -307,7 +307,7 @@ public class TestFight : MonoBehaviour
 
         //destory
         ItemEquip storeWeapon = null;
-        foreach (var itemEquip in BackBagPack.Instance.PageEquips)
+        foreach (var itemEquip in BackBagPack.Instance.PageEquips._PackItems)
         {
             if (!itemEquip.IsVolid())
                 continue;
@@ -432,8 +432,8 @@ public class TestFight : MonoBehaviour
 
         foreach (var gemLv in gemSetTab.Gems)
         {
-            var gemInfo = GemData.Instance.GetGemInfo(gemLv.Id);
-            GemData.Instance.GemLevelUp(gemInfo);
+            //var gemInfo = GemData.Instance.GetGemInfo(gemLv.Id);
+            //GemData.Instance.GemLevelUp(gemInfo);
         }
     }
 

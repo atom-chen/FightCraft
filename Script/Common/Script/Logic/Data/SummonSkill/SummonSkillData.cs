@@ -428,14 +428,14 @@ public class SummonSkillData : SaveItemBase
             UIMessageTip.ShowMessageTip(20000);
             return null;
         }
-        int itemCnt = BackBagPack.Instance.GetItemCnt(_GoldCostItem);
+        int itemCnt = BackBagPack.Instance.PageItems.GetItemCnt(_GoldCostItem);
         int needItemNum = buyTimes;
         if (itemCnt < buyTimes)
         {
             needItemNum = itemCnt;
         }
 
-        if (!BackBagPack.Instance.DecItem(_GoldCostItem, needItemNum))
+        if (!BackBagPack.Instance.PageItems.DecItem(_GoldCostItem, needItemNum))
         {
             UIMessageTip.ShowMessageTip(20006);
             return null;
@@ -461,14 +461,14 @@ public class SummonSkillData : SaveItemBase
             UIMessageTip.ShowMessageTip(20001);
             return null;
         }
-        int itemCnt = BackBagPack.Instance.GetItemCnt(_DiamondCostItem);
+        int itemCnt = BackBagPack.Instance.PageItems.GetItemCnt(_DiamondCostItem);
         int needItemNum = buyTimes;
         if (itemCnt < buyTimes)
         {
             needItemNum = itemCnt;
         }
 
-        if (!BackBagPack.Instance.DecItem(_DiamondCostItem, needItemNum))
+        if (!BackBagPack.Instance.PageItems.DecItem(_DiamondCostItem, needItemNum))
         {
             UIMessageTip.ShowMessageTip(20006);
             return null;
@@ -488,7 +488,7 @@ public class SummonSkillData : SaveItemBase
 
     public int GetExCostGold(int buyTimes)
     {
-        int itemCnt = BackBagPack.Instance.GetItemCnt(_GoldCostItem);
+        int itemCnt = BackBagPack.Instance.PageItems.GetItemCnt(_GoldCostItem);
         if (itemCnt >= buyTimes)
         {
             return 0;
@@ -500,7 +500,7 @@ public class SummonSkillData : SaveItemBase
 
     public int GetExCostDiamond(int buyTimes)
     {
-        int itemCnt = BackBagPack.Instance.GetItemCnt(_DiamondCostItem);
+        int itemCnt = BackBagPack.Instance.PageItems.GetItemCnt(_DiamondCostItem);
         if (itemCnt >= buyTimes)
         {
             return 0;
@@ -855,7 +855,7 @@ public class SummonSkillData : SaveItemBase
         int costItemCnt = 0;
         if (IsStageLvUpItemEnough(summonData, out costItemID, out costItemCnt))
         {
-            if (BackBagPack.Instance.DecItem(costItemID, costItemCnt))
+            if (BackBagPack.Instance.PageItems.DecItem(costItemID, costItemCnt))
             {
                 summonData.AddStage();
                 SaveClass(true);
@@ -888,7 +888,7 @@ public class SummonSkillData : SaveItemBase
         costItemID = costItem;
         costItemCnt = costCnt;
 
-        var itemCnt = BackBagPack.Instance.GetItemCnt(costItem);
+        var itemCnt = BackBagPack.Instance.PageItems.GetItemCnt(costItem);
         return itemCnt >= costItemCnt;
     }
 
@@ -909,7 +909,7 @@ public class SummonSkillData : SaveItemBase
             costItem = summonData.SummonRecord.StageCostItems[2].ToString();
         }
 
-        var itemCnt = BackBagPack.Instance.GetItemCnt(costItem);
+        var itemCnt = BackBagPack.Instance.PageItems.GetItemCnt(costItem);
         if (itemCnt < 1)
         {
             UIMessageTip.ShowMessageTip(20006);
@@ -925,7 +925,7 @@ public class SummonSkillData : SaveItemBase
             return;
         }
 
-        if (BackBagPack.Instance.DecItem(costItem, 1))
+        if (BackBagPack.Instance.PageItems.DecItem(costItem, 1))
         {
             summonData.AddStageAttr(idx);
             SaveClass(true);

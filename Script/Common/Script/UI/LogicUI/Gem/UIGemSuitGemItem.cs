@@ -10,7 +10,7 @@ public class UIGemSuitGemItem : UIPackItemBase
 {
     public GameObject _UnClearItem; 
 
-    private string _GemDataID;
+    private Tables.GemTableRecord _GemRecord;
     private int _MinGemLv;
     private bool _ClearGem;
 
@@ -18,32 +18,30 @@ public class UIGemSuitGemItem : UIPackItemBase
     {
         base.Show();
 
-        var gemInfo = (Tables.GemTableRecord)hash["InitObj"];
+        _GemRecord = (Tables.GemTableRecord)hash["InitObj"];
         _MinGemLv = (int)hash["MinLevel"];
         _ClearGem = (bool)hash["IsClearGem"];
 
-        ShowGem(gemInfo.Id);
+        ShowGem(_GemRecord, _MinGemLv);
     }
 
     public override void Refresh()
     {
         base.Refresh();
 
-        ShowGem(_GemDataID);
+        ShowGem(_GemRecord, _MinGemLv);
     }
 
 
-    public void ShowGem(string gemDataID)
+    public void ShowGem(Tables.GemTableRecord gemRecord, int minLevel)
     {
 
-        var gemData = GemData.Instance.GetGemInfo(gemDataID);
+        var gemData = GemData.Instance.GetGemClassMax(gemRecord.Class, minLevel);
         if (gemData == null || !gemData.IsVolid())
         {
             ClearItem();
             return;
         }
-
-        _GemDataID = gemDataID;
 
         if (_Num != null)
         {

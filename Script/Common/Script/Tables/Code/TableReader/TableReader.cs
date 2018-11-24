@@ -47,6 +47,8 @@ namespace Tables
 //
         public static FiveElementLevel FiveElementLevel { get; internal set; }
 //
+        public static FiveElementValueAttr FiveElementValueAttr { get; internal set; }
+//
         public static GemBaseAttr GemBaseAttr { get; internal set; }
 //
         public static GemSet GemSet { get; internal set; }
@@ -93,6 +95,7 @@ namespace Tables
             FiveElement = new FiveElement(TableReadBase.GetTableText("FiveElement"), false);
             FiveElementAttr = new FiveElementAttr(TableReadBase.GetTableText("FiveElementAttr"), false);
             FiveElementLevel = new FiveElementLevel(TableReadBase.GetTableText("FiveElementLevel"), false);
+            FiveElementValueAttr = new FiveElementValueAttr(TableReadBase.GetTableText("FiveElementValueAttr"), false);
             GemBaseAttr = new GemBaseAttr(TableReadBase.GetTableText("GemBaseAttr"), false);
             GemSet = new GemSet(TableReadBase.GetTableText("GemSet"), false);
             GemTable = new GemTable(TableReadBase.GetTableText("GemTable"), false);
@@ -122,6 +125,7 @@ namespace Tables
             FiveElement.CoverTableContent();
             FiveElementAttr.CoverTableContent();
             FiveElementLevel.CoverTableContent();
+            FiveElementValueAttr.CoverTableContent();
             GemBaseAttr.CoverTableContent();
             GemSet.CoverTableContent();
             GemTable.CoverTableContent();

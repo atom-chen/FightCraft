@@ -75,7 +75,7 @@ public class UICurrencyItem : UIItemBase
 
     public void ShowOwnCurrency(string itemDataID)
     {
-        int Ownvalue = BackBagPack.Instance.GetItemCnt(itemDataID);
+        int Ownvalue = BackBagPack.Instance.PageItems.GetItemCnt(itemDataID);
         ShowCurrency(itemDataID, Ownvalue);
     }
 

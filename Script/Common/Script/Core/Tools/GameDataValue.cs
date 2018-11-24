@@ -1269,8 +1269,8 @@ public class GameDataValue
     }
     #endregion
 
-    #region gem
-
+    #region gem mat
+    /*
     public static float _GemConsumeV = 1;
     public static float _GemConsumeA = 2;
     public static int _DropGemLevel = 10;
@@ -1376,7 +1376,7 @@ public class GameDataValue
 
         return gemAttrRecord.LvUpCostGold;
     }
-
+    */
     #endregion
 
     #region gold

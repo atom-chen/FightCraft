@@ -38,7 +38,7 @@ public class LogicManager
 
     public void StartLoadRole(int idx)
     {
-        GemData.Instance.LoadClass(true);
+        //GemData.Instance.LoadClass(true);
         GemData.Instance.InitGemData();
 
         LegendaryData.Instance.LoadClass(true);
@@ -49,7 +49,7 @@ public class LogicManager
 
         PlayerDataPack.Instance.SelectRole(idx);
 
-        BackBagPack.Instance.LoadClass(true);
+        //BackBagPack.Instance.LoadClass(true);
         BackBagPack.Instance.InitBackPack();
 
         ShopData.Instance.LoadClass(true);
@@ -72,6 +72,9 @@ public class LogicManager
 
         GlobalBuffData.Instance.LoadClass(true);
         GlobalBuffData.Instance.InitGlobalBuffData();
+
+        ItemPackTest.Instance.LoadClass(true);
+        ItemPackTest.Instance.Init();
 
         UIMainFun.ShowAsyn();
     }

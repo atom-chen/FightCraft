@@ -34,6 +34,7 @@ public class FiveElementData : SaveItemBase
 
         needSave |= InitPackElements();
         needSave |= InitUsingElements();
+        CalculateAttrs();
 
         if (needSave)
         {
@@ -71,10 +72,11 @@ public class FiveElementData : SaveItemBase
         if (_UsingElements == null || _UsingElements.Count == 0)
         {
             _UsingElements = new List<ItemFiveElement>();
-            for (int i = 0; i <= (int)FIVE_ELEMENT.EARTH; ++i)
-            {
-                _UsingElements.Add(new ItemFiveElement());
-            }
+            _UsingElements.Add(new ItemFiveElement("1120001"));
+            _UsingElements.Add(new ItemFiveElement("1120002"));
+            _UsingElements.Add(new ItemFiveElement("1120003"));
+            _UsingElements.Add(new ItemFiveElement("1120004"));
+            _UsingElements.Add(new ItemFiveElement("1120005"));
             return true;
         }
 
@@ -104,6 +106,93 @@ public class FiveElementData : SaveItemBase
             else
                 return 0;
         });
+    }
+
+    #endregion
+
+    #region value attr
+
+    private int _ElementsTotalValue = -1;
+    public int ElementsTotalValue
+    {
+        get
+        {
+            CalculateValue();
+            return _ElementsTotalValue;
+        }
+    }
+
+    private List<EquipExAttr> _ValueAttrs = new List<EquipExAttr>();
+    public List<EquipExAttr> ValueAttrs
+    {
+        get
+        {
+            return _ValueAttrs;
+        }
+    }
+
+    private void CalculateValue()
+    {
+        _ElementsTotalValue = 0;
+        for (int i = 0; i < _UsingElements.Count; ++i)
+        {
+            _ElementsTotalValue += _UsingElements[i].CombatValue;
+        }
+    }
+
+    private void CalculateAttrs()
+    {
+        _ValueAttrs = new List<EquipExAttr>();
+        CalculateValue();
+        if (_ElementsTotalValue == 0)
+            return;
+
+        var valueAttrs = Tables.TableReader.FiveElementValueAttr.Records.Values;
+        foreach (var valueAttr in valueAttrs)
+        {
+            string attr = Tables.StrDictionary.GetFormatStr(valueAttr.DescIdx);
+            if (_ElementsTotalValue >= valueAttr.Value)
+            {
+                _ValueAttrs.Add(TableReader.AttrValue.GetExAttr(valueAttr.Attr, _ElementsTotalValue));
+            }
+        }
+    }
+
+    public void SetAttr(RoleAttrStruct roleAttr)
+    {
+        for (int i = 0; i < _UsingElements.Count; ++i)
+        {
+            if (_UsingElements[i] == null)
+                continue;
+
+            if (!_UsingElements[i].IsVolid())
+                continue;
+
+            for (int j = 0; j < _UsingElements[i].EquipExAttrs.Count; ++j)
+            {
+                if (_UsingElements[i].EquipExAttrs[j].AttrType == "RoleAttrImpactBaseAttr")
+                {
+                    roleAttr.AddValue((RoleAttrEnum)_UsingElements[i].EquipExAttrs[j].AttrParams[0], _UsingElements[i].EquipExAttrs[j].AttrParams[1]);
+                }
+                else
+                {
+                    roleAttr.AddExAttr(RoleAttrImpactManager.GetAttrImpact(_UsingElements[i].EquipExAttrs[j]));
+                }
+            }
+        }
+
+        for (int j = 0; j < ValueAttrs.Count; ++j)
+        {
+            if (ValueAttrs[j].AttrType == "RoleAttrImpactBaseAttr")
+            {
+                roleAttr.AddValue((RoleAttrEnum)ValueAttrs[j].AttrParams[0], ValueAttrs[j].AttrParams[1]);
+            }
+            else
+            {
+                roleAttr.AddExAttr(RoleAttrImpactManager.GetAttrImpact(ValueAttrs[j]));
+            }
+        }
+
     }
 
     #endregion
@@ -173,6 +262,9 @@ public class FiveElementData : SaveItemBase
             usingElement.ReplaceAttr(replaceIdx, itemElement.EquipExAttrs[0]);
         }
         itemElement.ResetItem();
+
+        CalculateAttrs();
+
         SortPack();
         SaveClass(true);
         return true;
@@ -205,32 +297,7 @@ public class FiveElementData : SaveItemBase
         return extraRate;
     }
 
-    public void SetAttr(RoleAttrStruct roleAttr)
-    {
-        for (int i = 0; i < _UsingElements.Count; ++i)
-        {
-            if (_UsingElements[i] == null)
-                continue;
-
-            if (!_UsingElements[i].IsVolid())
-                continue;
-
-            for (int j = 0; j < _UsingElements[i].EquipExAttrs.Count; ++j)
-            {
-                if (_UsingElements[i].EquipExAttrs[j].AttrType == "RoleAttrImpactBaseAttr")
-                {
-                    roleAttr.AddValue((RoleAttrEnum)_UsingElements[i].EquipExAttrs[j].AttrParams[0], _UsingElements[i].EquipExAttrs[j].AttrParams[1]);
-                }
-                else
-                {
-                    roleAttr.AddExAttr(RoleAttrImpactManager.GetAttrImpact(_UsingElements[i].EquipExAttrs[j]));
-                }
-            }
-        }
-
-        GemSuit.Instance.SetGemSetAttr(roleAttr);
-
-    }
+   
 
     #endregion
 

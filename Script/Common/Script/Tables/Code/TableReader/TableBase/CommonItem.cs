@@ -20,6 +20,7 @@ namespace Tables
         public string Model { get; set; }
         public ITEM_QUALITY Quality { get; set; }
         public string DropItem { get; set; }
+        public int StackNum { get; set; }
         public CommonItemRecord(DataRecord dataRecord)
         {
             if (dataRecord != null)
@@ -41,6 +42,7 @@ namespace Tables
             recordStrList.Add(TableWriteBase.GetWriteStr(Model));
             recordStrList.Add(((int)Quality).ToString());
             recordStrList.Add(TableWriteBase.GetWriteStr(DropItem));
+            recordStrList.Add(TableWriteBase.GetWriteStr(StackNum));
 
             return recordStrList.ToArray();
         }
@@ -112,6 +114,7 @@ namespace Tables
                 pair.Value.Model = TableReadBase.ParseString(pair.Value.ValueStr[6]);
                 pair.Value.Quality =  (ITEM_QUALITY)TableReadBase.ParseInt(pair.Value.ValueStr[7]);
                 pair.Value.DropItem = TableReadBase.ParseString(pair.Value.ValueStr[8]);
+                pair.Value.StackNum = TableReadBase.ParseInt(pair.Value.ValueStr[9]);
             }
         }
     }

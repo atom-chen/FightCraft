@@ -152,10 +152,10 @@ public class CommonTool : Editor
                 if (gemSuit[i] == null)
                     break;
 
-                if (!levelMat.Contains(gemSuit[i].LevelUpParam))
-                {
-                    levelMat.Add(gemSuit[i].LevelUpParam);
-                }
+                //if (!levelMat.Contains(gemSuit[i].LevelUpParam))
+                //{
+                //    levelMat.Add(gemSuit[i].LevelUpParam);
+                //}
                 gemSuitNames += "\t" + gemSuit[i].Id;
 
                 if (_GemDefence.Contains(gemSuit[i].Id))
@@ -292,13 +292,13 @@ public class CommonTool : Editor
         foreach (var gemSetRecordA in Tables.TableReader.GemSet.Records.Values)
         {
             _GemMat.Clear();
-            foreach (var gemRecord in gemSetRecordA.Gems)
-            {
-                if (!_GemMat.Contains(gemRecord.LevelUpParam))
-                {
-                    _GemMat.Add(gemRecord.LevelUpParam);
-                }
-            }
+            //foreach (var gemRecord in gemSetRecordA.Gems)
+            //{
+            //    if (!_GemMat.Contains(gemRecord.LevelUpParam))
+            //    {
+            //        _GemMat.Add(gemRecord.LevelUpParam);
+            //    }
+            //}
             Debug.Log("GemSet cost mat typeCnt:" + _GemMat.Count);
         }
     }

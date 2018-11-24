@@ -151,7 +151,7 @@ public class ShopData : SaveItemBase
             UIMessageTip.ShowMessageTip(20004);
             return;
         }
-        if (BackBagPack.Instance.GetEmptyPageEquip() == null)
+        if (BackBagPack.Instance.PageEquips.GetEmptyPos() == null)
         {
             return;
         }

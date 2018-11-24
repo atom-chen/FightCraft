@@ -114,15 +114,18 @@ public class ItemBase : SaveItemBase
         return ItemStackNum;
     }
 
-    public int AddStackNum(int num)
+    public int AddStackNum(int num, bool needSave = true)
     {
         int temp = num + ItemStackNum;
         ItemStackNum = GetVolidItemNum(temp);
-        SaveClass(true);
+        if (needSave)
+        {
+            SaveClass(true);
+        }
         return ItemStackNum;
     }
 
-    public int DecStackNum(int num)
+    public int DecStackNum(int num, bool needSave = true)
     {
         int temp = ItemStackNum - num;
         ItemStackNum = GetVolidItemNum(temp);
@@ -130,7 +133,10 @@ public class ItemBase : SaveItemBase
         {
             ResetItem();
         }
-        SaveClass(true);
+        if (needSave)
+        {
+            SaveClass(true);
+        }
         return ItemStackNum;
     }
 
@@ -203,7 +209,7 @@ public class ItemBase : SaveItemBase
     {
         int itemDataID = int.Parse(itemID);
 
-        BackBagPack.Instance.AddItem(itemID, num);
+        BackBagPack.Instance.PageItems.AddItem(itemID, num);
 
     }
 

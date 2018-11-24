@@ -67,14 +67,14 @@ public class MonsterDrop
             dropList.Add(dropItem);
         }
 
-        var gemType = GameDataValue.GetGemMatDropItemID(monsterRecord);
-        var gemCnt = GameDataValue.GetGemMatDropCnt(monsterType, monsterRecord, level);
-        if (gemCnt > 0)
-        {
-            DropItemData dropItem = new DropItemData();
-            dropItem._ItemBase = new ItemBase(gemType, gemCnt);
-            dropList.Add(dropItem);
-        }
+        //var gemType = GameDataValue.GetGemMatDropItemID(monsterRecord);
+        //var gemCnt = GameDataValue.GetGemMatDropCnt(monsterType, monsterRecord, level);
+        //if (gemCnt > 0)
+        //{
+        //    DropItemData dropItem = new DropItemData();
+        //    dropItem._ItemBase = new ItemBase(gemType, gemCnt);
+        //    dropList.Add(dropItem);
+        //}
 
         var goldCnt = GameDataValue.GetGoldDropCnt(monsterType, level);
         for (int i = 0; i < goldCnt; ++i)
@@ -235,7 +235,7 @@ public class MonsterDrop
         }
         else if (dropItemData._ItemBase != null)
         {
-            if (!BackBagPack.Instance.AddItem(dropItemData._ItemBase.CommonItemRecord.Id, dropItemData._ItemBase.ItemStackNum))
+            if (!BackBagPack.Instance.PageItems.AddItem(dropItemData._ItemBase.CommonItemRecord.Id, dropItemData._ItemBase.ItemStackNum))
                 return;
         }
         else
