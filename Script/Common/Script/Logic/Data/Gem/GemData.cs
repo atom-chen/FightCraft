@@ -106,7 +106,17 @@ public class GemData
             return false;
         }
 
-        var equipedGem = EquipedGemDatas.GetItem(gem.ItemDataID);
+        var equipedGem = EquipedGemDatas._PackItems.Find((gemItem) =>
+        {
+            if (gemItem.IsVolid() && gemItem.GemRecord.Class == gem.GemRecord.Class)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        });
         if (equipedGem != null)
         {
             UIMessageTip.ShowMessageTip("allready put on gem");
@@ -123,10 +133,12 @@ public class GemData
         if (gem.ItemStackNum < 1)
             return false;
 
-        gem.DecStackNum(1);
-
         putOnSlot.ItemDataID = gem.ItemDataID;
         putOnSlot.AddStackNum(1);
+
+        PackGemDatas.DecItem(gem, 1);
+
+        PackGemDatas.SaveClass(true);
 
         GemSuit.Instance.IsActSet();
 
@@ -143,6 +155,7 @@ public class GemData
         }
 
         gem.DecStackNum(1);
+        PackGemDatas.SaveClass(true);
 
         RoleData.SelectRole.CalculateAttr();
         return true;
@@ -166,7 +179,7 @@ public class GemData
 
     #region gem container
 
-    public const int MAX_GEM_PACK = 100;
+    public const int MAX_GEM_PACK = -1;
 
     private ItemPackBase<ItemGem> _PackGemDatas;
     public ItemPackBase<ItemGem> PackGemDatas
@@ -191,14 +204,195 @@ public class GemData
         }
     }
 
+    public void CreateGem(string gemDataID, int gemCnt)
+    {
+        PackGemDatas.AddItem(gemDataID, gemCnt);
+        PackGemDatas.SaveClass(true);
+    }
+
     public void PacketSort()
     {
-
+        PackGemDatas.SortStack();
+        PackGemDatas.SortEmpty();
+        PackGemDatas.SaveClass(true);
     }
 
     #endregion
 
-    #region 
+    #region combine
+
+    private Dictionary<GemTableRecord, List<int>> _GemFormulas;
+    public Dictionary<GemTableRecord, List<int>> GemFormulas
+    {
+        get
+        {
+            InitGemFormulas();
+            return _GemFormulas;
+        }
+    }
+
+    private void InitGemFormulas()
+    {
+        if (_GemFormulas != null)
+            return;
+
+        _GemFormulas = new Dictionary<GemTableRecord, List<int>>();
+        foreach (var gemRecord in TableReader.GemTable.Records)
+        {
+            if (gemRecord.Value.Combine[0] < 0)
+                continue;
+
+            List<int> gemIds = new List<int>();
+            List<int> combines = new List<int>(gemRecord.Value.Combine);
+            combines.Sort((idA, idB) =>
+            {
+                if (idA < idB)
+                {
+                    return 1;
+                }
+                else if (idA > idB)
+                {
+                    return -1;
+                }
+                else
+                {
+                    return 0;
+                }
+            });
+
+            for (int i = 0; i < combines.Count; ++i)
+            {
+                if (combines[i] > 0)
+                {
+                    gemIds.Add(combines[i]);
+                }
+            }
+
+            _GemFormulas.Add(gemRecord.Value, gemIds);
+        }
+    }
+
+    public bool GemCombine(List<ItemGem> combineGem)
+    {
+        if (combineGem.Count == 3 && combineGem[0].ItemDataID == combineGem[1].ItemDataID
+            && combineGem[0].ItemDataID == combineGem[2].ItemDataID)
+        {
+            return GemCombineSame(combineGem);
+        }
+        else
+        {
+            return GemCombineFormula(combineGem);
+        }
+    }
+
+    private bool GemCombineSame(List<ItemGem> combineGems)
+    {
+        var nextGem = GetNextLevelGem(combineGems[0].GemRecord.Class, combineGems[0].GemRecord.Level);
+        if (nextGem == null)
+        {
+            UIMessageTip.ShowMessageTip(30006);
+            return false;
+        }
+
+        if (combineGems[0] == combineGems[1]
+            && combineGems[0] == combineGems[2])
+        {
+            if (combineGems[0].ItemStackNum < 3)
+                return false;
+
+            PackGemDatas.DecItem(combineGems[0], 3);
+        }
+        else if (combineGems[0] == combineGems[1])
+        {
+            if (combineGems[0].ItemStackNum < 2 || combineGems[2].ItemStackNum < 1)
+                return false;
+
+            PackGemDatas.DecItem(combineGems[0],2);
+            PackGemDatas.DecItem(combineGems[2],1);
+        }
+        else if (combineGems[0] == combineGems[2])
+        {
+            if (combineGems[0].ItemStackNum < 2 || combineGems[1].ItemStackNum < 1)
+                return false;
+
+            PackGemDatas.DecItem(combineGems[0],2);
+            PackGemDatas.DecItem(combineGems[1],1);
+        }
+        else if (combineGems[1] == combineGems[2])
+        {
+            if (combineGems[1].ItemStackNum < 2 || combineGems[2].ItemStackNum < 1)
+                return false;
+
+            PackGemDatas.DecItem(combineGems[1],2);
+            PackGemDatas.DecItem(combineGems[0],1);
+        }
+        else
+        {
+            if (combineGems[0].ItemStackNum < 1 || combineGems[1].ItemStackNum < 1 || combineGems[2].ItemStackNum < 1)
+                return false;
+
+            PackGemDatas.DecItem(combineGems[0],1);
+            PackGemDatas.DecItem(combineGems[1], 1);
+            PackGemDatas.DecItem(combineGems[2], 1);
+        }
+        CreateGem(nextGem.Id, 1);
+        return true;
+    }
+
+    private bool GemCombineFormula(List<ItemGem> combineGems)
+    {
+        InitGemFormulas();
+
+        combineGems.Sort((gemA, gemB) =>
+        {
+            int idA = int.Parse(gemA.ItemDataID);
+            int idB = int.Parse(gemB.ItemDataID);
+            if (idA < idB)
+            {
+                return 1;
+            }
+            else if (idA > idB)
+            {
+                return -1;
+            }
+            else
+            {
+                return 0;
+            }
+        });
+
+        foreach (var gemFormula in _GemFormulas)
+        {
+            if (combineGems.Count != gemFormula.Value.Count)
+                continue;
+
+            bool fitFormula = true;
+            for (int i = 0; i < gemFormula.Value.Count; ++i)
+            {
+                if (gemFormula.Value[i] != combineGems[i].GemRecord.Class)
+                {
+                    fitFormula = false;
+                    break;
+                }
+            }
+
+            if (fitFormula)
+            {
+                for (int i = 0; i < combineGems.Count; ++i)
+                {
+                    PackGemDatas.DecItem(combineGems[i], 1);
+                }
+                CreateGem(gemFormula.Key.Id, 1);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    #endregion
+
+    #region attr
 
     public void SetGemAttr(RoleAttrStruct roleAttr)
     {
@@ -258,6 +452,41 @@ public class GemData
         }
 
         return classItem;
+    }
+
+    public GemTableRecord GetGemByClass(int classType, int level)
+    {
+        return TableReader.GemTable.GetGemRecordByClass(classType, level);
+    }
+
+    public GemTableRecord GetNextLevelGem(int gemClass, int curLevel)
+    {
+        int nextLv = curLevel + 1;
+        foreach (var gemRecord in TableReader.GemTable.Records)
+        {
+            if (gemRecord.Value.Class == gemClass && gemRecord.Value.Level == nextLv)
+            {
+                return gemRecord.Value;
+            }
+        }
+        return null;
+    }
+
+    public List<GemTableRecord> GetAllLevelGemRecords(int gemClass)
+    {
+        List<GemTableRecord> gemRecords = new List<GemTableRecord>();
+        foreach (var gemData in PackGemDatas._PackItems)
+        {
+            if (gemData.IsVolid() && gemData.GemRecord.Class == gemClass)
+            {
+                if (!gemRecords.Contains(gemData.GemRecord))
+                {
+                    gemRecords.Add(gemData.GemRecord);
+                }
+            }
+        }
+
+        return gemRecords;
     }
 
 

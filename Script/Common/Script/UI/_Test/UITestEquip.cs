@@ -77,7 +77,7 @@ public class UITestEquip : UIBase
         int itemID = int.Parse(_ItemID.text);
         if (itemID > 70000 && itemID < 80000)
         {
-            GemData.Instance.PackGemDatas.AddItem(itemID.ToString(), itemCnt);
+            GemData.Instance.CreateGem(itemID.ToString(), itemCnt);
         }
         else
         {

@@ -193,6 +193,8 @@ public class RoleData : SaveItemBase
         roleAttr.SetValue(RoleAttrEnum.Intelligence, Intelligence);
         roleAttr.SetValue(RoleAttrEnum.Attack, _RoleLevel * GameDataValue._AtkPerRoleLevel + GameDataValue._AtkRoleLevelBase);
         roleAttr.SetValue(RoleAttrEnum.HPMax, _RoleLevel * GameDataValue._HPPerRoleLevel + GameDataValue._HPRoleLevelBase);
+        roleAttr.SetValue(RoleAttrEnum.CriticalHitChance, 500);
+        roleAttr.SetValue(RoleAttrEnum.CriticalHitDamge, 5000);
     }
 
     public void SetEquipAttr(RoleAttrStruct roleAttr)

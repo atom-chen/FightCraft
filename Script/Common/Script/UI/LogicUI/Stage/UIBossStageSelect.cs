@@ -26,30 +26,31 @@ public class UIBossStageSelect : UIBase
     {
         base.Show(hash);
 
-        InitContainer();
+        InitDiffs();
     }
 
     #region difficult panel
 
-    public List<Toggle> _DiffToggles;
-    public Text _SelectedDiffText;
+    public UIContainerSelect _DiffContainer;
 
-    private int _SelectedDiff;
+    private int _SelectedDiff = 0;
 
-    public void OnDiffSelect(bool isOn)
+    public void InitDiffs()
     {
-        if (!isOn)
-            return;
+        int maxDiff = ActData.Instance._BossStageDiff;
 
-        for (int i = 0; i < _DiffToggles.Count; ++i)
+        List<int> diffList = new List<int>();
+        for (int i = 0; i < maxDiff + 1; ++i)
         {
-            if (_DiffToggles[i].isOn)
-            {
-                _SelectedDiff = i;
-                _SelectedDiffText.text = "Diff" + i;
-                break;
-            }
+            diffList.Add(i);
         }
+        _DiffContainer.InitSelectContent(diffList, new List<int>() { maxDiff }, OnDiffSelect);
+    }
+
+    public void OnDiffSelect(object diffObj)
+    {
+        _SelectedDiff = (int)diffObj;
+        InitStages();
     }
 
     #endregion
@@ -60,9 +61,19 @@ public class UIBossStageSelect : UIBase
 
     private BossStageRecord _SelectedStage;
 
-    public void InitContainer()
+    public void InitStages()
     {
-        _StageContainer.InitSelectContent(TableReader.BossStage.Records.Values, null, OnSelectStage);
+        int bossStageId = ActData.Instance._BossStageIdx;
+        if (bossStageId == 0)
+        {
+            _SelectedStage = TableReader.BossStage.BossDiffRecords[_SelectedDiff][0];
+        }
+        else
+        {
+            _SelectedStage = TableReader.BossStage.GetRecord(bossStageId.ToString());
+        }
+        _StageContainer.InitSelectContent(TableReader.BossStage.BossDiffRecords[_SelectedDiff], 
+            new List<BossStageRecord>() { _SelectedStage }, OnSelectStage);
     }
 
     private void OnSelectStage(object stageObj)
@@ -87,13 +98,13 @@ public class UIBossStageSelect : UIBase
     private void SetStageInfo(BossStageRecord stage)
     {
         _StageName.text = stage.Name;
-        _StageLevel.text = "1";
+        _StageLevel.text = stage.Level.ToString();
         _StageDesc.text = stage.Desc;
     }
 
     public void OnEnterStage()
     {
-        ActData.Instance.StartStage(1, int.Parse(_SelectedStage.Id), STAGE_TYPE.BOSS);
+        ActData.Instance.StartStage(_SelectedDiff, int.Parse(_SelectedStage.Id), STAGE_TYPE.BOSS);
         LogicManager.Instance.EnterFight(Tables.TableReader.StageInfo.GetRecord("100"));
     }
 

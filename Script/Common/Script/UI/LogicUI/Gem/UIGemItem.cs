@@ -10,6 +10,15 @@ public class UIGemItem : /*UIDragableItemBase*/ UIPackItemBase
 {
     public GameObject _UsingGO;
 
+    private ItemGem _ItemGem;
+    public ItemGem ItemGem
+    {
+        get
+        {
+            return _ItemGem;
+        }
+    }
+
     public override void Show(Hashtable hash)
     {
         base.Show(hash);
@@ -27,6 +36,8 @@ public class UIGemItem : /*UIDragableItemBase*/ UIPackItemBase
 
     public void ShowGem(ItemGem showItem)
     {
+        _ItemGem = showItem;
+
         if (showItem == null)
         {
             ClearItem();
@@ -34,6 +45,7 @@ public class UIGemItem : /*UIDragableItemBase*/ UIPackItemBase
         }
 
         _ShowedItem = showItem;
+        
         if (!showItem.IsVolid())
         {
             ClearItem();
@@ -43,33 +55,33 @@ public class UIGemItem : /*UIDragableItemBase*/ UIPackItemBase
         if (_Num != null)
         {
             {
-                _Num.text = showItem.Level.ToString();
+                SetTempNum(showItem.ItemStackNum);
             }
         }
 
-        if (_DisableGO != null)
-        {
-            if (showItem.Level > 0)
-            {
-                _DisableGO.SetActive(false);
-            }
-            else
-            {
-                _DisableGO.SetActive(true);
-            }
-        }
+        //if (_DisableGO != null)
+        //{
+        //    if (showItem.Level > 0)
+        //    {
+        //        _DisableGO.SetActive(false);
+        //    }
+        //    else
+        //    {
+        //        _DisableGO.SetActive(true);
+        //    }
+        //}
 
-        if (_UsingGO != null)
-        {
-            if (GemData.Instance.IsEquipedGem(showItem.ItemDataID))
-            {
-                _UsingGO.SetActive(true);
-            }
-            else
-            {
-                _UsingGO.SetActive(false);
-            }
-        }
+        //if (_UsingGO != null)
+        //{
+        //    if (GemData.Instance.IsEquipedGem(showItem.ItemDataID))
+        //    {
+        //        _UsingGO.SetActive(true);
+        //    }
+        //    else
+        //    {
+        //        _UsingGO.SetActive(false);
+        //    }
+        //}
         _Icon.gameObject.SetActive(true);
     }
 
@@ -86,17 +98,42 @@ public class UIGemItem : /*UIDragableItemBase*/ UIPackItemBase
 
     #region 
 
-    //public override void OnItemClick()
-    //{
-    //    base.OnItemClick();
-    //}
+    private int _TempNum = 0;
+    public int TempNum
+    {
+        get
+        {
+            return _TempNum;
+        }
+    }
 
-    //protected override bool IsCanDrag()
-    //{
-    //    if (_ShowedItem.IsVolid() && _ShowedItem.ItemStackNum > 0)
-    //        return true;
-    //    return false;
-    //}
+    public void SetTempNum(int num)
+    {
+        _TempNum = num;
+        if (_Num != null)
+        {
+            if (_TempNum < 0)
+            {
+                _Num.text = "";
+            }
+            //else if (_TempNum == 0)
+            //{
+            //    _Num.text = "";
+            //}
+            else
+            {
+                if (_TempNum == _ShowedItem.ItemStackNum)
+                {
+                    _Num.text = CommonDefine.GetEnableGrayStr(1) + num.ToString() + "</color>";
+                }
+                else
+                {
+                    _Num.text = CommonDefine.GetEnableRedStr(0) + num.ToString() + "</color>";
+                }
+            }
+
+        }
+    }
 
     #endregion
 }

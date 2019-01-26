@@ -178,6 +178,7 @@
 62004,Skill,UI,Skill level is max,,
 62005,Skill,UI,{0} lv.{1},,
 62006,Skill,UI,Skill Level Max,,
+70000,stage,Normal Stage Diff,Easy,,
 70001,stage,Normal Stage Diff,Normal,,
 70002,stage,Normal Stage Diff,Hard,,
 70003,stage,Normal Stage Diff,Hell,,

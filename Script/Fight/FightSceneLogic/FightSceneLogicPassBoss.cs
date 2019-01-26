@@ -8,38 +8,68 @@ public class FightSceneLogicPassBoss : FightSceneLogicPassArea
 {
 
     public List<Transform> _PlayerTeleportPoses;
+    public List<AreaGate> _AreaGates;
 
     public override void StartLogic()
     {
         var bossStage = TableReader.BossStage.GetRecord(ActData.Instance._ProcessStageIdx.ToString());
         for (int i = 0; i < _FightArea.Count; ++i)
         {
+            var sceneGO = ResourcePool.Instance.CreateFightSceneObj("FightSceneLogic/BossStage/" + bossStage.FightLogic[i]);
+            _FightArea[i] = sceneGO.GetComponent<FightSceneAreaBase>();
+            sceneGO.SetActive(true);
+            sceneGO.transform.SetParent(_PlayerTeleportPoses[i].parent);
+            sceneGO.transform.position = _PlayerTeleportPoses[i].position;
+
             if (_FightArea[i] is FightSceneAreaKBossWithFish)
             {
-                (_FightArea[i] as FightSceneAreaKBossWithFish)._BossMotionID = bossStage.BossID[i].Id.ToString();
+                var bossArea = _FightArea[i] as FightSceneAreaKBossWithFish;
+                bossArea._BossMotionID = bossStage.BossID.Id;
             }
         }
 
+        for (int i = 0; i < _AreaGates.Count; ++i)
+        {
+            _AreaGates[i].gameObject.SetActive(false);
+        }
+
+        //base.StartLogic();
+        StartCoroutine(StartLogicDelay());
+    }
+
+    private IEnumerator StartLogicDelay()
+    {
+        yield return new WaitForSeconds(2.0f);
         base.StartLogic();
     }
 
     public override void AreaStart(FightSceneAreaBase startArea)
     {
+        
+        //_IsTeleporting = false;
+        FightManager.Instance.MoveToNewScene(LogicManager.Instance.EnterStageInfo.ValidScenePath[_RunningIdx]);
+        if (_RunningIdx > 0)
+        {
+            UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(LogicManager.Instance.EnterStageInfo.ValidScenePath[_RunningIdx - 1]);
+        }
+
         base.AreaStart(startArea);
-        _IsTeleporting = false;
+        //LogicManager.Instance.EnterStageInfo.ValidScenePath[_RunningIdx]
     }
 
     public override void AreaFinish(FightSceneAreaBase finishArea)
     {
-        if (_RunningIdx + 1 < _PlayerTeleportPoses.Count)
-        {
-            _IsTeleporting = true;
-            return;
-        }
-        else
-        {
-            base.AreaFinish(finishArea);
-        }
+        //if (_RunningIdx + 1 < _PlayerTeleportPoses.Count)
+        //{
+        //    _IsTeleporting = true;
+        //    return;
+        //}
+        //else
+        //{
+        //    base.AreaFinish(finishArea);
+        //}
+        _AreaGates[_RunningIdx].gameObject.SetActive(true);
+        
     }
 
     public override void StartNextArea()
@@ -51,7 +81,7 @@ public class FightSceneLogicPassBoss : FightSceneLogicPassArea
     {
         base.UpdateLogic();
 
-        UpdateTeleport();
+        //UpdateTeleport();
     }
 
     #region telepor

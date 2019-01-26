@@ -167,8 +167,17 @@ public class ItemPackBase<T> : DataPackBase where T : ItemBase,new()
         for (int i = 0; i < containsItems.Count; ++i)
         {
             int stackCnt = itemRecord.StackNum - containsItems[i].ItemStackNum;
-            leaveItemCnt -= stackCnt;
-            containsItems[i].AddStackNum(stackCnt);
+            int addCnt = 0;
+            if (leaveItemCnt > stackCnt)
+            {
+                addCnt = stackCnt;
+            }
+            else
+            {
+                addCnt = leaveItemCnt;
+            }
+            leaveItemCnt -= addCnt;
+            containsItems[i].AddStackNum(addCnt);
         }
         if (leaveItemCnt > 0)
         {
@@ -233,12 +242,29 @@ public class ItemPackBase<T> : DataPackBase where T : ItemBase,new()
                     decNum = items[i].ItemStackNum;
                 }
                 items[i].DecStackNum(decNum);
+                if (_PackSize < 0 && items[i].ItemStackNum == 0)
+                {
+                    _PackItems.Remove(items[i]);
+                }
                 needCnt -= decNum;
             }
             else
             {
                 break;
             }
+        }
+        return true;
+    }
+
+    public bool DecItem(T item, int cnt)
+    {
+        if (item.ItemStackNum < cnt)
+            return false;
+
+        item.DecStackNum(cnt);
+        if (_PackSize < 0 && item.ItemStackNum == 0)
+        {
+            _PackItems.Remove(item);
         }
         return true;
     }
@@ -256,6 +282,7 @@ public class ItemPackBase<T> : DataPackBase where T : ItemBase,new()
     public void SortStack()
     {
         List<string> sortedItemID = new List<string>();
+        List<T> emptyItem = new List<T>();
         foreach (var item in _PackItems)
         {
             if (!item.IsVolid())
@@ -280,6 +307,11 @@ public class ItemPackBase<T> : DataPackBase where T : ItemBase,new()
                         items[j].DecStackNum(addStackNum);
                         items[i].AddStackNum(addStackNum);
 
+                        if (items[j].ItemStackNum == 0)
+                        {
+                            emptyItem.Add(items[j]);
+                        }
+
                         if (items[i].CommonItemRecord.StackNum == items[i].ItemStackNum)
                         {
                             break;
@@ -290,6 +322,11 @@ public class ItemPackBase<T> : DataPackBase where T : ItemBase,new()
             }
 
             sortedItemID.Add(item.ItemDataID);
+        }
+
+        foreach (var item in emptyItem)
+        {
+            _PackItems.Remove(item);
         }
     }
 

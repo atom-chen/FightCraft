@@ -50,10 +50,10 @@ public class FightSceneAreaKAllEnemy : FightSceneAreaBase
     #region enemy step
 
     public SerializeEnemyInfo[] _EnemyBornPos;
-    private int _DeadEnemyCnt;
-    private List<AI_Base> _EnemyAI = new List<AI_Base>();
+    protected int _DeadEnemyCnt;
+    protected List<AI_Base> _EnemyAI = new List<AI_Base>();
 
-    private void StartStep()
+    protected virtual void StartStep()
     {
         int eliteIdx = -1;
 

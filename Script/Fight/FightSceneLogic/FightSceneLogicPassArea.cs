@@ -126,6 +126,9 @@ public class FightSceneLogicPassArea : FightSceneLogicBase
 
         for (int i = 0; i < _FightArea.Count; ++i)
         {
+            if (_FightArea[i] == null)
+                continue;
+
             var areaIds = _FightArea[i].GetAreaMonIDs();
 
             if (areaIds == null)

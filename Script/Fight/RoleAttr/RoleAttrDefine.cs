@@ -202,7 +202,16 @@ public class RandomAttrs
             case RoleAttrEnum.MoveSpeed:
             case RoleAttrEnum.AttackSpeed:
             case RoleAttrEnum.CriticalHitChance:
+            case RoleAttrEnum.CriticalHitDamge:
             case RoleAttrEnum.PhysicDamageEnhance:
+            case RoleAttrEnum.FireEnhance:
+            case RoleAttrEnum.FireResistan:
+            case RoleAttrEnum.ColdEnhance:
+            case RoleAttrEnum.ColdResistan:
+            case RoleAttrEnum.LightingEnhance:
+            case RoleAttrEnum.LightingResistan:
+            case RoleAttrEnum.WindEnhance:
+            case RoleAttrEnum.WindResistan:
                 var persentVal = (value) * 0.01f;
                 valueStr = string.Format("{0:0.00}", persentVal);
                 valueStr += "%";

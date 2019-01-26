@@ -667,72 +667,83 @@ public class RoleAttrManager : MonoBehaviour
 
         //element attack
         int fireAttack = sender._BaseAttr.GetValue(RoleAttrEnum.FireAttackAdd);
+        int fireEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.FireEnhance);
+        int fireResistan = _BaseAttr.GetValue(RoleAttrEnum.FireResistan);
         if (damageType == ElementType.Fire)
         {
             fireAttack += attackValue;
             damageClass.NormalDamageValue = 0;
-        }
-        if (fireAttack > 0)
-        {
-            int fireEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.FireEnhance);
-            int fireResistan = _BaseAttr.GetValue(RoleAttrEnum.FireResistan);
             int fireDamage = GameDataValue.GetEleDamage(fireAttack, damageRate, fireEnhance, fireResistan);
+            damageClass.FireDamage = Mathf.Max(fireDamage, 0);
+        }
+        else
+        {
+            
+            int fireDamage = GameDataValue.GetEleDamage(fireAttack, 1, fireEnhance, fireResistan);
             damageClass.FireDamage = Mathf.Max(fireDamage, 0);
         }
 
         int coldAttack = sender._BaseAttr.GetValue(RoleAttrEnum.ColdAttackAdd);
+        int coldEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.ColdEnhance);
+        int coldResistan = _BaseAttr.GetValue(RoleAttrEnum.ColdResistan);
         if (damageType == ElementType.Cold)
         {
             coldAttack += (int)(attackValue);
             damageClass.NormalDamageValue = 0;
-        }
-        if (coldAttack > 0)
-        {
-            int coldEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.ColdEnhance);
-            int coldResistan = _BaseAttr.GetValue(RoleAttrEnum.ColdResistan);
             int coldDamage = GameDataValue.GetEleDamage(coldAttack, damageRate, coldEnhance, coldResistan);
+            damageClass.IceDamage = Mathf.Max(coldDamage, 0);
+        }
+        else
+        {
+            int coldDamage = GameDataValue.GetEleDamage(coldAttack, 1, coldEnhance, coldResistan);
             damageClass.IceDamage = Mathf.Max(coldDamage, 0);
         }
 
         int lightingAttack = sender._BaseAttr.GetValue(RoleAttrEnum.LightingAttackAdd);
+        int lightingEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.LightingEnhance);
+        int lightingResistan = _BaseAttr.GetValue(RoleAttrEnum.LightingResistan);
         if (damageType == ElementType.Lighting)
         {
             lightingAttack += (int)(attackValue);
             damageClass.NormalDamageValue = 0;
-        }
-        if (lightingAttack > 0)
-        {
-            int lightingEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.LightingEnhance);
-            int lightingResistan = _BaseAttr.GetValue(RoleAttrEnum.LightingResistan);
             int lightingDamage = GameDataValue.GetEleDamage(lightingAttack, damageRate, lightingEnhance, lightingResistan);
+            damageClass.IceDamage = Mathf.Max(lightingDamage, 0);
+        }
+        else
+        {
+            
+            int lightingDamage = GameDataValue.GetEleDamage(lightingAttack, 1, lightingEnhance, lightingResistan);
             damageClass.IceDamage = Mathf.Max(lightingDamage, 0);
         }
 
         int windAttack = sender._BaseAttr.GetValue(RoleAttrEnum.WindAttackAdd);
+        int windEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.WindEnhance);
+        int windResistan = _BaseAttr.GetValue(RoleAttrEnum.WindResistan);
         if (damageType == ElementType.Wind)
         {
             windAttack += (int)(attackValue);
             damageClass.NormalDamageValue = 0;
-        }
-        if (windAttack > 0)
-        {
-            int windEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.WindEnhance);
-            int windResistan = _BaseAttr.GetValue(RoleAttrEnum.WindResistan);
             int windDamage = GameDataValue.GetEleDamage(windAttack, damageRate, windEnhance, windResistan);
             damageClass.IceDamage = Mathf.Max(windDamage, 0);
         }
+        else
+        {
+            
+            int windDamage = GameDataValue.GetEleDamage(windAttack, 1, windEnhance, windResistan);
+            damageClass.IceDamage = Mathf.Max(windDamage, 0);
+        }
 
+        int phyEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.PhysicDamageEnhance);
         if (damageType == ElementType.Physic)
         {
-            int phyEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.PhysicDamageEnhance);
             var phyDamage = GameDataValue.GetPhyDamage(attackValue, damageRate, phyEnhance, defenceValue, Level);
             damageClass.NormalDamageValue = Mathf.Max(phyDamage, 0);
             
         }
 
         int ignoreDAttack = sender._BaseAttr.GetValue(RoleAttrEnum.IgnoreDefenceAttack);
-        int ignoreDaamge = Mathf.CeilToInt(ignoreDAttack * damageRate);
-        damageClass.NormalDamageValue += ignoreDaamge;
+        int ignoreDamge = GameDataValue.GetPhyDamage(attackValue, damageRate, phyEnhance, 0, Level);
+        damageClass.NormalDamageValue += ignoreDamge;
 
     }
 

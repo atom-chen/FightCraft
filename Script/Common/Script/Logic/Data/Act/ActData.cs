@@ -116,6 +116,8 @@ public class ActData : DataPackBase
     [SaveField(4)]
     public int _BossStageIdx = 0;
 
+    public static int _MAX_BOSS_DIFF = 9;
+
     public void SetPassBossStage(int diff, int stageIdx)
     {
         _BossStageDiff = diff;

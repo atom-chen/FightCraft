@@ -104,16 +104,16 @@ public class GameDataValue
     public static int _HPRoleLevelBase = 100;
 
     public static float _AttackPerStrength = 0.5f;
-    public static float _DmgEnhancePerStrength = 0.5f;
+    public static float _DmgEnhancePerStrength = 1f;
     public static float _StrToAtk = 1f;
 
-    public static float _IgnoreAtkPerDex = 0.125f;
-    public static float _CriticalRatePerDex = 1f;
-    public static float _CriticalDmgPerDex = 10f;
+    public static float _IgnoreAtkPerDex = 0.25f;
+    public static float _CriticalRatePerDex = 0f;
+    public static float _CriticalDmgPerDex = 2f;
     public static float _DexToAtk = 1f;
 
-    public static float _EleAtkPerInt = 0.1f;
-    public static float _EleEnhancePerInt = 0.4f;
+    public static float _EleAtkPerInt = 0.25f;
+    public static float _EleEnhancePerInt = 0.5f;
     public static float _IntToAtk = 1f;
 
     public static float _HPPerVit = 8;
@@ -124,16 +124,16 @@ public class GameDataValue
 
     public static float _ElementToAtk = 1f;
     public static float _DmgEnhancePerElementEnhance = 10;
-    public static float _EleEnhanceToAtk = 1f;
-    public static float _EleResistToAtk = 1f;
+    public static float _EleEnhanceToAtk = 2.8f;
+    public static float _EleResistToAtk = 2.8f;
 
     public static float _IgnoreDefenceToAtk = 0.5f;
 
     public static float _HpToAtk = 10.0f;
     public static float _DefToAtk = 1.0f;
-    public static float _MoveSpeedToAtk = 18f;
-    public static float _AtkSpeedToAtk = 8f;
-    public static float _CriticalChanceToAtk = 8f;
+    public static float _MoveSpeedToAtk = 3f;
+    public static float _AtkSpeedToAtk = 2f;
+    public static float _CriticalChanceToAtk = 2f;
     public static float _DamageEnhance = 1;
 
     public static float GetAttrToValue(RoleAttrEnum roleAttr)
@@ -589,99 +589,119 @@ public class GameDataValue
         public RoleAttrEnum AttrID;
         public bool CanRepeat;
         public int MinValue;
+        public int MaxValue;
         public int Random;
 
-        public EquipExAttrRandom(RoleAttrEnum attr, bool repeat, int maxValue, int randomVal)
+        public EquipExAttrRandom(RoleAttrEnum attr, bool repeat,int minValue, int maxValue, int randomVal)
         {
             AttrID = attr;
             CanRepeat = repeat;
-            MinValue = maxValue;
+            MinValue = minValue;
+            MaxValue = maxValue;
             Random = randomVal;
         }
     }
 
     public static List<EquipExAttrRandom> _WeaponExAttrs = new List<EquipExAttrRandom>()
     {
-        new EquipExAttrRandom(RoleAttrEnum.Strength, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.Dexterity, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.Intelligence, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.Vitality, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.HPMax, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.Attack, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.Defense, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.AttackSpeed, false, 300, 100),
-        new EquipExAttrRandom(RoleAttrEnum.CriticalHitChance, false, 300, 100),
-        new EquipExAttrRandom(RoleAttrEnum.CriticalHitDamge, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.FireAttackAdd, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.ColdAttackAdd, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.LightingAttackAdd, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.WindAttackAdd, true, -1, 10),
-        new EquipExAttrRandom(RoleAttrEnum.FireResistan, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.ColdResistan, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.LightingResistan, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.WindResistan, true, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Strength, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Dexterity, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Intelligence, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Vitality, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.HPMax, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Attack, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Defense, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.AttackSpeed, false, 300, 1200, 100),
+        new EquipExAttrRandom(RoleAttrEnum.CriticalHitChance, false, 300, 1200, 100),
+        new EquipExAttrRandom(RoleAttrEnum.CriticalHitDamge, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.FireAttackAdd, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.ColdAttackAdd, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.LightingAttackAdd, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.WindAttackAdd, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.FireResistan, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.ColdResistan, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.LightingResistan, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.WindResistan, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.FireEnhance, false, 500, 1500, 100),
+        new EquipExAttrRandom(RoleAttrEnum.ColdEnhance, false, 500, 1500, 100),
+        new EquipExAttrRandom(RoleAttrEnum.LightingEnhance, false, 500, 1500, 100),
+        new EquipExAttrRandom(RoleAttrEnum.WindEnhance, false, 500, 1500, 100),
     };
 
     public static List<EquipExAttrRandom> _DefenceExAttrs = new List<EquipExAttrRandom>()
     {
-        new EquipExAttrRandom(RoleAttrEnum.Strength, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.Dexterity, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.Intelligence, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.Vitality, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.HPMax, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.Attack, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.Defense, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.CriticalHitDamge, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.FireAttackAdd, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.ColdAttackAdd, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.LightingAttackAdd, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.WindAttackAdd, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.FireResistan, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.ColdResistan, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.LightingResistan, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.WindResistan, true, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Strength, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Dexterity, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Intelligence, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Vitality, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.HPMax, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Attack, false, 1, -1, 50),
+        new EquipExAttrRandom(RoleAttrEnum.Defense, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.CriticalHitDamge, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.FireAttackAdd, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.ColdAttackAdd, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.LightingAttackAdd, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.WindAttackAdd, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.FireResistan, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.ColdResistan, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.LightingResistan, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.WindResistan, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.FireEnhance, false, 500, 1500, 50),
+        new EquipExAttrRandom(RoleAttrEnum.ColdEnhance, false, 500, 1500, 50),
+        new EquipExAttrRandom(RoleAttrEnum.LightingEnhance, false, 500, 50, 50),
+        new EquipExAttrRandom(RoleAttrEnum.WindEnhance, false, 500, 1500, 50),
     };
 
     public static List<EquipExAttrRandom> _AmuletExAttrs = new List<EquipExAttrRandom>()
     {
-        new EquipExAttrRandom(RoleAttrEnum.Strength, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.Dexterity, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.Intelligence, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.Vitality, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.HPMax, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.Attack, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.Defense, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.CriticalHitChance, false, 300, 100),
-        new EquipExAttrRandom(RoleAttrEnum.CriticalHitDamge, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.FireAttackAdd, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.ColdAttackAdd, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.LightingAttackAdd, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.WindAttackAdd, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.FireResistan, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.ColdResistan, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.LightingResistan, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.WindResistan, true, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Strength, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Dexterity, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Intelligence, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Vitality, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.HPMax, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Attack, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Defense, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.MoveSpeed, false, 300, 1200, 100),
+        new EquipExAttrRandom(RoleAttrEnum.CriticalHitChance, false,300, 1200, 100),
+        new EquipExAttrRandom(RoleAttrEnum.CriticalHitDamge, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.FireAttackAdd, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.ColdAttackAdd, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.LightingAttackAdd, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.WindAttackAdd, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.FireResistan, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.ColdResistan, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.LightingResistan, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.WindResistan, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.FireEnhance, false, 500, 1500, 100),
+        new EquipExAttrRandom(RoleAttrEnum.ColdEnhance, false, 500, 1500, 100),
+        new EquipExAttrRandom(RoleAttrEnum.LightingEnhance, false, 500, 50, 100),
+        new EquipExAttrRandom(RoleAttrEnum.WindEnhance, false, 500, 1500, 100),
     };
 
     public static List<EquipExAttrRandom> _RingExAttrs = new List<EquipExAttrRandom>()
     {
-        new EquipExAttrRandom(RoleAttrEnum.Strength, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.Dexterity, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.Intelligence, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.Vitality, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.HPMax, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.Attack, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.Defense, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.AttackSpeed, false, 300, 100),
-        new EquipExAttrRandom(RoleAttrEnum.CriticalHitDamge, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.FireAttackAdd, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.ColdAttackAdd, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.LightingAttackAdd, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.WindAttackAdd, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.FireResistan, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.ColdResistan, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.LightingResistan, true, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.WindResistan, true, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Strength, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Dexterity, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Intelligence, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Vitality, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.HPMax, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Attack, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Defense, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.AttackSpeed, false, 300, 1200, 100),
+        new EquipExAttrRandom(RoleAttrEnum.CriticalHitChance, false, 300, 1200, 100),
+        new EquipExAttrRandom(RoleAttrEnum.CriticalHitDamge, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.FireAttackAdd, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.ColdAttackAdd, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.LightingAttackAdd, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.WindAttackAdd, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.FireResistan, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.ColdResistan, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.LightingResistan, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.WindResistan, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.FireEnhance, false, 500, 1500, 100),
+        new EquipExAttrRandom(RoleAttrEnum.ColdEnhance, false, 500, 1500, 100),
+        new EquipExAttrRandom(RoleAttrEnum.LightingEnhance, false, 500, 50, 100),
+        new EquipExAttrRandom(RoleAttrEnum.WindEnhance, false, 500, 1500, 100),
     };
 
     #endregion
@@ -767,24 +787,17 @@ public class GameDataValue
 
     public static int GetEleDamage(int eleAtk, float damageRate, int eleEnhance, int eleResist)
     {
-        float eleDamage = eleAtk * damageRate * (1 + eleEnhance / 1000.0f);
-        float resistRate = 0;
-        if (eleResist > 0)
-        {
-            resistRate = (1 - eleResist / (eleResist + 1000.0f));
-        }
-        else
-        {
-            resistRate = (1 + eleResist / 1000.0f);
-        }
-        int finalDamage = Mathf.CeilToInt(eleDamage * resistRate);
+        float enhanceRate = 1 + ConfigIntToFloat(eleEnhance - eleResist);
+        enhanceRate = Mathf.Max(enhanceRate, 0);
+        float eleDamage = eleAtk * damageRate * (1 + ConfigIntToFloat(eleEnhance - eleResist));
+        int finalDamage = Mathf.CeilToInt(eleDamage);
         return finalDamage;
     }
 
     public static int GetPhyDamage(int phyAtk, float damageRate, int enhance, int defence, int roleLevel)
     {
         var equipRecord = TableReader.EquipBaseAttr.GetRecord(GetRoleLv(roleLevel).ToString());
-        float eleDamage = phyAtk * damageRate * (1 + enhance / 1000.0f);
+        float eleDamage = phyAtk * damageRate * (1 + ConfigIntToFloat(enhance));
         float resistRate = 1;
         if (defence > 0 && roleLevel > 0)
         {
@@ -803,7 +816,7 @@ public class GameDataValue
 
     public static float GetCriticleDamageRate(int criticleDamage)
     {
-        return ConfigIntToFloat(criticleDamage) + 0.5f;
+        return ConfigIntToFloat(criticleDamage);
     }
 
     #endregion
@@ -1712,6 +1725,31 @@ public class GameDataValue
             attrRecord = TableReader.MonsterAttr.GetRecord(roleLv.ToString());
         }
         defValue = (int)(attrRecord.Attrs[1] * defBase);
+        return defValue;
+    }
+
+    public static int GetMonsterEleDef(MonsterBaseRecord monsterBase, int roleLv, ElementType elementType)
+    {
+        int defValue = 0;
+        float defBase = ConfigIntToFloat(monsterBase.BaseAttr[2 + (int)elementType]);
+        MonsterAttrRecord attrRecord = null;
+        if (!TableReader.MonsterAttr.ContainsKey(roleLv.ToString()))
+        {
+            if (roleLv <= 0)
+            {
+                attrRecord = TableReader.MonsterAttr.GetRecord("1");
+            }
+            else
+            {
+                attrRecord = TableReader.MonsterAttr.GetRecord("200");
+            }
+        }
+        else
+        {
+            attrRecord = TableReader.MonsterAttr.GetRecord(roleLv.ToString());
+        }
+        ;
+        defValue = (int)(ConfigIntToFloat(attrRecord.Attrs[2 + (int)elementType]) * defBase);
         return defValue;
     }
 

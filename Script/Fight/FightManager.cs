@@ -414,6 +414,7 @@ public class FightManager : InstanceBase<FightManager>
                 SceneManager.MoveGameObjectToScene(_CameraFollow.gameObject, sceneInfo);
                 SceneManager.MoveGameObjectToScene(MainChatMotion.gameObject, sceneInfo);
                 SceneManager.MoveGameObjectToScene(gameObject, sceneInfo);
+                //SceneManager.MoveGameObjectToScene(_FightScene.gameObject, sceneInfo);
 
                 SceneManager.SetActiveScene(sceneInfo);
             }

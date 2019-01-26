@@ -284,17 +284,17 @@ public class UIContainerBase : UIBase
 
     public virtual void RefreshItems()
     {
-        foreach (var item in _ItemPrefabList)
+        foreach (var item in _ValueList)
         {
-            item.Refresh();
+            item.ShowItem.Refresh();
         }
     }
 
     public virtual void RefreshItems(Hashtable hash)
     {
-        foreach (var item in _ItemPrefabList)
+        foreach (var item in _ValueList)
         {
-            item.Refresh(hash);
+            item.ShowItem.Refresh(hash);
         }
     }
 
@@ -398,11 +398,11 @@ public class UIContainerBase : UIBase
 
     public void ForeachActiveItem<T>(Action<T> action)
     {
-        for (int i = 0; i < _ItemPrefabList.Count; ++i)
+        for (int i = 0; i < _ValueList.Count; ++i)
         {
-            if (_ItemPrefabList[i].gameObject.activeSelf)
+            if (_ValueList[i].ShowItem.gameObject.activeSelf)
             {
-                var component = _ItemPrefabList[i].gameObject.GetComponent<T>();
+                var component = _ValueList[i].ShowItem.gameObject.GetComponent<T>();
                 if (component == null)
                     continue;
 
@@ -413,11 +413,11 @@ public class UIContainerBase : UIBase
 
     public Vector3 GetObjItemPos(object obj)
     {
-        foreach (var item in _ItemPrefabList)
+        foreach (var item in _ValueList)
         {
-            if (item._InitInfo == obj)
+            if (item.ShowItem._InitInfo == obj)
             {
-                return item.transform.position;
+                return item.ShowItem.transform.position;
             }
         }
         return Vector3.zero;

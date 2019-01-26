@@ -26,6 +26,30 @@ public class UIGemPack : UIBase
         instance.Refresh();
     }
 
+    public static UIContainerBase GetGemPack()
+    {
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIGemPack>("LogicUI/Gem/UIGemPack");
+        if (instance == null)
+            return null;
+
+        if (!instance.isActiveAndEnabled)
+            return null;
+
+        return instance._GemPack;
+    }
+
+    public static void SetGemCombine(Tables.GemTableRecord resultRecord)
+    {
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIGemPack>("LogicUI/Gem/UIGemPack");
+        if (instance == null)
+            return;
+
+        if (!instance.isActiveAndEnabled)
+            return;
+
+        instance._CombinePanel.AutoFitCombine(resultRecord);
+    }
+
     #endregion
 
     #region 
@@ -34,18 +58,20 @@ public class UIGemPack : UIBase
 
     public UITagPanel _TagPanel;
     public UIGemPackPunch _PunchPanel;
+    public UIGemPackCombine _CombinePanel;
 
     public override void Show(Hashtable hash)
     {
         base.Show(hash);
 
         _TagPanel.ShowPage(0);
-        _GemPack.InitContentItem(GemData.Instance.PackGemDatas._PackItems, OnPackItemClick);
+        _GemPack.InitContentItem(GemData.Instance.PackGemDatas._PackItems, OnPackItemClick, null, OnPackPanelItemClick);
     }
 
     public void Refresh()
     {
-        _GemPack.RefreshItems();
+        //_GemPack.RefreshItems();
+        _GemPack.InitContentItem(GemData.Instance.PackGemDatas._PackItems, OnPackItemClick, null, OnPackPanelItemClick);
     }
 
     private void OnPackItemClick(object gemItemObj)
@@ -61,15 +87,27 @@ public class UIGemPack : UIBase
         }
     }
 
+    private void OnPackPanelItemClick(UIItemBase uiItemBase)
+    {
+        UIGemItem gemItem = uiItemBase as UIGemItem;
+        if (gemItem == null)
+            return;
+
+        int showingPage = _TagPanel.GetShowingPage();
+        if (showingPage == 1)
+        {
+            _CombinePanel.ShowGemTooltipsRight(gemItem);
+        }
+    }
+
     #endregion
 
     #region 
 
     public void OnBtnSort()
     {
-        GemData.Instance.PackGemDatas.SortStack();
-        GemData.Instance.PackGemDatas.SortEmpty();
-        _GemPack.RefreshItems();
+        GemData.Instance.PacketSort();
+        Refresh();
     }
 
     #endregion

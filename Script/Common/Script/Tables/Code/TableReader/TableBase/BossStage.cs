@@ -16,7 +16,8 @@ namespace Tables
         public string Desc { get; set; }
         public int Difficult { get; set; }
         public int Level { get; set; }
-        public List<MonsterBaseRecord> BossID { get; set; }
+        public List<string> FightLogic { get; set; }
+        public MonsterBaseRecord BossID { get; set; }
         public BossStageRecord(DataRecord dataRecord)
         {
             if (dataRecord != null)
@@ -25,7 +26,7 @@ namespace Tables
                 Id = ValueStr[0];
 
             }
-            BossID = new List<MonsterBaseRecord>();
+            FightLogic = new List<string>();
         }
         public override string[] GetRecordStr()
         {
@@ -35,16 +36,17 @@ namespace Tables
             recordStrList.Add(TableWriteBase.GetWriteStr(Desc));
             recordStrList.Add(TableWriteBase.GetWriteStr(Difficult));
             recordStrList.Add(TableWriteBase.GetWriteStr(Level));
-            foreach (var testTableItem in BossID)
+            foreach (var testTableItem in FightLogic)
             {
-                if (testTableItem != null)
-                {
-                    recordStrList.Add(testTableItem.Id);
-                }
-                else
-                {
-                    recordStrList.Add("");
-                }
+                recordStrList.Add(TableWriteBase.GetWriteStr(testTableItem));
+            }
+            if (BossID != null)
+            {
+                recordStrList.Add(BossID.Id);
+            }
+            else
+            {
+                recordStrList.Add("");
             }
 
             return recordStrList.ToArray();
@@ -113,45 +115,18 @@ namespace Tables
                 pair.Value.Desc = TableReadBase.ParseString(pair.Value.ValueStr[2]);
                 pair.Value.Difficult = TableReadBase.ParseInt(pair.Value.ValueStr[3]);
                 pair.Value.Level = TableReadBase.ParseInt(pair.Value.ValueStr[4]);
-                if (!string.IsNullOrEmpty(pair.Value.ValueStr[5]))
+                pair.Value.FightLogic.Add(TableReadBase.ParseString(pair.Value.ValueStr[5]));
+                pair.Value.FightLogic.Add(TableReadBase.ParseString(pair.Value.ValueStr[6]));
+                pair.Value.FightLogic.Add(TableReadBase.ParseString(pair.Value.ValueStr[7]));
+                pair.Value.FightLogic.Add(TableReadBase.ParseString(pair.Value.ValueStr[8]));
+                pair.Value.FightLogic.Add(TableReadBase.ParseString(pair.Value.ValueStr[9]));
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[10]))
                 {
-                    pair.Value.BossID.Add( TableReader.MonsterBase.GetRecord(pair.Value.ValueStr[5]));
+                    pair.Value.BossID =  TableReader.MonsterBase.GetRecord(pair.Value.ValueStr[10]);
                 }
                 else
                 {
-                    pair.Value.BossID.Add(null);
-                }
-                if (!string.IsNullOrEmpty(pair.Value.ValueStr[6]))
-                {
-                    pair.Value.BossID.Add( TableReader.MonsterBase.GetRecord(pair.Value.ValueStr[6]));
-                }
-                else
-                {
-                    pair.Value.BossID.Add(null);
-                }
-                if (!string.IsNullOrEmpty(pair.Value.ValueStr[7]))
-                {
-                    pair.Value.BossID.Add( TableReader.MonsterBase.GetRecord(pair.Value.ValueStr[7]));
-                }
-                else
-                {
-                    pair.Value.BossID.Add(null);
-                }
-                if (!string.IsNullOrEmpty(pair.Value.ValueStr[8]))
-                {
-                    pair.Value.BossID.Add( TableReader.MonsterBase.GetRecord(pair.Value.ValueStr[8]));
-                }
-                else
-                {
-                    pair.Value.BossID.Add(null);
-                }
-                if (!string.IsNullOrEmpty(pair.Value.ValueStr[9]))
-                {
-                    pair.Value.BossID.Add( TableReader.MonsterBase.GetRecord(pair.Value.ValueStr[9]));
-                }
-                else
-                {
-                    pair.Value.BossID.Add(null);
+                    pair.Value.BossID = null;
                 }
             }
         }
