@@ -91,6 +91,8 @@ public class FightManager : InstanceBase<FightManager>
         for (int i = 0; i < LogicManager.Instance.EnterStageInfo.ValidScenePath.Count; ++i)
         {
             var spGO = GameObject.Find(LogicManager.Instance.EnterStageInfo.ValidScenePath[i] + "_SP");
+            if (spGO == null)
+                Debug.LogError("spGO none:" + LogicManager.Instance.EnterStageInfo.ValidScenePath[i]);
             _SceneSPObj.Add(spGO);
 
             if (i > 0)
