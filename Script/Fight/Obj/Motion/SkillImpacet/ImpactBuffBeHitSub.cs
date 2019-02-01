@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class ImpactBuffBeHitSub : ImpactBuffSub
 {
-    public float _Interval = 1;
+    //public float _Interval = 1;
 
     private CapsuleCollider _Collider;
 
@@ -24,6 +24,11 @@ public class ImpactBuffBeHitSub : ImpactBuffSub
             return;
 
         SetCD();
+        HitAct(hitSender, hitImpact);
+    }
+
+    public virtual void HitAct(MotionManager hitSender, ImpactHit hitImpact)
+    {
         ActSubImpacts(_BuffSender, _BuffOwner);
 
         if (_SubImpactsToSender != null)

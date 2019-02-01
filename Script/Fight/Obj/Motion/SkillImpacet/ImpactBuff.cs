@@ -141,6 +141,7 @@ public class ImpactBuff : ImpactBase
         {
             return canAdd & (newBuff.GetType() != this.GetType());
         }
+
         return canAdd;
     }
 

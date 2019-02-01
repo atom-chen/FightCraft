@@ -51,7 +51,7 @@ public class FightSceneAreaKBossWithFish : FightSceneAreaBase
     private int _LivingEnemyCnt = 0;
     private float _LastUpdateFishTime = 0;
 
-    private void StartStep()
+    protected void StartStep()
     {
         _BossStepEnemyInterval = 30;
         var bossMotion = FightManager.Instance.InitEnemy(_BossMotionID, _BossBornPos.position, _BossBornPos.rotation.eulerAngles);

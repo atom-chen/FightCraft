@@ -145,6 +145,7 @@ public class AI_Base : MonoBehaviour
         public float SkillRange;
         public float SkillInterval;
         public float ReadyTime = 0;
+        public float StartCD = -1;
 
         public float LastUseSkillTime { get; set; }
 
@@ -172,11 +173,19 @@ public class AI_Base : MonoBehaviour
             skillInfo.SkillBase = skillBase;
             if (i == 0)
             {
-                skillInfo.LastUseSkillTime = -1;
+                skillInfo.LastUseSkillTime = Time.time - skillInfo.SkillInterval;
             }
             else
             {
-                skillInfo.LastUseSkillTime = Time.time - skillInfo.SkillInterval * 0.6f;
+                if (skillInfo.StartCD >= 0)
+                {
+                    skillInfo.LastUseSkillTime = Time.time - skillInfo.SkillInterval + skillInfo.StartCD;
+                }
+                else
+                {
+                    skillInfo.LastUseSkillTime = Time.time - skillInfo.SkillInterval * 0.6f;
+
+                }
             }
         }
         

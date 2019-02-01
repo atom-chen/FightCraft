@@ -28,6 +28,10 @@ public class StateMove : StateBase
         {
             _MotionManager.MoveDirect((Vector2)args[0]);
         }
+        else if(args[0] is Vector3)
+        {
+            _MotionManager.MoveTarget((Vector3)args[0]);
+        }
     }
 
     public override void StateOpt(MotionOpt opt, params object[] args)

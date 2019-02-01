@@ -628,6 +628,19 @@ public class MotionManager : MonoBehaviour
         }
     }
 
+    #region sp buff names
+
+    public List<string> _SpBuffNames = new List<string>();
+    public bool _IsBuffNameDirty = false;
+
+    public void AddBuffName(string buffName)
+    {
+        _SpBuffNames.Add(buffName);
+        _IsBuffNameDirty = true;
+    }
+
+    #endregion
+
     #endregion
 
     #region effect
@@ -918,6 +931,7 @@ public class MotionManager : MonoBehaviour
 
     public void MoveTarget(Vector3 targetPos)
     {
+        Debug.Log("MoveTarget:" + targetPos);
         _NavAgent.speed = RoleAttrManager.MoveSpeed;
         _NavAgent.SetDestination(targetPos);
 
@@ -1067,6 +1081,7 @@ public class MotionManager : MonoBehaviour
     #region collider
 
     public Vector3 _ColliderInfo = new Vector3(0.4f, 1.8f, 0);
+    public Vector3 _ColliderCenter = new Vector3(0, 0, 0);
 
     private Collider _TriggerCollider;
     public Collider TriggerCollider
@@ -1087,7 +1102,14 @@ public class MotionManager : MonoBehaviour
                     collider.radius = _ColliderInfo.x;
                     collider.height = _ColliderInfo.y;
                     collider.direction = 2;
-                    collider.center = new Vector3(0, 0, collider.height * 0.5f);
+                    if (_ColliderCenter == Vector3.zero)
+                    {
+                        collider.center = _ColliderCenter;
+                    }
+                    else
+                    {
+                        collider.center = new Vector3(0, 0, collider.height * 0.5f);
+                    }
                     collider.isTrigger = true;
                     var rigidbody = sole.gameObject.AddComponent<Rigidbody>();
                     rigidbody.isKinematic = true;

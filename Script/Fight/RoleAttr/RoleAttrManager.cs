@@ -458,6 +458,7 @@ public class RoleAttrManager : MonoBehaviour
         if (roleData != null)
         {
             _BaseAttr = new RoleAttrStruct(roleData._BaseAttr);
+            _Level = roleData._RoleLevel;
             //_ExAttrs = new Dictionary<FightAttr.FightAttrType, int>(roleData._ExAttrs);
         }
         else
@@ -467,12 +468,13 @@ public class RoleAttrManager : MonoBehaviour
             _BaseAttr.SetValue(RoleAttrEnum.Attack, 10);
             _BaseAttr.SetValue(RoleAttrEnum.Defense, 10);
             _BaseMoveSpeed = 4.5f;
+            _Level = 1;
         }
         _BaseAttr.SetValue(RoleAttrEnum.FlyGravity, 10000);
         _BaseAttr.SetValue(RoleAttrEnum.HitBack, 10000);
         _BaseAttr.SetValue(RoleAttrEnum.RiseUpSpeed, 10000);
 
-        _Level = roleData._RoleLevel;
+        //_Level = roleData._RoleLevel;
         RefreshMoveSpeed();
         RefreshAttackSpeed();
         AddHPPersent(1);

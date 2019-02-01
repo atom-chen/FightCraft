@@ -68,7 +68,15 @@ public class FightSceneLogicPassBoss : FightSceneLogicPassArea
         //{
         //    base.AreaFinish(finishArea);
         //}
-        _AreaGates[_RunningIdx].gameObject.SetActive(true);
+
+        if (_RunningIdx == _AreaGates.Count - 1)
+        {
+            base.AreaFinish(finishArea);
+        }
+        else
+        {
+            _AreaGates[_RunningIdx].gameObject.SetActive(true);
+        }
         
     }
 

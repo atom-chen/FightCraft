@@ -16,6 +16,9 @@ public class UISkillBar : UIBase
 
     public static void SetSkillUseTips(string input, float time)
     {
+        if (GameCore.Instance == null)
+            return;
+
         var instance = GameCore.Instance.UIManager.GetUIInstance<UISkillBar>("LogicUI/Fight/UISkillBar");
         if (instance == null)
             return;

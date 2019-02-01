@@ -37,7 +37,8 @@ public class UIBossStageSelect : UIBase
 
     public void InitDiffs()
     {
-        int maxDiff = ActData.Instance._BossStageDiff;
+        //int maxDiff = ActData.Instance._BossStageDiff;
+        int maxDiff = 9;
 
         List<int> diffList = new List<int>();
         for (int i = 0; i < maxDiff + 1; ++i)

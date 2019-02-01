@@ -32,6 +32,11 @@ public class UIHPItem : UIItemBase
         _HeightDelta.x = 0;
         _HeightDelta.z = 0;
         _HeightDelta.y += 0.2f;
+
+        for (int i = 0; i < _SpBuffNameTexts.Count; ++i)
+        {
+            _SpBuffNameTexts[i].gameObject.SetActive(false);
+        }
     }
 
 
@@ -48,6 +53,8 @@ public class UIHPItem : UIItemBase
         ActHPProcess();
 
         ActMPProcess();
+
+        ActSpBuffNames();
 
         _RectTransform.anchoredPosition = UIManager.Instance.WorldToScreenPoint(_FollowTransform.position + _HeightDelta);
     }
@@ -89,6 +96,31 @@ public class UIHPItem : UIItemBase
         else
         {
             _MPProcess.gameObject.SetActive(false);
+        }
+    }
+
+    #endregion
+
+    #region act buff name
+
+    public List<Text> _SpBuffNameTexts;
+
+    private void ActSpBuffNames()
+    {
+        if (!_ObjMotion._IsBuffNameDirty)
+            return;
+
+        for (int i = 0; i < _SpBuffNameTexts.Count; ++i)
+        {
+            if (_ObjMotion._SpBuffNames.Count > i)
+            {
+                _SpBuffNameTexts[i].gameObject.SetActive(true);
+                _SpBuffNameTexts[i].text = _ObjMotion._SpBuffNames[i];
+            }
+            else
+            {
+                _SpBuffNameTexts[i].gameObject.SetActive(false);
+            }
         }
     }
 

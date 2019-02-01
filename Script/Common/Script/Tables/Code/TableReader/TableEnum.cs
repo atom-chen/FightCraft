@@ -82,6 +82,7 @@ namespace Tables
         Hero = 1, //Hero,
         Elite = 2, //Elite,
         Normal = 3, //Normal,
+        ExElite = 4, //ExElite,ExElite
     }
 
     //

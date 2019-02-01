@@ -27,4 +27,10 @@
     <enumDesc>
     </enumDesc>
   </enumColumn>
+  <enumColumn>
+    <enumName>ExElite</enumName>
+    <enumCode>ExElite</enumCode>
+    <enumValue>4</enumValue>
+    <enumDesc>ExElite</enumDesc>
+  </enumColumn>
 </root>

@@ -256,7 +256,7 @@ public class AI_HeroBase : AI_Base
 
     public Transform _PassiveGO;
 
-    protected void InitPassiveSkills()
+    public void InitPassiveSkills()
     {
         if (_PassiveGO == null)
             return;
