@@ -46,6 +46,8 @@ public class ObjMotionSkillBase : MonoBehaviour
     public string _ActInput;
     public int _SkillMotionPrior = 100;
     public bool _SkillMotionPriorSelf = false;
+    public int _SuperArmorColliderID = -1;
+
     public float _SkillBaseSpeed = 1;
     public float SkillSpeed
     {
@@ -224,7 +226,7 @@ public class ObjMotionSkillBase : MonoBehaviour
     {
         get
         {
-            if (_SkillActSpeed < 0)
+            //if (_SkillActSpeed < 0)
             {
                 if (_MotionManager.RoleAttrManager == null)
                 {

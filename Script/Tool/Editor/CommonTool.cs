@@ -420,4 +420,50 @@ public class CommonTool : Editor
     }
 
     #endregion
+
+    #region skill motin
+
+    [MenuItem("TyTools/SkillMotion/SkillSuperArmor")]
+    public static void SkillSuperArmor()
+    {
+        var selections = Selection.GetFiltered(typeof(Object), SelectionMode.DeepAssets);
+
+        foreach (var selected in selections)
+        {
+            var selectedGO = selected as GameObject;
+            if (selectedGO == null)
+                continue;
+
+            ObjMotionSkillBase skillBase = selectedGO.GetComponent<ObjMotionSkillBase>();
+            if (skillBase == null)
+                continue;
+
+            var hitEvents = new List<ImpactHit>(selectedGO.GetComponentsInChildren<ImpactHit>(true));
+            //var hitEvents = new List<Transform>(selectedGO.GetComponentsInChildren<Transform>());
+            List<int> colliderIDs = new List<int>();
+            foreach (var hitEvent in hitEvents)
+            {
+                var select = hitEvent.GetComponent<SelectBase>();
+                if (select != null)
+                {
+                    colliderIDs.Add(select._ColliderID);
+                }
+            }
+
+            colliderIDs.Sort();
+            if (colliderIDs.Count > 0)
+            {
+                Debug.Log("start hit event id:" + colliderIDs[0]);
+                skillBase._SuperArmorColliderID = colliderIDs[0];
+                
+            }
+
+            EditorUtility.SetDirty(selected);
+        }
+
+        AssetDatabase.SaveAssets();
+
+    }
+
+    #endregion
 }

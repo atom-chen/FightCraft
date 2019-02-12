@@ -34,6 +34,6 @@ public class ObjMotionSkillInHit : ObjMotionSkillBase
         if (_ActInRise && _MotionManager._ActionState == _MotionManager._StateRise)
             return true;
 
-        return true;
+        return false;
     }
 }

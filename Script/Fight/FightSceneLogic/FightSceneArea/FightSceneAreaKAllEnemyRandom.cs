@@ -41,6 +41,10 @@ public class FightSceneAreaKAllEnemyRandom : FightSceneAreaKAllEnemy
                     enemyDataID = _ExEliteRandomIDs[randomIdx];
                     _RandomEliteExID = enemyDataID;
                 }
+                else
+                {
+                    enemyDataID = _RandomEliteExID;
+                }
             }
             else if (i < _EliteCnt + _ExEliteCnt)
             {
@@ -69,12 +73,26 @@ public class FightSceneAreaKAllEnemyRandom : FightSceneAreaKAllEnemy
                 enemyAI._TargetMotion = FightManager.Instance.MainChatMotion;
                 enemyAI.AIWake = true;
             }
+            enemyAI._HuntRange = 999;
+            enemyAI._ReHuntRange = 999;
 
-            if (_RandomBuffEliteCnt > i && _RandomBuffPassiveGO != null)
+            var eliteAI = enemyAI as AI_HeroBase;
+            if (eliteAI != null)
             {
-                var eliteAI = enemyAI as AI_HeroBase;
-                eliteAI._PassiveGO = _RandomBuffPassiveGO.transform;
+                eliteAI._IsContainsNormalAtk = true;
+
+                if (_RandomBuffEliteCnt > i && _RandomBuffPassiveGO != null)
+                {
+                    eliteAI._PassiveGO = _RandomBuffPassiveGO.transform;
+                }
+
+                if (_EliteCnt + _ExEliteCnt > 1)
+                {
+                    eliteAI.SetCombatLevel(2);
+                }
             }
+
+            
         }
     }
     

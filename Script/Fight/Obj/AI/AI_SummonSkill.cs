@@ -139,7 +139,7 @@ public class AI_SummonSkill : AI_Base
         if (objMotionSkill._NextAnim.Count == 0)
             return;
 
-        float attackConlliderTime = _SelfMotion.AnimationEvent.GetAnimFirstColliderEventTime(objMotionSkill._NextAnim[0]);
+        float attackConlliderTime = _SelfMotion.AnimationEvent.GetAnimFirstColliderEventTime(objMotionSkill._NextAnim[0], objMotionSkill._SuperArmorColliderID);
         if (attackConlliderTime < 0)
         {
             attackConlliderTime = objMotionSkill._NextAnim[0].length;

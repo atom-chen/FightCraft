@@ -50,35 +50,35 @@ public class AI_HeroStrNormal : AI_StrengthHeroBase
 
     protected override bool StartSkill()
     {
-        if (_NextForceSkill > 0)
-        {
-            StartSkill(_AISkills[_NextForceSkill]);
-            _NextForceSkill = 0;
-        }
+        //if (_NextForceSkill > 0)
+        //{
+        //    StartSkill(_AISkills[_NextForceSkill]);
+        //    _NextForceSkill = 0;
+        //}
 
-        if (!IsRandomActSkill())
-            return false;
+        //if (!IsRandomActSkill())
+        //    return false;
 
-        float dis = Vector3.Distance(_SelfMotion.transform.position, _TargetMotion.transform.position);
+        //float dis = Vector3.Distance(_SelfMotion.transform.position, _TargetMotion.transform.position);
 
-        for (int i = _AISkills.Count - 1; i >= 0; --i)
-        {
-            if (_AISkills[i].SkillRange < dis)
-                continue;
+        //for (int i = _AISkills.Count - 1; i >= 0; --i)
+        //{
+        //    if (_AISkills[i].SkillRange < dis)
+        //        continue;
 
-            if (!_AISkills[i].IsSkillCD())
-                continue;
+        //    if (!_AISkills[i].IsSkillCD())
+        //        continue;
 
-            if (!IsCommonCD())
-                continue;
+        //    if (!IsCommonCD())
+        //        continue;
 
-            {
-                StartSkill(_AISkills[i]);
-                return true;
-            }
-        }
+        //    {
+        //        StartSkill(_AISkills[i]);
+        //        return true;
+        //    }
+        //}
 
-        return false;
+        return base.StartSkill();
     }
 
     #endregion

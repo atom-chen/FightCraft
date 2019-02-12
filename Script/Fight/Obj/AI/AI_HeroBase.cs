@@ -20,6 +20,54 @@ public class AI_HeroBase : AI_Base
         //UpdateCriticalAI();
     }
 
+    #region use skill
+
+    protected float _AfterSkillWait = 0;
+    protected float _AfterSkillTime = 0;
+
+    protected override bool StartSkill()
+    {
+        //if (!IsRandomActSkill())
+        //    return false;
+
+        if (Time.time - _AfterSkillTime < _AfterSkillWait)
+            return false;
+
+        float dis = Vector3.Distance(_SelfMotion.transform.position, _TargetMotion.transform.position);
+
+        for (int i = _AISkills.Count - 1; i >= 0; --i)
+        {
+            if (!_AISkills[i].IsSkillCD())
+                continue;
+
+            //if (!IsCommonCD())
+            //    continue;
+
+            if (_AISkills[i].SkillRange < dis)
+                continue;
+
+            StartSkill(_AISkills[i]);
+            _AfterSkillWait = _AISkills[i].AfterSkillWait;
+            return true;
+
+        }
+
+        return false;
+    }
+
+    public override void OnStateChange(StateBase orgState, StateBase newState)
+    {
+        base.OnStateChange(orgState, newState);
+
+        //after skill
+        if (orgState is StateSkill && newState is StateIdle)
+        {
+            _AfterSkillTime = Time.time;
+        }
+    }
+
+    #endregion
+
     #region rise
 
     public bool _IsRiseBoom = false;
@@ -120,7 +168,7 @@ public class AI_HeroBase : AI_Base
         if (objMotionSkill._NextAnim.Count == 0)
             return;
 
-        float attackConlliderTime = _SelfMotion.AnimationEvent.GetAnimFirstColliderEventTime(objMotionSkill._NextAnim[0]);
+        float attackConlliderTime = _SelfMotion.AnimationEvent.GetAnimFirstColliderEventTime(objMotionSkill._NextAnim[0], objMotionSkill._SuperArmorColliderID);
         if (attackConlliderTime < 0)
             return;
 

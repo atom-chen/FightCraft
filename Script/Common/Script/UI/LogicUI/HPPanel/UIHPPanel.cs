@@ -17,6 +17,8 @@ public class UIHPPanel : UIInstanceBase<UIHPPanel>
         Hashtable hash = new Hashtable();
         hash.Add("InitObj", motionManager);
         Instance.ShowItem(hash);
+
+        Debug.Log("ShowHPItem:" + motionManager.name);
     }
 
     public static void HideHPItem(UIHPItem hpItem)

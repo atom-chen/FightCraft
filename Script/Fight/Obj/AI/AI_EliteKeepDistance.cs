@@ -11,6 +11,7 @@ public class AI_EliteKeepDistance : AI_EliteBase
 
     protected override void AIUpdate()
     {
+        base.AIUpdate();
         if (_TargetMotion == null)
             return;
 

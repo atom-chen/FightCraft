@@ -257,9 +257,20 @@ public class FightManager : InstanceBase<FightManager>
         FightLayerCommon.SetEnemyLayer(mainBase);
 
         AI_Base aiBase = mainBase.GetComponent<AI_Base>();
-        aiBase.SetCombatLevel(10);
+        aiBase.SetCombatLevel(1);
 
         _MonMotion.Add(mainBase);
+
+        if (monsterBase.MotionType == Tables.MOTION_TYPE.Elite)
+        {
+            mainBase.Animation.transform.localScale = mainBase.Animation.transform.localScale * 1.1f;
+            mainBase.NavAgent.radius = mainBase.NavAgent.radius * 1.1f;
+        }
+        else if (monsterBase.MotionType == Tables.MOTION_TYPE.ExElite)
+        {
+            mainBase.Animation.transform.localScale = mainBase.Animation.transform.localScale * 1.2f;
+            mainBase.NavAgent.radius = mainBase.NavAgent.radius * 1.2f;
+        }
 
         ++_SceneEnemyCnt;
 

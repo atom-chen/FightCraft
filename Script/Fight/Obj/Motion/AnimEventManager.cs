@@ -113,12 +113,21 @@ public class AnimEventManager : MonoBehaviour
 
     }
 
-    public float GetAnimFirstColliderEventTime(AnimationClip animClip)
+    public float GetAnimFirstColliderEventTime(AnimationClip animClip, int colliderID)
     {
         foreach (var animEvent in animClip.events)
         {
             if (animEvent.functionName == "ColliderStart")
-                return animEvent.time;
+            {
+                if (colliderID < 0)
+                {
+                    return animEvent.time;
+                }
+                else if(colliderID == animEvent.intParameter)
+                {
+                    return animEvent.time;
+                }
+            }
         }
 
         return -1;

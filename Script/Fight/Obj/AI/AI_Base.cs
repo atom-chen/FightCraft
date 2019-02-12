@@ -116,11 +116,30 @@ public class AI_Base : MonoBehaviour
 
     #region combatLevel
 
+    protected class CombatInfo
+    {
+        public float AfterSkillWait;
+        public float MoveWait;
+    }
+
+    protected static Dictionary<int, CombatInfo> _CombatInfos = new Dictionary<int, CombatInfo>()
+    {
+        { 1, new CombatInfo(){ AfterSkillWait=1, MoveWait=1} },
+        { 2, new CombatInfo(){ AfterSkillWait=2.0f, MoveWait=2.0f} },
+        { 3, new CombatInfo(){ AfterSkillWait=3.0f, MoveWait=3.0f} },
+        { 4, new CombatInfo(){ AfterSkillWait=4.0f, MoveWait=4.0f} },
+    };
+
     protected int _CombatLevel = 1;
 
     public void SetCombatLevel(int level)
     {
         _CombatLevel = level;
+
+        if (_Init)
+        {
+            ModifyInitSkill();
+        }
     }
 
     protected virtual void ModifyInitSkill()
@@ -131,7 +150,14 @@ public class AI_Base : MonoBehaviour
         if (_CombatLevel == 1)
             return;
 
-
+        if (_CombatInfos.ContainsKey(_CombatLevel))
+        {
+            var combatInfo = _CombatInfos[_CombatLevel];
+            foreach (var aiskill in _AISkills)
+            {
+                aiskill.AfterSkillWait = aiskill.AfterSkillWait * combatInfo.AfterSkillWait;
+            }
+        }
     }
 
     #endregion
@@ -146,6 +172,7 @@ public class AI_Base : MonoBehaviour
         public float SkillInterval;
         public float ReadyTime = 0;
         public float StartCD = -1;
+        public float AfterSkillWait = 1;
 
         public float LastUseSkillTime { get; set; }
 
@@ -250,45 +277,57 @@ public class AI_Base : MonoBehaviour
 
     int _ActValue = -1;
     float _AtkRate = -1;
+    float _LastRandomTime = 0;
     protected bool IsRandomActSkill()
     {
-        
+
+        if (Time.time - _LastRandomTime < 1.0f)
+        {
+            return false;
+        }
+        _LastRandomTime = Time.time;
+
         var actRandom = Random.Range(0, 10000);
 
         if (_ActValue < 0)
         {
-            int aiLevel = _SelfMotion.RoleAttrManager.Level / 10;
-            aiLevel = Mathf.Clamp(aiLevel, 1, 10);
+            //int aiLevel = _SelfMotion.RoleAttrManager.Level / 10;
+            //aiLevel = Mathf.Clamp(aiLevel, 1, 10);
 
-            if (_SelfMotion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.Normal)
-            {
-                _ActValue = aiLevel * 60 + 1000;
-            }
-            else if (_SelfMotion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.Elite)
-            {
-                _ActValue = 10000;
-            }
-            else if (_SelfMotion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.Hero)
-            {
-                _ActValue = 10000;
-            }
-            if (_AtkRate < 0)
-            {
-                if (_SelfMotion.MonsterBase != null)
-                    _AtkRate = _SelfMotion.MonsterBase.AtkRate;
-                else
-                    _AtkRate = 1;
-            }
-            _ActValue = (int)(_ActValue * _AtkRate);
-            _ActValue = (int)(_ActValue * Time.fixedDeltaTime);
+            //if (_SelfMotion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.Normal)
+            //{
+            //    _ActValue = aiLevel * 60 + 1000;
+            //}
+            //else if (_SelfMotion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.Elite)
+            //{
+            //    _ActValue = 10000;
+            //}
+            //else if (_SelfMotion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.Hero)
+            //{
+            //    _ActValue = 10000;
+            //}
+            //if (_AtkRate < 0)
+            //{
+            //    if (_SelfMotion.MonsterBase != null)
+            //        _AtkRate = _SelfMotion.MonsterBase.AtkRate;
+            //    else
+            //        _AtkRate = 1;
+            //}
+            //_ActValue = (int)(_ActValue * _AtkRate);
+            //_ActValue = (int)(_ActValue * Time.fixedDeltaTime);
 
-            foreach (var skillInfo in _AISkills)
+            //foreach (var skillInfo in _AISkills)
+            //{
+            //    if (_SelfMotion.RoleAttrManager.Level < 100)
+            //    {
+            //        skillInfo.SkillInterval += 2 * (100 - _SelfMotion.RoleAttrManager.Level) / 100;
+            //        _ComondSkillCD = 2 * (100 - _SelfMotion.RoleAttrManager.Level);
+            //    }
+            //}
+
+            //if (_SelfMotion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.Normal)
             {
-                if (_SelfMotion.RoleAttrManager.Level < 100)
-                {
-                    skillInfo.SkillInterval += 2 * (100 - _SelfMotion.RoleAttrManager.Level) / 100;
-                    _ComondSkillCD = 2 * (100 - _SelfMotion.RoleAttrManager.Level);
-                }
+                _ActValue = 1000;
             }
         }
 
@@ -572,7 +611,7 @@ public class AI_Base : MonoBehaviour
             return;
 
         _HitDict.Clear();
-        Debug.Log("HitProtectStateChange " + newState);
+        //Debug.Log("HitProtectStateChange " + newState);
     }
 
     #endregion

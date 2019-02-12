@@ -32,6 +32,14 @@ public class FightSceneAreaKAllEliteRandom : FightSceneAreaKAllEnemy
                 enemyAI._TargetMotion = FightManager.Instance.MainChatMotion;
                 enemyAI.AIWake = true;
             }
+            enemyAI._HuntRange = 999;
+            enemyAI._ReHuntRange = 999;
+
+            var eliteAI = enemyAI as AI_HeroBase;
+            if (eliteAI != null)
+            {
+                eliteAI._IsContainsNormalAtk = true;
+            }
         }
     }
     

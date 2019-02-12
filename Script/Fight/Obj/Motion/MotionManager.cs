@@ -931,7 +931,7 @@ public class MotionManager : MonoBehaviour
 
     public void MoveTarget(Vector3 targetPos)
     {
-        Debug.Log("MoveTarget:" + targetPos);
+        //Debug.Log("MoveTarget:" + targetPos);
         _NavAgent.speed = RoleAttrManager.MoveSpeed;
         _NavAgent.SetDestination(targetPos);
 
