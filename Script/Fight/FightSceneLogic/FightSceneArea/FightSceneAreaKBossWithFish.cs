@@ -60,6 +60,8 @@ public class FightSceneAreaKBossWithFish : FightSceneAreaBase
         {
             ai._TargetMotion = FightManager.Instance.MainChatMotion;
             ai.AIWake = true;
+
+            InitBossAILevel(ai as AI_HeroBase);
         }
 
         for (int i = 0; i < _FightingEnemyCnt; ++i)
@@ -110,10 +112,10 @@ public class FightSceneAreaKBossWithFish : FightSceneAreaBase
         {
             enemyMotion = FightManager.Instance.InitEnemy(GetRandomEnmeyID(), GetFishRandomPos(), Vector3.zero);
         }
-        AI_CloseAttack ai = enemyMotion.GetComponent<AI_CloseAttack>();
-        ai._HuntRange = 999;
+        AI_Base ai = enemyMotion.GetComponent<AI_Base>();
         if (ai != null)
         {
+            ai._HuntRange = 999;
             ai._TargetMotion = FightManager.Instance.MainChatMotion;
             ai.AIWake = true;
         }
@@ -131,16 +133,25 @@ public class FightSceneAreaKBossWithFish : FightSceneAreaBase
         new Vector3(0,0,-10),
         new Vector3(-7.5f,0,-7.5f),
     };
+    private static float _FarDistance = 7.0f;
     private Vector3 GetFishRandomPos()
     {
-        int randomIdx = Random.Range(0, _FishRandomPosDelta.Count);
-        var randomPos = _FishRandomPosDelta[randomIdx] + FightManager.Instance.MainChatMotion.transform.position;
-        NavMeshHit navMeshHit;
-        if (NavMesh.SamplePosition(randomPos, out navMeshHit, 100, -1))
+        List<Vector3> farPoses = new List<Vector3>();
+        for (int i = 0; i < _FishRandomPosDelta.Count; ++i)
         {
-            return navMeshHit.position;
+            NavMeshHit navMeshHit;
+            if (NavMesh.SamplePosition(_FishRandomPosDelta[i] + FightManager.Instance.MainChatMotion.transform.position, out navMeshHit, 100, -1))
+            {
+                if (Vector3.Distance(navMeshHit.position, FightManager.Instance.MainChatMotion.transform.position) > _FarDistance)
+                {
+                    farPoses.Add(navMeshHit.position);
+                }
+            }
         }
-        return _BossBornPos.position;
+        int randomIdx = Random.Range(0, farPoses.Count);
+        var randomPos = farPoses[randomIdx];
+
+        return randomPos;
 
     }
 
@@ -167,6 +178,49 @@ public class FightSceneAreaKBossWithFish : FightSceneAreaBase
         }
         return _EnemyMotionID[_EnemyMotionID.Length - 1]._EnemyDataID;
     }
+    #endregion
+
+    #region boss ai
+
+    private int _BossAILevel = 0;
+
+    public void SetBossAILevel(int aiLevel)
+    {
+        _BossAILevel = aiLevel;
+    }
+
+    public void InitBossAILevel(AI_HeroBase aiBoss)
+    {
+        if (aiBoss == null)
+            return;
+        switch (_BossAILevel)
+        {
+            case 0:
+                break;
+            case 1:
+                aiBoss.InitProtectTimes(1);
+                break;
+            case 2:
+                aiBoss.InitProtectTimes(2);
+                break;
+            case 3:
+                aiBoss.InitProtectTimes(2);
+                aiBoss._StageBuffHpPersent.Add(0.5f);
+                break;
+            case 4:
+                aiBoss.InitProtectTimes(2);
+                aiBoss._StageBuffHpPersent.Add(0.6f);
+                aiBoss.IsCancelNormalAttack = true;
+                break;
+            default:
+                aiBoss.InitProtectTimes(2);
+                aiBoss._StageBuffHpPersent.Add(2f);
+                aiBoss._StageBuffHpPersent.Add(0.6f);
+                aiBoss.IsCancelNormalAttack = true;
+                break;
+        }
+    }
+
     #endregion
 
     public override List<string> GetAreaMonIDs()

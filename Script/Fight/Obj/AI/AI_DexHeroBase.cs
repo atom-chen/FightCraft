@@ -18,45 +18,14 @@ public class AI_DexHeroBase : AI_HeroBase
 
     #region stage 2
 
-    public float Stage2BuffTime = 20;
-
-    protected bool _Stage2Started = false;
-
-    private ImpactBuff[] _DexStage2Buff;
-    public ImpactBuff[] DexStage2Buff
+    protected override void InitCrazyBuff()
     {
-        get
-        {
-            if (_DexStage2Buff == null)
-            {
-                var buffGO = ResourceManager.Instance.GetGameObject("SkillMotion/CommonImpact/DexAccelateBuff");
-                _DexStage2Buff = buffGO.GetComponents<ImpactBuff>();
-            }
-            return _DexStage2Buff;
-        }
+        base.InitCrazyBuff();
+
+        var buffGO = ResourceManager.Instance.GetGameObject("SkillMotion/CommonImpact/DexAccelateBuff");
+        _Strtage2Buff = buffGO.GetComponents<ImpactBuff>();
     }
-
-    protected override void AIUpdate()
-    {
-        base.AIUpdate();
-
-        if (_SelfMotion.RoleAttrManager.HPPersent < 0.5f)
-        {
-            StartStage2();
-        }
-    }
-
-    protected virtual void StartStage2()
-    {
-        if (_Stage2Started)
-            return;
-
-        _Stage2Started = true;
-        for (int i = 0; i < DexStage2Buff.Length; ++i)
-        {
-            DexStage2Buff[i].ActBuffInstance(_SelfMotion, _SelfMotion, Stage2BuffTime);
-        }
-    }
+    
 
     #endregion
 

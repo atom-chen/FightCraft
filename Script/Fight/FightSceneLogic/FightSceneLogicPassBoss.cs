@@ -25,6 +25,7 @@ public class FightSceneLogicPassBoss : FightSceneLogicPassArea
             {
                 var bossArea = _FightArea[i] as FightSceneAreaKBossWithFish;
                 bossArea._BossMotionID = bossStage.BossID.Id;
+                bossArea.SetBossAILevel(bossStage.Difficult);
             }
         }
 

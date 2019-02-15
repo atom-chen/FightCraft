@@ -92,7 +92,12 @@ public class FightSceneAreaKAllEnemyRandom : FightSceneAreaKAllEnemy
                 }
             }
 
-            
+            if (enemy.RoleAttrManager.MonsterRecord.MotionType == Tables.MOTION_TYPE.Hero)
+            {
+                enemy.Animation.transform.localScale = enemy.Animation.transform.localScale * 0.8f;
+                enemy.NavAgent.radius = enemy.NavAgent.radius * enemy.Animation.transform.localScale.x * 0.8f;
+            }
+
         }
     }
     

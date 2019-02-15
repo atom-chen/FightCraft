@@ -174,6 +174,7 @@ public class AI_Base : MonoBehaviour
         public float StartCD = -1;
         public float AfterSkillWait = 1;
 
+        public float FirstHitTime { get; set; }
         public float LastUseSkillTime { get; set; }
 
         public bool IsSkillCD()
@@ -210,7 +211,7 @@ public class AI_Base : MonoBehaviour
                 }
                 else
                 {
-                    skillInfo.LastUseSkillTime = Time.time - skillInfo.SkillInterval * 0.6f;
+                    skillInfo.LastUseSkillTime = Time.time - skillInfo.SkillInterval * 0.4f;
 
                 }
             }
@@ -548,9 +549,33 @@ public class AI_Base : MonoBehaviour
         }
     }
 
-    protected Dictionary<ObjMotionSkillBase, HitSkillInfo> _HitDict = new Dictionary<ObjMotionSkillBase, HitSkillInfo>();
+    public Dictionary<string, int> _ProtectTimes = new Dictionary<string, int>();
+    public void InitProtectTimes(int protectTimes)
+    {
+        if (protectTimes <= 0)
+            return;
+
+        _ProtectTimes.Add("1", protectTimes);
+        _ProtectTimes.Add("2", protectTimes);
+        _ProtectTimes.Add("3", protectTimes);
+    }
+    protected bool _ProtectTimesDirty = false;
+    public bool ProtectTimesDirty
+    {
+        get
+        {
+            return _ProtectTimesDirty;
+        }
+        set
+        {
+            _ProtectTimesDirty = value;
+        }
+    }
+
+    protected Dictionary<string, HitSkillInfo> _HitDict = new Dictionary<string, HitSkillInfo>();
     protected const int _ReleaseSkillTimes = 2;
     protected const int _ReleaseBuffTimes = 3;
+    protected ObjMotionSkillBase _HittingSkill;
 
     private void OnHitProtect(ImpactHit impactHit)
     {
@@ -563,25 +588,56 @@ public class AI_Base : MonoBehaviour
         if (impactHit.SkillMotion == null)
             return;
 
-        if (!_HitDict.ContainsKey(impactHit.SkillMotion))
+        if (!_HitDict.ContainsKey(impactHit.SkillMotion._ActInput))
         {
-            _HitDict.Add(impactHit.SkillMotion, new HitSkillInfo() { SkillBase = impactHit.SkillMotion , SkillActTimes= -1, HitTimes=0});
+            _HitDict.Add(impactHit.SkillMotion._ActInput, new HitSkillInfo() { SkillBase = impactHit.SkillMotion , SkillActTimes= -1, HitTimes=0});
         }
 
-        if (_HitDict[impactHit.SkillMotion].SkillActTimes != impactHit.SkillMotion._SkillActTimes)
+        //protect times
+        if (_HittingSkill != null && _HittingSkill != impactHit.SkillMotion && !(_HittingSkill is ObjMotionSkillBuff))
+        {   
+            if (_ProtectTimes.Count > 0)
+            {
+                ReleaseHit();
+                return;
+            }
+        }
+        else if(_HittingSkill != null)
         {
-            _HitDict[impactHit.SkillMotion].SkillActTimes = impactHit.SkillMotion._SkillActTimes;
-            ++_HitDict[impactHit.SkillMotion].HitTimes;
+            if (_ProtectTimes.Count > 0)
+            {
+                return;
+            }
+        }
+
+        _HittingSkill = impactHit.SkillMotion;
+
+        if (_HitDict[impactHit.SkillMotion._ActInput].SkillActTimes != impactHit.SkillMotion._SkillActTimes)
+        {
+            if (_ProtectTimes.ContainsKey(impactHit.SkillMotion._ActInput))
+            {
+                --_ProtectTimes[impactHit.SkillMotion._ActInput];
+                if (_ProtectTimes[impactHit.SkillMotion._ActInput] == 0)
+                {
+                    _ProtectTimes.Remove(impactHit.SkillMotion._ActInput);
+                }
+                ProtectTimesDirty = true;
+                return;
+            }
+
+            _HitDict[impactHit.SkillMotion._ActInput].SkillActTimes = impactHit.SkillMotion._SkillActTimes;
+
+            ++_HitDict[impactHit.SkillMotion._ActInput].HitTimes;
             if (impactHit.SkillMotion is ObjMotionSkillBuff)
             {
-                if (_HitDict[impactHit.SkillMotion].HitTimes > _ReleaseBuffTimes)
+                if (_HitDict[impactHit.SkillMotion._ActInput].HitTimes > _ReleaseBuffTimes)
                 {
                     ReleaseHit();
                 }
             }
             else
             {
-                if (_HitDict[impactHit.SkillMotion].HitTimes > _ReleaseSkillTimes)
+                if (_HitDict[impactHit.SkillMotion._ActInput].HitTimes > _ReleaseSkillTimes)
                 {
                     ReleaseHit();
                 }
@@ -607,11 +663,12 @@ public class AI_Base : MonoBehaviour
         if (newState is StateFly
             || newState is StateCatch
             || newState is StateHit
-            || newState is StateLie)
+            || newState is StateLie
+            || newState is StateDie)
             return;
 
         _HitDict.Clear();
-        //Debug.Log("HitProtectStateChange " + newState);
+        _HittingSkill = null;
     }
 
     #endregion

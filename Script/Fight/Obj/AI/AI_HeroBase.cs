@@ -10,6 +10,8 @@ public class AI_HeroBase : AI_Base
         InitRise();
 
         InitPassiveSkills();
+
+        IsCancelNormalAttack = true;
     }
 
     protected override void AIUpdate()
@@ -17,6 +19,7 @@ public class AI_HeroBase : AI_Base
         base.AIUpdate();
 
         RiseUpdate();
+        CrazyUpdate();
         //UpdateCriticalAI();
     }
 
@@ -27,8 +30,6 @@ public class AI_HeroBase : AI_Base
 
     protected override bool StartSkill()
     {
-        //if (!IsRandomActSkill())
-        //    return false;
 
         if (Time.time - _AfterSkillTime < _AfterSkillWait)
             return false;
@@ -39,9 +40,6 @@ public class AI_HeroBase : AI_Base
         {
             if (!_AISkills[i].IsSkillCD())
                 continue;
-
-            //if (!IsCommonCD())
-            //    continue;
 
             if (_AISkills[i].SkillRange < dis)
                 continue;
@@ -63,6 +61,36 @@ public class AI_HeroBase : AI_Base
         if (orgState is StateSkill && newState is StateIdle)
         {
             _AfterSkillTime = Time.time;
+        }
+
+        //cancel attack
+        if (newState is StateSkill)
+        {
+            if (_SelfMotion.ActingSkill == _AISkills[0].SkillBase)
+            {
+                for (int i = 1; i < _AISkills.Count; ++i)
+                {
+                    float skillCD = Time.time - _AISkills[i].LastUseSkillTime;
+                    if (skillCD < _AISkills[i].SkillInterval * 0.5f)
+                    {
+                        _AISkills[i].LastUseSkillTime = Time.time - _AISkills[i].SkillInterval + _AISkills[i].FirstHitTime / _SelfMotion.RoleAttrManager.AttackSpeed + 0.05f;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    private bool _IsCancelNormalAttack = false;
+    public bool IsCancelNormalAttack
+    {
+        get
+        {
+            return _IsCancelNormalAttack;
+        }
+        set
+        {
+            _IsCancelNormalAttack = value;
         }
     }
 
@@ -158,23 +186,25 @@ public class AI_HeroBase : AI_Base
         }
         for (int i = startIdx; i < _AISkills.Count; ++i)
         {
-            InitSuperArmorSkill(_AISkills[i].SkillBase);
+            var firstHitTime = InitSuperArmorSkill(_AISkills[i].SkillBase);
+            _AISkills[i].FirstHitTime = firstHitTime;
             InitReadySkillSpeed(_AISkills[i]);
         }
     }
 
-    protected void InitSuperArmorSkill(ObjMotionSkillBase objMotionSkill)
+    protected float InitSuperArmorSkill(ObjMotionSkillBase objMotionSkill)
     {
         if (objMotionSkill._NextAnim.Count == 0)
-            return;
+            return 0;
 
         float attackConlliderTime = _SelfMotion.AnimationEvent.GetAnimFirstColliderEventTime(objMotionSkill._NextAnim[0], objMotionSkill._SuperArmorColliderID);
         if (attackConlliderTime < 0)
-            return;
+            return 0;
 
         _SelfMotion.AnimationEvent.AddEvent(objMotionSkill._NextAnim[0], 0, AttackStart);
         _SelfMotion.AnimationEvent.AddEvent(objMotionSkill._NextAnim[0], attackConlliderTime + 0.05f, AttackCollider);
         _SelfMotion.AnimationEvent.AddEvent(objMotionSkill._NextAnim[0], objMotionSkill._NextAnim[0].length, AttackCollider);
+        return attackConlliderTime;
     }
 
     private void AttackStart()
@@ -319,6 +349,62 @@ public class AI_HeroBase : AI_Base
         foreach (var buff in passiveImpacts)
         {
             buff.ActImpact(_SelfMotion, _SelfMotion);
+        }
+    }
+
+    #endregion
+
+    #region stage 2 /crizy buff
+
+    public float Stage2SuperTime = 20;
+    public List<float> _StageBuffHpPersent;
+
+    protected bool _Stage2Started = false;
+
+    protected ImpactBuff[] _Strtage2Buff;
+    public ImpactBuff[] StrStage2Buff
+    {
+        get
+        {
+            if (_Strtage2Buff == null)
+            {
+                InitCrazyBuff();
+                for (int i = 0; i < _Strtage2Buff.Length; ++i)
+                {
+                    _Strtage2Buff[i].Init(null, null);
+                }
+            }
+            return _Strtage2Buff;
+        }
+    }
+
+    protected virtual void InitCrazyBuff()
+    {
+
+    }
+
+    protected virtual void CrazyUpdate()
+    {
+        if (_StageBuffHpPersent.Count > 0)
+        {
+            if (_SelfMotion.RoleAttrManager.HPPersent < _StageBuffHpPersent[0])
+            {
+                StartStage2();
+                _StageBuffHpPersent.RemoveAt(0);
+            }
+        }
+    }
+
+    protected virtual void StartStage2()
+    {
+        for (int i = 0; i < StrStage2Buff.Length; ++i)
+        {
+            float buffLoasTime = StrStage2Buff[i]._LastTime;
+            if (StrStage2Buff[i]._LastTime <= 0)
+            {
+                buffLoasTime = Stage2SuperTime;
+            }
+            StrStage2Buff[i].ActBuffInstance(_SelfMotion, _SelfMotion, buffLoasTime);
         }
     }
 

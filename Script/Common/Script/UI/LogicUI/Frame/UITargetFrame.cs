@@ -19,9 +19,10 @@ public class UITargetFrame : UIBase
     void Update()
     {
         HpUpdate();
+        ProtectPanelUpdate();
     }
 
-    #region 
+    #region HP
 
     public GameObject _FrameRoot;
     public Slider _HPProcess;
@@ -34,18 +35,88 @@ public class UITargetFrame : UIBase
         if (!AimTarget.Instance)
             return;
 
-        if (AimTarget.Instance.LockTarget != null)
+        if (AimTarget.Instance.LockTarget != null
+            && _TargetMotion != AimTarget.Instance.LockTarget)
         {
             _TargetMotion = AimTarget.Instance.LockTarget;
+            _TargetAI = null;
         }
 
         if (_TargetMotion != null)
         {
-
+            _FrameRoot.SetActive(true);
             _HPText.text = _TargetMotion.RoleAttrManager.HP + "/" + _TargetMotion.RoleAttrManager.GetBaseAttr(RoleAttrEnum.HPMax);
             _HPProcess.value = _TargetMotion.RoleAttrManager.HPPersent;
         }
+        else
+        {
+            _FrameRoot.SetActive(false);
+        }
     }
+
+    #endregion
+
+    #region Hit Protect
+
+    [System.Serializable]
+    public class HitProtectInfos
+    {
+        public string _SkillInput;
+        public List<GameObject> _HitProtectGOs;
+    }
+
+    [SerializeField]
+    public List<HitProtectInfos> _HitPretects;
+
+    public GameObject _HitProtectPanel;
+
+    private AI_Base _TargetAI;
+
+    public void ProtectPanelUpdate()
+    {
+        if (_TargetMotion == null)
+            return;
+
+        if (_TargetAI == null)
+        {
+            _TargetAI = _TargetMotion.GetComponent<AI_Base>();
+            _TargetAI.ProtectTimesDirty = true;
+        }
+
+        if (_TargetAI == null)
+            return;
+
+        if (_TargetAI._ProtectTimes.Count == 0)
+        {
+            _HitProtectPanel.SetActive(false);
+            return;
+        }
+        else
+        {
+            _HitProtectPanel.SetActive(true);
+        }
+
+        if (!_TargetAI.ProtectTimesDirty)
+            return;
+
+        for (int i = 0; i < 3; ++i)
+        {
+            for (int j = 0; j < _HitPretects[i]._HitProtectGOs.Count; ++j)
+            {
+                if (_TargetAI._ProtectTimes.ContainsKey(_HitPretects[i]._SkillInput)
+                    && j < _TargetAI._ProtectTimes[_HitPretects[i]._SkillInput])
+                {
+                    _HitPretects[i]._HitProtectGOs[j].SetActive(true);
+                }
+                else
+                {
+                    _HitPretects[i]._HitProtectGOs[j].SetActive(false);
+                }
+            }
+        }
+    }
+
+
 
     #endregion
 }

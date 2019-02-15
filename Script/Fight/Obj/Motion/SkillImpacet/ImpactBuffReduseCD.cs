@@ -30,13 +30,4 @@ public class ImpactBuffReduseCD : ImpactBuff
         }
     }
 
-    public override bool IsBuffCanHit(MotionManager impactSender, ImpactHit damageImpact)
-    {
-        return false;
-    }
-
-    public override bool IsBuffCanCatch(ImpactCatch damageImpact)
-    {
-        return false;
-    }
 }
