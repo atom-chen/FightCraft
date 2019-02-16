@@ -83,9 +83,9 @@ public class RandomAttrs
         return exAttrs;
     }
 
-    public static void LvUpEquipExAttr(ItemEquip itemEquip)
+    public static void RefreshEquipExAttr(ItemEquip itemEquip)
     {
-        GameDataValue.LvUpEquipAttr(itemEquip);
+        GameDataValue.RefreshEquipExAttr(itemEquip);
         itemEquip.BakeExAttr();
         itemEquip.CalculateSet();
 
@@ -121,9 +121,12 @@ public class RandomAttrs
         {
             var equipExAttr = new EquipExAttr();
             equipExAttr.AttrType = "RoleAttrImpactBaseAttr";
-            equipExAttr.Value = GameDataValue.GetExAttrRandomValue(exAttrTypes[i], equipValue);
+            var attrQuality = GameDataValue.GetExAttrRandomQuality();
+            equipExAttr.Value = GameDataValue.GetExAttrRandomValue(exAttrTypes[i], equipValue, attrQuality);
             equipExAttr.AttrParams.Add((int)exAttrTypes[i]);
             equipExAttr.AttrParams.Add(GameDataValue.GetValueAttr(exAttrTypes[i], equipExAttr.Value));
+            equipExAttr.AttrParams.Add(attrQuality);
+            equipExAttr.InitAttrQuality();
             exAttrs.Add(equipExAttr);
         }
 

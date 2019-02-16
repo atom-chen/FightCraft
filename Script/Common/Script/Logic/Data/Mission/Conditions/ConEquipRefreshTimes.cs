@@ -38,6 +38,6 @@ public class ConEquipRefreshTimes : MissionConditionBase
 
     public override void ConditionGoto()
     {
-        UIEquipRefresh.ShowAsyn();
+        UIGemPack.ShowAsyn();
     }
 }

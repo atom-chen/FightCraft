@@ -11,13 +11,15 @@ public class CommonDefine
         switch (quality)
         {
             case ITEM_QUALITY.WHITE:
-                return "<color=#ffffff>";
+                return "<color=#A5A5A5FF>";
+            case ITEM_QUALITY.GREEN:
+                return "<color=#10D200FF>";
             case ITEM_QUALITY.BLUE:
                 return "<color=#3ba0ff>";
             case ITEM_QUALITY.PURPER:
                 return "<color=#ca40e7>";
             case ITEM_QUALITY.ORIGIN:
-                return "<color=#ffe400>";
+                return "<color=#F0960EFF>";
         }
         return "<color=#ffffff>";
     }

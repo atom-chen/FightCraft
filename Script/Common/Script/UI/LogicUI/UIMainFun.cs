@@ -98,11 +98,6 @@ public class UIMainFun : UIBase
         UITestEquip.ShowAsyn();
     }
 
-    public void BtnResetEquip()
-    {
-        UIEquipRefresh.ShowAsyn();
-    }
-
     public void BtnSkill()
     {
         UISkillLevelUp.ShowAsyn();

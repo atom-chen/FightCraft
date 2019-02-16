@@ -217,6 +217,11 @@ public class GemData
         PackGemDatas.SaveClass(true);
     }
 
+    public void DecGem(ItemGem itemGem, int num = 1)
+    {
+
+    }
+
     #endregion
 
     #region combine

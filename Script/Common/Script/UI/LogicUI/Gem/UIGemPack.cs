@@ -52,6 +52,18 @@ public class UIGemPack : UIBase
 
     #endregion
 
+    public void OnTagSelect(int page)
+    {
+        if (page == 2)
+        {
+            _GemPackPanel.SetActive(false);
+        }
+        else
+        {
+            _GemPackPanel.SetActive(true);
+        }
+    }
+
     #region 
 
     public UIContainerBase _GemPack;
@@ -59,6 +71,7 @@ public class UIGemPack : UIBase
     public UITagPanel _TagPanel;
     public UIGemPackPunch _PunchPanel;
     public UIGemPackCombine _CombinePanel;
+    public GameObject _GemPackPanel;
 
     public override void Show(Hashtable hash)
     {

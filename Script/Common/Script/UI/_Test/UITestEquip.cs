@@ -182,7 +182,6 @@ public class UITestEquip : UIBase
             }
 
             //drop
-            int matCnt = BackBagPack.Instance.PageItems.GetItemCnt(EquipRefresh._RefreshMatDataID);
             int gemCnt = 0;
             monCnt += passStage._MonsterCnt;
             equipDropCnt += passStage._DropEquipCnt;

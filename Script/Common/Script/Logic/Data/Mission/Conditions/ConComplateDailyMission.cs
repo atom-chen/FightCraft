@@ -108,6 +108,6 @@ public class ConComplateDailyMission : MissionConditionBase
 
     public override void ConditionGoto()
     {
-        UIEquipRefresh.ShowAsyn();
+        UIGemPack.ShowAsyn();
     }
 }

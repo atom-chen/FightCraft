@@ -80,10 +80,17 @@ public class UIEquipRefreshAttrItem : UIItemBase
         //    valueStr = string.Format("({0})", _ShowAttr.Value);
         //}
         _AddValue.text = "";
-        _Value.text = _ShowAttr.Value.ToString();
+        var valueStr = StrDictionary.GetFormatStr(GameDataValue._ExAttrQualityStrDict[(int)_ShowAttr.AttrQuality]);
+        valueStr = CommonDefine.GetQualityColorStr(attr.AttrQuality) + valueStr + "</color>";
+        _Value.text = valueStr;
         if (_ItemEquip != null)
         {
-            attrStr = CommonDefine.GetQualityColorStr(attr.AttrQuality) + attrStr + "</color>";
+            var attrColor = attr.AttrQuality;
+            if (attrColor < ITEM_QUALITY.ORIGIN)
+            {
+                attrColor = ITEM_QUALITY.BLUE;
+            }
+            attrStr = CommonDefine.GetQualityColorStr(attrColor) + attrStr + "</color>";
         }
         _AttrText.text = attrStr;
         SetValueDelta();

@@ -6,37 +6,17 @@ public class ItemGem : ItemBase
 {
     public ItemGem(string dataID) : base(dataID)
     {
-        Level = 0;
+
     }
 
     public ItemGem() : base()
     {
-        Level = 0;
+
     }
 
     #region base attr
 
-    public const int _MaxGemLevel = 200;
-
-    public int Level
-    {
-        get
-        {
-            return ItemStackNum;
-        }
-        protected set
-        {
-            ItemStackNum = value;
-        }
-    }
-
-    public int LevelUp()
-    {
-        ++Level;
-        RefreshGemAttr();
-        SaveClass(true);
-        return Level;
-    }
+    public const int _MaxGemLevel = 5;
 
     private GemTableRecord _GemRecord;
     public GemTableRecord GemRecord
@@ -79,9 +59,7 @@ public class ItemGem : ItemBase
         {
             if (_GemAttr == null)
             {
-                int recordLv = Mathf.Clamp(Level, 0, _MaxGemLevel);
-                var levelRecord = TableReader.GemBaseAttr.GetRecord(recordLv.ToString());
-                _GemAttr = GameDataValue.GetGemAttr((RoleAttrEnum)GemRecord.AttrValue.AttrParams[0], levelRecord.Value);
+                RefreshGemAttr();
             }
             return _GemAttr;
         }
@@ -89,9 +67,7 @@ public class ItemGem : ItemBase
 
     public void RefreshGemAttr()
     {
-        int recordLv = Mathf.Clamp(Level, 0, _MaxGemLevel);
-        var levelRecord = TableReader.GemBaseAttr.GetRecord(recordLv.ToString());
-        _GemAttr = GameDataValue.GetGemAttr((RoleAttrEnum)GemRecord.AttrValue.AttrParams[0], levelRecord.Value);
+        _GemAttr = GameDataValue.GetGemAttr((RoleAttrEnum)GemRecord.AttrValue.AttrParams[0], GemRecord.AttrValue.AttrParams[1]);
     }
 
     #endregion

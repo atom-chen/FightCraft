@@ -55,9 +55,6 @@ public class LogicManager
         ShopData.Instance.LoadClass(true);
         ShopData.Instance.InitShop();
 
-        EquipRefresh.Instance.LoadClass(true);
-        EquipRefresh.Instance.InitEquipRefresh();
-
         SummonSkillData.Instance.LoadClass(true);
         SummonSkillData.Instance.InitSummonSkillData();
 

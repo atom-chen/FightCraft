@@ -59,13 +59,7 @@ public class MonsterDrop
             dropList.Add(dropItem);
         }
 
-        int dropMatCnt = GameDataValue.GetEquipMatDropCnt(monsterType, monsterRecord, level);
-        if (dropMatCnt > 0)
-        {
-            DropItemData dropItem = new DropItemData();
-            dropItem._ItemBase = new ItemBase(EquipRefresh._RefreshMatDataID, dropMatCnt);
-            dropList.Add(dropItem);
-        }
+        
 
         //var gemType = GameDataValue.GetGemMatDropItemID(monsterRecord);
         //var gemCnt = GameDataValue.GetGemMatDropCnt(monsterType, monsterRecord, level);

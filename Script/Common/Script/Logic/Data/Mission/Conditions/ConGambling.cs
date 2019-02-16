@@ -52,6 +52,6 @@ public class ConGambling : MissionConditionBase
 
     public override void ConditionGoto()
     {
-        UIEquipRefresh.ShowAsyn();
+        UIShopPack.ShowAsyn();
     }
 }

@@ -41,13 +41,19 @@ public class UIEquipAttrItem : UIItemBase
 
         string attrStr = _ShowAttr.GetAttrStr();
         string valueStr = "";
-        if (_ShowAttr.Value > 0)
+        //if (_ShowAttr.AttrQuality > 0)
         {
-            valueStr = string.Format("({0})", _ShowAttr.Value);
+            valueStr = string.Format("({0})", StrDictionary.GetFormatStr(GameDataValue._ExAttrQualityStrDict[(int)_ShowAttr.AttrQuality]));
+            valueStr = CommonDefine.GetQualityColorStr(attr.AttrQuality) + valueStr + "</color>";
         }
         if (_ItemEquip != null)
         {
-            attrStr = CommonDefine.GetQualityColorStr(attr.AttrQuality) + attrStr + valueStr + "</color>";
+            var attrColor = attr.AttrQuality;
+            if (attrColor < ITEM_QUALITY.ORIGIN)
+            {
+                attrColor = ITEM_QUALITY.BLUE;
+            }
+            attrStr = CommonDefine.GetQualityColorStr(attrColor) + attrStr + valueStr + "</color>";
         }
         _AttrText.text = attrStr;
     }

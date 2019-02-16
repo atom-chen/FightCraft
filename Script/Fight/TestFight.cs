@@ -322,15 +322,6 @@ public class TestFight : MonoBehaviour
                 }
             }
 
-            if (itemEquip.EquipLevel > GameDataValue._DropMatLevel)
-            {
-                if (itemEquip.EquipQuality != ITEM_QUALITY.WHITE)
-                {
-                    EquipRefresh.Instance.DestoryMatCnt(itemEquip, false);
-                    continue;
-                }
-            }
-
             if (itemEquip.EquipItemRecord.Slot == EQUIP_SLOT.WEAPON && itemEquip.RequireLevel > RoleData.SelectRole._RoleLevel)
             {
                 if (storeWeapon == null)
@@ -417,12 +408,6 @@ public class TestFight : MonoBehaviour
         if (weaponItem == null)
             return;
 
-        while (true)
-        {
-            bool isSucess = EquipRefresh.Instance.EquipRefreshMat(weaponItem, false);
-            if (!isSucess)
-                break;
-        }
     }
 
     public static void DelGem()

@@ -42,6 +42,6 @@ public class ConGemLvUp : MissionConditionBase
 
     public override void ConditionGoto()
     {
-        UIEquipRefresh.ShowAsyn();
+        UIGemPack.ShowAsyn();
     }
 }

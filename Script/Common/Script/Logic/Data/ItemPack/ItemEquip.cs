@@ -26,6 +26,23 @@ public class EquipExAttr
 
     public ITEM_QUALITY AttrQuality = ITEM_QUALITY.BLUE;
 
+    public void InitAttrQuality()
+    {
+        if (AttrType != "RoleAttrImpactBaseAttr")
+        {
+            AttrQuality = ITEM_QUALITY.ORIGIN;
+            return;
+        }
+        if (AttrParams.Count < 3)
+        {
+            AttrQuality = ITEM_QUALITY.WHITE;
+            return;
+        }
+
+        AttrQuality = (ITEM_QUALITY)AttrParams[2];
+    }
+
+
     public EquipExAttr()
     {
         AttrParams = new List<int>();
@@ -37,6 +54,8 @@ public class EquipExAttr
         AttrType = attrType;
         Value = value;
         AttrParams = new List<int>(attrValues);
+
+        InitAttrQuality();
     }
 
     public EquipExAttr(EquipExAttr copyInstance)
@@ -44,6 +63,8 @@ public class EquipExAttr
         AttrType = copyInstance.AttrType;
         Value = copyInstance.Value;
         AttrParams = copyInstance.AttrParams;
+
+        InitAttrQuality();
     }
 
     public string GetAttrStr(bool eqiupAttr = true)
@@ -269,6 +290,7 @@ public class ItemEquip : ItemBase
                     {
                         exAttr.AttrParams.Add(int.Parse(strParam._StrParams[i]));
                     }
+                    exAttr.InitAttrQuality();
                     _EquipExAttrs.Add(exAttr);
                 }
             }
@@ -796,7 +818,7 @@ public class ItemEquip : ItemBase
     #region equip sp attr
 
     public static string _DefauletSpSetID = "1";
-    public static int _ActSetLeastExCnt = 2;
+    public static int _ActSetLeastExCnt = 3;
     public static float _ActSetValPersent = 1.1f;
     public static int _MinLv = 25;
 
@@ -829,19 +851,14 @@ public class ItemEquip : ItemBase
         {
             if (exAttr.AttrType != "RoleAttrImpactBaseAttr")
             {
-                exAttr.AttrQuality = ITEM_QUALITY.ORIGIN;
+                ++valAttrCnt;
                 continue;
             }
 
-            var valuePersent = GameDataValue.GetExAttrPersent(this, exAttr);
-            if (valuePersent > _ActSetValPersent)
+
+            if (exAttr.AttrQuality == ITEM_QUALITY.ORIGIN)
             {
-                exAttr.AttrQuality = ITEM_QUALITY.PURPER;
                 ++valAttrCnt;
-            }
-            else
-            {
-                exAttr.AttrQuality = ITEM_QUALITY.BLUE;
             }
 
             if ((exAttr.AttrParams[0] != (int)RoleAttrEnum.AttackPersent

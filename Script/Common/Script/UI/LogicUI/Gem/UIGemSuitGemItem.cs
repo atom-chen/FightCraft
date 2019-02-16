@@ -46,14 +46,14 @@ public class UIGemSuitGemItem : UIPackItemBase
         if (_Num != null)
         {
             {
-                _Num.text = gemData.Level.ToString();
+                _Num.text = "";
             }
         }
         _Icon.gameObject.SetActive(true);
 
         if (_DisableGO != null)
         {
-            if (gemData.Level >= _MinGemLv)
+            if (gemData.GemRecord.Level >= _MinGemLv)
             {
                 _DisableGO.SetActive(false);
             }
@@ -65,7 +65,7 @@ public class UIGemSuitGemItem : UIPackItemBase
 
         if (!_ClearGem)
         {
-            if (gemData.Level >= _MinGemLv)
+            if (gemData.GemRecord.Level >= _MinGemLv)
             {
                 _UnClearItem.SetActive(false);
             }

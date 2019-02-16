@@ -39,6 +39,6 @@ public class ConWatchMovie : MissionConditionBase
 
     public override void ConditionGoto()
     {
-        UIEquipRefresh.ShowAsyn();
+        UIGemPack.ShowAsyn();
     }
 }

@@ -30,7 +30,7 @@ public class UIEquipSetInfo : UIBase
         if (setAttrInfo == null)
             return;
 
-        _Name.text = CommonDefine.GetQualityColorStr(ITEM_QUALITY.ORIGIN) + StrDictionary.GetFormatStr(itemEquip.SpSetRecord.Name) + "</color>";
+        _Name.text = CommonDefine.GetQualityColorStr(ITEM_QUALITY.GREEN) + StrDictionary.GetFormatStr(itemEquip.SpSetRecord.Name) + "</color>";
 
         var attrs = EquipSet.Instance.GetEquipAttr(itemEquip.SpSetRecord);
         List<EquipSetAttrItem> setAttrs = new List<EquipSetAttrItem>();

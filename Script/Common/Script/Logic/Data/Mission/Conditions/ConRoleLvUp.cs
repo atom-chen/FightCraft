@@ -41,6 +41,6 @@ public class ConRoleLvUp : MissionConditionBase
 
     public override void ConditionGoto()
     {
-        UIEquipRefresh.ShowAsyn();
+        UIStageSelect.ShowAsyn();
     }
 }
