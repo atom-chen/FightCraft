@@ -21,7 +21,7 @@ namespace Tables
         public List<AttrValueRecord> BaseAttrs { get; set; }
         public int LevelLimit { get; set; }
         public int ProfessionLimit { get; set; }
-        public AttrValueRecord ExAttr { get; set; }
+        public List<AttrValueRecord> ExAttr { get; set; }
         public EquipItemRecord(DataRecord dataRecord)
         {
             if (dataRecord != null)
@@ -31,6 +31,7 @@ namespace Tables
 
             }
             BaseAttrs = new List<AttrValueRecord>();
+            ExAttr = new List<AttrValueRecord>();
         }
         public override string[] GetRecordStr()
         {
@@ -55,13 +56,16 @@ namespace Tables
             }
             recordStrList.Add(TableWriteBase.GetWriteStr(LevelLimit));
             recordStrList.Add(TableWriteBase.GetWriteStr(ProfessionLimit));
-            if (ExAttr != null)
+            foreach (var testTableItem in ExAttr)
             {
-                recordStrList.Add(ExAttr.Id);
-            }
-            else
-            {
-                recordStrList.Add("");
+                if (testTableItem != null)
+                {
+                    recordStrList.Add(testTableItem.Id);
+                }
+                else
+                {
+                    recordStrList.Add("");
+                }
             }
 
             return recordStrList.ToArray();
@@ -152,11 +156,43 @@ namespace Tables
                 pair.Value.ProfessionLimit = TableReadBase.ParseInt(pair.Value.ValueStr[10]);
                 if (!string.IsNullOrEmpty(pair.Value.ValueStr[11]))
                 {
-                    pair.Value.ExAttr =  TableReader.AttrValue.GetRecord(pair.Value.ValueStr[11]);
+                    pair.Value.ExAttr.Add( TableReader.AttrValue.GetRecord(pair.Value.ValueStr[11]));
                 }
                 else
                 {
-                    pair.Value.ExAttr = null;
+                    pair.Value.ExAttr.Add(null);
+                }
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[12]))
+                {
+                    pair.Value.ExAttr.Add( TableReader.AttrValue.GetRecord(pair.Value.ValueStr[12]));
+                }
+                else
+                {
+                    pair.Value.ExAttr.Add(null);
+                }
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[13]))
+                {
+                    pair.Value.ExAttr.Add( TableReader.AttrValue.GetRecord(pair.Value.ValueStr[13]));
+                }
+                else
+                {
+                    pair.Value.ExAttr.Add(null);
+                }
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[14]))
+                {
+                    pair.Value.ExAttr.Add( TableReader.AttrValue.GetRecord(pair.Value.ValueStr[14]));
+                }
+                else
+                {
+                    pair.Value.ExAttr.Add(null);
+                }
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[15]))
+                {
+                    pair.Value.ExAttr.Add( TableReader.AttrValue.GetRecord(pair.Value.ValueStr[15]));
+                }
+                else
+                {
+                    pair.Value.ExAttr.Add(null);
                 }
             }
         }

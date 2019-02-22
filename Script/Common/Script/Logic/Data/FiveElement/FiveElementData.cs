@@ -34,6 +34,8 @@ public class FiveElementData : SaveItemBase
 
         needSave |= InitPackElements();
         needSave |= InitUsingElements();
+        needSave |= InitPackCore();
+        needSave |= InitUsingCore();
         CalculateAttrs();
 
         if (needSave)
@@ -44,23 +46,25 @@ public class FiveElementData : SaveItemBase
 
     #region element 
 
-    public const int _ITEM_PACKET_CNT = 50;
+    public const int _ITEM_PACKET_CNT = 200;
     
     [SaveField(1)]
     public List<ItemFiveElement> _UsingElements;
 
     [SaveField(2)]
-    public List<ItemFiveElement> _PackElements;
+    public ItemPackBase<ItemFiveElement> _PackElements;
 
     private bool InitPackElements()
     {
-        if (_PackElements == null || _PackElements.Count == 0)
+        _PackElements = new ItemPackBase<ItemFiveElement>();
+        _PackElements._SaveFileName = "PackFiveElements";
+        _PackElements._PackSize = _ITEM_PACKET_CNT;
+        _PackElements.LoadClass(true);
+
+        if (_PackElements._PackItems == null)
         {
-            _PackElements = new List<ItemFiveElement>();
-            for (int i = 0; i < _ITEM_PACKET_CNT; ++i)
-            {
-                _PackElements.Add(new ItemFiveElement());
-            }
+            _PackElements._PackItems = new List<ItemFiveElement>();
+            _PackElements.SaveClass(true);
             return true;
         }
 
@@ -72,11 +76,11 @@ public class FiveElementData : SaveItemBase
         if (_UsingElements == null || _UsingElements.Count == 0)
         {
             _UsingElements = new List<ItemFiveElement>();
-            _UsingElements.Add(new ItemFiveElement("1120001"));
-            _UsingElements.Add(new ItemFiveElement("1120002"));
-            _UsingElements.Add(new ItemFiveElement("1120003"));
-            _UsingElements.Add(new ItemFiveElement("1120004"));
-            _UsingElements.Add(new ItemFiveElement("1120005"));
+            _UsingElements.Add(new ItemFiveElement("1100001"));
+            _UsingElements.Add(new ItemFiveElement("1100002"));
+            _UsingElements.Add(new ItemFiveElement("1100003"));
+            _UsingElements.Add(new ItemFiveElement("1100004"));
+            _UsingElements.Add(new ItemFiveElement("1100005"));
             return true;
         }
 
@@ -85,19 +89,12 @@ public class FiveElementData : SaveItemBase
 
     public void AddElementItem(ItemFiveElement elementItem)
     {
-        ItemFiveElement emptySlot = FindEmptySlot();
-        if (emptySlot == null)
-        {
-            UIMessageTip.ShowMessageTip(10002);
-            return;
-        }
-
-        emptySlot.ExchangeInfo(elementItem);
+        _PackElements.AddItem(elementItem);
     }
 
     public void SortPack()
     {
-        _PackElements.Sort((itemA, itemB) =>
+        _PackElements._PackItems.Sort((itemA, itemB) =>
         {
             if (itemA.IsVolid() && !itemB.IsVolid())
                 return -1;
@@ -106,6 +103,58 @@ public class FiveElementData : SaveItemBase
             else
                 return 0;
         });
+    }
+
+    #endregion
+
+    #region element core
+
+    public const int _ELEMENT_CORE_PACKET_CNT = 50;
+
+    [SaveField(3)]
+    public List<ItemFiveElementCore> _UsingCores;
+
+    [SaveField(4)]
+    public ItemPackBase<ItemFiveElementCore> _PackCores;
+
+    private bool InitPackCore()
+    {
+        _PackCores = new ItemPackBase<ItemFiveElementCore>();
+        _PackCores._SaveFileName = "PackFiveElementCores";
+        _PackCores._PackSize = _ITEM_PACKET_CNT;
+        _PackCores.LoadClass(true);
+
+        if (_PackCores._PackItems == null)
+        {
+            _PackCores._PackItems = new List<ItemFiveElementCore>();
+            _PackCores.SaveClass(true);
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool InitUsingCore()
+    {
+        if (_UsingCores == null || _UsingCores.Count == 0)
+        {
+            _UsingCores = new List<ItemFiveElementCore>();
+            _UsingCores.Add(new ItemFiveElementCore());
+            _UsingCores.Add(new ItemFiveElementCore());
+            _UsingCores.Add(new ItemFiveElementCore());
+            _UsingCores.Add(new ItemFiveElementCore());
+            _UsingCores.Add(new ItemFiveElementCore());
+            return true;
+        }
+
+        return false;
+    }
+
+    public void CreateCoreItem(string coreID)
+    {
+        var coreItem = new ItemFiveElementCore(coreID);
+        //TODO: add attr
+        _PackCores.AddItem(coreItem);
     }
 
     #endregion
@@ -199,34 +248,19 @@ public class FiveElementData : SaveItemBase
 
     #region opt
 
-    public ItemFiveElement FindEmptySlot()
-    {
-        ItemFiveElement emptySlot = null;
-        for (int i = 0; i < _PackElements.Count; ++i)
-        {
-            if (!_PackElements[i].IsVolid())
-            {
-                emptySlot = _PackElements[i];
-                break;
-            }
-        }
-
-        return emptySlot;
-    }
-
-    public void PutOnElement(ItemFiveElement itemElement)
+    public void PutOnElementCore(ItemFiveElementCore itemElement)
     {
         if (!itemElement.IsVolid())
             return;
 
-        _UsingElements[(int)itemElement.FiveElementRecord.EvelemtType].ExchangeInfo(itemElement);
+        _UsingCores[(int)itemElement.FiveElementRecord.ElementType].ExchangeInfo(itemElement);
 
         RoleData.SelectRole.CalculateAttr();
     }
 
-    public void PutOffElement(ItemFiveElement itemElement)
+    public void PutOffElementCore(ItemFiveElementCore itemElement)
     {
-        ItemFiveElement emptySlot = FindEmptySlot();
+        ItemFiveElementCore emptySlot = (ItemFiveElementCore)_PackCores.GetEmptyPos();
         if (emptySlot == null)
         {
             UIMessageTip.ShowMessageTip(10002);
@@ -244,22 +278,41 @@ public class FiveElementData : SaveItemBase
         if (usingElement == null || !usingElement.IsVolid())
             return false;
 
-        float extraRate = GetAddExAttrRate(usingElement.EquipExAttrs.Count);
-
-        float extraRandom = UnityEngine.Random.Range(0, 1.0f);
-        if (extraRandom < extraRate)
+        int sameIdx = -1;
+        for (int i = 0; i < usingElement.EquipExAttrs.Count; ++i)
         {
-            usingElement.AddExAttr(itemElement.EquipExAttrs[0]);
+            if (usingElement.EquipExAttrs[i].AttrParams[0] == itemElement.EquipExAttrs[0].AttrParams[0])
+            {
+                sameIdx = i;
+            }
+        }
+        //replace same attr
+        if (sameIdx >= 0)
+        {
+            usingElement.ReplaceAttr(sameIdx, itemElement.EquipExAttrs[0]);
         }
         else
         {
-            List<int> randomIdxs = new List<int>();
-            for (int i = 0; i < usingElement.EquipExAttrs.Count; ++i)
+            float extraRate = GetAddExAttrRate(usingElement.EquipExAttrs.Count);
+            float extraRandom = UnityEngine.Random.Range(0, 1.0f);
+            if (extraRandom < extraRate)
             {
-                randomIdxs.Add(100);
+                usingElement.AddExAttr(itemElement.EquipExAttrs[0]);
             }
-            int replaceIdx = GameRandom.GetRandomLevel(randomIdxs);
-            usingElement.ReplaceAttr(replaceIdx, itemElement.EquipExAttrs[0]);
+            else
+            {
+                List<int> randomIdxs = new List<int>();
+                for (int i = 0; i < usingElement.EquipExAttrs.Count; ++i)
+                {
+                    randomIdxs.Add(100);
+                }
+                int replaceIdx = GameRandom.GetRandomLevel(randomIdxs);
+                if (sameIdx >= 0 && replaceIdx >= sameIdx)
+                {
+                    ++replaceIdx;
+                }
+                usingElement.ReplaceAttr(replaceIdx, itemElement.EquipExAttrs[0]);
+            }
         }
         itemElement.ResetItem();
 
@@ -293,6 +346,10 @@ public class FiveElementData : SaveItemBase
         {
             extraRate = 0.05f;
         }
+        else if (idx == 5)
+        {
+            extraRate = 0.03f;
+        }
 
         return extraRate;
     }
@@ -315,5 +372,7 @@ public class FiveElementData : SaveItemBase
     }
 
     #endregion
+
+    
 
 }

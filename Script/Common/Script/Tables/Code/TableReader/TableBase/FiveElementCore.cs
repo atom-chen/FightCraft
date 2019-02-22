@@ -14,6 +14,8 @@ namespace Tables
 
         public override string Id { get; set; }        public string Name { get; set; }
         public string Desc { get; set; }
+        public FIVE_ELEMENT ElementType { get; set; }
+        public ITEM_QUALITY Quality { get; set; }
         public List<int> PosAttrLimit { get; set; }
         public List<int> PosCondition { get; set; }
         public List<FiveElementCoreAttrRecord> CoreAttr { get; set; }
@@ -35,6 +37,8 @@ namespace Tables
             recordStrList.Add(TableWriteBase.GetWriteStr(Id));
             recordStrList.Add(TableWriteBase.GetWriteStr(Name));
             recordStrList.Add(TableWriteBase.GetWriteStr(Desc));
+            recordStrList.Add(((int)ElementType).ToString());
+            recordStrList.Add(((int)Quality).ToString());
             foreach (var testTableItem in PosAttrLimit)
             {
                 recordStrList.Add(TableWriteBase.GetWriteStr(testTableItem));
@@ -119,41 +123,20 @@ namespace Tables
             {
                 pair.Value.Name = TableReadBase.ParseString(pair.Value.ValueStr[1]);
                 pair.Value.Desc = TableReadBase.ParseString(pair.Value.ValueStr[2]);
-                pair.Value.PosAttrLimit.Add(TableReadBase.ParseInt(pair.Value.ValueStr[3]));
-                pair.Value.PosAttrLimit.Add(TableReadBase.ParseInt(pair.Value.ValueStr[4]));
+                pair.Value.ElementType =  (FIVE_ELEMENT)TableReadBase.ParseInt(pair.Value.ValueStr[3]);
+                pair.Value.Quality =  (ITEM_QUALITY)TableReadBase.ParseInt(pair.Value.ValueStr[4]);
                 pair.Value.PosAttrLimit.Add(TableReadBase.ParseInt(pair.Value.ValueStr[5]));
                 pair.Value.PosAttrLimit.Add(TableReadBase.ParseInt(pair.Value.ValueStr[6]));
                 pair.Value.PosAttrLimit.Add(TableReadBase.ParseInt(pair.Value.ValueStr[7]));
-                pair.Value.PosCondition.Add(TableReadBase.ParseInt(pair.Value.ValueStr[8]));
-                pair.Value.PosCondition.Add(TableReadBase.ParseInt(pair.Value.ValueStr[9]));
-                pair.Value.PosCondition.Add(TableReadBase.ParseInt(pair.Value.ValueStr[10]));
+                pair.Value.PosAttrLimit.Add(TableReadBase.ParseInt(pair.Value.ValueStr[8]));
+                pair.Value.PosAttrLimit.Add(TableReadBase.ParseInt(pair.Value.ValueStr[9]));
+                pair.Value.PosAttrLimit.Add(TableReadBase.ParseInt(pair.Value.ValueStr[10]));
                 pair.Value.PosCondition.Add(TableReadBase.ParseInt(pair.Value.ValueStr[11]));
                 pair.Value.PosCondition.Add(TableReadBase.ParseInt(pair.Value.ValueStr[12]));
                 pair.Value.PosCondition.Add(TableReadBase.ParseInt(pair.Value.ValueStr[13]));
-                if (!string.IsNullOrEmpty(pair.Value.ValueStr[14]))
-                {
-                    pair.Value.CoreAttr.Add( TableReader.FiveElementCoreAttr.GetRecord(pair.Value.ValueStr[14]));
-                }
-                else
-                {
-                    pair.Value.CoreAttr.Add(null);
-                }
-                if (!string.IsNullOrEmpty(pair.Value.ValueStr[15]))
-                {
-                    pair.Value.CoreAttr.Add( TableReader.FiveElementCoreAttr.GetRecord(pair.Value.ValueStr[15]));
-                }
-                else
-                {
-                    pair.Value.CoreAttr.Add(null);
-                }
-                if (!string.IsNullOrEmpty(pair.Value.ValueStr[16]))
-                {
-                    pair.Value.CoreAttr.Add( TableReader.FiveElementCoreAttr.GetRecord(pair.Value.ValueStr[16]));
-                }
-                else
-                {
-                    pair.Value.CoreAttr.Add(null);
-                }
+                pair.Value.PosCondition.Add(TableReadBase.ParseInt(pair.Value.ValueStr[14]));
+                pair.Value.PosCondition.Add(TableReadBase.ParseInt(pair.Value.ValueStr[15]));
+                pair.Value.PosCondition.Add(TableReadBase.ParseInt(pair.Value.ValueStr[16]));
                 if (!string.IsNullOrEmpty(pair.Value.ValueStr[17]))
                 {
                     pair.Value.CoreAttr.Add( TableReader.FiveElementCoreAttr.GetRecord(pair.Value.ValueStr[17]));
@@ -165,6 +148,30 @@ namespace Tables
                 if (!string.IsNullOrEmpty(pair.Value.ValueStr[18]))
                 {
                     pair.Value.CoreAttr.Add( TableReader.FiveElementCoreAttr.GetRecord(pair.Value.ValueStr[18]));
+                }
+                else
+                {
+                    pair.Value.CoreAttr.Add(null);
+                }
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[19]))
+                {
+                    pair.Value.CoreAttr.Add( TableReader.FiveElementCoreAttr.GetRecord(pair.Value.ValueStr[19]));
+                }
+                else
+                {
+                    pair.Value.CoreAttr.Add(null);
+                }
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[20]))
+                {
+                    pair.Value.CoreAttr.Add( TableReader.FiveElementCoreAttr.GetRecord(pair.Value.ValueStr[20]));
+                }
+                else
+                {
+                    pair.Value.CoreAttr.Add(null);
+                }
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[21]))
+                {
+                    pair.Value.CoreAttr.Add( TableReader.FiveElementCoreAttr.GetRecord(pair.Value.ValueStr[21]));
                 }
                 else
                 {

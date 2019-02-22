@@ -434,15 +434,24 @@ public class UITestEquip : UIBase
 
     #region element test
 
+    public InputField _FiveElementCoreID;
     public InputField _FiveElementItemLevel;
     public InputField _FiveElementItemType;
 
     public void OnBtnElementItem()
     {
-        int level = int.Parse(_FiveElementItemLevel.text);
-        int type = int.Parse(_FiveElementItemType.text);
-        var elementItem = FiveElementData.CreateElementItem(level, (FIVE_ELEMENT)type);
-        FiveElementData.Instance.AddElementItem(elementItem);
+        if (!string.IsNullOrEmpty(_FiveElementCoreID.text))
+        {
+            string coreID = _FiveElementCoreID.text;
+            FiveElementData.Instance.CreateCoreItem(coreID);
+        }
+        else
+        {
+            int level = int.Parse(_FiveElementItemLevel.text);
+            int type = int.Parse(_FiveElementItemType.text);
+            var elementItem = FiveElementData.CreateElementItem(level, (FIVE_ELEMENT)type);
+            FiveElementData.Instance.AddElementItem(elementItem);
+        }
     }
 
     #endregion

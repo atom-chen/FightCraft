@@ -1450,20 +1450,37 @@ public class GameDataValue
 
     #region five element
 
+    public static List<EquipExAttrRandom> _FiveElementAttrs = new List<EquipExAttrRandom>()
+    {
+        new EquipExAttrRandom(RoleAttrEnum.Strength, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Dexterity, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Intelligence, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Vitality, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.HPMax, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Attack, false, 1, -1, 50),
+        new EquipExAttrRandom(RoleAttrEnum.FireAttackAdd, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.ColdAttackAdd, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.LightingAttackAdd, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.WindAttackAdd, true, 1, -1, 100),
+        
+    };
+
     public static EquipExAttr GetFiveElementExAttr(int level, FIVE_ELEMENT eleType)
     {
         int attrValue = TableReader.FiveElementLevel.GetElementLevel(level).Value;
-        List<FiveElementAttrRecord> elementAttrRecord = new List<FiveElementAttrRecord>();
-        foreach (var record in TableReader.FiveElementAttr.Records)
-        {
-            if (record.Value.ElementType == eleType && record.Value.LevelLimit <= level)
-            {
-                elementAttrRecord.Add(record.Value);
 
-            }
-        }
-        var randomAttr = GetFiveElementRandomAttr(elementAttrRecord);
-        return randomAttr.Attr.GetExAttr(attrValue);
+        var randomAttrType = CalRandomAttrs(_FiveElementAttrs, 1);
+        var equipExAttr = new EquipExAttr();
+        equipExAttr.AttrType = "RoleAttrImpactBaseAttr";
+        var attrQuality = GameDataValue.GetExAttrRandomQuality();
+        equipExAttr.Value = GameDataValue.GetExAttrRandomValue(randomAttrType[0], attrValue, attrQuality);
+        equipExAttr.AttrParams.Add((int)randomAttrType[0]);
+        equipExAttr.AttrParams.Add(GameDataValue.GetValueAttr(randomAttrType[0], equipExAttr.Value));
+        equipExAttr.AttrParams.Add(attrQuality);
+        equipExAttr.InitAttrQuality();
+
+        return equipExAttr;
+
     }
 
     public static FiveElementAttrRecord GetFiveElementRandomAttr(List<FiveElementAttrRecord> staticList)

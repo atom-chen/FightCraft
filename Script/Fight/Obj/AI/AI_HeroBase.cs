@@ -30,6 +30,7 @@ public class AI_HeroBase : AI_Base
 
     protected override bool StartSkill()
     {
+        return false;
 
         if (Time.time - _AfterSkillTime < _AfterSkillWait)
             return false;

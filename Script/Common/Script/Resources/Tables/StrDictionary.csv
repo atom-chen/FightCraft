@@ -592,3 +592,5 @@
 1330003,FiveElement,ValueAttr,AttrDesc3,,
 1330004,FiveElement,ValueAttr,AttrDesc4,,
 1330005,FiveElement,ValueAttr,AttrDesc5,,
+1350001,FiveElement,OtherDesc,Enable {1} attribute on location {0},,
+1350002,FiveElement,OtherDesc,any,,

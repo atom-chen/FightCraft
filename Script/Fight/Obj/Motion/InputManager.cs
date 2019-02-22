@@ -205,12 +205,12 @@ public class InputManager : InstanceBase<InputManager>
                     return;
                 }
 
-                if (!string.IsNullOrEmpty(_BuffSkillInput) && _InputMotion._StateSkill._SkillMotions[_BuffSkillInput].IsCanActSkill())
-                {
-                    SetRotate();
-                    _InputMotion.ActSkill(_InputMotion._StateSkill._SkillMotions[_BuffSkillInput]);
-                    _BuffSkillInput = null;
-                }
+                //if (!string.IsNullOrEmpty(_BuffSkillInput) && _InputMotion._StateSkill._SkillMotions[_BuffSkillInput].IsCanActSkill())
+                //{
+                //    SetRotate();
+                //    _InputMotion.ActSkill(_InputMotion._StateSkill._SkillMotions[_BuffSkillInput]);
+                //    _BuffSkillInput = null;
+                //}
 
                 string inputKey = "k";
                 if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey) && _InputMotion._StateSkill._SkillMotions[inputKey].IsCanActSkill())

@@ -711,7 +711,8 @@ public class ItemEquip : ItemBase
         itemEquip.AddExAttr(RandomAttrs.GetRandomEquipExAttrs(baseEquip.Slot, level, value, equipQuality, RoleData.SelectRole.Profession, legencyEquip));
         if (legencyEquip != null)
         {
-            EquipExAttr legencyAttr = legencyEquip.ExAttr.GetExAttr(GameDataValue.GetLegencyLv( itemEquip.EquipLevel));
+            var exLevel = GameDataValue.GetLegencyLv(itemEquip.EquipLevel);
+            EquipExAttr legencyAttr = legencyEquip.ExAttr[exLevel - 1].GetExAttr(1);
             itemEquip.AddExAttr(legencyAttr);
         }
 

@@ -1,5 +1,6 @@
 """ID""","""??""","""??""","""Difficult""","""Level""","""FightLogic1""","""FightLogic2""","""FightLogic3""","""FightLogic4""","""FightLogic5""","""BossID"""
-1,,,0,1,FightLogic_Boss_Normal_Fish_FF,FightLogic_Boss_Normal_Fish_FB,FightLogic_Boss_Normal_Fish_FM,FightLogic_Boss_Normal_Fish_FM,FightLogic_Boss_Single,101
+#1,,,0,1,FightLogic_Boss_Normal_Fish_FF,FightLogic_Boss_Normal_Fish_FB,FightLogic_Boss_Normal_Fish_FM,FightLogic_Boss_Normal_Fish_FM,FightLogic_Boss_Single,101
+1,,,0,1,FightLogic_Boss_Single,FightLogic_Boss_Single,FightLogic_Boss_Single,FightLogic_Boss_Single,FightLogic_Boss_Single,101
 2,,,0,1,FightLogic_Boss_Normal_Fish_FF,FightLogic_Boss_Normal_Fish_FB,FightLogic_Boss_Normal_Fish_FM,FightLogic_Boss_Normal_Fish_FM,FightLogic_Boss_Single,102
 3,,,0,1,FightLogic_Boss_Normal_Fish_FF,FightLogic_Boss_Normal_Fish_FB,FightLogic_Boss_Normal_Fish_FM,FightLogic_Boss_Normal_Fish_FM,FightLogic_Boss_Single,103
 4,,,0,1,FightLogic_Boss_Normal_Fish_FF,FightLogic_Boss_Normal_Fish_FB,FightLogic_Boss_Normal_Fish_FM,FightLogic_Boss_Normal_Fish_FM,FightLogic_Boss_Single,104

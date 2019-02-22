@@ -67,6 +67,11 @@ public class MissionItem : SaveItemBase
     public void InitMissionItem()
     {
         var conditionType = Type.GetType(MissionRecord.ConditionScript);
+        if (conditionType == null)
+        {
+            Debug.LogError("MissionRecord.ConditionScript type error:" + MissionRecord.ConditionScript);
+            return;
+        }
         _MissionCondition = Activator.CreateInstance(conditionType) as MissionConditionBase;
         _MissionCondition.InitCondition(this, MissionRecord);
     }

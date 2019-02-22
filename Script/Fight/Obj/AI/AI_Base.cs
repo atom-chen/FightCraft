@@ -574,7 +574,7 @@ public class AI_Base : MonoBehaviour
 
     protected Dictionary<string, HitSkillInfo> _HitDict = new Dictionary<string, HitSkillInfo>();
     protected const int _ReleaseSkillTimes = 2;
-    protected const int _ReleaseBuffTimes = 3;
+    protected const int _ReleaseBuffTimes = 2;
     protected ObjMotionSkillBase _HittingSkill;
 
     private void OnHitProtect(ImpactHit impactHit)
@@ -630,9 +630,12 @@ public class AI_Base : MonoBehaviour
             ++_HitDict[impactHit.SkillMotion._ActInput].HitTimes;
             if (impactHit.SkillMotion is ObjMotionSkillBuff)
             {
-                if (_HitDict[impactHit.SkillMotion._ActInput].HitTimes > _ReleaseBuffTimes)
+                if (impactHit.SkillMotion._ActInput == "5")
                 {
-                    ReleaseHit();
+                    if (_HitDict[impactHit.SkillMotion._ActInput].HitTimes > _ReleaseBuffTimes)
+                    {
+                        ReleaseHit();
+                    }
                 }
             }
             else

@@ -45,6 +45,10 @@ namespace Tables
 //
         public static FiveElementAttr FiveElementAttr { get; internal set; }
 //
+        public static FiveElementCore FiveElementCore { get; internal set; }
+//
+        public static FiveElementCoreAttr FiveElementCoreAttr { get; internal set; }
+//
         public static FiveElementLevel FiveElementLevel { get; internal set; }
 //
         public static FiveElementValueAttr FiveElementValueAttr { get; internal set; }
@@ -80,10 +84,6 @@ namespace Tables
         public static SummonSkillAttr SummonSkillAttr { get; internal set; }
 //
         public static SummonSkillLottery SummonSkillLottery { get; internal set; }
-//
-        public static FiveElementCore FiveElementCore { get; internal set; }
-//
-        public static FiveElementCoreAttr FiveElementCoreAttr { get; internal set; }
 
         public static void ReadTables()
         {
@@ -98,6 +98,8 @@ namespace Tables
             FightAttr = new FightAttr(TableReadBase.GetTableText("FightAttr"), false);
             FiveElement = new FiveElement(TableReadBase.GetTableText("FiveElement"), false);
             FiveElementAttr = new FiveElementAttr(TableReadBase.GetTableText("FiveElementAttr"), false);
+            FiveElementCore = new FiveElementCore(TableReadBase.GetTableText("FiveElementCore"), false);
+            FiveElementCoreAttr = new FiveElementCoreAttr(TableReadBase.GetTableText("FiveElementCoreAttr"), false);
             FiveElementLevel = new FiveElementLevel(TableReadBase.GetTableText("FiveElementLevel"), false);
             FiveElementValueAttr = new FiveElementValueAttr(TableReadBase.GetTableText("FiveElementValueAttr"), false);
             GemBaseAttr = new GemBaseAttr(TableReadBase.GetTableText("GemBaseAttr"), false);
@@ -116,8 +118,6 @@ namespace Tables
             SummonSkill = new SummonSkill(TableReadBase.GetTableText("SummonSkill"), false);
             SummonSkillAttr = new SummonSkillAttr(TableReadBase.GetTableText("SummonSkillAttr"), false);
             SummonSkillLottery = new SummonSkillLottery(TableReadBase.GetTableText("SummonSkillLottery"), false);
-            FiveElementCore = new FiveElementCore(TableReadBase.GetTableText("FiveElementCore"), false);
-            FiveElementCoreAttr = new FiveElementCoreAttr(TableReadBase.GetTableText("FiveElementCoreAttr"), false);
 
             //初始化所有表
             Achievement.CoverTableContent();
@@ -130,6 +130,8 @@ namespace Tables
             FightAttr.CoverTableContent();
             FiveElement.CoverTableContent();
             FiveElementAttr.CoverTableContent();
+            FiveElementCore.CoverTableContent();
+            FiveElementCoreAttr.CoverTableContent();
             FiveElementLevel.CoverTableContent();
             FiveElementValueAttr.CoverTableContent();
             GemBaseAttr.CoverTableContent();
@@ -148,8 +150,6 @@ namespace Tables
             SummonSkill.CoverTableContent();
             SummonSkillAttr.CoverTableContent();
             SummonSkillLottery.CoverTableContent();
-            FiveElementCore.CoverTableContent();
-            FiveElementCoreAttr.CoverTableContent();
         }
 
         #endregion

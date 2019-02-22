@@ -81,7 +81,7 @@ namespace Tables
 
             foreach (var record in Records.Values)
             {
-                if (record.ExAttr != null)
+                if (record.ExAttr[0] != null)
                     continue;
 
                 if (!_ClassedEquips.ContainsKey(record.Slot))

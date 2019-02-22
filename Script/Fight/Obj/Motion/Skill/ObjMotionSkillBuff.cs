@@ -5,24 +5,24 @@ using System.Collections.Generic;
 public class ObjMotionSkillBuff : ObjMotionSkillBase
 {
 
-    //void Update()
-    //{
-    //    if (_CanNextInput && _IsCanActAfterBuff)
-    //    {
-    //        if (InputManager.Instance.IsKeyHold("k") || InputManager.Instance.IsKeyHold(_ActSkillInput))
-    //        {
-    //            _SkillProcess = 1.1f;
-    //            InputManager.Instance.SetRotate();
-    //            MotionManager.FinishSkill(this);
-    //            MotionManager.ActSkill(MotionManager._StateSkill._SkillMotions[_ActSkillInput]);
-    //        }
-    //    }
+    void Update()
+    {
+        if (_CanNextInput && _IsCanActAfterBuff)
+        {
+            if (InputManager.Instance.IsKeyHold("k") || InputManager.Instance.IsKeyHold(_ActSkillInput))
+            {
+                _SkillProcess = 1.1f;
+                InputManager.Instance.SetRotate();
+                MotionManager.FinishSkill(this);
+                MotionManager.ActSkill(MotionManager._StateSkill._SkillMotions[_ActSkillInput]);
+            }
+        }
 
-    //    _SkillProcess += Time.deltaTime;
-    //    MotionManager.SkillProcessing = _SkillProcess / GetTotalAnimLength();
-    //}
+        _SkillProcess += Time.deltaTime;
+        MotionManager.SkillProcessing = _SkillProcess / GetTotalAnimLength();
+    }
 
-    private bool _IsCanActAfterBuff = true;
+    private bool _IsCanActAfterBuff = false;
     public bool IsCanActAfterBuff
     {
         get
