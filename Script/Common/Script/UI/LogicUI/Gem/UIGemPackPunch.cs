@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -7,7 +8,9 @@ public class UIGemPackPunch : UIBase, IDragablePack
 {
 
     #region 
+
     public UIGemItem[] _GemPack;
+    public Text _ActingSuit;
 
     private int _SelectGemSlot = -1;
 
@@ -35,6 +38,15 @@ public class UIGemPackPunch : UIBase, IDragablePack
             _GemPack[i]._ClickEvent += ShowGemTooltipsLeft;
         }
         //_BackPack.Show(null);
+
+        if (GemSuit.Instance.ActSet != null)
+        {
+            _ActingSuit.text = Tables.StrDictionary.GetFormatStr(GemSuit.Instance.ActSet.Name);
+        }
+        else
+        {
+            _ActingSuit.text = "";
+        }
     }
 
     public void RefreshItems()
@@ -47,6 +59,15 @@ public class UIGemPackPunch : UIBase, IDragablePack
         }
         //_EquipContainer.RefreshItems();
         //_BackPack.RefreshItems();
+
+        if (GemSuit.Instance.ActSet != null)
+        {
+            _ActingSuit.text = Tables.StrDictionary.GetFormatStr(GemSuit.Instance.ActSet.Name);
+        }
+        else
+        {
+            _ActingSuit.text = "";
+        }
     }
 
     private void ShowGemTooltipsLeft(object equipObj)

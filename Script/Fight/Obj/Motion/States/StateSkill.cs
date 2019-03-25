@@ -16,19 +16,30 @@ public class StateSkill : StateBase
 
     public override bool CanStartState(params object[] args)
     {
+        bool isCanActSkill = true;
         ObjMotionSkillBase skillBase = args[0] as ObjMotionSkillBase;
-        if (skillBase != null)
+        if (skillBase == null)
         {
-            return skillBase.IsCanActSkill();
+            string inputKey = args[0] as string;
+            if (_SkillMotions.ContainsKey(inputKey))
+            {
+                skillBase = _SkillMotions[inputKey];
+            }
+
         }
 
-        string inputKey = args[0] as string;
-        if (_SkillMotions.ContainsKey(inputKey))
+        if (skillBase == null)
+            return false;
+
+
+        isCanActSkill &= skillBase.IsCanActSkill();
+
+        if (FightManager.Instance != null && _MotionManager == FightManager.Instance.MainChatMotion)
         {
-            return _SkillMotions[inputKey].IsCanActSkill();
+            isCanActSkill &= !FightSkillManager.Instance.IsSkillInCD(skillBase);
         }
 
-        return false;
+        return isCanActSkill;
     }
 
     public override void StartState(params object[] args)
@@ -174,7 +185,9 @@ public class StateSkill : StateBase
             return;
 
         if (_ActingSkill != null)
-            _ActingSkill.FinishSkillImmediately();
+        {
+            FinishSkill(_ActingSkill);
+        }
 
         skillMotion.StartSkill(exHash);
         _ActingSkill = skillMotion;
@@ -183,8 +196,13 @@ public class StateSkill : StateBase
 
     public void FinishSkill(ObjMotionSkillBase skillMotion)
     {
+        if (FightManager.Instance != null)
+        {
+            FightSkillManager.Instance.SetSkillCD(_ActingSkill);
+        }
         _ActingSkill = null;
         skillMotion.FinishSkillImmediately();
+
     }
     
 

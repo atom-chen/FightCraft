@@ -183,6 +183,7 @@ public class RoleData : SaveItemBase
         FiveElementData.Instance.SetAttr(_BaseAttr);
 
         CalculateSecondAttr(_BaseAttr);
+        CalculateCombatValue(_BaseAttr);
     }
 
     public void SetRoleLevelAttr(RoleAttrStruct roleAttr)
@@ -272,6 +273,15 @@ public class RoleData : SaveItemBase
         }
     }
 
+    public void CalculateCombatValue(RoleAttrStruct roleAttr)
+    {
+        _CombatValue = roleAttr.GetValue(RoleAttrEnum.Attack)
+            + roleAttr.GetValue(RoleAttrEnum.FireAttackAdd)
+            + roleAttr.GetValue(RoleAttrEnum.ColdAttackAdd)
+            +roleAttr.GetValue(RoleAttrEnum.LightingAttackAdd)
+            +roleAttr.GetValue(RoleAttrEnum.WindAttackAdd);
+    }
+
     #endregion
 
     #region attr Points
@@ -285,6 +295,14 @@ public class RoleData : SaveItemBase
 
     [SaveField(3)]
     public int _AttrLevel;
+
+    public int TotalLevel
+    {
+        get
+        {
+            return _RoleLevel + _AttrLevel;
+        }
+    }
 
     [SaveField(4)]
     public int _CurExp;
@@ -338,6 +356,8 @@ public class RoleData : SaveItemBase
             return _UnDistrubutePoint;
         }
     }
+
+    public int _CombatValue = 0;
 
     private static int MAX_LEVEL = 50;
     private int _LvUpExp = 0;

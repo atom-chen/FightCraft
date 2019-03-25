@@ -25,7 +25,7 @@ public class RoleAttrImpactPassiveRelive : RoleAttrImpactPassive
         var buffs = buffGO.GetComponents<ImpactBuff>(); 
         foreach (var buff in buffs)
         {
-            var subBuffs = buffGO.GetComponentsInChildren<ImpactBuffConcealInNormal>();
+            var subBuffs = buffGO.GetComponentsInChildren<ImpactBuffConceal>();
             foreach (var subBuff in subBuffs)
             {
                 if (subBuff.gameObject == buffGO)
@@ -65,14 +65,14 @@ public class RoleAttrImpactPassiveRelive : RoleAttrImpactPassive
 
     private static float GetValueFromTab(AttrValueRecord attrRecord, int level)
     {
-        var theValue = GameDataValue.ConfigIntToFloat(attrRecord.AttrParams[0] + attrRecord.AttrParams[1] * level);
+        var theValue = GameDataValue.ConfigIntToFloat(attrRecord.AttrParams[0] + attrRecord.AttrParams[1] * (level - 1));
         theValue = Mathf.Min(theValue, GameDataValue.ConfigIntToFloat(attrRecord.AttrParams[2]));
         return theValue;
     }
 
     private static float GetValue2FromTab(AttrValueRecord attrRecord, int level)
     {
-        var theValue = GameDataValue.ConfigIntToFloat(attrRecord.AttrParams[3] + attrRecord.AttrParams[4] * level);
+        var theValue = GameDataValue.ConfigIntToFloat(attrRecord.AttrParams[3] + attrRecord.AttrParams[4] * (level - 1));
         theValue = Mathf.Min(theValue, GameDataValue.ConfigIntToFloat(attrRecord.AttrParams[5]));
         return theValue;
     }

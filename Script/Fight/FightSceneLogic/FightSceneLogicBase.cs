@@ -7,7 +7,7 @@ public class FightSceneLogicBase : MonoBehaviour
 {
     public Transform _MainCharBornPos;
 
-    private bool _IsStart = false;
+    protected bool _IsStart = false;
 
     void FixedUpdate()
     {

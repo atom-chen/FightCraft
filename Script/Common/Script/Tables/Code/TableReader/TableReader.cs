@@ -71,6 +71,8 @@ namespace Tables
 //
         public static ShopItem ShopItem { get; internal set; }
 //
+        public static SkillBase SkillBase { get; internal set; }
+//
         public static SkillInfo SkillInfo { get; internal set; }
 //
         public static StageInfo StageInfo { get; internal set; }
@@ -111,6 +113,7 @@ namespace Tables
             MonsterBase = new MonsterBase(TableReadBase.GetTableText("MonsterBase"), false);
             RoleExp = new RoleExp(TableReadBase.GetTableText("RoleExp"), false);
             ShopItem = new ShopItem(TableReadBase.GetTableText("ShopItem"), false);
+            SkillBase = new SkillBase(TableReadBase.GetTableText("SkillBase"), false);
             SkillInfo = new SkillInfo(TableReadBase.GetTableText("SkillInfo"), false);
             StageInfo = new StageInfo(TableReadBase.GetTableText("StageInfo"), false);
             StrDictionary = new StrDictionary(TableReadBase.GetTableText("StrDictionary"), false);
@@ -143,6 +146,7 @@ namespace Tables
             MonsterBase.CoverTableContent();
             RoleExp.CoverTableContent();
             ShopItem.CoverTableContent();
+            SkillBase.CoverTableContent();
             SkillInfo.CoverTableContent();
             StageInfo.CoverTableContent();
             StrDictionary.CoverTableContent();

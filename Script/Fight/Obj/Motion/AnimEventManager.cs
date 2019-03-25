@@ -68,6 +68,13 @@ public class AnimEventManager : MonoBehaviour
         animEvent.time = animTime;
         animEvent.functionName = "SpecilEventCallBack";
         animEvent.stringParameter = funcName;
+
+        foreach (var selectorEvent in animClip.events)
+        {
+            if (selectorEvent.time == animEvent.time && funcName == selectorEvent.stringParameter)
+                return;
+        }
+
         animClip.AddEvent(animEvent);
 
         if(!_AnimCallBack.ContainsKey(funcName))
@@ -76,10 +83,18 @@ public class AnimEventManager : MonoBehaviour
 
     public void AddSelectorEvent(AnimationClip animClip, int frame, int selectorID)
     {
+        
         AnimationEvent animEvent = new AnimationEvent();
-        animEvent.time = frame / animClip.frameRate;
+        animEvent.time = (float)Math.Round( frame / animClip.frameRate, 2);
         animEvent.functionName = "ColliderStart";
         animEvent.intParameter = selectorID;
+
+        foreach (var selectorEvent in animClip.events)
+        {
+            if (selectorEvent.time == animEvent.time && selectorID == selectorEvent.intParameter)
+                return;
+        }
+
         animClip.AddEvent(animEvent);
     }
 
@@ -89,6 +104,13 @@ public class AnimEventManager : MonoBehaviour
         animEvent.time = frame / animClip.frameRate;
         animEvent.functionName = "CollidertEnd";
         animEvent.intParameter = selectorID;
+
+        foreach (var selectorEvent in animClip.events)
+        {
+            if (selectorEvent.time == animEvent.time && selectorID == selectorEvent.intParameter)
+                return;
+        }
+
         animClip.AddEvent(animEvent);
     }
 
@@ -98,6 +120,13 @@ public class AnimEventManager : MonoBehaviour
         animEvent.time = time;
         animEvent.functionName = "CollidertEnd";
         animEvent.intParameter = selectorID;
+
+        foreach (var selectorEvent in animClip.events)
+        {
+            if (selectorEvent.time == animEvent.time && selectorID == selectorEvent.intParameter)
+                return;
+        }
+
         animClip.AddEvent(animEvent);
     }
 

@@ -23,6 +23,7 @@ public class ImpactBuffConceal : ImpactBuff
 
     public override void RemoveBuff(MotionManager reciverManager)
     {
+        base.RemoveBuff(reciverManager);
         Debug.Log("_OrgNavRadius:" + _OrgNavRadius);
         //reciverManager.NavAgent.radius = _OrgNavRadius;
         reciverManager.TriggerCollider.enabled = true;

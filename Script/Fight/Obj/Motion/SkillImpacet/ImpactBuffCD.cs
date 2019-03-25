@@ -4,11 +4,16 @@ using System.Collections;
 public class ImpactBuffCD : ImpactBuff
 {
     public float _ActCD = 5;
+    public bool _ShowCD = false;
 
     private float _StartTime = -1;
 
     public void SetCD()
     {
+        if (_ShowCD)
+        {
+            
+        }
         _StartTime = Time.time;
     }
 

@@ -27,11 +27,11 @@ public class UIGemSuitAttr : UIBase
             return;
 
         //_GemSuitName.text = GemSuit.Instance.ActLevel.ToString();
-        _GemSuitLevel.text = StrDictionary.GetFormatStr(30004, GemSuit.Instance.ActLevel);
+        _GemSuitLevel.text = StrDictionary.GetFormatStr(30004, 1);
         Hashtable hash = new Hashtable();
         hash.Add("GetSetRecord", gemSet);
 
-        List<EquipExAttr> exAttrs = GameDataValue.GetGemSetAttr(gemSet, GemSuit.Instance.ActLevel);
+        List<EquipExAttr> exAttrs = GameDataValue.GetGemSetAttr(gemSet, 1);
 
         _AttrContainer.InitContentItem(exAttrs, null, hash);
     }

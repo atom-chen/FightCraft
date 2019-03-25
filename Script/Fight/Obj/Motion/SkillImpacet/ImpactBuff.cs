@@ -6,6 +6,13 @@ public class ImpactBuff : ImpactBase
 {
     #region buff critic
 
+    [System.Serializable]
+    public enum CRITIC_TYPE
+    {
+        None = 0,
+        Refresh,
+    }
+
     public static int _StaticBuffID = 0;
     public static int GetBuffID()
     {
@@ -23,6 +30,9 @@ public class ImpactBuff : ImpactBase
 
     public bool _IsBuffCriticID = false;
     public bool _IsBuffCriticClass = false;
+
+    public CRITIC_TYPE _CriticType = CRITIC_TYPE.Refresh;
+
     #endregion
 
     #region buff type
@@ -134,12 +144,19 @@ public class ImpactBuff : ImpactBase
         bool canAdd = true;
         if (_IsBuffCriticID)
         {
-            return canAdd & (BuffID != newBuff.BuffID);
+            canAdd = canAdd & (BuffID != newBuff.BuffID);
+            
         }
 
         if (_IsBuffCriticClass)
         {
-            return canAdd & (newBuff.GetType() != this.GetType());
+            canAdd = canAdd & (newBuff.GetType() != this.GetType());
+        }
+
+        if (!canAdd && _CriticType == CRITIC_TYPE.Refresh)
+        {
+            _LastTime = newBuff._LastTime;
+            RefreshLastTime();
         }
 
         return canAdd;
@@ -160,7 +177,7 @@ public class ImpactBuff : ImpactBase
 
     public void RefreshLastTime()
     {
-        StopCoroutine("TimeOut");
+        StopAllCoroutines();
         StartCoroutine(TimeOut(_BuffOwner));
     }
 

@@ -96,6 +96,8 @@ public class AI_Base : MonoBehaviour
         InitSkillInfos();
 
         _BornPos = transform.position;
+
+        InitReleaseSkillTimes();
     }
 
     protected virtual void AIUpdate()
@@ -495,6 +497,9 @@ public class AI_Base : MonoBehaviour
     {
         float lng = 0.0f;
 
+        if (path == null)
+            return 999999;
+
         if ((path.status != NavMeshPathStatus.PathInvalid) && (path.corners.Length > 1))
         {
             for (int i = 1; i < path.corners.Length; ++i)
@@ -504,6 +509,14 @@ public class AI_Base : MonoBehaviour
         }
 
         return lng;
+    }
+
+    public static float GetPathLength(Vector3 fromPos, Vector3 toPos)
+    {
+        var navMeshPath = GetPath(fromPos, toPos);
+        if (navMeshPath == null)
+            return 9999999;
+        return GetPathLength(navMeshPath);
     }
     #endregion
 
@@ -573,17 +586,34 @@ public class AI_Base : MonoBehaviour
     }
 
     protected Dictionary<string, HitSkillInfo> _HitDict = new Dictionary<string, HitSkillInfo>();
-    protected const int _ReleaseSkillTimes = 2;
-    protected const int _ReleaseBuffTimes = 2;
+    protected static int _ReleaseSkillTimes = -1;
+    protected static int _ReleaseAttackTimes = 8;
+    protected static int _ReleaseBuffTimes = 2;
     protected ObjMotionSkillBase _HittingSkill;
+
+    private void InitReleaseSkillTimes()
+    {
+        if (_ReleaseSkillTimes > 0)
+            return;
+
+        if (FightSkillManager.Instance.ReuseSkillConfig != "0")
+        {
+            _ReleaseSkillTimes = 2;
+        }
+        else
+        {
+            _ReleaseSkillTimes = 1;
+            Debug.Log("_ReleaseSkillTimes:" + _ReleaseSkillTimes);
+        }
+    }
 
     private void OnHitProtect(ImpactHit impactHit)
     {
         if (impactHit == null)
             return;
 
-        if (impactHit.SkillMotion is ObjMotionSkillAttack)
-            return;
+        //if (impactHit.SkillMotion is ObjMotionSkillAttack)
+        //    return;
 
         if (impactHit.SkillMotion == null)
             return;
@@ -636,6 +666,13 @@ public class AI_Base : MonoBehaviour
                     {
                         ReleaseHit();
                     }
+                }
+            }
+            else if (impactHit.SkillMotion is ObjMotionSkillAttack)
+            {
+                if (_HitDict[impactHit.SkillMotion._ActInput].HitTimes > _ReleaseAttackTimes)
+                {
+                    ReleaseHit(); 
                 }
             }
             else

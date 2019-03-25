@@ -206,7 +206,7 @@ public class UIContainerBase : UIBase
             ++i;
         }
 
-        _InitItemCount = 30;
+        _InitItemCount = 50;
         _InitItemCount = Math.Min(_InitItemCount, _ValueList.Count);
 
         _HasInit = false;

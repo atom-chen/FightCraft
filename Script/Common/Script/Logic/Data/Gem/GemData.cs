@@ -290,6 +290,38 @@ public class GemData
         }
     }
 
+    private static List<int> _CombineSameNeedNum = new List<int>() { 3, 9, 27, 81 };
+    public void GemCombineSameAll(ItemGem gemDataID)
+    {
+        int gemMatCnt = PackGemDatas.GetItemCnt(gemDataID.ItemDataID);
+        int combineLevel = GemCombineSameLevel(gemMatCnt);
+        while (combineLevel > 0)
+        {
+            var nextGem = GetNextLevelGem(gemDataID.GemRecord.Class, combineLevel);
+            if (nextGem == null)
+            {
+                UIMessageTip.ShowMessageTip(30006);
+                return;
+            }
+            PackGemDatas.DecItem(gemDataID, _CombineSameNeedNum[combineLevel - 1]);
+            CreateGem(nextGem.Id, 1);
+
+            gemMatCnt = PackGemDatas.GetItemCnt(gemDataID.ItemDataID);
+            combineLevel = GemCombineSameLevel(gemMatCnt);
+        }
+    }
+
+    private int GemCombineSameLevel(int gemMatCnt)
+    {
+        for (int i = _CombineSameNeedNum.Count - 1; i >= 0; --i)
+        {
+            if (gemMatCnt >= _CombineSameNeedNum[i])
+                return i + 1;
+        }
+
+        return -1;
+    }
+
     private bool GemCombineSame(List<ItemGem> combineGems)
     {
         var nextGem = GetNextLevelGem(combineGems[0].GemRecord.Class, combineGems[0].GemRecord.Level);

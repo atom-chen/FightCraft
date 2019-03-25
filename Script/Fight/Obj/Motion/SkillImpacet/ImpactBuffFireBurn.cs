@@ -57,6 +57,9 @@ public class ImpactBuffFireBurn : ImpactBuff
         if (targetMotion.IsMotionDie)
             return;
 
+        if (_BuffSender == null)
+            return;
+
         _BuffSender.RoleAttrManager.SendDamageEvent(targetMotion, _Damage, ElementType.Fire, this);
         targetMotion.PlayHitEffect(_BuffSender, 3);
         targetMotion.PlayAudio(ResourcePool.Instance._CommonAudio[110]);

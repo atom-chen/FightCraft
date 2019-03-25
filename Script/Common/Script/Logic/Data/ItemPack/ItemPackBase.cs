@@ -206,7 +206,7 @@ public class ItemPackBase<T> : DataPackBase where T : ItemBase,new()
                 {
                     var newItem = new T();
                     newItem.ItemDataID = itemDataID;
-                    newItem.AddStackNum(newItemCnt);
+                    newItem.SetStackNum(newItemCnt);
                     _PackItems.Add(newItem);
                 }
             }
@@ -263,6 +263,15 @@ public class ItemPackBase<T> : DataPackBase where T : ItemBase,new()
 
         item.DecStackNum(cnt);
         if (_PackSize < 0 && item.ItemStackNum == 0)
+        {
+            _PackItems.Remove(item);
+        }
+        return true;
+    }
+
+    public bool DecItem(T item)
+    {
+        if (_PackSize < 0)
         {
             _PackItems.Remove(item);
         }

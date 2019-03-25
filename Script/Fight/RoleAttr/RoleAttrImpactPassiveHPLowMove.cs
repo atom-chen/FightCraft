@@ -51,7 +51,7 @@ public class RoleAttrImpactPassiveHPLowMove : RoleAttrImpactPassive
 
     private static float GetValueFromTab(AttrValueRecord attrRecord, int level)
     {
-        var theValue = GameDataValue.ConfigIntToFloat(attrRecord.AttrParams[0] + attrRecord.AttrParams[1] * level);
+        var theValue = GameDataValue.ConfigIntToFloat(attrRecord.AttrParams[0] + attrRecord.AttrParams[1] * (level - 1));
         theValue = Mathf.Min(theValue, GameDataValue.ConfigIntToFloat(attrRecord.AttrParams[2]));
         return theValue;
     }

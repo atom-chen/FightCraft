@@ -9,14 +9,15 @@ public class RoleAttrImpactBuffRate : RoleAttrImpactBase
     public override void InitImpact(string skillInput, List<int> args)
     {
         _SkillInput = skillInput;
-        _ValueModify = args[0];
+        _ValueModify = GameDataValue.ConfigIntToFloat(args[0]);
     }
 
     public override List<int> GetSkillImpactVal(ItemSkill skillInfo)
     {
         var valList = new List<int>();
 
-        valList.Add(skillInfo.SkillRecord.EffectValue[0] + skillInfo.SkillActureLevel * skillInfo.SkillRecord.EffectValue[1]);
+        var buffValue = skillInfo.SkillRecord.EffectValue[0] + (skillInfo.SkillActureLevel - 1) * skillInfo.SkillRecord.EffectValue[1];
+        valList.Add(buffValue);
 
         return valList;
     }
@@ -39,8 +40,9 @@ public class RoleAttrImpactBuffRate : RoleAttrImpactBase
         List<int> copyAttrs = new List<int>(attrParams);
         int attrDescID = copyAttrs[0];
         var skillRecord = Tables.TableReader.SkillInfo.GetRecord(attrDescID.ToString());
-        var damageModify = attrParams[1] * skillRecord.EffectValue[1] + skillRecord.EffectValue[0];
-        var strFormat = StrDictionary.GetFormatStr(skillRecord.DescStrDict, ((int)(damageModify)));
+        int skillLevel = Mathf.Max(1, attrParams[1]);
+        var damageModify = (skillLevel - 1) * skillRecord.EffectValue[1] + skillRecord.EffectValue[0];
+        var strFormat = StrDictionary.GetFormatStr(skillRecord.DescStrDict, GameDataValue.ConfigIntToPersent(damageModify));
         return strFormat;
     }
 

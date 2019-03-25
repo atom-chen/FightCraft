@@ -28,7 +28,7 @@ public class MonsterDrop
     public static void MonsterDropItems(MotionManager monsterMotion)
     {
 
-        var drops = GetMonsterDrops(monsterMotion.MonsterBase, monsterMotion.RoleAttrManager.MotionType, monsterMotion.RoleAttrManager.Level);
+        var drops = GetMonsterDrops(monsterMotion.MonsterBase, monsterMotion.RoleAttrManager.MotionType, monsterMotion.RoleAttrManager.Level, ActData.Instance._StageMode);
         var randomPoses = GameRandom.GetIndependentRandoms(0, 16, drops.Count);
         int posIdx = 0;
         foreach (var drop in drops)
@@ -42,16 +42,16 @@ public class MonsterDrop
             dropItem.InitDrop(drop);
         }
 
-        int dropExp = GameDataValue.GetMonsterExp(monsterMotion.RoleAttrManager.MotionType, monsterMotion.RoleAttrManager.Level, RoleData.SelectRole._RoleLevel);
+        int dropExp = GameDataValue.GetMonsterExp(monsterMotion.RoleAttrManager.MotionType, monsterMotion.RoleAttrManager.Level, RoleData.SelectRole._RoleLevel, ActData.Instance._StageMode);
         RoleData.SelectRole.AddExp(dropExp);
     }
 
     public static int DropGold = 0;
-    public static List<DropItemData> GetMonsterDrops(Tables.MonsterBaseRecord monsterRecord, MOTION_TYPE monsterType, int level)
+    public static List<DropItemData> GetMonsterDrops(Tables.MonsterBaseRecord monsterRecord, MOTION_TYPE monsterType, int level, STAGE_TYPE stageType = STAGE_TYPE.NORMAL)
     {
         List<DropItemData> dropList = new List<DropItemData>();
 
-        List<ItemEquip> dropEquips = GameDataValue.GetMonsterDropEquip(monsterType, monsterRecord, level);
+        List<ItemEquip> dropEquips = GameDataValue.GetMonsterDropEquip(monsterType, monsterRecord, level, stageType);
         for (int i = 0; i < dropEquips.Count; ++i)
         {
             DropItemData dropItem = new DropItemData();

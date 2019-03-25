@@ -27,7 +27,7 @@ public class StateLie : StateBase
                 _MotionManager.TryEnterState(_MotionManager._StateSkill, args);
                 break;
             case MotionOpt.Hit:
-                _MotionManager.TryEnterState(_MotionManager._StateHit, args);
+                _MotionManager.TryEnterState(_MotionManager._StateFly, args);
                 break;
             case MotionOpt.Fly:
                 _MotionManager.TryEnterState(_MotionManager._StateFly, args);
@@ -42,7 +42,7 @@ public class StateLie : StateBase
 
     #region 
 
-    private static float _LieTime = 0.2f;
+    private static float _LieTime = 0.6f;
     private float _LieStartTime = -1;
     private float _RealLieTime = _LieTime;
 

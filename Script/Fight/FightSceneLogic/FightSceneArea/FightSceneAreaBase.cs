@@ -13,11 +13,33 @@ public class SerializeEnemyInfo
 
 public class FightSceneAreaBase : MonoBehaviour
 {
+    public int AreaID { get; set; }
+
+    protected bool _AreaStarted = false;
+
+    public bool AreaStrated
+    {
+        get
+        {
+            return _AreaStarted;
+        }
+    }
+
+    protected bool _AreaFinished = false;
+    public bool AreaFinished
+    {
+        get
+        {
+            return _AreaFinished;
+        }
+    }
+
     public virtual void InitArea()
     { }
 
     public virtual void StartArea()
     {
+        _AreaStarted = true;
         UpdateEnemyAlert();
         InitFightLogic();
         CloseAllDoor();
@@ -25,6 +47,7 @@ public class FightSceneAreaBase : MonoBehaviour
 
     public virtual void FinishArea()
     {
+        _AreaFinished = true;
         OpenAllDoor();
         _FightSceneLogic.AreaFinish(this);
     }

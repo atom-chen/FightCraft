@@ -14,7 +14,29 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
 
         InitPos();
 
-        InitAreas();
+        //InitAreas();
+    }
+
+    protected override void UpdateLogic()
+    {
+        base.UpdateLogic();
+
+        for (int i = 0; i < _ActingGroup._FightAreas.Count; ++i)
+        {
+            if (i == MainCharPosIdxInFightArea)
+                continue;
+
+            if (!_ActingGroup._FightAreas[i].AreaStrated)
+            {
+                //float dis = Vector3.Distance(FightManager.Instance.MainChatMotion.transform.position, area.transform.position);
+                float dis = AI_Base.GetPathLength(FightManager.Instance.MainChatMotion.transform.position, _ActingGroup._FightAreas[i].transform.position);
+
+                if (dis < 25)
+                {
+                    _ActingGroup._FightAreas[i].InitArea();
+                }
+            }
+        }
     }
 
     #region motion die

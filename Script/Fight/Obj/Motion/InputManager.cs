@@ -16,7 +16,6 @@ public class InputManager : InstanceBase<InputManager>
         {
             _NormalAttack = _InputMotion.GetComponentInChildren<ObjMotionSkillAttack>();
         }
-        InitReuseSkill();
     }
 
     void OnDestory()
@@ -50,6 +49,7 @@ public class InputManager : InstanceBase<InputManager>
             }
         }
         CharSkill();
+        UpdateSummonSkill();
     }
 
     public MotionManager _InputMotion;
@@ -196,12 +196,11 @@ public class InputManager : InstanceBase<InputManager>
             }
             else
             {
-                if (CanReuseSkill() && _InputMotion._StateSkill._SkillMotions[_ReuseSkillInput].IsCanActSkill())
+                if (FightSkillManager.Instance.CanReuseSkill() && FightSkillManager.Instance.ReuseSkillBase.IsCanActSkill())
                 {
                     SetRotate();
-                    _InputMotion.ActSkill(_InputMotion._StateSkill._SkillMotions[_ReuseSkillInput]);
-                    ResetReuseSkill();
-                    _ReuseTimes = -1;
+                    _InputMotion.ActSkill(FightSkillManager.Instance.ReuseSkillBase);
+                    FightSkillManager.Instance.ResetReuseSkill();
                     return;
                 }
 
@@ -317,9 +316,9 @@ public class InputManager : InstanceBase<InputManager>
             }
             else if (_InputMotion.ActingSkill == null)
             {
-                if (CanReuseSkill())
+                if (FightSkillManager.Instance.ReuseSkillBase != null)
                 {
-                    return _InputMotion._StateSkill._SkillMotions[_ReuseSkillInput];
+                    return FightSkillManager.Instance.ReuseSkillBase;
                 }
 
                 {
@@ -393,94 +392,117 @@ public class InputManager : InstanceBase<InputManager>
 
     #region use skill again
 
-    private string _ReuseSkillInput;
-    private string _ReuseSkillConfig = "0";
-    private int _ReuseTimes = 0;
-    private float _ReuseStartTime = 0;
-    private float _ReuseLast = 2.0f;
+    //private string _ReuseSkillInput;
+    //private string _ReuseSkillConfig = "0";
+    //public string ReuseSkillConfig
+    //{
+    //    get
+    //    {
+    //        return _ReuseSkillConfig;
+    //    }
+    //}
+    //private int _ReuseTimes = 0;
+    //private float _ReuseStartTime = 0;
+    //private float _ReuseLast = 2.0f;
 
-    public void InitReuseSkill()
-    {
-        foreach (var skillInfo in SkillData.Instance.ProfessionSkills)
-        {
-            if (skillInfo.SkillRecord.SkillAttr.AttrImpact == "RoleAttrImpactAnotherUse" && skillInfo.SkillActureLevel > 0)
-            {
-                _ReuseSkillConfig = skillInfo.SkillRecord.SkillInput;
-                break;
-            }
-        }
-    }
+    //public void InitReuseSkill()
+    //{
+    //    foreach (var skillInfo in SkillData.Instance.ProfessionSkills)
+    //    {
+    //        if (skillInfo.SkillRecord.SkillAttr.AttrImpact == "RoleAttrImpactAnotherUse" && skillInfo.SkillActureLevel > 0)
+    //        {
+    //            _ReuseSkillConfig = skillInfo.SkillRecord.SkillInput;
+    //            break;
+    //        }
+    //    }
+    //}
 
-    public void SkillNextInput(ObjMotionSkillBase motionSkill)
-    {
-        //if (_ReuseTimes > 0)
-        //{
-        //    if (motionSkill._ActInput == "j"
-        //        || motionSkill._ActInput == "1"
-        //        || motionSkill._ActInput == "2"
-        //        || motionSkill._ActInput == "3")
-        //    {
-        //        _ReuseTimes = 0;
-        //        UISkillBar.SetSkillUseTips("k", 0);
-        //        return;
-        //    }
-        //}
-        if (_InputMotion == FightManager.Instance.MainChatMotion)
-        {
-            if (_ReuseSkillConfig == "-1")
-            {
-                if (motionSkill._ActInput == "1"
-                    || motionSkill._ActInput == "2"
-                    || motionSkill._ActInput == "3")
-                {
-                    ++_ReuseTimes;
-                    if (_ReuseTimes > 0)
-                    {
-                        _ReuseStartTime = Time.time;
-                        UISkillBar.SetSkillUseTips("k", _ReuseLast);
-                        _ReuseSkillInput = motionSkill._ActInput;
-                    }
-                }
-            }
-            else if (motionSkill._ActInput == _ReuseSkillConfig)
-            {
-                _ReuseSkillInput = _ReuseSkillConfig;
-                ++_ReuseTimes;
-                if (_ReuseTimes > 0)
-                {
-                    _ReuseStartTime = Time.time;
-                    UISkillBar.SetSkillUseTips("k", _ReuseLast);
-                }
-            }
-        }
-    }
+    //public void SkillNextInput(ObjMotionSkillBase motionSkill)
+    //{
+    //    //if (_ReuseTimes > 0)
+    //    //{
+    //    //    if (motionSkill._ActInput == "j"
+    //    //        || motionSkill._ActInput == "1"
+    //    //        || motionSkill._ActInput == "2"
+    //    //        || motionSkill._ActInput == "3")
+    //    //    {
+    //    //        _ReuseTimes = 0;
+    //    //        UISkillBar.SetSkillUseTips("k", 0);
+    //    //        return;
+    //    //    }
+    //    //}
+    //    if (_InputMotion == FightManager.Instance.MainChatMotion)
+    //    {
+    //        if (_ReuseSkillConfig == "-1")
+    //        {
+    //            if (motionSkill._ActInput == "1"
+    //                || motionSkill._ActInput == "2"
+    //                || motionSkill._ActInput == "3")
+    //            {
+    //                ++_ReuseTimes;
+    //                if (_ReuseTimes > 0)
+    //                {
+    //                    _ReuseStartTime = Time.time;
+    //                    //UISkillBar.SetSkillUseTips("k", _ReuseLast);
+    //                    FightSkillManager.Instance.SetReuse(motionSkill, _ReuseLast);
+    //                    _ReuseSkillInput = motionSkill._ActInput;
+    //                }
+    //            }
+    //        }
+    //        else if (motionSkill._ActInput == _ReuseSkillConfig)
+    //        {
+    //            _ReuseSkillInput = _ReuseSkillConfig;
+    //            ++_ReuseTimes;
+    //            if (_ReuseTimes > 0)
+    //            {
+    //                _ReuseStartTime = Time.time;
+    //                //UISkillBar.SetSkillUseTips("k", _ReuseLast);
+    //                FightSkillManager.Instance.SetReuse(motionSkill, _ReuseLast);
+    //            }
+    //        }
+    //    }
+    //}
 
-    public void ResetReuseSkill()
-    {
-        _ReuseTimes = 0;
-        UISkillBar.SetSkillUseTips("k", 0);
-        return;
-    }
+    //public void ResetReuseSkill()
+    //{
+    //    _ReuseTimes = 0;
+    //    //UISkillBar.SetSkillUseTips("k", 0);
+    //    FightSkillManager.Instance.SetReuse(null, 0);
+    //    return;
+    //}
 
-    private bool CanReuseSkill()
-    {
-        if (_ReuseTimes > 0 && Time.time - _ReuseStartTime < _ReuseLast)
-        {
-            return true;
-        }
-        return false;
-    }
+    //private bool CanReuseSkill()
+    //{
+    //    if (_ReuseTimes > 0 && Time.time - _ReuseStartTime < _ReuseLast)
+    //    {
+    //        return true;
+    //    }
+    //    return false;
+    //}
 
     #endregion
 
     #region set buff skill
 
     private string _BuffSkillInput;
+    private float _BuffResuseLast = 2.0f;
 
     public void SetReuseSkill(string skillInput)
     {
         _BuffSkillInput = skillInput;
-        UISkillBar.SetSkillUseTips("k", _ReuseLast);
+        //FightSkillManager.Instance.SetReuse(_InputMotion._StateSkill._SkillMotions[skillInput], _BuffResuseLast);
+    }
+
+    #endregion
+
+    #region summon skill
+
+    public void UpdateSummonSkill()
+    {
+        if (IsKeyHold("h"))
+        {
+            SummonSkill.Instance.UseSummonSkill();
+        }
     }
 
     #endregion

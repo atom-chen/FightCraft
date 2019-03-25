@@ -20,7 +20,8 @@ public class AI_EliteBase : AI_HeroBase
 
         if (!_AIAwake)
         {
-            float distance = Vector3.Distance(transform.position, _TargetMotion.transform.position);
+            //float distance = Vector3.Distance(transform.position, _TargetMotion.transform.position);
+            float distance = GetPathLength(transform.position, _TargetMotion.transform.position);
             if (distance > _AlertRange)
                 return;
 

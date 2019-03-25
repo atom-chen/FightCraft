@@ -168,11 +168,11 @@ namespace Tables
                 }
                 if (!string.IsNullOrEmpty(pair.Value.ValueStr[10]))
                 {
-                    pair.Value.Gems.Add( TableReader.GemTable.GetRecord(pair.Value.ValueStr[10]));
+                    pair.Value.Attrs.Add( TableReader.AttrValue.GetRecord(pair.Value.ValueStr[10]));
                 }
                 else
                 {
-                    pair.Value.Gems.Add(null);
+                    pair.Value.Attrs.Add(null);
                 }
                 if (!string.IsNullOrEmpty(pair.Value.ValueStr[11]))
                 {
@@ -241,14 +241,6 @@ namespace Tables
                 if (!string.IsNullOrEmpty(pair.Value.ValueStr[19]))
                 {
                     pair.Value.Attrs.Add( TableReader.AttrValue.GetRecord(pair.Value.ValueStr[19]));
-                }
-                else
-                {
-                    pair.Value.Attrs.Add(null);
-                }
-                if (!string.IsNullOrEmpty(pair.Value.ValueStr[20]))
-                {
-                    pair.Value.Attrs.Add( TableReader.AttrValue.GetRecord(pair.Value.ValueStr[20]));
                 }
                 else
                 {

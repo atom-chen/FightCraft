@@ -13,26 +13,28 @@ public class GameDataValue
 
     public static float ConfigIntToFloatDex1(int val)
     {
-        int dex = Mathf.CeilToInt(val * 0.1f);
+        int dex = Mathf.RoundToInt(val * 0.1f);
         var resultVal = new decimal(0.001) * new decimal(dex);
         return (float)resultVal;
     }
 
     public static float ConfigIntToPersent(int val)
     {
-        
+
         var resultVal = new decimal(0.01) * new decimal(val);
         return (float)resultVal;
     }
 
     public static int ConfigFloatToInt(float val)
     {
-        return (int)(val * 10000);
+        return Mathf.RoundToInt(val * 10000);
     }
 
     public static int ConfigFloatToPersent(float val)
     {
-        return (int)(val * 100);
+        float largeVal = val * 100;
+        var intVal = Mathf.RoundToInt(largeVal);
+        return intVal;
     }
 
     public static int GetMaxRate()
@@ -795,35 +797,7 @@ public class GameDataValue
     #region product & consume
 
     #region exp
-
-    public static int _NormalExpBase = 50;
-    public static int _EliteExpBase = 250;
-    public static int _SpecialExpBase = 500;
-    public static int _BossExpBase = 1250;
-    public static float _Level30ExpRate = 0.1f;
-    public static float _Level60ExpRate = 0.12f;
-    public static float _Level90ExpRate = 0.15f;
-    public static float _Level100ExpRate = 0.2f;
-    public static float _Level999ExpRate = 0.1f;
-
-    public static int _LevelExpBase30 = 4000;
-    public static int _LevelExpBase60 = 6000;
-    public static int _LevelExpBase90 = 8000;
-    public static int _LevelExpBase100 = 12000;
-    public static int _LevelExpStep999 = 1600;
-    public static int _LevelExpBase999 = 100000;
-    public static int _LevelExpMax999 = 180000;
-    public static float _LvUp30ExpRate = 0.25f;
-    public static float _LvUp60ExpRate = 0.4f;
-    public static float _LvUp90ExpRate = 0.6f;
-    public static float _LvUp100ExpRate = 1.0f;
-    public static float _LvUp999ExpRate = 1f;
-
-    private static int _Lv30UpTotalVal = 0;
-    private static int _Lv60UpTotalVal = 0;
-    private static int _Lv90UpTotalVal = 0;
-    private static int _Lv100UpTotalVal = 0;
-
+    
     public static int GetLvUpExp(int playerLv, int attrLv)
     {
         int totalLv = playerLv + attrLv;
@@ -837,50 +811,9 @@ public class GameDataValue
             expRecord = TableReader.RoleExp.GetRecord(totalLv.ToString());
         }
         return expRecord.ExpValue;
-
-        //if (_Lv30UpTotalVal == 0)
-        //{
-        //    _Lv30UpTotalVal = Mathf.CeilToInt(_LvUp30ExpRate * 30 * _LevelExpBase30);
-        //    _Lv60UpTotalVal = Mathf.CeilToInt(_Lv30UpTotalVal + _LvUp60ExpRate * 30 * _LevelExpBase60);
-        //    _Lv90UpTotalVal = Mathf.CeilToInt(_Lv60UpTotalVal + _LvUp90ExpRate * 30 * _LevelExpBase90);
-        //    _Lv100UpTotalVal = Mathf.CeilToInt(_Lv90UpTotalVal + _LvUp100ExpRate * 10 * _LevelExpBase100);
-
-        //}
-
-        //int realLv = playerLv + attrLv;
-        //int levelExp = 0;
-        //if (realLv <= 30)
-        //{
-        //    levelExp = Mathf.CeilToInt((1 + _LvUp30ExpRate * realLv) * _LevelExpBase30);
-        //}
-        //else if (realLv <= 60)
-        //{
-        //    levelExp = Mathf.CeilToInt((1 + _LvUp60ExpRate * (realLv - 30)) * _LevelExpBase60) + _Lv30UpTotalVal;
-        //}
-        //else if (realLv <= 90)
-        //{
-        //    levelExp = Mathf.CeilToInt((1 + _LvUp90ExpRate * (realLv - 60)) * _LevelExpBase90) + _Lv60UpTotalVal;
-        //}
-        //else if (realLv <= 100)
-        //{
-        //    levelExp = Mathf.CeilToInt((1 + _LvUp100ExpRate * (realLv - 90)) * _LevelExpBase100 + _Lv90UpTotalVal);
-        //}
-        //else
-        //{
-        //    levelExp = Mathf.CeilToInt((1 + _LvUp999ExpRate * (realLv - 100)) * _LevelExpStep999 + _LevelExpBase999);
-        //    levelExp = Mathf.Clamp(levelExp, _LevelExpBase999, _LevelExpMax999);
-        //}
-
-        //return levelExp;
     }
 
-    private static float _Lv30TotalRate = 0;
-    private static float _Lv60TotalRate = 0;
-    private static float _Lv90TotalRate = 0;
-    private static float _Lv100TotalRate = 0;
-    public static int _MAX_MONSTER_EXP_LEVEL = 120;
-
-    public static int GetMonsterExp(MOTION_TYPE motionType, int level, int playerLv)
+    public static int GetMonsterExp(MOTION_TYPE motionType, int level, int playerLv, STAGE_TYPE stageType = STAGE_TYPE.NORMAL)
     {
         MonsterAttrRecord monAttrRecord = null;
         if (level > 200)
@@ -892,7 +825,7 @@ public class GameDataValue
             monAttrRecord = TableReader.MonsterAttr.GetRecord(level.ToString());
         }
         int exp= monAttrRecord.Drops[0];
-        if (motionType == MOTION_TYPE.Elite)
+        if (motionType == MOTION_TYPE.Elite || motionType == MOTION_TYPE.ExElite)
         {
             exp = exp * 3;
         }
@@ -900,58 +833,13 @@ public class GameDataValue
         {
             exp = exp * 10;
         }
+
+        if (stageType == STAGE_TYPE.ACTIVITY)
+        {
+            exp = 1;
+        }
         return exp;
-
-        //int levelDelta = Mathf.Clamp(playerLv - level,0, 10);
-        //int monExpLevel = Mathf.Clamp(level, 1, _MAX_MONSTER_EXP_LEVEL);
-        //int expBase = 0;
-        //switch (motionType)
-        //{
-        //    case MOTION_TYPE.Normal:
-        //        expBase = _NormalExpBase;
-        //        break;
-        //    case MOTION_TYPE.Elite:
-        //        expBase = _EliteExpBase;
-        //        break;
-        //    case MOTION_TYPE.Hero:
-        //        expBase = _BossExpBase;
-        //        break;
-        //}
-
-        //if (_Lv30TotalRate == 0)
-        //{
-        //    _Lv30TotalRate = _Level30ExpRate * 30;
-        //    _Lv60TotalRate = _Lv30TotalRate + _Level60ExpRate * 30;
-        //    _Lv90TotalRate = _Lv60TotalRate + _Level90ExpRate * 30;
-        //    _Lv100TotalRate = _Lv90TotalRate + _Level100ExpRate * 10;
-
-        //}
-
-        //int levelExp = 0;
-        //if (monExpLevel <= 30)
-        //{
-        //    levelExp = Mathf.CeilToInt((1 + _Level30ExpRate * monExpLevel) * expBase);
-        //}
-        //else if (monExpLevel <= 60)
-        //{
-        //    levelExp = Mathf.CeilToInt((1 + _Lv30TotalRate +  _Level60ExpRate * (monExpLevel - 30)) * expBase);
-        //}
-        //else if (monExpLevel <= 90)
-        //{
-        //    levelExp = Mathf.CeilToInt((1 + _Lv60TotalRate + _Level90ExpRate * (monExpLevel - 60)) * expBase);
-        //}
-        //else if (monExpLevel <= 100)
-        //{
-        //    levelExp = Mathf.CeilToInt((1 + _Lv90TotalRate + _Level100ExpRate * (monExpLevel - 90)) * expBase);
-        //}
-        //else
-        //{
-        //    levelExp = Mathf.CeilToInt((1 + _Lv100TotalRate + _Level999ExpRate * (monExpLevel - 100)) * expBase);
-        //}
-
-        //var deltaRate = Mathf.Clamp(levelDelta * 0.03f, -0.3f, 0.2f);
-        //levelExp = Mathf.CeilToInt(levelExp * (1 + deltaRate));
-        //return levelExp;
+        
     }
 
     #endregion
@@ -964,75 +852,86 @@ public class GameDataValue
     private static int _EqiupLvRing = 4;
     private static int _EqiupLvAmulate = 4;
 
-    private static List<ITEM_QUALITY> GetDropQualitys(MOTION_TYPE motionType, MonsterBaseRecord monsterRecord, int level, int dropActType = 1)
+    private static List<ITEM_QUALITY> GetDropQualitys(MOTION_TYPE motionType, MonsterBaseRecord monsterRecord, int level, STAGE_TYPE stageType)
     {
         List<ITEM_QUALITY> dropEquipQualitys = new List<ITEM_QUALITY>();
         int dropCnt = 0;
         int dropQuality = 0;
         float exEquipRate = ConfigIntToFloat(RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.ExEquipDrop)) + 1;
-        switch (motionType)
+        if (stageType == STAGE_TYPE.ACTIVITY)
         {
-            case MOTION_TYPE.Normal:
-                dropCnt = GameRandom.GetRandomLevel(95, 5);
-                for (int i = 0; i < dropCnt; ++i)
-                {
-                    dropQuality = GameRandom.GetRandomLevel(7000, (int)(3000 * exEquipRate));
-                    if (dropQuality > 0)
-                    {
-                        ++dropQuality;
-                    }
-                    dropEquipQualitys.Add((ITEM_QUALITY)dropQuality);
-                }
-                
-                break;
-            case MOTION_TYPE.Elite:
-                dropCnt = GameRandom.GetRandomLevel(10, 70, 20);
-                for (int i = 0; i < dropCnt; ++i)
-                {
-                    dropQuality = GameRandom.GetRandomLevel(3000, (int)(6500 * exEquipRate), (int)(500 * exEquipRate));
-                    if (dropQuality > 0)
-                    {
-                        ++dropQuality;
-                    }
-                    dropEquipQualitys.Add((ITEM_QUALITY)dropQuality);
-                }
+            
+        }
+        else if (stageType == STAGE_TYPE.NORMAL)
+        {
 
-                break;
-            case MOTION_TYPE.Hero:
-                if (level <= 20)
-                    dropCnt = GameRandom.GetRandomLevel(0, 10, 50, 30);
-                else if (level <= 40)
-                    dropCnt = GameRandom.GetRandomLevel(0, 0, 50, 50,10);
-                else
-                    dropCnt = GameRandom.GetRandomLevel(0, 0, 50, 30,30);
-                bool isOringe = false;
-                for (int i = 0; i < dropCnt; ++i)
-                {
-                    if (level <= 10)
-                        dropQuality = GameRandom.GetRandomLevel(0, 7000, (int)(2500 * exEquipRate), (int)(500 * exEquipRate));
-                    else if (level <= 30)
-                        dropQuality = GameRandom.GetRandomLevel(0, 6000, (int)(2500 * exEquipRate), (int)(1500 * exEquipRate));
+        }
+        else if (stageType == STAGE_TYPE.BOSS)
+        {
+            switch (motionType)
+            {
+                case MOTION_TYPE.Normal:
+                    dropCnt = GameRandom.GetRandomLevel(95, 5);
+                    for (int i = 0; i < dropCnt; ++i)
+                    {
+                        dropQuality = GameRandom.GetRandomLevel(7000, (int)(3000 * exEquipRate));
+                        if (dropQuality > 0)
+                        {
+                            ++dropQuality;
+                        }
+                        dropEquipQualitys.Add((ITEM_QUALITY)dropQuality);
+                    }
+
+                    break;
+                case MOTION_TYPE.Elite:
+                    dropCnt = GameRandom.GetRandomLevel(10, 70, 20);
+                    for (int i = 0; i < dropCnt; ++i)
+                    {
+                        dropQuality = GameRandom.GetRandomLevel(3000, (int)(6500 * exEquipRate), (int)(500 * exEquipRate));
+                        if (dropQuality > 0)
+                        {
+                            ++dropQuality;
+                        }
+                        dropEquipQualitys.Add((ITEM_QUALITY)dropQuality);
+                    }
+
+                    break;
+                case MOTION_TYPE.Hero:
+                    if (level <= 20)
+                        dropCnt = GameRandom.GetRandomLevel(0, 10, 50, 30);
+                    else if (level <= 40)
+                        dropCnt = GameRandom.GetRandomLevel(0, 0, 50, 50, 10);
                     else
-                        dropQuality = GameRandom.GetRandomLevel(0, 4000, (int)(3500 * exEquipRate), (int)(2500 * exEquipRate));
-                    if (dropQuality == (int)ITEM_QUALITY.ORIGIN)
+                        dropCnt = GameRandom.GetRandomLevel(0, 0, 50, 30, 30);
+                    bool isOringe = false;
+                    for (int i = 0; i < dropCnt; ++i)
                     {
-                        if (!isOringe)
-                        {
-                            isOringe = true;
-                        }
+                        if (level <= 10)
+                            dropQuality = GameRandom.GetRandomLevel(0, 7000, (int)(2500 * exEquipRate), (int)(500 * exEquipRate));
+                        else if (level <= 30)
+                            dropQuality = GameRandom.GetRandomLevel(0, 6000, (int)(2500 * exEquipRate), (int)(1500 * exEquipRate));
                         else
+                            dropQuality = GameRandom.GetRandomLevel(0, 4000, (int)(3500 * exEquipRate), (int)(2500 * exEquipRate));
+                        if (dropQuality == (int)ITEM_QUALITY.ORIGIN)
                         {
-                            --dropQuality;
+                            if (!isOringe)
+                            {
+                                isOringe = true;
+                            }
+                            else
+                            {
+                                --dropQuality;
+                            }
                         }
+                        if (dropQuality > 0)
+                        {
+                            ++dropQuality;
+                        }
+                        dropEquipQualitys.Add((ITEM_QUALITY)dropQuality);
                     }
-                    if (dropQuality > 0)
-                    {
-                        ++dropQuality;
-                    }
-                    dropEquipQualitys.Add((ITEM_QUALITY)dropQuality);
-                }
 
-                break;
+                    break;
+            }
         }
         return dropEquipQualitys;
     }
@@ -1047,10 +946,10 @@ public class GameDataValue
         return Mathf.Clamp(equipLv, 1, _MaxLv);
     }
 
-    public static List<ItemEquip> GetMonsterDropEquip(MOTION_TYPE motionType, MonsterBaseRecord monsterRecord, int level, int dropActType = 1)
+    public static List<ItemEquip> GetMonsterDropEquip(MOTION_TYPE motionType, MonsterBaseRecord monsterRecord, int level, STAGE_TYPE stageType)
     {
         List<ItemEquip> dropEquipList = new List<ItemEquip>();
-        var dropEquipQualitys = GetDropQualitys(motionType, monsterRecord, level, dropActType);
+        var dropEquipQualitys = GetDropQualitys(motionType, monsterRecord, level, stageType);
         if (dropEquipQualitys.Count == 0)
             return dropEquipList;
 
@@ -1532,6 +1431,10 @@ public class GameDataValue
         {
             var stageRecord = TableReader.BossStage.GetRecord(stageIdx.ToString());
             level = stageRecord.Level;
+        }
+        else if (stageMode == STAGE_TYPE.ACTIVITY)
+        {
+            level = RoleData.SelectRole.TotalLevel;
         }
 
         return level;

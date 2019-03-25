@@ -11,7 +11,7 @@ public class RoleAttrImpactAddSkill : RoleAttrImpactBase
         var attrTab = Tables.TableReader.AttrValue.GetRecord(args[0].ToString());
         _ImpactName = attrTab.StrParam[0];
         _SkillInput = attrTab.StrParam[1];
-        _Damage = GameDataValue.ConfigIntToFloat(attrTab.AttrParams[0]) + GameDataValue.ConfigIntToFloat(attrTab.AttrParams[1] * args[1]);
+        _CD = attrTab.AttrParams[0] + attrTab.AttrParams[1] * args[1];
     }
 
     public override void ModifySkillBeforeInit(MotionManager roleMotion)
@@ -22,12 +22,7 @@ public class RoleAttrImpactAddSkill : RoleAttrImpactBase
         var skillMotion = roleMotion._StateSkill._SkillMotions[_SkillInput];
         //var impactGO = ResourceManager.Instance.GetInstanceGameObject("Bullet\\Emitter\\Element\\" + _ImpactName);
         //impactGO.transform.SetParent(skillMotion.transform);
-
-        var bulletEmitterEle = skillMotion.GetComponentsInChildren<ImpactDamage>();
-        foreach (var bulletEmitter in bulletEmitterEle)
-        {
-            bulletEmitter._DamageRate = _Damage;
-        }
+        skillMotion._SkillCD = _CD;
     }
 
     public override bool AddData(List<int> attrParam)
@@ -54,7 +49,7 @@ public class RoleAttrImpactAddSkill : RoleAttrImpactBase
 
     public float _Damage;
     public string _ImpactName;
-
+    public float _CD;
     
     #endregion
 }

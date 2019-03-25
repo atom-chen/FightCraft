@@ -79,6 +79,7 @@ public class FightSceneAreaKAllEnemy : FightSceneAreaBase
             MotionManager enemy = FightManager.Instance.InitEnemy(_EnemyBornPos[i]._EnemyDataID, _EnemyBornPos[i]._EnemyTransform.position, _EnemyBornPos[i]._EnemyTransform.rotation.eulerAngles, isElite);
             
             var enemyAI = enemy.gameObject.GetComponent<AI_Base>();
+            enemyAI.GroupID = AreaID;
             _EnemyAI.Add(enemyAI);
             if (_IsEnemyAlert)
             {
@@ -103,12 +104,14 @@ public class FightSceneAreaKAllEnemy : FightSceneAreaBase
 
     private void StepMotionDie(MotionManager motion)
     {
-
-        ++_DeadEnemyCnt;
-
-        if (_DeadEnemyCnt >= _EnemyBornPos.Length)
+        var enemyAI = motion.gameObject.GetComponent<AI_Base>();
+        if (_EnemyAI.Contains(enemyAI))
         {
-            FinishArea();
+            _EnemyAI.Remove(enemyAI);
+            if (_EnemyAI.Count == 0)
+            {
+                FinishArea();
+            }
         }
     }
 

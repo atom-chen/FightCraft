@@ -24,7 +24,6 @@ public class SummonSkill
 
     #region summon in fight
 
-    private static float _ModelSizeFixed = 0.7f;
     private static string _ModelShader = "Mobile/Particles/Additive Culled";
     private static Color _ColorRed = CommonDefine.HexToColor("90141480");
     private static Color _ColorOrigin = CommonDefine.HexToColor("D4990080");
@@ -33,8 +32,15 @@ public class SummonSkill
 
     private Dictionary<string, AI_SummonSkill> _SummonMotions = new Dictionary<string, AI_SummonSkill>();
 
+    public int GetSummonMotionCnt()
+    {
+        return _SummonMotions.Count;
+    }
+
     public void InitSummonMotions()
     {
+        _CurSummonIdx = 0;
+        _SummonMotions.Clear();
         for (int i = 0; i < SummonSkillData.Instance._UsingSummon.Count; ++i)
         {
             if (SummonSkillData.Instance._UsingSummon[i] == null)
@@ -44,7 +50,6 @@ public class SummonSkill
             var summonMotion = ResourcePool.Instance.GetIdleMotion(SummonSkillData.Instance._UsingSummon[i].SummonRecord.MonsterBase);
             summonMotion.InitRoleAttr(SummonSkillData.Instance._UsingSummon[i]);
             summonMotion.InitMotion();
-            summonMotion.Animation.transform.localScale = summonMotion.Animation.transform.localScale * _ModelSizeFixed;
             var shader = Shader.Find(_ModelShader);
             var meshRenders = summonMotion.Animation.GetComponentsInChildren<SkinnedMeshRenderer>();
             foreach (var meshRender in meshRenders)
@@ -69,6 +74,7 @@ public class SummonSkill
             FightLayerCommon.SetFriendLayer(summonMotion);
             var summonAI = summonMotion.GetComponent<AI_SummonSkill>();
             _SummonMotions.Add(monsterBase.Id, summonAI);
+            summonMotion.Animation.transform.localScale = summonMotion.Animation.transform.localScale * summonAI._ModelSizeFixed;
         }
     }
 
@@ -76,7 +82,7 @@ public class SummonSkill
     {
         if (SummonSkillData.Instance._UsingSummon[idx] != null)
         {
-            return SummonAndSkill(SummonSkillData.Instance._UsingSummon[idx].SummonRecord.MonsterBase.Id, 0, masterMotion);
+            return SummonAndSkill(SummonSkillData.Instance._UsingSummon[idx].SummonRecord.MonsterBase.Id, SummonSkillData.Instance._UsingSummon[idx].SummonRecord.ActSkillIdx, masterMotion);
         }
         return false;
     }
@@ -112,6 +118,35 @@ public class SummonSkill
     public void HideSummonMotion(AI_SummonSkill summonAI)
     {
         summonAI._SelfMotion.transform.position = new Vector3(0, -10000, 0);
+    }
+
+    #endregion
+
+    #region act skill
+
+    private int _CurSummonIdx = 0;
+
+    public void UseSummonSkill()
+    {
+        if (SummonSkillData.Instance._UsingSummon.Count <= _CurSummonIdx)
+            return;
+
+        if (FightSkillManager.Instance.IsSummonSkillInCD(SummonSkillData.Instance._UsingSummon[_CurSummonIdx]))
+            return;
+
+        if (SummonSkill.Instance.SummonAndSkill(_CurSummonIdx, FightManager.Instance.MainChatMotion))
+        {
+            int curIdx = _CurSummonIdx;
+            ++_CurSummonIdx;
+            if (_CurSummonIdx == SummonSkill.Instance.GetSummonMotionCnt())
+            {
+                _CurSummonIdx = 0;
+            }
+            FightSkillManager.Instance.SetSummonCD(SummonSkillData.Instance._UsingSummon[curIdx], SummonSkillData.Instance.SummonSkillCD, false);
+            FightSkillManager.Instance.SetSummonCD(SummonSkillData.Instance._UsingSummon[_CurSummonIdx], SummonSkillData._SummonCommonCD, true);
+        }
+
+
     }
 
     #endregion

@@ -54,6 +54,7 @@ public class StateFly : StateBase
             case MotionOpt.Hit:
                 //_MotionManager.TryEnterState(_MotionManager._StateHit, args);
                 MotionFlyStay((float)args[0], (int)args[1], (int)args[6], (MotionManager)args[2], (bool)args[7]);
+                //MotionFly(0.2f, (int)args[1], (int)args[6], (MotionManager)args[2]);
                 SetHitMove((Vector3)args[4], (float)args[5]);
                 break;
             case MotionOpt.Fly:
@@ -154,6 +155,7 @@ public class StateFly : StateBase
         if (audioID > 0)
             _MotionManager.PlayAudio(ResourcePool.Instance._CommonAudio[audioID]);
 
+        Debug.Log("MotionFlyStay isPauseFly:" + isPauseFly);
         if (isPauseFly)
         {
             var flyStayTime = time * (GameDataValue.ConfigIntToFloat(_MotionManager.RoleAttrManager.GetBaseAttr(RoleAttrEnum.FlyGravity)));
@@ -163,7 +165,7 @@ public class StateFly : StateBase
         else
         {
             _MotionManager.RePlayAnimation(_Animation, 1);
-            _StayTime = 0.15f;
+            _StayTime = 0.2f;
         }
 
         

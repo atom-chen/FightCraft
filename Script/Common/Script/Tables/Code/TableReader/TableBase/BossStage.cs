@@ -16,6 +16,7 @@ namespace Tables
         public string Desc { get; set; }
         public int Difficult { get; set; }
         public int Level { get; set; }
+        public int Combat { get; set; }
         public List<string> FightLogic { get; set; }
         public MonsterBaseRecord BossID { get; set; }
         public BossStageRecord(DataRecord dataRecord)
@@ -36,6 +37,7 @@ namespace Tables
             recordStrList.Add(TableWriteBase.GetWriteStr(Desc));
             recordStrList.Add(TableWriteBase.GetWriteStr(Difficult));
             recordStrList.Add(TableWriteBase.GetWriteStr(Level));
+            recordStrList.Add(TableWriteBase.GetWriteStr(Combat));
             foreach (var testTableItem in FightLogic)
             {
                 recordStrList.Add(TableWriteBase.GetWriteStr(testTableItem));
@@ -115,14 +117,15 @@ namespace Tables
                 pair.Value.Desc = TableReadBase.ParseString(pair.Value.ValueStr[2]);
                 pair.Value.Difficult = TableReadBase.ParseInt(pair.Value.ValueStr[3]);
                 pair.Value.Level = TableReadBase.ParseInt(pair.Value.ValueStr[4]);
-                pair.Value.FightLogic.Add(TableReadBase.ParseString(pair.Value.ValueStr[5]));
+                pair.Value.Combat = TableReadBase.ParseInt(pair.Value.ValueStr[5]);
                 pair.Value.FightLogic.Add(TableReadBase.ParseString(pair.Value.ValueStr[6]));
                 pair.Value.FightLogic.Add(TableReadBase.ParseString(pair.Value.ValueStr[7]));
                 pair.Value.FightLogic.Add(TableReadBase.ParseString(pair.Value.ValueStr[8]));
                 pair.Value.FightLogic.Add(TableReadBase.ParseString(pair.Value.ValueStr[9]));
-                if (!string.IsNullOrEmpty(pair.Value.ValueStr[10]))
+                pair.Value.FightLogic.Add(TableReadBase.ParseString(pair.Value.ValueStr[10]));
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[11]))
                 {
-                    pair.Value.BossID =  TableReader.MonsterBase.GetRecord(pair.Value.ValueStr[10]);
+                    pair.Value.BossID =  TableReader.MonsterBase.GetRecord(pair.Value.ValueStr[11]);
                 }
                 else
                 {

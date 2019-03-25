@@ -34,6 +34,14 @@ public class RoleAttrImpactDefenceArmor : RoleAttrImpactBase
 
     }
 
+    public static string GetAttrDesc(List<int> attrParams)
+    {
+        List<int> copyAttrs = new List<int>(attrParams);
+        int attrDescID = copyAttrs[0];
+        var skillRecord = Tables.TableReader.SkillInfo.GetRecord(attrDescID.ToString());
+        var strFormat = StrDictionary.GetFormatStr(skillRecord.DescStrDict, (skillRecord.EffectValue[0]), GameDataValue.ConfigIntToPersent(skillRecord.EffectValue[1]));
+        return strFormat;
+    }
     #region 
 
     public string _ImpactName;

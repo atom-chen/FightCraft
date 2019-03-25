@@ -7,7 +7,7 @@ public class FightManager : InstanceBase<FightManager>
 {
 
     // Use this for initialization
-    void Start ()
+    void Awake ()
     {
         SetInstance(this);
         _InitProcess = 0;
@@ -437,6 +437,12 @@ public class FightManager : InstanceBase<FightManager>
             }
         }
     }
+
+    #endregion
+
+    #region main
+
+    public FightSkillManager _FightSkillManager;
 
     #endregion
 }

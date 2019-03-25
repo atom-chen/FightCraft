@@ -25,9 +25,18 @@ public class RoleAttrImpactAnotherUse : RoleAttrImpactBase
 
     }
 
+    public static string GetAttrDesc(List<int> attrParams)
+    {
+        List<int> copyAttrs = new List<int>(attrParams);
+        int attrDescID = copyAttrs[0];
+        var skillRecord = Tables.TableReader.SkillInfo.GetRecord(attrDescID.ToString());
+        var strFormat = StrDictionary.GetFormatStr(skillRecord.DescStrDict);
+        return strFormat;
+    }
+
     #region 
 
 
-    
+
     #endregion
 }

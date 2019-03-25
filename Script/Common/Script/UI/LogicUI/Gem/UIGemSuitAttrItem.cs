@@ -40,18 +40,18 @@ public class UIGemSuitAttrItem : UIItemBase
 
         string attrStr = _ShowAttr.GetAttrStr();
 
-        int actLevel = GemSuit._ActAttrLevel[_Idx];
+        //int actLevel = GemSuit._ActAttrLevel[_Idx];
 
-        if (_GemSetRecord == GemSuit.Instance.ActSet && _Idx < GemSuit.Instance.ActSetAttrCnt)
-        {
-            attrStr = CommonDefine.GetEnableGrayStr(1) + attrStr + "</color>";
-            attrStr += CommonDefine.GetEnableRedStr(1) + StrDictionary.GetFormatStr(30005, actLevel) + "</color>";
-        }
-        else
-        {
-            attrStr = CommonDefine.GetEnableGrayStr(0) + attrStr + "</color>";
-            attrStr += CommonDefine.GetEnableRedStr(0) + StrDictionary.GetFormatStr(30005, actLevel) + "</color>";
-        }
+        //if (_GemSetRecord == GemSuit.Instance.ActSet && _Idx < GemSuit.Instance.ActSetAttrCnt)
+        //{
+        //    attrStr = CommonDefine.GetEnableGrayStr(1) + attrStr + "</color>";
+        //    attrStr += CommonDefine.GetEnableRedStr(1) + StrDictionary.GetFormatStr(30005, actLevel) + "</color>";
+        //}
+        //else
+        //{
+        //    attrStr = CommonDefine.GetEnableGrayStr(0) + attrStr + "</color>";
+        //    attrStr += CommonDefine.GetEnableRedStr(0) + StrDictionary.GetFormatStr(30005, actLevel) + "</color>";
+        //}
 
         _AttrText.text = attrStr;
     }

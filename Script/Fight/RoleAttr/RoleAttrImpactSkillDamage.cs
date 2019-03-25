@@ -33,7 +33,7 @@ public class RoleAttrImpactSkillDamage : RoleAttrImpactBase
         {
             if (damage._IsCharSkillDamage)
             {
-                damage._DamageRate *= (1 + _DamageModify);
+                damage._DamageRate *= _DamageModify;
             }
         }
     }

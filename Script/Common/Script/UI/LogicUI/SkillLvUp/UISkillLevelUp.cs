@@ -99,13 +99,15 @@ public class UISkillLevelUp : UIBase
 
         var skillTab = Tables.TableReader.SkillInfo.GetRecord(_SelectedSkill.SkillID);
         var impactType = Type.GetType(_SelectedSkill.SkillRecord.SkillAttr.AttrImpact);
+        int descLevel = _SelectedSkill.SkillLevel;
+        descLevel = Mathf.Clamp(_SelectedSkill.SkillLevel, 1, skillTab.MaxLevel);
         if (impactType != null)
         {
 
             var method = impactType.GetMethod("GetAttrDesc");
             if (method != null)
             {
-                string skillDesc = method.Invoke(null, new object[] { new List<int>() { int.Parse(_SelectedSkill.SkillID), _SelectedSkill.SkillLevel } }) as string;
+                string skillDesc = method.Invoke(null, new object[] { new List<int>() { int.Parse(_SelectedSkill.SkillID), descLevel } }) as string;
                 _Desc.text = skillDesc;
             }
         }

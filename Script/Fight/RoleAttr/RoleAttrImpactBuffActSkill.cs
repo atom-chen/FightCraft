@@ -29,6 +29,17 @@ public class RoleAttrImpactBuffActSkill : RoleAttrImpactBase
         (skillMotion as ObjMotionSkillBuff).IsCanActAfterBuff = true;
     }
 
+    public static string GetAttrDesc(List<int> attrParams)
+    {
+        List<int> copyAttrs = new List<int>(attrParams);
+        int attrDescID = copyAttrs[0];
+        var skillRecord = Tables.TableReader.SkillInfo.GetRecord(attrDescID.ToString());
+        int skillLevel = Mathf.Max(1, attrParams[1]);
+        var damageModify = (skillLevel - 1) * skillRecord.EffectValue[1] + skillRecord.EffectValue[0];
+        var strFormat = StrDictionary.GetFormatStr(skillRecord.DescStrDict, GameDataValue.ConfigIntToPersent(damageModify));
+        return strFormat;
+    }
+
     #region 
 
     public int _ValueModify;

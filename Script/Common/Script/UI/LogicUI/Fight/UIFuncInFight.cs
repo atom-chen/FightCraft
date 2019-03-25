@@ -2,8 +2,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-
 using System.Collections;
+using System.Collections.Generic;
 using System;
 
 public class UIFuncInFight : UIBase
@@ -28,6 +28,15 @@ public class UIFuncInFight : UIBase
         Debug.Log("FightTime:" + instance._FightSecond);
     }
 
+    public static void UpdateSkillInfoUI()
+    {
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIFuncInFight>("LogicUI/Fight/UIFuncInFight");
+        if (instance == null)
+            return;
+
+        instance.UpdateSkillInfo();
+    }
+
     #endregion
 
     public override void Show(Hashtable hash)
@@ -35,6 +44,7 @@ public class UIFuncInFight : UIBase
         base.Show(hash);
 
         StartFightTime();
+        UpdateSkillInfo();
 
         GameCore.Instance.EventController.RegisteEvent(EVENT_TYPE.EVENT_LOGIC_PASS_STAGE, EventDelegate);
     }
@@ -79,6 +89,37 @@ public class UIFuncInFight : UIBase
     {
         Debug.Log("Fight finish time:" + _FightSecond);
 
+    }
+
+    #endregion
+
+    #region  skill info
+
+    public List<UIFightSkillInfo> _UIFightInfos;
+
+    public void UpdateSkillInfo()
+    {
+        int showIdx = FightSkillManager.Instance.FightSkillDict.Count;
+        for (int i = 0; i < _UIFightInfos.Count; ++i)
+        {
+            --showIdx;
+            if (showIdx >= 0)
+            {
+                if (FightSkillManager.Instance.FightSkillDict[showIdx]._ShowInUI)
+                {
+                    _UIFightInfos[i].gameObject.SetActive(true);
+                    _UIFightInfos[i].InitSkillInfo(FightSkillManager.Instance.FightSkillDict[showIdx]);
+                }
+                else
+                {
+                    --showIdx;
+                }
+            }
+            else
+            {
+                _UIFightInfos[i].gameObject.SetActive(false);
+            }
+        }
     }
 
     #endregion

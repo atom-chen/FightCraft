@@ -88,6 +88,8 @@ public class ActData : DataPackBase
     [SaveField(2)]
     public int _NormalStageIdx = 0;
 
+    public static int _MAX_NORMAL_DIFF = 9;
+
     public void SetPassNormalStage(int diff, int stageIdx)
     {
         if (diff < _NormalStageDiff)
@@ -117,6 +119,7 @@ public class ActData : DataPackBase
     public int _BossStageIdx = 0;
 
     public static int _MAX_BOSS_DIFF = 9;
+    public static string _BOSS_TICKET = "1600000";
 
     public void SetPassBossStage(int diff, int stageIdx)
     {
@@ -124,6 +127,54 @@ public class ActData : DataPackBase
         _BossStageIdx = stageIdx;
 
         SaveClass(false);
+    }
+
+    public bool IsCanStartBossStage()
+    {
+        return BackBagPack.Instance.PageItems.DecItem(ActData._BOSS_TICKET, 1);
+    }
+
+    public bool IsBossStageLock(BossStageRecord bossStageRecord)
+    {
+        int stageID = int.Parse(bossStageRecord.Id);
+        if (stageID > _BossStageIdx + 2)
+        {
+            return false;
+        }
+
+        if (RoleData.SelectRole._RoleLevel < bossStageRecord.Level)
+        {
+            return false;
+        }
+
+        if (RoleData.SelectRole._CombatValue < bossStageRecord.Combat)
+            return false;
+
+        return true;
+    }
+
+    #endregion
+
+    #region act
+
+    public static string _ACT_TICKET = "1600001";
+    public static int _MAX_ACT_USING_TICKET = 5;
+    public static int _MAX_START_ACT_LEVEL = 20;
+    public static List<float> _DropRates = new List<float>() { 1, 1.95f, 2.85f, 3.7f, 4.5f, 5.25f };
+
+    public int _ActConsumeTickets = 0;
+
+    public bool IsCanStartAct(int consumeTickets)
+    {
+        if (BackBagPack.Instance.PageItems.DecItem(ActData._ACT_TICKET, consumeTickets))
+        {
+            _ActConsumeTickets = consumeTickets;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     #endregion

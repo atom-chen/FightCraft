@@ -21,9 +21,10 @@ public class FightSceneLogicPassArea : FightSceneLogicBase
     {
         base.StartLogic();
 
-        foreach (var area in _FightArea)
+        for (int i = 0; i < _FightArea.Count; ++i)
         {
-            area.InitArea();
+            _FightArea[i].InitArea();
+            _FightArea[i].AreaID = i;
         }
 
         _RunningIdx = -1;
@@ -36,7 +37,25 @@ public class FightSceneLogicPassArea : FightSceneLogicBase
     {
         base.UpdateLogic();
 
-        if(_RunningArea != null)
+        foreach (var area in _FightArea)
+        {
+            if (!area.AreaStrated)
+            {
+                if (area is FightSceneAreaKShowTeleport)
+                    continue;
+
+                //float dis = Vector3.Distance(FightManager.Instance.MainChatMotion.transform.position, area.transform.position);
+                float dis = AI_Base.GetPathLength(FightManager.Instance.MainChatMotion.transform.position, area.transform.position);
+                
+                if (dis < 25)
+                {
+                    area.StartArea();
+                }
+            }
+        }
+
+
+        if (_RunningArea != null)
             _RunningArea.UpdateArea();
     }
 
@@ -44,10 +63,17 @@ public class FightSceneLogicPassArea : FightSceneLogicBase
     {
         base.MotionDie(motion);
 
-        if (_RunningArea != null)
+        foreach (var area in _FightArea)
         {
-            _RunningArea.MotionDie(motion);
+            if (area.AreaStrated && !area.AreaFinished)
+            {
+                if (area is FightSceneAreaKShowTeleport)
+                    continue;
+
+                area.MotionDie(motion);
+            }
         }
+        
     }
 
     public Vector3 GetNextAreaPos()
@@ -102,7 +128,7 @@ public class FightSceneLogicPassArea : FightSceneLogicBase
         ++_RunningIdx;
         if (_RunningIdx < _FightArea.Count)
         {
-            if (_FightArea[_RunningIdx]._TrigAreaType == FightSceneAreaBase.TrigType.TRIG_AUTO)
+            if (_FightArea[_RunningIdx] is FightSceneAreaKShowTeleport || _FightArea[_RunningIdx] is FightSceneAreaKBossWithFish)
             {
                 AreaStart(_FightArea[_RunningIdx]);
             }

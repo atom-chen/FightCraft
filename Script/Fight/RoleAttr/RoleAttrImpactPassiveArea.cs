@@ -46,7 +46,16 @@ public class RoleAttrImpactPassiveArea : RoleAttrImpactPassive
         var attrTab = Tables.TableReader.AttrValue.GetRecord(attrDescID.ToString());
         var value1 = GetValueFromTab(attrTab, attrParams[1]);
         var value2 = GetValue2FromTab(attrTab, attrParams[1]);
-        var strFormat = StrDictionary.GetFormatStr(attrDescID, GameDataValue.ConfigFloatToPersent(value1), value2);
+        string valueDesc = "";
+        if (attrTab.AttrParams[6] == 0)
+        {
+            valueDesc = GameDataValue.ConfigFloatToPersent(value1).ToString();
+        }
+        else
+        {
+            valueDesc = GameDataValue.ConfigIntToPersent(Mathf.CeilToInt( value1)).ToString();
+        }
+        var strFormat = StrDictionary.GetFormatStr(attrDescID, valueDesc, value2);
         return strFormat;
     }
 
@@ -57,14 +66,14 @@ public class RoleAttrImpactPassiveArea : RoleAttrImpactPassive
 
     private static float GetValueFromTab(AttrValueRecord attrRecord, int level)
     {
-        var theValue = GameDataValue.ConfigIntToFloat(attrRecord.AttrParams[0] + attrRecord.AttrParams[1] * level);
-        theValue = Mathf.Min(theValue, GameDataValue.ConfigIntToFloat(attrRecord.AttrParams[2]));
+        var theValue = GameDataValue.ConfigIntToFloat(attrRecord.AttrParams[0] + attrRecord.AttrParams[1] * (level - 1));
+        //theValue = Mathf.Min(theValue, GameDataValue.ConfigIntToFloat(attrRecord.AttrParams[2]));
         return theValue;
     }
 
     private static float GetValue2FromTab(AttrValueRecord attrRecord, int level)
     {
-        var theValue = GameDataValue.ConfigIntToFloat(attrRecord.AttrParams[3] + attrRecord.AttrParams[4] * level);
+        var theValue = GameDataValue.ConfigIntToFloat(attrRecord.AttrParams[3] + attrRecord.AttrParams[4] * (level - 1));
         theValue = Mathf.Min(theValue, GameDataValue.ConfigIntToFloat(attrRecord.AttrParams[5]));
         return theValue;
     }

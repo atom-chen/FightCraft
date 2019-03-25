@@ -147,40 +147,11 @@ public class UISkillBar : UIBase
 
     #region summon
 
-    public UISkillBarItem[] _SummonBtn;
-
-    private List<float> _SummonCDs;
-
-    private void InitSummonCD()
+    public UISkillBarItem _SummonBtn;
+    
+    public void OnBtnSummon()
     {
-        if (_SummonCDs == null)
-        {
-            _SummonCDs = new List<float>();
-            for (int i = 0; i < _SummonBtn.Length; ++i)
-            {
-                _SummonCDs.Add(0);
-            }
-        }
-    }
-
-    public void OnBtnSummon(int btnIdx)
-    {
-        if (SummonSkill.Instance.SummonAndSkill(btnIdx, FightManager.Instance.MainChatMotion))
-        {
-            for (int i = 0; i < _SummonBtn.Length; ++i)
-            {
-                if (i == btnIdx)
-                {
-                    _SummonBtn[i].SetCDTime(SummonSkillData.Instance.SummonSkillCD);
-                }
-                else if(_SummonBtn[i].CDNow == 0)
-                {
-                    _SummonBtn[i].SetCDTime(SummonSkillData._SummonCommonCD);
-                }
-            }
-        }
-        else
-        { }
+        SummonSkill.Instance.UseSummonSkill();    
     }
 
     #endregion

@@ -10,293 +10,6 @@ public class SummonCollectItem
     public int _Star;
 }
 
-public class SummonMotionData
-{
-    [SaveField(1)]
-    public string SummonRecordID;
-    [SaveField(2)]
-    public int Exp;
-    [SaveField(3)]
-    public int StarExp;
-    [SaveField(4)]
-    public bool IsLock;
-    [SaveField(5)]
-    public int Stage;
-    [SaveField(6)]
-    public List<int> StageAttrs;
-
-    public SummonMotionData()
-    {
-        SummonRecordID = "";
-        Exp = 0;
-        StarExp = 0;
-        IsLock = false;
-    }
-
-    public SummonMotionData(string recordID)
-    {
-        SummonRecordID = recordID;
-        Exp = 0;
-        StarExp = 0;
-        IsLock = false;
-    }
-
-    private SummonSkillRecord _SummonRecord;
-    public SummonSkillRecord SummonRecord
-    {
-        get
-        {
-            if (_SummonRecord == null)
-            {
-                Debug.Log("SummonRecordID:" + SummonRecordID);
-                _SummonRecord = Tables.TableReader.SummonSkill.GetRecord(SummonRecordID);
-            }
-            return _SummonRecord;
-        }
-    }
-
-    #region level
-
-    private int _Level = -1;
-    public int Level
-    {
-        get
-        {
-            if (_Level < 0)
-            {
-                CalculateLevel();
-            }
-            return _Level;
-        }
-    }
-
-    private int _CurLvExp = -1;
-    public int CurLvExp
-    {
-        get
-        {
-            if (_CurLvExp < 0)
-            {
-                CalculateLevel();
-            }
-            return _CurLvExp;
-        }
-    }
-
-    public void AddExp(int expValue)
-    {
-        Exp += expValue;
-        CalculateLevel();
-    }
-
-    private void CalculateLevel()
-    {
-        int tempExp = Exp;
-        int level = 1;
-        while (true)
-        {
-            var summonAttrRecord = TableReader.SummonSkillAttr.GetRecord(level.ToString());
-            if (tempExp >= summonAttrRecord.Cost[0])
-            {
-                tempExp = tempExp - summonAttrRecord.Cost[0];
-                ++level;
-            }
-            else
-            {
-                break;
-            }
-        }
-
-        _Level = level;
-        _CurLvExp = tempExp;
-
-        UpdateAttrs();
-    }
-
-    #endregion
-
-    #region star
-
-    private int _StarLevel = -1;
-    public int StarLevel
-    {
-        get
-        {
-            if (_StarLevel < 0)
-            {
-                CalculateStarLevel();
-            }
-            return _StarLevel;
-        }
-    }
-
-    private int _CurStarExp = -1;
-    public int CurStarExp
-    {
-        get
-        {
-            if (_CurStarExp < 0)
-            {
-                CalculateStarLevel();
-            }
-            return _CurStarExp;
-        }
-    }
-
-    public int CurStarLevelExp()
-    {
-        if (StarLevel < SummonRecord.StarExp.Count)
-        {
-            return SummonRecord.StarExp[StarLevel];
-        }
-        return 0;
-    }
-
-    public void AddStarExp(int expValue)
-    {
-        StarExp += expValue;
-        CalculateStarLevel();
-    }
-
-    private void CalculateStarLevel()
-    {
-        int tempExp = StarExp;
-        int starLv = 0;
-        for (int i = 0; i < SummonRecord.StarExp.Count; ++i)
-        {
-            if (tempExp >= SummonRecord.StarExp[i])
-            {
-                tempExp = tempExp - SummonRecord.StarExp[i];
-                ++starLv;
-            }
-            else
-            {
-                break;
-            }
-        }
-
-        _StarLevel = starLv;
-        _CurStarExp = tempExp;
-    }
-
-    #endregion
-
-    #region stage
-
-    public void InitStageAttr()
-    {
-        if (StageAttrs != null && StageAttrs.Count != 0)
-            return;
-
-        StageAttrs = new List<int>();
-        for (int i = 0; i < 5; ++i)
-        {
-            StageAttrs.Add(0);
-        }
-    }
-
-    public void AddStage()
-    {
-        ++Stage;
-    }
-
-    public void AddStageAttr(int idx)
-    {
-        StageAttrs[idx] += StageAttrAdd[idx];
-
-        UpdateAttrs();
-    }
-
-    public List<int> GetStageAttrMax()
-    {
-        if (Stage == 0)
-        {
-            return SummonRecord.Stage1AttrMax;
-        }
-        else if (Stage == 1)
-        {
-            return SummonRecord.Stage2AttrMax;
-        }
-        else if (Stage == 2)
-        {
-            return SummonRecord.Stage3AttrMax;
-        }
-        else if (Stage == 3)
-        {
-            return SummonRecord.Stage4AttrMax;
-        }
-        else if (Stage == 4)
-        {
-            return SummonRecord.Stage5AttrMax;
-        }
-
-        return null;
-    }
-
-    #endregion
-
-    #region attr
-
-    public static List<RoleAttrEnum> StageAttrEnums = new List<RoleAttrEnum>()
-    { RoleAttrEnum.Attack, RoleAttrEnum.CriticalHitDamge, RoleAttrEnum.CriticalHitChance, RoleAttrEnum.RiseHandSpeed, RoleAttrEnum.AttackSpeed};
-
-    public static List<int> StageAttrAdd = new List<int>()
-    { 1, 100,100,100,100 };
-
-    private List<EquipExAttr> _SummonAttrs;
-    public List<EquipExAttr> SummonAttrs
-    {
-        get
-        {
-            if (_SummonAttrs == null)
-            {
-                UpdateAttrs();
-            }
-            return _SummonAttrs;
-        }
-    }
-
-    public void UpdateAttrs()
-    {
-        _SummonAttrs = new List<EquipExAttr>();
-        InitStageAttr();
-
-        var levelAttr = Tables.TableReader.SummonSkillAttr.GetRecord(Level.ToString());
-
-        var atkValue = (int)(levelAttr.Attr[0] * SummonRecord.AttrModelfy) + StageAttrs[0];
-        var critiDmgValue = (int)(levelAttr.Attr[1]) + StageAttrs[1];
-        var critiRateValue = (int)(levelAttr.Attr[2]) + StageAttrs[2];
-        var riseHandSpeedValue = (int)(levelAttr.Attr[3]) + StageAttrs[3];
-        var atkSpeedValue = (int)(levelAttr.Attr[4]) + StageAttrs[4];
-
-        _SummonAttrs.Add(EquipExAttr.GetBaseExAttr(StageAttrEnums[0], atkValue));
-        _SummonAttrs.Add(EquipExAttr.GetBaseExAttr(StageAttrEnums[1], critiDmgValue));
-        _SummonAttrs.Add(EquipExAttr.GetBaseExAttr(StageAttrEnums[2], critiRateValue));
-        _SummonAttrs.Add(EquipExAttr.GetBaseExAttr(StageAttrEnums[3], riseHandSpeedValue));
-        _SummonAttrs.Add(EquipExAttr.GetBaseExAttr(StageAttrEnums[4], atkSpeedValue));
-    }
-
-    public string GetAttrCostItem(int idx)
-    {
-        string costItem = "";
-        if (idx == 0)
-        {
-            costItem = SummonRecord.StageCostItems[0].ToString();
-        }
-        else if (idx == 1 || idx == 2)
-        {
-            costItem = SummonRecord.StageCostItems[1].ToString();
-        }
-        else if (idx == 3 || idx == 4)
-        {
-            costItem = SummonRecord.StageCostItems[2].ToString();
-        }
-
-        return costItem;
-    }
-    #endregion
-}
-
 public class SummonSkillData : SaveItemBase
 {
     #region 唯一
@@ -339,11 +52,33 @@ public class SummonSkillData : SaveItemBase
 
     public const int _MAX_PACK_SUMMON_NUM = 100;
 
-    [SaveField(1)]
-    public List<SummonMotionData> _SummonMotionList = new List<SummonMotionData>();
+    public ItemPackBase<SummonMotionData> _SummonMotionList;
+
+    public ItemPackBase<SummonMotionData> _SummonMatList;
 
     private bool InitSummonMotions()
     {
+        _SummonMotionList = new ItemPackBase<SummonMotionData>();
+        _SummonMotionList._SaveFileName = "PackSummonMotions";
+        _SummonMotionList._PackSize = -1;
+        _SummonMotionList.LoadClass(true);
+
+        if (_SummonMotionList._PackItems == null)
+        {
+            _SummonMotionList._PackItems = new List<SummonMotionData>();
+            _SummonMotionList.SaveClass(true);
+        }
+
+        _SummonMatList = new ItemPackBase<SummonMotionData>();
+        _SummonMatList._SaveFileName = "PackSummonMaterials";
+        _SummonMatList._PackSize = -1;
+        _SummonMatList.LoadClass(true);
+
+        if (_SummonMatList._PackItems == null)
+        {
+            _SummonMatList._PackItems = new List<SummonMotionData>();
+            _SummonMatList.SaveClass(true);
+        }
         return false;
     }
 
@@ -353,7 +88,7 @@ public class SummonSkillData : SaveItemBase
 
     public const int USING_SUMMON_NUM = 3;
 
-    [SaveField(2)]
+    [SaveField(1)]
     private List<int> _UsingSummonIds = new List<int>();
 
     public List<SummonMotionData> _UsingSummon;
@@ -376,9 +111,9 @@ public class SummonSkillData : SaveItemBase
             {
                 _UsingSummon.Add(null);
             }
-            else if (_SummonMotionList.Count > _UsingSummonIds[i])
+            else if (_SummonMotionList._PackItems.Count > _UsingSummonIds[i])
             {
-                _UsingSummon.Add(_SummonMotionList[_UsingSummonIds[i]]);
+                _UsingSummon.Add(_SummonMotionList._PackItems[_UsingSummonIds[i]]);
             }
         }
 
@@ -403,7 +138,7 @@ public class SummonSkillData : SaveItemBase
             }
             else
             {
-                int index = _SummonMotionList.IndexOf(_UsingSummon[i]);
+                int index = _SummonMotionList._PackItems.IndexOf(_UsingSummon[i]);
                 _UsingSummonIds.Add(index);
             }
         }
@@ -526,12 +261,31 @@ public class SummonSkillData : SaveItemBase
                 summonIdx = GameRandom.GetRandomLevel(TableReader.SummonSkillLottery.DiamondRates);
             }
 
-            SummonMotionData summonData = new SummonMotionData(TableReader.SummonSkillLottery.RecordsList[summonIdx].SummonSkill.Id);
+            SummonMotionData summonData = AddSummonData(TableReader.SummonSkillLottery.RecordsList[summonIdx].SummonSkill.Id);
             summonList.Add(summonData);
-            _SummonMotionList.Add(summonData);
         }
-        SaveClass(true);
+        _SummonMotionList.SaveClass(true);
+        _SummonMatList.SaveClass(true);
+
+        RefreshCollection(summonList);
         return summonList;
+    }
+
+    public SummonMotionData AddSummonData(string summonID)
+    {
+        SummonMotionData summonData = new SummonMotionData(summonID);
+        var listItem = _SummonMotionList.GetItem(summonID);
+        if (listItem == null && summonData.SummonRecord.Quality > ITEM_QUALITY.GREEN)
+        {
+            _SummonMotionList.AddItem(summonData);
+        }
+        else
+        {
+            _SummonMatList.AddItem(summonID, 1);
+        }
+
+
+        return summonData;
     }
 
     #endregion
@@ -565,12 +319,11 @@ public class SummonSkillData : SaveItemBase
 
     public void RefreshTotalStar()
     {
-        int _TotalStars = 0;
         foreach (var starDict in _CollectionItems)
         {
             if (starDict._Star > 0)
             {
-                _TotalStars += starDict._Star;
+                _TotalCollectStars += starDict._Star;
             }
         }
         RefreshCD();
@@ -613,7 +366,7 @@ public class SummonSkillData : SaveItemBase
     {
         foreach (var record in _CollectionItems)
         {
-            foreach (var summonMotion in _SummonMotionList)
+            foreach (var summonMotion in _SummonMotionList._PackItems)
             {
                 if (record._SummonRecord.Id == summonMotion.SummonRecordID)
                 {
@@ -638,6 +391,9 @@ public class SummonSkillData : SaveItemBase
             }
         });
 
+        if (collectItem == null)
+            return;
+
         if (collectItem._Star < summonMotion.StarLevel)
         {
             collectItem._Star = summonMotion.StarLevel;
@@ -659,29 +415,31 @@ public class SummonSkillData : SaveItemBase
 
     public void SellSummonItem(SummonMotionData summonData)
     {
-        _SummonMotionList.Remove(summonData);
+        _SummonMatList.DecItem(summonData);
 
         RefreshUsingIdx();
         //SaveClass(true);
     }
 
-    public int LevelUpSummonItem(SummonMotionData summonData, List<SummonMotionData> expItems)
+    public int LevelUpSummonItem(SummonMotionData summonData, Dictionary<SummonMotionData, int> expItems)
     {
         int exp = GetItemsExp(expItems);
 
         int starCnt = 0;
-        int expItemCnt = expItems.Count;
-        for (int i = 0; i < expItemCnt; ++i)
+        
+        foreach(var expItem in expItems)
         {
-            _SummonMotionList.Remove(expItems[i]);
-            if (expItems[i].SummonRecordID == summonData.SummonRecordID)
+            _SummonMatList.DecItem(expItem.Key, expItem.Value);
+            if (expItem.Key.SummonRecordID == summonData.SummonRecordID)
             {
-                ++starCnt;
+                starCnt += expItem.Value;
             }
         }
 
+        _SummonMatList.SaveClass(true);
         summonData.AddExp(exp);
         summonData.AddStarExp(starCnt);
+        summonData.SaveClass(true);
 
         RefreshUsingIdx();
         //SaveClass(true);
@@ -691,22 +449,34 @@ public class SummonSkillData : SaveItemBase
         return exp;
     }
 
-    public int GetItemsExp(List<SummonMotionData> expItems)
+    public int GetItemsExp(Dictionary<SummonMotionData, int> expItems)
     {
         int exp = 0;
         int expItemCnt = expItems.Count;
-        for (int i = 0; i < expItemCnt; ++i)
+        foreach(var expItem in expItems)
         {
-            exp += expItems[i].Exp + (int)expItems[i].SummonRecord.Quality * 2 + 1;
+            exp += (expItem.Key.Exp + (int)expItem.Key.SummonRecord.Quality * 2 + 1) * expItem.Value;
         }
 
         return exp;
     }
 
+    public int GetItemsStarExp(SummonMotionData motionData, Dictionary<SummonMotionData, int> expItems)
+    {
+        int starCnt = 0;
+        foreach (var expItem in expItems)
+        {
+            if (expItem.Key.ItemDataID == motionData.ItemDataID)
+            {
+                starCnt += expItem.Value;
+            }
+        }
+
+        return starCnt;
+    }
+
     public void SetLockSummonItem(SummonMotionData summonData, bool isLock)
     {
-        summonData.IsLock = isLock;
-
         SaveClass(true);
     }
 
@@ -720,14 +490,6 @@ public class SummonSkillData : SaveItemBase
                 return -1;
             }
             else if (sameMotion != null && motionA.SummonRecordID != sameMotion.SummonRecordID && motionB.SummonRecordID == sameMotion.SummonRecordID)
-            {
-                return 1;
-            }
-            else if (motionA.IsLock && !motionB.IsLock)
-            {
-                return -1;
-            }
-            else if (!motionA.IsLock && motionB.IsLock)
             {
                 return 1;
             }
@@ -839,6 +601,7 @@ public class SummonSkillData : SaveItemBase
         });
     }
 
+    /*
     public void StageLevelUp(SummonMotionData summonData)
     {
         var maxAttrs = summonData.GetStageAttrMax();
@@ -931,6 +694,7 @@ public class SummonSkillData : SaveItemBase
             SaveClass(true);
         }
     }
+    */
     #endregion
 
 }

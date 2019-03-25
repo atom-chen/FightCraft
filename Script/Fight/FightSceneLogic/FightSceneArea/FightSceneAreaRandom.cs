@@ -13,6 +13,7 @@ public class FightSceneAreaRandom : FightSceneAreaBase
     {
         base.InitArea();
 
+        _AreaStarted = true;
         InitRandomMonsters();
     }
 
@@ -104,7 +105,7 @@ public class FightSceneAreaRandom : FightSceneAreaBase
 
     public List<Transform> _DirectTrans;
     public FightSceneLogicRandomArea RandomLogic { get; set; }
-    public int AreaID { get; set; }
+    
 
     private Vector3 _MonTrans;
     private Vector3 _MonLookTrans;

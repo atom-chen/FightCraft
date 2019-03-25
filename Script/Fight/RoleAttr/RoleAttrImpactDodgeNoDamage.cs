@@ -10,7 +10,7 @@ public class RoleAttrImpactDodgeNoDamage : RoleAttrImpactBase
     {
         _SkillInput = skillInput;
         _ImpactName = "DodgeDexImpact";
-
+        _BuffLastTime = GameDataValue.ConfigIntToFloat(args[0]);
     }
 
     public override List<int> GetSkillImpactVal(ItemSkill skillInfo)
@@ -32,11 +32,24 @@ public class RoleAttrImpactDodgeNoDamage : RoleAttrImpactBase
         impactGO.transform.localPosition = Vector3.zero;
         impactGO.transform.localRotation = Quaternion.Euler(0, 0, 0);
 
+        var buff = impactGO.GetComponentInChildren<ImpactBuff>();
+        buff._LastTime = _BuffLastTime;
+
+    }
+
+    public static string GetAttrDesc(List<int> attrParams)
+    {
+        List<int> copyAttrs = new List<int>(attrParams);
+        int attrDescID = copyAttrs[0];
+        var skillRecord = Tables.TableReader.SkillInfo.GetRecord(attrDescID.ToString());
+        var strFormat = StrDictionary.GetFormatStr(skillRecord.DescStrDict, GameDataValue.ConfigIntToFloat(skillRecord.EffectValue[0]));
+        return strFormat;
     }
 
     #region 
 
     public string _ImpactName;
+    public float _BuffLastTime;
     
     #endregion
 }

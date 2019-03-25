@@ -11,6 +11,7 @@ public class AI_HeroBase : AI_Base
 
         InitPassiveSkills();
 
+        //BuffStar();
         IsCancelNormalAttack = true;
     }
 
@@ -407,6 +408,30 @@ public class AI_HeroBase : AI_Base
             }
             StrStage2Buff[i].ActBuffInstance(_SelfMotion, _SelfMotion, buffLoasTime);
         }
+    }
+
+    #endregion
+
+    #region block bullet
+
+    private ImpactBuff _BulletBlockBuffPrefab;
+    public ImpactBuff BulletBlockBuffPrefab
+    {
+        get
+        {
+            if (_BulletBlockBuffPrefab == null)
+            {
+                var buffGO = ResourceManager.Instance.GetGameObject("SkillMotion/CommonImpact/BlockBullet");
+                _BulletBlockBuffPrefab = buffGO.GetComponent<ImpactBuff>();
+            }
+            return _BulletBlockBuffPrefab;
+        }
+    }
+
+    private void BuffStar()
+    {
+        BulletBlockBuffPrefab.ActBuffInstance(_SelfMotion, _SelfMotion);
+
     }
 
     #endregion

@@ -3,6 +3,7 @@ using System.Collections;
 
 public class AI_SummonSkill : AI_Base
 {
+    public float _ModelSizeFixed = 0.7f;
 
     protected override void Init()
     {
@@ -30,7 +31,7 @@ public class AI_SummonSkill : AI_Base
     private static float _DispearTimeStatic = 0.2f;
     private float _ShowDelay = 0.15f;
     private float _SkillDelay = 0.15f;
-    private float _DispearTime = 0.2f;
+    private float _DispearTime = 1.0f;
 
     private float _SkillStartTime = -1;
     private float _SkillFinishTime = -1;
@@ -50,6 +51,10 @@ public class AI_SummonSkill : AI_Base
             return;
 
         PlayShow();
+        if (_SelfMotion.ActingSkill != null)
+        {
+            _SelfMotion.ActingSkill.FinishSkill();
+        }
         StartCoroutine(UseSkillDelay(idx));
     }
 

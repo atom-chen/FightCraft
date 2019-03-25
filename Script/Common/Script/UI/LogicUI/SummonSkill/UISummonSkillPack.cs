@@ -30,46 +30,56 @@ public class UISummonSkillPack : UIBase
 
     #region pack
 
+    public UITagPanel _PackPage;
     public UIContainerBase _SummonItemContainer;
+
+    private int _ShowingPage = 0;
 
     public override void Show(Hashtable hash)
     {
         base.Show(hash);
 
-        ShowItemPack();
+        ShowItemPack(_ShowingPage);
         ShowUsingItems();
 
         _ArrayMode = false;
     }
 
+    public void OnShowPage(int page)
+    {
+        _ShowingPage = page;
+        RefreshItems();
+    }
+
     public void RefreshItems()
     {
-        ShowItemPack();
+        ShowItemPack(_ShowingPage);
         ShowUsingItems();
     }
 
-    private void ShowItemPack()
+    private void ShowItemPack(int pageIdx)
     {
-        List<SummonMotionData> unusedMotions = new List<SummonMotionData>();
-        for (int i = 0; i < SummonSkillData.Instance._SummonMotionList.Count; ++i)
+        if (pageIdx == 2)
         {
-            //var sameSummonData = SummonSkillData.Instance._UsingSummon.Find((summonData) =>
-            //{
-            //    if (summonData.SummonRecordID == SummonSkillData.Instance._SummonMotionList[i].SummonRecordID)
-            //    {
-            //        return true;
-            //    }
-            //    return false;
-            //});
-            //if (sameSummonData == null)
-            {
-                unusedMotions.Add(SummonSkillData.Instance._SummonMotionList[i]);
-            }
+            Hashtable hash = new Hashtable();
+            hash.Add("IsMaterial", true);
+            _SummonItemContainer.InitContentItem(SummonSkillData.Instance._SummonMatList._PackItems, null, hash, OnPackClick);
         }
+        else
+        {
+            List<SummonMotionData> unusedMotions = new List<SummonMotionData>();
+            for (int i = 0; i < SummonSkillData.Instance._SummonMotionList._PackItems.Count; ++i)
+            {
+                if (SummonSkillData.Instance._SummonMotionList._PackItems[i].SummonRecord.ActSkillIdx == pageIdx)
+                {
+                    unusedMotions.Add(SummonSkillData.Instance._SummonMotionList._PackItems[i]);
+                }
+            }
 
-        SummonSkillData.Instance.SortSummonMotionsInPack(unusedMotions);
+            SummonSkillData.Instance.SortSummonMotionsInPack(unusedMotions);
 
-        _SummonItemContainer.InitContentItem(unusedMotions, null, null, OnPackClick);
+            _SummonItemContainer.InitContentItem(unusedMotions, null, null, OnPackClick);
+        }
     }
 
     private void OnPackClick(UIItemBase itemObj)
@@ -102,7 +112,7 @@ public class UISummonSkillPack : UIBase
         }
         else
         {
-            UISummonSkillToolTips.ShowAsyn(summonItem.SummonMotionData);
+            UISummonSkillToolTips.ShowAsyn(summonItem.SummonMotionData, true);
         }
     }
 
@@ -148,7 +158,7 @@ public class UISummonSkillPack : UIBase
             if (summonItem.SummonMotionData == null)
                 return;
 
-            UISummonSkillToolTips.ShowAsyn(summonItem.SummonMotionData);
+            UISummonSkillToolTips.ShowAsyn(summonItem.SummonMotionData, true);
         }
     }
 

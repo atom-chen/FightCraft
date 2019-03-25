@@ -14,6 +14,7 @@ namespace Tables
 
         public override string Id { get; set; }        public string Name { get; set; }
         public string Desc { get; set; }
+        public int NameDict { get; set; }
         public List<int> ExAttrEnum { get; set; }
         public List<int> Attr { get; set; }
         public EquipSpAttrRecord(DataRecord dataRecord)
@@ -33,6 +34,7 @@ namespace Tables
             recordStrList.Add(TableWriteBase.GetWriteStr(Id));
             recordStrList.Add(TableWriteBase.GetWriteStr(Name));
             recordStrList.Add(TableWriteBase.GetWriteStr(Desc));
+            recordStrList.Add(TableWriteBase.GetWriteStr(NameDict));
             foreach (var testTableItem in ExAttrEnum)
             {
                 recordStrList.Add(TableWriteBase.GetWriteStr(testTableItem));
@@ -106,13 +108,13 @@ namespace Tables
             {
                 pair.Value.Name = TableReadBase.ParseString(pair.Value.ValueStr[1]);
                 pair.Value.Desc = TableReadBase.ParseString(pair.Value.ValueStr[2]);
-                pair.Value.ExAttrEnum.Add(TableReadBase.ParseInt(pair.Value.ValueStr[3]));
+                pair.Value.NameDict = TableReadBase.ParseInt(pair.Value.ValueStr[3]);
                 pair.Value.ExAttrEnum.Add(TableReadBase.ParseInt(pair.Value.ValueStr[4]));
                 pair.Value.ExAttrEnum.Add(TableReadBase.ParseInt(pair.Value.ValueStr[5]));
                 pair.Value.ExAttrEnum.Add(TableReadBase.ParseInt(pair.Value.ValueStr[6]));
                 pair.Value.ExAttrEnum.Add(TableReadBase.ParseInt(pair.Value.ValueStr[7]));
                 pair.Value.ExAttrEnum.Add(TableReadBase.ParseInt(pair.Value.ValueStr[8]));
-                pair.Value.Attr.Add(TableReadBase.ParseInt(pair.Value.ValueStr[9]));
+                pair.Value.ExAttrEnum.Add(TableReadBase.ParseInt(pair.Value.ValueStr[9]));
                 pair.Value.Attr.Add(TableReadBase.ParseInt(pair.Value.ValueStr[10]));
                 pair.Value.Attr.Add(TableReadBase.ParseInt(pair.Value.ValueStr[11]));
                 pair.Value.Attr.Add(TableReadBase.ParseInt(pair.Value.ValueStr[12]));
@@ -122,6 +124,7 @@ namespace Tables
                 pair.Value.Attr.Add(TableReadBase.ParseInt(pair.Value.ValueStr[16]));
                 pair.Value.Attr.Add(TableReadBase.ParseInt(pair.Value.ValueStr[17]));
                 pair.Value.Attr.Add(TableReadBase.ParseInt(pair.Value.ValueStr[18]));
+                pair.Value.Attr.Add(TableReadBase.ParseInt(pair.Value.ValueStr[19]));
             }
         }
     }

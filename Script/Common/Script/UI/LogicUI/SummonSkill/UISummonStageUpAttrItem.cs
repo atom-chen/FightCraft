@@ -80,16 +80,16 @@ public class UISummonStageUpAttrItem : UIItemBase
         }
 
         _AddValue.text = "+" + SummonMotionData.StageAttrAdd[_SummonAttrInfo.AttrIdx];
-        _CostItem.ShowCost(_SummonMotionData.GetAttrCostItem(_SummonAttrInfo.AttrIdx), 1);
+        //_CostItem.ShowCost(_SummonMotionData.GetAttrCostItem(_SummonAttrInfo.AttrIdx), 1);
     }
 
     #region 
 
     public void AddAttr()
     {
-        SummonSkillData.Instance.StageAddAttr(_SummonMotionData, _SummonAttrInfo.AttrIdx);
+        //SummonSkillData.Instance.StageAddAttr(_SummonMotionData, _SummonAttrInfo.AttrIdx);
 
-        _SummonAttrInfo.CurValue = _SummonMotionData.StageAttrs[_SummonAttrInfo.AttrIdx];
+        //_SummonAttrInfo.CurValue = _SummonMotionData.StageAttrs[_SummonAttrInfo.AttrIdx];
         Refresh();
     }
 

@@ -56,6 +56,9 @@ public class SkillData : SaveItemBase
         if (Tables.TableReader.SkillInfo == null)
             return false;
 
+        if (RoleData.SelectRole == null)
+            return false;
+
         Debug.Log("_SkillItems:" + _SkillItems.Count);
         bool isNeedSave = false;
         _ProfessionSkills = new List<ItemSkill>();
@@ -90,7 +93,7 @@ public class SkillData : SaveItemBase
 
     public List<string> GetRoleSkills()
     {
-        List<string> skillMotions = new List<string>() { "Attack", "Dush" };
+        List<string> skillMotions = new List<string>() { "Attack" };
         if (RoleData.SelectRole.Profession == PROFESSION.BOY_DEFENCE || RoleData.SelectRole.Profession == PROFESSION.GIRL_DEFENCE)
         {
             skillMotions.Add("Defence");

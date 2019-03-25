@@ -712,7 +712,7 @@ public class ItemEquip : ItemBase
         if (legencyEquip != null)
         {
             var exLevel = GameDataValue.GetLegencyLv(itemEquip.EquipLevel);
-            EquipExAttr legencyAttr = legencyEquip.ExAttr[exLevel - 1].GetExAttr(1);
+            EquipExAttr legencyAttr = legencyEquip.ExAttr[exLevel - 1].GetExAttr(exLevel);
             itemEquip.AddExAttr(legencyAttr);
         }
 

@@ -8,10 +8,11 @@ public class UISummonSkillToolTips : UIBase
 
     #region static funs
 
-    public static void ShowAsyn(SummonMotionData summonDatas)
+    public static void ShowAsyn(SummonMotionData summonDatas, bool isLvUp)
     {
         Hashtable hash = new Hashtable();
         hash.Add("SummonData", summonDatas);
+        hash.Add("IsLVUp", isLvUp);
         GameCore.Instance.UIManager.ShowUI("LogicUI/SummonSkill/UISummonSkillToolTips", UILayer.SubPopUI, hash);
     }
 
@@ -55,12 +56,14 @@ public class UISummonSkillToolTips : UIBase
     public GameObject _BtnLevelUp;
 
     private SummonMotionData _SummonData;
+    private bool _IsLvUp;
 
     public override void Show(Hashtable hash)
     {
         base.Show(hash);
 
         _SummonData = (SummonMotionData)hash["SummonData"];
+        _IsLvUp = (bool)hash["IsLVUp"];
         ShowItem();
     }
 
@@ -76,13 +79,13 @@ public class UISummonSkillToolTips : UIBase
 
         _StarExp.text = string.Format("({0}/{1})", _SummonData.CurStarExp, _SummonData.CurStarLevelExp());
 
-        if (_SummonData.SummonRecord.Quality == Tables.ITEM_QUALITY.WHITE)
+        if (_IsLvUp)
         {
-            _BtnLevelUp.SetActive(false);
+            _BtnLevelUp.SetActive(true);
         }
         else
         {
-            _BtnLevelUp.SetActive(true);
+            _BtnLevelUp.SetActive(false);
         }
 
         _SkillDesc.text = Tables.StrDictionary.GetFormatStr(_SummonData.SummonRecord.SkillDesc, _SummonData.SummonRecord.SkillRate[_SummonData.StarLevel] * 100);

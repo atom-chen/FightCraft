@@ -28,6 +28,15 @@ public class UIStageSelect : UIBase
         return instance.MaxStageId;
     }
 
+    public static int GetSelectedDiff()
+    {
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIStageSelect>("LogicUI/Stage/UIStageSelect");
+        if (instance == null)
+            return -1;
+
+        return instance._SelectedDiff;
+    }
+
     #endregion
 
     public override void Show(Hashtable hash)
@@ -151,12 +160,25 @@ public class UIStageSelect : UIBase
     public Text _StageName;
     public Text _StageLevel;
     public Text _StageDesc;
+    public Text _Condition;
 
     private void SetStageInfo(StageInfoRecord stage)
     {
-        _StageName.text = stage.Name;
-        _StageLevel.text = "1";
-        _StageDesc.text = stage.Desc;
+        int stageID = int.Parse(_SelectedStage.Id);
+        int stageLevel = GameDataValue.GetStageLevel(_SelectedDiff, stageID, STAGE_TYPE.NORMAL);
+        _StageName.text = StrDictionary.GetFormatStr(stage.Name);
+        _StageLevel.text = stageLevel.ToString();
+        _StageDesc.text = StrDictionary.GetFormatStr(stage.Desc);
+
+        _Condition.text = "";
+        //if (stageLevel > RoleData.SelectRole.TotalLevel + 10)
+        //{
+        //    _Condition.text = StrDictionary.GetFormatStr(71100);
+        //}
+        //else if (stageID < GetMaxStageID())
+        //{
+        //    _Condition.text = StrDictionary.GetFormatStr(71102);
+        //}
     }
 
     public void OnEnterStage()

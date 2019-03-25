@@ -94,6 +94,9 @@ public class ObjMotionSkillBuff : ObjMotionSkillBase
 
     public void StartNextInput()
     {
-        InputManager.Instance.SetReuseSkill(_ActSkillInput);
+        if (IsCanActAfterBuff)
+        {
+            InputManager.Instance.SetReuseSkill(_ActSkillInput);
+        }
     }
 }

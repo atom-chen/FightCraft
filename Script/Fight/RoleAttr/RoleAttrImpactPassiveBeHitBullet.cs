@@ -56,14 +56,14 @@ public class RoleAttrImpactPassiveBeHitBullet : RoleAttrImpactPassive
 
     private static float GetValueFromTab(AttrValueRecord attrRecord, int level)
     {
-        var theValue = GameDataValue.ConfigIntToFloat(attrRecord.AttrParams[0] + attrRecord.AttrParams[1] * level);
+        var theValue = GameDataValue.ConfigIntToFloat(attrRecord.AttrParams[0] + attrRecord.AttrParams[1] * (level - 1));
         theValue = Mathf.Min(theValue, GameDataValue.ConfigIntToFloat(attrRecord.AttrParams[2]));
         return theValue;
     }
 
     private static float GetValue2FromTab(AttrValueRecord attrRecord, int level)
     {
-        var theValue = GameDataValue.ConfigIntToFloat(attrRecord.AttrParams[3] + attrRecord.AttrParams[4] * level);
+        var theValue = GameDataValue.ConfigIntToFloat(attrRecord.AttrParams[3] + attrRecord.AttrParams[4] * (level - 1));
         theValue = Mathf.Max(theValue, GameDataValue.ConfigIntToFloat(attrRecord.AttrParams[5]));
         return theValue;
     }

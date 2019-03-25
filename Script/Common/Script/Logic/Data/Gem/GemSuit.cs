@@ -76,6 +76,9 @@ public class GemSuit
     {
         foreach (var gemRecord in gemSet.Gems)
         {
+            if (gemRecord == null)
+                continue;
+
             var gemInfo = GemData.Instance.GetGemClassMax(gemRecord.Class, gemSet.MinGemLv);
             if (gemInfo == null || !gemInfo.IsVolid() || gemInfo.GemRecord.Level < gemSet.MinGemLv)
                 return false;
@@ -93,6 +96,9 @@ public class GemSuit
 
         for (int i = 0; i < gemSet.Gems.Count; ++i)
         {
+            if (gemSet.Gems[i] == null)
+                continue;
+
             var gemInfo = GemData.Instance.GetGemClassMax(gemSet.Gems[i].Class, gemSet.MinGemLv);
             if (gemInfo == null)
             {
@@ -167,13 +173,14 @@ public class GemSuit
         if (_ActSet != null)
         {
             _ActSetAttrs = GameDataValue.GetGemSetAttr(_ActSet, _ActLevel);
-            for (int i = 0; i < _ActAttrLevel.Count; ++i)
-            {
-                if (_ActLevel >= _ActAttrLevel[i])
-                {
-                    _ActSetAttrCnt = i + 1;
-                }
-            }
+            _ActSetAttrCnt = _ActSetAttrs.Count;
+            //for (int i = 0; i < _ActAttrLevel.Count; ++i)
+            //{
+            //    //if (_ActLevel >= _ActAttrLevel[i])
+            //    {
+            //        _ActSetAttrCnt = i + 1;
+            //    }
+            //}
         }
     }
 

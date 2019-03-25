@@ -125,6 +125,20 @@ public class MotionManager : MonoBehaviour
 
     public void InitAnimation(AnimationClip animClip)
     {
+        List<AnimationEvent> eveneList = new List<UnityEngine.AnimationEvent>();
+        foreach (var animEvent in animClip.events)
+        {
+            if (animEvent.functionName == "ColliderStart" && animEvent.intParameter >= 1000)
+            { }
+            else if (animEvent.functionName == "CollidertEnd" && animEvent.intParameter >= 1000)
+            { }
+            else
+            {
+                eveneList.Add(animEvent);
+            }
+        }
+        animClip.events = eveneList.ToArray();
+
         _Animaton.AddClip(animClip, animClip.name);
     }
 
@@ -262,6 +276,13 @@ public class MotionManager : MonoBehaviour
         UnityEngine.AnimationEvent animEvent = new UnityEngine.AnimationEvent();
         animEvent.time = animClip.length;
         animEvent.functionName = "AnimationEnd";
+
+        foreach (var selectorEvent in animClip.events)
+        {
+            if (selectorEvent.time == animEvent.time && animEvent.functionName == selectorEvent.functionName)
+                return;
+        }
+
         animClip.AddEvent(animEvent);
     }
 

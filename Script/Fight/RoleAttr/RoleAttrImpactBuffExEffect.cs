@@ -9,13 +9,14 @@ public class RoleAttrImpactBuffExEffect : RoleAttrImpactBase
     public override void InitImpact(string skillInput, List<int> args)
     {
         _SkillInput = skillInput;
-        _ImpactName = "ExBuffImpact";
+        var skillRecord = TableReader.SkillInfo.GetRecord(args[0].ToString());
+        _ImpactName = skillRecord.SkillAttr.StrParam[0];
     }
 
     public override List<int> GetSkillImpactVal(ItemSkill skillInfo)
     {
         var valList = new List<int>();
-        valList.Add(skillInfo.SkillActureLevel * skillInfo.SkillRecord.EffectValue[0]);
+        valList.Add(int.Parse(skillInfo.SkillID));
 
         return valList;
     }
@@ -26,11 +27,19 @@ public class RoleAttrImpactBuffExEffect : RoleAttrImpactBase
             return;
 
         var skillMotion = roleMotion._StateSkill._SkillMotions[_SkillInput];
-        var impactGO = ResourceManager.Instance.GetInstanceGameObject("SkillMotion\\" + roleMotion._MotionAnimPath + "\\" + _ImpactName);
+        var impactGO = ResourceManager.Instance.GetInstanceGameObject("SkillMotion\\CommonImpact\\" + _ImpactName);
         impactGO.transform.SetParent(skillMotion.transform);
 
     }
 
+    public static string GetAttrDesc(List<int> attrParams)
+    {
+        List<int> copyAttrs = new List<int>(attrParams);
+        int attrDescID = copyAttrs[0];
+        var skillRecord = Tables.TableReader.SkillInfo.GetRecord(attrDescID.ToString());
+        var strFormat = StrDictionary.GetFormatStr(skillRecord.DescStrDict, GameDataValue.ConfigIntToPersent(skillRecord.EffectValue[0]), GameDataValue.ConfigIntToPersent(skillRecord.EffectValue[1]));
+        return strFormat;
+    }
     #region 
 
     public string _ImpactName;

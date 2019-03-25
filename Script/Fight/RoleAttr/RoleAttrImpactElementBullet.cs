@@ -11,7 +11,7 @@ public class RoleAttrImpactElementBullet : RoleAttrImpactBase
         var attrTab = Tables.TableReader.AttrValue.GetRecord(args[0].ToString());
         _ImpactName = attrTab.StrParam[0];
         _SkillInput = attrTab.StrParam[1];
-        _Damage = GameDataValue.ConfigIntToFloat(attrTab.AttrParams[0] + attrTab.AttrParams[1] * args[1]);
+        _Damage = GameDataValue.ConfigIntToFloat(attrTab.AttrParams[0] + attrTab.AttrParams[1] * (args[1] - 1));
     }
 
     public override void ModifySkillBeforeInit(MotionManager roleMotion)
@@ -24,7 +24,7 @@ public class RoleAttrImpactElementBullet : RoleAttrImpactBase
         impactGO.transform.SetParent(skillMotion.transform);
         impactGO.transform.localPosition = Vector3.zero;
         impactGO.transform.localRotation = Quaternion.Euler(Vector3.zero);
-        var bulletEmitterEle = impactGO.GetComponentsInChildren<BulletEmitterElement>();
+        var bulletEmitterEle = impactGO.GetComponentsInChildren<BulletEmitterBase>();
         foreach (var bulletEmitter in bulletEmitterEle)
         {
             bulletEmitter._Damage = _Damage;
@@ -41,8 +41,8 @@ public class RoleAttrImpactElementBullet : RoleAttrImpactBase
         List<int> copyAttrs = new List<int>(attrParams);
         int attrDescID = copyAttrs[0];
         var attrTab = Tables.TableReader.AttrValue.GetRecord(attrDescID.ToString());
-        var damage = attrTab.AttrParams[0] + attrTab.AttrParams[1] * attrParams[1];
-        var strFormat = StrDictionary.GetFormatStr(attrDescID, GameDataValue.ConfigIntToPersent(damage));
+        var damage = attrTab.AttrParams[0] + attrTab.AttrParams[1] * (attrParams[1] - 1);
+        var strFormat = StrDictionary.GetFormatStr(attrTab.StrParam[2], GameDataValue.ConfigIntToPersent(damage));
         return strFormat;
     }
 

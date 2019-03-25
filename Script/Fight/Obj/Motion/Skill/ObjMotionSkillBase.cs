@@ -93,6 +93,8 @@ public class ObjMotionSkillBase : MonoBehaviour
 
         if (_MotionManager._ActionState == _MotionManager._StateSkill)
         {
+            if (_MotionManager.ActingSkill == null)
+                return true;
             if (_MotionManager.ActingSkill._SkillMotionPrior < _SkillMotionPrior)
             {
                 return true;
@@ -106,6 +108,7 @@ public class ObjMotionSkillBase : MonoBehaviour
 
     public bool StartSkill(Hashtable exHash = null)
     {
+        Debug.Log("StartSkill:" + _ActInput + ",Time:" + Time.time);
         if (!IsCanActSkill())
             return false;
 
@@ -152,7 +155,7 @@ public class ObjMotionSkillBase : MonoBehaviour
                 ColliderEnd(param);
                 break;
             case AnimEventManager.NEXT_INPUT_START:
-                InputManager.Instance.SkillNextInput(this);
+                FightSkillManager.Instance.SkillNextInput(this);
                 _CanNextInput = true;
                 break;
         }

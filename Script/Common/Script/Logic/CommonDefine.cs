@@ -53,6 +53,18 @@ public class CommonDefine
         return "<color=#ffffff>";
     }
 
+    public static string GetQualityItemName(string itemDataID, bool withBrackets = false)
+    {
+        var itemRecord = TableReader.CommonItem.GetRecord(itemDataID);
+        string itemName = StrDictionary.GetFormatStr(itemRecord.NameStrDict);
+        if (withBrackets)
+        {
+            itemName = "[" + itemName + "]";
+        }
+        itemName = GetQualityColorStr(itemRecord.Quality) + itemName + "</color>";
+        return itemName;
+    }
+
     /// <summary>
     /// color 转换hex
     /// </summary>

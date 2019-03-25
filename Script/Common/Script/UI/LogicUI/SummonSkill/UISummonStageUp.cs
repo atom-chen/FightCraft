@@ -67,41 +67,41 @@ public class UISummonStageUp : UIBase
 
     private void RefreshAttrs()
     {
-        var maxAttr = _SummonData.GetStageAttrMax();
-        List<SummonAttrInfo> summonAttrs = new List<SummonAttrInfo>();
-        for (int i = 0; i < _SummonData.Stage + 1; ++i)
-        {
-            SummonAttrInfo attrInfo = new SummonAttrInfo();
-            attrInfo.AttrIdx = i;
-            attrInfo.CurValue = _SummonData.StageAttrs[i];
-            attrInfo.MaxValue = maxAttr[i];
-            attrInfo.AttrEnum = SummonMotionData.StageAttrEnums[i];
+        //var maxAttr = _SummonData.GetStageAttrMax();
+        //List<SummonAttrInfo> summonAttrs = new List<SummonAttrInfo>();
+        //for (int i = 0; i < _SummonData.Stage + 1; ++i)
+        //{
+        //    SummonAttrInfo attrInfo = new SummonAttrInfo();
+        //    attrInfo.AttrIdx = i;
+        //    attrInfo.CurValue = _SummonData.StageAttrs[i];
+        //    attrInfo.MaxValue = maxAttr[i];
+        //    attrInfo.AttrEnum = SummonMotionData.StageAttrEnums[i];
 
-            summonAttrs.Add(attrInfo);
-        }
+        //    summonAttrs.Add(attrInfo);
+        //}
 
-        Hashtable hash = new Hashtable();
-        hash.Add("SummonMotionData", _SummonData);
-        _AttrContainer.InitContentItem(summonAttrs, null, hash);
+        //Hashtable hash = new Hashtable();
+        //hash.Add("SummonMotionData", _SummonData);
+        //_AttrContainer.InitContentItem(summonAttrs, null, hash);
     }
 
     private void RefreshStageUpCost()
     {
-        string costItemID = "";
-        int costItemCnt = 0;
-        SummonSkillData.Instance.IsStageLvUpItemEnough(_SummonData, out costItemID, out costItemCnt);
-        _StageUpCostItem.ShowCost(costItemID, costItemCnt);
+        //string costItemID = "";
+        //int costItemCnt = 0;
+        //SummonSkillData.Instance.IsStageLvUpItemEnough(_SummonData, out costItemID, out costItemCnt);
+        //_StageUpCostItem.ShowCost(costItemID, costItemCnt);
     }
 
     public void AddAttr(int idx)
     {
-        if (_SummonData == null)
-            return;
+        //if (_SummonData == null)
+        //    return;
 
-        SummonSkillData.Instance.StageAddAttr(_SummonData, idx);
+        //SummonSkillData.Instance.StageAddAttr(_SummonData, idx);
 
-        RefreshAttrs();
-        RefreshStageUpCost();
+        //RefreshAttrs();
+        //RefreshStageUpCost();
     }
 
     #endregion
@@ -111,8 +111,8 @@ public class UISummonStageUp : UIBase
 
     public void BtnStageUp()
     {
-        SummonSkillData.Instance.StageLevelUp(_SummonData);
-        ShowItem();
+        //SummonSkillData.Instance.StageLevelUp(_SummonData);
+        //ShowItem();
     }
 
     #endregion

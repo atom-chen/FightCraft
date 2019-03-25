@@ -23,6 +23,11 @@ namespace Tables
 
         public static string GetFormatStr(string idx, params object[] param)
         {
+            if (string.IsNullOrEmpty(idx))
+            {
+                Debug.LogError("string.IsNullOrEmpty(idx)");
+                return "StrDictionary Error:" + idx;
+            }
             var strRecord = TableReader.StrDictionary.GetRecord(idx.ToString());
             if (strRecord == null)
             {

@@ -23,7 +23,8 @@ public class AI_KeepDistance : AI_CloseAttack
 
         if (!_AIAwake)
         {
-            float distance = Vector3.Distance(transform.position, _TargetMotion.transform.position);
+            //float distance = Vector3.Distance(transform.position, _TargetMotion.transform.position);
+            float distance = GetPathLength(transform.position, _TargetMotion.transform.position);
             if (distance > _AlertRange)
                 return;
 

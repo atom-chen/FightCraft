@@ -145,6 +145,27 @@ public class UIGemPackCombine : UIBase
     {
         UIGemCombineSet.ShowAsyn();
     }
+
+    public void OnBtnCombineAll()
+    {
+        if (_CopyPack[0].ItemGem != null && _CopyPack[0].ItemGem.IsVolid()
+            && _CopyPack[0].ItemGem.ItemDataID == _CopyPack[1].ItemGem.ItemDataID
+            && _CopyPack[0].ItemGem.ItemDataID == _CopyPack[2].ItemGem.ItemDataID
+            )
+        {
+            string dictStr = Tables.StrDictionary.GetFormatStr(30007, Tables.StrDictionary.GetFormatStr(_CopyPack[0].ItemGem.CommonItemRecord.NameStrDict));
+            UIMessageBox.Show(dictStr, () =>
+            {
+                GemData.Instance.GemCombineSameAll(_CopyPack[0].ItemGem);
+                ResetPacket();
+            }, null);
+            
+        }
+        else
+        {
+            UIMessageTip.ShowMessageTip(30008);
+        }
+    }
     #endregion
 
 }

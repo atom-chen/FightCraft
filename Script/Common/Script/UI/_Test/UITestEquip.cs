@@ -93,6 +93,9 @@ public class UITestEquip : UIBase
     public void AutoLevel()
     {
         int targetLevel = int.Parse(_TargetLevel.text);
+        RoleData.SelectRole._RoleLevel = targetLevel;
+        return;
+
         int fightTimes = 0;
         string fileName = "StagePassInfos";
 
@@ -452,6 +455,37 @@ public class UITestEquip : UIBase
             var elementItem = FiveElementData.CreateElementItem(level, (FIVE_ELEMENT)type);
             FiveElementData.Instance.AddElementItem(elementItem);
         }
+    }
+
+    #endregion
+
+    #region summon soul
+
+    public void OnBtnAllSummon()
+    {
+        var summonTabs = TableReader.SummonSkill.Records.Values;
+        foreach (var summonTab in summonTabs)
+        {
+            var summonData = SummonSkillData.Instance.AddSummonData(summonTab.Id);
+            summonData.AddExp(2500);
+            summonData.AddStarExp(20);
+        }
+
+        SummonSkillData.Instance.RefreshCollection();
+
+
+    }
+
+    #endregion
+
+    #region stage
+
+    public void OnBtnStageDiff()
+    {
+        ActData.Instance._BossStageDiff = ActData._MAX_BOSS_DIFF;
+        ActData.Instance._BossStageIdx = 20;
+        ActData.Instance._NormalStageDiff = ActData._MAX_NORMAL_DIFF;
+        ActData.Instance._NormalStageIdx = 20;
     }
 
     #endregion

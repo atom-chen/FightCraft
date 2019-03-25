@@ -4,6 +4,7 @@ using System.Collections;
  
 using UnityEngine.EventSystems;
 using System;
+using Tables;
 
 public class UISummonSkillItem : UIItemSelect
 {
@@ -14,9 +15,8 @@ public class UISummonSkillItem : UIItemSelect
     public Text _Level;
     public GameObject[] _Stars;
     public GameObject _ArraySelect;
-    public GameObject _ExpSelect;
 
-    private SummonMotionData _SummonMotionData;
+    protected SummonMotionData _SummonMotionData;
     public SummonMotionData SummonMotionData
     {
         get
@@ -24,6 +24,8 @@ public class UISummonSkillItem : UIItemSelect
             return _SummonMotionData;
         }
     }
+
+    private bool _IsMaterial = false;
 
     public override void Show(Hashtable hash)
     {
@@ -33,17 +35,13 @@ public class UISummonSkillItem : UIItemSelect
         if (summonData == null)
             return;
 
-        ShowSummonData(summonData);
-
-        _ExpSelect.gameObject.SetActive(false);
-        if (hash.Contains("ShowSelect"))
+        _IsMaterial = false;
+        if (hash.ContainsKey("IsMaterial"))
         {
-            bool isShowSelect = (bool)hash["ShowSelect"];
-            if (isShowSelect)
-            {
-                _ExpSelect.gameObject.SetActive(true);
-            }
+            _IsMaterial = (bool)hash["IsMaterial"];
         }
+
+        ShowSummonData(summonData);
     }
 
     public override void Refresh()
@@ -69,17 +67,29 @@ public class UISummonSkillItem : UIItemSelect
         }
 
         _InfoPanel.SetActive(true);
-        _Name.text = CommonDefine.GetQualityColorStr(_SummonMotionData.SummonRecord.Quality) + _SummonMotionData.SummonRecord.Name + "</color>";
-        _Level.text = "Lv." + _SummonMotionData.Level;
-        for (int i = 0; i < _Stars.Length; ++i)
+        _Name.text = CommonDefine.GetQualityColorStr(_SummonMotionData.SummonRecord.Quality) + StrDictionary.GetFormatStr(_SummonMotionData.SummonRecord.NameDict) + "</color>";
+
+        if (_IsMaterial)
         {
-            if (i < _SummonMotionData.StarLevel)
-            {
-                _Stars[i].gameObject.SetActive(true);
-            }
-            else
+            _Level.text = _SummonMotionData.ItemStackNum.ToString();
+            for (int i = 0; i < _Stars.Length; ++i)
             {
                 _Stars[i].gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            _Level.text = "Lv." + _SummonMotionData.Level;
+            for (int i = 0; i < _Stars.Length; ++i)
+            {
+                if (i < _SummonMotionData.StarLevel)
+                {
+                    _Stars[i].gameObject.SetActive(true);
+                }
+                else
+                {
+                    _Stars[i].gameObject.SetActive(false);
+                }
             }
         }
     }

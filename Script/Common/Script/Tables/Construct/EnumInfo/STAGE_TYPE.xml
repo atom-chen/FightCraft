@@ -18,4 +18,10 @@
     <enumValue>2</enumValue>
     <enumDesc>DOUBLE_BOSS</enumDesc>
   </enumColumn>
+  <enumColumn>
+    <enumName>ACTIVITY</enumName>
+    <enumCode>ACTIVITY</enumCode>
+    <enumValue>3</enumValue>
+    <enumDesc>ACTIVITY</enumDesc>
+  </enumColumn>
 </root>

@@ -193,6 +193,10 @@ public class ResourcePool : InstanceBase<ResourcePool>
         {
             motion = ResourceManager.Instance.GetInstanceGameObject("ModelBase/" + monsterTab.MotionPath);
         }
+        if (motion == null)
+        {
+            Debug.LogError("GetIdleMotion error:" + monsterTab.MotionPath);
+        }
         var motionScript = motion.GetComponent<MotionManager>();
         var aiScript = motion.GetComponent<AI_Base>();
         aiScript.InitSkillGoes(motionScript);

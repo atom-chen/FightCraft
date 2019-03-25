@@ -67,7 +67,7 @@
     </constructType2>
     <constructDefault>
     </constructDefault>
-    <constructRepeat>6</constructRepeat>
+    <constructRepeat>5</constructRepeat>
   </constructColumn>
   <constructColumn>
     <constructName>Attrs</constructName>

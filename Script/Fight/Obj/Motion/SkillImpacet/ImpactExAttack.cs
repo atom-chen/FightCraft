@@ -28,6 +28,14 @@ public class ImpactExAttack : ImpactBase
         string skillPath = "SkillMotion/" + skillMotion.MotionManager._MotionAnimPath + "/AttackEx";
         var skillObj = ResourceManager.Instance.GetInstanceGameObject(skillPath);
         _ExAttackSkill = skillObj.GetComponent<ObjMotionSkillBase>();
+        var hitCollider = skillObj.GetComponentInChildren<SelectCollider>();
+        if (hitCollider != null)
+        {
+            while (hitCollider._EventFrame.Count > _AttackTimes)
+            {
+                hitCollider._EventFrame.RemoveAt(hitCollider._EventFrame.Count - 1);
+            }
+        }
         _ExAttackSkill.transform.SetParent(skillMotion.transform.parent);
         _ExAttackSkill.Init();
     }

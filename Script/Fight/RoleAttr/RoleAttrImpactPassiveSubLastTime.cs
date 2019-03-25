@@ -50,7 +50,7 @@ public class RoleAttrImpactPassiveSubLastTime : RoleAttrImpactPassive
 
     private static float GetSubBuffLastTimeFromTab(AttrValueRecord attrRecord, int level)
     {
-        var lastTime = GameDataValue.ConfigIntToFloat(attrRecord.AttrParams[0] + attrRecord.AttrParams[1] * level);
+        var lastTime = GameDataValue.ConfigIntToFloat(attrRecord.AttrParams[0] + attrRecord.AttrParams[1] * (level - 1));
         lastTime = Mathf.Min(lastTime, attrRecord.AttrParams[2]);
         return lastTime;
     }

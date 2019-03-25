@@ -3,6 +3,8 @@ using System.Collections;
 
 public class ImpactBuffBlockCD : ImpactBuffCD
 {
+    public int _ActAudio = 0;
+
     public override bool IsBuffCanCatch(ImpactCatch damageImpact)
     {
         if (IsInCD())
@@ -27,6 +29,8 @@ public class ImpactBuffBlockCD : ImpactBuffCD
         }
         else
         {
+            ReciveMotion.PlayAudio(ResourcePool.Instance._CommonAudio[_ActAudio]);
+            orgDamage.TotalDamageValue = 0;
             SetCD();
         }
 
