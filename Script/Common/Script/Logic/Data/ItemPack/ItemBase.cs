@@ -63,7 +63,12 @@ public class ItemBase : SaveItemBase
 
     public virtual string GetName()
     {
-        return StrDictionary.GetFormatStr(CommonItemRecord.Name);
+        return StrDictionary.GetFormatStr(CommonItemRecord.NameStrDict);
+    }
+
+    public virtual string GetNameWithColor()
+    {
+        return CommonDefine.GetQualityColorStr(CommonItemRecord.Quality) + StrDictionary.GetFormatStr(CommonItemRecord.Name) + "</color>";
     }
 
     public virtual string GetDesc()

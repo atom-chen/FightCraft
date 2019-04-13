@@ -16,7 +16,7 @@ namespace Tables
         public string Desc { get; set; }
         public bool IsEnableDefault { get; set; }
         public int MinGemLv { get; set; }
-        public List<GemTableRecord> Gems { get; set; }
+        public List<int> Gems { get; set; }
         public List<AttrValueRecord> Attrs { get; set; }
         public GemSetRecord(DataRecord dataRecord)
         {
@@ -26,7 +26,7 @@ namespace Tables
                 Id = ValueStr[0];
 
             }
-            Gems = new List<GemTableRecord>();
+            Gems = new List<int>();
             Attrs = new List<AttrValueRecord>();
         }
         public override string[] GetRecordStr()
@@ -39,14 +39,7 @@ namespace Tables
             recordStrList.Add(TableWriteBase.GetWriteStr(MinGemLv));
             foreach (var testTableItem in Gems)
             {
-                if (testTableItem != null)
-                {
-                    recordStrList.Add(testTableItem.Id);
-                }
-                else
-                {
-                    recordStrList.Add("");
-                }
+                recordStrList.Add(TableWriteBase.GetWriteStr(testTableItem));
             }
             foreach (var testTableItem in Attrs)
             {
@@ -126,46 +119,11 @@ namespace Tables
                 pair.Value.Desc = TableReadBase.ParseString(pair.Value.ValueStr[2]);
                 pair.Value.IsEnableDefault = TableReadBase.ParseBool(pair.Value.ValueStr[3]);
                 pair.Value.MinGemLv = TableReadBase.ParseInt(pair.Value.ValueStr[4]);
-                if (!string.IsNullOrEmpty(pair.Value.ValueStr[5]))
-                {
-                    pair.Value.Gems.Add( TableReader.GemTable.GetRecord(pair.Value.ValueStr[5]));
-                }
-                else
-                {
-                    pair.Value.Gems.Add(null);
-                }
-                if (!string.IsNullOrEmpty(pair.Value.ValueStr[6]))
-                {
-                    pair.Value.Gems.Add( TableReader.GemTable.GetRecord(pair.Value.ValueStr[6]));
-                }
-                else
-                {
-                    pair.Value.Gems.Add(null);
-                }
-                if (!string.IsNullOrEmpty(pair.Value.ValueStr[7]))
-                {
-                    pair.Value.Gems.Add( TableReader.GemTable.GetRecord(pair.Value.ValueStr[7]));
-                }
-                else
-                {
-                    pair.Value.Gems.Add(null);
-                }
-                if (!string.IsNullOrEmpty(pair.Value.ValueStr[8]))
-                {
-                    pair.Value.Gems.Add( TableReader.GemTable.GetRecord(pair.Value.ValueStr[8]));
-                }
-                else
-                {
-                    pair.Value.Gems.Add(null);
-                }
-                if (!string.IsNullOrEmpty(pair.Value.ValueStr[9]))
-                {
-                    pair.Value.Gems.Add( TableReader.GemTable.GetRecord(pair.Value.ValueStr[9]));
-                }
-                else
-                {
-                    pair.Value.Gems.Add(null);
-                }
+                pair.Value.Gems.Add(TableReadBase.ParseInt(pair.Value.ValueStr[5]));
+                pair.Value.Gems.Add(TableReadBase.ParseInt(pair.Value.ValueStr[6]));
+                pair.Value.Gems.Add(TableReadBase.ParseInt(pair.Value.ValueStr[7]));
+                pair.Value.Gems.Add(TableReadBase.ParseInt(pair.Value.ValueStr[8]));
+                pair.Value.Gems.Add(TableReadBase.ParseInt(pair.Value.ValueStr[9]));
                 if (!string.IsNullOrEmpty(pair.Value.ValueStr[10]))
                 {
                     pair.Value.Attrs.Add( TableReader.AttrValue.GetRecord(pair.Value.ValueStr[10]));

@@ -11,7 +11,8 @@ using Tables;
 public class UIGemSuitItem : UIItemSelect
 {
     public Text _SuitName;
-    public UIContainerBase _SuitGems;
+    public Text _SuitDesc;
+    //public UIContainerBase _SuitGems;
     public Button _BtnApply;
 
     private Tables.GemSetRecord _GemSetTab;
@@ -36,14 +37,15 @@ public class UIGemSuitItem : UIItemSelect
     {
         _GemSetTab = gemSet;
 
-        _SuitName.text = gemSet.Name;
+        _SuitName.text = StrDictionary.GetFormatStr(gemSet.Name);
+        _SuitDesc.text = StrDictionary.GetFormatStr(gemSet.Desc);
 
-        Hashtable hash = new Hashtable();
-        hash.Add("MinLevel", gemSet.MinGemLv);
-        hash.Add("IsClearGem", gemSet.IsEnableDefault);
-        _SuitGems.InitContentItem(GemSuit.Instance.GetRecordGemRecords(gemSet), null, hash);
+        //Hashtable hash = new Hashtable();
+        //hash.Add("MinLevel", gemSet.MinGemLv);
+        //hash.Add("IsClearGem", gemSet.IsEnableDefault);
+        //_SuitGems.InitContentItem(GemSuit.Instance.GetRecordGemRecords(gemSet), null, hash);
 
-        if (GemSuit.Instance.IsGemSetCanUse(gemSet))
+        if (GemSuit.Instance.SuitMinLevel(gemSet) > 0)
         {
             _BtnApply.interactable = true;
         }
@@ -57,7 +59,7 @@ public class UIGemSuitItem : UIItemSelect
     {
         Debug.Log("OnBtnUseSet:" + _GemSetTab.Id);
         GemSuit.Instance.UseGemSet(_GemSetTab);
-        UIGemPack.RefreshPack();
+        UIGemPack.RefreshPunchPack();
     }
 
 }

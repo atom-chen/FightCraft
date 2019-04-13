@@ -133,6 +133,10 @@ public class UIBossStageSelect : UIBase
                 ActData.Instance.StartStage(_SelectedDiff, int.Parse(_SelectedStage.Id), STAGE_TYPE.BOSS);
                 LogicManager.Instance.EnterFight(Tables.TableReader.StageInfo.GetRecord("100"));
             }
+            else
+            {
+                UIMessageTip.ShowMessageTip(71106);
+            }
         }
     }
 

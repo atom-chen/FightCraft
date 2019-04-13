@@ -221,12 +221,11 @@ public class RoleData : SaveItemBase
         roleAttr.AddValue(RoleAttrEnum.PhysicDamageEnhance, (int)PhyEnhanceByStrength);
 
         var dexteriry = roleAttr.GetValue(RoleAttrEnum.Dexterity);
-        int criticalRate = (int)(dexteriry * GameDataValue._CriticalRatePerDex);
-        int criticalDamage = (int)(dexteriry * GameDataValue._CriticalDmgPerDex);
-        int ignoreAttack = (int)(dexteriry * GameDataValue._IgnoreAtkPerDex);
-        roleAttr.AddValue(RoleAttrEnum.CriticalHitChance, criticalRate);
-        roleAttr.AddValue(RoleAttrEnum.CriticalHitDamge, criticalDamage);
-        roleAttr.AddValue(RoleAttrEnum.IgnoreDefenceAttack, ignoreAttack);
+        int def = (int)(dexteriry * GameDataValue._DefencePerDex);
+        //int criticalRate = (int)(dexteriry * GameDataValue._CriticalRatePerDex);
+        //int criticalDamage = (int)(dexteriry * GameDataValue._CriticalDmgPerDex);
+        //int ignoreAttack = (int)(dexteriry * GameDataValue._IgnoreAtkPerDex);
+        roleAttr.AddValue(RoleAttrEnum.Defense, def);
 
         var intelligence = roleAttr.GetValue(RoleAttrEnum.Intelligence);
         int eleAtk = (int)(intelligence * GameDataValue._EleAtkPerInt);
@@ -289,6 +288,7 @@ public class RoleData : SaveItemBase
     public static int MAX_ROLE_LEVEL = 50;
     public static int POINT_PER_ROLE_LEVEL = 4;
     public static int POINT_PER_ATTR_LEVEL = 1;
+    public static int ATTR_PER_LEVEL = 0;
 
     [SaveField(2)]
     public int _RoleLevel;
@@ -313,7 +313,7 @@ public class RoleData : SaveItemBase
     {
         get
         {
-            return _RoleLevel + _AttrLevel + _AddStrength;
+            return (_RoleLevel + _AttrLevel) * ATTR_PER_LEVEL + _AddStrength;
         }
     }
 
@@ -323,7 +323,7 @@ public class RoleData : SaveItemBase
     {
         get
         {
-            return _RoleLevel + _AttrLevel + _AddDexterity;
+            return (_RoleLevel + _AttrLevel) * ATTR_PER_LEVEL + _AddDexterity;
         }
     }
 
@@ -333,7 +333,7 @@ public class RoleData : SaveItemBase
     {
         get
         {
-            return _RoleLevel + _AttrLevel + _AddVitality;
+            return (_RoleLevel + _AttrLevel) * ATTR_PER_LEVEL + _AddVitality;
         }
     }
 
@@ -343,7 +343,7 @@ public class RoleData : SaveItemBase
     {
         get
         {
-            return _RoleLevel + _AttrLevel + _AddIntelligence;
+            return (_RoleLevel + _AttrLevel) * ATTR_PER_LEVEL + _AddIntelligence;
         }
     }
 

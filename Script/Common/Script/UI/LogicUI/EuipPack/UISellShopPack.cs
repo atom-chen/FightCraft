@@ -50,8 +50,7 @@ public class UISellShopPack : UIBase
 
         _BackPack = UIBackPack.GetUIBackPackInstance(_BackPackPos);
         _BackPack.SetBackPackSellMode(Tables.ITEM_QUALITY.BLUE);
-        _BackPack._BtnSell.SetActive(false);
-        _BackPack._TagPanel._Tags[1].gameObject.SetActive(false);
+        _BackPack._BtnPanel.SetActive(false);
     }
 
     public override void Show(Hashtable hash)

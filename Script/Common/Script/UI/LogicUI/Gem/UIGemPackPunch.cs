@@ -31,10 +31,10 @@ public class UIGemPackPunch : UIBase, IDragablePack
         for (int i = 0; i < _GemPack.Length; ++i)
         {
             Hashtable hash = new Hashtable();
-            hash.Add("InitObj", GemData.Instance.EquipedGemDatas._PackItems[i]);
+            hash.Add("InitObj", GemData.Instance.EquipedGemDatas[i]);
             hash.Add("DragPack", this);
             _GemPack[i].Show(hash);
-            _GemPack[i]._InitInfo = GemData.Instance.EquipedGemDatas._PackItems[i];
+            _GemPack[i]._InitInfo = GemData.Instance.EquipedGemDatas[i];
             _GemPack[i]._ClickEvent += ShowGemTooltipsLeft;
         }
         //_BackPack.Show(null);
@@ -55,7 +55,7 @@ public class UIGemPackPunch : UIBase, IDragablePack
 
         for (int i = 0; i < _GemPack.Length; ++i)
         {
-            _GemPack[i].ShowGem(GemData.Instance.EquipedGemDatas._PackItems[i]);
+            _GemPack[i].ShowGem(GemData.Instance.EquipedGemDatas[i]);
         }
         //_EquipContainer.RefreshItems();
         //_BackPack.RefreshItems();
@@ -72,18 +72,18 @@ public class UIGemPackPunch : UIBase, IDragablePack
 
     private void ShowGemTooltipsLeft(object equipObj)
     {
-        for (int i = 0; i < _GemPack.Length; ++i)
-        {
-            if (_GemPack[i]._InitInfo == equipObj)
-            {
-                _GemPack[i].Selected();
-                _SelectGemSlot = i;
-            }
-            else
-            {
-                _GemPack[i].UnSelected();
-            }
-        }
+        //for (int i = 0; i < _GemPack.Length; ++i)
+        //{
+        //    if (_GemPack[i]._InitInfo == equipObj)
+        //    {
+        //        _GemPack[i].Selected();
+        //        _SelectGemSlot = i;
+        //    }
+        //    else
+        //    {
+        //        _GemPack[i].UnSelected();
+        //    }
+        //}
         ItemGem gemItem = equipObj as ItemGem;
         if (gemItem == null || !gemItem.IsVolid())
             return;
@@ -125,15 +125,17 @@ public class UIGemPackPunch : UIBase, IDragablePack
         if (!itemGem.IsVolid())
             return;
 
-        if (_SelectGemSlot >= 0)
-        {
-            PunchOn(itemGem, _SelectGemSlot);
-        }
-        else
+        //if (_SelectGemSlot >= 0)
+        //{
+        //    PunchOn(itemGem, _SelectGemSlot);
+        //}
+        //else
         {
             var idx = GemData.Instance.GetPutOnIdx();
             PunchOn(itemGem, idx);
         }
+
+        UIGemTooltips.HideAsyn();
     }
 
     private void PunchOff(ItemBase itemBase)
@@ -141,11 +143,22 @@ public class UIGemPackPunch : UIBase, IDragablePack
         ItemGem itemGem = itemBase as ItemGem;
         GemData.Instance.PutOff(itemGem);
         RefreshItems();
+
+        UIGemTooltips.HideAsyn();
     }
 
     private void LevelUp(ItemBase itemBase)
     {
-        
+        ItemGem itemGem = itemBase as ItemGem;
+        if (GemData.Instance.GemLevelUp(itemGem))
+        {
+            ShowGemTooltipsRight(itemGem);
+            RefreshItems();
+        }
+        else
+        {
+            UIMessageTip.ShowMessageTip(30003);
+        }
     }
 
     private void ItemRefresh(object sender, Hashtable args)

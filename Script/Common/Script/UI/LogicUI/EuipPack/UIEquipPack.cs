@@ -40,11 +40,11 @@ public class UIEquipPack : UIBase,IDragablePack
     {
         base.Init();
 
-        _BackPack = UIBackPack.GetUIBackPackInstance(transform);
+        //_BackPack = UIBackPack.GetUIBackPackInstance(transform);
+        _BackPack.OnShowPage(0);
         _BackPack._OnItemSelectCallBack = ShowBackPackSelectItem;
         _BackPack._OnDragItemCallBack = OnDragItem;
         _BackPack._IsCanDropItemCallBack = IsCanDropItem;
-        _BackPack._TagPanel._Tags[1].gameObject.SetActive(false);
     }
 
     public override void Show(Hashtable hash)
@@ -58,6 +58,18 @@ public class UIEquipPack : UIBase,IDragablePack
     public override void Hide()
     {
         base.Hide();
+    }
+
+    public void OnShowPage(int page)
+    {
+        if (page == 2)
+        {
+            _BackPack.OnShowAllEquip();
+        }
+        else
+        {
+            _BackPack.OnShowPage(0);
+        }
     }
 
     private void ShowPackItems()
@@ -77,14 +89,25 @@ public class UIEquipPack : UIBase,IDragablePack
 
     public void ShowBackPackSelectItem(ItemBase itemObj)
     {
-        ItemEquip equipItem = itemObj as ItemEquip;
-        if (equipItem != null && equipItem.IsVolid())
+        if (_UILegendaryPack.isActiveAndEnabled)
         {
-            UIEquipTooltips.ShowAsyn(equipItem, new ToolTipFunc[1] { new ToolTipFunc(10003, PutOnEquip) });
+            _UILegendaryPack.ShowBackPackSelectItem(itemObj);
         }
-        else if (itemObj.IsVolid())
+        else if (_UIEquipPackRefresh.isActiveAndEnabled)
         {
-            UIItemTooltips.ShowAsyn(itemObj);
+            _UIEquipPackRefresh.OnSelectedEquip(itemObj);
+        }
+        else
+        {
+            ItemEquip equipItem = itemObj as ItemEquip;
+            if (equipItem != null && equipItem.IsVolid())
+            {
+                UIEquipTooltips.ShowAsyn(equipItem, new ToolTipFunc[1] { new ToolTipFunc(10003, PutOnEquip) });
+            }
+            else if (itemObj.IsVolid())
+            {
+                UIItemTooltips.ShowAsyn(itemObj);
+            }
         }
     }
 
@@ -204,6 +227,16 @@ public class UIEquipPack : UIBase,IDragablePack
 
     #endregion
 
+    #region page collect
 
+    public UILegendaryPack _UILegendaryPack;
+
+    #endregion
+
+    #region page refresh
+
+    public UIEquipPackRefresh _UIEquipPackRefresh;
+
+    #endregion
 }
 

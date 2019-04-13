@@ -31,9 +31,6 @@ public class UIFiveElementExtra : UIBase
 
     #region 
 
-    public Image _Icon;
-    public Image _Quality;
-    public Text _Name;
     public List<Text> _Attrs;
 
     public UIContainerSelect _ElementItems;
@@ -68,6 +65,11 @@ public class UIFiveElementExtra : UIBase
         RefreshFilter();
     }
 
+    public void ShowItemByIndex(int idx)
+    {
+        ShowItemInfo(FiveElementData.Instance._UsingElements[idx]);
+    }
+
     private void ShowItemInfo(ItemFiveElement extraItem)
     {
         _ElementItem = extraItem;
@@ -75,10 +77,6 @@ public class UIFiveElementExtra : UIBase
         {
             _ElementItem = FiveElementData.Instance._UsingElements[0];
         }
-
-        _Icon.gameObject.SetActive(true);
-        _Quality.gameObject.SetActive(true);
-        _Name.text = _ElementItem.GetElementNameWithColor();
 
         for (int i = 0; i < _Attrs.Count; ++i)
         {
@@ -155,10 +153,11 @@ public class UIFiveElementExtra : UIBase
 
     public GameObject _FilterPanel;
     public UIContainerBase _FilterContainer;
-    public Toggle _FilterUnusedAttr;
+    public Toggle _FilterActedAttr;
+    public Toggle _FilterUnActedAttr;
 
     private List<int> _FilterAttrs = null;
-    private List<int> _FilterUnusedAttrs = null;
+    private List<int> _FilterTroggleAttrs = null;
 
     public void InitAttrFilter()
     {
@@ -191,10 +190,19 @@ public class UIFiveElementExtra : UIBase
 
         ShowMaterialItems();
 
-        _FilterUnusedAttr.isOn = false;
+        _FilterActedAttr.isOn = false;
+        _FilterUnActedAttr.isOn = false;
     }
 
-    public void OnToggleFilter(bool isOn)
+    public void OnToggleFilterAct(bool isOn)
+    {
+        if (isOn)
+        {
+            RefreshFilter();
+        }
+    }
+
+    public void OnToggleFilterUnAct(bool isOn)
     {
         if (isOn)
         {
@@ -204,19 +212,56 @@ public class UIFiveElementExtra : UIBase
 
     private void RefreshFilter()
     {
-        if (_FilterUnusedAttr.isOn)
+        if (_FilterUnActedAttr.isOn)
         {
-            FilterUnuseAttr();
+            FilterTroggleAttr(false);
+        }
+        else if (_FilterActedAttr.isOn)
+        {
+            FilterTroggleAttr(true);
         }
     }
 
-    private void FilterUnuseAttr()
+    private void FilterTroggleAttr(bool isActed)
     {
-        if (_FilterUnusedAttrs == null)
+        if (_FilterTroggleAttrs == null)
         {
-            _FilterUnusedAttrs = new List<int>();
+            _FilterTroggleAttrs = new List<int>();
         }
-        _FilterUnusedAttrs.Clear();
+        _FilterTroggleAttrs.Clear();
+
+        foreach (var elementAttr in GameDataValue._FiveElementAttrs)
+        {
+            bool containsAttr = false;
+            foreach (var exAttr in _ElementItem.EquipExAttrs)
+            {
+                if (exAttr.AttrParams[0] == (int)elementAttr.AttrID)
+                {
+                    containsAttr = true;
+                    break;
+                }
+            }
+
+            if (!isActed && !containsAttr)
+            {
+                _FilterTroggleAttrs.Add((int)elementAttr.AttrID);
+            }
+            else if(isActed && containsAttr)
+            {
+                _FilterTroggleAttrs.Add((int)elementAttr.AttrID);
+            }
+        }
+
+        ShowMaterialItems();
+    }
+
+    private void FilterActedAttr()
+    {
+        if (_FilterTroggleAttrs == null)
+        {
+            _FilterTroggleAttrs = new List<int>();
+        }
+        _FilterTroggleAttrs.Clear();
 
         foreach (var elementAttr in GameDataValue._FiveElementAttrs)
         {
@@ -232,7 +277,7 @@ public class UIFiveElementExtra : UIBase
 
             if (!containsAttr)
             {
-                _FilterUnusedAttrs.Add((int)elementAttr.AttrID);
+                _FilterTroggleAttrs.Add((int)elementAttr.AttrID);
             }
         }
 
@@ -242,9 +287,9 @@ public class UIFiveElementExtra : UIBase
     private bool IsFilterAttr(int attrID)
     {
         bool isFilter = true;
-        if (_FilterUnusedAttr.isOn)
+        if (_FilterUnActedAttr.isOn || _FilterActedAttr.isOn)
         {
-            isFilter &= _FilterUnusedAttrs.Contains(attrID);
+            isFilter &= _FilterTroggleAttrs.Contains(attrID);
         }
 
         if (_FilterAttrs != null)

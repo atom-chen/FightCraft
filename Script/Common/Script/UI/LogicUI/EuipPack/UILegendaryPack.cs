@@ -11,14 +11,18 @@ public class UILegendaryPack : UIBase,IDragablePack
 
     public UIContainerBase _LegencyContainer;
     public UIEquipPack _EquipPack;
+    public GameObject _AttrPanel;
+    public Text _CombatValue;
     public Text _Attr1;
     public Text _Attr2;
+    public Text _Attr3;
 
     public void OnEnable()
     {
         _EquipPack._BackPack._OnItemSelectCallBack = ShowBackPackSelectItem;
         _EquipPack._BackPack._OnDragItemCallBack = OnDragItem;
         _EquipPack._BackPack._IsCanDropItemCallBack = IsCanDropItem;
+        _AttrPanel.SetActive(false);
 
         ShowPackItems();
     }
@@ -42,8 +46,7 @@ public class UILegendaryPack : UIBase,IDragablePack
 
     private void RefreshAttrs()
     {
-        _Attr1.text = LegendaryData.Instance.ExAttrs[0].GetAttrStr();
-        _Attr2.text = LegendaryData.Instance.ExAttrs[1].GetAttrStr();
+        _CombatValue.text = StrDictionary.GetFormatStr(40006, LegendaryData.Instance.LegendaryValue);
     }
 
     public void RefreshEquipItems()
@@ -80,9 +83,49 @@ public class UILegendaryPack : UIBase,IDragablePack
 
         var equipItem = LegendaryData.Instance._LegendaryEquipDict[equipRecord];
         if (equipItem == null || !equipItem.IsVolid())
-            return;
+        {
+            UILegendaryItemTooltips.ShowAsyn(equipRecord, new ToolTipFunc[1] { new ToolTipFunc(10011, PutOffEquip) });   
+        }
+        else
+        {
+            UIEquipTooltips.ShowAsyn(equipItem, new ToolTipFunc[1] { new ToolTipFunc(10011, PutOffEquip) });
+        }
+    }
 
-        UIEquipTooltips.ShowAsyn(equipItem, new ToolTipFunc[1] { new ToolTipFunc(10011, PutOffEquip) });
+    public void OnBtnShowAttr()
+    {
+        _AttrPanel.SetActive(true);
+        _Attr1.text = LegendaryData.Instance.ExAttrs[0].GetAttrStr();
+        _Attr2.text = LegendaryData.Instance.ExAttrs[1].GetAttrStr();
+        int impactLevel = 1;
+        LegendaryData.LegendaryShadowAttrInfo nextShadowLv = null;
+        if (LegendaryData.Instance.ExAttrs.Count == 3)
+        {
+            impactLevel = LegendaryData.Instance.ExAttrs[2].AttrParams[1];
+            nextShadowLv = LegendaryData.Instance.GetNextShadowLv(impactLevel);
+        }
+        else
+        {
+            nextShadowLv = LegendaryData.Instance.GetNextShadowLv(0);
+        }
+
+        var attrRecord = TableReader.AttrValue.GetRecord(LegendaryData._SpecilImpact);
+        string impactAttr = EquipExAttr.GetAttrStr(attrRecord.AttrImpact, new List<int>() { int.Parse(LegendaryData._SpecilImpact), impactLevel });
+        impactAttr += "Lv." + impactLevel;
+        if (nextShadowLv != null)
+        {
+            impactAttr += "\n" + StrDictionary.GetFormatStr(40007, LegendaryData.Instance.GetLegendaryCollectValue(), nextShadowLv._NeedValue, nextShadowLv._Level);
+        }
+        if (LegendaryData.Instance.ExAttrs.Count != 3)
+        {
+            impactAttr = CommonDefine.GetEnableGrayStr(0) + impactAttr + "</color>";
+        }
+        _Attr3.text = impactAttr;
+    }
+
+    public void OnHideAttr()
+    {
+        _AttrPanel.SetActive(false);
     }
     #endregion
 

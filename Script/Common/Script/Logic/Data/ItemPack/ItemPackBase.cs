@@ -62,6 +62,9 @@ public class ItemPackBase<T> : DataPackBase where T : ItemBase,new()
 
     public T GetItem(string itemID)
     {
+        if (string.IsNullOrEmpty(itemID))
+            return null;
+
         for (int i = 0; i < _PackItems.Count; ++i)
         {
             if (_PackItems[i].IsVolid() && _PackItems[i].ItemDataID == itemID)

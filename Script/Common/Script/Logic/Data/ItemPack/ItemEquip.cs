@@ -69,15 +69,7 @@ public class EquipExAttr
 
     public string GetAttrStr(bool eqiupAttr = true)
     {
-        var impactType = Type.GetType(AttrType);
-        if (impactType == null)
-            return "";
-
-        var method = impactType.GetMethod("GetAttrDesc");
-        if (method == null)
-            return "";
-
-        var attrStr = method.Invoke(null, new object[] { AttrParams }) as string;
+        var attrStr = GetAttrStr(AttrType, AttrParams);
 
         if (eqiupAttr)
         {
@@ -86,6 +78,21 @@ public class EquipExAttr
                 attrStr += " Lv." + AttrParams[1];
             }
         }
+
+        return attrStr;
+    }
+
+    public static string GetAttrStr(string attrType, List<int> attrParams)
+    {
+        var impactType = Type.GetType(attrType);
+        if (impactType == null)
+            return "";
+
+        var method = impactType.GetMethod("GetAttrDesc");
+        if (method == null)
+            return "";
+
+        var attrStr = method.Invoke(null, new object[] { attrParams }) as string;
 
         return attrStr;
     }
@@ -312,6 +319,18 @@ public class ItemEquip : ItemBase
         return true;
     }
 
+    public string GetEquipLegendaryID()
+    {
+        if (IsLegandaryEquip())
+        {
+            return ItemDataID;
+        }
+        else
+        {
+            return "";
+        }
+    }
+
     public string GetEquipLegandaryName()
     {
         string equipName = StrDictionary.GetFormatStr(EquipItemRecord.NameStrDict);
@@ -321,10 +340,10 @@ public class ItemEquip : ItemBase
     public string GetEquipNameWithColor()
     {
         string equipName = StrDictionary.GetFormatStr(CommonItemRecord.NameStrDict);
-        if (SpSetRecord != null)
-        {
-            equipName = StrDictionary.GetFormatStr(SpSetRecord.Name) + "-" + equipName;
-        }
+        //if (SpSetRecord != null)
+        //{
+        //    equipName = StrDictionary.GetFormatStr(SpSetRecord.Name) + "-" + equipName;
+        //}
         return CommonDefine.GetQualityColorStr(EquipQuality) + equipName + "</color>";
     }
 
@@ -336,7 +355,7 @@ public class ItemEquip : ItemBase
             string attackValue = BaseAttack.ToString();
             if (_ExBaseAtk)
             {
-                attackValue = CommonDefine.GetQualityColorStr(EquipQuality) + attackValue + "</color>";
+                attackValue = CommonDefine.GetQualityColorStr(ITEM_QUALITY.BLUE) + attackValue + "</color>";
             }
             attrStr = RandomAttrs.GetAttrName(RoleAttrEnum.Attack) + " + " + attackValue;
         }
@@ -345,14 +364,14 @@ public class ItemEquip : ItemBase
             string hpValue = BaseHP.ToString();
             if (_ExBaseHp)
             {
-                hpValue = CommonDefine.GetQualityColorStr(EquipQuality) + hpValue + "</color>";
+                hpValue = CommonDefine.GetQualityColorStr(ITEM_QUALITY.BLUE) + hpValue + "</color>";
             }
             attrStr = RandomAttrs.GetAttrName(RoleAttrEnum.HPMax) + " + " + hpValue;
 
             string defenceValue = BaseDefence.ToString();
             if (_ExBaseDef)
             {
-                defenceValue = CommonDefine.GetQualityColorStr(EquipQuality) + defenceValue + "</color>";
+                defenceValue = CommonDefine.GetQualityColorStr(ITEM_QUALITY.BLUE) + defenceValue + "</color>";
             }
             attrStr += "\n" + RandomAttrs.GetAttrName(RoleAttrEnum.Defense) + " + " + defenceValue;
         }
@@ -449,10 +468,10 @@ public class ItemEquip : ItemBase
                 if (EquipItemRecord.Slot == EQUIP_SLOT.WEAPON)
                 {
                     _BaseAttack = GameDataValue.CalWeaponAttack(EquipLevel);
-                    if (EquipExAttrs.Count > 0 && EquipExAttrs[0].AttrType == "RoleAttrImpactBaseAttr" && EquipExAttrs[0].AttrParams[0] == (int)RoleAttrEnum.AttackPersent)
+                    if (BaseModelAttrs.Count > 0 && BaseModelAttrs[0].AttrType == "RoleAttrImpactBaseAttr" && BaseModelAttrs[0].AttrParams[0] == (int)RoleAttrEnum.AttackPersent)
                     {
                         _ExBaseAtk = true;
-                        _BaseAttack += Mathf.CeilToInt(_BaseAttack * GameDataValue.ConfigIntToFloatDex1(EquipExAttrs[0].AttrParams[1]));
+                        _BaseAttack += Mathf.CeilToInt(_BaseAttack * GameDataValue.ConfigIntToFloatDex1(BaseModelAttrs[0].AttrParams[1]));
                     }
                 }
                 else
@@ -482,10 +501,10 @@ public class ItemEquip : ItemBase
                 {
                     _BaseHP = GameDataValue.CalEquipLegsHP(EquipLevel);
                 }
-                if (EquipExAttrs.Count > 0 && EquipExAttrs[0].AttrType == "RoleAttrImpactBaseAttr" && EquipExAttrs[0].AttrParams[0] == (int)RoleAttrEnum.AttackPersent)
+                if (BaseModelAttrs.Count > 0 && BaseModelAttrs[0].AttrType == "RoleAttrImpactBaseAttr" && BaseModelAttrs[0].AttrParams[0] == (int)RoleAttrEnum.HPMaxPersent)
                 {
                     _ExBaseHp = true;
-                    _BaseHP += Mathf.CeilToInt(_BaseAttack * GameDataValue.ConfigIntToFloatDex1(EquipExAttrs[0].AttrParams[1]));
+                    _BaseHP += Mathf.CeilToInt(_BaseHP * GameDataValue.ConfigIntToFloatDex1(BaseModelAttrs[0].AttrParams[1]));
                 }
             }
             return _BaseHP;
@@ -509,10 +528,10 @@ public class ItemEquip : ItemBase
                 {
                     _BaseDefence = GameDataValue.CalEquipLegsDefence(EquipLevel);
                 }
-                if (EquipExAttrs.Count > 0 && EquipExAttrs[0].AttrType == "RoleAttrImpactBaseAttr" && EquipExAttrs[0].AttrParams[0] == (int)RoleAttrEnum.AttackPersent)
+                if (BaseModelAttrs.Count > 0 && BaseModelAttrs[0].AttrType == "RoleAttrImpactBaseAttr" && BaseModelAttrs[0].AttrParams[0] == (int)RoleAttrEnum.DefensePersent)
                 {
                     _ExBaseDef = true;
-                    _BaseDefence += Mathf.CeilToInt(_BaseAttack * GameDataValue.ConfigIntToFloatDex1(EquipExAttrs[0].AttrParams[1]));
+                    _BaseDefence += Mathf.CeilToInt(_BaseDefence * GameDataValue.ConfigIntToFloatDex1(BaseModelAttrs[0].AttrParams[1]));
                 }
             }
             return _BaseDefence;
@@ -590,9 +609,23 @@ public class ItemEquip : ItemBase
             if (baseAttr == null)
                 continue;
 
-            float euiqpModelValue = GameDataValue.ConfigIntToFloat(baseAttr.AttrParams[1]) + GameDataValue.ConfigIntToFloat(baseAttr.AttrParams[2] * EquipLevel);
-            euiqpModelValue = Mathf.Clamp(euiqpModelValue, GameDataValue.ConfigIntToFloat(baseAttr.AttrParams[1]), GameDataValue.ConfigIntToFloat(baseAttr.AttrParams[3]));
-            var exAttr = EquipExAttr.GetBaseExAttr((RoleAttrEnum)baseAttr.AttrParams[0], (int)euiqpModelValue);
+            var attrType = (RoleAttrEnum)baseAttr.AttrParams[0];
+            int exValue = 0;
+            if (attrType == RoleAttrEnum.AttackPersent
+                || attrType == RoleAttrEnum.DefensePersent
+                || attrType == RoleAttrEnum.HPMaxPersent
+                || attrType == RoleAttrEnum.AttackSpeed
+                || attrType == RoleAttrEnum.CriticalHitChance)
+            {
+                exValue = baseAttr.AttrParams[1];
+            }
+            else
+            {
+                var attrValue = GameDataValue.CalLvValue(EquipLevel, equipRecord.Slot);
+                exValue = (int)(attrValue * GameDataValue.ConfigIntToFloat(baseAttr.AttrParams[1]));
+            }
+            
+            var exAttr = EquipExAttr.GetBaseExAttr((RoleAttrEnum)baseAttr.AttrParams[0], exValue);
             _BaseModelAttrs.Add(exAttr);
         }
     }
@@ -686,8 +719,9 @@ public class ItemEquip : ItemBase
             }
         }
 
-        int value = GameDataValue.CalLvValue(level, equipSlot);
-        baseEquip = GetRandomItem(equipSlot, level, profession);
+        var equipLevel = GameDataValue.GetEquipLv(equipSlot, level);
+        int value = GameDataValue.CalLvValue(equipLevel, equipSlot);
+        baseEquip = GetRandomItem(equipSlot, equipLevel, profession);
         if (baseEquip == null)
             return null;
 
@@ -700,19 +734,19 @@ public class ItemEquip : ItemBase
         }
 
         ItemEquip itemEquip = new ItemEquip(equipID);
-        itemEquip.EquipLevel = level;
+        itemEquip.EquipLevel = equipLevel;
         itemEquip.EquipQuality = equipQuality;
         itemEquip.EquipValue = value;
-        itemEquip.RequireLevel = level;
+        itemEquip.RequireLevel = equipLevel;
         itemEquip.CommonItemDataID = int.Parse(commonItemRecord.Id);
         itemEquip.SetBaseModelAttrs(baseEquip);
 
         //RandomEquipAttr(itemEquip);
-        itemEquip.AddExAttr(RandomAttrs.GetRandomEquipExAttrs(baseEquip.Slot, level, value, equipQuality, RoleData.SelectRole.Profession, legencyEquip));
+        itemEquip.AddExAttr(RandomAttrs.GetRandomEquipExAttrs(baseEquip.Slot, equipLevel, value, equipQuality, RoleData.SelectRole.Profession, legencyEquip));
         if (legencyEquip != null)
         {
             var exLevel = GameDataValue.GetLegencyLv(itemEquip.EquipLevel);
-            EquipExAttr legencyAttr = legencyEquip.ExAttr[exLevel - 1].GetExAttr(exLevel);
+            EquipExAttr legencyAttr = legencyEquip.ExAttr[exLevel - 1].GetExAttr(equipLevel);
             itemEquip.AddExAttr(legencyAttr);
         }
 
@@ -834,81 +868,81 @@ public class ItemEquip : ItemBase
 
     public void CalculateSet()
     {
-        if (_SpSetRecord != null)
-        {
-            EquipSet.Instance.RemoveActingSpAttr(_SpSetRecord, EquipValue);
-        }
-        _SpSetRecord = null;
-        if (EquipExAttrs.Count < _ActSetLeastExCnt)
-        {
-            return;
-        }
-        if (EquipLevel < _MinLv)
-            return;
+    //    if (_SpSetRecord != null)
+    //    {
+    //        EquipSet.Instance.RemoveActingSpAttr(_SpSetRecord, EquipValue);
+    //    }
+    //    _SpSetRecord = null;
+    //    if (EquipExAttrs.Count < _ActSetLeastExCnt)
+    //    {
+    //        return;
+    //    }
+    //    if (EquipLevel < _MinLv)
+    //        return;
 
-        int valAttrCnt = 0;
-        List<EquipExAttr> randomAttrs = new List<global::EquipExAttr>();
-        foreach (var exAttr in EquipExAttrs)
-        {
-            if (exAttr.AttrType != "RoleAttrImpactBaseAttr")
-            {
-                ++valAttrCnt;
-                continue;
-            }
-
-
-            if (exAttr.AttrQuality == ITEM_QUALITY.ORIGIN)
-            {
-                ++valAttrCnt;
-            }
-
-            if ((exAttr.AttrParams[0] != (int)RoleAttrEnum.AttackPersent
-                && exAttr.AttrParams[0] != (int)RoleAttrEnum.HPMaxPersent
-                && exAttr.AttrParams[0] != (int)RoleAttrEnum.MoveSpeed))
-            {
-                randomAttrs.Add(exAttr);
-            }
-        }
-        if (valAttrCnt < _ActSetLeastExCnt)
-        {
-            return;
-        }
+    //    int valAttrCnt = 0;
+    //    List<EquipExAttr> randomAttrs = new List<global::EquipExAttr>();
+    //    foreach (var exAttr in EquipExAttrs)
+    //    {
+    //        if (exAttr.AttrType != "RoleAttrImpactBaseAttr")
+    //        {
+    //            ++valAttrCnt;
+    //            continue;
+    //        }
 
 
-        foreach (var setRecord in TableReader.EquipSpAttr.Records.Values)
-        {
-            if (setRecord.Id == _DefauletSpSetID)
-                continue;
+    //        if (exAttr.AttrQuality == ITEM_QUALITY.ORIGIN)
+    //        {
+    //            ++valAttrCnt;
+    //        }
 
-            _SpSetRecord = setRecord;
-            foreach (var exAttr in randomAttrs)
-            {
-                bool isAttrOk = false;
-                for (int i = 0; i < setRecord.ExAttrEnum.Count; ++i)
-                {
-                    if (exAttr.AttrParams[0] == setRecord.ExAttrEnum[i])
-                    {
-                        isAttrOk = true;
-                        break;
-                    }
-                }
-                if (!isAttrOk)
-                {
-                    _SpSetRecord = null;
-                    break;
-                }
-            }
-            if (_SpSetRecord != null)
-            {
-                break;
-            }
-        }
+    //        if ((exAttr.AttrParams[0] != (int)RoleAttrEnum.AttackPersent
+    //            && exAttr.AttrParams[0] != (int)RoleAttrEnum.HPMaxPersent
+    //            && exAttr.AttrParams[0] != (int)RoleAttrEnum.MoveSpeed))
+    //        {
+    //            randomAttrs.Add(exAttr);
+    //        }
+    //    }
+    //    if (valAttrCnt < _ActSetLeastExCnt)
+    //    {
+    //        return;
+    //    }
 
-        if (_SpSetRecord == null)
-        {
-            _SpSetRecord = TableReader.EquipSpAttr.GetRecord(_DefauletSpSetID);
-        }
-        EquipSet.Instance.ActingSpAttr(_SpSetRecord, EquipValue);
+
+    //    foreach (var setRecord in TableReader.EquipSpAttr.Records.Values)
+    //    {
+    //        if (setRecord.Id == _DefauletSpSetID)
+    //            continue;
+
+    //        _SpSetRecord = setRecord;
+    //        foreach (var exAttr in randomAttrs)
+    //        {
+    //            bool isAttrOk = false;
+    //            for (int i = 0; i < setRecord.ExAttrEnum.Count; ++i)
+    //            {
+    //                if (exAttr.AttrParams[0] == setRecord.ExAttrEnum[i])
+    //                {
+    //                    isAttrOk = true;
+    //                    break;
+    //                }
+    //            }
+    //            if (!isAttrOk)
+    //            {
+    //                _SpSetRecord = null;
+    //                break;
+    //            }
+    //        }
+    //        if (_SpSetRecord != null)
+    //        {
+    //            break;
+    //        }
+    //    }
+
+    //    if (_SpSetRecord == null)
+    //    {
+    //        _SpSetRecord = TableReader.EquipSpAttr.GetRecord(_DefauletSpSetID);
+    //    }
+    //    EquipSet.Instance.ActingSpAttr(_SpSetRecord, EquipValue);
     }
 
     public static bool IsAttrSpToEquip(EquipExAttr exAttr)

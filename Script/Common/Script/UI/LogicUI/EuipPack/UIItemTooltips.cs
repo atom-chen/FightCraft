@@ -66,6 +66,7 @@ public class UIItemTooltips : UIBase
 
     protected ItemBase _ShowItem;
     protected ToolTipFunc[] _ShowFuncs;
+    protected bool _HideAfterBtn = true;
 
     public override void Show(Hashtable hash)
     {
@@ -134,7 +135,10 @@ public class UIItemTooltips : UIBase
     public void OnBtnFunc(int idx)
     {
         _ShowFuncs[idx]._Func.Invoke(_ShowItem);
-        Hide();
+        if (_HideAfterBtn)
+        {
+            Hide();
+        }
     }
 
     #endregion

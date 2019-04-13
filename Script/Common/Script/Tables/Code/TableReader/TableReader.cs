@@ -29,6 +29,8 @@ namespace Tables
 //
         public static AttrValue AttrValue { get; internal set; }
 //
+        public static AttrValueLevel AttrValueLevel { get; internal set; }
+//
         public static BossStage BossStage { get; internal set; }
 //
         public static CommonItem CommonItem { get; internal set; }
@@ -92,6 +94,7 @@ namespace Tables
             //读取所有表
             Achievement = new Achievement(TableReadBase.GetTableText("Achievement"), false);
             AttrValue = new AttrValue(TableReadBase.GetTableText("AttrValue"), false);
+            AttrValueLevel = new AttrValueLevel(TableReadBase.GetTableText("AttrValueLevel"), false);
             BossStage = new BossStage(TableReadBase.GetTableText("BossStage"), false);
             CommonItem = new CommonItem(TableReadBase.GetTableText("CommonItem"), false);
             EquipBaseAttr = new EquipBaseAttr(TableReadBase.GetTableText("EquipBaseAttr"), false);
@@ -125,6 +128,7 @@ namespace Tables
             //初始化所有表
             Achievement.CoverTableContent();
             AttrValue.CoverTableContent();
+            AttrValueLevel.CoverTableContent();
             BossStage.CoverTableContent();
             CommonItem.CoverTableContent();
             EquipBaseAttr.CoverTableContent();

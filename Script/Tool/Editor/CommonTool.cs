@@ -253,23 +253,6 @@ public class CommonTool : Editor
     }
 
 
-    private static void GemSetGemsCriticSelf(Tables.GemSetRecord gemSet)
-    {
-        foreach (var gem in gemSet.Gems)
-        {
-            var sameGems = gemSet.Gems.FindAll((gemInfo) =>
-            {
-                if (gem.Id == gemInfo.Id)
-                    return true;
-                return false;
-            });
-            if (sameGems.Count > 1)
-            {
-                Debug.Log("GemSetGemsCriticSelf:" + gemSet.Id);
-            }
-        }
-    }
-
     [MenuItem("TyTools/Test/GemSetGroupTest")]
     public static void GemSetCriticTest()
     {
@@ -305,20 +288,6 @@ public class CommonTool : Editor
 
     public static void GemSetCriticTableTest(Tables.GemSetRecord gemSetA, Tables.GemSetRecord gemSetB)
     {
-        foreach (var gem in gemSetA.Gems)
-        {
-            var sameGems = gemSetB.Gems.Find((gemInfo) =>
-            {
-                if (gem.Id == gemInfo.Id)
-                    return true;
-                return false;
-            });
-
-            if (sameGems == null)
-            {
-                return;
-            }
-        }
         Debug.Log("gemSetCritic:" + gemSetA.Id + "," + gemSetB.Id);
     }
 

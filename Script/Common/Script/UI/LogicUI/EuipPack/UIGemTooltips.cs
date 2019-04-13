@@ -40,7 +40,7 @@ public class UIGemTooltips : UIItemTooltips
 
     public UIGemInfo _GemInfo;
 
-    public UIGemSuitAttr _GemSuitAttr;
+    public UICurrencyItem _CostMat;
 
     #endregion
 
@@ -55,48 +55,14 @@ public class UIGemTooltips : UIItemTooltips
         _ShowItem = _ItemGem;
         _GemInfo.ShowTips(_ItemGem);
 
-        if (hash.Contains("TooltipType"))
-        {
-            var toolTipType = (TooltipType)hash["TooltipType"];
-            if (toolTipType == TooltipType.GemSuitAttr)
-            {
-                ShowSuitAttr();
-            }
-            else
-            {
-                HideSuitAttr();
-            }
-        }
-        else
-        {
-            ShowSuitAttr();
-        }
+        _CostMat.ShowCostCurrency(_ItemGem.ItemDataID, GemData.Instance.GetLevelCostMat(_ItemGem));
 
-        ToolTipFunc[] showType = (ToolTipFunc[])hash["ToolTipFun"];
-        ShowFuncs(showType);
+        _HideAfterBtn = false;
     }
 
 
     #endregion
-
-    public void ShowSuitAttr()
-    {
-        if (GemSuit.Instance.ActSet == null)
-        {
-            HideSuitAttr();
-            return;
-        }
-
-        _GemSuitAttr.gameObject.SetActive(true);
-        _GemSuitAttr.SuitSelect(GemSuit.Instance.ActSet);
-    }
-
-    public void HideSuitAttr()
-    {
-        _GemSuitAttr.ClearSuitInfo();
-        _GemSuitAttr.gameObject.SetActive(false);
-    }
-
+    
 
 }
 

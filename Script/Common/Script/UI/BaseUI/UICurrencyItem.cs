@@ -79,6 +79,48 @@ public class UICurrencyItem : UIItemBase
         ShowCurrency(itemDataID, Ownvalue);
     }
 
+    public void ShowCostCurrency(MONEYTYPE currencyType, int costValue)
+    {
+        int Ownvalue = 0;
+        if (currencyType == MONEYTYPE.GOLD)
+        {
+            Ownvalue = PlayerDataPack.Instance.Gold;
+        }
+        else if (currencyType == MONEYTYPE.DIAMOND)
+        {
+            Ownvalue = PlayerDataPack.Instance.Diamond;
+        }
+        ShowCurrency(currencyType, Ownvalue);
+
+        string currencyStr = "";
+        if (costValue > Ownvalue)
+        {
+            currencyStr = CommonDefine.GetEnableRedStr(0) + Ownvalue.ToString() + "</color>/" + costValue.ToString();
+        }
+        else
+        {
+            currencyStr = CommonDefine.GetEnableRedStr(1) + Ownvalue.ToString() + "</color>/" + costValue.ToString();
+        }
+        _CurrencyValue.text = currencyStr;
+    }
+
+    public void ShowCostCurrency(string itemDataID, int costValue)
+    {
+        int Ownvalue = BackBagPack.Instance.PageItems.GetItemCnt(itemDataID);
+        ShowCurrency(itemDataID, Ownvalue);
+
+        string currencyStr = "";
+        if (costValue > Ownvalue)
+        {
+            currencyStr = CommonDefine.GetEnableRedStr(0) + Ownvalue.ToString() + "</color>/" + costValue.ToString();
+        }
+        else
+        {
+            currencyStr = CommonDefine.GetEnableRedStr(1) + Ownvalue.ToString() + "</color>/" + costValue.ToString();
+        }
+        _CurrencyValue.text = currencyStr;
+    }
+
     #endregion
 
     public void OnBtnAddClick()

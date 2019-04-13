@@ -37,6 +37,7 @@ public class UIGemItem : /*UIDragableItemBase*/ UIPackItemBase
     public void ShowGem(ItemGem showItem)
     {
         _ItemGem = showItem;
+        _InitInfo = showItem;
 
         if (showItem == null)
         {

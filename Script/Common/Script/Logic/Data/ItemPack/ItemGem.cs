@@ -31,6 +31,17 @@ public class ItemGem : ItemBase
         }
     }
 
+    public int Level
+    {
+        get
+        {
+            return ItemStackNum;
+        }
+        set
+        {
+            ItemStackNum = value;
+        }
+    }
 
     #endregion 
 
@@ -67,7 +78,7 @@ public class ItemGem : ItemBase
 
     public void RefreshGemAttr()
     {
-        _GemAttr = GameDataValue.GetGemAttr((RoleAttrEnum)GemRecord.AttrValue.AttrParams[0], GemRecord.AttrValue.AttrParams[1]);
+        _GemAttr = GameDataValue.GetGemAttr((RoleAttrEnum)GemRecord.AttrValue.AttrParams[0], GameDataValue.GetGemValue(Level));
     }
 
     #endregion

@@ -26,6 +26,18 @@ public class UIGemPack : UIBase
         instance.Refresh();
     }
 
+    public static void RefreshPunchPack()
+    {
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIGemPack>("LogicUI/Gem/UIGemPack");
+        if (instance == null)
+            return;
+
+        if (!instance.isActiveAndEnabled)
+            return;
+
+        instance._PunchPanel.RefreshItems();
+    }
+
     public static UIContainerBase GetGemPack()
     {
         var instance = GameCore.Instance.UIManager.GetUIInstance<UIGemPack>("LogicUI/Gem/UIGemPack");
@@ -66,9 +78,9 @@ public class UIGemPack : UIBase
 
     #region 
 
-    public UIContainerBase _GemPack;
+    public UIContainerSelect _GemPack;
 
-    public UITagPanel _TagPanel;
+    //public UITagPanel _TagPanel;
     public UIGemPackPunch _PunchPanel;
     public UIGemPackCombine _CombinePanel;
     public GameObject _GemPackPanel;
@@ -77,7 +89,6 @@ public class UIGemPack : UIBase
     {
         base.Show(hash);
 
-        _TagPanel.ShowPage(0);
         _GemPack.InitContentItem(GemData.Instance.PackGemDatas._PackItems, OnPackItemClick, null, OnPackPanelItemClick);
     }
 
@@ -93,8 +104,8 @@ public class UIGemPack : UIBase
         if (gemItem == null)
             return;
 
-        int showingPage = _TagPanel.GetShowingPage();
-        if (showingPage == 0)
+        //int showingPage = _TagPanel.GetShowingPage();
+        //if (showingPage == 0)
         {
             _PunchPanel.ShowGemTooltipsRight(gemItem);
         }
@@ -106,11 +117,11 @@ public class UIGemPack : UIBase
         if (gemItem == null)
             return;
 
-        int showingPage = _TagPanel.GetShowingPage();
-        if (showingPage == 1)
-        {
-            _CombinePanel.ShowGemTooltipsRight(gemItem);
-        }
+        //int showingPage = _TagPanel.GetShowingPage();
+        //if (showingPage == 1)
+        //{
+        //    _CombinePanel.ShowGemTooltipsRight(gemItem);
+        //}
     }
 
     #endregion

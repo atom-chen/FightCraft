@@ -35,7 +35,22 @@ public class UIGemSuitPack : UIBase
     private void ShowPackItems()
     {
         var suitTabs = Tables.TableReader.GemSet.Records.Values;
-        _GemSuitContainer.InitSelectContent(suitTabs, new List<GemSetRecord>() { GemSuit.Instance.ActSet }, SuitSelect);
+
+        if (GemSuit.Instance.ActSet == null)
+        {
+            List<GemSetRecord> selectedList = new List<GemSetRecord>();
+            foreach (var suitTab in suitTabs)
+            {
+                selectedList.Add(suitTab);
+                break;
+            }
+                 
+            _GemSuitContainer.InitSelectContent(suitTabs, selectedList, SuitSelect);
+        }
+        else
+        {
+            _GemSuitContainer.InitSelectContent(suitTabs, new List<GemSetRecord>() { GemSuit.Instance.ActSet }, SuitSelect);
+        }
     }
 
     private void ClearSuitInfo()

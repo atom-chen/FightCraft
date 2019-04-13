@@ -39,9 +39,10 @@ public class UIBackPack : UIBase, IDragablePack
 
     #region 
 
-    public UITagPanel _TagPanel;
-    public UIContainerBase _ItemsContainer;
-    public GameObject _BtnSell;
+    public UIContainerSelect _ItemsContainer;
+    public GameObject _BtnPanel;
+
+    private int _ShowingPage = 0;
 
     #endregion
 
@@ -62,6 +63,7 @@ public class UIBackPack : UIBase, IDragablePack
 
     public void OnShowPage(int page)
     {
+        _ShowingPage = page;
         Hashtable hash = new Hashtable();
         hash.Add("DragPack", this);
         if (page == 0)
@@ -73,6 +75,54 @@ public class UIBackPack : UIBase, IDragablePack
             _ItemsContainer.InitContentItem(BackBagPack.Instance.PageItems._PackItems, ShowBackPackTooltips, hash);
         }
 
+        _BtnPanel.SetActive(true);
+    }
+
+    public void OnShowAllEquip()
+    {
+        List<ItemEquip> equipList = new List<ItemEquip>();
+        foreach (var equipItem in PlayerDataPack.Instance._SelectedRole._EquipList)
+        {
+            if (equipItem.IsVolid() && equipItem.EquipQuality > Tables.ITEM_QUALITY.BLUE)
+            {
+                equipList.Add(equipItem);
+            }
+        }
+
+        List<ItemEquip> equipInBackPack = new List<ItemEquip>();
+        foreach (var equipItem in BackBagPack.Instance.PageEquips._PackItems)
+        {
+            if (equipItem.IsVolid() && equipItem.EquipQuality > Tables.ITEM_QUALITY.BLUE)
+            {
+                equipInBackPack.Add(equipItem);
+            }
+        }
+        equipInBackPack.Sort((equipA, equipB) =>
+        {
+            if (equipA.EquipQuality > equipB.EquipQuality)
+                return 1;
+            return -1;
+        });
+        equipList.AddRange(equipInBackPack);
+        if (equipList.Count < BackBagPack._BAG_PAGE_SLOT_CNT)
+        {
+            for (int i = equipList.Count; i < BackBagPack._BAG_PAGE_SLOT_CNT; ++i)
+            {
+                equipList.Add(new ItemEquip());
+            }
+        }
+
+        Hashtable hash = new Hashtable();
+        hash.Add("DragPack", this);
+        if (equipList.Count > 0)
+        {
+            _ItemsContainer.InitContentItem(equipList, ShowBackPackTooltips, hash);
+        }
+        else
+        {
+            _ItemsContainer.InitContentItem(equipList, ShowBackPackTooltips, hash);
+        }
+        _BtnPanel.SetActive(false);
     }
 
     public void RefreshItems()
@@ -128,15 +178,15 @@ public class UIBackPack : UIBase, IDragablePack
 
     public void OnBtnRefresh()
     {
-        if (_TagPanel.GetShowingPage() == 0)
+        if (_ShowingPage == 0)
         {
             BackBagPack.Instance.SortEquip();
         }
-        else if (_TagPanel.GetShowingPage() == 1)
+        else if (_ShowingPage == 1)
         {
             BackBagPack.Instance.SortItem();
         }
-        OnShowPage(_TagPanel.GetShowingPage());
+        OnShowPage(_ShowingPage);
     }
 
     public void SetBackPackSellMode(Tables.ITEM_QUALITY sellQuality)

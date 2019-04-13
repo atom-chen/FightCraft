@@ -3,13 +3,6 @@ using System.Collections.Generic;
 using Tables;
 using UnityEngine;
 
-public class EquipRefreshCost
-{
-    public int _MatCnt;
-    public int _CostGold;
-    public int _CostDiamond;
-}
-
 public class EquipRefresh : DataPackBase
 {
     #region 单例
@@ -46,7 +39,7 @@ public class EquipRefresh : DataPackBase
 
         if (GemData.Instance.PackGemDatas.DecItem(costGem, 1))
         {
-            RandomAttrs.RefreshEquipExAttr(itemEquip);
+            RandomAttrs.RefreshEquipExAttrValue(itemEquip);
 
             Hashtable hash = new Hashtable();
             hash.Add("EquipInfo", itemEquip);
@@ -57,6 +50,48 @@ public class EquipRefresh : DataPackBase
 
         return false;
     }
-    
+
+    public bool EquipRefreshGold(ItemEquip itemEquip)
+    {
+        if (itemEquip.EquipQuality == ITEM_QUALITY.WHITE)
+            return false;
+
+        int costValue = GameDataValue.GetEquipRefreshGold(itemEquip);
+
+        if (PlayerDataPack.Instance.DecGold(costValue))
+        {
+            RandomAttrs.RefreshEquipExAttrs(itemEquip);
+
+            Hashtable hash = new Hashtable();
+            hash.Add("EquipInfo", itemEquip);
+            GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_EQUIP_REFRESH, this, hash);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool EquipRefreshDiamond(ItemEquip itemEquip)
+    {
+        if (itemEquip.EquipQuality == ITEM_QUALITY.WHITE)
+            return false;
+
+        int costValue = GameDataValue.GetEquipRefreshDiamond(itemEquip);
+
+        if (PlayerDataPack.Instance.DecDiamond(costValue))
+        {
+            RandomAttrs.RefreshEquipExAttrValue(itemEquip);
+
+            Hashtable hash = new Hashtable();
+            hash.Add("EquipInfo", itemEquip);
+            GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_EQUIP_REFRESH, this, hash);
+
+            return true;
+        }
+
+        return false;
+    }
+
     #endregion
 }

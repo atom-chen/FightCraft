@@ -36,7 +36,7 @@ public class UIGemSuitGemItem : UIPackItemBase
     public void ShowGem(Tables.GemTableRecord gemRecord, int minLevel)
     {
 
-        var gemData = GemData.Instance.GetGemClassMax(gemRecord.Class, minLevel);
+        var gemData = GemData.Instance.GetGemClassMax(gemRecord.Class, minLevel, null);
         if (gemData == null || !gemData.IsVolid())
         {
             ClearItem();

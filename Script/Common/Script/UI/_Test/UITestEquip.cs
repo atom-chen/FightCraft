@@ -27,7 +27,7 @@ public class UITestEquip : UIBase
 
     #endregion
 
-    #region 
+    #region equip/item test
 
     public InputField _LegencyID;
     public InputField _InputLevel;
@@ -37,9 +37,7 @@ public class UITestEquip : UIBase
     public InputField _ItemID;
     public InputField _ItemCnt;
 
-    #endregion
-
-    #region equip/item test
+    public InputField _EquipPackQuality;
 
     public override void Show(Hashtable hash)
     {
@@ -75,13 +73,40 @@ public class UITestEquip : UIBase
     {
         int itemCnt = int.Parse(_ItemCnt.text);
         int itemID = int.Parse(_ItemID.text);
-        if (itemID > 70000 && itemID < 80000)
+        //if (itemID > 70000 && itemID < 80000)
+        //{
+        //    GemData.Instance.CreateGem(itemID.ToString(), itemCnt);
+        //}
+        //else
         {
-            GemData.Instance.CreateGem(itemID.ToString(), itemCnt);
+            ItemBase.CreateItemInPack(itemID.ToString(), itemCnt);
+        }
+    }
+
+    public void OnBtnPackEquip()
+    {
+        int equipQuality = int.Parse(_EquipPackQuality.text);
+        int professionLimit = 10;
+        if (RoleData.SelectRole.Profession == PROFESSION.BOY_DEFENCE
+            || RoleData.SelectRole.Profession == PROFESSION.BOY_DOUGE)
+        {
+            professionLimit = 5;
+        }
+        if (equipQuality >= (int)Tables.ITEM_QUALITY.WHITE && equipQuality <= (int)Tables.ITEM_QUALITY.ORIGIN)
+        {
+            for (int i = 0; i <= (int)Tables.EQUIP_SLOT.RING; ++i)
+            {
+                var equipItem = ItemEquip.CreateEquip(RoleData.SelectRole.TotalLevel, (ITEM_QUALITY)equipQuality, -1, i, professionLimit);
+                RoleData.SelectRole.PutOnEquip(equipItem.EquipItemRecord.Slot, equipItem);
+            }
         }
         else
         {
-            ItemBase.CreateItemInPack(itemID.ToString(), itemCnt);
+            for (int i = 0; i <= (int)Tables.EQUIP_SLOT.RING; ++i)
+            {
+                var equipItem = ItemEquip.CreateEquip(RoleData.SelectRole.TotalLevel, (ITEM_QUALITY)equipQuality, -1, i, professionLimit);
+                RoleData.SelectRole.PutOnEquip(equipItem.EquipItemRecord.Slot, equipItem);
+            }
         }
     }
     #endregion

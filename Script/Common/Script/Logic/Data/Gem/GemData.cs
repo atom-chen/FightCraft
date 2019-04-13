@@ -11,7 +11,7 @@ public class GemLevelInfo
     public int CostMoney;
 }
 
-public class GemData
+public class GemData : DataPackBase
 {
     #region 唯一
 
@@ -30,7 +30,7 @@ public class GemData
 
     private GemData()
     {
-        
+        _SaveFileName = "GemData";
     }
 
     #endregion
@@ -44,10 +44,13 @@ public class GemData
 
     #region gem pack
 
-    public const int MAX_GEM_EQUIP = 6;
+    public const int MAX_GEM_EQUIP = 5;
 
-    private ItemPackBase<ItemGem> _EquipedGemDatas;
-    public ItemPackBase<ItemGem> EquipedGemDatas
+    [SaveField(1)]
+    public List<string> _EquipGemDataID;
+
+    private List<ItemGem> _EquipedGemDatas;
+    public List<ItemGem> EquipedGemDatas
     {
         get
         {
@@ -55,44 +58,47 @@ public class GemData
         }
     }
 
+    public bool IsEquipedGem(ItemGem itemGem)
+    {
+        return _EquipedGemDatas.Contains(itemGem);
+    }
+
     public void SaveEquipGem()
     {
-        EquipedGemDatas.SaveClass(true);
+        SaveClass(true);
+    }
+
+    public void RefreshEquipedGems()
+    {
+        _EquipedGemDatas = new List<ItemGem>();
+        for (int i = 0; i < _EquipGemDataID.Count; ++i)
+        {
+            _EquipedGemDatas.Add(_PackGemDatas.GetItem(_EquipGemDataID[i]));
+        }
+
+        GemSuit.Instance.IsActSet();
     }
 
     public bool InitGemPack()
     {
-        _EquipedGemDatas = new ItemPackBase<ItemGem>();
-        _EquipedGemDatas._SaveFileName = "GemDataEquiped";
-        _EquipedGemDatas._PackSize = MAX_GEM_EQUIP;
-        _EquipedGemDatas.LoadClass(true);
-        
-        if (_EquipedGemDatas._PackItems == null || _EquipedGemDatas._PackItems.Count < MAX_GEM_EQUIP)
+        if (_EquipGemDataID == null || _EquipGemDataID.Count == 0)
         {
-            if (_EquipedGemDatas._PackItems == null)
+            _EquipGemDataID = new List<string>();
+            for (int i = 0; i < MAX_GEM_EQUIP; ++i)
             {
-                _EquipedGemDatas._PackItems = new List<ItemGem>();
-                _EquipedGemDatas._PackSize = MAX_GEM_EQUIP;
+                _EquipGemDataID.Add("-1");
             }
-            int equipSlotCnt = MAX_GEM_EQUIP;
-            int startIdx = _EquipedGemDatas._PackItems.Count;
-            for (int i = startIdx; i < equipSlotCnt; ++i)
-            {
-                ItemGem newItemGem = new ItemGem("-1");
-                _EquipedGemDatas._PackItems.Add(newItemGem);
-            }
-            _EquipedGemDatas.SaveClass(true);
         }
 
-        GemSuit.Instance.IsActSet();
+        RefreshEquipedGems();
         return false;
     }
 
     public int GetPutOnIdx()
     {
-        for (int i = 0; i < EquipedGemDatas._PackItems.Count; ++i)
+        for (int i = 0; i < EquipedGemDatas.Count; ++i)
         {
-            if (!EquipedGemDatas._PackItems[i].IsVolid())
+            if (EquipedGemDatas[i] == null || !EquipedGemDatas[i].IsVolid())
                 return i;
         }
         return -1;
@@ -106,9 +112,9 @@ public class GemData
             return false;
         }
 
-        var equipedGem = EquipedGemDatas._PackItems.Find((gemItem) =>
+        var equipedGem = EquipedGemDatas.Find((gemItem) =>
         {
-            if (gemItem.IsVolid() && gemItem.GemRecord.Class == gem.GemRecord.Class)
+            if (gemItem != null && gemItem.IsVolid() && gemItem.ItemDataID == gem.ItemDataID)
             {
                 return true;
             }
@@ -123,21 +129,11 @@ public class GemData
             return false;
         }
 
-        var putOnSlot = EquipedGemDatas._PackItems[slot];
-        if (putOnSlot == null || putOnSlot.IsVolid())
-        {
-            UIMessageTip.ShowMessageTip(30001);
-            return false;
-        }
+        _EquipGemDataID[slot] = gem.ItemDataID;
 
-        if (gem.ItemStackNum < 1)
-            return false;
+        RefreshEquipedGems();
 
-        putOnSlot.ItemDataID = gem.ItemDataID;
-        putOnSlot.AddStackNum(1);
-
-        PackGemDatas.DecItem(gem, 1);
-
+        SaveClass(true);
         PackGemDatas.SaveClass(true);
 
         GemSuit.Instance.IsActSet();
@@ -148,14 +144,24 @@ public class GemData
 
     public bool PutOff(ItemGem gem)
     {
-        if (!PackGemDatas.AddItem(gem.ItemDataID, 1))
-        {
-            UIMessageTip.ShowMessageTip(10002);
-            return false;
-        }
 
-        gem.DecStackNum(1);
+        int equipSlot = -1;
+        for (int i = 0; i < _EquipedGemDatas.Count; ++i)
+        {
+            if (_EquipedGemDatas[i] == gem)
+            {
+                equipSlot = i;
+                break;
+            }
+        }
+        if (equipSlot < 0)
+            return false;
+
+        _EquipGemDataID[equipSlot] = "-1";
+        RefreshEquipedGems();
+
         PackGemDatas.SaveClass(true);
+        SaveClass(true);
 
         RoleData.SelectRole.CalculateAttr();
         return true;
@@ -171,8 +177,14 @@ public class GemData
 
     public bool IsEquipedGem(string gemDataID)
     {
-        var gemData = EquipedGemDatas.GetItem(gemDataID);
-        return gemData != null;
+        for (int i = 0; i < _EquipGemDataID.Count; ++i)
+        {
+            if (_EquipGemDataID[i] == gemDataID)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     #endregion
@@ -197,9 +209,18 @@ public class GemData
         _PackGemDatas._PackSize = MAX_GEM_PACK;
         _PackGemDatas.LoadClass(true);
 
-        if (_PackGemDatas._PackItems == null)
+        if (_PackGemDatas._PackItems == null || _PackGemDatas._PackItems.Count == 0)
         {
             _PackGemDatas._PackItems = new List<ItemGem>();
+
+            var gemRecordTabs = TableReader.GemTable.Records.Values;
+            foreach (var gemRecord in gemRecordTabs)
+            {
+                ItemGem newItemGem = new ItemGem(gemRecord.Id);
+                newItemGem.Level = 0;
+                _PackGemDatas._PackItems.Add(newItemGem);
+            }
+
             _PackGemDatas.SaveClass(true);
         }
     }
@@ -433,21 +454,21 @@ public class GemData
 
     public void SetGemAttr(RoleAttrStruct roleAttr)
     {
-        for (int i = 0; i < EquipedGemDatas._PackItems.Count; ++i)
+        for (int i = 0; i < EquipedGemDatas.Count; ++i)
         {
-            if (EquipedGemDatas._PackItems[i] == null)
+            if (EquipedGemDatas[i] == null)
                 continue;
 
-            if (!EquipedGemDatas._PackItems[i].IsVolid())
+            if (!EquipedGemDatas[i].IsVolid())
                 continue;
 
-            if (EquipedGemDatas._PackItems[i].GemAttr.AttrType == "RoleAttrImpactBaseAttr")
+            if (EquipedGemDatas[i].GemAttr.AttrType == "RoleAttrImpactBaseAttr")
             {
-                roleAttr.AddValue((RoleAttrEnum)EquipedGemDatas._PackItems[i].GemAttr.AttrParams[0], EquipedGemDatas._PackItems[i].GemAttr.AttrParams[1]);
+                roleAttr.AddValue((RoleAttrEnum)EquipedGemDatas[i].GemAttr.AttrParams[0], EquipedGemDatas[i].GemAttr.AttrParams[1]);
             }
             else
             {
-                roleAttr.AddExAttr(RoleAttrImpactManager.GetAttrImpact(EquipedGemDatas._PackItems[i].GemAttr));
+                roleAttr.AddExAttr(RoleAttrImpactManager.GetAttrImpact(EquipedGemDatas[i].GemAttr));
             }
         }
 
@@ -455,11 +476,14 @@ public class GemData
        
     }
 
-    public ItemGem GetGemClassMax(int classID, int minLevel)
+    public ItemGem GetGemClassMax(int classID, int minLevel, List<ItemGem> extraGems)
     {
         ItemGem classItem = null;
         foreach (var gemData in PackGemDatas._PackItems)
         {
+            if (extraGems !=null && extraGems.Contains(gemData))
+                continue;
+
             if (gemData.IsVolid() && gemData.GemRecord.Class == classID && gemData.GemRecord.Level >= minLevel)
             {
                 if (classItem == null)
@@ -473,9 +497,12 @@ public class GemData
             }
         }
 
-        foreach (var gemData in EquipedGemDatas._PackItems)
+        foreach (var gemData in EquipedGemDatas)
         {
-            if (gemData.IsVolid() && gemData.GemRecord.Class == classID && gemData.GemRecord.Level >= minLevel)
+            if (extraGems != null && extraGems.Contains(gemData))
+                continue;
+
+            if (gemData!= null && gemData.IsVolid() && gemData.GemRecord.Class == classID && gemData.GemRecord.Level >= minLevel)
             {
                 if (classItem == null)
                 {
@@ -526,6 +553,39 @@ public class GemData
         return gemRecords;
     }
 
+
+    #endregion
+
+    #region level up
+
+    public int GetLevelCostMoney(ItemGem itemGem)
+    {
+        return GameDataValue.GetGemLevelUpCostMoney(itemGem.Level);
+    }
+
+    public int GetLevelCostMat(ItemGem itemGem)
+    {
+        return GameDataValue.GetGemLevelUpCostMat(itemGem.Level);
+    }
+
+    public bool GemLevelUp(ItemGem itemGem)
+    {
+        if (itemGem.Level >= RoleData.SelectRole.TotalLevel)
+        {
+            UIMessageTip.ShowMessageTip(30009);
+            return false;
+        }
+
+        int costMatCnt = GetLevelCostMat(itemGem);
+        if (BackBagPack.Instance.PageItems.DecItem(itemGem.ItemDataID, costMatCnt))
+        {
+            ++itemGem.Level;
+            itemGem.RefreshGemAttr();
+            itemGem.SaveClass(true);
+            return true;
+        }
+        return false;
+    }
 
     #endregion
 }

@@ -38,7 +38,7 @@ public class LogicManager
 
     public void StartLoadRole(int idx)
     {
-        //GemData.Instance.LoadClass(true);
+        GemData.Instance.LoadClass(true);
         GemData.Instance.InitGemData();
 
         LegendaryData.Instance.LoadClass(true);

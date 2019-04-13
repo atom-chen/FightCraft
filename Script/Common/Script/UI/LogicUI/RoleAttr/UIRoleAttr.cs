@@ -207,16 +207,16 @@ public class UIRoleAttr : UIBase
         switch (attr)
         {
             case RoleAttrEnum.Strength:
-                showTips = Tables.StrDictionary.GetFormatStr(1001000, value * GameDataValue._AttackPerStrength, value * GameDataValue._DmgEnhancePerStrength);
+                showTips = Tables.StrDictionary.GetFormatStr(1001000, value * GameDataValue._AttackPerStrength);
                 break;
             case RoleAttrEnum.Dexterity:
-                showTips = Tables.StrDictionary.GetFormatStr(1001001, value * GameDataValue._IgnoreAtkPerDex, GameDataValue.ConfigIntToPersent((int)(value * GameDataValue._CriticalRatePerDex)), GameDataValue.ConfigIntToPersent((int)(value * GameDataValue._CriticalDmgPerDex)));
+                showTips = Tables.StrDictionary.GetFormatStr(1001001, value * GameDataValue._DefencePerDex);
                 break;
             case RoleAttrEnum.Intelligence:
-                showTips = Tables.StrDictionary.GetFormatStr(1001002, value * GameDataValue._EleAtkPerInt, value * GameDataValue._EleEnhancePerInt);
+                showTips = Tables.StrDictionary.GetFormatStr(1001002, value * GameDataValue._EleAtkPerInt);
                 break;
             case RoleAttrEnum.Vitality:
-                showTips = Tables.StrDictionary.GetFormatStr(1001003, value * GameDataValue._HPPerVit, value * GameDataValue._FinalDmgRedusePerVit);
+                showTips = Tables.StrDictionary.GetFormatStr(1001003, value * GameDataValue._HPPerVit);
                 break;
         }
 

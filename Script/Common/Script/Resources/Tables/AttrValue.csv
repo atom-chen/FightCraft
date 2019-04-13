@@ -1,4 +1,4 @@
-"""ID""","""??""","""??""","""AttrImpact""","""StrParam1""","""StrParam2""","""StrParam3""","""AttrParams1""","""AttrParams2""","""AttrParams3""","""AttrParams4""","""AttrParams5""","""AttrParams6""","""AttrParams7""","""AttrParams8""","""AttrParams9""","""AttrParams10"""
+"""ID""","""Name""","""Desc""","""AttrImpact""","""StrParam1""","""StrParam2""","""StrParam3""","""AttrParams1""","""AttrParams2""","""AttrParams3""","""AttrParams4""","""AttrParams5""","""AttrParams6""","""AttrParams7""","""AttrParams8""","""AttrParams9""","""AttrParams10"""
 #legendary equip LV1,,,,,,,,,,,,,,,,
 120000,,,RoleAttrImpactElementBullet,ImpactAttr2_B3_Stone,3,120000,2500,250,0,0,0,0,0,389,1,2
 120001,,,RoleAttrImpactElementBullet,ImpactAttr4_B3_WhirlWind,3,120001,2500,250,0,0,0,0,0,435,78,3
@@ -72,113 +72,44 @@
 128000,,,RoleAttrImpactBaseAttr,equip,,128000,36,1000,100,0,0,0,0,0,0,0
 999999,,,RoleAttrImpactPassiveDamageArea,PassiveDamageArea,3,999999,100000,300,100000,60000,3000,60000,1000,0,0,0
 #gem,,,,,,,,,,,,,,,,
-70001,,,RoleAttrImpactBaseAttr,,Fire Atk,,15,100,100,1,0,0,0,0,0,0
-70002,,,RoleAttrImpactBaseAttr,,Fire Atk,,15,100,100,1,0,0,0,0,0,0
-70003,,,RoleAttrImpactBaseAttr,,Fire Atk,,15,100,100,1,0,0,0,0,0,0
-70004,,,RoleAttrImpactBaseAttr,,Fire Atk,,15,100,100,1,0,0,0,0,0,0
-70005,,,RoleAttrImpactBaseAttr,,Fire Atk,,15,100,100,1,0,0,0,0,0,0
-70101,,,RoleAttrImpactBaseAttr,,Cold Atk,,16,100,100,1,0,0,0,0,0,0
-70102,,,RoleAttrImpactBaseAttr,,Cold Atk,,16,100,100,1,0,0,0,0,0,0
-70103,,,RoleAttrImpactBaseAttr,,Cold Atk,,16,100,100,1,0,0,0,0,0,0
-70104,,,RoleAttrImpactBaseAttr,,Cold Atk,,16,100,100,1,0,0,0,0,0,0
-70105,,,RoleAttrImpactBaseAttr,,Cold Atk,,16,100,100,1,0,0,0,0,0,0
-70201,,,RoleAttrImpactBaseAttr,,Lighting Atk,,17,100,100,1,0,0,0,0,0,0
-70202,,,RoleAttrImpactBaseAttr,,Lighting Atk,,17,100,100,1,0,0,0,0,0,0
-70203,,,RoleAttrImpactBaseAttr,,Lighting Atk,,17,100,100,1,0,0,0,0,0,0
-70204,,,RoleAttrImpactBaseAttr,,Lighting Atk,,17,100,100,1,0,0,0,0,0,0
-70205,,,RoleAttrImpactBaseAttr,,Lighting Atk,,17,100,100,1,0,0,0,0,0,0
-70301,,,RoleAttrImpactBaseAttr,,Wind Atk,,18,100,100,1,0,0,0,0,0,0
-70302,,,RoleAttrImpactBaseAttr,,Wind Atk,,18,100,100,1,0,0,0,0,0,0
-70303,,,RoleAttrImpactBaseAttr,,Wind Atk,,18,100,100,1,0,0,0,0,0,0
-70304,,,RoleAttrImpactBaseAttr,,Wind Atk,,18,100,100,1,0,0,0,0,0,0
-70305,,,RoleAttrImpactBaseAttr,,Wind Atk,,18,100,100,1,0,0,0,0,0,0
-70401,,,RoleAttrImpactBaseAttr,,Fire Def,,19,100,100,1,0,0,0,0,0,0
-70402,,,RoleAttrImpactBaseAttr,,Fire Def,,19,100,100,1,0,0,0,0,0,0
-70403,,,RoleAttrImpactBaseAttr,,Fire Def,,19,100,100,1,0,0,0,0,0,0
-70404,,,RoleAttrImpactBaseAttr,,Fire Def,,19,100,100,1,0,0,0,0,0,0
-70405,,,RoleAttrImpactBaseAttr,,Fire Def,,19,100,100,1,0,0,0,0,0,0
-70501,,,RoleAttrImpactBaseAttr,,Cold Def,,20,100,100,1,0,0,0,0,0,0
-70502,,,RoleAttrImpactBaseAttr,,Cold Def,,20,100,100,1,0,0,0,0,0,0
-70503,,,RoleAttrImpactBaseAttr,,Cold Def,,20,100,100,1,0,0,0,0,0,0
-70504,,,RoleAttrImpactBaseAttr,,Cold Def,,20,100,100,1,0,0,0,0,0,0
-70505,,,RoleAttrImpactBaseAttr,,Cold Def,,20,100,100,1,0,0,0,0,0,0
-70601,,,RoleAttrImpactBaseAttr,,Lighting Def,,21,100,100,1,0,0,0,0,0,0
-70602,,,RoleAttrImpactBaseAttr,,Lighting Def,,21,100,100,1,0,0,0,0,0,0
-70603,,,RoleAttrImpactBaseAttr,,Lighting Def,,21,100,100,1,0,0,0,0,0,0
-70604,,,RoleAttrImpactBaseAttr,,Lighting Def,,21,100,100,1,0,0,0,0,0,0
-70605,,,RoleAttrImpactBaseAttr,,Lighting Def,,21,100,100,1,0,0,0,0,0,0
-70701,,,RoleAttrImpactBaseAttr,,Wind Def,,22,100,100,1,0,0,0,0,0,0
-70702,,,RoleAttrImpactBaseAttr,,Wind Def,,22,100,100,1,0,0,0,0,0,0
-70703,,,RoleAttrImpactBaseAttr,,Wind Def,,22,100,100,1,0,0,0,0,0,0
-70704,,,RoleAttrImpactBaseAttr,,Wind Def,,22,100,100,1,0,0,0,0,0,0
-70705,,,RoleAttrImpactBaseAttr,,Wind Def,,22,100,100,1,0,0,0,0,0,0
-70801,,,RoleAttrImpactBaseAttr,,Strength +{0},,1,100,100,1,0,0,0,0,0,0
-70802,,,RoleAttrImpactBaseAttr,,Strength +{0},,1,100,100,1,0,0,0,0,0,0
-70803,,,RoleAttrImpactBaseAttr,,Strength +{0},,1,100,100,1,0,0,0,0,0,0
-70804,,,RoleAttrImpactBaseAttr,,Strength +{0},,1,100,100,1,0,0,0,0,0,0
-70805,,,RoleAttrImpactBaseAttr,,Strength +{0},,1,100,100,1,0,0,0,0,0,0
-70901,,,RoleAttrImpactBaseAttr,,Dexterity +{0},,2,100,100,1,0,0,0,0,0,0
-70902,,,RoleAttrImpactBaseAttr,,Dexterity +{0},,2,100,100,1,0,0,0,0,0,0
-70903,,,RoleAttrImpactBaseAttr,,Dexterity +{0},,2,100,100,1,0,0,0,0,0,0
-70904,,,RoleAttrImpactBaseAttr,,Dexterity +{0},,2,100,100,1,0,0,0,0,0,0
-70905,,,RoleAttrImpactBaseAttr,,Dexterity +{0},,2,100,100,1,0,0,0,0,0,0
-71001,,,RoleAttrImpactBaseAttr,,Intelligence +{0},,3,100,100,1,0,0,0,0,0,0
-71002,,,RoleAttrImpactBaseAttr,,Intelligence +{0},,3,100,100,1,0,0,0,0,0,0
-71003,,,RoleAttrImpactBaseAttr,,Intelligence +{0},,3,100,100,1,0,0,0,0,0,0
-71004,,,RoleAttrImpactBaseAttr,,Intelligence +{0},,3,100,100,1,0,0,0,0,0,0
-71005,,,RoleAttrImpactBaseAttr,,Intelligence +{0},,3,100,100,1,0,0,0,0,0,0
-71101,,,RoleAttrImpactBaseAttr,,Vitality +{0},,4,100,100,1,0,0,0,0,0,0
-71102,,,RoleAttrImpactBaseAttr,,Vitality +{0},,4,100,100,1,0,0,0,0,0,0
-71103,,,RoleAttrImpactBaseAttr,,Vitality +{0},,4,100,100,1,0,0,0,0,0,0
-71104,,,RoleAttrImpactBaseAttr,,Vitality +{0},,4,100,100,1,0,0,0,0,0,0
-71105,,,RoleAttrImpactBaseAttr,,Vitality +{0},,4,100,100,1,0,0,0,0,0,0
-71201,,,RoleAttrImpactBaseAttr,,Atk,,7,100,100,1,0,0,0,0,0,0
-71202,,,RoleAttrImpactBaseAttr,,Atk,,7,100,100,1,0,0,0,0,0,0
-71203,,,RoleAttrImpactBaseAttr,,Atk,,7,100,100,1,0,0,0,0,0,0
-71204,,,RoleAttrImpactBaseAttr,,Atk,,7,100,100,1,0,0,0,0,0,0
-71205,,,RoleAttrImpactBaseAttr,,Atk,,7,100,100,1,0,0,0,0,0,0
-71301,,,RoleAttrImpactBaseAttr,,Def,,9,100,100,1,0,0,0,0,0,0
-71302,,,RoleAttrImpactBaseAttr,,Def,,9,100,100,1,0,0,0,0,0,0
-71303,,,RoleAttrImpactBaseAttr,,Def,,9,100,100,1,0,0,0,0,0,0
-71304,,,RoleAttrImpactBaseAttr,,Def,,9,100,100,1,0,0,0,0,0,0
-71305,,,RoleAttrImpactBaseAttr,,Def,,9,100,100,1,0,0,0,0,0,0
-71401,,,RoleAttrImpactBaseAttr,,CDC,,13,100,100,1,0,0,0,0,0,0
-71402,,,RoleAttrImpactBaseAttr,,CDC,,13,100,100,1,0,0,0,0,0,0
-71403,,,RoleAttrImpactBaseAttr,,CDC,,13,100,100,1,0,0,0,0,0,0
-71404,,,RoleAttrImpactBaseAttr,,CDC,,13,100,100,1,0,0,0,0,0,0
-71405,,,RoleAttrImpactBaseAttr,,CDC,,13,100,100,1,0,0,0,0,0,0
-71501,,,RoleAttrImpactBaseAttr,,CDR,,14,100,100,1,0,0,0,0,0,0
-71502,,,RoleAttrImpactBaseAttr,,CDR,,14,100,100,1,0,0,0,0,0,0
-71503,,,RoleAttrImpactBaseAttr,,CDR,,14,100,100,1,0,0,0,0,0,0
-71504,,,RoleAttrImpactBaseAttr,,CDR,,14,100,100,1,0,0,0,0,0,0
-71505,,,RoleAttrImpactBaseAttr,,CDR,,14,100,100,1,0,0,0,0,0,0
+70001,,,RoleAttrImpactBaseAttr,,Atk,,7,100,100,1,0,0,0,0,0,0
+70002,,,RoleAttrImpactBaseAttr,,Def,,9,100,100,1,0,0,0,0,0,0
+70003,,,RoleAttrImpactBaseAttr,,HP,,5,100,100,1,0,0,0,0,0,0
+70004,,,RoleAttrImpactBaseAttr,,Str,,1,100,100,1,0,0,0,0,0,0
+70005,,,RoleAttrImpactBaseAttr,,Dec,,2,100,100,1,0,0,0,0,0,0
+70006,,,RoleAttrImpactBaseAttr,,Int,,3,100,100,1,0,0,0,0,0,0
+70007,,,RoleAttrImpactBaseAttr,,Vit,,4,100,100,1,0,0,0,0,0,0
+70008,,,RoleAttrImpactBaseAttr,,Fire Atk,,15,100,100,1,0,0,0,0,0,0
+70009,,,RoleAttrImpactBaseAttr,,Cold Atk,,16,100,100,1,0,0,0,0,0,0
+70010,,,RoleAttrImpactBaseAttr,,Lighting Atk,,17,100,100,1,0,0,0,0,0,0
+70011,,,RoleAttrImpactBaseAttr,,Wind Atk,,18,100,100,1,0,0,0,0,0,0
 #,,,,,,,,,,,,,,,,
-80000,,,RoleAttrImpactBaseAttr,,Fire Atk,,15,100,100,1,0,0,0,0,0,0
-80001,,,RoleAttrImpactBaseAttr,,Cold Atk,,16,100,100,1,0,0,0,0,0,0
-80002,,,RoleAttrImpactBaseAttr,,Lighting Atk,,17,100,100,1,0,0,0,0,0,0
-80003,,,RoleAttrImpactBaseAttr,,Wind Atk,,18,100,100,1,0,0,0,0,0,0
-80010,,,RoleAttrImpactBaseAttr,,Fire enhance,,23,100,100,1,0,0,0,0,0,0
-80011,,,RoleAttrImpactBaseAttr,,Cold enhance,,24,100,100,1,0,0,0,0,0,0
-80012,,,RoleAttrImpactBaseAttr,,Lighting enhance,,25,100,100,1,0,0,0,0,0,0
-80013,,,RoleAttrImpactBaseAttr,,Wind enhance,,26,100,100,1,0,0,0,0,0,0
-80100,,,RoleAttrImpactBaseAttr,,Fire Atk,,15,100,100,1,0,0,0,0,0,0
-80101,,,RoleAttrImpactBaseAttr,,Cold Atk,,16,100,100,1,0,0,0,0,0,0
-80102,,,RoleAttrImpactBaseAttr,,Lighting Atk,,17,100,100,1,0,0,0,0,0,0
-80103,,,RoleAttrImpactBaseAttr,,Wind Atk,,18,100,100,1,0,0,0,0,0,0
-80110,,,RoleAttrImpactBaseAttr,,Fire enhance,,23,100,100,1,0,0,0,0,0,0
-80111,,,RoleAttrImpactBaseAttr,,Cold enhance,,24,100,100,1,0,0,0,0,0,0
-80112,,,RoleAttrImpactBaseAttr,,Lighting enhance,,25,100,100,1,0,0,0,0,0,0
-80113,,,RoleAttrImpactBaseAttr,,Wind enhance,,26,100,100,1,0,0,0,0,0,0
-80120,,,RoleAttrImpactBaseAttr,,Atk,,7,100,100,1,0,0,0,0,0,0
-80200,,,RoleAttrImpactBaseAttr,,Fire Atk,,23,100,100,1,0,0,0,0,0,0
-80201,,,RoleAttrImpactBaseAttr,,Cold Atk,,24,100,100,1,0,0,0,0,0,0
-80202,,,RoleAttrImpactBaseAttr,,Lighting Atk,,25,100,100,1,0,0,0,0,0,0
-80203,,,RoleAttrImpactBaseAttr,,Wind Atk,,26,100,100,1,0,0,0,0,0,0
-80220,,,RoleAttrImpactBaseAttr,,Fire enhance,,23,100,100,1,0,0,0,0,0,0
-80221,,,RoleAttrImpactBaseAttr,,Cold enhance,,24,100,100,1,0,0,0,0,0,0
-80222,,,RoleAttrImpactBaseAttr,,Lighting enhance,,25,100,100,1,0,0,0,0,0,0
-80223,,,RoleAttrImpactBaseAttr,,Wind enhance,,26,100,100,1,0,0,0,0,0,0
-80230,,,RoleAttrImpactBaseAttr,,Atk,,7,100,100,1,0,0,0,0,0,0
+80000,,,RoleAttrImpactBaseAttr,,Fire Atk,,15,1,100,1,0,0,0,0,0,0
+80001,,,RoleAttrImpactBaseAttr,,Cold Atk,,16,1,100,1,0,0,0,0,0,0
+80002,,,RoleAttrImpactBaseAttr,,Lighting Atk,,17,1,100,1,0,0,0,0,0,0
+80003,,,RoleAttrImpactBaseAttr,,Wind Atk,,18,1,100,1,0,0,0,0,0,0
+80010,,,RoleAttrImpactBaseAttr,,Fire enhance,,23,1,100,1,0,0,0,0,0,0
+80011,,,RoleAttrImpactBaseAttr,,Cold enhance,,24,1,100,1,0,0,0,0,0,0
+80012,,,RoleAttrImpactBaseAttr,,Lighting enhance,,25,1,100,1,0,0,0,0,0,0
+80013,,,RoleAttrImpactBaseAttr,,Wind enhance,,26,1,100,1,0,0,0,0,0,0
+80100,,,RoleAttrImpactBaseAttr,,Fire Atk,,15,1,100,1,0,0,0,0,0,0
+80101,,,RoleAttrImpactBaseAttr,,Cold Atk,,16,1,100,1,0,0,0,0,0,0
+80102,,,RoleAttrImpactBaseAttr,,Lighting Atk,,17,1,100,1,0,0,0,0,0,0
+80103,,,RoleAttrImpactBaseAttr,,Wind Atk,,18,1,100,1,0,0,0,0,0,0
+80110,,,RoleAttrImpactBaseAttr,,Fire enhance,,23,1,100,1,0,0,0,0,0,0
+80111,,,RoleAttrImpactBaseAttr,,Cold enhance,,24,1,100,1,0,0,0,0,0,0
+80112,,,RoleAttrImpactBaseAttr,,Lighting enhance,,25,1,100,1,0,0,0,0,0,0
+80113,,,RoleAttrImpactBaseAttr,,Wind enhance,,26,1,100,1,0,0,0,0,0,0
+80120,,,RoleAttrImpactBaseAttr,,Atk,,7,1,100,1,0,0,0,0,0,0
+80200,,,RoleAttrImpactBaseAttr,,Fire Atk,,15,1,100,1,0,0,0,0,0,0
+80201,,,RoleAttrImpactBaseAttr,,Cold Atk,,16,1,100,1,0,0,0,0,0,0
+80202,,,RoleAttrImpactBaseAttr,,Lighting Atk,,17,1,100,1,0,0,0,0,0,0
+80203,,,RoleAttrImpactBaseAttr,,Wind Atk,,18,1,100,1,0,0,0,0,0,0
+80220,,,RoleAttrImpactBaseAttr,,Fire enhance,,23,1,100,1,0,0,0,0,0,0
+80221,,,RoleAttrImpactBaseAttr,,Cold enhance,,24,1,100,1,0,0,0,0,0,0
+80222,,,RoleAttrImpactBaseAttr,,Lighting enhance,,25,1,100,1,0,0,0,0,0,0
+80223,,,RoleAttrImpactBaseAttr,,Wind enhance,,26,1,100,1,0,0,0,0,0,0
+80230,,,RoleAttrImpactBaseAttr,,Atk,,7,2,100,1,0,0,0,0,0,0
 80240,,,RoleAttrImpactElementBullet,ImpactBuff_Fire,6,31000,2500,250,100,1,0,0,0,0,0,0
 80241,,,RoleAttrImpactElementBullet,ImpactBuff_Ice,6,31001,2500,250,100,1,0,0,0,0,0,0
 80242,,,RoleAttrImpactElementBullet,ImpactBuff_Light,6,31002,2500,250,100,1,0,0,0,0,0,0
@@ -206,7 +137,7 @@
 #legendary set,,,,,,,,,,,,,,,,
 3000,,,RoleAttrImpactBaseAttr,,,,14,1,1,1,0,0,0,0,0,0
 3001,,,RoleAttrImpactBaseAttr,,,,5,1,1,1,0,0,0,0,0,0
-3002,,,RoleAttrImpactPassiveShadowHit,,,,500,500,1,1,0,0,0,0,0,0
+3002,,,RoleAttrImpactPassiveShadowHit,,,40008,0,500,1,1,0,0,0,0,0,0
 #five element,,,,,,,,,,,,,,,,
 1000000,,,RoleAttrImpactBaseAttr,,,,1,100,100,1,0,0,0,0,0,0
 1000001,,,RoleAttrImpactBaseAttr,,,,2,100,100,1,0,0,0,0,0,0
@@ -281,27 +212,27 @@
 1300011,,,RoleAttrImpactBaseAttr,,,,13,200,0,3,2,2,2,2,2,2
 1300012,,,RoleAttrImpactBaseAttr,,,,13,400,0,3,2,2,2,2,2,2
 1300013,,,RoleAttrImpactBaseAttr,,,,13,600,0,3,2,2,2,2,2,2
-1300021,,,RoleAttrImpactBaseAttr,,,,7,10000,800,500000,2,2,2,2,2,2
-1300022,,,RoleAttrImpactBaseAttr,,,,7,10000,800,500000,2,2,2,2,2,2
-1300023,,,RoleAttrImpactBaseAttr,,,,7,10000,800,500000,3,3,3,3,3,3
-1300101,,,RoleAttrImpactBaseAttr,,,,5,10000,800,500000,4,4,4,4,4,4
-1300102,,,RoleAttrImpactBaseAttr,,,,5,10000,800,500000,5,5,5,5,5,5
-1300103,,,RoleAttrImpactBaseAttr,,,,5,10000,800,500000,5,5,5,5,5,5
-1300111,,,RoleAttrImpactBaseAttr,,,,9,10000,800,500000,4,4,4,4,4,4
-1300112,,,RoleAttrImpactBaseAttr,,,,9,10000,800,500000,5,5,5,5,5,5
-1300113,,,RoleAttrImpactBaseAttr,,,,9,10000,800,500000,5,5,5,5,5,5
-1300201,,,RoleAttrImpactBaseAttr,,,,1,10000,800,500000,4,4,4,4,4,4
-1300202,,,RoleAttrImpactBaseAttr,,,,1,10000,800,500000,5,5,5,5,5,5
-1300203,,,RoleAttrImpactBaseAttr,,,,1,10000,800,500000,5,5,5,5,5,5
-1300211,,,RoleAttrImpactBaseAttr,,,,2,10000,800,500000,4,4,4,4,4,4
-1300212,,,RoleAttrImpactBaseAttr,,,,2,10000,800,500000,5,5,5,5,5,5
-1300213,,,RoleAttrImpactBaseAttr,,,,2,10000,800,500000,5,5,5,5,5,5
-1300301,,,RoleAttrImpactBaseAttr,,,,3,10000,800,500000,4,4,4,4,4,4
-1300302,,,RoleAttrImpactBaseAttr,,,,3,10000,800,500000,5,5,5,5,5,5
-1300303,,,RoleAttrImpactBaseAttr,,,,3,10000,800,500000,5,5,5,5,5,5
-1300311,,,RoleAttrImpactBaseAttr,,,,4,10000,800,500000,4,4,4,4,4,4
-1300312,,,RoleAttrImpactBaseAttr,,,,4,10000,800,500000,5,5,5,5,5,5
-1300313,,,RoleAttrImpactBaseAttr,,,,4,10000,800,500000,5,5,5,5,5,5
+1300021,,,RoleAttrImpactBaseAttr,,,,8,500,0,0,2,2,2,2,2,2
+1300022,,,RoleAttrImpactBaseAttr,,,,8,1000,0,0,2,2,2,2,2,2
+1300023,,,RoleAttrImpactBaseAttr,,,,8,1500,0,0,3,3,3,3,3,3
+1300101,,,RoleAttrImpactBaseAttr,,,,6,1000,0,0,4,4,4,4,4,4
+1300102,,,RoleAttrImpactBaseAttr,,,,6,2000,0,0,5,5,5,5,5,5
+1300103,,,RoleAttrImpactBaseAttr,,,,6,3000,0,0,5,5,5,5,5,5
+1300111,,,RoleAttrImpactBaseAttr,,,,10,1000,0,0,4,4,4,4,4,4
+1300112,,,RoleAttrImpactBaseAttr,,,,10,2000,0,0,5,5,5,5,5,5
+1300113,,,RoleAttrImpactBaseAttr,,,,10,3000,0,0,5,5,5,5,5,5
+1300201,,,RoleAttrImpactBaseAttr,,,,1,1000,0,0,4,4,4,4,4,4
+1300202,,,RoleAttrImpactBaseAttr,,,,1,2000,0,0,5,5,5,5,5,5
+1300203,,,RoleAttrImpactBaseAttr,,,,1,3000,0,0,5,5,5,5,5,5
+1300211,,,RoleAttrImpactBaseAttr,,,,2,1000,0,0,4,4,4,4,4,4
+1300212,,,RoleAttrImpactBaseAttr,,,,2,2000,0,0,5,5,5,5,5,5
+1300213,,,RoleAttrImpactBaseAttr,,,,2,3000,0,0,5,5,5,5,5,5
+1300301,,,RoleAttrImpactBaseAttr,,,,3,1000,0,0,4,4,4,4,4,4
+1300302,,,RoleAttrImpactBaseAttr,,,,3,2000,0,0,5,5,5,5,5,5
+1300303,,,RoleAttrImpactBaseAttr,,,,3,3000,0,0,5,5,5,5,5,5
+1300311,,,RoleAttrImpactBaseAttr,,,,4,1000,0,0,4,4,4,4,4,4
+1300312,,,RoleAttrImpactBaseAttr,,,,4,2000,0,0,5,5,5,5,5,5
+1300313,,,RoleAttrImpactBaseAttr,,,,4,3000,0,0,5,5,5,5,5,5
 #test buff,,,,,,,,,,,,,,,,
 9000001,,,RoleAttrImpactPassiveDamageArea,PassiveDamageArea,3,,100000,300,100000,60000,3000,60000,1000,0,0,0
 9000002,,,RoleAttrImpactPassiveAddAttr,PassiveResistExAtkSpeed,3,,40000000,1000000,15000000,1,0,0,0,0,0,3

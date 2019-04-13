@@ -16,7 +16,7 @@ public class UIGemInfo : UIItemInfo
     {
         base.ShowTips(itemBase);
 
-        _Level.text = "";
+        _Level.text = StrDictionary.GetFormatStr(30004, itemBase.Level);
         _BaseAttr.ShowAttr(itemBase.GemAttr);
     }
 

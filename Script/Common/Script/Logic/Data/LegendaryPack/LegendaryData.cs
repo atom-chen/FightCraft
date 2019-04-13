@@ -166,7 +166,10 @@ public class LegendaryData : SaveItemBase
         _LegendaryValue = 0;
         foreach (var equip in _LegendaryEquips)
         {
-            _LegendaryValue += equip.EquipLevel;
+            if (equip.IsVolid())
+            {
+                _LegendaryValue += (int)(GameDataValue.CalLvValue(equip.EquipLevel, equip.EquipItemRecord.Slot) * _ValueModify);
+            }
         }
     }
 
@@ -204,32 +207,51 @@ public class LegendaryData : SaveItemBase
 
     public List<LegendaryShadowAttrInfo> _ShadowInfos = new List<LegendaryShadowAttrInfo>()
     {
-        new LegendaryShadowAttrInfo() { _NeedValue = 3750, _Level=3},
-        new LegendaryShadowAttrInfo() { _NeedValue = 3000, _Level=2},
-        new LegendaryShadowAttrInfo() { _NeedValue = 1875, _Level=1},
+        new LegendaryShadowAttrInfo() { _NeedValue = 82, _Level=3},
+        new LegendaryShadowAttrInfo() { _NeedValue = 74, _Level=2},
+        new LegendaryShadowAttrInfo() { _NeedValue = 66, _Level=1},
+        //new LegendaryShadowAttrInfo() { _NeedValue = 3, _Level=3},
+        //new LegendaryShadowAttrInfo() { _NeedValue = 2, _Level=2},
+        //new LegendaryShadowAttrInfo() { _NeedValue = 1, _Level=1},
     };
 
     public static string _SpecilImpact = "3002";
 
     public float _AtkParam = 0.06f;
     public float _HpParam = 0.25f;
+    public static float _ValueModify = 0.1f;
+
+    public LegendaryShadowAttrInfo GetNextShadowLv(int level)
+    {
+        foreach (var shadowInfo in _ShadowInfos)
+        {
+            if (shadowInfo._Level == level + 1)
+            {
+                return shadowInfo;
+            }
+        }
+        return null;
+    }
+
+    public int GetLegendaryCollectValue()
+    {
+        return GetLegendatyCnt();
+    }
 
     private void CalculateAttrs()
     {
         _ExAttrs = new List<EquipExAttr>();
         CalculateValue();
-        if (_LegendaryValue == 0)
-            return;
+        //if (_LegendaryValue == 0)
+        //    return;
 
-        int atkValue = Mathf.Max(1, Mathf.CeilToInt(_AtkParam * _LegendaryValue));
-
-        _ExAttrs.Add(EquipExAttr.GetBaseExAttr(RoleAttrEnum.Attack, atkValue));
-        _ExAttrs.Add(EquipExAttr.GetBaseExAttr(RoleAttrEnum.HPMax, atkValue));
+        _ExAttrs.Add(EquipExAttr.GetBaseExAttr(RoleAttrEnum.Attack, GameDataValue.GetValueAttr(RoleAttrEnum.Attack, _LegendaryValue)));
+        _ExAttrs.Add(EquipExAttr.GetBaseExAttr(RoleAttrEnum.HPMax, GameDataValue.GetValueAttr(RoleAttrEnum.HPMax, _LegendaryValue)));
 
         var attrRecord = TableReader.AttrValue.GetRecord(_SpecilImpact);
         foreach (var shadowInfo in _ShadowInfos)
         {
-            if (_LegendaryValue >= shadowInfo._NeedValue)
+            if (GetLegendaryCollectValue() >= shadowInfo._NeedValue)
             {
                 _ExAttrs.Add(attrRecord.GetExAttr(shadowInfo._Level));
                 break;

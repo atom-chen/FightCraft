@@ -101,26 +101,27 @@ public class GameDataValue
     #region baseAttr -> exAttr atk
 
     public static int _AtkPerRoleLevel = 0;
-    public static int _AtkRoleLevelBase = 10;
+    public static int _AtkRoleLevelBase = 0;
     public static int _HPPerRoleLevel = 0;
     public static int _HPRoleLevelBase = 100;
 
-    public static float _AttackPerStrength = 0.5f;
-    public static float _DmgEnhancePerStrength = 1f;
-    public static float _StrToAtk = 1f;
+    public static float _AttackPerStrength = 2.5f;
+    public static float _DmgEnhancePerStrength = 0f;
+    public static float _StrToAtk = 0.4f;
 
-    public static float _IgnoreAtkPerDex = 0.25f;
-    public static float _CriticalRatePerDex = 0f;
-    public static float _CriticalDmgPerDex = 2f;
-    public static float _DexToAtk = 1f;
+    //public static float _IgnoreAtkPerDex = 0.25f;
+    //public static float _CriticalRatePerDex = 0f;
+    //public static float _CriticalDmgPerDex = 2f;
+    public static float _DefencePerDex = 2.5f;
+    public static float _DexToAtk = 0.4f;
 
-    public static float _EleAtkPerInt = 0.25f;
-    public static float _EleEnhancePerInt = 0.5f;
-    public static float _IntToAtk = 1f;
+    public static float _EleAtkPerInt = 1f;
+    public static float _EleEnhancePerInt = 0f;
+    public static float _IntToAtk = 0.4f;
 
-    public static float _HPPerVit = 8;
-    public static float _FinalDmgRedusePerVit = 0.12f;
-    public static float _VitToAtk = 1f;
+    public static float _HPPerVit = 20;
+    public static float _FinalDmgRedusePerVit = 0f;
+    public static float _VitToAtk = 0.4f;
 
     public static float _CriticalDmgToAtk = 2f;
 
@@ -229,34 +230,32 @@ public class GameDataValue
     public static int GetValueAttr(RoleAttrEnum roleAttr, int value)
     {
         int attrValue = 1;
-        if (roleAttr == RoleAttrEnum.AttackPersent)
+
+        if (roleAttr == RoleAttrEnum.AttackSpeed
+            || roleAttr == RoleAttrEnum.MoveSpeed
+            || roleAttr == RoleAttrEnum.CriticalHitChance
+            || roleAttr == RoleAttrEnum.CriticalHitDamge
+            || roleAttr == RoleAttrEnum.FireEnhance
+            || roleAttr == RoleAttrEnum.ColdEnhance
+            || roleAttr == RoleAttrEnum.LightingEnhance
+            || roleAttr == RoleAttrEnum.WindEnhance
+            || roleAttr == RoleAttrEnum.FireResistan
+            || roleAttr == RoleAttrEnum.ColdResistan
+            || roleAttr == RoleAttrEnum.LightingResistan
+            || roleAttr == RoleAttrEnum.WindResistan
+            || roleAttr == RoleAttrEnum.PhysicDamageEnhance
+            || roleAttr == RoleAttrEnum.AttackPersent
+            || roleAttr == RoleAttrEnum.DefensePersent
+            || roleAttr == RoleAttrEnum.HPMaxPersent)
         {
-            attrValue = Mathf.Clamp(value, 1, 10000);
-        }
-        else if (roleAttr == RoleAttrEnum.HPMaxPersent)
-        {
-            attrValue = Mathf.Clamp(value, 1, 10000);
+            attrValue = value;
         }
         else
         {
             attrValue = Mathf.CeilToInt(value * GetAttrToValue(roleAttr));
-            if (roleAttr == RoleAttrEnum.AttackSpeed)
-            {
-                attrValue = Mathf.Clamp(attrValue, 1, 1000);
-            }
-            else if (roleAttr == RoleAttrEnum.MoveSpeed)
-            {
-                attrValue = Mathf.Clamp(attrValue, 1, 1500);
-            }
-            else if (roleAttr == RoleAttrEnum.CriticalHitChance)
-            {
-                attrValue = Mathf.Clamp(attrValue, 1, 1000);
-            }
-            else
-            {
-                attrValue = Mathf.Max(attrValue, 1);
-            }
+            attrValue = Mathf.Max(attrValue, 1);
         }
+
         return attrValue;
     }
 
@@ -284,23 +283,19 @@ public class GameDataValue
     private static float _LvValueV = 10;
     private static float _LvValueA = 0.8f;
 
-    public static int CalLvValue(int level, EQUIP_SLOT equipSlot)
+    public static int CalLvValue(int level, EQUIP_SLOT equipSlot = EQUIP_SLOT.WEAPON)
     {
-        //var exValue = _LvValueV * level + level * level * 0.5f * _LvValueA + _LvValueBase;
-        //if (equipSlot == EQUIP_SLOT.AMULET || equipSlot == EQUIP_SLOT.RING)
-        //{
-        //    exValue *= 2;
-
-        //}
-        //return Mathf.CeilToInt(exValue);
+        if (level == 0)
+            return 0;
 
         var attrRecord = TableReader.EquipBaseAttr.GetEquipBaseAttr(level);
-        int equipValue = attrRecord.Value;
-        if (equipSlot == EQUIP_SLOT.AMULET || equipSlot == EQUIP_SLOT.RING)
-        {
-            equipValue *= 2;
+        //int equipValue = attrRecord.Value;
+        int equipValue = TableReader.AttrValueLevel.GetBaseValue(level);
+        //if (equipSlot == EQUIP_SLOT.AMULET || equipSlot == EQUIP_SLOT.RING)
+        //{
+        //    equipValue *= 2;
 
-        }
+        //}
         return equipValue;
     }
 
@@ -309,7 +304,7 @@ public class GameDataValue
     #region equip
 
     public static List<float> _ExAttrQualityPersent = new List<float>() { 0.8f, 0.92f, 1.0f, 1.08f, 1.2f };
-
+    public static int _SpAttrStep = 50;
     public static List<int> _ExAttrQualityStrDict = new List<int>() { 92004, 92003, 92002, 92001, 92000 };
 
     public static int GetExAttrRandomQuality()
@@ -318,179 +313,179 @@ public class GameDataValue
         return random;
     }
 
-    public static int GetExAttrRandomValue(RoleAttrEnum roleAttr, int baseValue, int qualityLevel)
+    public static int GetExAttrRandomValue(RoleAttrEnum roleAttr, int attrLevel, int qualityLevel)
     {
         var randomValue = _ExAttrQualityPersent[qualityLevel];
-        if (roleAttr == RoleAttrEnum.AttackPersent)
+        int attrValue = CalLvValue(attrLevel);
+        return Mathf.CeilToInt(attrValue * randomValue);
+    }
+
+    public static int GetExAttrRandomValue(EquipExAttrRandom roleAttr, int attrLevel, int qualityLevel)
+    {
+        if (roleAttr.AttrValueIdx > 0)
         {
-            return Mathf.CeilToInt(5000 * randomValue);
+            var randomValue = _ExAttrQualityPersent[qualityLevel];
+            int attrValue = TableReader.AttrValueLevel.GetSpValue(attrLevel, roleAttr.AttrValueIdx);
+            int spAttrStep = (int)((attrValue * randomValue) / _SpAttrStep);
+            return Mathf.CeilToInt(spAttrStep * _SpAttrStep);
         }
-        else if (roleAttr == RoleAttrEnum.HPMaxPersent)
-        {
-            return Mathf.CeilToInt(5000 * randomValue);
-        }
-        //else if (roleAttr == RoleAttrEnum.MoveSpeed)
-        //{
-        //    int value = 300 + Mathf.CeilToInt( randomValue * baseValue);
-        //    return Mathf.Clamp(value, 300, 1500);
-        //}
-        //else if (roleAttr == RoleAttrEnum.AttackSpeed)
-        //{
-        //    int value = Mathf.CeilToInt(randomValue * baseValue);
-        //    return Mathf.Clamp(value, 300, 1000);
-        //}
-        //else if (roleAttr == RoleAttrEnum.CriticalHitChance)
-        //{
-        //    int value = Mathf.CeilToInt(randomValue * baseValue);
-        //    return Mathf.Clamp(value, 300, 1000);
-        //}
         else
         {
-            return Mathf.CeilToInt(baseValue * randomValue * _ExToBase);
+            return GetExAttrRandomValue(roleAttr.AttrID, attrLevel, qualityLevel);
         }
     }
 
-    public static List<RoleAttrEnum> GetRandomEquipAttrsType(Tables.EQUIP_SLOT equipSlot, Tables.ITEM_QUALITY quality, EquipItemRecord legencyEquip, int fixNum = 0)
+    public static List<EquipExAttrRandom> GetRandomEquipAttrsType(Tables.EQUIP_SLOT equipSlot, Tables.ITEM_QUALITY quality, EquipItemRecord legencyEquip, int level, int fixNum = 0)
     {
         List<EquipExAttr> exAttrs = new List<EquipExAttr>();
 
         int exAttrCnt = 0;
         if (quality == ITEM_QUALITY.WHITE)
-            return new List<RoleAttrEnum>();
+            return new List<EquipExAttrRandom>();
 
-        if (fixNum == 0)
+        List<EquipExAttrRandom> targetRandomList = _WeaponExAttrs;
+
+        switch (equipSlot)
         {
-            switch (equipSlot)
-            {
-                case Tables.EQUIP_SLOT.WEAPON:
+            case Tables.EQUIP_SLOT.WEAPON:
+                exAttrCnt = 3;
+                if (quality == Tables.ITEM_QUALITY.BLUE)
+                {
+                    exAttrCnt = Random.Range(1, 3);
+                }
+                else if (quality == ITEM_QUALITY.PURPER)
+                {
                     exAttrCnt = 3;
-                    if (quality == Tables.ITEM_QUALITY.BLUE)
+                }
+                else if (quality == ITEM_QUALITY.ORIGIN)
+                {
+                    if (legencyEquip == null)
                     {
-                        exAttrCnt = Random.Range(1, 3);
+                        exAttrCnt = 4;
                     }
-                    else if (quality == ITEM_QUALITY.PURPER)
+                    else
                     {
                         exAttrCnt = 3;
                     }
-                    else if (quality == ITEM_QUALITY.ORIGIN)
-                    {
-                        if (legencyEquip == null)
-                        {
-                            exAttrCnt = 4;
-                        }
-                        else
-                        {
-                            exAttrCnt = 3;
-                        }
-                    }
-                    return CalRandomAttrs(_WeaponExAttrs, exAttrCnt);
-                case Tables.EQUIP_SLOT.TORSO:
+                }
+                targetRandomList = _WeaponExAttrs;
+                break;
+            case Tables.EQUIP_SLOT.TORSO:
+                exAttrCnt = 3;
+                if (quality == Tables.ITEM_QUALITY.BLUE)
+                {
+                    exAttrCnt = Random.Range(1, 3);
+                }
+                else if (quality == ITEM_QUALITY.PURPER)
+                {
                     exAttrCnt = 3;
-                    if (quality == Tables.ITEM_QUALITY.BLUE)
+                }
+                else if (quality == ITEM_QUALITY.ORIGIN)
+                {
+                    if (legencyEquip == null)
                     {
-                        exAttrCnt = Random.Range(1, 3);
+                        exAttrCnt = 4;
                     }
-                    else if (quality == ITEM_QUALITY.PURPER)
+                    else
                     {
                         exAttrCnt = 3;
                     }
-                    else if (quality == ITEM_QUALITY.ORIGIN)
-                    {
-                        if (legencyEquip == null)
-                        {
-                            exAttrCnt = 4;
-                        }
-                        else
-                        {
-                            exAttrCnt = 3;
-                        }
-                    }
-                    return CalRandomAttrs(_DefenceExAttrs, exAttrCnt);
-                case Tables.EQUIP_SLOT.LEGS:
+                }
+                targetRandomList = _TorsoExAttrs;
+                break;
+            case Tables.EQUIP_SLOT.LEGS:
+                exAttrCnt = 3;
+                if (quality == Tables.ITEM_QUALITY.BLUE)
+                {
+                    exAttrCnt = Random.Range(1, 3);
+                }
+                else if (quality == ITEM_QUALITY.PURPER)
+                {
                     exAttrCnt = 3;
-                    if (quality == Tables.ITEM_QUALITY.BLUE)
+                }
+                else if (quality == ITEM_QUALITY.ORIGIN)
+                {
+                    if (legencyEquip == null)
                     {
-                        exAttrCnt = Random.Range(1, 3);
+                        exAttrCnt = 4;
                     }
-                    else if (quality == ITEM_QUALITY.PURPER)
+                    else
                     {
                         exAttrCnt = 3;
                     }
-                    else if (quality == ITEM_QUALITY.ORIGIN)
+                }
+                targetRandomList = _LegsExAttrs;
+                break;
+            case Tables.EQUIP_SLOT.AMULET:
+                exAttrCnt = 3;
+                if (quality == Tables.ITEM_QUALITY.BLUE)
+                {
+                    exAttrCnt = Random.Range(1, 3);
+                }
+                else if (quality == ITEM_QUALITY.PURPER)
+                {
+                    exAttrCnt = Random.Range(3, 5);
+                }
+                else if (quality == ITEM_QUALITY.ORIGIN)
+                {
+                    if (legencyEquip == null)
                     {
-                        if (legencyEquip == null)
-                        {
-                            exAttrCnt = 4;
-                        }
-                        else
-                        {
-                            exAttrCnt = 3;
-                        }
+                        exAttrCnt = 5;
                     }
-                    return CalRandomAttrs(_DefenceExAttrs, exAttrCnt);
-                case Tables.EQUIP_SLOT.AMULET:
-                    exAttrCnt = 3;
-                    if (quality == Tables.ITEM_QUALITY.BLUE)
+                    else
                     {
-                        exAttrCnt = Random.Range(1, 3);
+                        exAttrCnt = 4;
                     }
-                    else if (quality == ITEM_QUALITY.PURPER)
+                }
+                targetRandomList = _AmuletExAttrs;
+                break;
+            case Tables.EQUIP_SLOT.RING:
+                exAttrCnt = 3;
+                if (quality == Tables.ITEM_QUALITY.BLUE)
+                {
+                    exAttrCnt = Random.Range(1, 3);
+                }
+                else if (quality == ITEM_QUALITY.PURPER)
+                {
+                    exAttrCnt = Random.Range(3, 5);
+                }
+                else if (quality == ITEM_QUALITY.ORIGIN)
+                {
+                    if (legencyEquip == null)
                     {
-                        exAttrCnt = 3;
+                        exAttrCnt = 5;
                     }
-                    else if (quality == ITEM_QUALITY.ORIGIN)
+                    else
                     {
-                        if (legencyEquip == null)
-                        {
-                            exAttrCnt = 4;
-                        }
-                        else
-                        {
-                            exAttrCnt = 3;
-                        }
+                        exAttrCnt = 4;
                     }
-                    return CalRandomAttrs(_AmuletExAttrs, exAttrCnt);
-                case Tables.EQUIP_SLOT.RING:
-                    exAttrCnt = 3;
-                    if (quality == Tables.ITEM_QUALITY.BLUE)
-                    {
-                        exAttrCnt = Random.Range(1, 3);
-                    }
-                    else if (quality == ITEM_QUALITY.PURPER)
-                    {
-                        exAttrCnt = 3;
-                    }
-                    else if (quality == ITEM_QUALITY.ORIGIN)
-                    {
-                        if (legencyEquip == null)
-                        {
-                            exAttrCnt = 4;
-                        }
-                        else
-                        {
-                            exAttrCnt = 3;
-                        }
-                    }
-                    return CalRandomAttrs(_RingExAttrs, exAttrCnt);
-            }
+                }
+                targetRandomList = _RingExAttrs;
+                break;
         }
-        else
+
+        if (fixNum != 0)
         {
-            return CalRandomAttrs(_AmuletExAttrs, fixNum);
+            exAttrCnt = fixNum;
         }
-        return null;
+
+        return CalRandomAttrs(targetRandomList, exAttrCnt, level);
     }
 
-    public static List<RoleAttrEnum> CalRandomAttrs(List<EquipExAttrRandom> staticList, int randomCnt)
+    public static List<EquipExAttrRandom> CalRandomAttrs(List<EquipExAttrRandom> staticList, int randomCnt, int level)
     {
-        List<EquipExAttrRandom> randomList = new List<EquipExAttrRandom>(staticList);
+        List<EquipExAttrRandom> randomList = new List<EquipExAttrRandom>();
         int totalRandom = 0;
-        foreach (var attrRandom in randomList)
+        foreach (var attrRandom in staticList)
         {
-            totalRandom += (attrRandom.Random);
+            if (attrRandom.AttrValueIdx <= 0 || TableReader.AttrValueLevel.GetSpValue(level, attrRandom.AttrValueIdx) > 0)
+            {
+                randomList.Add(attrRandom);
+                totalRandom += (attrRandom.Random);
+            }
         }
 
-        List<RoleAttrEnum> attrList = new List<RoleAttrEnum>();
+        List<EquipExAttrRandom> attrList = new List<EquipExAttrRandom>();
         for (int i = 0; i < randomCnt; ++i)
         {
             int temp = totalRandom;
@@ -510,7 +505,7 @@ public class GameDataValue
                 attr = randomList[randomList.Count - 1];
             }
 
-            attrList.Add(attr.AttrID);
+            attrList.Add(attr);
             if (!attr.CanRepeat)
             {
                 totalRandom -= attr.Random;
@@ -520,7 +515,7 @@ public class GameDataValue
         return attrList;
     }
 
-    public static void RefreshEquipExAttr(ItemEquip itemEquip)
+    public static void RefreshEquipExAttrValue(ItemEquip itemEquip)
     {
         List<EquipExAttr> valueAttrs = new List<EquipExAttr>();
         int singleValueMax = Mathf.CeilToInt(itemEquip.EquipValue * _ExToBase);
@@ -531,13 +526,40 @@ public class GameDataValue
                 continue;
 
             var attrQuality = GameDataValue.GetExAttrRandomQuality();
-            equipExAttr.Value = GameDataValue.GetExAttrRandomValue((RoleAttrEnum)equipExAttr.AttrParams[0], itemEquip.EquipValue, attrQuality);
+            equipExAttr.Value = GameDataValue.GetExAttrRandomValue((RoleAttrEnum)equipExAttr.AttrParams[0], itemEquip.EquipLevel, attrQuality);
             equipExAttr.AttrParams[1] = (GameDataValue.GetValueAttr((RoleAttrEnum)equipExAttr.AttrParams[0], equipExAttr.Value));
             equipExAttr.AttrParams[2] = attrQuality;
 
             equipExAttr.InitAttrQuality();
         }
         
+        itemEquip.RefreshEquip();
+    }
+
+    public static void RefreshEquipExAttrs(ItemEquip itemEquip)
+    {
+        EquipItemRecord legendaryRecord = null;
+        int exAttrCount = itemEquip.EquipExAttrs.Count;
+        if (itemEquip.IsLegandaryEquip())
+        {
+            legendaryRecord = itemEquip.EquipItemRecord;
+            --exAttrCount;
+        }
+        var exAttrTypes = GameDataValue.GetRandomEquipAttrsType(itemEquip.EquipItemRecord.Slot, itemEquip.EquipQuality, legendaryRecord, itemEquip.EquipLevel, exAttrCount);
+
+        for (int i = 0; i < exAttrTypes.Count; ++i)
+        {
+            var equipExAttr = new EquipExAttr();
+            equipExAttr.AttrType = "RoleAttrImpactBaseAttr";
+            var attrQuality = GameDataValue.GetExAttrRandomQuality();
+            equipExAttr.Value = GameDataValue.GetExAttrRandomValue(exAttrTypes[i], itemEquip.EquipLevel, attrQuality);
+            equipExAttr.AttrParams.Add((int)exAttrTypes[i].AttrID);
+            equipExAttr.AttrParams.Add(GameDataValue.GetValueAttr(exAttrTypes[i].AttrID, equipExAttr.Value));
+            equipExAttr.AttrParams.Add(attrQuality);
+            equipExAttr.InitAttrQuality();
+            itemEquip.EquipExAttrs[i] = equipExAttr;
+        }
+
         itemEquip.RefreshEquip();
     }
 
@@ -562,6 +584,7 @@ public class GameDataValue
         public int MinValue;
         public int MaxValue;
         public int Random;
+        public int AttrValueIdx = -1;
 
         public EquipExAttrRandom(RoleAttrEnum attr, bool repeat,int minValue, int maxValue, int randomVal)
         {
@@ -582,24 +605,25 @@ public class GameDataValue
         new EquipExAttrRandom(RoleAttrEnum.HPMax, true, 1, -1, 100),
         new EquipExAttrRandom(RoleAttrEnum.Attack, true, 1, -1, 100),
         new EquipExAttrRandom(RoleAttrEnum.Defense, true, 1, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.AttackSpeed, false, 300, 1200, 100),
-        new EquipExAttrRandom(RoleAttrEnum.CriticalHitChance, false, 300, 1200, 100),
-        new EquipExAttrRandom(RoleAttrEnum.CriticalHitDamge, true, 1, -1, 100),
         new EquipExAttrRandom(RoleAttrEnum.FireAttackAdd, true, 1, -1, 100),
         new EquipExAttrRandom(RoleAttrEnum.ColdAttackAdd, true, 1, -1, 100),
         new EquipExAttrRandom(RoleAttrEnum.LightingAttackAdd, true, 1, -1, 100),
         new EquipExAttrRandom(RoleAttrEnum.WindAttackAdd, true, 1, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.FireResistan, true, 1, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.ColdResistan, true, 1, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.LightingResistan, true, 1, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.WindResistan, true, 1, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.FireEnhance, false, 500, 1500, 100),
-        new EquipExAttrRandom(RoleAttrEnum.ColdEnhance, false, 500, 1500, 100),
-        new EquipExAttrRandom(RoleAttrEnum.LightingEnhance, false, 500, 1500, 100),
-        new EquipExAttrRandom(RoleAttrEnum.WindEnhance, false, 500, 1500, 100),
+
+        new EquipExAttrRandom(RoleAttrEnum.AttackSpeed, false, 300, 1200, 100)
+        {AttrValueIdx=1 },
+
+        new EquipExAttrRandom(RoleAttrEnum.FireEnhance, false, 500, 1500, 100)
+        {AttrValueIdx=5 },
+        new EquipExAttrRandom(RoleAttrEnum.ColdEnhance, false, 500, 1500, 100)
+        {AttrValueIdx=5 },
+        new EquipExAttrRandom(RoleAttrEnum.LightingEnhance, false, 500, 1500, 100)
+        {AttrValueIdx=5 },
+        new EquipExAttrRandom(RoleAttrEnum.WindEnhance, false, 500, 1500, 100)
+        {AttrValueIdx=5 },
     };
 
-    public static List<EquipExAttrRandom> _DefenceExAttrs = new List<EquipExAttrRandom>()
+    public static List<EquipExAttrRandom> _TorsoExAttrs = new List<EquipExAttrRandom>()
     {
         new EquipExAttrRandom(RoleAttrEnum.Strength, true, 1, -1, 100),
         new EquipExAttrRandom(RoleAttrEnum.Dexterity, true, 1, -1, 100),
@@ -608,19 +632,64 @@ public class GameDataValue
         new EquipExAttrRandom(RoleAttrEnum.HPMax, true, 1, -1, 100),
         new EquipExAttrRandom(RoleAttrEnum.Attack, false, 1, -1, 50),
         new EquipExAttrRandom(RoleAttrEnum.Defense, true, 1, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.CriticalHitDamge, true, 1, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.FireAttackAdd, true, 1, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.ColdAttackAdd, true, 1, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.LightingAttackAdd, true, 1, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.WindAttackAdd, true, 1, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.FireResistan, true, 1, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.ColdResistan, true, 1, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.LightingResistan, true, 1, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.WindResistan, true, 1, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.FireEnhance, false, 500, 1500, 50),
-        new EquipExAttrRandom(RoleAttrEnum.ColdEnhance, false, 500, 1500, 50),
-        new EquipExAttrRandom(RoleAttrEnum.LightingEnhance, false, 500, 50, 50),
-        new EquipExAttrRandom(RoleAttrEnum.WindEnhance, false, 500, 1500, 50),
+        new EquipExAttrRandom(RoleAttrEnum.FireAttackAdd, true, 1, -1, 80),
+        new EquipExAttrRandom(RoleAttrEnum.ColdAttackAdd, true, 1, -1, 80),
+        new EquipExAttrRandom(RoleAttrEnum.LightingAttackAdd, true, 1, -1, 80),
+        new EquipExAttrRandom(RoleAttrEnum.WindAttackAdd, true, 1, -1, 80),
+
+        new EquipExAttrRandom(RoleAttrEnum.FireResistan, true, 1, -1, 100)
+        {AttrValueIdx=6 },
+        new EquipExAttrRandom(RoleAttrEnum.ColdResistan, true, 1, -1, 100)
+        {AttrValueIdx=6 },
+        new EquipExAttrRandom(RoleAttrEnum.LightingResistan, true, 1, -1, 100)
+        {AttrValueIdx=6 },
+        new EquipExAttrRandom(RoleAttrEnum.WindResistan, true, 1, -1, 100)
+        {AttrValueIdx=6 },
+
+        new EquipExAttrRandom(RoleAttrEnum.FireEnhance, false, 500, 1500, 50)
+        {AttrValueIdx=5 },
+        new EquipExAttrRandom(RoleAttrEnum.ColdEnhance, false, 500, 1500, 50)
+        {AttrValueIdx=5 },
+        new EquipExAttrRandom(RoleAttrEnum.LightingEnhance, false, 500, 1500, 50)
+        {AttrValueIdx=5 },
+        new EquipExAttrRandom(RoleAttrEnum.WindEnhance, false, 500, 1500, 50)
+        {AttrValueIdx=5 },
+    };
+
+    public static List<EquipExAttrRandom> _LegsExAttrs = new List<EquipExAttrRandom>()
+    {
+        new EquipExAttrRandom(RoleAttrEnum.Strength, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Dexterity, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Intelligence, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Vitality, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.HPMax, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.Attack, false, 1, -1, 80),
+        new EquipExAttrRandom(RoleAttrEnum.Defense, true, 1, -1, 100),
+        new EquipExAttrRandom(RoleAttrEnum.FireAttackAdd, true, 1, -1, 80),
+        new EquipExAttrRandom(RoleAttrEnum.ColdAttackAdd, true, 1, -1, 80),
+        new EquipExAttrRandom(RoleAttrEnum.LightingAttackAdd, true, 1, -1, 80),
+        new EquipExAttrRandom(RoleAttrEnum.WindAttackAdd, true, 1, -1, 80),
+
+        new EquipExAttrRandom(RoleAttrEnum.FireResistan, true, 1, -1, 100)
+        {AttrValueIdx=6 },
+        new EquipExAttrRandom(RoleAttrEnum.ColdResistan, true, 1, -1, 100)
+        {AttrValueIdx=6 },
+        new EquipExAttrRandom(RoleAttrEnum.LightingResistan, true, 1, -1, 100)
+        {AttrValueIdx=6 },
+        new EquipExAttrRandom(RoleAttrEnum.WindResistan, true, 1, -1, 100)
+        {AttrValueIdx=6 },
+
+        new EquipExAttrRandom(RoleAttrEnum.FireEnhance, false, 500, 1500, 50)
+        {AttrValueIdx=5 },
+        new EquipExAttrRandom(RoleAttrEnum.ColdEnhance, false, 500, 1500, 50)
+        {AttrValueIdx=5 },
+        new EquipExAttrRandom(RoleAttrEnum.LightingEnhance, false, 500, 1500, 50)
+        {AttrValueIdx=5 },
+        new EquipExAttrRandom(RoleAttrEnum.WindEnhance, false, 500, 1500, 50)
+        {AttrValueIdx=5 },
+
+        new EquipExAttrRandom(RoleAttrEnum.MoveSpeed, false, 500, 1500, 150)
+        {AttrValueIdx=4 },
     };
 
     public static List<EquipExAttrRandom> _AmuletExAttrs = new List<EquipExAttrRandom>()
@@ -632,21 +701,15 @@ public class GameDataValue
         new EquipExAttrRandom(RoleAttrEnum.HPMax, true, 1, -1, 100),
         new EquipExAttrRandom(RoleAttrEnum.Attack, true, 1, -1, 100),
         new EquipExAttrRandom(RoleAttrEnum.Defense, true, 1, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.MoveSpeed, false, 300, 1200, 100),
-        new EquipExAttrRandom(RoleAttrEnum.CriticalHitChance, false,300, 1200, 100),
-        new EquipExAttrRandom(RoleAttrEnum.CriticalHitDamge, true, 1, -1, 100),
         new EquipExAttrRandom(RoleAttrEnum.FireAttackAdd, true, 1, -1, 100),
         new EquipExAttrRandom(RoleAttrEnum.ColdAttackAdd, true, 1, -1, 100),
         new EquipExAttrRandom(RoleAttrEnum.LightingAttackAdd, true, 1, -1, 100),
         new EquipExAttrRandom(RoleAttrEnum.WindAttackAdd, true, 1, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.FireResistan, true, 1, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.ColdResistan, true, 1, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.LightingResistan, true, 1, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.WindResistan, true, 1, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.FireEnhance, false, 500, 1500, 100),
-        new EquipExAttrRandom(RoleAttrEnum.ColdEnhance, false, 500, 1500, 100),
-        new EquipExAttrRandom(RoleAttrEnum.LightingEnhance, false, 500, 50, 100),
-        new EquipExAttrRandom(RoleAttrEnum.WindEnhance, false, 500, 1500, 100),
+
+        new EquipExAttrRandom(RoleAttrEnum.CriticalHitChance, false,300, 1200, 100)
+        {AttrValueIdx=2 },
+        new EquipExAttrRandom(RoleAttrEnum.CriticalHitDamge, true, 1, -1, 100)
+        {AttrValueIdx=3 },
     };
 
     public static List<EquipExAttrRandom> _RingExAttrs = new List<EquipExAttrRandom>()
@@ -658,21 +721,15 @@ public class GameDataValue
         new EquipExAttrRandom(RoleAttrEnum.HPMax, true, 1, -1, 100),
         new EquipExAttrRandom(RoleAttrEnum.Attack, true, 1, -1, 100),
         new EquipExAttrRandom(RoleAttrEnum.Defense, true, 1, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.AttackSpeed, false, 300, 1200, 100),
-        new EquipExAttrRandom(RoleAttrEnum.CriticalHitChance, false, 300, 1200, 100),
-        new EquipExAttrRandom(RoleAttrEnum.CriticalHitDamge, true, 1, -1, 100),
         new EquipExAttrRandom(RoleAttrEnum.FireAttackAdd, true, 1, -1, 100),
         new EquipExAttrRandom(RoleAttrEnum.ColdAttackAdd, true, 1, -1, 100),
         new EquipExAttrRandom(RoleAttrEnum.LightingAttackAdd, true, 1, -1, 100),
         new EquipExAttrRandom(RoleAttrEnum.WindAttackAdd, true, 1, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.FireResistan, true, 1, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.ColdResistan, true, 1, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.LightingResistan, true, 1, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.WindResistan, true, 1, -1, 100),
-        new EquipExAttrRandom(RoleAttrEnum.FireEnhance, false, 500, 1500, 100),
-        new EquipExAttrRandom(RoleAttrEnum.ColdEnhance, false, 500, 1500, 100),
-        new EquipExAttrRandom(RoleAttrEnum.LightingEnhance, false, 500, 50, 100),
-        new EquipExAttrRandom(RoleAttrEnum.WindEnhance, false, 500, 1500, 100),
+
+        new EquipExAttrRandom(RoleAttrEnum.CriticalHitChance, false,300, 1200, 100)
+        {AttrValueIdx=2 },
+        new EquipExAttrRandom(RoleAttrEnum.CriticalHitDamge, true, 1, -1, 100)
+        {AttrValueIdx=3 },
     };
 
     #endregion
@@ -690,7 +747,8 @@ public class GameDataValue
 
     public static int GetGemValue(int level)
     {
-        int value = Mathf.CeilToInt(level * _GemAttrV + 0.5f * level * level * _GemAttrA);
+        //int value = Mathf.CeilToInt(level * _GemAttrV + 0.5f * level * level * _GemAttrA);
+        int value = CalLvValue(level * 2);
         return value;
     }
 
@@ -708,25 +766,35 @@ public class GameDataValue
             if (attrValue == null || string.IsNullOrEmpty(attrValue.AttrImpact))
                 continue;
 
-            if (attrValue.AttrImpact == "RoleAttrImpactBaseAttr")
+            if (attrValue.AttrImpact == "RoleAttrImpactBaseAttr"
+                && (RoleAttrEnum)attrValue.AttrParams[0] != RoleAttrEnum.FireEnhance
+                && (RoleAttrEnum)attrValue.AttrParams[0] != RoleAttrEnum.ColdEnhance
+                && (RoleAttrEnum)attrValue.AttrParams[0] != RoleAttrEnum.LightingEnhance
+                && (RoleAttrEnum)attrValue.AttrParams[0] != RoleAttrEnum.WindEnhance
+                && (RoleAttrEnum)attrValue.AttrParams[0] != RoleAttrEnum.PhysicDamageEnhance)
             {
-                int levelID = Mathf.Clamp(level, 0, 200);
-                var gemAttrRecord = TableReader.GemBaseAttr.GetRecord(levelID.ToString());
-                if (gemAttrRecord == null)
-                {
-                    gemAttrRecord = TableReader.GemBaseAttr.GetRecord("200");
-                }
-                var exAttr = GetGemAttr((RoleAttrEnum)attrValue.AttrParams[0], gemAttrRecord.SetAttrValue);
-                attrList.Add(exAttr);
+                EquipExAttr equipExAttr = new EquipExAttr();
+                equipExAttr.AttrType = attrValue.AttrImpact;
+                equipExAttr.Value = GetGemValue(level) * (int)attrValue.AttrParams[1];
+                equipExAttr.AttrParams.Add((int)attrValue.AttrParams[0]);
+                equipExAttr.AttrParams.Add(GameDataValue.GetValueAttr((RoleAttrEnum)attrValue.AttrParams[0], equipExAttr.Value));
+                attrList.Add(equipExAttr);
+            }
+            else if((RoleAttrEnum)attrValue.AttrParams[0] == RoleAttrEnum.FireEnhance
+                    || (RoleAttrEnum)attrValue.AttrParams[0] == RoleAttrEnum.ColdEnhance
+                    || (RoleAttrEnum)attrValue.AttrParams[0] == RoleAttrEnum.LightingEnhance
+                    || (RoleAttrEnum)attrValue.AttrParams[0] == RoleAttrEnum.WindEnhance)
+            {
+                EquipExAttr equipExAttr = new EquipExAttr();
+                equipExAttr.AttrType = attrValue.AttrImpact;
+                equipExAttr.Value = GetGemValue(level);
+                equipExAttr.AttrParams.Add((int)attrValue.AttrParams[0]);
+                equipExAttr.AttrParams.Add(GameDataValue.GetValueAttr((RoleAttrEnum)attrValue.AttrParams[0], TableReader.AttrValueLevel.GetSpValue(level, 9)));
+                attrList.Add(equipExAttr);
             }
             else
             {
-                int spAttrLv = GemSuit._ActAttrLevel[GemSuit._ActAttrLevel.Count - 1];
-                int attrLv = 0;
-                if (level > spAttrLv)
-                {
-                    attrLv = Mathf.CeilToInt((level - spAttrLv) / 5 + 1);
-                }
+                int attrLv = TableReader.AttrValueLevel.GetSpValue(level, 10);
                 var exAttr = attrValue.GetExAttr(attrLv);
                 attrList.Add(exAttr);
             }
@@ -846,11 +914,8 @@ public class GameDataValue
 
     #region equip
 
-    private static int _EqiupLvWeapon = 1;
-    private static int _EqiupLvTorso = 2;
-    private static int _EqiupLvShoes = 3;
-    private static int _EqiupLvRing = 4;
-    private static int _EqiupLvAmulate = 4;
+    private static List<int> _EquipLevels = new List<int>() { 0, 1, 2, 3,3 };
+    private static int _EqiupLevelStep = 5;
 
     private static List<ITEM_QUALITY> GetDropQualitys(MOTION_TYPE motionType, MonsterBaseRecord monsterRecord, int level, STAGE_TYPE stageType)
     {
@@ -936,14 +1001,17 @@ public class GameDataValue
         return dropEquipQualitys;
     }
 
-    private static int GetEquipLv(EQUIP_SLOT equipSlot, int dropLevel)
+    public static int GetEquipLv(EQUIP_SLOT equipSlot, int dropLevel)
     {
-        if (dropLevel > _MaxLv)
-            return _MaxLv;
 
-        var randomValue = Random.Range(-1, 4);
-        int equipLv = dropLevel + randomValue;
-        return Mathf.Clamp(equipLv, 1, _MaxLv);
+        int lvStep = dropLevel / _EqiupLevelStep;
+        int slotLevel = lvStep * _EqiupLevelStep + _EquipLevels[(int)equipSlot];
+        if (slotLevel > dropLevel)
+        {
+            slotLevel = slotLevel - _EqiupLevelStep;
+        }
+        
+        return Mathf.Max(slotLevel, 1);
     }
 
     public static List<ItemEquip> GetMonsterDropEquip(MOTION_TYPE motionType, MonsterBaseRecord monsterRecord, int level, STAGE_TYPE stageType)
@@ -995,35 +1063,8 @@ public class GameDataValue
 
     public static int GetLegencyLv(int equipLv)
     {
-        int randomLv = GameRandom.GetRandomLevel(3, 5, 2);
-        int baseLv = 1;
-        if (equipLv < 30)
-        {
-            baseLv = 1;
-        }
-        else if (equipLv < 50)
-        {
-            baseLv = 2;
-        }
-        else if (equipLv < 70)
-        {
-            baseLv = 3;
-        }
-        else if (equipLv < 90)
-        {
-            baseLv = 4;
-        }
-        else
-        {
-            baseLv = 5;
-        }
-
-        int delta = (equipLv - 100) / 10;
-        baseLv += delta;
-
-        baseLv += (randomLv - 1);
-        baseLv = Mathf.Max(baseLv, 1);
-        return baseLv;
+        int impactLevel = Tables.TableReader.AttrValueLevel.GetSpValue(equipLv, 7);
+        return impactLevel;
     }
 
     public static EQUIP_SLOT GetRandomItemSlot(ITEM_QUALITY itemQuality)
@@ -1160,116 +1201,35 @@ public class GameDataValue
 
         return destoryMatCnt + equip.EquipRefreshCostMatrial;
     }
+
+    public static int GetEquipRefreshGold(ItemEquip eqiup)
+    {
+        var value = (int)(GetGoldStageDrop(eqiup.EquipLevel) * 0.5f);
+        return value;
+
+    }
+
+    public static int GetEquipRefreshDiamond(ItemEquip eqiup)
+    {
+
+        return 5;
+
+    }
     #endregion
 
     #region gem mat
-    /*
-    public static float _GemConsumeV = 1;
-    public static float _GemConsumeA = 2;
-    public static int _DropGemLevel = 10;
 
-    public static float _LevelGemParam = 0.02f;
-    public static int _NormalGemBase = 1;
-    public static int _EliteGemBase = 2;
-    public static int _SpecialGemBase = 2;
-    public static int _BossGemBase = 10;
-    //public static int _NormalGemBase = 0;
-    //public static int _EliteGemBase = 0;
-    //public static int _SpecialGemBase = 0;
-    //public static int _BossGemBase = 150000;
-
-    public static int _GemConsumeGoldBase = 200;
-    public static float _GemConsumeGoldStep = 300;
-
-    public static string GetGemMatDropItemID(MonsterBaseRecord monsterRecord)
+    public static int GetGemLevelUpCostMoney(int level)
     {
-        if (monsterRecord.ElementType > 0)
-        {
-            return GemData._GemMaterialDataIDs[monsterRecord.ElementType];
-        }
-        else
-        {
-            var random = Random.Range(0, GemData._GemMaterialDataIDs.Count);
-            return GemData._GemMaterialDataIDs[random];
-        }
+        var stageDrop = GetGoldStageDrop(level * 2);
+        return (int)(stageDrop * 0.5f);
     }
 
-    public static int GetGemMatDropCnt(MOTION_TYPE motionType, MonsterBaseRecord monsterRecord, int level)
+    public static int GetGemLevelUpCostMat(int level)
     {
-        //int dropCnt = 0;
-        //if (level < _DropGemLevel)
-        //    return dropCnt;
-
-        //float modifyRate = (ConfigIntToFloat(RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.ExGemDrop)) + 1);
-        //switch (motionType)
-        //{
-        //    case MOTION_TYPE.Normal:
-        //        dropCnt = GetDropCnt(Mathf.CeilToInt(_NormalGemBase * level * _LevelGemParam * modifyRate));
-        //        break;
-        //    case MOTION_TYPE.Elite:
-        //        dropCnt = GetDropCnt(Mathf.CeilToInt(_EliteGemBase * level * _LevelGemParam * modifyRate));
-        //        break;
-        //    case MOTION_TYPE.Hero:
-        //        dropCnt = GetDropCnt(Mathf.CeilToInt(_BossGemBase * level * _LevelGemParam * modifyRate));
-        //        break;
-        //}
-
-        //return dropCnt;
-
-        var monAttrRecord = TableReader.MonsterAttr.GetRecord(level.ToString());
-        if (monAttrRecord == null)
-        {
-            monAttrRecord = TableReader.MonsterAttr.GetRecord("200");
-        }
-        int dropCnt = 0;
-        var rate = monAttrRecord.Drops[2];
-        switch (motionType)
-        {
-            case MOTION_TYPE.Normal:
-                dropCnt = GetDropCnt(Mathf.CeilToInt(_NormalGemBase * rate));
-                break;
-            case MOTION_TYPE.Elite:
-                dropCnt = GetDropCnt(Mathf.CeilToInt(_EliteGemBase * rate));
-                break;
-            case MOTION_TYPE.Hero:
-                dropCnt = GetDropCnt(Mathf.CeilToInt(_BossGemBase * rate));
-                break;
-        }
-        return dropCnt;
+        return TableReader.AttrValueLevel.GetSpValue(level, 15);
     }
 
-    public static int GetGemConsume(int level)
-    {
-        //int consumeCnt = 0;
-        //consumeCnt = Mathf.CeilToInt(_GemConsumeV + _GemConsumeA * (level));
-        //return consumeCnt;
-
-        int levelID = Mathf.Clamp(level, 0, 200);
-        var gemAttrRecord = TableReader.GemBaseAttr.GetRecord(levelID.ToString());
-        if (gemAttrRecord == null)
-        {
-            gemAttrRecord = TableReader.GemBaseAttr.GetRecord("200");
-        }
-
-        return gemAttrRecord.LvUpCost;
-    }
-
-    public static int GetGemGoldConsume(int level)
-    {
-        //int gold = (int)(_GemConsumeGoldBase + _GemConsumeGoldStep * (level));
-
-        //return gold;
-
-        int levelID = Mathf.Clamp(level, 0, 200);
-        var gemAttrRecord = TableReader.GemBaseAttr.GetRecord(levelID.ToString());
-        if (gemAttrRecord == null)
-        {
-            gemAttrRecord = TableReader.GemBaseAttr.GetRecord("200");
-        }
-
-        return gemAttrRecord.LvUpCostGold;
-    }
-    */
     #endregion
 
     #region gold
@@ -1333,6 +1293,12 @@ public class GameDataValue
         return goldCnt;
     }
 
+    public static int GetGoldStageDrop(int level)
+    {
+        var value = CalLvValue(level);
+        return value * 10;
+    }
+
     #endregion
 
     #region skill
@@ -1368,13 +1334,13 @@ public class GameDataValue
     {
         int attrValue = TableReader.FiveElementLevel.GetElementLevel(level).Value;
 
-        var randomAttrType = CalRandomAttrs(_FiveElementAttrs, 1);
+        var randomAttrType = CalRandomAttrs(_FiveElementAttrs, 1, level);
         var equipExAttr = new EquipExAttr();
         equipExAttr.AttrType = "RoleAttrImpactBaseAttr";
         var attrQuality = GameDataValue.GetExAttrRandomQuality();
-        equipExAttr.Value = GameDataValue.GetExAttrRandomValue(randomAttrType[0], attrValue, attrQuality);
-        equipExAttr.AttrParams.Add((int)randomAttrType[0]);
-        equipExAttr.AttrParams.Add(GameDataValue.GetValueAttr(randomAttrType[0], equipExAttr.Value));
+        equipExAttr.Value = GameDataValue.GetExAttrRandomValue(randomAttrType[0].AttrID, level, attrQuality);
+        equipExAttr.AttrParams.Add((int)randomAttrType[0].AttrID);
+        equipExAttr.AttrParams.Add(GameDataValue.GetValueAttr(randomAttrType[0].AttrID, equipExAttr.Value));
         equipExAttr.AttrParams.Add(attrQuality);
         equipExAttr.InitAttrQuality();
 
@@ -1409,6 +1375,11 @@ public class GameDataValue
 
         return attr;
     }
+
+    //public static ItemFiveElement GetDropElementItem(int level)
+    //{
+
+    //}
 
     #endregion
 

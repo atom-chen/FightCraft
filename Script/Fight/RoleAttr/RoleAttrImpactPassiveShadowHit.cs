@@ -44,14 +44,14 @@ public class RoleAttrImpactPassiveShadowHit : RoleAttrImpactPassive
 
     public new static string GetAttrDesc(List<int> attrParams)
     {
-        //List<int> copyAttrs = new List<int>(attrParams);
-        //int attrDescID = copyAttrs[0];
-        //var attrTab = Tables.TableReader.AttrValue.GetRecord(attrDescID.ToString());
-        //var value1 = GetValueFromTab(attrTab, attrParams[1]);
-        //var value2 = GetValue2FromTab(attrTab, attrParams[1]);
-        //var strFormat = StrDictionary.GetFormatStr(attrDescID, GameDataValue.ConfigFloatToPersent(value1), value2);
-        //return strFormat;
-        return "";
+        List<int> copyAttrs = new List<int>(attrParams);
+        int attrDescID = copyAttrs[0];
+        var attrTab = Tables.TableReader.AttrValue.GetRecord(attrDescID.ToString());
+        var shadowCnt = GetValueFromTab(attrTab, attrParams[1]);
+        var hitDamage = GameDataValue.ConfigFloatToPersent( GetValue2FromTab(attrTab, attrParams[1]));
+
+        var strFormat = StrDictionary.GetFormatStr(attrTab.StrParam[2], shadowCnt, hitDamage);
+        return strFormat;
     }
 
     #region 

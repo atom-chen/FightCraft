@@ -83,20 +83,29 @@ public class RandomAttrs
         return exAttrs;
     }
 
-    public static void RefreshEquipExAttr(ItemEquip itemEquip)
+    public static void RefreshEquipExAttrValue(ItemEquip itemEquip)
     {
-        GameDataValue.RefreshEquipExAttr(itemEquip);
+        GameDataValue.RefreshEquipExAttrValue(itemEquip);
+        itemEquip.BakeExAttr();
+        itemEquip.CalculateSet();
+
+        RoleData.SelectRole.CalculateAttr();
+    }
+
+    public static void RefreshEquipExAttrs(ItemEquip itemEquip)
+    {
+        GameDataValue.RefreshEquipExAttrs(itemEquip);
         itemEquip.BakeExAttr();
         itemEquip.CalculateSet();
 
         RoleData.SelectRole.CalculateAttr();
     }
     #region weapon
-    
+
 
     private static List<EquipExAttr> GetWeaponRandomAttr(int level, int equipValue, Tables.ITEM_QUALITY quality, Tables.PROFESSION profession, EquipItemRecord legencyEquip)
     {
-        List<RoleAttrEnum> exAttrTypes = GameDataValue.GetRandomEquipAttrsType(Tables.EQUIP_SLOT.WEAPON, quality, legencyEquip);
+        List<GameDataValue.EquipExAttrRandom> exAttrTypes = GameDataValue.GetRandomEquipAttrsType(Tables.EQUIP_SLOT.WEAPON, quality, legencyEquip, level);
         //if (quality == Tables.ITEM_QUALITY.BLUE)
         //{
         //    //exAttrTypes = GameDataValue.GetRandomEquipAttrsType(Tables.EQUIP_SLOT.WEAPON, quality);
@@ -110,10 +119,10 @@ public class RandomAttrs
         //    exAttrTypes.Insert(0, RoleAttrEnum.AttackPersent);
         //}
 
-        return CalculateExAttr(exAttrTypes, equipValue);
+        return CalculateExAttr(exAttrTypes, level);
     }
 
-    private static List<EquipExAttr> CalculateExAttr(List<RoleAttrEnum> exAttrTypes, int equipValue)
+    private static List<EquipExAttr> CalculateExAttr(List<GameDataValue.EquipExAttrRandom> exAttrTypes, int equipLevel)
     {
         List<EquipExAttr> exAttrs = new List<EquipExAttr>();
 
@@ -122,9 +131,9 @@ public class RandomAttrs
             var equipExAttr = new EquipExAttr();
             equipExAttr.AttrType = "RoleAttrImpactBaseAttr";
             var attrQuality = GameDataValue.GetExAttrRandomQuality();
-            equipExAttr.Value = GameDataValue.GetExAttrRandomValue(exAttrTypes[i], equipValue, attrQuality);
-            equipExAttr.AttrParams.Add((int)exAttrTypes[i]);
-            equipExAttr.AttrParams.Add(GameDataValue.GetValueAttr(exAttrTypes[i], equipExAttr.Value));
+            equipExAttr.Value = GameDataValue.GetExAttrRandomValue(exAttrTypes[i], equipLevel, attrQuality);
+            equipExAttr.AttrParams.Add((int)exAttrTypes[i].AttrID);
+            equipExAttr.AttrParams.Add(GameDataValue.GetValueAttr(exAttrTypes[i].AttrID, equipExAttr.Value));
             equipExAttr.AttrParams.Add(attrQuality);
             equipExAttr.InitAttrQuality();
             exAttrs.Add(equipExAttr);
@@ -139,7 +148,7 @@ public class RandomAttrs
 
     private static List<EquipExAttr> GetTorseRandomAttr(int level, int equipValue, Tables.ITEM_QUALITY quality, Tables.PROFESSION profession, EquipItemRecord legencyEquip)
     {
-        List<RoleAttrEnum> exAttrTypes = GameDataValue.GetRandomEquipAttrsType(Tables.EQUIP_SLOT.TORSO, quality, legencyEquip);
+        var exAttrTypes = GameDataValue.GetRandomEquipAttrsType(Tables.EQUIP_SLOT.TORSO, quality, legencyEquip, level);
         //if (quality == Tables.ITEM_QUALITY.BLUE)
         //{
         //    //exAttrTypes = GameDataValue.GetRandomEquipAttrsType(Tables.EQUIP_SLOT.WEAPON, quality);
@@ -153,12 +162,12 @@ public class RandomAttrs
         //    exAttrTypes.Insert(0, RoleAttrEnum.HPMaxPersent);
         //}
 
-        return CalculateExAttr(exAttrTypes, equipValue);
+        return CalculateExAttr(exAttrTypes, level);
     }
 
     private static List<EquipExAttr> GetLegsRandomAttr(int level, int equipValue, Tables.ITEM_QUALITY quality, Tables.PROFESSION profession, EquipItemRecord legencyEquip)
     {
-        List<RoleAttrEnum> exAttrTypes = GameDataValue.GetRandomEquipAttrsType(Tables.EQUIP_SLOT.LEGS, quality, legencyEquip);
+        var exAttrTypes = GameDataValue.GetRandomEquipAttrsType(Tables.EQUIP_SLOT.LEGS, quality, legencyEquip, level);
         //if (quality == Tables.ITEM_QUALITY.BLUE)
         //{
         //    //exAttrTypes = GameDataValue.GetRandomEquipAttrsType(Tables.EQUIP_SLOT.WEAPON, quality);
@@ -172,7 +181,7 @@ public class RandomAttrs
         //    exAttrTypes.Insert(0, RoleAttrEnum.MoveSpeed);
         //}
 
-        return CalculateExAttr(exAttrTypes, equipValue);
+        return CalculateExAttr(exAttrTypes, level);
     }
 
     #endregion
@@ -181,9 +190,9 @@ public class RandomAttrs
     
     private static List<EquipExAttr> GetAmuletRandomAttr(int level, int equipValue, Tables.ITEM_QUALITY quality, Tables.PROFESSION profession, EquipItemRecord legencyEquip)
     {
-        List<RoleAttrEnum> exAttrTypes = GameDataValue.GetRandomEquipAttrsType(Tables.EQUIP_SLOT.RING, quality, legencyEquip);
+        var exAttrTypes = GameDataValue.GetRandomEquipAttrsType(Tables.EQUIP_SLOT.RING, quality, legencyEquip, level);
 
-        return CalculateExAttr(exAttrTypes, equipValue);
+        return CalculateExAttr(exAttrTypes, level);
     }
 
     #endregion
@@ -202,6 +211,7 @@ public class RandomAttrs
         {
             case RoleAttrEnum.AttackPersent:
             case RoleAttrEnum.HPMaxPersent:
+            case RoleAttrEnum.DefensePersent:
             case RoleAttrEnum.MoveSpeed:
             case RoleAttrEnum.AttackSpeed:
             case RoleAttrEnum.CriticalHitChance:
@@ -216,8 +226,9 @@ public class RandomAttrs
             case RoleAttrEnum.WindEnhance:
             case RoleAttrEnum.WindResistan:
                 var persentVal = (value) * 0.01f;
-                valueStr = string.Format("{0:0.00}", persentVal);
-                valueStr += "%";
+                //System.Text.StringBuilder
+                //valueStr = string.Format("{0:0.0}", persentVal);
+                valueStr = persentVal + "%";
                 break;
             case RoleAttrEnum.ExEquipDrop:
             case RoleAttrEnum.ExGemDrop:
