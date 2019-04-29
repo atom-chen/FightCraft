@@ -29,35 +29,29 @@ public class ActData : DataPackBase
 
     #region 
 
+    public static int LEVEL_LIMIT = 10;
+
     public void InitActData()
     {
-        if (_NormalStageDiff <= 0)
-            _NormalStageDiff = 0;
-
         if (_NormalStageIdx <= 0)
             _NormalStageIdx = 0;
-
-        if (_BossStageDiff <= 0)
-            _BossStageDiff = 0;
 
         if (_BossStageIdx <= 0)
             _BossStageIdx = 0;
     }
 
-    public int _ProcessStageDiff;
     public int _ProcessStageIdx;
     public STAGE_TYPE _StageMode;
 
-    public void StartStage(int diff, int stageIdx, Tables.STAGE_TYPE stageMode)
+    public void StartStage(int stageIdx, Tables.STAGE_TYPE stageMode)
     {
-        _ProcessStageDiff = diff;
         _ProcessStageIdx = stageIdx;
         _StageMode = stageMode;
     }
 
     public int GetStageLevel()
     {
-        return GameDataValue.GetStageLevel(_ProcessStageDiff, _ProcessStageIdx, _StageMode);
+        return GameDataValue.GetStageLevel(_ProcessStageIdx, _StageMode);
     }
 
     public void PassStage(Tables.STAGE_TYPE stageMode)
@@ -65,17 +59,24 @@ public class ActData : DataPackBase
         switch (stageMode)
         {
             case STAGE_TYPE.NORMAL:
-                SetPassNormalStage(_ProcessStageDiff, _ProcessStageIdx);
+                SetPassNormalStage(_ProcessStageIdx);
                 break;
             case STAGE_TYPE.BOSS:
-                SetPassBossStage(_ProcessStageDiff, _ProcessStageIdx);
+                SetPassBossStage(_ProcessStageIdx);
                 break;
         }
 
         Hashtable hash = new Hashtable();
         hash.Add("StageType", stageMode);
         hash.Add("StageIdx", _ProcessStageIdx);
-        hash.Add("StageDiff", _ProcessStageDiff);
+        if (stageMode == STAGE_TYPE.NORMAL)
+        {
+            hash.Add("StageDiff", GetNormalDiff());
+        }
+        else
+        {
+            hash.Add("StageDiff", GetBossDiff());
+        }
         GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_PASS_STAGE, this, hash);
     }
 
@@ -84,21 +85,15 @@ public class ActData : DataPackBase
     #region normal 
 
     [SaveField(1)]
-    public int _NormalStageDiff = 0;
-    [SaveField(2)]
     public int _NormalStageIdx = 0;
 
     public static int _MAX_NORMAL_DIFF = 9;
+    public static int _CIRCLE_STAGE_COUNT = 20;
 
-    public void SetPassNormalStage(int diff, int stageIdx)
+    public void SetPassNormalStage(int stageIdx)
     {
-        if (diff < _NormalStageDiff)
+        if (_NormalStageIdx >= stageIdx)
             return;
-
-        if (diff == _NormalStageDiff && stageIdx <= _NormalStageIdx)
-            return;
-
-        _NormalStageDiff = diff;
         _NormalStageIdx = stageIdx;
 
         SaveClass(false);
@@ -109,21 +104,26 @@ public class ActData : DataPackBase
 
     }
 
+    public int GetNormalDiff()
+    {
+        return _NormalStageIdx / _MAX_NORMAL_DIFF + 1;
+    }
+
     #endregion
 
     #region boss
 
-    [SaveField(3)]
-    public int _BossStageDiff = 0;
-    [SaveField(4)]
+    [SaveField(2)]
     public int _BossStageIdx = 0;
 
     public static int _MAX_BOSS_DIFF = 9;
     public static string _BOSS_TICKET = "1600000";
 
-    public void SetPassBossStage(int diff, int stageIdx)
+    public void SetPassBossStage(int stageIdx)
     {
-        _BossStageDiff = diff;
+        if (_BossStageIdx >= stageIdx)
+            return;
+        
         _BossStageIdx = stageIdx;
 
         SaveClass(false);
@@ -151,6 +151,11 @@ public class ActData : DataPackBase
             return false;
 
         return true;
+    }
+
+    public int GetBossDiff()
+    {
+        return _BossStageIdx / _MAX_NORMAL_DIFF + 1;
     }
 
     #endregion

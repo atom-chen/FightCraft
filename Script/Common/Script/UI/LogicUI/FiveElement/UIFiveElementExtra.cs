@@ -32,30 +32,12 @@ public class UIFiveElementExtra : UIBase
     #region 
 
     public List<Text> _Attrs;
+    public List<Text> _AttrExPersent;
 
     public UIContainerSelect _ElementItems;
 
     private ItemFiveElement _ElementItem;
     private ItemFiveElement _SelectedMatItem;
-
-    public override void Show(Hashtable hash)
-    {
-        base.Show(hash);
-
-        var elementItem = hash["ExtraItem"] as ItemFiveElement;
-        ShowItemInfo(elementItem);
-        ShowMaterialItems();
-        _NeedRefresh = false;
-
-        InitAttrFilter();
-    }
-
-    public override void Hide()
-    {
-        base.Hide();
-
-        UIFiveElement.RefreshPack();
-    }
 
     public void RefreshInfo()
     {
@@ -68,6 +50,12 @@ public class UIFiveElementExtra : UIBase
     public void ShowItemByIndex(int idx)
     {
         ShowItemInfo(FiveElementData.Instance._UsingElements[idx]);
+
+        ResetFilter();
+        ShowMaterialItems();
+        _NeedRefresh = false;
+
+        InitAttrFilter();
     }
 
     private void ShowItemInfo(ItemFiveElement extraItem)
@@ -80,9 +68,9 @@ public class UIFiveElementExtra : UIBase
 
         for (int i = 0; i < _Attrs.Count; ++i)
         {
-            if (_ElementItem.EquipExAttrs.Count > i)
+            if (_ElementItem.ElementExAttrs.Count > i)
             {
-                _Attrs[i].text = _ElementItem.EquipExAttrs[i].GetAttrStr(false);
+                _Attrs[i].text = _ElementItem.ElementExAttrs[i].GetAttrStr(false);
             }
             else
             {
@@ -90,7 +78,15 @@ public class UIFiveElementExtra : UIBase
                 _Attrs[i].text = GameDataValue.ConfigFloatToPersent(addRate).ToString() + "%";
             }
         }
+
+        for (int i = 0; i < _AttrExPersent.Count; ++i)
+        {
+            _AttrExPersent[i].text = FiveElementData.Instance.GetAttrAddRateStr(_ElementItem, i);
+        }
     }
+
+    private void RefreshMaterialItems()
+    { }
 
     private void ShowMaterialItems()
     {
@@ -98,11 +94,6 @@ public class UIFiveElementExtra : UIBase
         foreach (var itemElement in FiveElementData.Instance._PackElements._PackItems)
         {
             if (itemElement == null || !itemElement.IsVolid())
-            {
-                continue;
-            }
-
-            if (itemElement.FiveElementRecord.EvelemtType != _ElementItem.FiveElementRecord.EvelemtType)
             {
                 continue;
             }
@@ -126,18 +117,30 @@ public class UIFiveElementExtra : UIBase
             }
             else
             {
+                if (element1.Level > element2.Level)
+                {
+                    return 1;
+                }
+                else if (element1.Level < element2.Level)
+                {
+                    return -1;
+                }
                 return 0;
             }
         });
 
-        if (matItems.Count > 0)
+        List<ItemFiveElement> selectedItems = null;
+        if (matItems.Contains(_SelectedMatItem))
         {
-            _ElementItems.InitSelectContent(matItems, new List<ItemFiveElement>() { matItems[0] }, OnMatItemClick);
+            selectedItems = new List<ItemFiveElement>();
+            selectedItems.Add(_SelectedMatItem);
         }
         else
         {
-            _ElementItems.InitSelectContent(matItems, null, OnMatItemClick);
+            _SelectedMatItem = null;
         }
+
+        _ElementItems.InitSelectContent(matItems, selectedItems, OnMatItemClick);
     }
 
     private void OnMatItemClick(object itemObj)
@@ -145,6 +148,8 @@ public class UIFiveElementExtra : UIBase
         ItemFiveElement itemElement = itemObj as ItemFiveElement;
 
         _SelectedMatItem = itemElement;
+
+        RefreshCostMoney();
     }
 
     #endregion
@@ -153,16 +158,28 @@ public class UIFiveElementExtra : UIBase
 
     public GameObject _FilterPanel;
     public UIContainerBase _FilterContainer;
+    public GameObject _FilterGO;
     public Toggle _FilterActedAttr;
     public Toggle _FilterUnActedAttr;
 
     private List<int> _FilterAttrs = null;
     private List<int> _FilterTroggleAttrs = null;
 
+    public void ResetFilter()
+    {
+        _FilterAttrs = null;
+        _FilterTroggleAttrs = null;
+        _FilterGO.SetActive(false);
+
+        _FilterActedAttr.isOn = false;
+        _FilterUnActedAttr.isOn = false;
+    }
+
     public void InitAttrFilter()
     {
         _FilterContainer.InitContentItem(GameDataValue._FiveElementAttrs);
         _FilterAttrs = null;
+        _FilterGO.SetActive(false);
     }
 
     public void OnBtnShowFilter()
@@ -190,6 +207,15 @@ public class UIFiveElementExtra : UIBase
 
         ShowMaterialItems();
 
+        if (_FilterAttrs.Count != GameDataValue._FiveElementAttrs.Count)
+        {
+            _FilterGO.SetActive(true);
+        }
+        else
+        {
+            _FilterGO.SetActive(false);
+        }
+
         _FilterActedAttr.isOn = false;
         _FilterUnActedAttr.isOn = false;
     }
@@ -198,16 +224,18 @@ public class UIFiveElementExtra : UIBase
     {
         if (isOn)
         {
-            RefreshFilter();
+            _FilterUnActedAttr.isOn = false;
         }
+        RefreshFilter();
     }
 
     public void OnToggleFilterUnAct(bool isOn)
     {
         if (isOn)
         {
-            RefreshFilter();
+            _FilterActedAttr.isOn = false;
         }
+        RefreshFilter();
     }
 
     private void RefreshFilter()
@@ -219,6 +247,16 @@ public class UIFiveElementExtra : UIBase
         else if (_FilterActedAttr.isOn)
         {
             FilterTroggleAttr(true);
+        }
+        else
+        {
+            if (_FilterTroggleAttrs == null)
+            {
+                _FilterTroggleAttrs = new List<int>();
+            }
+            _FilterTroggleAttrs.Clear();
+
+            ShowMaterialItems();
         }
     }
 
@@ -304,7 +342,21 @@ public class UIFiveElementExtra : UIBase
 
     #region opt
 
+    public UICurrencyItem _CostMoney;
+
     private bool _NeedRefresh = false;
+
+    public void RefreshCostMoney()
+    {
+        if (_SelectedMatItem == null)
+        {
+            _CostMoney.ShowCostCurrency(MONEYTYPE.GOLD, 0);
+        }
+        else
+        {
+            _CostMoney.ShowCostCurrency(MONEYTYPE.GOLD, GameDataValue.GetElementExtraCostMoney(_SelectedMatItem.Level));
+        }
+    }
 
     public void OnBtnExtraOK()
     {
@@ -317,36 +369,26 @@ public class UIFiveElementExtra : UIBase
             return;
         }
 
-        _NeedRefresh = FiveElementData.Instance.Extract(_SelectedMatItem);
+        int selectedIdx = UIFiveElement.GetSelectedIdx();
+        if (selectedIdx < 0)
+            return;
+
+        _NeedRefresh = FiveElementData.Instance.Extract(_SelectedMatItem, selectedIdx);
         if (_NeedRefresh)
         {
             RefreshInfo();
         }
     }
 
-    public void ShowCoreTooltips()
+    public void OnBtnSell()
     {
-        var elementCore = FiveElementData.Instance._UsingCores[(int)_ElementItem.FiveElementRecord.EvelemtType];
-        if (elementCore == null)
-            return;
-
-        UIFiveElementCoreTooltip.ShowAsynInType(elementCore, TooltipType.Single);
-    }
-
-    public void SwitchElement(int direct)
-    {
-        int switchPos = (int)_ElementItem.FiveElementRecord.EvelemtType + direct;
-        if (switchPos < 0)
+        string sellEnsure = Tables.StrDictionary.GetFormatStr(1350005, _SelectedMatItem.GetName(), _SelectedMatItem.ItemStackNum, FiveElementData.Instance.GetElementSellMoney(_SelectedMatItem));
+        UIMessageBox.Show(sellEnsure, () =>
         {
-            switchPos = 4;
-        }
-        if (switchPos > 4)
-        {
-            switchPos = 0;
-        }
-
-        var itemUsing = FiveElementData.Instance._UsingElements[switchPos];
-        ShowItemInfo(itemUsing);
+            FiveElementData.Instance.SellElement(_SelectedMatItem);
+            RefreshInfo();
+        }, null);
+        
     }
 
     #endregion

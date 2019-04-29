@@ -148,7 +148,6 @@ public class UITestEquip : UIBase
             int gold = 0;
 
             var passStage = TestPassNormalStage(level, nextDiff, ref exp, ref gold);
-            ActData.Instance._ProcessStageDiff = nextDiff;
             ActData.Instance._ProcessStageIdx = nextStage;
             ActData.Instance.PassStage( STAGE_TYPE.NORMAL);
 
@@ -464,21 +463,25 @@ public class UITestEquip : UIBase
 
     public InputField _FiveElementCoreID;
     public InputField _FiveElementItemLevel;
-    public InputField _FiveElementItemType;
+    public InputField _FiveElementItemNum;
 
     public void OnBtnElementItem()
     {
         if (!string.IsNullOrEmpty(_FiveElementCoreID.text))
         {
             string coreID = _FiveElementCoreID.text;
-            FiveElementData.Instance.CreateCoreItem(coreID);
+            int level = int.Parse(_FiveElementItemLevel.text);
+            FiveElementData.Instance.CreateCoreItem(coreID, level);
         }
         else
         {
             int level = int.Parse(_FiveElementItemLevel.text);
-            int type = int.Parse(_FiveElementItemType.text);
-            var elementItem = FiveElementData.CreateElementItem(level, (FIVE_ELEMENT)type);
-            FiveElementData.Instance.AddElementItem(elementItem);
+            int num = int.Parse(_FiveElementItemNum.text);
+            for (int i = 0; i < num; ++i)
+            {
+                var elementItem = FiveElementData.CreateElementItem(level);
+                
+            }
         }
     }
 
@@ -507,10 +510,8 @@ public class UITestEquip : UIBase
 
     public void OnBtnStageDiff()
     {
-        ActData.Instance._BossStageDiff = ActData._MAX_BOSS_DIFF;
-        ActData.Instance._BossStageIdx = 20;
-        ActData.Instance._NormalStageDiff = ActData._MAX_NORMAL_DIFF;
-        ActData.Instance._NormalStageIdx = 20;
+        ActData.Instance._BossStageIdx = 200;
+        ActData.Instance._NormalStageIdx = 200;
     }
 
     #endregion

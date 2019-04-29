@@ -742,22 +742,46 @@
 1220018,SummonSkill,Name,HeroYangJian,,
 1220019,SummonSkill,Name,HeroZhaoYun,,
 1220020,SummonSkill,Name,HeroZhouWang,,
+1260000,SummonSkill,Tips,Already acting this hero.,,
 1300001,FiveElement,Tips,Please select an item,,
 1300002,FiveElement,Tips,Five Element Combat Value:{0},,
-1310001,FiveElement,BaseItemName,Metal,,
-1310002,FiveElement,BaseItemName,Wood,,
-1310003,FiveElement,BaseItemName,Water,,
-1310004,FiveElement,BaseItemName,Fire,,
-1310005,FiveElement,BaseItemName,Earth,,
-1320001,FiveElement,Item,Element-Metal,,
-1320002,FiveElement,Item,Element-Wood,,
-1320003,FiveElement,Item,Element-Water,,
-1320004,FiveElement,Item,Element-Fire,,
-1320005,FiveElement,Item,Element-Earth,,
+1310001,FiveElement,BaseItemName,"WuXing Fragment-Strength
+",,
+1310002,FiveElement,BaseItemName,"WuXing Fragment-Dexterity
+",,
+1310003,FiveElement,BaseItemName,"WuXing Fragment-Intelligence
+",,
+1310004,FiveElement,BaseItemName,"WuXing Fragment-Vitality
+",,
+1310005,FiveElement,BaseItemName,"WuXing Fragment-HPMax
+",,
+1310006,FiveElement,BaseItemName,"WuXing Fragment-Attack
+",,
+1310007,FiveElement,BaseItemName,"WuXing Fragment-Defense
+",,
+1310008,FiveElement,BaseItemName,"WuXing Fragment-FireAttack
+",,
+1310009,FiveElement,BaseItemName,"WuXing Fragment-ColdAttack
+",,
+1310010,FiveElement,BaseItemName,"WuXing Fragment-LightingAttack
+",,
+1310011,FiveElement,BaseItemName,"WuXing Fragment-WindAttack
+",,
+1320001,FiveElement,Item,WuXing Core-Metal,,
+1320002,FiveElement,Item,WuXing Core-Wood,,
+1320003,FiveElement,Item,WuXing Core-Water,,
+1320004,FiveElement,Item,WuXing Core-Fire,,
+1320005,FiveElement,Item,WuXing Core-Earth,,
+1320100,FiveElement,Core Attr,Pos <color=#00FF00>{0}</color> increased <color=#00FF00>{1}%</color>.,,
+1320101,FiveElement,Core Attr,All <color=#00FF00>{0}</color> increased <color=#00FF00>{1}%</color>.,,
 1330001,FiveElement,ValueAttr,AttrDesc1,,
 1330002,FiveElement,ValueAttr,AttrDesc2,,
 1330003,FiveElement,ValueAttr,AttrDesc3,,
 1330004,FiveElement,ValueAttr,AttrDesc4,,
 1330005,FiveElement,ValueAttr,AttrDesc5,,
-1350001,FiveElement,OtherDesc,Enable {1} attribute on location {0},,
+1350001,FiveElement,OtherDesc,Enable {1} on pos {0},,
 1350002,FiveElement,OtherDesc,any,,
+1350003,FiveElement,OtherDesc,Lv.{0},,
+1350004,FiveElement,OtherDesc,Num:{0},,
+1350005,FiveElement,OtherDesc,Sell {0}*{1} for {2} gold?,,
+1350006,FiveElement,OtherDesc,Material item is not enough,,

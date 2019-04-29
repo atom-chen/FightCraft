@@ -19,6 +19,46 @@ public class ItemFiveElement : ItemBase
 
     #region elevemt data
 
+    private static int MAX_INT_CNT = 2;
+    public List<int> DynamicDataInt
+    {
+        get
+        {
+            if (_DynamicDataInt == null || _DynamicDataInt.Count == 0)
+            {
+                _DynamicDataInt = new List<int>() { 0, 0, 0, 0 };
+            }
+            else if (_DynamicDataInt.Count < MAX_INT_CNT)
+            {
+                for (int i = 0; i < MAX_INT_CNT; ++i)
+                {
+                    _DynamicDataInt.Add(0);
+                }
+            }
+            return _DynamicDataInt;
+        }
+    }
+
+    public int Level
+    {
+        get
+        {
+            if (DynamicDataInt.Count < 2)
+            {
+                DynamicDataInt.Add(0);
+            }
+            return DynamicDataInt[1];
+        }
+        set
+        {
+            if (DynamicDataInt.Count <2)
+            {
+                DynamicDataInt.Add(0);
+            }
+            DynamicDataInt[1] = value;
+        }
+    }
+
     private FiveElementRecord _FiveElementRecord;
     public FiveElementRecord FiveElementRecord
     {
@@ -38,7 +78,7 @@ public class ItemFiveElement : ItemBase
         }
     }
 
-    private int _CombatValue = 0;
+    protected int _CombatValue = 0;
     public int CombatValue
     {
         get
@@ -47,11 +87,11 @@ public class ItemFiveElement : ItemBase
         }
     }
 
-    public void CalculateCombatValue()
+    public virtual void CalculateCombatValue()
     {
         _CombatValue = 0;
 
-        foreach (var exAttrs in EquipExAttrs)
+        foreach (var exAttrs in ElementExAttrs)
         {
             if (exAttrs.AttrType == "RoleAttrImpactBaseAttr")
             {
@@ -131,6 +171,43 @@ public class ItemFiveElement : ItemBase
         }
     }
 
+    private List<EquipExAttr> _ElementExAttrs;
+    public List<EquipExAttr> ElementExAttrs
+    {
+        get
+        {
+            if (_ElementExAttrs == null)
+            {
+                _ElementExAttrs = new List<global::EquipExAttr>();
+                for(int i = 0; i< _DynamicDataEx.Count; ++i)
+                {
+                    EquipExAttr exAttr = new global::EquipExAttr();
+                    exAttr.AttrType = _DynamicDataEx[i]._StrParams[0];
+                    exAttr.Value = int.Parse(_DynamicDataEx[i]._StrParams[1]);
+                    for (int j = 2; j < _DynamicDataEx[i]._StrParams.Count; ++j)
+                    {
+                        exAttr.AttrParams.Add(int.Parse(_DynamicDataEx[i]._StrParams[j]));
+                    }
+                    exAttr.AttrParams[1] = (int)(FiveElementData.Instance.GetAttrRate(this, i) * exAttr.AttrParams[1]);
+                    _ElementExAttrs.Add(exAttr);
+                }
+                CalculateCombatValue();
+            }
+            return _ElementExAttrs;
+        }
+        set
+        {
+            _ElementExAttrs = value;
+            CalculateCombatValue();
+            //BakeExAttr();
+        }
+    }
+
+    public void RefreshElementAttr()
+    {
+        _ElementExAttrs = null;
+    }
+
     public void BakeExAttr()
     {
         _DynamicDataEx.Clear();
@@ -146,6 +223,8 @@ public class ItemFiveElement : ItemBase
             _DynamicDataEx.Add(exData);
         }
         SaveClass(true);
+
+        _ElementExAttrs = null;
     }
 
     public void ReplaceAttr(int idx, EquipExAttr attr)
@@ -153,9 +232,20 @@ public class ItemFiveElement : ItemBase
         if (EquipExAttrs.Count < idx)
             return;
 
-        EquipExAttrs[idx] = attr;
+        ItemExData exData = new ItemExData();
+        exData._StrParams.Add(attr.AttrType);
+        exData._StrParams.Add(attr.Value.ToString());
+        for (int i = 0; i < attr.AttrParams.Count; ++i)
+        {
+            exData._StrParams.Add(attr.AttrParams[i].ToString());
+        }
+
+        _DynamicDataEx[idx] = exData;
+        _EquipExAttrs = null;
+        _ElementExAttrs = null;
+
         CalculateCombatValue();
-        BakeExAttr();
+        //BakeExAttr();
     }
 
     public void AddExAttr(EquipExAttr attr)
@@ -168,8 +258,17 @@ public class ItemFiveElement : ItemBase
         {
             exData._StrParams.Add(attr.AttrParams[i].ToString());
         }
+        _EquipExAttrs = null;
         _DynamicDataEx.Add(exData);
+        _ElementExAttrs = null;
+
         CalculateCombatValue();
+    }
+
+    public void RefreshExAttr(int idx)
+    {
+        GameDataValue.RefreshElementExAttr(EquipExAttrs[idx], idx);
+        BakeExAttr();
     }
 
     #endregion

@@ -35,11 +35,11 @@ public class ConStagePassed : MissionConditionBase
     {
         if (_StageType == (int)Tables.STAGE_TYPE.NORMAL)
         {
-            if (ActData.Instance._NormalStageDiff > _TargetStageDiff)
+            if (ActData.Instance.GetNormalDiff() > _TargetStageDiff)
             {
                 return _TargetStageIdx;
             }
-            else if (ActData.Instance._NormalStageDiff < _TargetStageDiff)
+            else if (ActData.Instance.GetNormalDiff() < _TargetStageDiff)
             {
                 return 0;
             }
@@ -52,11 +52,11 @@ public class ConStagePassed : MissionConditionBase
         }
         else if (_StageType == (int)Tables.STAGE_TYPE.BOSS)
         {
-            if (ActData.Instance._BossStageDiff > _TargetStageDiff)
+            if (ActData.Instance.GetBossDiff() > _TargetStageDiff)
             {
                 return _TargetStageIdx;
             }
-            else if (ActData.Instance._BossStageDiff < _TargetStageDiff)
+            else if (ActData.Instance.GetBossDiff() < _TargetStageDiff)
             {
                 return 0;
             }

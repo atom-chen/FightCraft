@@ -38,8 +38,8 @@ public class UIFiveElementCoreInfo : UIItemInfo
 
 
         bool isConditionComplate = true;
-        List<string> conditionDesc = new List<string>();
-        for (int i = 0; i < _ShowElementItem.FiveElementRecord.PosCondition.Count; ++i)
+        List<EleCoreConditionInfo> conditionDesc = new List<EleCoreConditionInfo>();
+        for (int i = 0; i < _ShowElementItem.FiveElementCoreRecord.PosCondition.Count; ++i)
         {
             var conState = _ShowElementItem.ConditionState(i);
             if (conState < 0)
@@ -50,16 +50,12 @@ public class UIFiveElementCoreInfo : UIItemInfo
                 isConditionComplate = false;
             }
 
+            EleCoreConditionInfo conditionInfo = new EleCoreConditionInfo();
             var conDesc = _ShowElementItem.GetConditionDesc(i);
-            if (conState > 0 && isConditionComplate)
-            {
-                conDesc = CommonDefine.GetEnableRedStr(1) + conDesc + "</color>";
-            }
-            else
-            {
-                conDesc = CommonDefine.GetEnableGrayStr(0) + conDesc + "</color>";
-            }
-            conditionDesc.Add(conDesc);
+            conditionInfo._Desc = conDesc;
+            conditionInfo._IsAct = conState > 0 && isConditionComplate;
+            conditionInfo._Attr = _ShowElementItem.EquipExAttrs[i];
+            conditionDesc.Add(conditionInfo);
         }
         
         Hashtable hash = new Hashtable();

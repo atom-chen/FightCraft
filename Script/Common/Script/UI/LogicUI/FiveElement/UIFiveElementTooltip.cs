@@ -110,15 +110,15 @@ public class UIFiveElementTooltip : UIItemTooltips
         if (_ShowElement == null)
             return;
 
-        var usingItem = FiveElementData.Instance._UsingElements[(int)_ShowElement.FiveElementRecord.EvelemtType];
-        if (usingItem == null || !usingItem.IsVolid())
-            return;
+        //var usingItem = FiveElementData.Instance._UsingElements[(int)_ShowElement.FiveElementRecord.EvelemtType];
+        //if (usingItem == null || !usingItem.IsVolid())
+        //    return;
 
-        if (usingItem == _ShowElement)
-            return;
+        //if (usingItem == _ShowElement)
+        //    return;
 
-        _CompareInfo.gameObject.SetActive(true);
-        _CompareInfo.ShowTips(usingItem);
+        //_CompareInfo.gameObject.SetActive(true);
+        //_CompareInfo.ShowTips(usingItem);
     }
 
     private void HideCompare()

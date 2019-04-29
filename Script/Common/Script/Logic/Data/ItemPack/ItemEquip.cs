@@ -73,7 +73,10 @@ public class EquipExAttr
 
         if (eqiupAttr)
         {
-            if (!AttrType.Equals("RoleAttrImpactBaseAttr") && !AttrType.Equals("RoleAttrImpactSetAttrByEquip"))
+            if (!AttrType.Equals("RoleAttrImpactBaseAttr") 
+                && !AttrType.Equals("RoleAttrImpactSetAttrByEquip")
+                && !AttrType.Equals("RoleAttrImpactEleCorePos")
+                && !AttrType.Equals("RoleAttrImpactEleCoreAttr"))
             {
                 attrStr += " Lv." + AttrParams[1];
             }

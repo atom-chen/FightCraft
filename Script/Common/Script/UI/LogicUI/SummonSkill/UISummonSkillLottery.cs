@@ -63,8 +63,8 @@ public class UISummonSkillLottery : UIBase
         _GoldPanel.SetActive(true);
         _DiamondPanel.SetActive(false);
 
-        _CostOne.ShowCurrency(MONEYTYPE.GOLD, SummonSkillData._GoldCostOne);
-        _CostTen.ShowCurrency(MONEYTYPE.GOLD, SummonSkillData._GoldCostOne * 10);
+        _CostOne.ShowCurrency(MONEYTYPE.GOLD, GameDataValue.GetSummonCostGold(SummonSkillData.Instance.SummonLevel));
+        _CostTen.ShowCurrency(MONEYTYPE.GOLD, GameDataValue.GetSummonCostGold(SummonSkillData.Instance.SummonLevel) * 10);
         _CostItem.ShowOwnCurrency(SummonSkillData._GoldCostItem);
     }
 
@@ -73,8 +73,8 @@ public class UISummonSkillLottery : UIBase
         _GoldPanel.SetActive(false);
         _DiamondPanel.SetActive(true);
 
-        _CostOne.ShowCurrency(MONEYTYPE.DIAMOND, SummonSkillData._DiamondCostOne);
-        _CostTen.ShowCurrency(MONEYTYPE.DIAMOND, SummonSkillData._DiamondCostOne * 10);
+        _CostOne.ShowCurrency(MONEYTYPE.DIAMOND, GameDataValue.GetSummonCostDiamond(SummonSkillData.Instance.SummonLevel));
+        _CostTen.ShowCurrency(MONEYTYPE.DIAMOND, GameDataValue.GetSummonCostDiamond(SummonSkillData.Instance.SummonLevel) * 10);
         _CostItem.ShowOwnCurrency(SummonSkillData._DiamondCostItem);
     }
 

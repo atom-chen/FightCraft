@@ -43,12 +43,22 @@ public class UISummonSkillPack : UIBase
         ShowUsingItems();
 
         _ArrayMode = false;
+        RefreshAttr();
     }
 
     public void OnShowPage(int page)
     {
         _ShowingPage = page;
         RefreshItems();
+
+        if (page == 2)
+        {
+            _BtnAbsort.SetActive(true);
+        }
+        else
+        {
+            _BtnAbsort.SetActive(false);
+        }
     }
 
     public void RefreshItems()
@@ -132,10 +142,10 @@ public class UISummonSkillPack : UIBase
             _UsingItems[i]._PanelClickEvent = OnArrayClick;
         }
 
-        if (!_ArrayMode)
-        {
-            ClearSelect();
-        }
+        //if (!_ArrayMode)
+        //{
+        //    ClearSelect();
+        //}
     }
 
     private void OnArrayClick(UIItemBase itemObj)
@@ -215,8 +225,8 @@ public class UISummonSkillPack : UIBase
 
     #region interface
 
-    public GameObject _BtnArray;
-    public GameObject _BtnArrayOk;
+    public GameObject _BtnAbsort;
+
 
     private bool _ArrayMode = false;
 
@@ -230,35 +240,50 @@ public class UISummonSkillPack : UIBase
         UISummonSkillLottery.ShowDiamondAsyn();
     }
 
-    public void OnBtnArray()
-    {
-        _ArrayMode = true;
-
-        _BtnArray.SetActive(false);
-        _BtnArrayOk.SetActive(true);
-
-        SelectNextEmpty();
-        if (_SelectingItem == null)
-        {
-            SetSelectedArray(_UsingItems[0]);
-        }
-    }
-
-    public void OnBtnArrayOK()
-    {
-        _ArrayMode = false;
-
-        _BtnArray.SetActive(true);
-        _BtnArrayOk.SetActive(false);
-
-        SetSelectedArray(null);
-    }
-
     public void OnBtnCollect()
     {
         UISummonCollections.ShowAsyn();
     }
+
+    public void OnBtnSellAll()
+    {
+
+    }
+
+    public void OnBtnAbsort()
+    {
+        Dictionary<SummonMotionData, int> absortMotions = new Dictionary<SummonMotionData, int>();
+        for (int i = 0; i < SummonSkillData.Instance._SummonMatList._PackItems.Count; ++i)
+        {
+            if (!SummonSkillData.Instance.CanBeStage(SummonSkillData.Instance._SummonMatList._PackItems[i]))
+            {
+                absortMotions.Add(SummonSkillData.Instance._SummonMatList._PackItems[i], SummonSkillData.Instance._SummonMatList._PackItems[i].ItemStackNum);
+            }
+        }
+
+        int exp = SummonSkillData.Instance.LevelUpSummonData(absortMotions);
+
+        RefreshItems();
+        RefreshAttr();
+    }
     #endregion
 
+    #region attr
+
+    public Text _Level;
+    public Text _Exp;
+    public Slider _ExpSlider;
+
+    public void RefreshAttr()
+    {
+        _Exp.text = SummonSkillData.Instance.SummonRemainExp.ToString();
+        _Level.text = SummonSkillData.Instance.SummonLevel.ToString();
+
+        var lvUpExp = GameDataValue.GetSummonLevelExp(SummonSkillData.Instance.SummonLevel);
+        float process = (float)SummonSkillData.Instance.SummonRemainExp / lvUpExp;
+        _ExpSlider.value = process;
+    }
+
+    #endregion
 }
 

@@ -71,16 +71,20 @@ public class SummonMotionData : ItemBase
 
     #region level
 
-    private int _Level = -1;
+    private int _Level = 1;
     public int Level
     {
         get
         {
-            if (_Level < 0)
-            {
-                CalculateLevel();
-            }
+            //if (_Level < 0)
+            //{
+            //    CalculateLevel();
+            //}
             return _Level;
+        }
+        set
+        {
+            _Level = value;
         }
     }
 
@@ -235,6 +239,11 @@ public class SummonMotionData : ItemBase
 
         _StarLevel = starLv;
         _CurStarExp = tempExp;
+    }
+
+    public bool IsStageMax()
+    {
+        return _StarLevel >= SummonRecord.StarExp.Count;
     }
 
     public static int GetStarLevelByExp(SummonMotionData motionData, int exp, out int lastExp)

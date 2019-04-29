@@ -15,20 +15,20 @@ namespace Tables
 
     public partial class FiveElement : TableFileBase
     {
-        Dictionary<FIVE_ELEMENT, FiveElementRecord> _EleTypeDict;
+        List<FiveElementRecord> _RecordList;
 
-        public FiveElementRecord GetFiveElementByType(FIVE_ELEMENT eleType)
+        public FiveElementRecord GetFiveElementByIndex(int idx)
         {
-            if (_EleTypeDict == null)
+            if (_RecordList == null)
             {
-                _EleTypeDict = new Dictionary<FIVE_ELEMENT, FiveElementRecord>();
+                _RecordList = new List<FiveElementRecord>();
                 foreach (var record in Records)
                 {
-                    _EleTypeDict.Add(record.Value.EvelemtType, record.Value);
+                    _RecordList.Add(record.Value);
                 }
             }
 
-            return _EleTypeDict[eleType];
+            return _RecordList[idx];
         }
     }
 

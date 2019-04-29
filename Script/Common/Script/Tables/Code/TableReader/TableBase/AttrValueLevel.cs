@@ -120,6 +120,16 @@ namespace Tables
                 pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[20]));
                 pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[21]));
                 pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[22]));
+                pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[23]));
+                pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[24]));
+                pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[25]));
+                pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[26]));
+                pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[27]));
+                pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[28]));
+                pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[29]));
+                pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[30]));
+                pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[31]));
+                pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[32]));
             }
         }
     }

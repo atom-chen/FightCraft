@@ -53,7 +53,9 @@ public class UISummonSkillToolTips : UIBase
 
     public Text _StarExp;
 
-    public GameObject _BtnLevelUp;
+    public GameObject _BtnAct;
+    public GameObject _BtnDisAct;
+    public GameObject _BtnStage;
 
     private SummonMotionData _SummonData;
     private bool _IsLvUp;
@@ -79,18 +81,19 @@ public class UISummonSkillToolTips : UIBase
 
         _StarExp.text = string.Format("({0}/{1})", _SummonData.CurStarExp, _SummonData.CurStarLevelExp());
 
-        if (_IsLvUp)
-        {
-            _BtnLevelUp.SetActive(true);
-        }
-        else
-        {
-            _BtnLevelUp.SetActive(false);
-        }
-
         _SkillDesc.text = Tables.StrDictionary.GetFormatStr(_SummonData.SummonRecord.SkillDesc, _SummonData.SummonRecord.SkillRate[_SummonData.StarLevel] * 100);
         _AttrContainer.InitContentItem(_SummonData.SummonAttrs);
 
+        if (SummonSkillData.Instance.IsSummonAct(_SummonData))
+        {
+            _BtnAct.SetActive(false);
+            _BtnDisAct.SetActive(true);
+        }
+        else
+        {
+            _BtnAct.SetActive(true);
+            _BtnDisAct.SetActive(false);
+        }
     }
 
     public void UpdateExp(SummonMotionData summonMotion, int exp)
@@ -118,6 +121,32 @@ public class UISummonSkillToolTips : UIBase
     public void BtnLevelUp()
     {
         UISummonLevelUpSelect.ShowAsyn(_SummonData);
+    }
+
+    public void BtnAct()
+    {
+        if (SummonSkillData.Instance.IsSummonAct(_SummonData))
+        {
+            UIMessageTip.ShowMessageTip(1260000);
+            return;
+        }
+        else
+        {
+            var emptyPos = SummonSkillData.Instance.GetEmptyPos();
+            SummonSkillData.Instance.SetUsingSummon(emptyPos, _SummonData);
+            UISummonSkillPack.RefreshPack();
+
+            Hide();
+        }
+    }
+
+    public void BtnDisAct()
+    {
+        int idx = SummonSkillData.Instance._UsingSummon.IndexOf(_SummonData);
+        SummonSkillData.Instance.SetUsingSummon(idx, null);
+        UISummonSkillPack.RefreshPack();
+
+        Hide();
     }
 
     #endregion

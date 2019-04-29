@@ -46,6 +46,6 @@
       <constructType2>整数</constructType2>
     </constructType2>
     <constructDefault>0</constructDefault>
-    <constructRepeat>20</constructRepeat>
+    <constructRepeat>30</constructRepeat>
   </constructColumn>
 </root>

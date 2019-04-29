@@ -265,9 +265,16 @@ public class ItemPackBase<T> : DataPackBase where T : ItemBase,new()
             return false;
 
         item.DecStackNum(cnt);
-        if (_PackSize < 0 && item.ItemStackNum == 0)
+        if (item.ItemStackNum == 0)
         {
-            _PackItems.Remove(item);
+            if (_PackSize < 0)
+            {
+                _PackItems.Remove(item);
+            }
+            else
+            {
+                item.ResetItem();
+            }
         }
         return true;
     }

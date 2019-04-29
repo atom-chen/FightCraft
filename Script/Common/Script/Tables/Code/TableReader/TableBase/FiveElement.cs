@@ -14,7 +14,7 @@ namespace Tables
 
         public override string Id { get; set; }        public string Name { get; set; }
         public string Desc { get; set; }
-        public FIVE_ELEMENT EvelemtType { get; set; }
+        public AttrValueRecord Attr { get; set; }
         public FiveElementRecord(DataRecord dataRecord)
         {
             if (dataRecord != null)
@@ -30,7 +30,14 @@ namespace Tables
             recordStrList.Add(TableWriteBase.GetWriteStr(Id));
             recordStrList.Add(TableWriteBase.GetWriteStr(Name));
             recordStrList.Add(TableWriteBase.GetWriteStr(Desc));
-            recordStrList.Add(((int)EvelemtType).ToString());
+            if (Attr != null)
+            {
+                recordStrList.Add(Attr.Id);
+            }
+            else
+            {
+                recordStrList.Add("");
+            }
 
             return recordStrList.ToArray();
         }
@@ -96,7 +103,14 @@ namespace Tables
             {
                 pair.Value.Name = TableReadBase.ParseString(pair.Value.ValueStr[1]);
                 pair.Value.Desc = TableReadBase.ParseString(pair.Value.ValueStr[2]);
-                pair.Value.EvelemtType =  (FIVE_ELEMENT)TableReadBase.ParseInt(pair.Value.ValueStr[3]);
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[3]))
+                {
+                    pair.Value.Attr =  TableReader.AttrValue.GetRecord(pair.Value.ValueStr[3]);
+                }
+                else
+                {
+                    pair.Value.Attr = null;
+                }
             }
         }
     }

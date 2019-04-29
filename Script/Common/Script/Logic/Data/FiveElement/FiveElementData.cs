@@ -36,7 +36,6 @@ public class FiveElementData : SaveItemBase
         needSave |= InitUsingElements();
         needSave |= InitPackCore();
         needSave |= InitUsingCore();
-        CalculateAttrs();
 
         if (needSave)
         {
@@ -76,11 +75,11 @@ public class FiveElementData : SaveItemBase
         if (_UsingElements == null || _UsingElements.Count == 0)
         {
             _UsingElements = new List<ItemFiveElement>();
-            _UsingElements.Add(new ItemFiveElement("1100001"));
-            _UsingElements.Add(new ItemFiveElement("1100002"));
-            _UsingElements.Add(new ItemFiveElement("1100003"));
-            _UsingElements.Add(new ItemFiveElement("1100004"));
-            _UsingElements.Add(new ItemFiveElement("1100005"));
+            _UsingElements.Add(new ItemFiveElement("1500001"));
+            _UsingElements.Add(new ItemFiveElement("1500002"));
+            _UsingElements.Add(new ItemFiveElement("1500003"));
+            _UsingElements.Add(new ItemFiveElement("1500004"));
+            _UsingElements.Add(new ItemFiveElement("1500005"));
             return true;
         }
 
@@ -89,6 +88,16 @@ public class FiveElementData : SaveItemBase
 
     public void AddElementItem(ItemFiveElement elementItem)
     {
+        for (int i = 0; i < _PackElements._PackItems.Count; ++i)
+        {
+            if (_PackElements._PackItems[i].ItemDataID == elementItem.ItemDataID
+                && _PackElements._PackItems[i].Level == elementItem.Level)
+            {
+                _PackElements._PackItems[i].AddStackNum(1, true);
+                return;
+            }
+        }
+        
         _PackElements.AddItem(elementItem);
     }
 
@@ -126,7 +135,7 @@ public class FiveElementData : SaveItemBase
 
         if (_PackCores._PackItems == null)
         {
-            _PackCores._PackItems = new List<ItemFiveElementCore>();
+            _PackCores.InitPack();
             _PackCores.SaveClass(true);
             return true;
         }
@@ -150,11 +159,15 @@ public class FiveElementData : SaveItemBase
         return false;
     }
 
-    public void CreateCoreItem(string coreID)
+    public void CreateCoreItem(string coreID, int level)
     {
-        var coreItem = new ItemFiveElementCore(coreID);
-        //TODO: add attr
-        _PackCores.AddItem(coreItem);
+        var elementCore = GameDataValue.GetRandomFiveElementCore(coreID, level);
+        _PackCores.AddItem(elementCore);
+    }
+
+    public void AddCoreItem(ItemFiveElementCore itemCore)
+    {
+        _PackCores.AddItem(itemCore);
     }
 
     #endregion
@@ -191,24 +204,41 @@ public class FiveElementData : SaveItemBase
 
     private void CalculateAttrs()
     {
-        _ValueAttrs = new List<EquipExAttr>();
-        CalculateValue();
-        if (_ElementsTotalValue == 0)
-            return;
+        //_ValueAttrs = new List<EquipExAttr>();
+        //CalculateValue();
+        //if (_ElementsTotalValue == 0)
+        //    return;
 
-        var valueAttrs = Tables.TableReader.FiveElementValueAttr.Records.Values;
-        foreach (var valueAttr in valueAttrs)
-        {
-            string attr = Tables.StrDictionary.GetFormatStr(valueAttr.DescIdx);
-            if (_ElementsTotalValue >= valueAttr.Value)
-            {
-                _ValueAttrs.Add(TableReader.AttrValue.GetExAttr(valueAttr.Attr, _ElementsTotalValue));
-            }
-        }
+        //var valueAttrs = Tables.TableReader.FiveElementValueAttr.Records.Values;
+        //foreach (var valueAttr in valueAttrs)
+        //{
+        //    string attr = Tables.StrDictionary.GetFormatStr(valueAttr.DescIdx);
+        //    if (_ElementsTotalValue >= valueAttr.Value)
+        //    {
+        //        _ValueAttrs.Add(TableReader.AttrValue.GetExAttr(valueAttr.Attr, _ElementsTotalValue));
+        //    }
+        //}
+
+        RoleData.SelectRole.CalculateAttr();
     }
 
     public void SetAttr(RoleAttrStruct roleAttr)
     {
+        for (int j = 0; j < _UsingCores.Count; ++j)
+        {
+            for (int i = 0; i < _UsingCores[j].EquipExAttrs.Count; ++i)
+            {
+                if (_UsingCores[j].EquipExAttrs[i].AttrType == "RoleAttrImpactBaseAttr")
+                {
+                    roleAttr.AddValue((RoleAttrEnum)_UsingCores[j].EquipExAttrs[i].AttrParams[0], _UsingCores[j].EquipExAttrs[i].AttrParams[1]);
+                }
+                else
+                {
+                    roleAttr.AddExAttr(RoleAttrImpactManager.GetAttrImpact(_UsingCores[j].EquipExAttrs[i]));
+                }
+            }
+        }
+
         for (int i = 0; i < _UsingElements.Count; ++i)
         {
             if (_UsingElements[i] == null)
@@ -217,30 +247,20 @@ public class FiveElementData : SaveItemBase
             if (!_UsingElements[i].IsVolid())
                 continue;
 
-            for (int j = 0; j < _UsingElements[i].EquipExAttrs.Count; ++j)
+            for (int j = 0; j < _UsingElements[i].ElementExAttrs.Count; ++j)
             {
-                if (_UsingElements[i].EquipExAttrs[j].AttrType == "RoleAttrImpactBaseAttr")
+                if (_UsingElements[i].ElementExAttrs[j].AttrType == "RoleAttrImpactBaseAttr")
                 {
-                    roleAttr.AddValue((RoleAttrEnum)_UsingElements[i].EquipExAttrs[j].AttrParams[0], _UsingElements[i].EquipExAttrs[j].AttrParams[1]);
+                    roleAttr.AddValue((RoleAttrEnum)_UsingElements[i].ElementExAttrs[j].AttrParams[0], _UsingElements[i].ElementExAttrs[j].AttrParams[1]);
                 }
                 else
                 {
-                    roleAttr.AddExAttr(RoleAttrImpactManager.GetAttrImpact(_UsingElements[i].EquipExAttrs[j]));
+                    roleAttr.AddExAttr(RoleAttrImpactManager.GetAttrImpact(_UsingElements[i].ElementExAttrs[j]));
                 }
             }
         }
 
-        for (int j = 0; j < ValueAttrs.Count; ++j)
-        {
-            if (ValueAttrs[j].AttrType == "RoleAttrImpactBaseAttr")
-            {
-                roleAttr.AddValue((RoleAttrEnum)ValueAttrs[j].AttrParams[0], ValueAttrs[j].AttrParams[1]);
-            }
-            else
-            {
-                roleAttr.AddExAttr(RoleAttrImpactManager.GetAttrImpact(ValueAttrs[j]));
-            }
-        }
+        
 
     }
 
@@ -253,9 +273,15 @@ public class FiveElementData : SaveItemBase
         if (!itemElement.IsVolid())
             return;
 
-        _UsingCores[(int)itemElement.FiveElementRecord.ElementType].ExchangeInfo(itemElement);
+        _UsingCores[(int)itemElement.FiveElementCoreRecord.ElementType].ExchangeInfo(itemElement);
+        if (!itemElement.IsVolid())
+        {
+            _PackCores.RemoveItem(itemElement);
+            _PackCores.SaveClass(false);
+        }
 
-        RoleData.SelectRole.CalculateAttr();
+        CalculateAttrs();
+        //RoleData.SelectRole.CalculateAttr();
     }
 
     public void PutOffElementCore(ItemFiveElementCore itemElement)
@@ -269,32 +295,41 @@ public class FiveElementData : SaveItemBase
 
         emptySlot.ExchangeInfo(itemElement);
 
-        RoleData.SelectRole.CalculateAttr();
+        CalculateAttrs();
+        //RoleData.SelectRole.CalculateAttr();
     }
 
-    public bool Extract(ItemFiveElement itemElement)
+    public bool Extract( ItemFiveElement itemElement, int usingIdx)
     {
-        ItemFiveElement usingElement = _UsingElements[(int)itemElement.FiveElementRecord.EvelemtType];
+        ItemFiveElement usingElement = _UsingElements[usingIdx];
         if (usingElement == null || !usingElement.IsVolid())
             return false;
 
+        var costMoney = GameDataValue.GetElementExtraCostMoney(itemElement.Level);
+        if (!PlayerDataPack.Instance.DecGold(costMoney))
+        {
+            return false;
+        }
+
         int sameIdx = -1;
-        for (int i = 0; i < usingElement.EquipExAttrs.Count; ++i)
-        {
-            if (usingElement.EquipExAttrs[i].AttrParams[0] == itemElement.EquipExAttrs[0].AttrParams[0])
-            {
-                sameIdx = i;
-            }
-        }
+        //for (int i = 0; i < usingElement.EquipExAttrs.Count; ++i)
+        //{
+        //    if (usingElement.EquipExAttrs[i].AttrParams[0] == itemElement.EquipExAttrs[0].AttrParams[0])
+        //    {
+        //        sameIdx = i;
+        //    }
+        //}
+
         //replace same attr
-        if (sameIdx >= 0)
-        {
-            usingElement.ReplaceAttr(sameIdx, itemElement.EquipExAttrs[0]);
-        }
-        else
+        //if (sameIdx >= 0)
+        //{
+        //    usingElement.ReplaceAttr(sameIdx, itemElement.EquipExAttrs[0]);
+        //}
+        //else
         {
             float extraRate = GetAddExAttrRate(usingElement.EquipExAttrs.Count);
             float extraRandom = UnityEngine.Random.Range(0, 1.0f);
+            int refreshIdx = usingElement.EquipExAttrs.Count;
             if (extraRandom < extraRate)
             {
                 usingElement.AddExAttr(itemElement.EquipExAttrs[0]);
@@ -311,10 +346,18 @@ public class FiveElementData : SaveItemBase
                 {
                     ++replaceIdx;
                 }
+                refreshIdx = replaceIdx;
                 usingElement.ReplaceAttr(replaceIdx, itemElement.EquipExAttrs[0]);
             }
+            //usingElement.RefreshExAttr(refreshIdx);
         }
-        itemElement.ResetItem();
+
+        //itemElement.ResetItem();
+        if (!_PackElements.DecItem(itemElement, 1))
+        {
+            UIMessageTip.ShowMessageTip(1350006);
+            return false;
+        }
 
         CalculateAttrs();
 
@@ -354,21 +397,77 @@ public class FiveElementData : SaveItemBase
         return extraRate;
     }
 
-   
+    public float GetAttrRate(ItemFiveElement usingItem, int idx)
+    {
+        int usingIdx = _UsingElements.IndexOf(usingItem);
+        if (usingIdx < 0)
+            return 1;
+        float curValue = GameDataValue._FiveElementValueRate[idx];
+        if (_UsingCores[usingIdx] != null && _UsingCores[usingIdx].IsVolid())
+        {
+            for (int i = 0; i < _UsingCores[usingIdx].EquipExAttrs.Count; ++i)
+            {
+                if (_UsingCores[usingIdx].ConditionState(i) > 0)
+                {
+                    if (_UsingCores[usingIdx].EquipExAttrs[i].AttrType == "RoleAttrImpactEleCorePos")
+                    {
+                        var attrTab = TableReader.AttrValue.GetRecord(_UsingCores[usingIdx].EquipExAttrs[i].AttrParams[0].ToString());
+                        var targetPos = RoleAttrImpactEleCorePos.GetPosFromTab(attrTab);
+                        if (targetPos == idx)
+                        {
+                            curValue += RoleAttrImpactEleCorePos.GetValueFromTab(attrTab) * curValue;
+                        }
+                    }
+                    else if (_UsingCores[usingIdx].EquipExAttrs[i].AttrType == "RoleAttrImpactEleCoreAttr")
+                    {
+                        var attrTab = TableReader.AttrValue.GetRecord(_UsingCores[usingIdx].EquipExAttrs[i].AttrParams[0].ToString());
+                        var targetAttr = RoleAttrImpactEleCoreAttr.GetAttrFromTab(attrTab);
+                        if (targetAttr == usingItem.EquipExAttrs[idx].AttrParams[0])
+                        {
+                            curValue += curValue * RoleAttrImpactEleCoreAttr.GetValueFromTab(attrTab);
+                        }
+                    }
+                }
+            }
+        }
+        return curValue;
+    }
+
+    public string GetAttrAddRateStr(ItemFiveElement usingItem, int idx)
+    {
+        float curValue = GetAttrRate(usingItem, idx);
+        //float curValue = GameDataValue._FiveElementValueRate[idx];
+        string addPersent = GameDataValue.ConfigFloatToPersent(curValue - 1) + "%";
+        return addPersent;
+    }
+
+    public int GetElementSellMoney(ItemFiveElement eleItem)
+    {
+        var singleMoney = GameDataValue.GetElementSellMoney(eleItem.Level);
+        return singleMoney * eleItem.ItemStackNum;
+    }
+
+    public void SellElement(ItemFiveElement eleItem)
+    {
+        int sellMoney = GetElementSellMoney(eleItem);
+        _PackElements.RemoveItem(eleItem);
+        PlayerDataPack.Instance.AddGold(sellMoney);
+    }
+
+    public void SellCore(ItemFiveElementCore eleCore)
+    {
+
+    }
 
     #endregion
 
     #region static create
 
-    public static ItemFiveElement CreateElementItem(int level, FIVE_ELEMENT elementType = FIVE_ELEMENT.METAL)
+    public static ItemFiveElement CreateElementItem(int level)
     {
-        var elementRecord = TableReader.FiveElement.GetFiveElementByType(elementType);
-        ItemFiveElement itemElement = new ItemFiveElement(elementRecord.Id);
-
-        //RandomEquipAttr(itemEquip);
-        itemElement.AddExAttr(GameDataValue.GetFiveElementExAttr(level, elementType));
-
-        return itemElement;
+        var elementItem = GameDataValue.GetRandomFiveElement(level);
+        FiveElementData.Instance.AddElementItem(elementItem);
+        return elementItem;
     }
 
     #endregion

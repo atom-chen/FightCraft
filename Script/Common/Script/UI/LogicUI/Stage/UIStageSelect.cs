@@ -19,15 +19,6 @@ public class UIStageSelect : UIBase
         GameCore.Instance.UIManager.ShowUI("LogicUI/Stage/UIStageSelect", UILayer.PopUI, hash);
     }
 
-    public static int GetMaxStageID()
-    {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UIStageSelect>("LogicUI/Stage/UIStageSelect");
-        if (instance == null)
-            return -1;
-
-        return instance.MaxStageId;
-    }
-
     public static int GetSelectedDiff()
     {
         var instance = GameCore.Instance.UIManager.GetUIInstance<UIStageSelect>("LogicUI/Stage/UIStageSelect");
@@ -54,19 +45,30 @@ public class UIStageSelect : UIBase
 
     public void InitDiffs()
     {
-        int maxDiff = ActData.Instance._NormalStageDiff;
-        int maxStage = TableReader.StageInfo.GetMaxNormalStageID();
-        if (ActData.Instance._NormalStageIdx == 0 || ActData.Instance._NormalStageIdx == maxStage)
-        {
-            ++maxDiff;
-        }
+        int maxStage = ActData.Instance._NormalStageIdx;
+        int maxDiff = maxStage / ActData._CIRCLE_STAGE_COUNT + 1;
+        int passStage = maxStage % ActData._CIRCLE_STAGE_COUNT;
 
+        List<int> selected = new List<int>();
         List<int> diffList = new List<int>();
         for (int i = 1; i < maxDiff + 1; ++i)
         {
             diffList.Add(i);
+            int minLevel = GameDataValue.GetStageLevel((i-1)* ActData._CIRCLE_STAGE_COUNT + 1, STAGE_TYPE.NORMAL);
+            int maxLevel = GameDataValue.GetStageLevel((i) * ActData._CIRCLE_STAGE_COUNT, STAGE_TYPE.NORMAL);
+            if (RoleData.SelectRole.TotalLevel + ActData.LEVEL_LIMIT >= minLevel
+                && RoleData.SelectRole.TotalLevel + ActData.LEVEL_LIMIT <= maxLevel)
+            {
+                selected.Add(i);
+            }
         }
-        _DiffContainer.InitSelectContent(diffList, new List<int>() { maxDiff }, OnDiffSelect);
+
+        if (selected.Count == 0)
+        {
+            selected.Add(maxDiff);
+        }
+
+        _DiffContainer.InitSelectContent(diffList, selected, OnDiffSelect);
     }
 
     public void OnDiffSelect(object diffObj)
@@ -90,61 +92,62 @@ public class UIStageSelect : UIBase
         }
     }
 
+    private static int StageCircle = 20;
     private int _NormalMinID = 1;
-    private int _NormalMaxID = 21;
     private int _RandomMinID = 21;
-    private int _RandomMaxID = 41;
 
-    private StageInfoRecord _SelectedStage;
+    private StageInfoItem _SelectedStage;
 
     public void InitStages()
     {
-        int maxStage = ActData.Instance._NormalStageIdx - 1;
-        if (_SelectedDiff < ActData.Instance._NormalStageDiff)
+
+        List<StageInfoItem> stageList = new List<StageInfoItem>();
+
+
+        for (int i = 0; i < ActData._CIRCLE_STAGE_COUNT; ++i)
         {
-            maxStage = TableReader.StageInfo.GetMaxNormalStageID();
-            if (maxStage < _RandomMaxID)
+            StageInfoItem stageInfo = new StageInfoItem();
+            if (ActData.Instance._NormalStageIdx <= _RandomMinID)
             {
-                maxStage = maxStage - _RandomMinID;
+                stageInfo._StageRecord = TableReader.StageInfo.GetRecord((i + _NormalMinID).ToString());
             }
             else
             {
-                maxStage = maxStage - _NormalMinID;
+                stageInfo._StageRecord = TableReader.StageInfo.GetRecord((i + _RandomMinID).ToString());
             }
-        }
-        else if (_SelectedDiff > ActData.Instance._NormalStageDiff)
-        {
-            maxStage = 0;
-        }
-        else
-        {
-            ++maxStage;
-            maxStage = Mathf.Clamp(maxStage, 0, 19);
+            stageInfo._StageIdx = (_SelectedDiff - 1) * ActData._CIRCLE_STAGE_COUNT + i + 1;
+            stageInfo._Level = GameDataValue.GetStageLevel(stageInfo._StageIdx, STAGE_TYPE.NORMAL);
+            
+            stageList.Add(stageInfo);
         }
 
-        List<StageInfoRecord> stageList = new List<StageInfoRecord>();
-        if (_SelectedDiff == 1)
+        List<StageInfoItem> selectedStage = new List<StageInfoItem>();
+        int passStage = ActData.Instance._NormalStageIdx - (ActData._CIRCLE_STAGE_COUNT * (_SelectedDiff - 1));
+        int maxLevel = GameDataValue.GetStageLevel(ActData.Instance._NormalStageIdx, STAGE_TYPE.NORMAL);
+
+        if (passStage <= 0)
         {
-            for (int i = _NormalMinID; i < _NormalMaxID; ++i)
-            {
-                stageList.Add(TableReader.StageInfo.GetRecord(i.ToString()));
-            }
+            selectedStage.Add(stageList[0]);
+        }
+        else if (passStage >= ActData._CIRCLE_STAGE_COUNT)
+        {
+            selectedStage.Add(stageList[ActData._CIRCLE_STAGE_COUNT - 1]);
+        }
+        else if (RoleData.SelectRole.TotalLevel + ActData.LEVEL_LIMIT <= maxLevel)
+        {
+            int delta = maxLevel - RoleData.SelectRole.TotalLevel - ActData.LEVEL_LIMIT;
+            selectedStage.Add(stageList[passStage - delta - 1]);
         }
         else
         {
-            for (int i = _RandomMinID; i < _RandomMaxID; ++i)
-            {
-                stageList.Add(TableReader.StageInfo.GetRecord(i.ToString()));
-            }
+            selectedStage.Add(stageList[passStage]);
         }
-        _MaxStageId = int.Parse(stageList[maxStage].Id);
-        //_MaxStageId = 2;
-        _StageContainer.InitSelectContent(stageList, new List<StageInfoRecord>() { stageList[maxStage] }, OnSelectStage);
+        _StageContainer.InitSelectContent(stageList, selectedStage, OnSelectStage);
     }
 
     private void OnSelectStage(object stageObj)
     {
-        StageInfoRecord stageInfo = stageObj as StageInfoRecord;
+        StageInfoItem stageInfo = stageObj as StageInfoItem;
         if (stageInfo == null)
             return;
 
@@ -162,13 +165,13 @@ public class UIStageSelect : UIBase
     public Text _StageDesc;
     public Text _Condition;
 
-    private void SetStageInfo(StageInfoRecord stage)
+    private void SetStageInfo(StageInfoItem stage)
     {
-        int stageID = int.Parse(_SelectedStage.Id);
-        int stageLevel = GameDataValue.GetStageLevel(_SelectedDiff, stageID, STAGE_TYPE.NORMAL);
-        _StageName.text = StrDictionary.GetFormatStr(stage.Name);
+        int stageID = _SelectedStage._StageIdx;
+        int stageLevel = _SelectedStage._Level;
+        _StageName.text = StrDictionary.GetFormatStr(stage._StageRecord.Name);
         _StageLevel.text = stageLevel.ToString();
-        _StageDesc.text = StrDictionary.GetFormatStr(stage.Desc);
+        _StageDesc.text = StrDictionary.GetFormatStr(stage._StageRecord.Desc);
 
         _Condition.text = "";
         //if (stageLevel > RoleData.SelectRole.TotalLevel + 10)
@@ -183,8 +186,105 @@ public class UIStageSelect : UIBase
 
     public void OnEnterStage()
     {
-        ActData.Instance.StartStage(_SelectedDiff, int.Parse(_SelectedStage.Id), STAGE_TYPE.NORMAL);
-        LogicManager.Instance.EnterFight(_SelectedStage);
+        int stageLevel = _SelectedStage._Level;
+        if (RoleData.SelectRole.TotalLevel + ActData.LEVEL_LIMIT < stageLevel)
+        {
+            UIMessageTip.ShowMessageTip(StrDictionary.GetFormatStr( 71103, stageLevel));
+            return;
+        }
+        ActData.Instance.StartStage(_SelectedStage._StageIdx, STAGE_TYPE.NORMAL);
+        LogicManager.Instance.EnterFight(_SelectedStage._StageRecord);
+    }
+
+    #endregion
+
+    #region test pass
+
+    public void TestPassStage()
+    {
+        int stageID = _SelectedStage._StageIdx;
+        int stageLevel = _SelectedStage._Level;
+        if (RoleData.SelectRole.TotalLevel + ActData.LEVEL_LIMIT < stageLevel)
+        {
+            UIMessageTip.ShowMessageTip(StrDictionary.GetFormatStr(71103, stageLevel));
+            return;
+        }
+
+        ActData.Instance.StartStage(stageID, STAGE_TYPE.NORMAL);
+        ActData.Instance.PassStage(STAGE_TYPE.NORMAL);
+
+        int normalMonstarCnt = 0;
+        int eliteMonsterCnt = 0;
+        int bossMonsterCnt = 1;
+        if (stageLevel <= 20)
+        {
+            normalMonstarCnt = TableReader.AttrValueLevel.GetSpValue(stageLevel, 14);
+            eliteMonsterCnt = 0;
+        }
+        else
+        {
+            normalMonstarCnt = 180;
+            eliteMonsterCnt = 20;
+        }
+        
+        for (int i = 0; i < normalMonstarCnt; ++i)
+        {
+            var monRecord = TableReader.MonsterBase.GetRecord("21");
+            var monsterDrops = MonsterDrop.GetMonsterDrops(monRecord, monRecord.MotionType, RoleData.SelectRole._RoleLevel);
+            foreach (var dropItem in monsterDrops)
+            {
+                MonsterDrop.PickItem(dropItem);
+            }
+            int dropExp = GameDataValue.GetMonsterExp(MOTION_TYPE.Normal, stageLevel, RoleData.SelectRole._RoleLevel);
+            RoleData.SelectRole.AddExp(dropExp);
+
+            Hashtable hash = new Hashtable();
+            MotionManager objMotion = new MotionManager();
+            objMotion.RoleAttrManager = new RoleAttrManager();
+            objMotion.RoleAttrManager.InitEnemyAttr(monRecord, stageLevel);
+            hash.Add("MonsterInfo", objMotion);
+            GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_KILL_MONSTER, this, hash);
+        }
+
+        for (int i = 0; i < eliteMonsterCnt; ++i)
+        {
+            var monRecord = TableReader.MonsterBase.GetRecord("22");
+            var monsterDrops = MonsterDrop.GetMonsterDrops(monRecord, monRecord.MotionType, RoleData.SelectRole._RoleLevel);
+            foreach (var dropItem in monsterDrops)
+            {
+                MonsterDrop.PickItem(dropItem);
+            }
+            int dropExp = GameDataValue.GetMonsterExp(MOTION_TYPE.Elite, stageLevel, RoleData.SelectRole._RoleLevel);
+            RoleData.SelectRole.AddExp(dropExp);
+
+            Hashtable hash = new Hashtable();
+            MotionManager objMotion = new MotionManager();
+            objMotion.RoleAttrManager = new RoleAttrManager();
+            objMotion.RoleAttrManager.InitEnemyAttr(monRecord, stageLevel);
+            hash.Add("MonsterInfo", objMotion);
+            GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_KILL_MONSTER, this, hash);
+        }
+
+        for (int i = 0; i < bossMonsterCnt; ++i)
+        {
+            var monRecord = TableReader.MonsterBase.GetRecord("1");
+            var monsterDrops = MonsterDrop.GetMonsterDrops(monRecord, monRecord.MotionType, RoleData.SelectRole._RoleLevel);
+            foreach (var dropItem in monsterDrops)
+            {
+                MonsterDrop.PickItem(dropItem);
+            }
+            int dropExp = GameDataValue.GetMonsterExp(MOTION_TYPE.Hero, stageLevel, RoleData.SelectRole._RoleLevel);
+            RoleData.SelectRole.AddExp(dropExp);
+
+            Hashtable hash = new Hashtable();
+            MotionManager objMotion = new MotionManager();
+            objMotion.RoleAttrManager = new RoleAttrManager();
+            objMotion.RoleAttrManager.InitEnemyAttr(monRecord, stageLevel);
+            hash.Add("MonsterInfo", objMotion);
+            GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_KILL_MONSTER, this, hash);
+        }
+
+        InitDiffs();
     }
 
     #endregion

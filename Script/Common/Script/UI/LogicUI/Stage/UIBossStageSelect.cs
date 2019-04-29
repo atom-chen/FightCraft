@@ -37,7 +37,7 @@ public class UIBossStageSelect : UIBase
 
     public void InitDiffs()
     {
-        int maxDiff = ActData.Instance._BossStageDiff;
+        int maxDiff = ActData.Instance.GetBossDiff();
         //int maxDiff = 9;
 
         List<int> diffList = new List<int>();
@@ -105,7 +105,7 @@ public class UIBossStageSelect : UIBase
     private void SetStageInfo(BossStageRecord stage)
     {
         int stageID = int.Parse(stage.Id);
-        int stageLevel = GameDataValue.GetStageLevel(_SelectedDiff, stageID, STAGE_TYPE.NORMAL);
+        int stageLevel = GameDataValue.GetStageLevel(stageID, STAGE_TYPE.NORMAL);
         _StageName.text = StrDictionary.GetFormatStr(stage.Name);
         _StageLevel.text = stageLevel.ToString();
         _StageDesc.text = StrDictionary.GetFormatStr(stage.Desc);
@@ -122,7 +122,7 @@ public class UIBossStageSelect : UIBase
         {
             if (ActData.Instance.IsCanStartAct(_UsingTicket))
             {
-                ActData.Instance.StartStage(_SelectedDiff, int.Parse(_SelectedStage.Id), STAGE_TYPE.ACTIVITY);
+                ActData.Instance.StartStage(int.Parse(_SelectedStage.Id), STAGE_TYPE.ACTIVITY);
                 LogicManager.Instance.EnterFight(_SelectedActStage);
             }
         }
@@ -130,7 +130,7 @@ public class UIBossStageSelect : UIBase
         {
             if (ActData.Instance.IsCanStartBossStage())
             {
-                ActData.Instance.StartStage(_SelectedDiff, int.Parse(_SelectedStage.Id), STAGE_TYPE.BOSS);
+                ActData.Instance.StartStage(int.Parse(_SelectedStage.Id), STAGE_TYPE.BOSS);
                 LogicManager.Instance.EnterFight(Tables.TableReader.StageInfo.GetRecord("100"));
             }
             else

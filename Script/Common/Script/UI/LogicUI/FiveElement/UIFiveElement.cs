@@ -27,12 +27,41 @@ public class UIFiveElement : UIBase
 
     }
 
+    public static int GetSelectedIdx()
+    {
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIFiveElement>("LogicUI/FiveElement/UIFiveElement");
+        if (instance == null)
+            return -1;
+
+        if (!instance.isActiveAndEnabled)
+            return -1;
+
+        return instance._SelectedIdx;
+
+    }
+
+    public static void SetSelectedIdx(int idx)
+    {
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIFiveElement>("LogicUI/FiveElement/UIFiveElement");
+        if (instance == null)
+            return;
+
+        if (!instance.isActiveAndEnabled)
+            return;
+
+        instance.SetSelectIdx(idx);
+
+    }
+
     #endregion
 
     #region element pack
 
     public List<UIFiveElementItem> _UsingElement = new List<UIFiveElementItem>();
     public UIFiveElementExtra _UIFiveElementExtra;
+    public UIFiveElementCorePack _UIFiveElementCorePack;
+
+    public int _SelectedIdx = 0;
 
     public override void Show(Hashtable hash)
     {
@@ -67,7 +96,12 @@ public class UIFiveElement : UIBase
                 {
                     _UIFiveElementExtra.ShowItemByIndex(i);
                 }
+                else if (_UIFiveElementCorePack.isActiveAndEnabled)
+                {
+                    _UIFiveElementCorePack.ShowItemByIndex(i);
+                }
                 _UsingElement[i].Selected();
+                _SelectedIdx = i;
             }
             else
             {
@@ -75,10 +109,30 @@ public class UIFiveElement : UIBase
             }
         }
     }
-    
-    
+
+    public void SwitchElement(int direct)
+    {
+        int switchPos = (int)UIFiveElement.GetSelectedIdx() + direct;
+        if (switchPos < 0)
+        {
+            switchPos = 4;
+        }
+        if (switchPos > 4)
+        {
+            switchPos = 0;
+        }
+
+        var itemUsing = _UsingElement[switchPos];
+        OnElementCoreClick(itemUsing);
+    }
+
+    public void SetSelectIdx(int idx)
+    {
+        OnElementCoreClick(_UsingElement[idx]);
+    }
+
     #endregion
-    
+
 
 }
 

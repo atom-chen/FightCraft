@@ -7,6 +7,13 @@ using UnityEngine.EventSystems;
 using System;
 using Tables;
 
+public class StageInfoItem
+{
+    public StageInfoRecord _StageRecord;
+    public int _Level;
+    public int _StageIdx;
+}
+
 public class UIStageInfoItem : UIItemSelect
 {
     public Text _StageName;
@@ -14,37 +21,38 @@ public class UIStageInfoItem : UIItemSelect
     public Text _StageCondition;
 
     protected string _ConditionTips;
-    protected StageInfoRecord _ShowItem;
+    protected StageInfoItem _ShowItem;
 
     public override void Show(Hashtable hash)
     {
         base.Show();
 
-        var showItem = (StageInfoRecord)hash["InitObj"];
+        var showItem = (StageInfoItem)hash["InitObj"];
         ShowStage(showItem);
     }
 
-    public void ShowStage(StageInfoRecord showItem)
+    public void ShowStage(StageInfoItem showItem)
     {
         _ShowItem = showItem;
-        _StageName.text = StrDictionary.GetFormatStr(showItem.Name);
+        _StageName.text = StrDictionary.GetFormatStr(_ShowItem._StageRecord.Name);
 
-        int stageId = int.Parse(showItem.Id);
+        int stageId = _ShowItem._StageIdx;
 
         _ConditionTips = "";
 
-        int stageLevel = GameDataValue.GetStageLevel(UIStageSelect.GetSelectedDiff(), stageId, STAGE_TYPE.NORMAL);
-        if (showItem.StageType == STAGE_TYPE.ACTIVITY)
+        int stageLevel = _ShowItem._Level;
+        if (showItem._StageRecord.StageType == STAGE_TYPE.ACTIVITY)
         {
             stageLevel = RoleData.SelectRole.TotalLevel;
         }
         else
         {
-            if (RoleData.SelectRole.TotalLevel + 10 < stageLevel)
+            
+            if (RoleData.SelectRole.TotalLevel + ActData.LEVEL_LIMIT < stageLevel)
             {
                 _ConditionTips = CommonDefine.GetEnableRedStr(0) + StrDictionary.GetFormatStr(71103, stageLevel) + "</color>";
             }
-            else if (UIStageSelect.GetMaxStageID() < stageId)
+            else if (ActData.Instance._NormalStageIdx < stageId)
             {
                 _ConditionTips = StrDictionary.GetFormatStr(71103, stageLevel);
             }
@@ -66,8 +74,7 @@ public class UIStageInfoItem : UIItemSelect
     {
         if (_LockedGO.activeSelf)
         {
-            int stageId = int.Parse(_ShowItem.Id);
-            if (UIStageSelect.GetMaxStageID() < stageId)
+            if (ActData.Instance._NormalStageIdx < _ShowItem._StageIdx)
             {
                 UIMessageTip.ShowMessageTip(71102);
             }

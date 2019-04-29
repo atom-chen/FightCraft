@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Tables;
 using System;
 
-public class ItemFiveElementCore : ItemBase
+public class ItemFiveElementCore : ItemFiveElement
 {
     public ItemFiveElementCore(string datID) : base(datID)
     {
@@ -17,26 +17,27 @@ public class ItemFiveElementCore : ItemBase
 
     }
 
-    #region attr
-
-    public int Level
+    public override void CalculateCombatValue()
     {
-        get
+        _CombatValue = 0;
+
+        foreach (var exAttrs in EquipExAttrs)
         {
-            return ItemStackNum;
-        }
-        protected set
-        {
-            ItemStackNum = value;
+            if (exAttrs.AttrType == "RoleAttrImpactBaseAttr")
+            {
+                _CombatValue += GameDataValue.GetAttrValue((RoleAttrEnum)exAttrs.AttrParams[0], exAttrs.AttrParams[1]);
+            }
+            else
+            {
+                _CombatValue += 0;
+            }
         }
     }
-
-    #endregion
 
     #region elevemt data
 
     private FiveElementCoreRecord _FiveElementCoreRecord;
-    public FiveElementCoreRecord FiveElementRecord
+    public FiveElementCoreRecord FiveElementCoreRecord
     {
         get
         {
@@ -57,15 +58,15 @@ public class ItemFiveElementCore : ItemBase
     public string GetElementNameWithColor()
     {
         string equipName = StrDictionary.GetFormatStr(CommonItemRecord.NameStrDict);
-        return CommonDefine.GetQualityColorStr(FiveElementRecord.Quality) + equipName + "</color>";
+        return CommonDefine.GetQualityColorStr(FiveElementCoreRecord.Quality) + equipName + "</color>";
     }
 
     public bool IsHaveCondition(int idx)
     {
-        if (idx < 0 || idx >= FiveElementRecord.PosCondition.Count)
+        if (idx < 0 || idx >= FiveElementCoreRecord.PosCondition.Count)
             return false;
 
-        if (FiveElementRecord.PosCondition[idx] == -1)
+        if (FiveElementCoreRecord.PosCondition[idx] == -1)
         {
             return false;
         }
@@ -75,16 +76,16 @@ public class ItemFiveElementCore : ItemBase
 
     public int ConditionState(int idx)
     {
-        if (idx < 0 || idx >= FiveElementRecord.PosCondition.Count)
+        if (idx < 0 || idx >= FiveElementCoreRecord.PosCondition.Count)
             return -1;
 
-        if (FiveElementRecord.PosCondition[idx] == -1)
+        if (FiveElementCoreRecord.PosCondition[idx] == -1)
         {
             return -1;
         }
 
         List<int> subCons = new List<int>();
-        int tempCon = FiveElementRecord.PosCondition[idx];
+        int tempCon = FiveElementCoreRecord.PosCondition[idx];
         while (tempCon >= 10)
         {
             int subCon = (int)tempCon % 10;
@@ -93,7 +94,7 @@ public class ItemFiveElementCore : ItemBase
         }
         subCons.Add(tempCon);
 
-        ItemFiveElement usingElement = FiveElementData.Instance._UsingElements[(int)FiveElementRecord.ElementType];
+        ItemFiveElement usingElement = FiveElementData.Instance._UsingElements[(int)FiveElementCoreRecord.ElementType];
         bool allConditionComplate = true;
         for (int i = 0; i < subCons.Count; ++i)
         {
@@ -103,8 +104,8 @@ public class ItemFiveElementCore : ItemBase
                 break;
             }
 
-            if (FiveElementRecord.PosAttrLimit[subCons[i]] >= 0 
-                && usingElement.EquipExAttrs[subCons[i]].AttrParams[0] != FiveElementRecord.PosAttrLimit[subCons[i]])
+            if (FiveElementCoreRecord.PosAttrLimit[subCons[i]] >= 0 
+                && usingElement.EquipExAttrs[subCons[i]].AttrParams[0] != FiveElementCoreRecord.PosAttrLimit[subCons[i]])
             {
                 allConditionComplate = false;
                 break;
@@ -119,16 +120,16 @@ public class ItemFiveElementCore : ItemBase
 
     public string GetConditionDesc(int idx)
     {
-        if (idx < 0 || idx >= FiveElementRecord.PosCondition.Count)
+        if (idx < 0 || idx >= FiveElementCoreRecord.PosCondition.Count)
             return "";
 
-        if (FiveElementRecord.PosCondition[idx] == -1)
+        if (FiveElementCoreRecord.PosCondition[idx] == -1)
         {
             return "";
         }
 
         List<int> subCons = new List<int>();
-        int tempCon = FiveElementRecord.PosCondition[idx];
+        int tempCon = FiveElementCoreRecord.PosCondition[idx];
         while (tempCon >= 10)
         {
             int subCon = (int)tempCon % 10;
@@ -137,14 +138,14 @@ public class ItemFiveElementCore : ItemBase
         }
         subCons.Add(tempCon);
 
-        ItemFiveElement usingElement = FiveElementData.Instance._UsingElements[(int)FiveElementRecord.ElementType];
+        ItemFiveElement usingElement = FiveElementData.Instance._UsingElements[(int)FiveElementCoreRecord.ElementType];
         string desc = "";
         for (int i = 0; i < subCons.Count; ++i)
         {
             string attrStr = "";
-            if (FiveElementRecord.PosAttrLimit[subCons[i]] > 0)
+            if (FiveElementCoreRecord.PosAttrLimit[subCons[i]] > 0)
             {
-                attrStr = StrDictionary.GetFormatStr(FiveElementRecord.PosAttrLimit[subCons[i]]);
+                attrStr = StrDictionary.GetFormatStr(FiveElementCoreRecord.PosAttrLimit[subCons[i]]);
             }
             else
             {
@@ -164,6 +165,7 @@ public class ItemFiveElementCore : ItemBase
     }
 
     #endregion
+
 
 }
 

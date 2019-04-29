@@ -91,7 +91,7 @@ public class UIFiveElementCoreTooltip : UIItemTooltips
         if (_ShowElement == null)
             return;
 
-        var usingItem = FiveElementData.Instance._UsingCores[(int)_ShowElement.FiveElementRecord.ElementType];
+        var usingItem = FiveElementData.Instance._UsingCores[(int)_ShowElement.FiveElementCoreRecord.ElementType];
         if (usingItem == null || !usingItem.IsVolid())
             return;
 

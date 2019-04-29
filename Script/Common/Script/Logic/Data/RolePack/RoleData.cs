@@ -381,24 +381,24 @@ public class RoleData : SaveItemBase
 
     public void AddExp(int value)
     {
-        if (_RoleLevel < MAX_LEVEL)
-        {
+        //if (_RoleLevel < MAX_LEVEL)
+        //{
             _CurExp += value;
             if (_CurExp >= _LvUpExp)
             {
                 _CurExp -= _LvUpExp;
                 RoleLevelUp();
             }
-        }
-        else
-        {
-            _CurExp += value;
-            if (_CurExp >= _LvUpExp)
-            {
-                _CurExp -= _LvUpExp;
-                AttrLevelUp();
-            }
-        }
+        //}
+        //else
+        //{
+        //    _CurExp += value;
+        //    if (_CurExp >= _LvUpExp)
+        //    {
+        //        _CurExp -= _LvUpExp;
+        //        AttrLevelUp();
+        //    }
+        //}
 
         if (_CurExp > _LvUpExp)
         {

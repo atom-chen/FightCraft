@@ -41,6 +41,7 @@ public class SummonSkillData : SaveItemBase
         needSave |= InitSummonMotions();
         needSave |= InitUsingSummon();
         InitCollection();
+        RefreshLevel();
 
         if (needSave)
         {
@@ -80,6 +81,14 @@ public class SummonSkillData : SaveItemBase
             _SummonMatList.SaveClass(true);
         }
         return false;
+    }
+
+    public void SetAllLevel()
+    {
+        for (int i = 0; i < _SummonMotionList._PackItems.Count; ++i)
+        {
+            _SummonMotionList._PackItems[i].Level = _SummonLevel;
+        }
     }
 
     #endregion
@@ -126,6 +135,23 @@ public class SummonSkillData : SaveItemBase
         RefreshUsingIdx();
     }
 
+    public int GetEmptyPos()
+    {
+        for (int i = 0; i < _UsingSummonIds.Count; ++i)
+        {
+            if (_UsingSummonIds[i] < 0)
+                return i;
+        }
+        return 0;
+    }
+
+    public bool IsSummonAct(SummonMotionData summonData)
+    {
+        if (_UsingSummon.Contains(summonData))
+            return true;
+        return false;
+    }
+
     private void RefreshUsingIdx()
     {
         _UsingSummonIds.Clear();
@@ -148,10 +174,72 @@ public class SummonSkillData : SaveItemBase
 
     #endregion
 
+    #region global attr
+
+    [SaveField(2)]
+    private int _SummonExp = 1;
+
+    private int _SummonLevel = -1;
+    public int SummonLevel
+    {
+        get
+        {
+            if (_SummonLevel < 0)
+            {
+                RefreshLevel();
+            }
+            return _SummonLevel;
+        }
+    }
+    private int _SummonRemainExp = -1;
+    public int SummonRemainExp
+    {
+        get
+        {
+            if (_SummonRemainExp < 0)
+            {
+                RefreshLevel();
+            }
+            return _SummonRemainExp;
+        }
+    }
+    public void RefreshLevel()
+    {
+        int tempExp = _SummonExp;
+        int level = 1;
+        while (true)
+        {
+            int lvUpExp = GameDataValue.GetSummonLevelExp(level);
+            if (tempExp >= lvUpExp)
+            {
+                tempExp = tempExp - lvUpExp;
+                ++level;
+            }
+            else
+            {
+                break;
+            }
+        }
+        if (_SummonLevel != level)
+        {
+            _SummonLevel = level;
+            SetAllLevel();
+        }
+        _SummonRemainExp = tempExp;
+    }
+
+    public void AddSummonExp(int exp)
+    {
+        _SummonExp += exp;
+        RefreshLevel();
+    }
+
+   
+
+    #endregion
+
     #region lottery
 
-    public static int _GoldCostOne = 2000;
-    public static int _DiamondCostOne = 200;
     public static string _GoldCostItem = "1200001";
     public static string _DiamondCostItem = "1200002";
 
@@ -184,6 +272,9 @@ public class SummonSkillData : SaveItemBase
                 return null;
             }
         }
+
+        int exp = GameDataValue.GetSummonExp(SummonLevel, true);
+        AddSummonExp(exp * buyTimes);
 
         return AddLotteryItems(0, buyTimes);
     }
@@ -218,6 +309,9 @@ public class SummonSkillData : SaveItemBase
             }
         }
 
+        int exp = GameDataValue.GetSummonExp(SummonLevel, false);
+        AddSummonExp(exp * buyTimes);
+
         return AddLotteryItems(1, buyTimes);
     }
 
@@ -229,7 +323,7 @@ public class SummonSkillData : SaveItemBase
             return 0;
         }
 
-        int costMoney = (buyTimes - itemCnt) * _GoldCostOne;
+        int costMoney = (buyTimes - itemCnt) * GameDataValue.GetSummonCostGold(SummonLevel);
         return costMoney;
     }
 
@@ -241,7 +335,7 @@ public class SummonSkillData : SaveItemBase
             return 0;
         }
 
-        int costMoney = (buyTimes - itemCnt) * _DiamondCostOne;
+        int costMoney = (buyTimes - itemCnt) * GameDataValue.GetSummonCostDiamond(SummonLevel);
         return costMoney;
     }
 
@@ -421,6 +515,29 @@ public class SummonSkillData : SaveItemBase
         //SaveClass(true);
     }
 
+    public int LevelUpSummonData(Dictionary<SummonMotionData, int> expItems)
+    {
+        int exp = GetItemsExp(expItems);
+
+        int starCnt = 0;
+
+        foreach (var expItem in expItems)
+        {
+            _SummonMatList.DecItem(expItem.Key, expItem.Value);
+        }
+
+        _SummonMatList.SaveClass(true);
+        //summonData.AddExp(exp);
+        AddSummonExp(exp);
+
+        RefreshUsingIdx();
+        SaveClass(true);
+
+        UISummonSkillPack.RefreshPack();
+
+        return exp;
+    }
+
     public int LevelUpSummonItem(SummonMotionData summonData, Dictionary<SummonMotionData, int> expItems)
     {
         int exp = GetItemsExp(expItems);
@@ -437,7 +554,7 @@ public class SummonSkillData : SaveItemBase
         }
 
         _SummonMatList.SaveClass(true);
-        summonData.AddExp(exp);
+        //summonData.AddExp(exp);
         summonData.AddStarExp(starCnt);
         summonData.SaveClass(true);
 
@@ -455,10 +572,27 @@ public class SummonSkillData : SaveItemBase
         int expItemCnt = expItems.Count;
         foreach(var expItem in expItems)
         {
-            exp += (expItem.Key.Exp + (int)expItem.Key.SummonRecord.Quality * 2 + 1) * expItem.Value;
+            //exp += (expItem.Key.Exp + (int)expItem.Key.SummonRecord.Quality * 2 + 1) * expItem.Value;
+            exp += ((int)expItem.Key.SummonRecord.Quality + 1) * expItem.Value;
         }
 
         return exp;
+    }
+
+    public bool CanBeStage(SummonMotionData motionData)
+    {
+        var packMotion = _SummonMotionList.GetItem(motionData.ItemDataID);
+        if (packMotion == null)
+            return false;
+
+        if (!packMotion.IsStageMax())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public int GetItemsStarExp(SummonMotionData motionData, Dictionary<SummonMotionData, int> expItems)

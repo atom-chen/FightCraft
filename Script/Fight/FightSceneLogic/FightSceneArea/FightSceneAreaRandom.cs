@@ -152,7 +152,7 @@ public class FightSceneAreaRandom : FightSceneAreaBase
         }
 
         int eliteIdx = -1;
-        if (ActData.Instance._ProcessStageDiff > 1)
+        if (ActData.Instance.GetNormalDiff() > 1)
         {
             var eliteRate = FightManager.Instance.GetEliteMonsterRate();
             var eliteRandom = Random.Range(0, GameDataValue.GetMaxRate());
