@@ -34,7 +34,8 @@ public class UIStageSelect : UIBase
     {
         base.Show(hash);
 
-        InitDiffs();
+        //InitDiffs();
+        InitPassedStages();
     }
 
     #region difficult panel
@@ -145,6 +146,35 @@ public class UIStageSelect : UIBase
         _StageContainer.InitSelectContent(stageList, selectedStage, OnSelectStage);
     }
 
+    public void InitPassedStages()
+    {
+
+        if (ActData.Instance._NormalStageIdx == 0)
+            return;
+
+        List<StageInfoItem> stageList = new List<StageInfoItem>();
+
+
+        for (int i = 0; i < ActData._MAX_NROMAL_PRE_STAGE; ++i)
+        {
+            int stageIdx = ActData.Instance._NormalStageIdx - i;
+            if (stageIdx > 0)
+            {
+                StageInfoItem stageInfo = new StageInfoItem();
+                stageInfo._StageRecord = ActData.Instance.GetNormalStageRecord(stageIdx);
+                stageInfo._StageIdx = stageIdx;
+                stageInfo._Level = GameDataValue.GetStageLevel(stageInfo._StageIdx, STAGE_TYPE.NORMAL);
+
+                stageList.Add(stageInfo);
+            }
+        }
+
+        stageList.Reverse();
+        List<StageInfoItem> selectedStage = new List<StageInfoItem>();
+        selectedStage.Add(stageList[stageList.Count - 1]);
+        _StageContainer.InitSelectContent(stageList, selectedStage, OnSelectStage);
+    }
+
     private void OnSelectStage(object stageObj)
     {
         StageInfoItem stageInfo = stageObj as StageInfoItem;
@@ -186,14 +216,27 @@ public class UIStageSelect : UIBase
 
     public void OnEnterStage()
     {
-        int stageLevel = _SelectedStage._Level;
-        if (RoleData.SelectRole.TotalLevel + ActData.LEVEL_LIMIT < stageLevel)
-        {
-            UIMessageTip.ShowMessageTip(StrDictionary.GetFormatStr( 71103, stageLevel));
-            return;
-        }
+        //int stageLevel = _SelectedStage._Level;
+        //if (RoleData.SelectRole.TotalLevel + ActData.LEVEL_LIMIT < stageLevel)
+        //{
+        //    UIMessageTip.ShowMessageTip(StrDictionary.GetFormatStr( 71103, stageLevel));
+        //    return;
+        //}
+
+        //if (BackBagPack.Instance.PageItems.GetItemCnt(GameDataValue._BOSS_TICKET_ID) >= GameDataValue._MONSTER_DROP_BOSS_TICKET_MAX_STORE)
+        //{
+        //    UIMessageBox.Show(71107, OnEnterStageOk, null);
+        //}
+        //else
+        //{
+        //    OnEnterStageOk();
+        //}
+    }
+
+    private void OnEnterStageOk()
+    {
         ActData.Instance.StartStage(_SelectedStage._StageIdx, STAGE_TYPE.NORMAL);
-        LogicManager.Instance.EnterFight(_SelectedStage._StageRecord);
+        //LogicManager.Instance.EnterFight(_SelectedStage._StageRecord);
     }
 
     #endregion
@@ -201,6 +244,18 @@ public class UIStageSelect : UIBase
     #region test pass
 
     public void TestPassStage()
+    {
+        if (BackBagPack.Instance.PageItems.GetItemCnt(GameDataValue._BOSS_TICKET_ID) >= GameDataValue._MONSTER_DROP_BOSS_TICKET_MAX_STORE)
+        {
+            UIMessageBox.Show(71107, TestPassStageOk, null);
+        }
+        else
+        {
+            TestPassStageOk();
+        }
+    }
+
+    public void TestPassStageOk()
     {
         int stageID = _SelectedStage._StageIdx;
         int stageLevel = _SelectedStage._Level;
@@ -230,14 +285,13 @@ public class UIStageSelect : UIBase
         for (int i = 0; i < normalMonstarCnt; ++i)
         {
             var monRecord = TableReader.MonsterBase.GetRecord("21");
-            var monsterDrops = MonsterDrop.GetMonsterDrops(monRecord, monRecord.MotionType, RoleData.SelectRole._RoleLevel);
+            var monsterDrops = MonsterDrop.GetMonsterDrops(monRecord, monRecord.MotionType, stageLevel);
             foreach (var dropItem in monsterDrops)
             {
                 MonsterDrop.PickItem(dropItem);
             }
-            int dropExp = GameDataValue.GetMonsterExp(MOTION_TYPE.Normal, stageLevel, RoleData.SelectRole._RoleLevel);
+            int dropExp = GameDataValue.GetMonsterExp(MOTION_TYPE.Normal, stageLevel, RoleData.SelectRole.RoleLevel);
             RoleData.SelectRole.AddExp(dropExp);
-
             Hashtable hash = new Hashtable();
             MotionManager objMotion = new MotionManager();
             objMotion.RoleAttrManager = new RoleAttrManager();
@@ -249,12 +303,12 @@ public class UIStageSelect : UIBase
         for (int i = 0; i < eliteMonsterCnt; ++i)
         {
             var monRecord = TableReader.MonsterBase.GetRecord("22");
-            var monsterDrops = MonsterDrop.GetMonsterDrops(monRecord, monRecord.MotionType, RoleData.SelectRole._RoleLevel);
+            var monsterDrops = MonsterDrop.GetMonsterDrops(monRecord, monRecord.MotionType, stageLevel);
             foreach (var dropItem in monsterDrops)
             {
                 MonsterDrop.PickItem(dropItem);
             }
-            int dropExp = GameDataValue.GetMonsterExp(MOTION_TYPE.Elite, stageLevel, RoleData.SelectRole._RoleLevel);
+            int dropExp = GameDataValue.GetMonsterExp(MOTION_TYPE.Elite, stageLevel, RoleData.SelectRole.RoleLevel);
             RoleData.SelectRole.AddExp(dropExp);
 
             Hashtable hash = new Hashtable();
@@ -268,12 +322,12 @@ public class UIStageSelect : UIBase
         for (int i = 0; i < bossMonsterCnt; ++i)
         {
             var monRecord = TableReader.MonsterBase.GetRecord("1");
-            var monsterDrops = MonsterDrop.GetMonsterDrops(monRecord, monRecord.MotionType, RoleData.SelectRole._RoleLevel);
+            var monsterDrops = MonsterDrop.GetMonsterDrops(monRecord, monRecord.MotionType, stageLevel);
             foreach (var dropItem in monsterDrops)
             {
                 MonsterDrop.PickItem(dropItem);
             }
-            int dropExp = GameDataValue.GetMonsterExp(MOTION_TYPE.Hero, stageLevel, RoleData.SelectRole._RoleLevel);
+            int dropExp = GameDataValue.GetMonsterExp(MOTION_TYPE.Hero, stageLevel, RoleData.SelectRole.RoleLevel);
             RoleData.SelectRole.AddExp(dropExp);
 
             Hashtable hash = new Hashtable();
@@ -285,6 +339,10 @@ public class UIStageSelect : UIBase
         }
 
         InitDiffs();
+
+        //GemData.Instance.AutoLevelAll();
+
+        Debug.Log("Player level:" + RoleData.SelectRole.TotalLevel);
     }
 
     #endregion

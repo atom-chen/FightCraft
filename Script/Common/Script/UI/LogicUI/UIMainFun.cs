@@ -30,7 +30,15 @@ public class UIMainFun : UIBase
 
     #region 
 
+    public void OnEnable()
+    {
+        GameCore.Instance.EventController.RegisteEvent(EVENT_TYPE.EVENT_LOGIC_PASS_STAGE, StagePassEvent, -100);
+    }
 
+    public void OnDisable()
+    {
+        GameCore.Instance.EventController.UnRegisteEvent(EVENT_TYPE.EVENT_LOGIC_PASS_STAGE, StagePassEvent);
+    }
 
     #endregion
 
@@ -41,11 +49,7 @@ public class UIMainFun : UIBase
         base.Show(hash);
 
         UpdateMoneyInner();
-    }
-
-    public void OnEnable()
-    {
-        
+        RefreshGiftBtns();
     }
 
     #endregion
@@ -68,8 +72,9 @@ public class UIMainFun : UIBase
     //fight
     public void BtnFight()
     {
-        UIStageSelect.ShowAsyn();
+        //UIStageSelect.ShowAsyn();
         //LogicManager.Instance.EnterFight("Stage_01_01");
+        ActData.Instance.StartDefaultStage();
     }
 
     public void BtnBagPack()
@@ -142,6 +147,55 @@ public class UIMainFun : UIBase
     {
         UIGlobalBuff.ShowAttrAsyn();
     }
+
+    public void BtnStage()
+    {
+        if (ActData.Instance._NormalStageIdx == 0)
+            return;
+
+        UIStageSelect.ShowAsyn();
+    }
+
+    public void BtnAct()
+    {
+        UIActPanel.ShowAsyn();
+    }
+    #endregion
+
+    #region gift 
+
+    public GameObject _AdGift;
+    public GameObject _PurchGift;
+
+    public void RefreshGiftBtns()
+    {
+        if (GiftData.Instance._GiftItems.Count > 0)
+        {
+            _AdGift.SetActive(true);
+            _PurchGift.SetActive(true);
+        }
+        else
+        {
+            _AdGift.SetActive(false);
+            _PurchGift.SetActive(false);
+        }
+    }
+
+    public void OnBtnAdGift()
+    {
+        UIGiftPack.ShowAsyn();
+    }
+
+    public void OnBtnPurchGift()
+    {
+        UIGiftPack.ShowAsyn();
+    }
+
+    public void StagePassEvent(object go, Hashtable eventArgs)
+    {
+        RefreshGiftBtns();
+    }
+
     #endregion
 }
 

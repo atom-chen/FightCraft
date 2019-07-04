@@ -264,40 +264,8 @@ public class UIContainerSelect : UIContainerBase
 
     public override void ShowItemsFinish()
     {
+        base.ShowItemsFinish();
         SetSelect(_SelectedList);
-        //int index = 0;
-        //foreach (var shoItem in _ItemPrefabList)
-        //{
-        //    var showObj = shoItem._InitInfo;
-        //    ContentPos selectPos = _Selecteds.Find((pos) =>
-        //    {
-        //        if (pos.Obj == showObj)
-        //            return true;
-        //        return false;
-        //    });
-
-        //    if (selectPos != null)
-        //    {
-        //        ((UIItemSelect)shoItem).Selected();
-        //        if (_SelectedCallBack != null)
-        //        {
-        //            _SelectedCallBack(selectPos.Obj);
-        //        }
-        //        if (index > 0)
-        //        {
-        //            StartCoroutine(ShowSelectContainPos(shoItem));
-        //        }
-        //        else
-        //        {
-        //            ResetSelectContainPos();
-        //        }
-        //    }
-        //    else
-        //    {
-        //        ((UIItemSelect)shoItem).UnSelected();
-        //    }
-        //    ++index;
-        //}
     }
 
     public delegate void ShowContainerPosCallFunc();

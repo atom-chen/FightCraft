@@ -96,7 +96,6 @@ public class PlayerDataPack : DataPackBase
 
     #region char
 
-    [SaveField(3)]
     public List<RoleData> _RoleList;
 
     public RoleData _SelectedRole;
@@ -123,7 +122,6 @@ public class PlayerDataPack : DataPackBase
 
         for (int i = 0; i < _RoleList.Count; ++i)
         {
-            _RoleList[i].LoadClass(false);
             if (i == (int)PROFESSION.BOY_DEFENCE)
             {
                 _RoleList[i].MainBaseName = "MainCharBoyDefence";
@@ -167,7 +165,6 @@ public class PlayerDataPack : DataPackBase
             _SelectedRole = _RoleList[roleIdx];
         }
 
-        _SelectedRole.LoadClass(true);
         _SelectedRole.InitRoleData();
 
         SkillData.Instance.LoadClass(true);
@@ -178,5 +175,41 @@ public class PlayerDataPack : DataPackBase
 
     #endregion
 
+    #region role data
+
+    [SaveField(3)]
+    public List<ItemEquip> _EquipList;
+
+    [SaveField(4)]
+    private int _RoleLevel;
+    public int RoleLevel
+    {
+        get
+        {
+            return _RoleLevel;
+        }
+        set
+        {
+            _RoleLevel = value;
+            SaveClass(false);
+        }
+    }
+
+    [SaveField(5)]
+    private int _CurExp;
+    public int CurExp
+    {
+        get
+        {
+            return _CurExp;
+        }
+        set
+        {
+            _CurExp = value;
+            SaveClass(false);
+        }
+    }
+
+    #endregion
 }
 

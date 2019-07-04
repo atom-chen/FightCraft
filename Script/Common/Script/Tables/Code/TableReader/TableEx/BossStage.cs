@@ -35,7 +35,14 @@ namespace Tables
                 return _BossDiffRecords;
             }
         }
-        
+
+        public List<BossStageRecord> GetBossRecordsByDiff(int diff)
+        {
+            if (BossDiffRecords.ContainsKey(diff))
+                return BossDiffRecords[diff];
+            return BossDiffRecords[10];
+        }
+
     }
 
 }

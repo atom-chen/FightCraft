@@ -51,7 +51,7 @@ public class UIEquipInfo : UIItemInfo
         }
 
         _Name.text = _ShowEquip.GetEquipNameWithColor();
-        if (_ShowEquip.RequireLevel > RoleData.SelectRole._RoleLevel)
+        if (_ShowEquip.RequireLevel > RoleData.SelectRole.RoleLevel)
         {
             _Level.text = StrDictionary.GetFormatStr(10000) + " " + CommonDefine.GetEnableRedStr(0) + _ShowEquip.RequireLevel + "</color>";
         }
@@ -63,8 +63,7 @@ public class UIEquipInfo : UIItemInfo
 
         if (_ProfessionLimit != null)
         {
-            if (_ShowEquip.EquipItemRecord.ProfessionLimit > 0 &&
-                ((_ShowEquip.EquipItemRecord.ProfessionLimit >> (int)RoleData.SelectRole.Profession) & 1) == 0)
+            if(!_ShowEquip.IsMatchRole(RoleData.SelectRole.Profession))
             {
                 _ProfessionLimit.gameObject.SetActive(true);
             }

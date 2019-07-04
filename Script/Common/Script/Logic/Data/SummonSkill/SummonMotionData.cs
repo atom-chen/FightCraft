@@ -205,6 +205,28 @@ public class SummonMotionData : ItemBase
         }
     }
 
+    private int _MaxStarExp = -1;
+    public int MaxStarExp
+    {
+        get
+        {
+            if (_MaxStarExp < 0)
+            {
+                _MaxStarExp = 0;
+                for (int i = 0; i < SummonRecord.StarExp.Count; ++i)
+                {
+                    _MaxStarExp += SummonRecord.StarExp[i];
+                }
+            }
+            return _MaxStarExp;
+        }
+    }
+
+    public int GetCanAddExp()
+    {
+        return MaxStarExp - StarExp;
+    }
+
     public int CurStarLevelExp()
     {
         if (StarLevel < SummonRecord.StarExp.Count)
@@ -239,6 +261,8 @@ public class SummonMotionData : ItemBase
 
         _StarLevel = starLv;
         _CurStarExp = tempExp;
+
+        UpdateAttrs();
     }
 
     public bool IsStageMax()
@@ -274,8 +298,8 @@ public class SummonMotionData : ItemBase
     public static List<RoleAttrEnum> StageAttrEnums = new List<RoleAttrEnum>()
     { RoleAttrEnum.Attack, RoleAttrEnum.CriticalHitChance, RoleAttrEnum.CriticalHitDamge, RoleAttrEnum.RiseHandSpeed, RoleAttrEnum.AttackSpeed};
 
-    public static List<int> StageAttrAdd = new List<int>()
-    { 1, 100,100,100,100 };
+    public static List<int> StageAttrValues = new List<int>()
+    { 1, 1500,5000,2500,2500 };
 
     private List<EquipExAttr> _SummonAttrs;
     public List<EquipExAttr> SummonAttrs
@@ -295,15 +319,29 @@ public class SummonMotionData : ItemBase
         _SummonAttrs = new List<EquipExAttr>();
         //InitStageAttr();
 
-        var levelAttr = Tables.TableReader.SummonSkillAttr.GetRecord(Level.ToString());
+        int atkValue = (int)(GameDataValue.GetSummonAtk(Level) * SummonRecord.AttrModelfy);
+        int critiDmgValue = 0;
+        if (StarLevel > 1)
+        {
+            critiDmgValue = StageAttrValues[1];
+        }
+        int critiRateValue = 0;
+        if (StarLevel > 2)
+        {
+            critiRateValue = StageAttrValues[2];
+        }
+        int riseHandSpeedValue = 0;
+        if (StarLevel > 3)
+        {
+            riseHandSpeedValue = StageAttrValues[3];
+        }
+        int atkSpeedValue = 0;
+        if (StarLevel > 4)
+        {
+            atkSpeedValue = StageAttrValues[4];
+        }
 
-        var atkValue = (int)(levelAttr.Attr[0] * SummonRecord.AttrModelfy);
-        var critiDmgValue = (int)(levelAttr.Attr[1]);
-        var critiRateValue = (int)(levelAttr.Attr[2]);
-        var riseHandSpeedValue = (int)(levelAttr.Attr[3]);
-        var atkSpeedValue = (int)(levelAttr.Attr[4]);
-
-        _SummonAttrs.Add(EquipExAttr.GetBaseExAttr(StageAttrEnums[0], atkValue));
+        //_SummonAttrs.Add(EquipExAttr.GetBaseExAttr(StageAttrEnums[0], atkValue));
         _SummonAttrs.Add(EquipExAttr.GetBaseExAttr(StageAttrEnums[1], critiDmgValue));
         _SummonAttrs.Add(EquipExAttr.GetBaseExAttr(StageAttrEnums[2], critiRateValue));
         _SummonAttrs.Add(EquipExAttr.GetBaseExAttr(StageAttrEnums[3], riseHandSpeedValue));

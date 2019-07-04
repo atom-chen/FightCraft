@@ -14,13 +14,24 @@ public class UIModelAnim : MonoBehaviour
         _Animation = GetComponent<Animation>();
     }
 
-    public void InitAnim(List<AnimationClip> anims)
+    public void InitAnim(List<AnimationClip> anims, bool initPlay = true)
     {
         _Anims = anims;
         _Animation.AddClip(_Anims[0], "0");
         _Animation.AddClip(_Anims[1], "1");
 
-        PlayAnim();
+        if (initPlay)
+        {
+            PlayAnim();
+        }
+    }
+
+    public void PlayAnim(int idx)
+    {
+        if (idx >= _Anims.Count || idx < 0)
+            return;
+
+        _Animation.Play(idx.ToString());
     }
 
     public void PlayAnim()

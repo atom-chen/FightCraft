@@ -3,43 +3,47 @@ using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using Tables;
 
 public class UISellShopPack : UIBase
 {
     #region static
 
-    public static void ShowSync()
+    public delegate int GetItemPrice(List<ItemBase> items);
+    public delegate void SellItems(List<ItemBase> items);
+
+    public static void ShowSellQualitySync(List<ItemBase> toSellItems, List<ITEM_QUALITY> selectQualities, GetItemPrice getItemPrice, SellItems sellItems)
     {
         Hashtable hash = new Hashtable();
+        hash.Add("ToSellItems", toSellItems);
+        hash.Add("SelectQualities", selectQualities);
+        hash.Add("GetItemPrice", getItemPrice);
+        hash.Add("SellItems", sellItems);
         GameCore.Instance.UIManager.ShowUI("LogicUI/BagPack/UISellShopPack", UILayer.SubPopUI, hash);
     }
 
-    public static UISellShopPack GetUIBackPackInstance(Transform parentTrans)
+    public static void ShowSellLevelSync(List<ItemBase> toSellItems, List<Vector2> selectLevels, GetItemPrice getItemPrice, SellItems sellItems)
     {
-        var tempGO = ResourceManager.Instance.GetUI("LogicUI/BagPack/UISellShopPack");
-        if (tempGO != null)
-        {
-            var uiGO = GameObject.Instantiate(tempGO);
-
-            uiGO.transform.SetParent(parentTrans);
-            uiGO.transform.localPosition = Vector3.zero;
-            uiGO.transform.localRotation = Quaternion.Euler(Vector3.zero);
-            uiGO.transform.localScale = Vector3.one;
-
-            var backPack = uiGO.GetComponent<UISellShopPack>();
-            return backPack;
-        }
-        return null;
+        Hashtable hash = new Hashtable();
+        hash.Add("ToSellItems", toSellItems);
+        hash.Add("SelectLevels", selectLevels);
+        hash.Add("GetItemPrice", getItemPrice);
+        hash.Add("SellItems", sellItems);
+        GameCore.Instance.UIManager.ShowUI("LogicUI/BagPack/UISellShopPack", UILayer.SubPopUI, hash);
     }
 
     #endregion
 
     #region 
 
-    public UIBackPack _BackPack;
-    public Transform _BackPackPos;
-    public UIContainerBase _ItemsContainer;
+    public UIContainerSelect _ConditionContainer;
+    public UIContainerSelect _ItemsContainer;
+    public UICurrencyItem _SellPrice;
 
+    private GetItemPrice _GetItemPrice;
+    private SellItems _SellItems;
+    private List<ItemBase> _ShowItems = new List<ItemBase>();
+    private List<ItemBase> _SelectedItems = new List<ItemBase>();
     #endregion
 
     #region 
@@ -47,19 +51,104 @@ public class UISellShopPack : UIBase
     public override void Init()
     {
         base.Init();
-
-        _BackPack = UIBackPack.GetUIBackPackInstance(_BackPackPos);
-        _BackPack.SetBackPackSellMode(Tables.ITEM_QUALITY.BLUE);
-        _BackPack._BtnPanel.SetActive(false);
     }
 
     public override void Show(Hashtable hash)
     {
         base.Show(hash);
 
-        _BackPack.Show(null);
-        _BackPack.SetBackPackSellMode(Tables.ITEM_QUALITY.BLUE);
-        _ItemsContainer.InitContentItem(ShopData.Instance.BuyBackList, ShowSellBackTooltips, hash, null);
+        _SelectedItems.Clear();
+        _ShowItems = (List<ItemBase>)hash["ToSellItems"];
+        _GetItemPrice = (GetItemPrice)hash["GetItemPrice"];
+        _SellItems = (SellItems)hash["SellItems"];
+
+        if (hash.ContainsKey("SelectQualities"))
+        {
+            List<ITEM_QUALITY> selectQualities = (List<ITEM_QUALITY>)hash["SelectQualities"];
+            _ConditionContainer.InitSelectContent(selectQualities, ShopData.Instance._SellQualityTemp, OnQualitySelect, OnQualitySelect);
+        }
+        if (hash.ContainsKey("SelectLevels"))
+        {
+            List<Vector2> selectQualities = (List<Vector2>)hash["SelectLevels"];
+            _ConditionContainer.InitSelectContent(selectQualities, ShopData.Instance._SellLevelTemp, OnLevelSelect, OnLevelSelect);
+            
+        }
+        _ItemsContainer.InitSelectContent(_ShowItems, null, OnItemSelect, OnItemUnSelect);
+        _ItemsContainer.SetShowItemFinishCallFun(AfterInit);
+
+        _SellPrice.ShowCurrency(MONEYTYPE.GOLD, 0);
+    }
+
+    public void AfterInit()
+    {
+        OnQualitySelect(null);
+    }
+
+    public void OnQualitySelect(object quality)
+    {
+        var selectQualities = _ConditionContainer.GetSelecteds<ITEM_QUALITY>();
+
+        ShopData.Instance._SellQualityTemp = selectQualities;
+        _SelectedItems.Clear();
+        for (int i = 0; i < _ShowItems.Count; ++i)
+        {
+            if (selectQualities.Contains(_ShowItems[i].GetQuality()))
+            {
+                _SelectedItems.Add(_ShowItems[i]);
+            }
+        }
+        _ItemsContainer.SetSelect(_SelectedItems);
+
+        if (_GetItemPrice != null)
+        {
+            int sellGold = _GetItemPrice.Invoke(_SelectedItems);
+            _SellPrice.ShowCurrency(MONEYTYPE.GOLD, sellGold);
+        }
+    }
+
+    public void OnLevelSelect(object level)
+    {
+        var selectLevel = _ConditionContainer.GetSelecteds<Vector2>();
+
+        ShopData.Instance._SellLevelTemp = selectLevel;
+        _SelectedItems.Clear();
+        for (int i = 0; i < _ShowItems.Count; ++i)
+        {
+            for (int j = 0; j < selectLevel.Count; ++j)
+            {
+                if (selectLevel[j].x <= _ShowItems[i].GetLevel()
+                    && selectLevel[j].y >= _ShowItems[i].GetLevel())
+                {
+                    _SelectedItems.Add(_ShowItems[i]);
+                    break;
+                }
+            }
+        }
+        _ItemsContainer.SetSelect(_SelectedItems);
+
+        if (_GetItemPrice != null)
+        {
+            int sellGold = _GetItemPrice.Invoke(_SelectedItems);
+            _SellPrice.ShowCurrency(MONEYTYPE.GOLD, sellGold);
+        }
+    }
+
+    public void OnItemSelect(object itemObj)
+    {
+        ItemBase itemBase = itemObj as ItemBase;
+        if (!_SelectedItems.Contains(itemBase))
+        {
+            _SelectedItems.Add(itemBase);
+        }
+    }
+
+    public void OnItemUnSelect(object itemObj)
+    {
+        ItemBase itemBase = itemObj as ItemBase;
+        if (_SelectedItems.Contains(itemBase))
+        {
+            _SelectedItems.Remove(itemBase);
+        }
     }
 
     public override void Hide()
@@ -77,14 +166,11 @@ public class UISellShopPack : UIBase
 
     public void OnBtnSell()
     {
-        var sellList = _BackPack.GetSellList();
-        foreach (var sellItem in sellList)
-        {
-            ShopData.Instance.SellItem(sellItem, false);
-        }
 
-        _BackPack.RefreshItems();
-        _ItemsContainer.RefreshItems();
+        if (_SellItems != null)
+        {
+            _SellItems.Invoke(_SelectedItems);
+        }
 
         Hide();
 

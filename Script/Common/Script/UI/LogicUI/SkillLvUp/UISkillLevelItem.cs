@@ -29,14 +29,14 @@ public class UISkillLevelItem : UIItemSelect
         var skillRecord = Tables.TableReader.SkillInfo.GetRecord(_SkillItem.SkillID);
         string skillName = Tables.StrDictionary.GetFormatStr(skillRecord.NameStrDict);
         _SkillNameText.text = skillName;
-        _SkillLevelText.text = "Lv." + _SkillItem.SkillActureLevel;
+        _SkillLevelText.text = "Lv." + _SkillItem.SkillActureLevel + "/" + _SkillItem.SkillRecord.MaxLevel;
     }
 
     public override void Refresh()
     {
         base.Refresh();
 
-        _SkillLevelText.text = "Lv." + _SkillItem.SkillActureLevel;
+        _SkillLevelText.text = "Lv." + _SkillItem.SkillActureLevel + "/" + _SkillItem.SkillRecord.MaxLevel;
         //ShowEquip(_ShowItem as ItemEquip);
     }
 

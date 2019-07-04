@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -35,16 +36,19 @@ public class UIEquipPack : UIBase,IDragablePack
     public UIContainerBase _EquipContainer;
     public UIBackPack _BackPack;
     public UITagPanel _TagPanel;
+    public UIBackPackItem _OtherRoleWeapon;
+    public Text _Combat;
 
     public override void Init()
     {
         base.Init();
 
         //_BackPack = UIBackPack.GetUIBackPackInstance(transform);
-        _BackPack.OnShowPage(0);
+        _BackPack.OnShowPage(0, true);
         _BackPack._OnItemSelectCallBack = ShowBackPackSelectItem;
         _BackPack._OnDragItemCallBack = OnDragItem;
         _BackPack._IsCanDropItemCallBack = IsCanDropItem;
+        RefreshCombat();
     }
 
     public override void Show(Hashtable hash)
@@ -52,7 +56,11 @@ public class UIEquipPack : UIBase,IDragablePack
         base.Show(hash);
 
         _TagPanel.ShowPage(0);
-        ShowPackItems();
+        ShowEquipPackItems();
+        _BackPack.OnShowPage(0, true);
+        RefreshCombat();
+
+        _OtherRoleWeapon.gameObject.SetActive(false);
     }
 
     public override void Hide()
@@ -66,18 +74,24 @@ public class UIEquipPack : UIBase,IDragablePack
         {
             _BackPack.OnShowAllEquip();
         }
-        else
+        else if (page == 0)
         {
-            _BackPack.OnShowPage(0);
+            _BackPack.OnShowPage(0, true);
+            RefreshCombat();
+            //ShowEquipPackItems();
+        }
+        else if (page == 1)
+        {
+            _BackPack.OnShowPage(0, false);
         }
     }
 
-    private void ShowPackItems()
+    private void ShowEquipPackItems()
     {
         Hashtable exHash = new Hashtable();
         exHash.Add("DragPack", this);
 
-        _EquipContainer.InitContentItem(PlayerDataPack.Instance._SelectedRole._EquipList, ShowEquipPackTooltips, exHash);
+        _EquipContainer.InitContentItem(PlayerDataPack.Instance._SelectedRole.EquipList, ShowEquipPackTooltips, exHash);
         _BackPack.Show(null);
     }
 
@@ -85,6 +99,22 @@ public class UIEquipPack : UIBase,IDragablePack
     {
         _EquipContainer.RefreshItems();
         _BackPack.RefreshItems();
+
+        RefreshCombat();
+    }
+
+    private void RefreshCombat()
+    {
+        int combatValue = 0;
+        foreach (var equipItem in PlayerDataPack.Instance._SelectedRole.EquipList)
+        {
+            if (equipItem != null && equipItem.IsVolid())
+            {
+                combatValue += equipItem.CombatValue;
+            }
+        }
+
+        _Combat.text = combatValue.ToString();
     }
 
     public void ShowBackPackSelectItem(ItemBase itemObj)
@@ -119,6 +149,15 @@ public class UIEquipPack : UIBase,IDragablePack
 
         UIEquipTooltips.ShowAsyn(equipItem, new ToolTipFunc[1] { new ToolTipFunc(10004, PutOffEquip) });
     }
+
+    private void ShowOtherWeaponTooltips(object equipObj)
+    {
+        ItemEquip equipItem = equipObj as ItemEquip;
+        if (equipItem == null || !equipItem.IsVolid())
+            return;
+
+        UIEquipTooltips.ShowAsyn(equipItem);
+    }
     #endregion
 
     #region 
@@ -148,7 +187,7 @@ public class UIEquipPack : UIBase,IDragablePack
             if (dropItem.ShowedItem is ItemEquip)
             {
                 var equip = (ItemEquip)dropItem.ShowedItem;
-                var slot = PlayerDataPack.Instance._SelectedRole._EquipList.IndexOf(equip);
+                var slot = PlayerDataPack.Instance._SelectedRole.EquipList.IndexOf(equip);
                 if (slot < 0)
                     return false;
 
@@ -160,7 +199,7 @@ public class UIEquipPack : UIBase,IDragablePack
             if (dragItem.ShowedItem is ItemEquip)
             {
                 var equip = (ItemEquip)dragItem.ShowedItem;
-                var slot = PlayerDataPack.Instance._SelectedRole._EquipList.IndexOf(dropItem.ShowedItem as ItemEquip);
+                var slot = PlayerDataPack.Instance._SelectedRole.EquipList.IndexOf(dropItem.ShowedItem as ItemEquip);
                 if (slot < 0)
                     return false;
 
@@ -209,7 +248,26 @@ public class UIEquipPack : UIBase,IDragablePack
         var itemEquip = itemBase as ItemEquip;
         if (itemEquip != null)
         {
-            PlayerDataPack.Instance._SelectedRole.PutOnEquip(itemEquip.EquipItemRecord.Slot, itemEquip);
+            bool isNeedShowSlot = (!itemEquip.IsMatchRole(RoleData.SelectRole.Profession)) && itemEquip.EquipItemRecord.Slot == Tables.EQUIP_SLOT.WEAPON;
+
+            if (PlayerDataPack.Instance._SelectedRole.PutOnEquip(itemEquip.EquipItemRecord.Slot, itemEquip))
+            {
+
+                if (isNeedShowSlot)
+                {
+                    UIMessageBox.ShowWithDontShotTodayTips(Tables.StrDictionary.GetFormatStr(1015), "EquipDontMatch");
+                    var equipedItem = RoleData.SelectRole.GetEquipItemOtherWeaon();
+                    {
+                        Hashtable hash = new Hashtable();
+                        hash.Add("InitObj", equipedItem);
+                        _OtherRoleWeapon.Show(hash);
+                        _OtherRoleWeapon._InitInfo = equipedItem;
+                        _OtherRoleWeapon._ClickEvent += ShowOtherWeaponTooltips;
+                        _OtherRoleWeapon.gameObject.SetActive(true);
+                    }
+                }
+            }
+
         }
     }
 

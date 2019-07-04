@@ -11,9 +11,13 @@ public class ImpactBuffAssassination : ImpactBuff
     {
         base.CastDamage(orgDamage, damageImpact);
 
-            if (!GameRandom.IsInRate(_Rate))
-                return;
+        if (!GameRandom.IsInRate(_Rate))
+            return;
 
+        if (orgDamage.DamageType < RoleAttrManager.ShowDamageType.Hight_Criticle)
+        {
+            orgDamage.DamageType = RoleAttrManager.ShowDamageType.Hight_Criticle;
+        }
         orgDamage.TotalDamageValue = (int)(orgDamage.TotalDamageValue * _DmgRate);
     }
 

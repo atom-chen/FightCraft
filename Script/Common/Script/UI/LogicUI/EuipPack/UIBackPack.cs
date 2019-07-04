@@ -53,7 +53,7 @@ public class UIBackPack : UIBase, IDragablePack
         base.Show(hash);
 
 
-        OnShowPage(0);
+        OnShowPage(0, true);
     }
 
     public override void Hide()
@@ -61,13 +61,14 @@ public class UIBackPack : UIBase, IDragablePack
         base.Hide();
     }
 
-    public void OnShowPage(int page)
+    public void OnShowPage(int page, bool isEquipPack = false)
     {
         _ShowingPage = page;
         Hashtable hash = new Hashtable();
         hash.Add("DragPack", this);
         if (page == 0)
         {
+            hash.Add("IsShowRedTips", isEquipPack);
             _ItemsContainer.InitContentItem(BackBagPack.Instance.PageEquips._PackItems, ShowBackPackTooltips, hash);
         }
         else
@@ -81,7 +82,7 @@ public class UIBackPack : UIBase, IDragablePack
     public void OnShowAllEquip()
     {
         List<ItemEquip> equipList = new List<ItemEquip>();
-        foreach (var equipItem in PlayerDataPack.Instance._SelectedRole._EquipList)
+        foreach (var equipItem in PlayerDataPack.Instance._SelectedRole.EquipList)
         {
             if (equipItem.IsVolid() && equipItem.EquipQuality > Tables.ITEM_QUALITY.BLUE)
             {
@@ -158,7 +159,38 @@ public class UIBackPack : UIBase, IDragablePack
         //_BuyBackPanel.SetActive(true);
         //_BuyBackContainer.InitContentItem(ShopData.Instance._BuyBackList);
 
-        UISellShopPack.ShowSync();
+        List<Tables.ITEM_QUALITY> equipQualities = new List<Tables.ITEM_QUALITY>()
+        {
+            Tables.ITEM_QUALITY.WHITE,
+            Tables.ITEM_QUALITY.BLUE,
+            Tables.ITEM_QUALITY.PURPER,
+            Tables.ITEM_QUALITY.ORIGIN,
+        };
+        UISellShopPack.ShowSellQualitySync(BackBagPack.Instance.PageEquips.ToItemBases(), equipQualities, GetSellPrice, SellEquips);
+    }
+
+    public int GetSellPrice(List<ItemBase> items)
+    {
+        int totalMoney = 0;
+        for (int i = 0; i < items.Count; ++i)
+        {
+            ItemEquip itemEquip = items[i] as ItemEquip;
+            if (itemEquip != null)
+            {
+                totalMoney += GameDataValue.GetEquipSellGold(itemEquip);
+            }
+        }
+
+        return totalMoney;
+    }
+
+    public void SellEquips(List<ItemBase> items)
+    {
+        BackBagPack.Instance.SellEquips(items);
+
+        Hashtable hash = new Hashtable();
+        hash.Add("EquipInfos", items);
+        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_EQUIP_SELL, this, hash);
     }
 
     public List<ItemBase> GetSellList()
@@ -186,7 +218,7 @@ public class UIBackPack : UIBase, IDragablePack
         {
             BackBagPack.Instance.SortItem();
         }
-        OnShowPage(_ShowingPage);
+        OnShowPage(_ShowingPage, true);
     }
 
     public void SetBackPackSellMode(Tables.ITEM_QUALITY sellQuality)

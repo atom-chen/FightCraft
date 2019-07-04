@@ -261,25 +261,54 @@ public class ItemEquip : ItemBase
     public void CalculateCombatValue()
     {
         _CombatValue = 0;
-        _CombatValue += GameDataValue.GetAttrValue(RoleAttrEnum.Attack, BaseAttack);
-        _CombatValue += GameDataValue.GetAttrValue(RoleAttrEnum.HPMax, BaseHP);
-        _CombatValue += GameDataValue.GetAttrValue(RoleAttrEnum.Defense, BaseDefence);
+
+        int baseValue = GameDataValue.GetEquipLvValue(EquipLevel, EquipItemRecord.Slot);
+        if (EquipItemRecord.Slot != EQUIP_SLOT.AMULET
+            && EquipItemRecord.Slot != EQUIP_SLOT.RING)
+        {
+            if (EquipItemRecord.Slot == EQUIP_SLOT.WEAPON)
+            {
+                _CombatValue += baseValue * 2 + 100;
+            }
+            else if (EquipItemRecord.Slot == EQUIP_SLOT.TORSO)
+            {
+                _CombatValue += (int)(baseValue * 1.5f) + 75;
+            }
+            else if (EquipItemRecord.Slot == EQUIP_SLOT.LEGS)
+            {
+                _CombatValue += (int)(baseValue * 1.5f) + 75;
+            }
+
+            var record = TableReader.EquipItem.GetRecord(CommonItemDataID.ToString());
+            if (record.LevelLimit == 10)
+            {
+                _CombatValue += (int)(_CombatValue * 0.05f);
+            }
+            else if (record.LevelLimit == 20)
+            {
+                _CombatValue += (int)(_CombatValue * 0.1f);
+            }
+            else if (record.LevelLimit == 30)
+            {
+                _CombatValue += (int)(_CombatValue * 0.15f);
+            }
+        }
+        else
+        {
+            _CombatValue = 0;
+        }
 
         foreach (var exAttrs in EquipExAttrs)
         {
-            if (exAttrs.AttrType == "RoleAttrImpactBaseAttr")
+            if (exAttrs.AttrType != "RoleAttrImpactBaseAttr")
             {
-                _CombatValue += GameDataValue.GetAttrValue((RoleAttrEnum)exAttrs.AttrParams[0], exAttrs.AttrParams[1]);
+                _CombatValue += (int)(baseValue * 3.0f);
             }
             else
             {
-                _CombatValue += 0;
+                _CombatValue += (int)(baseValue * GameDataValue._ExAttrQualityPersent[(int)exAttrs.AttrQuality]);
             }
-        }
 
-        if (EquipQuality == ITEM_QUALITY.ORIGIN)
-        {
-            _CombatValue = Mathf.CeilToInt(_CombatValue * 1.2f);
         }
     }
 
@@ -381,6 +410,19 @@ public class ItemEquip : ItemBase
         return attrStr;
 
     }
+
+    public bool IsMatchRole(PROFESSION profession)
+    {
+        if (EquipItemRecord.ProfessionLimit > 0 &&
+            ((EquipItemRecord.ProfessionLimit >> (int)profession) & 1) == 0)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
     #endregion
 
     #region fun
@@ -404,6 +446,16 @@ public class ItemEquip : ItemBase
     {
         base.ResetItem();
         _EquipItemRecord = null;
+    }
+
+    public override ITEM_QUALITY GetQuality()
+    {
+        return EquipQuality;
+    }
+
+    public override int GetLevel()
+    {
+        return EquipLevel;
     }
 
     #endregion
@@ -546,6 +598,8 @@ public class ItemEquip : ItemBase
         _BaseAttack = -1;
         _BaseHP = -1;
         _BaseDefence = -1;
+
+        CalculateCombatValue();
     }
 
     private int _RequireLevel = -1;
@@ -723,7 +777,7 @@ public class ItemEquip : ItemBase
         }
 
         var equipLevel = GameDataValue.GetEquipLv(equipSlot, level);
-        int value = GameDataValue.CalLvValue(equipLevel, equipSlot);
+        int value = GameDataValue.GetEquipLvValue(equipLevel, equipSlot);
         baseEquip = GetRandomItem(equipSlot, equipLevel, profession);
         if (baseEquip == null)
             return null;
@@ -791,56 +845,24 @@ public class ItemEquip : ItemBase
 
         int value = randomItems.Count / 4;
         List<int> randomVals = new List<int>();
-        if (level < 10)
+
+        for (int i = 0; i < randomItems.Count; ++i)
         {
-            for (int i = 0; i < value; ++i)
+            if (level >= randomItems[i].LevelLimit && randomItems[i].LevelLimit == 0)
             {
                 randomVals.Add(10);
             }
-        }
-        else if (level < 20)
-        {
-            for (int i = 0; i < value; ++i)
-            {
-                randomVals.Add(10);
-            }
-            for (int i = 0; i < value; ++i)
+            else if (level >= randomItems[i].LevelLimit && randomItems[i].LevelLimit == 10)
             {
                 randomVals.Add(20);
             }
-        }
-        else if (level < 30)
-        {
-            for (int i = 0; i < value; ++i)
-            {
-                randomVals.Add(10);
-            }
-            for (int i = 0; i < value; ++i)
-            {
-                randomVals.Add(20);
-            }
-            for (int i = 0; i < value; ++i)
+            else if (level >= randomItems[i].LevelLimit && randomItems[i].LevelLimit == 20)
             {
                 randomVals.Add(30);
             }
-        }
-        else
-        {
-            for (int i = 0; i < value; ++i)
+            else if (level >= randomItems[i].LevelLimit && randomItems[i].LevelLimit == 30)
             {
-                randomVals.Add(10);
-            }
-            for (int i = 0; i < value; ++i)
-            {
-                randomVals.Add(20);
-            }
-            for (int i = 0; i < value; ++i)
-            {
-                randomVals.Add(30);
-            }
-            for (int i = 0; i < value; ++i)
-            {
-                randomVals.Add(20);
+                randomVals.Add(40);
             }
         }
 

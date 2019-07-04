@@ -24,6 +24,14 @@ public class CommonDefine
         return "<color=#ffffff>";
     }
 
+    public static string GetQualityName(ITEM_QUALITY quality)
+    {
+        string name = GetQualityColorStr(quality);
+        name += StrDictionary.GetFormatStr(5000 + (int)quality);
+        name += "</color>";
+        return name;
+    }
+
     public static string GetMigicAttrColor()
     {
         return "<color=#3ba0ff>";

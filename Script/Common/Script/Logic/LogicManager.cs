@@ -32,7 +32,7 @@ public class LogicManager
     {
         SceneManager.LoadScene(GameDefine.GAMELOGIC_SCENE_NAME);
 
-        PlayerDataPack.Instance.LoadClass(false);
+        PlayerDataPack.Instance.LoadClass(true);
         PlayerDataPack.Instance.InitPlayerData();
     }
 
@@ -73,6 +73,8 @@ public class LogicManager
         ItemPackTest.Instance.LoadClass(true);
         ItemPackTest.Instance.Init();
 
+        GiftData.Instance.InitGemData();
+
         UIMainFun.ShowAsyn();
     }
 
@@ -89,22 +91,24 @@ public class LogicManager
         else
         {
             UIMainFun.ShowAsyn();
+
+            //UIGiftTipPack.ShowAsyn();
         }
         GameCore.Instance._SoundManager.PlayBGMusic(GameCore.Instance._SoundManager._LogicAudio);
     }
 
     public void SaveGame()
     {
-        PlayerDataPack.Instance.SaveClass(false);
+        //PlayerDataPack.Instance.SaveClass(false);
         //BackBagPack.Instance.SaveClass(true);
         //ShopData.Instance.SaveClass(true);
         //GemData.Instance.SaveClass(true);
 
 
-        if (PlayerDataPack.Instance._SelectedRole != null)
-        {
-            PlayerDataPack.Instance._SelectedRole.SaveClass(false);
-        }
+        //if (PlayerDataPack.Instance._SelectedRole != null)
+        //{
+        //    PlayerDataPack.Instance._SelectedRole.SaveClass(false);
+        //}
         //DataManager.Instance.Save();
     }
 

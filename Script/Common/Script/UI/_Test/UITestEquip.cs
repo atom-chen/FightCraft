@@ -114,116 +114,29 @@ public class UITestEquip : UIBase
     #region fight test
 
     public InputField _TargetLevel;
+    public Toggle _TestAct;
+    public Toggle _TestActAD;
 
     public void AutoLevel()
     {
         int targetLevel = int.Parse(_TargetLevel.text);
-        RoleData.SelectRole._RoleLevel = targetLevel;
-        return;
 
-        int fightTimes = 0;
-        string fileName = "StagePassInfos";
-
-#if UNITY_EDITOR
-        string path = Application.dataPath + fileName + ".txt";
-        var fileStream = File.Create(path);
-        var streamWriter = new StreamWriter(fileStream);
-#endif
-        int preGold = 0;
-        int lastLevel = -1;
-        int monCnt = 0;
-        int equipDropCnt = 0;
-        TestFight._DropOrangeEquipCnt = 0;
-        while (true)
+        int lastLevel = RoleData.SelectRole.TotalLevel;
+        while (targetLevel > RoleData.SelectRole.TotalLevel)
         {
-            var level = RoleData.SelectRole._RoleLevel + RoleData.SelectRole._AttrLevel;
-            if (level >= targetLevel)
-                break;
+            ActData.Instance.StartDefaultStage();
 
-            var nextDiff = level / 20;
-            var nextStage = level % 40;
-            nextStage = Mathf.Clamp(nextStage, 1, 40);
-
-            int exp = 0;
-            int gold = 0;
-
-            var passStage = TestPassNormalStage(level, nextDiff, ref exp, ref gold);
-            ActData.Instance._ProcessStageIdx = nextStage;
-            ActData.Instance.PassStage( STAGE_TYPE.NORMAL);
-
-            var plantGO = GameObject.CreatePrimitive(PrimitiveType.Plane);
-            plantGO.AddComponent<MeshCollider>();
-
-            ++fightTimes;
-
-            if (level != lastLevel)
+            if (_TestAct.isOn && RoleData.SelectRole.TotalLevel >= ActData._MAX_START_ACT_LEVEL)
             {
-                lastLevel = level;
-                RoleAttrManager roleAttr = new RoleAttrManager();
-                roleAttr.InitMainRoleAttr();
-
-                RoleAttrManager monAttr = new RoleAttrManager();
-                monAttr.InitEnemyAttr(TableReader.MonsterBase.GetRecord("21"), level);
-
-                Hashtable resultHash = new Hashtable();
-                float damageRage = GameDataValue.GetSkillDamageRate(2);
-                resultHash.Add("SkillDamageRate", damageRage);
-                resultHash.Add("DamagePos", Vector3.zero);
-                resultHash.Add("ImpactBase", new ImpactDamage() { _DamageType = ElementType.Physic });
-                resultHash.Add("DamageType", ElementType.Physic);
-
-                //damage
-                RoleAttrManager.DamageClass damageClass = new RoleAttrManager.DamageClass();
-                monAttr.CalculateNormalDamage(roleAttr, resultHash, damageClass);
-                //final
-                monAttr.CaculateFinalDamage(roleAttr, resultHash, damageClass);
-
-                Hashtable resultHash2 = new Hashtable();
-                float damageRage2 = GameDataValue.GetSkillDamageRate(2, true);
-                resultHash2.Add("SkillDamageRate", damageRage2);
-                resultHash2.Add("DamagePos", Vector3.zero);
-                resultHash2.Add("ImpactBase", new ImpactDamage() { _DamageType = ElementType.Physic });
-                resultHash2.Add("DamageType", ElementType.Physic);
-
-                //damage
-                RoleAttrManager.DamageClass damageClass2 = new RoleAttrManager.DamageClass();
-                monAttr.CalculateNormalDamage(roleAttr, resultHash2, damageClass2);
-                //final
-                monAttr.CaculateFinalDamage(roleAttr, resultHash2, damageClass2);
-
-#if UNITY_EDITOR
-                //attr
-                //streamWriter.WriteLine(fightTimes + "\t" + level + "\t" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Attack)
-                //    + "\t" + monAttr.HP + "\t" + damageClass.TotalDamageValue
-                //    + "\t" + damageRage + "\t" + ((float)monAttr.HP / damageClass.TotalDamageValue)
-                //    + "\t" + damageRage2 + "\t" + ((float)monAttr.HP / damageClass2.TotalDamageValue));
-
-                streamWriter.WriteLine(fightTimes + "\t" + level + "\t" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax)
-                    + "\t" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Defense)
-                    + "\t" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Attack));
-
-                Debug.Log("Drop orange equip cng:" + TestFight._DropOrangeEquipCnt);
-                //streamWriter.WriteLine(fightTimes + "\t" + level + "\t" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax)
-                //    + "\t" + monAttr.GetBaseAttr(RoleAttrEnum.Attack));
-#endif
+                if (lastLevel != RoleData.SelectRole.TotalLevel)
+                {
+                    lastLevel = RoleData.SelectRole.TotalLevel;
+                    ActData.Instance.StartStage(1, STAGE_TYPE.ACT_GOLD, _TestActAD.isOn);
+                }
             }
-
-            //drop
-            int gemCnt = 0;
-            monCnt += passStage._MonsterCnt;
-            equipDropCnt += passStage._DropEquipCnt;
-#if UNITY_EDITOR
-            //streamWriter.WriteLine(fightTimes + "\t" + level + "\t" + RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax)
-            //    + "\t" + monAttr.GetBaseAttr(RoleAttrEnum.Attack) + "\t" + ((float)RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.HPMax) / monAttr.GetBaseAttr(RoleAttrEnum.Attack)));
-            //streamWriter.WriteLine(fightTimes + "\t" + level + "\t" + PlayerDataPack.Instance.Gold + "\t" + matCnt + "\t" + gemCnt + "\t" + passStage._Gold + "\t" + monCnt + "\t" + equipDropCnt);
-#endif
-
         }
 
-#if UNITY_EDITOR
-        streamWriter.Close();
-#endif
-        Debug.Log("FightTimes:" + fightTimes);
+        
     }
 
     private void GetLevelStage(int level, ref int diff, ref int stageIdx)

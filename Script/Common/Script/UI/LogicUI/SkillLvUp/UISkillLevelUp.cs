@@ -119,7 +119,7 @@ public class UISkillLevelUp : UIBase
 
         string roleLvStr = StrDictionary.GetFormatStr(62000);
         int nextLv = skillTab.StartRoleLevel + (_SelectedSkill.SkillActureLevel) * skillTab.NextLvInterval;
-        if (RoleData.SelectRole._RoleLevel >= nextLv)
+        if (RoleData.SelectRole.RoleLevel >= nextLv)
         {
             roleLvStr += StrDictionary.GetFormatStr(1000005, nextLv);
         }
@@ -166,15 +166,24 @@ public class UISkillLevelUp : UIBase
         }
         else
         {
-            int costValue = skillTab.CostStep[1];
-            _MoneyCost.ShowCurrency(MONEYTYPE.DIAMOND, costValue);
-            if (costValue > PlayerDataPack.Instance.Diamond)
+            int skillItemCnt = BackBagPack.Instance.PageItems.GetItemCnt(GameDataValue._SkillItemID);
+            if (skillItemCnt > 0)
             {
-                _MoneyText.color = Color.red;
+                _MoneyCost.ShowCurrency(GameDataValue._SkillItemID, 1);
+                _MoneyText.color = Color.green;
             }
             else
             {
-                _MoneyText.color = Color.green;
+                int costValue = skillTab.CostStep[1];
+                _MoneyCost.ShowCurrency(MONEYTYPE.DIAMOND, costValue);
+                if (costValue > PlayerDataPack.Instance.Diamond)
+                {
+                    _MoneyText.color = Color.red;
+                }
+                else
+                {
+                    _MoneyText.color = Color.green;
+                }
             }
         }
 
@@ -182,6 +191,7 @@ public class UISkillLevelUp : UIBase
         {
             _LevelUp.interactable = false;
             _NeedRoleLv.text = StrDictionary.GetFormatStr(62006);
+            _MoneyCost.gameObject.SetActive(false);
         }
         else
         {

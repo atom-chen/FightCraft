@@ -46,8 +46,8 @@ public class UIRoleSelect : UIBase
     {
         _SelectRoleID = roleID;
         Debug.Log("_RoleList.Count:" + PlayerDataPack.Instance._RoleList.Count);
-        _RoleLevel.text = PlayerDataPack.Instance._RoleList[_SelectRoleID]._RoleLevel.ToString();
-        _AttrLevel.text = PlayerDataPack.Instance._RoleList[_SelectRoleID]._AttrLevel.ToString();
+        _RoleLevel.text = PlayerDataPack.Instance._RoleList[_SelectRoleID].RoleLevel.ToString();
+        _AttrLevel.text = PlayerDataPack.Instance._RoleList[_SelectRoleID].AttrLevel.ToString();
 
         //var roleData = GetCharModel(roleID);
         

@@ -50,12 +50,11 @@ public class FiveElementData : SaveItemBase
     [SaveField(1)]
     public List<ItemFiveElement> _UsingElements;
 
-    [SaveField(2)]
-    public ItemPackBase<ItemFiveElement> _PackElements;
+    public ItemPackElement<ItemFiveElement> _PackElements;
 
     private bool InitPackElements()
     {
-        _PackElements = new ItemPackBase<ItemFiveElement>();
+        _PackElements = new ItemPackElement<ItemFiveElement>();
         _PackElements._SaveFileName = "PackFiveElements";
         _PackElements._PackSize = _ITEM_PACKET_CNT;
         _PackElements.LoadClass(true);
@@ -120,10 +119,9 @@ public class FiveElementData : SaveItemBase
 
     public const int _ELEMENT_CORE_PACKET_CNT = 50;
 
-    [SaveField(3)]
+    [SaveField(2)]
     public List<ItemFiveElementCore> _UsingCores;
 
-    [SaveField(4)]
     public ItemPackBase<ItemFiveElementCore> _PackCores;
 
     private bool InitPackCore()
@@ -299,34 +297,64 @@ public class FiveElementData : SaveItemBase
         //RoleData.SelectRole.CalculateAttr();
     }
 
+    public bool SetExtractLock(int usingIdx, int idx, bool isLock)
+    {
+        ItemFiveElement usingElement = _UsingElements[usingIdx];
+        if (usingElement == null || !usingElement.IsVolid())
+            return false;
+
+        return usingElement.SetAttrLock(idx, isLock);
+    }
+
     public bool Extract( ItemFiveElement itemElement, int usingIdx)
     {
         ItemFiveElement usingElement = _UsingElements[usingIdx];
         if (usingElement == null || !usingElement.IsVolid())
             return false;
 
-        var costMoney = GameDataValue.GetElementExtraCostMoney(itemElement.Level);
-        if (!PlayerDataPack.Instance.DecGold(costMoney))
-        {
-            return false;
-        }
+        //var costMoney = GameDataValue.GetElementExtraCostMoney(itemElement.Level);
+        //if (!PlayerDataPack.Instance.DecGold(costMoney))
+        //{
+        //    return false;
+        //}
 
         int sameIdx = -1;
-        //for (int i = 0; i < usingElement.EquipExAttrs.Count; ++i)
-        //{
-        //    if (usingElement.EquipExAttrs[i].AttrParams[0] == itemElement.EquipExAttrs[0].AttrParams[0])
-        //    {
-        //        sameIdx = i;
-        //    }
-        //}
+        for (int i = 0; i < usingElement.EquipExAttrs.Count; ++i)
+        {
+            if (usingElement.EquipExAttrs[i].AttrParams[0] == itemElement.EquipExAttrs[0].AttrParams[0])
+            {
+                sameIdx = i;
+            }
+        }
 
         //replace same attr
-        //if (sameIdx >= 0)
-        //{
-        //    usingElement.ReplaceAttr(sameIdx, itemElement.EquipExAttrs[0]);
-        //}
-        //else
+        if (sameIdx >= 0)
         {
+            if (!_PackElements.DecItem(itemElement, 1))
+            {
+                UIMessageTip.ShowMessageTip(1350006);
+                return false;
+            }
+
+            usingElement.ReplaceAttr(sameIdx, itemElement.EquipExAttrs[0]);
+        }
+        else
+        {
+            //if (!IsExtraCostEnough(usingIdx))
+            //    return false;
+
+            //ExtraCostItems(usingIdx);
+
+            if (!_PackElements.DecItem(itemElement, 1))
+            {
+                UIMessageTip.ShowMessageTip(1350006);
+                return false;
+            }
+
+            int goldCost = GameDataValue.GetElementExtraCostMoney(usingElement);
+            if (!PlayerDataPack.Instance.DecGold(goldCost))
+                return false;
+
             float extraRate = GetAddExAttrRate(usingElement.EquipExAttrs.Count);
             float extraRandom = UnityEngine.Random.Range(0, 1.0f);
             int refreshIdx = usingElement.EquipExAttrs.Count;
@@ -337,27 +365,28 @@ public class FiveElementData : SaveItemBase
             else
             {
                 List<int> randomIdxs = new List<int>();
+                List<int> randomRates = new List<int>();
                 for (int i = 0; i < usingElement.EquipExAttrs.Count; ++i)
                 {
-                    randomIdxs.Add(100);
+                    if (!usingElement.IsAttrLock(i))
+                    {
+                        randomIdxs.Add(i);
+                        randomRates.Add(100);
+                    }
                 }
-                int replaceIdx = GameRandom.GetRandomLevel(randomIdxs);
-                if (sameIdx >= 0 && replaceIdx >= sameIdx)
-                {
-                    ++replaceIdx;
-                }
-                refreshIdx = replaceIdx;
-                usingElement.ReplaceAttr(replaceIdx, itemElement.EquipExAttrs[0]);
+                int replaceIdx = GameRandom.GetRandomLevel(randomRates);
+                //if (sameIdx >= 0 && replaceIdx >= sameIdx)
+                //{
+                //    ++replaceIdx;
+                //}
+                refreshIdx = randomIdxs[replaceIdx];
+                usingElement.ReplaceAttr(refreshIdx, itemElement.EquipExAttrs[0]);
             }
             //usingElement.RefreshExAttr(refreshIdx);
         }
 
         //itemElement.ResetItem();
-        if (!_PackElements.DecItem(itemElement, 1))
-        {
-            UIMessageTip.ShowMessageTip(1350006);
-            return false;
-        }
+        
 
         CalculateAttrs();
 
@@ -365,6 +394,53 @@ public class FiveElementData : SaveItemBase
         SaveClass(true);
         return true;
     }
+
+    public bool IsExtraCostEnough(int usingIdx, bool withTips = true)
+    {
+        ItemFiveElement usingElement = _UsingElements[usingIdx];
+        int costCnt = GameDataValue.GetLockExtraCostCnt(usingElement);
+        for (int i = 0; i < usingElement.EquipExAttrs.Count; ++i)
+        {
+            if (usingElement.IsAttrLock(i))
+            {
+                int attrCnt = _PackElements.GetAttrItemCnt(usingElement.ElementExAttrs[i].AttrParams[0]);
+                if (attrCnt < costCnt)
+                {
+                    if (withTips)
+                    {
+                        var itemRecord = TableReader.FiveElement.GetFiveElementByAttr(usingElement.ElementExAttrs[i].AttrParams[0]);
+                        if (itemRecord != null)
+                        {
+                            var commonItem = TableReader.CommonItem.GetRecord(itemRecord.Id);
+                            UIMessageTip.ShowMessageTip(StrDictionary.GetFormatStr(1300003, StrDictionary.GetFormatStr(commonItem.NameStrDict)));
+                        }
+                    }
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public bool ExtraCostItems(int usingIdx)
+    {
+        ItemFiveElement usingElement = _UsingElements[usingIdx];
+        int costCnt = GameDataValue.GetLockExtraCostCnt(usingElement);
+
+        for (int i = 0; i < usingElement.EquipExAttrs.Count; ++i)
+        {
+            if (usingElement.IsAttrLock(i))
+            {
+                bool decItems = _PackElements.DecAttrItem(usingElement.ElementExAttrs[i].AttrParams[0], costCnt);
+                if (!decItems)
+                    return false;
+            }
+        }
+
+        return true;
+    }
+    
 
     public float GetAddExAttrRate(int idx)
     {
@@ -422,7 +498,7 @@ public class FiveElementData : SaveItemBase
                     {
                         var attrTab = TableReader.AttrValue.GetRecord(_UsingCores[usingIdx].EquipExAttrs[i].AttrParams[0].ToString());
                         var targetAttr = RoleAttrImpactEleCoreAttr.GetAttrFromTab(attrTab);
-                        if (targetAttr == usingItem.EquipExAttrs[idx].AttrParams[0])
+                        if (targetAttr == usingItem.EquipExAttrs[i].AttrParams[0])
                         {
                             curValue += curValue * RoleAttrImpactEleCoreAttr.GetValueFromTab(attrTab);
                         }
@@ -443,20 +519,61 @@ public class FiveElementData : SaveItemBase
 
     public int GetElementSellMoney(ItemFiveElement eleItem)
     {
-        var singleMoney = GameDataValue.GetElementSellMoney(eleItem.Level);
+        var singleMoney = GameDataValue.GetElementSellGold(eleItem.Level);
         return singleMoney * eleItem.ItemStackNum;
+    }
+
+    public int GetCoreSellMoney(ItemFiveElementCore eleCore)
+    {
+        return GameDataValue.GetCoreSellGold(eleCore);
     }
 
     public void SellElement(ItemFiveElement eleItem)
     {
         int sellMoney = GetElementSellMoney(eleItem);
         _PackElements.RemoveItem(eleItem);
+        _PackElements.SaveClass(true);
+        PlayerDataPack.Instance.AddGold(sellMoney);
+    }
+
+    public void SellElements(List<ItemBase> eleItems)
+    {
+        int sellMoney = 0;
+        for (int i = 0; i < eleItems.Count; ++i)
+        {
+            ItemFiveElement itemElement = eleItems[i] as ItemFiveElement;
+            if(itemElement != null)
+            {
+                sellMoney += GetElementSellMoney(itemElement);
+                _PackElements.RemoveItem(itemElement);
+            }
+        }
+        _PackElements.SaveClass(true);
         PlayerDataPack.Instance.AddGold(sellMoney);
     }
 
     public void SellCore(ItemFiveElementCore eleCore)
     {
+        int sellMoney = GetCoreSellMoney(eleCore);
+        _PackCores.RemoveItem(eleCore);
+        _PackCores.SaveClass(true);
+        PlayerDataPack.Instance.AddGold(sellMoney);
+    }
 
+    public void SellCores(List<ItemBase> eleCores)
+    {
+        int sellMoney = 0;
+        for (int i = 0; i < eleCores.Count; ++i)
+        {
+            ItemFiveElementCore itemElement = eleCores[i] as ItemFiveElementCore;
+            if (itemElement != null)
+            {
+                sellMoney += GetCoreSellMoney(itemElement);
+                _PackCores.RemoveItem(itemElement);
+            }
+        }
+        _PackCores.SaveClass(true);
+        PlayerDataPack.Instance.AddGold(sellMoney);
     }
 
     #endregion

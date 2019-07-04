@@ -225,6 +225,7 @@ public class RandomAttrs
             case RoleAttrEnum.LightingResistan:
             case RoleAttrEnum.WindEnhance:
             case RoleAttrEnum.WindResistan:
+            case RoleAttrEnum.RiseHandSpeed:
                 var persentVal = (value) * 0.01f;
                 //System.Text.StringBuilder
                 //valueStr = string.Format("{0:0.0}", persentVal);

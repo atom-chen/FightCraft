@@ -275,7 +275,7 @@ public class SkillData : SaveItemBase
 
         //cost
         int nextLv = skillTab.StartRoleLevel + findSkill.SkillLevel * skillTab.NextLvInterval;
-        if (RoleData.SelectRole._RoleLevel < nextLv)
+        if (RoleData.SelectRole.RoleLevel < nextLv)
         {
             UIMessageTip.ShowMessageTip(62002);
             return;
@@ -301,9 +301,18 @@ public class SkillData : SaveItemBase
         }
         else
         {
-            int costValue = skillTab.CostStep[1];
-            if (!PlayerDataPack.Instance.DecDiamond(costValue))
-                return;
+            int skillItemCnt = BackBagPack.Instance.PageItems.GetItemCnt(GameDataValue._SkillItemID);
+            if (skillItemCnt > 0)
+            {
+                if (!BackBagPack.Instance.PageItems.DecItem(GameDataValue._SkillItemID, 1))
+                    return;
+            }
+            else
+            {
+                int costValue = skillTab.CostStep[1];
+                if (!PlayerDataPack.Instance.DecDiamond(costValue))
+                    return;
+            }
         }
 
         if (findSkill == null)

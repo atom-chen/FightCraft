@@ -17,7 +17,7 @@
     <constructRepeat>1</constructRepeat>
   </constructColumn>
   <constructColumn>
-    <constructName>名称</constructName>
+    <constructName>Name</constructName>
     <constructCode>Name</constructCode>
     <constructType1>基本类型</constructType1>
     <constructType2>
@@ -28,7 +28,7 @@
     <constructRepeat>1</constructRepeat>
   </constructColumn>
   <constructColumn>
-    <constructName>描述</constructName>
+    <constructName>Desc</constructName>
     <constructCode>Desc</constructCode>
     <constructType1>基本类型</constructType1>
     <constructType2>
@@ -90,6 +90,26 @@
     <constructRepeat>1</constructRepeat>
   </constructColumn>
   <constructColumn>
+    <constructName>ClassItemCnt</constructName>
+    <constructCode>ClassItemCnt</constructCode>
+    <constructType1>基本类型</constructType1>
+    <constructType2>
+      <constructType2>整数</constructType2>
+    </constructType2>
+    <constructDefault>0</constructDefault>
+    <constructRepeat>1</constructRepeat>
+  </constructColumn>
+  <constructColumn>
+    <constructName>Prior</constructName>
+    <constructCode>Prior</constructCode>
+    <constructType1>基本类型</constructType1>
+    <constructType2>
+      <constructType2>整数</constructType2>
+    </constructType2>
+    <constructDefault>0</constructDefault>
+    <constructRepeat>1</constructRepeat>
+  </constructColumn>
+  <constructColumn>
     <constructName>Script</constructName>
     <constructCode>Script</constructCode>
     <constructType1>基本类型</constructType1>
@@ -108,6 +128,28 @@
       <constructType2>整数</constructType2>
     </constructType2>
     <constructDefault>1</constructDefault>
+    <constructRepeat>3</constructRepeat>
+  </constructColumn>
+  <constructColumn>
+    <constructName>ActScript</constructName>
+    <constructCode>ActScript</constructCode>
+    <constructType1>基本类型</constructType1>
+    <constructType2>
+      <constructType2>字符串</constructType2>
+    </constructType2>
+    <constructDefault>
+    </constructDefault>
+    <constructRepeat>1</constructRepeat>
+  </constructColumn>
+  <constructColumn>
+    <constructName>ActScriptParam</constructName>
+    <constructCode>ActScriptParam</constructCode>
+    <constructType1>基本类型</constructType1>
+    <constructType2>
+      <constructType2>字符串</constructType2>
+    </constructType2>
+    <constructDefault>
+    </constructDefault>
     <constructRepeat>3</constructRepeat>
   </constructColumn>
 </root>

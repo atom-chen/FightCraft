@@ -458,7 +458,7 @@ public class RoleAttrManager : MonoBehaviour
         if (roleData != null)
         {
             _BaseAttr = new RoleAttrStruct(roleData._BaseAttr);
-            _Level = roleData._RoleLevel;
+            _Level = roleData.RoleLevel;
             //_ExAttrs = new Dictionary<FightAttr.FightAttrType, int>(roleData._ExAttrs);
         }
         else
@@ -586,18 +586,30 @@ public class RoleAttrManager : MonoBehaviour
         {
             AddHPPersent(1);
         }
+        
     }
 
     #endregion
 
     #region calculate
 
+    public enum ShowDamageType
+    {
+        Normal,
+        Criticle,
+        Hight_Criticle,
+        Trauma,
+        Fatality,
+        Hurt,
+        Heal,
+    }
+
     public class DamageClass
     {
         public int TotalDamageValue;
         public int AttachDamageValue;
         public int NormalDamageValue;
-        public bool IsCriticle;
+        public ShowDamageType DamageType;
         public int FireDamage;
         public int IceDamage;
         public int LightingDamage;
@@ -630,14 +642,9 @@ public class RoleAttrManager : MonoBehaviour
             UIDamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, ShowDamageType.Hurt, 1);
             //DamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, ShowDamageType.Hurt, 1);
         }
-        else if (damageClass.IsCriticle)
-        {
-            UIDamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, ShowDamageType.Critical, 1);
-            //DamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, ShowDamageType.Critical, 1);
-        }
         else
         {
-            UIDamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, ShowDamageType.Normal, 1);
+            UIDamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, damageClass.DamageType, 1);
             //DamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, ShowDamageType.Normal, 1);
         }
 
@@ -753,8 +760,11 @@ public class RoleAttrManager : MonoBehaviour
     {
         var criticleRate = _BaseAttr.GetValue(RoleAttrEnum.CriticalHitChance);
         var criticleDamage = _BaseAttr.GetValue(RoleAttrEnum.CriticalHitDamge);
-        damageClass.IsCriticle = GameDataValue.IsCriticleHit(criticleRate);
-        if (damageClass.IsCriticle)
+        if (GameDataValue.IsCriticleHit(criticleRate))
+        {
+            damageClass.DamageType = ShowDamageType.Criticle;
+        }
+        if (damageClass.DamageType == ShowDamageType.Criticle)
         {
             float criticleDamageRate = GameDataValue.GetCriticleDamageRate(criticleDamage) + 1;
             if (damageClass.NormalDamageValue > 0)

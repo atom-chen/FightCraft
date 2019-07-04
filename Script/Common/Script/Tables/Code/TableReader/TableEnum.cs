@@ -127,7 +127,8 @@ namespace Tables
         NORMAL = 0, //NORMAL,枚举必须保留0值
         BOSS = 1, //BOSS,BOSS
         DOUBLE_BOSS = 2, //DOUBLE_BOSS,DOUBLE_BOSS
-        ACTIVITY = 3, //ACTIVITY,ACTIVITY
+        ACT_GOLD = 3, //ACT_GOLD,ACT_GOLD
+        ACT_GEM = 4, //ACT_GEM,ACT_GEM
     }
 
 

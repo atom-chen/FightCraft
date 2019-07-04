@@ -60,10 +60,8 @@ public class UIEquipPackRefresh : UIBase
     public void RefreshCost()
     {
         int costGold = GameDataValue.GetEquipRefreshGold(_SelectedEquip);
-        int costDiamond = GameDataValue.GetEquipRefreshDiamond(_SelectedEquip);
 
         _CostGold.ShowCostCurrency(MONEYTYPE.GOLD, costGold);
-        _CostDiamond.ShowCostCurrency(MONEYTYPE.DIAMOND, costDiamond);
     }
 
     #endregion

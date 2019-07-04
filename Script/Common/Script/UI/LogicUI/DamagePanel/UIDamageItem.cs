@@ -7,13 +7,7 @@ using System.Collections.Generic;
 
  
 
-    public enum ShowDamageType
-    {
-        Normal,
-        Critical,
-        Hurt,
-        Heal,
-    }
+
 
 public class UIDamageItem : UIItemBase
 {
@@ -30,21 +24,21 @@ public class UIDamageItem : UIItemBase
 
     private Vector3 _InitPos = Vector3.zero;
 
-    public void Show(Vector3 showWorldPos, int showValue1, int showValue2, ShowDamageType showType, int baseSize)
+    public void Show(Vector3 showWorldPos, int showValue1, int showValue2, RoleAttrManager.ShowDamageType showType, int baseSize)
     {
         gameObject.SetActive(true);
         switch (showType)
         {
-            case ShowDamageType.Normal:
+            case RoleAttrManager.ShowDamageType.Normal:
                 DamageValue1.text = _NormalColor + showValue1.ToString() + "</color>";
                 break;
-            case ShowDamageType.Critical:
+            case RoleAttrManager.ShowDamageType.Criticle:
                 DamageValue1.text = _CriticalColor + showValue1.ToString() + "</color>";
                 break;
-            case ShowDamageType.Hurt:
+            case RoleAttrManager.ShowDamageType.Hurt:
                 DamageValue1.text = _HurtColor + showValue1.ToString() + "</color>";
                 break;
-            case ShowDamageType.Heal:
+            case RoleAttrManager.ShowDamageType.Heal:
                 DamageValue1.text = _HealColor + showValue1.ToString() + "</color>";
                 break;
         }

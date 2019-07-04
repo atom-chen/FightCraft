@@ -30,6 +30,16 @@ namespace Tables
 
             return _RecordList[idx];
         }
+
+        public FiveElementRecord GetFiveElementByAttr(int attr)
+        {
+            foreach (var fiveElementRecord in Records.Values)
+            {
+                if (fiveElementRecord.Attr.AttrParams[0] == attr)
+                    return fiveElementRecord;
+            }
+            return null;
+        }
     }
 
 }

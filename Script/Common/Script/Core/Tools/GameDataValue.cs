@@ -59,11 +59,11 @@ public class GameDataValue
 
     public static int CalWeaponAttack(int equiplevel)
     {
-        var attrRecord = TableReader.EquipBaseAttr.GetEquipBaseAttr(equiplevel);
-        return attrRecord.Atk;
-        //int power = equiplevel / 5;
-        //var attackValue = _AttackPerLevel* Mathf.Pow(_AttackIncreaseLevel, power);
-        //return Mathf.CeilToInt(attackValue);
+        //var attrRecord = TableReader.EquipBaseAttr.GetEquipBaseAttr(equiplevel);
+        //return attrRecord.Atk;
+
+        var attackValue = GetEquipLvValue(equiplevel) * 2 + 100;
+        return Mathf.CeilToInt(attackValue);
     }
 
     public static int CalEquipTorsoHP(int equiplevel)
@@ -80,14 +80,14 @@ public class GameDataValue
         //int power = equiplevel / 5;
         //var value = _DefencePerLevel * Mathf.Pow(_AttackIncreaseLevel, power);
         //return Mathf.CeilToInt(value);
-        var attrRecord = TableReader.EquipBaseAttr.GetEquipBaseAttr(equiplevel);
-        return attrRecord.Defence;
+        var value = _DefToAtk * (GetEquipLvValue(equiplevel) + 50);
+        return Mathf.CeilToInt(value);
     }
 
     public static int CalEquipLegsHP(int equiplevel)
     {
-        var attrRecord = TableReader.EquipBaseAttr.GetEquipBaseAttr(equiplevel);
-        return attrRecord.HP;
+        var value = _HpToAtk * (GetEquipLvValue(equiplevel) + 50);
+        return Mathf.CeilToInt(value);
     }
 
     public static int CalEquipLegsDefence(int equiplevel)
@@ -288,15 +288,20 @@ public class GameDataValue
         if (level == 0)
             return 0;
 
-        var attrRecord = TableReader.EquipBaseAttr.GetEquipBaseAttr(level);
+        //var attrRecord = TableReader.EquipBaseAttr.GetEquipBaseAttr(level);
         //int equipValue = attrRecord.Value;
-        int equipValue = TableReader.AttrValueLevel.GetBaseValue(level);
+        int equipValue = (int)(TableReader.AttrValueLevel.GetBaseValue(level));
         //if (equipSlot == EQUIP_SLOT.AMULET || equipSlot == EQUIP_SLOT.RING)
         //{
         //    equipValue *= 2;
 
         //}
         return equipValue;
+    }
+
+    public static int GetEquipLvValue(int level, EQUIP_SLOT equipSlot = EQUIP_SLOT.WEAPON)
+    {
+        return (int)(CalLvValue(level) * 1.5f);
     }
 
     #endregion
@@ -316,7 +321,7 @@ public class GameDataValue
     public static int GetExAttrRandomValue(RoleAttrEnum roleAttr, int attrLevel, int qualityLevel)
     {
         var randomValue = _ExAttrQualityPersent[qualityLevel];
-        int attrValue = CalLvValue(attrLevel);
+        int attrValue = GetEquipLvValue(attrLevel);
         return Mathf.CeilToInt(attrValue * randomValue);
     }
 
@@ -748,7 +753,13 @@ public class GameDataValue
     public static int GetGemValue(int level)
     {
         //int value = Mathf.CeilToInt(level * _GemAttrV + 0.5f * level * level * _GemAttrA);
-        int value = CalLvValue(level * 2);
+        int valueIdx = level + 25;
+        if (level <= 16)
+        {
+            valueIdx = (level - 1) * 2 + 10;
+        }
+        
+        int value = CalLvValue(valueIdx);
         return value;
     }
 
@@ -880,6 +891,14 @@ public class GameDataValue
         //}
         //return expRecord.ExpValue;
         int monCnt = TableReader.AttrValueLevel.GetSpValue(playerLv, 14);
+        if (playerLv > 20)
+        {
+            monCnt += 60;
+        }
+        else
+        {
+            monCnt += 10;
+        }
         float stageTimeCnt = ConfigIntToFloat( TableReader.AttrValueLevel.GetSpValue(playerLv, 13));
         int exp = GetMonsterExp(MOTION_TYPE.Normal, playerLv, playerLv);
         int levelExp = (int)(monCnt * stageTimeCnt * exp);
@@ -898,7 +917,16 @@ public class GameDataValue
         //    monAttrRecord = TableReader.MonsterAttr.GetRecord(level.ToString());
         //}
         //int exp= monAttrRecord.Drops[0];
-        int exp = CalLvValue(level);
+        int exp = 200;
+        int lvdelta = (level - playerLv) + 20;
+        if (lvdelta > 0)
+        {
+            exp = (int)((ConfigIntToFloat(TableReader.AttrValueLevel.GetSpValue(lvdelta, 28)) + 1) * exp);
+        }
+        else
+        {
+            exp = 0;
+        }
         if (motionType == MOTION_TYPE.Elite || motionType == MOTION_TYPE.ExElite)
         {
             exp = exp * 3;
@@ -908,7 +936,7 @@ public class GameDataValue
             exp = exp * 10;
         }
 
-        if (stageType == STAGE_TYPE.ACTIVITY)
+        if (stageType == STAGE_TYPE.ACT_GOLD || stageType == STAGE_TYPE.ACT_GEM)
         {
             exp = 1;
         }
@@ -929,19 +957,34 @@ public class GameDataValue
         int dropCnt = 0;
         int dropQuality = 0;
         float exEquipRate = ConfigIntToFloat(RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.ExEquipDrop)) + 1;
-        if (stageType == STAGE_TYPE.ACTIVITY)
+        if (stageType == STAGE_TYPE.ACT_GOLD || stageType == STAGE_TYPE.ACT_GEM)
         {
             
         }
-        else if (stageType == STAGE_TYPE.BOSS || stageType == STAGE_TYPE.NORMAL)
+        else if (stageType == STAGE_TYPE.NORMAL)
         {
             switch (motionType)
             {
                 case MOTION_TYPE.Normal:
-                    dropCnt = GameRandom.GetRandomLevel(95, 5);
+                    if (level <= 20)
+                        dropCnt = GameRandom.GetRandomLevel(90, 10);
+                    else if (level <= 50)
+                        dropCnt = GameRandom.GetRandomLevel(97, 3);
+                    else if(level <= 100)
+                        dropCnt = GameRandom.GetRandomLevel(96, 4);
+                    else
+                        dropCnt = GameRandom.GetRandomLevel(95, 5);
+
                     for (int i = 0; i < dropCnt; ++i)
                     {
-                        dropQuality = GameRandom.GetRandomLevel(7000, (int)(3000 * exEquipRate));
+                        if (level <= 20)
+                            dropQuality = GameRandom.GetRandomLevel(8000, (int)(2000 * exEquipRate));
+                        else if (level <= 50)
+                            dropQuality = GameRandom.GetRandomLevel(7000, (int)(3000 * exEquipRate));
+                        else if (level <= 100)
+                            dropQuality = GameRandom.GetRandomLevel(6000, (int)(3500), (int)(500 * exEquipRate));
+                        else
+                            dropQuality = GameRandom.GetRandomLevel(5000, (int)(3500), (int)(1500 * exEquipRate));
                         if (dropQuality > 0)
                         {
                             ++dropQuality;
@@ -951,10 +994,26 @@ public class GameDataValue
 
                     break;
                 case MOTION_TYPE.Elite:
-                    dropCnt = GameRandom.GetRandomLevel(10, 70, 20);
+                    if (level <= 20)
+                        dropCnt = GameRandom.GetRandomLevel(20, 80);
+                    else if (level <= 50)
+                        dropCnt = GameRandom.GetRandomLevel(0, 100);
+                    else if (level <= 100)
+                        dropCnt = GameRandom.GetRandomLevel(0, 100);
+                    else
+                        dropCnt = GameRandom.GetRandomLevel(0, 100);
+
                     for (int i = 0; i < dropCnt; ++i)
                     {
-                        dropQuality = GameRandom.GetRandomLevel(3000, (int)(6500 * exEquipRate), (int)(500 * exEquipRate));
+                        if (level <= 20)
+                            dropQuality = GameRandom.GetRandomLevel(6000, 3500, (int)(500 * exEquipRate));
+                        else if (level <= 50)
+                            dropQuality = GameRandom.GetRandomLevel(5000, 3500, (int)(1500 * exEquipRate));
+                        else if (level <= 100)
+                            dropQuality = GameRandom.GetRandomLevel(4500, 3500, 1500, (int)(500 * exEquipRate));
+                        else
+                            dropQuality = GameRandom.GetRandomLevel(3500, 2500, 2500, (int)(1500 * exEquipRate));
+
                         if (dropQuality > 0)
                         {
                             ++dropQuality;
@@ -965,20 +1024,126 @@ public class GameDataValue
                     break;
                 case MOTION_TYPE.Hero:
                     if (level <= 20)
-                        dropCnt = GameRandom.GetRandomLevel(0, 10, 50, 30);
-                    else if (level <= 40)
-                        dropCnt = GameRandom.GetRandomLevel(0, 0, 50, 50, 10);
+                        dropCnt = GameRandom.GetRandomLevel(0, 0, 50, 50);
+                    else if (level <= 50)
+                        dropCnt = GameRandom.GetRandomLevel(0, 0, 50, 40, 10);
+                    else if (level <= 100)
+                        dropCnt = GameRandom.GetRandomLevel(0, 0, 40, 40, 20);
                     else
-                        dropCnt = GameRandom.GetRandomLevel(0, 0, 50, 30, 30);
+                        dropCnt = GameRandom.GetRandomLevel(0, 0, 30, 40, 30);
                     bool isOringe = false;
                     for (int i = 0; i < dropCnt; ++i)
                     {
-                        if (level <= 10)
-                            dropQuality = GameRandom.GetRandomLevel(0, 7000, (int)(2500 * exEquipRate), (int)(500 * exEquipRate));
-                        else if (level <= 30)
-                            dropQuality = GameRandom.GetRandomLevel(0, 6000, (int)(2500 * exEquipRate), (int)(1500 * exEquipRate));
+                        if (level <= 20)
+                            dropQuality = GameRandom.GetRandomLevel(0, 7000, 2000, (int)(1000 * exEquipRate));
+                        else if (level <= 50)
+                            dropQuality = GameRandom.GetRandomLevel(0, 5000, 3000, (int)(2000 * exEquipRate));
+                        else if (level <= 100)
+                            dropQuality = GameRandom.GetRandomLevel(0, 3000, 4000, (int)(3000 * exEquipRate));
                         else
-                            dropQuality = GameRandom.GetRandomLevel(0, 4000, (int)(3500 * exEquipRate), (int)(2500 * exEquipRate));
+                            dropQuality = GameRandom.GetRandomLevel(0, 2000, 3000, (int)(5000 * exEquipRate));
+                        if (dropQuality == (int)ITEM_QUALITY.ORIGIN)
+                        {
+                            if (!isOringe)
+                            {
+                                isOringe = true;
+                            }
+                            else
+                            {
+                                --dropQuality;
+                            }
+                        }
+                        if (dropQuality > 0)
+                        {
+                            ++dropQuality;
+                        }
+                        dropEquipQualitys.Add((ITEM_QUALITY)dropQuality);
+                    }
+
+                    break;
+            }
+        }
+        else if (stageType == STAGE_TYPE.BOSS)
+        {
+            switch (motionType)
+            {
+                case MOTION_TYPE.Normal:
+                    if (level <= 20)
+                        dropCnt = GameRandom.GetRandomLevel(90, 10);
+                    else if (level <= 50)
+                        dropCnt = GameRandom.GetRandomLevel(94, 6);
+                    else if (level <= 100)
+                        dropCnt = GameRandom.GetRandomLevel(92, 8);
+                    else
+                        dropCnt = GameRandom.GetRandomLevel(90, 10);
+
+                    for (int i = 0; i < dropCnt; ++i)
+                    {
+                        if (level <= 20)
+                            dropQuality = GameRandom.GetRandomLevel(8000, (int)(2000 * exEquipRate));
+                        else if (level <= 50)
+                            dropQuality = GameRandom.GetRandomLevel(6000, (int)(3500), (int)(500 * exEquipRate));
+                        else if (level <= 100)
+                            dropQuality = GameRandom.GetRandomLevel(5000, (int)(3500), (int)(1500 * exEquipRate));
+                        else
+                            dropQuality = GameRandom.GetRandomLevel(4000, (int)(3500), (int)(2500 * exEquipRate));
+                        if (dropQuality > 0)
+                        {
+                            ++dropQuality;
+                        }
+                        dropEquipQualitys.Add((ITEM_QUALITY)dropQuality);
+                    }
+
+                    break;
+                case MOTION_TYPE.Elite:
+                    if (level <= 20)
+                        dropCnt = GameRandom.GetRandomLevel(0, 100);
+                    else if (level <= 50)
+                        dropCnt = GameRandom.GetRandomLevel(0, 100);
+                    else if (level <= 100)
+                        dropCnt = GameRandom.GetRandomLevel(0, 100);
+                    else
+                        dropCnt = GameRandom.GetRandomLevel(0, 100);
+
+                    for (int i = 0; i < dropCnt; ++i)
+                    {
+                        if (level <= 20)
+                            dropQuality = GameRandom.GetRandomLevel(6000, 3500, (int)(500 * exEquipRate));
+                        else if (level <= 50)
+                            dropQuality = GameRandom.GetRandomLevel(4500, 3500, 1500, (int)(500 * exEquipRate));
+                        else if (level <= 100)
+                            dropQuality = GameRandom.GetRandomLevel(3500, 2500, 2500, (int)(1500 * exEquipRate));
+                        else
+                            dropQuality = GameRandom.GetRandomLevel(0, 4500, 3000, (int)(2500 * exEquipRate));
+
+                        if (dropQuality > 0)
+                        {
+                            ++dropQuality;
+                        }
+                        dropEquipQualitys.Add((ITEM_QUALITY)dropQuality);
+                    }
+
+                    break;
+                case MOTION_TYPE.Hero:
+                    if (level <= 20)
+                        dropCnt = GameRandom.GetRandomLevel(0, 0, 50, 50);
+                    else if (level <= 50)
+                        dropCnt = GameRandom.GetRandomLevel(0, 0, 40, 50, 10);
+                    else if (level <= 100)
+                        dropCnt = GameRandom.GetRandomLevel(0, 0, 30, 40, 30);
+                    else
+                        dropCnt = GameRandom.GetRandomLevel(0, 0, 10, 50, 40);
+                    bool isOringe = false;
+                    for (int i = 0; i < dropCnt; ++i)
+                    {
+                        if (level <= 20)
+                            dropQuality = GameRandom.GetRandomLevel(0, 7000, 2500, (int)(500 * exEquipRate));
+                        else if (level <= 50)
+                            dropQuality = GameRandom.GetRandomLevel(0, 5000, 3000, (int)(2000 * exEquipRate));
+                        else if (level <= 100)
+                            dropQuality = GameRandom.GetRandomLevel(0, 4000, 3000, (int)(3000 * exEquipRate));
+                        else
+                            dropQuality = GameRandom.GetRandomLevel(0, 3000, 3000, (int)(4000 * exEquipRate));
                         if (dropQuality == (int)ITEM_QUALITY.ORIGIN)
                         {
                             if (!isOringe)
@@ -1037,7 +1202,7 @@ public class GameDataValue
                 {
                     var equipSlot = GetRandomItemSlot(dropEquipQualitys[i]);
                     var equipLevel = GetEquipLv(equipSlot, level);
-                    var equipValue = CalLvValue(equipLevel, equipSlot);
+                    var equipValue = GetEquipLvValue(equipLevel, equipSlot);
                     var dropEquip = ItemEquip.CreateEquip(equipLevel, dropEquipQualitys[i], -1, (int)equipSlot);
                     dropEquipList.Add(dropEquip);
                 }
@@ -1045,7 +1210,7 @@ public class GameDataValue
                 {
                     var dropEquipTab = TableReader.EquipItem.GetRecord(dropItem.Id);
                     var equipLevel = GetEquipLv(dropEquipTab.Slot, level);
-                    var equipValue = CalLvValue(equipLevel, dropEquipTab.Slot);
+                    var equipValue = GetEquipLvValue(equipLevel, dropEquipTab.Slot);
                     var dropEquip = ItemEquip.CreateEquip(equipLevel, dropEquipQualitys[i], int.Parse(dropItem.Id), (int)dropEquipTab.Slot);
                     dropEquipList.Add(dropEquip);
                 }
@@ -1054,7 +1219,7 @@ public class GameDataValue
             {
                 var equipSlot = GetRandomItemSlot(dropEquipQualitys[i]);
                 var equipLevel = GetEquipLv(equipSlot, level);
-                var equipValue = CalLvValue(equipLevel, equipSlot);
+                var equipValue = GetEquipLvValue(equipLevel, equipSlot);
                 var dropEquip = ItemEquip.CreateEquip(equipLevel, dropEquipQualitys[i], -1, (int)equipSlot);
                 dropEquipList.Add(dropEquip);
             }
@@ -1082,7 +1247,21 @@ public class GameDataValue
 
     public static int GetEquipSellGold(ItemEquip itemEquip)
     {
-        int gold = Mathf.CeilToInt((itemEquip.EquipLevel * 0.5f + itemEquip.EquipExAttrs.Count) * ((int)itemEquip.EquipQuality + 1));
+        int rate = 1;
+        switch (itemEquip.EquipQuality)
+        {
+            case ITEM_QUALITY.WHITE:
+                return 1;
+            case ITEM_QUALITY.BLUE:
+                return 2;
+            case ITEM_QUALITY.PURPER:
+                rate = 4;
+                break;
+            case ITEM_QUALITY.ORIGIN:
+                rate = 10;
+                break;
+        }
+        int gold = GetGoldDropNum(itemEquip.EquipLevel) * rate;
         return gold;
     }
 
@@ -1206,15 +1385,14 @@ public class GameDataValue
 
     public static int GetEquipRefreshGold(ItemEquip eqiup)
     {
-        var value = (int)(GetGoldStageDrop(eqiup.EquipLevel) * 0.5f);
+        var value = 10000;
         return value;
-
     }
 
     public static int GetEquipRefreshDiamond(ItemEquip eqiup)
     {
 
-        return 5;
+        return 6;
 
     }
     #endregion
@@ -1234,17 +1412,25 @@ public class GameDataValue
         return TableReader.AttrValueLevel.GetSpValue(level, 15);
     }
 
-    public static ItemGem GetGemMonsterDrop(int level)
+    public static ItemGem GetGemMonsterDrop(int level, STAGE_TYPE stageType)
     {
         if (level < MONSTER_DROP_GEM_LEVEL)
             return null;
 
-        int rate = Random.Range(0, 10000);
-        if (!GameRandom.IsInRate(TableReader.AttrValueLevel.GetSpValue(level, 20)))
+        //if (stageType != STAGE_TYPE.ACT_GOLD)
+        //    return null;
+
+        int dropRate = TableReader.AttrValueLevel.GetSpValue(level, 20);
+        //if (stageType == STAGE_TYPE.ACT_GOLD)
+        //{
+        //    dropRate += (int)(ActData.Instance.GetActDropAddRate() * dropRate);
+        //}
+        if (!GameRandom.IsInRate(dropRate))
             return null;
 
         string randomID = TableReader.GemTable.GetRandomRecord().Id;
         ItemGem itemGem = new ItemGem(randomID);
+        itemGem.Level = 1;
         itemGem.SetStackNum(1);
 
         return itemGem;
@@ -1256,12 +1442,12 @@ public class GameDataValue
 
     public static int GetSummonCostGold(int level)
     {
-        return GetGoldStageDrop(level + 30) * 2;
+        return 15000;
     }
 
     public static int GetSummonCostDiamond(int level)
     {
-        return 200;
+        return 50;
     }
 
     public static int GetSummonLevelExp(int level)
@@ -1281,6 +1467,11 @@ public class GameDataValue
         }
     }
 
+    public static int GetSummonAtk(int level)
+    {
+        return level;
+    }
+
     #endregion
 
     #region gold
@@ -1292,19 +1483,19 @@ public class GameDataValue
     public static int[] _BossGoldBase = {0, 0, 3000, 3000, 4000};
     
 
-    public static int GetGoldDropCnt(MOTION_TYPE motionType, int level)
+    public static int GetGoldDropCnt(MOTION_TYPE motionType, int level, STAGE_TYPE stageType)
     {
         int dropCnt = 0;
         switch (motionType)
         {
             case MOTION_TYPE.Normal:
-                dropCnt = GetGoldDropCnt(_NormalGoldBase);
+                dropCnt = GetGoldDropCnt(stageType, _NormalGoldBase);
                 break;
             case MOTION_TYPE.Elite:
-                dropCnt = GetGoldDropCnt(_EliteGoldBase);
+                dropCnt = GetGoldDropCnt(stageType, _EliteGoldBase);
                 break;
             case MOTION_TYPE.Hero:
-                dropCnt = GetGoldDropCnt(_BossGoldBase) + 1;
+                dropCnt = GetGoldDropCnt(stageType, _BossGoldBase) + 1;
                 break;
         }
 
@@ -1319,24 +1510,30 @@ public class GameDataValue
         //    monAttrRecord = TableReader.MonsterAttr.GetRecord("200");
         //}
 
-        //float random = Random.Range(0.6f, 1.5f);
-        //var exGoldDrop = RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.ExGoldDrop);
-        //float rate = ConfigIntToFloat(exGoldDrop) + 1;
-        //float dropNum = ConfigIntToFloat(monAttrRecord.Attrs[1]);
-
-        //return Mathf.CeilToInt(dropNum * random * rate);
 
         int goldValue = TableReader.AttrValueLevel.GetSpValue(level, 19);
-        return goldValue;
+
+        float random = Random.Range(0.6f, 1.4f);
+        var exGoldDrop = RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.ExGoldDrop);
+        float rate = ConfigIntToFloat(exGoldDrop) + 1;
+        rate = rate + ActData.Instance.GetActDropGoldNumAdd() * rate;
+        float dropNum = goldValue;
+
+        return Mathf.CeilToInt(dropNum * random * rate);
     }
 
-    public static int GetGoldDropCnt(params int[] rates)
+    public static int GetGoldDropCnt(STAGE_TYPE stageType, params int[] rates)
     {
         int goldCnt = 0;
         var random = Random.Range(0, GetMaxRate());
         if (rates.Length == 1)
         {
-            if (random < rates[0])
+            int dropRate = rates[0];
+            if (stageType == STAGE_TYPE.ACT_GOLD)
+            {
+                dropRate = rates[0] + (int)(ActData.Instance.GetActDropGoldRateAdd() * rates[0]);
+            }
+            if (random < dropRate)
                 goldCnt = 1;
         }
         else
@@ -1360,12 +1557,14 @@ public class GameDataValue
 
     #region skill
 
+    public static string _SkillItemID = "1800000";
+
     public static int GetSkillLvUpGold(SkillInfoRecord skillRecord, int skillLv)
     {
         if (skillLv == 0)
             return skillRecord.CostStep[1];
         else
-            return skillRecord.CostStep[2] * skillLv;
+            return skillRecord.CostStep[1] + skillRecord.CostStep[2] * (skillLv - 1);
     }
 
     #endregion
@@ -1408,22 +1607,41 @@ public class GameDataValue
         return tempLevel;
     }
 
+    public static int GetNearestLevel(int level)
+    {
+        int rate = level % 10;
+        if (rate == 0)
+        {
+            return level;
+        }
+
+        int tempLevel = ((int)(level / 10)) * 10;
+
+        return tempLevel;
+    }
+
     public static ItemFiveElement GetRandomFiveElement(int level)
     {
         int fragmentLevel = RandomFiveElementFragmentLevel(level);
 
-        int randomIdx = Random.Range(0,  TableReader.FiveElement.Records.Count);
+        int randomIdx = Random.Range(0, TableReader.FiveElement.Records.Count);
         var randomItemRecord = TableReader.FiveElement.GetFiveElementByIndex(randomIdx);
-        ItemFiveElement itemElement = new ItemFiveElement(randomItemRecord.Id);
+
+        return GetFiveElement(randomItemRecord, fragmentLevel);
+    }
+
+    public static ItemFiveElement GetFiveElement(FiveElementRecord record, int level)
+    {
+        ItemFiveElement itemElement = new ItemFiveElement(record.Id);
         itemElement.SetStackNum(1);
-        itemElement.Level = fragmentLevel;
-        
+        itemElement.Level = level;
+
 
         var equipExAttr = new EquipExAttr();
         equipExAttr.AttrType = "RoleAttrImpactBaseAttr";
-        int levelValue = CalLvValue(fragmentLevel);
+        int levelValue = CalLvValue(level);
         equipExAttr.Value = (int)(levelValue);
-        equipExAttr.AttrParams.Add((int)randomItemRecord.Attr.AttrParams[0]);
+        equipExAttr.AttrParams.Add((int)record.Attr.AttrParams[0]);
         equipExAttr.AttrParams.Add(GameDataValue.GetValueAttr((RoleAttrEnum)equipExAttr.AttrParams[0], (int)(equipExAttr.Value * _FiveElementValueRate[0])));
         equipExAttr.InitAttrQuality();
 
@@ -1438,23 +1656,51 @@ public class GameDataValue
         equipExAttr.InitAttrQuality();
     }
 
-    public static int GetElementExtraCostMoney(int level)
+    public static int GetElementExtraCostMoney(ItemFiveElement itemElement)
+    {
+        int lockCnt = 0;
+        for (int i = 0; i < itemElement.AttrLock.Count; ++i)
+        {
+            if (itemElement.AttrLock[i] > 0)
+            {
+                ++lockCnt;
+            }
+        }
+
+        return (int)(lockCnt * 10000);
+    }
+
+    public static int GetElementExtraCostNum(ItemFiveElement itemElement)
+    {
+        int lockCnt = 0;
+        for (int i = 0; i < itemElement.AttrLock.Count; ++i)
+        {
+            if (itemElement.AttrLock[i] > 0)
+            {
+                ++lockCnt;
+            }
+        }
+
+        return (int)(lockCnt) + 1;
+    }
+
+    public static int GetElementSellGold(int level)
     {
         var elementDrop = TableReader.AttrValueLevel.GetSpValue(level, 16);
         var stageCntForLv = ConfigIntToFloat(TableReader.AttrValueLevel.GetSpValue(level, 13));
         var stageDrop = GetGoldStageDrop(level);
         var singleCost = (stageDrop / Mathf.Max((elementDrop * stageCntForLv), 1)) * 0.5f;
-        return (int)(singleCost);
+
+        return (int)(singleCost * 0.4f);
     }
 
-    public static int GetElementSellMoney(int level)
+    public static int GetCoreSellGold(ItemFiveElementCore itemCore)
     {
-        var extraMoney = GetElementExtraCostMoney(level);
-        return (int)(extraMoney * 0.4f);
+        return GetElementSellGold(itemCore.Level);
     }
 
 
-    public static List<EquipExAttrRandom> _FiveElementCore12Attrs = new List<EquipExAttrRandom>()
+    public static List<EquipExAttrRandom> _FiveElementCore1Attrs = new List<EquipExAttrRandom>()
     {
         new EquipExAttrRandom(RoleAttrEnum.Strength, true, 1, -1, 100),
         new EquipExAttrRandom(RoleAttrEnum.Dexterity, true, 1, -1, 100),
@@ -1468,7 +1714,7 @@ public class GameDataValue
         new EquipExAttrRandom(RoleAttrEnum.WindAttackAdd, true, 1, -1, 100),
     };
 
-    public static List<string> _FiveElementCore3Attrs = new List<string>()
+    public static List<string> _FiveElementCore2Attrs = new List<string>()
     {
         "1500001",
         "1500002",
@@ -1479,7 +1725,7 @@ public class GameDataValue
         "1500007",
     };
 
-    public static List<EquipExAttrRandom> _FiveElementCore4Attrs = new List<EquipExAttrRandom>()
+    public static List<EquipExAttrRandom> _FiveElementCore3Attrs = new List<EquipExAttrRandom>()
     {
         new EquipExAttrRandom(RoleAttrEnum.FireEnhance, true, 1, -1, 100)
         { AttrValueIdx = 17},
@@ -1493,11 +1739,20 @@ public class GameDataValue
         { AttrValueIdx = 17},
     };
 
-    public static EquipExAttr GetRandomElementCoreAttr(int attrIdx, int level)
+    public static List<string> _FiveElementCore4Attrs = new List<string>()
+    {
+        "1510001",
+        "1510002",
+        "1510003",
+        "1510004",
+        "1510005",
+    };
+
+    public static EquipExAttr GetRandomElementCoreAttr(int attrIdx, int level, FIVE_ELEMENT elementType)
     {
         if (attrIdx == 1)
         {
-            var attrRandoms = CalRandomAttrs(_FiveElementCore12Attrs, 1, level);
+            var attrRandoms = CalRandomAttrs(_FiveElementCore1Attrs, 1, level);
             var equipExAttr = new EquipExAttr();
             equipExAttr.AttrType = "RoleAttrImpactBaseAttr";
             var attrQuality = GameDataValue.GetExAttrRandomQuality();
@@ -1510,26 +1765,13 @@ public class GameDataValue
         }
         else if (attrIdx == 2)
         {
-            var attrRandoms = CalRandomAttrs(_FiveElementCore12Attrs, 1, level);
-            var equipExAttr = new EquipExAttr();
-            equipExAttr.AttrType = "RoleAttrImpactBaseAttr";
-            var attrQuality = GameDataValue.GetExAttrRandomQuality();
-            equipExAttr.Value = (int)(CalLvValue(level) * 1.5f);
-            equipExAttr.AttrParams.Add((int)attrRandoms[0].AttrID);
-            equipExAttr.AttrParams.Add(GameDataValue.GetValueAttr(attrRandoms[0].AttrID, equipExAttr.Value));
-            equipExAttr.AttrParams.Add(attrQuality);
-            equipExAttr.InitAttrQuality();
-            return equipExAttr;
+            int randomIdx = Random.Range(0, _FiveElementCore2Attrs.Count);
+            var attrTab = TableReader.AttrValue.GetRecord(_FiveElementCore2Attrs[randomIdx]);
+            return attrTab.GetExAttr(level);
         }
         else if (attrIdx == 3)
         {
-            int randomIdx = Random.Range(0, _FiveElementCore3Attrs.Count);
-            var attrTab = TableReader.AttrValue.GetRecord(_FiveElementCore3Attrs[randomIdx]);
-            return attrTab.GetExAttr(level);
-        }
-        else if (attrIdx == 4)
-        {
-            var attrRandoms = CalRandomAttrs(_FiveElementCore12Attrs, 1, level);
+            var attrRandoms = CalRandomAttrs(_FiveElementCore3Attrs, 1, level);
             var equipExAttr = new EquipExAttr();
             equipExAttr.AttrType = "RoleAttrImpactBaseAttr";
             var attrQuality = GameDataValue.GetExAttrRandomQuality();
@@ -1539,6 +1781,11 @@ public class GameDataValue
             equipExAttr.AttrParams.Add(attrQuality);
             equipExAttr.InitAttrQuality();
             return equipExAttr;
+        }
+        else if (attrIdx == 4)
+        {
+            var attrTab = TableReader.AttrValue.GetRecord(_FiveElementCore4Attrs[(int)elementType]);
+            return attrTab.GetExAttr(TableReader.AttrValueLevel.GetSpValue(level, 27));
         }
 
         return null;
@@ -1557,7 +1804,7 @@ public class GameDataValue
         }
         for (int i = 1; i <= volidAttrCnt; ++i)
         {
-            var exAttr = GetRandomElementCoreAttr(i, level);
+            var exAttr = GetRandomElementCoreAttr(i, level, itemEleCore.FiveElementCoreRecord.ElementType);
             itemEleCore.AddExAttr(exAttr);
         }
 
@@ -1589,23 +1836,34 @@ public class GameDataValue
         new ElementCoreRate(ITEM_QUALITY.ORIGIN, 45, -1),
     };
 
-    public static ItemFiveElement GetMonsterDropElement(int level)
+    public static ItemFiveElement GetMonsterDropElement(int level, STAGE_TYPE stageType)
     {
         if (level < MONSTER_DROP_ELEMENT_LEVEL)
             return null;
 
-        if (!GameRandom.IsInRate(TableReader.AttrValueLevel.GetSpValue(level, 21)))
+        int dropRate = TableReader.AttrValueLevel.GetSpValue(level, 21);
+        //if (stageType == STAGE_TYPE.ACT_GEM)
+        //{
+        //    dropRate += (int)(ActData.Instance.GetActDropElementRate() * dropRate);
+        //}
+
+        if (!GameRandom.IsInRate(dropRate))
             return null;
 
         return GetRandomFiveElement(level);
     }
 
-    public static ItemFiveElementCore GetMonsterDropElementCore(int level)
+    public static ItemFiveElementCore GetMonsterDropElementCore(int level, STAGE_TYPE stageType)
     {
         if (level < MONSTER_DROP_ELEMENT_LEVEL)
             return null;
 
-        var randomIdx = GameRandom.GetTotalRandomRate(10000, TableReader.AttrValueLevel.GetSpValue(level, 22),
+        int totalRate = 10000;
+        //if (stageType == STAGE_TYPE.ACT_GEM)
+        //{
+        //    totalRate = (int)(totalRate / ActData.Instance.GetActDropElementCoreRate());
+        //}
+        var randomIdx = GameRandom.GetTotalRandomRate(totalRate, TableReader.AttrValueLevel.GetSpValue(level, 22),
             TableReader.AttrValueLevel.GetSpValue(level, 23),
             TableReader.AttrValueLevel.GetSpValue(level, 24),
             TableReader.AttrValueLevel.GetSpValue(level, 25),
@@ -1618,7 +1876,115 @@ public class GameDataValue
         return GetRandomFiveElementCore(coreRecord.Id, level);
 
     }
+
+    public static int GetLockExtraCostCnt(ItemFiveElement extraItem)
+    {
+        int lockCnt = 0;
+        for (int i = 0; i < extraItem.AttrLock.Count; ++i)
+        {
+            if (extraItem.AttrLock[i] > 0)
+            {
+                ++lockCnt;
+            }
+        }
+
+        return lockCnt;
+    }
     #endregion
+
+    #region shop
+
+    public static ITEM_QUALITY GetGamblingEquipQuality(int level)
+    {
+        int randomQuality = 0;
+        if (level <= 20)
+            randomQuality = GameRandom.GetRandomLevel(0, 5000, 3000, (int)(2000));
+        else if (level <= 50)
+            randomQuality = GameRandom.GetRandomLevel(0, 5000, 2000, (int)(3000));
+        else if (level <= 100)
+            randomQuality = GameRandom.GetRandomLevel(0, 1500, 3500, (int)(5000));
+        else
+            randomQuality = GameRandom.GetRandomLevel(0, 0, 3500, (int)(6500));
+
+        if (randomQuality > 0)
+        {
+            ++randomQuality;
+        }
+        return (ITEM_QUALITY)(randomQuality);
+    }
+
+    public static int GetGamblingEquipLegendary(int level, EQUIP_SLOT equipSlot)
+    {
+        if (!TableReader.EquipItem.BaseAttrLegendary.ContainsKey(equipSlot))
+            return -1;
+
+        bool isLegendary = false;
+        isLegendary = Random.Range(1, 10000) < 100;
+        if (!isLegendary)
+            return -1;
+
+        var slotEquips = TableReader.EquipItem.BaseAttrLegendary[equipSlot];
+        int randomIdx = Random.Range(0, slotEquips.Count);
+
+        return int.Parse(slotEquips[randomIdx].Id);
+    }
+
+    public static ITEM_QUALITY GetGamblingCoreQuality(int level)
+    {
+        var randomQuality = GameRandom.GetRandomLevel(0, 0, 2000, 4000, 4000);
+        return (ITEM_QUALITY)(randomQuality);
+    }
+
+    #endregion
+
+    #region ticket
+
+    public static string _BOSS_TICKET_ID = "1600000";
+    public static string _ACT_TICKET_ID = "1600001";
+    public static int _MONSTER_DROP_BOSS_TICKET_LEVEL = 19;
+    public static int _MONSTER_DROP_ACT_TICKET_LEVEL = 20;
+    public static int _MONSTER_DROP_BOSS_TICKET_MAX_STORE = 5;
+
+    public static ItemBase GetMonsterDropBossTicket(int level, STAGE_TYPE stageType)
+    {
+        if (stageType != STAGE_TYPE.NORMAL)
+            return null;
+
+        if (level < _MONSTER_DROP_BOSS_TICKET_LEVEL)
+            return null;
+
+        var ticketCnt = BackBagPack.Instance.PageItems.GetItemCnt(_BOSS_TICKET_ID);
+        if (ticketCnt >= _MONSTER_DROP_BOSS_TICKET_MAX_STORE)
+            return null;
+
+        ItemBase ticketItem = new ItemBase(_BOSS_TICKET_ID);
+        ticketItem.SetStackNum(1, false);
+        return ticketItem;
+    }
+
+    public static ItemBase GetMonsterDropActTicket(int level, STAGE_TYPE stageType)
+    {
+        if (stageType != STAGE_TYPE.BOSS && stageType != STAGE_TYPE.NORMAL)
+            return null;
+
+        if (level < _MONSTER_DROP_ACT_TICKET_LEVEL)
+            return null;
+
+        if (!GameRandom.IsInRate(3000))
+            return null;
+
+        ItemBase ticketItem = new ItemBase(_ACT_TICKET_ID);
+        ticketItem.SetStackNum(1, false);
+        return ticketItem;
+    }
+
+    #endregion
+
+    #endregion
+
+    #region role define
+
+    public static int _ROLE_OPEN_LEVEL = 50;
 
     #endregion
 
@@ -1648,6 +2014,10 @@ public class GameDataValue
         //return level;
         if (stageMode == STAGE_TYPE.BOSS)
             return stageIdx + ActData._CIRCLE_STAGE_COUNT;
+        else if (stageMode == STAGE_TYPE.NORMAL)
+            return stageIdx;
+        else if (stageMode == STAGE_TYPE.ACT_GEM || stageMode == STAGE_TYPE.ACT_GOLD)
+            return RoleData.SelectRole.TotalLevel;
         else
             return stageIdx;
     }
@@ -1864,6 +2234,15 @@ public class GameDataValue
         ;
         defValue = (int)(ConfigIntToFloat(attrRecord.Attrs[2 + (int)elementType]) * defBase);
         return defValue;
+    }
+
+    #endregion
+
+    #region stage
+
+    public static int GetBossStageLimitCombat(int level)
+    {
+        return level;
     }
 
     #endregion

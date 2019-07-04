@@ -29,42 +29,18 @@ public class ShopData : SaveItemBase
     #endregion
 
     #region shop refresh
-
-    [SaveField(1)]
-    public string _LastRefreshTimeStr;
-
-    private DateTime _LastRefreshTime;
-    public DateTime LastRefreshTime
-    {
-        get
-        {
-            if (_LastRefreshTime.Year < 2000)
-            {
-                if (!string.IsNullOrEmpty(_LastRefreshTimeStr))
-                {
-                    _LastRefreshTime = DateTime.Parse(_LastRefreshTimeStr);
-                }
-            }
-            return _LastRefreshTime;
-        }
-        set
-        {
-            _LastRefreshTime = value;
-            _LastRefreshTimeStr = _LastRefreshTime.ToString();
-        }
-    }
-
+    
     public void InitShop()
     {
-        if (DateTime.Now.Day != LastRefreshTime.Day || LastRefreshTime.Year < 2000)
-        {
-            RefreshShopItem();
-            
-            LastRefreshTime = DateTime.Now;
-
-            SaveClass(true);
-        }
         InitShopItem();
+        InitGambling();
+
+        GameCore.Instance.EventController.RegisteEvent(EVENT_TYPE.EVENT_LOGIC_PASS_STAGE, EventPassStage);
+    }
+
+    private void EventPassStage(object go, Hashtable eventArgs)
+    {
+        _RefreshShopItemsFlag = true;
     }
 
     public void SellItem(ItemBase sellItem, bool isNeedEnsure = true)
@@ -103,117 +79,248 @@ public class ShopData : SaveItemBase
         sellItem.ResetItem();
         PlayerDataPack.Instance.AddGold(gold);
         sellItem.SaveClass(true);
-
-        AddToBuyBack(sellItem as ItemEquip);
     }
+
+    
 
     #endregion
 
     #region item shop
 
-    [SaveField(2)]
-    public List<int> _ShopLimit=new List<int>();
+    public class ShopRandomGroup
+    {
+        public string GroupName;
+        public int GroupItemCnt;
+        public int GroupItemRateTotal;
+        public List<ShopItemRecord> ShopItems;
+    }
 
-    public Dictionary<string, List<ItemShop>> _ShopItems;
+    private List<ShopRandomGroup> _ShopGroups;
+    
+    public List<ItemShop> _ShopItems = new List<ItemShop>();
+
+    public bool _RefreshShopItemsFlag = true;
+
+    public void InitShopGroup()
+    {
+        if (_ShopGroups != null)
+            return;
+
+        _ShopGroups = new List<ShopRandomGroup>();
+        foreach (var shopItem in TableReader.ShopItem.Records.Values)
+        {
+            if (shopItem.ClassItemCnt <= 0)
+            {
+                ShopRandomGroup shopGroup = new ShopRandomGroup();
+                shopGroup.GroupName = shopItem.Class;
+                shopGroup.GroupItemCnt = 1;
+                shopGroup.GroupItemRateTotal = 10000;
+                shopGroup.ShopItems = new List<ShopItemRecord>() { shopItem };
+
+                _ShopGroups.Add(shopGroup);
+            }
+            else
+            {
+                ShopRandomGroup shopGroup = _ShopGroups.Find((groupInfo) =>
+                {
+                    if (groupInfo.GroupName == shopItem.Class)
+                        return true;
+                    return false;
+                });
+                if (shopGroup == null)
+                {
+                    shopGroup = new ShopRandomGroup();
+                    shopGroup.GroupName = shopItem.Class;
+                    shopGroup.GroupItemCnt = shopItem.ClassItemCnt;
+                    shopGroup.GroupItemRateTotal = shopItem.Prior;
+                    shopGroup.ShopItems = new List<ShopItemRecord>() { shopItem };
+
+                    _ShopGroups.Add(shopGroup);
+                }
+                else
+                {
+                    shopGroup.GroupItemRateTotal += shopItem.Prior;
+                    shopGroup.ShopItems.Add(shopItem);
+                }
+            }
+        }
+    }
 
     public void InitShopItem()
     {
-        _ShopItems = new Dictionary<string, List<ItemShop>>();
-        int i = 0; 
-        foreach (var shopItem in TableReader.ShopItem.Records.Values)
-        {
-            ItemShop itemShop = new ItemShop(shopItem.Id);
-            itemShop.BuyTimes = _ShopLimit[i];
+        RefreshShopItem();
+    }
 
-            if (!_ShopItems.ContainsKey(itemShop.ShopRecord.Class))
-            {
-                _ShopItems.Add(itemShop.ShopRecord.Class, new List<ItemShop>());
-            }
-            _ShopItems[itemShop.ShopRecord.Class].Add(itemShop);
-            ++i;
+    public ShopItemRecord GetRandomShopRecord(List<ShopItemRecord> randomList)
+    {
+        int[] randomRate = new int[randomList.Count];
+        for (int i = 0; i < randomList.Count; ++i)
+        {
+            randomRate[i] = randomList[i].Prior;
         }
+        int idx = GameRandom.GetRandomLevel(randomRate);
+        return randomList[idx];
     }
 
     public void RefreshShopItem()
     {
-        _ShopLimit = new List<int>();
-        foreach (var shopItem in TableReader.ShopItem.Records.Values)
+        InitShopGroup();
+
+        _ShopItems.Clear();
+        foreach (var shopGroup in _ShopGroups)
         {
-            _ShopLimit.Add(shopItem.DailyLimit);
+            if (shopGroup.ShopItems.Count == 1)
+            {
+                if (shopGroup.ShopItems[0].Prior <= 0)
+                {
+                    _ShopItems.Add(new ItemShop(shopGroup.ShopItems[0].Id));
+                }
+                if (GameRandom.IsInRate(shopGroup.ShopItems[0].Prior))
+                {
+                    _ShopItems.Add(new ItemShop(shopGroup.ShopItems[0].Id));
+                }
+            }
+            else
+            {
+                List<ShopItemRecord> tempShopItems = new List<ShopItemRecord>(shopGroup.ShopItems);
+                for (int i = 0; i < shopGroup.GroupItemCnt; ++i)
+                {
+                    var shopRecord = GetRandomShopRecord(tempShopItems);
+                    _ShopItems.Add(new ItemShop(shopRecord.Id));
+                    tempShopItems.Remove(shopRecord);
+                }
+            }
         }
+
+        _RefreshShopItemsFlag = false;
     }
 
-    public void BuyItem(ItemShop shopItem)
+    public bool BuyItem(ItemShop shopItem)
     {
-        var shopItemTab = shopItem.ShopRecord;
-        if (shopItem.BuyTimes == 0)
+
+        int lastNumCnt = shopItem.ShopRecord.DailyLimit - shopItem.BuyTimes;
+        if (lastNumCnt == 0)
         {
             UIMessageTip.ShowMessageTip(20004);
-            return;
+            return false;
         }
-        if (BackBagPack.Instance.PageEquips.GetEmptyPos() == null)
-        {
-            return;
-        }
-        if (shopItemTab.MoneyType == 0)
+
+        if (shopItem.ShopRecord.MoneyType == 0)
         {
             if (!PlayerDataPack.Instance.DecGold(shopItem.BuyPrice))
-                return;
+                return false;
         }
         else
         {
             if (!PlayerDataPack.Instance.DecDiamond(shopItem.BuyPrice))
-                return;
+                return false;
         }
 
-        var scriptType = Type.GetType(shopItemTab.Script);
+        var scriptType = Type.GetType(shopItem.ShopRecord.Script);
         var buyMethod = scriptType.GetMethod("BuyItem", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
         buyMethod.Invoke(null, new object[1] { shopItem} );
 
-        if (shopItem.BuyTimes > 0)
-            --shopItem.BuyTimes;
+        ++shopItem.BuyTimes;
+
         Debug.Log("BuyItem:" + shopItem.ItemDataID);
+        return true;
     }
 
     #endregion
 
+    #region gambling
 
-    #region buy back
+    public List<ItemEquip> _GamblingEquips = new List<ItemEquip>();
+    public List<ItemFiveElementCore> _GamblingCores = new List<ItemFiveElementCore>();
+    public static int _MAX_RANDOM_EQUIP_CNT = 5;
+    public static string _GAMBLING_COST_ITEM_ID = "1600002";
 
-    public const int _MaxBuyBackCnt = 25;
-    private List<ItemEquip> _BuyBackList;
-    public List<ItemEquip> BuyBackList
+    public void InitGambling()
     {
-        get
-        {
-            if (_BuyBackList == null)
-            {
-                _BuyBackList = new List<ItemEquip>();
-                for (int i = 0; i < _MaxBuyBackCnt; ++i)
-                {
-                    _BuyBackList.Add(new ItemEquip());
-                }
-            }
-            return _BuyBackList;
-        }
+        RefreshGambling();
     }
 
-
-
-    public void AddToBuyBack(ItemEquip itemBase)
+    public void RefreshGambling()
     {
-        if (itemBase == null)
-            return;
-
-        for (int i = 0; i < BuyBackList.Count; ++i)
+        _GamblingEquips.Clear();
+        int proLimit = 5;
+        if (RoleData.SelectRole.Profession == PROFESSION.GIRL_DEFENCE
+            || RoleData.SelectRole.Profession == PROFESSION.GIRL_DOUGE)
+            proLimit = 10;
+        var weaponQuality = GameDataValue.GetGamblingEquipQuality(RoleData.SelectRole.TotalLevel);
+        ItemEquip weapon = ItemEquip.CreateEquip(RoleData.SelectRole.TotalLevel, weaponQuality, -1, 0, proLimit);
+        _GamblingEquips.Add(weapon);
+        for (int i = 0; i < _MAX_RANDOM_EQUIP_CNT; ++i)
         {
-            if (string.IsNullOrEmpty(BuyBackList[i].ItemDataID) || BuyBackList[i].ItemDataID == "-1")
-            {
-                BuyBackList[i].ExchangeInfo(itemBase);
-            }
+            var itemQuality = GameDataValue.GetGamblingEquipQuality(RoleData.SelectRole.TotalLevel);
+            var randomSlot = GameDataValue.GetRandomItemSlot(itemQuality);
+            var legendaryID = GameDataValue.GetGamblingEquipLegendary(RoleData.SelectRole.TotalLevel, randomSlot);
+            ItemEquip equip = ItemEquip.CreateEquip(RoleData.SelectRole.TotalLevel, itemQuality, legendaryID, (int)randomSlot, proLimit);
+            _GamblingEquips.Add(equip);
         }
+
+        _GamblingCores.Clear();
+        //for (int i = 0; i < (int)FIVE_ELEMENT.EARTH + 1; ++i)
+        //{
+        //    int elementLevel = GameDataValue.GetNearestLevel(RoleData.SelectRole.TotalLevel);
+        //    var itemQuality = GameDataValue.GetGamblingCoreQuality(RoleData.SelectRole.TotalLevel);
+        //    var coreRecord = TableReader.FiveElementCore.GetElementCoreRecord(itemQuality, (FIVE_ELEMENT)i);
+        //    var coreItem = GameDataValue.GetRandomFiveElementCore(coreRecord.Id, elementLevel);
+        //    _GamblingCores.Add(coreItem);
+        //}
+        
     }
 
+    public int GetGamblingEquipCost(ItemEquip itemEqiup)
+    {
+        return 10000;
+    }
+
+    public int GetGamblingCoreCost(ItemFiveElementCore itemCore)
+    {
+        return 10000;
+    }
+
+    public bool BuyGambling(ItemEquip itemEquip)
+    {
+        if (BackBagPack.Instance.PageEquips.GetEmptyPos() == null)
+        {
+            UIMessageTip.ShowMessageTip(10002);
+            return false;
+        }
+
+        int itemCnt = BackBagPack.Instance.PageItems.GetItemCnt(_GAMBLING_COST_ITEM_ID);
+        if (itemCnt > 0)
+        {
+            if (!BackBagPack.Instance.PageItems.DecItem(_GAMBLING_COST_ITEM_ID, 1))
+                return false;
+        }
+        else
+        {
+            if (!PlayerDataPack.Instance.DecGold(GetGamblingEquipCost(itemEquip)))
+                return false;
+        }
+
+        BackBagPack.Instance.AddEquip(itemEquip);
+        _GamblingEquips.Remove(itemEquip);
+        return true;
+    }
+
+    public bool BuyGambling(ItemFiveElementCore itemCore)
+    {
+        if (!PlayerDataPack.Instance.DecGold(GetGamblingCoreCost(itemCore)))
+            return false;
+
+        FiveElementData.Instance.AddCoreItem(itemCore);
+        _GamblingCores.Remove(itemCore);
+        return true;
+    }
     #endregion
 
+    #region sell data
+
+    public List<ITEM_QUALITY> _SellQualityTemp = new List<ITEM_QUALITY>();
+    public List<Vector2> _SellLevelTemp = new List<Vector2>();
+
+    #endregion
 }

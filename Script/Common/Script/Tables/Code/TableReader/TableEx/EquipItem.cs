@@ -73,16 +73,40 @@ namespace Tables
             }
         }
 
+        private Dictionary<EQUIP_SLOT, List<EquipItemRecord>> _BaseAttrLegendary = null;
+        public Dictionary<EQUIP_SLOT, List<EquipItemRecord>> BaseAttrLegendary
+        {
+            get
+            {
+                if (_BaseAttrLegendary == null)
+                {
+                    InitClassedEquips();
+                }
+                return _BaseAttrLegendary;
+            }
+        }
+
         private void InitClassedEquips()
         {
             _ClassedEquips = new Dictionary<EQUIP_SLOT, List<EquipItemRecord>>();
             _AxeWeapons = new List<EquipItemRecord>();
             _SwordWeapons = new List<EquipItemRecord>();
+            _BaseAttrLegendary = new Dictionary<EQUIP_SLOT, List<EquipItemRecord>>();
 
             foreach (var record in Records.Values)
             {
                 if (record.ExAttr[0] != null)
+                {
+                    if (record.ExAttr[0].AttrImpact.Equals("RoleAttrImpactBaseAttr"))
+                    {
+                        if (!_BaseAttrLegendary.ContainsKey(record.Slot))
+                        {
+                            _BaseAttrLegendary.Add(record.Slot, new List<EquipItemRecord>());
+                        }
+                        _BaseAttrLegendary[record.Slot].Add(record);
+                    }
                     continue;
+                }
 
                 if (!_ClassedEquips.ContainsKey(record.Slot))
                 {
@@ -100,6 +124,9 @@ namespace Tables
                         _SwordWeapons.Add(record);
                     }
                 }
+
+                    
+                
             }
 
             

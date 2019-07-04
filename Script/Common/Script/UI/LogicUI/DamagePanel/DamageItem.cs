@@ -35,7 +35,7 @@ public class DamageItem : MonoBehaviour
     private Vector3 _InitPos = Vector3.zero;
     public List<GameObject> _NumOBJs = new List<GameObject>();
 
-    public void Show(Vector3 showWorldPos, int showValue1, int showValue2, ShowDamageType showType, int baseSize)
+    public void Show(Vector3 showWorldPos, int showValue1, int showValue2, RoleAttrManager.ShowDamageType showType, int baseSize)
     {
         gameObject.SetActive(true);
         transform.position = showWorldPos;
@@ -50,16 +50,16 @@ public class DamageItem : MonoBehaviour
         _AnimAlpha = 1;
         switch (showType)
         {
-            case ShowDamageType.Normal:
+            case RoleAttrManager.ShowDamageType.Normal:
                 _NumColor = _NormalColor;
                 break;
-            case ShowDamageType.Critical:
+            case RoleAttrManager.ShowDamageType.Criticle:
                 _NumColor = _CriticalColor;
                 break;
-            case ShowDamageType.Hurt:
+            case RoleAttrManager.ShowDamageType.Hurt:
                 _NumColor = _HurtColor;
                 break;
-            case ShowDamageType.Heal:
+            case RoleAttrManager.ShowDamageType.Heal:
                 _NumColor = _HealColor;
                 break;
         }

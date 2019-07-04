@@ -17,7 +17,7 @@ public class UIDamagePanel : UIBase
         GameCore.Instance.UIManager.ShowUI("LogicUI/DamagePanel/UIDamagePanel", UILayer.BaseUI, hash);
     }
 
-    public static void ShowItem(Vector3 showWorldPos, int showValue1, int showValue2, ShowDamageType showType, int baseSize)
+    public static void ShowItem(Vector3 showWorldPos, int showValue1, int showValue2, RoleAttrManager.ShowDamageType showType, int baseSize)
     {
         if (!GameCore.Instance)
             return;
@@ -53,11 +53,11 @@ public class UIDamagePanel : UIBase
 
     }
 
-    private void ShowItemInner(Vector3 showWorldPos, int showValue1, int showValue2, ShowDamageType showType, int baseSize)
+    private void ShowItemInner(Vector3 showWorldPos, int showValue1, int showValue2, RoleAttrManager.ShowDamageType showType, int baseSize)
     {
-        if (showType == ShowDamageType.Critical ||
-            showType == ShowDamageType.Heal ||
-            showType == ShowDamageType.Hurt)
+        if (showType == RoleAttrManager.ShowDamageType.Criticle ||
+            showType == RoleAttrManager.ShowDamageType.Heal ||
+            showType == RoleAttrManager.ShowDamageType.Hurt)
         {
             var itemBase = ResourcePool.Instance.GetIdleUIItem<UIDamageItem>(_UIHPItemPrefab.gameObject);
             itemBase.transform.SetParent(transform);

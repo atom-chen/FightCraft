@@ -36,7 +36,7 @@ public class ConRoleLevel : MissionConditionBase
             int num = 0;
             for (int i = 0; i < PlayerDataPack.Instance._RoleList.Count; ++i)
             {
-                if (PlayerDataPack.Instance._RoleList[i]._RoleLevel >= _TargetLv)
+                if (PlayerDataPack.Instance._RoleList[i].RoleLevel >= _TargetLv)
                 {
                     ++num;
                 }
@@ -48,7 +48,7 @@ public class ConRoleLevel : MissionConditionBase
             int num = 0;
             for (int i = 0; i < PlayerDataPack.Instance._RoleList.Count; ++i)
             {
-                if (PlayerDataPack.Instance._RoleList[i]._AttrLevel >= _TargetLv)
+                if (PlayerDataPack.Instance._RoleList[i].AttrLevel >= _TargetLv)
                 {
                     ++num;
                 }

@@ -1,12 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Tables;
 
 public class Shop_GemMat
 {
     public static void BuyItem(ItemShop itemShop)
     {
-        var randomVal = Random.Range(itemShop.ShopRecord.ScriptParam[1], itemShop.ShopRecord.ScriptParam[2]);
-        BackBagPack.Instance.PageItems.AddItem(itemShop.ShopRecord.ScriptParam[0].ToString(), randomVal);
+        if (itemShop.ShopRecord.ScriptParam[0] < 0)
+        {
+            foreach (var gemRecord in TableReader.GemTable.Records.Values)
+            {
+                GemData.Instance.CreateGem(gemRecord.Id, 1);
+            }
+            
+        }
+        else
+        {
+            var gemRecord = TableReader.GemTable.GetRecord(itemShop.ShopRecord.ScriptParam[0].ToString());
+            GemData.Instance.CreateGem(gemRecord.Id, 1);
+        }
     }
 }

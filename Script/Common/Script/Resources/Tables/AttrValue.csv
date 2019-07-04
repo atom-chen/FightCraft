@@ -74,15 +74,14 @@
 #gem,,,,,,,,,,,,,,,,
 70001,,,RoleAttrImpactBaseAttr,,Atk,,7,100,100,1,0,0,0,0,0,0
 70002,,,RoleAttrImpactBaseAttr,,Def,,9,100,100,1,0,0,0,0,0,0
-70003,,,RoleAttrImpactBaseAttr,,HP,,5,100,100,1,0,0,0,0,0,0
-70004,,,RoleAttrImpactBaseAttr,,Str,,1,100,100,1,0,0,0,0,0,0
-70005,,,RoleAttrImpactBaseAttr,,Dec,,2,100,100,1,0,0,0,0,0,0
-70006,,,RoleAttrImpactBaseAttr,,Int,,3,100,100,1,0,0,0,0,0,0
-70007,,,RoleAttrImpactBaseAttr,,Vit,,4,100,100,1,0,0,0,0,0,0
-70008,,,RoleAttrImpactBaseAttr,,Fire Atk,,15,100,100,1,0,0,0,0,0,0
-70009,,,RoleAttrImpactBaseAttr,,Cold Atk,,16,100,100,1,0,0,0,0,0,0
-70010,,,RoleAttrImpactBaseAttr,,Lighting Atk,,17,100,100,1,0,0,0,0,0,0
-70011,,,RoleAttrImpactBaseAttr,,Wind Atk,,18,100,100,1,0,0,0,0,0,0
+70003,,,RoleAttrImpactBaseAttr,,Str,,1,100,100,1,0,0,0,0,0,0
+70004,,,RoleAttrImpactBaseAttr,,Dec,,2,100,100,1,0,0,0,0,0,0
+70005,,,RoleAttrImpactBaseAttr,,Int,,3,100,100,1,0,0,0,0,0,0
+70006,,,RoleAttrImpactBaseAttr,,Vit,,4,100,100,1,0,0,0,0,0,0
+70007,,,RoleAttrImpactBaseAttr,,Fire Atk,,15,100,100,1,0,0,0,0,0,0
+70008,,,RoleAttrImpactBaseAttr,,Cold Atk,,16,100,100,1,0,0,0,0,0,0
+70009,,,RoleAttrImpactBaseAttr,,Lighting Atk,,17,100,100,1,0,0,0,0,0,0
+70010,,,RoleAttrImpactBaseAttr,,Wind Atk,,18,100,100,1,0,0,0,0,0,0
 #,,,,,,,,,,,,,,,,
 80000,,,RoleAttrImpactBaseAttr,,Fire Atk,,15,1,100,1,0,0,0,0,0,0
 80001,,,RoleAttrImpactBaseAttr,,Cold Atk,,16,1,100,1,0,0,0,0,0,0
@@ -256,3 +255,9 @@
 1500005,,,RoleAttrImpactEleCoreAttr,,,1320101,16,6000,0,0,2,2,2,2,2,2
 1500006,,,RoleAttrImpactEleCoreAttr,,,1320101,17,6000,0,0,2,2,2,2,2,2
 1500007,,,RoleAttrImpactEleCoreAttr,,,1320101,18,6000,0,0,2,2,2,2,2,2
+#Five element Core SP,,,,,,,,,,,,,,,,
+1510001,,,RoleAttrImpactPassiveCutting,PassiveCutting,,1360001,1000,0,1000,10000,1000,20000,1,1,1,1
+1510002,,,RoleAttrImpactPassiveAssasination,PassiveAssasination,,1360002,100,0,100,100000,10000,200000,2,2,2,2
+1510003,,,RoleAttrImpactPassiveBloodSucking,PassiveBloodSucking,,1360003,500,0,500,500,100,2000,0,0,0,0
+1510004,,,RoleAttrImpactPassiveFatality,PassiveFatality,,1360004,1000,100,2000,100000,0,2,2,2,2,2
+1510005,,,RoleAttrImpactPassiveTrauma,PassiveTrauma,,1360005,1000,100,2000,1000,0,1000,2,2,2,2

@@ -61,6 +61,8 @@ namespace Tables
 //
         public static GemTable GemTable { get; internal set; }
 //
+        public static GiftPacket GiftPacket { get; internal set; }
+//
         public static GlobalBuff GlobalBuff { get; internal set; }
 //
         public static Mission Mission { get; internal set; }
@@ -110,6 +112,7 @@ namespace Tables
             GemBaseAttr = new GemBaseAttr(TableReadBase.GetTableText("GemBaseAttr"), false);
             GemSet = new GemSet(TableReadBase.GetTableText("GemSet"), false);
             GemTable = new GemTable(TableReadBase.GetTableText("GemTable"), false);
+            GiftPacket = new GiftPacket(TableReadBase.GetTableText("GiftPacket"), false);
             GlobalBuff = new GlobalBuff(TableReadBase.GetTableText("GlobalBuff"), false);
             Mission = new Mission(TableReadBase.GetTableText("Mission"), false);
             MonsterAttr = new MonsterAttr(TableReadBase.GetTableText("MonsterAttr"), false);
@@ -144,6 +147,7 @@ namespace Tables
             GemBaseAttr.CoverTableContent();
             GemSet.CoverTableContent();
             GemTable.CoverTableContent();
+            GiftPacket.CoverTableContent();
             GlobalBuff.CoverTableContent();
             Mission.CoverTableContent();
             MonsterAttr.CoverTableContent();

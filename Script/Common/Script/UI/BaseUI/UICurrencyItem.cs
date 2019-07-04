@@ -32,6 +32,12 @@ public class UICurrencyItem : UIItemBase
 
     #region 
 
+    public void SetValue(int value)
+    {
+        _CurrencyValue.text = value.ToString();
+        _CurrencyIntValue = value;
+    }
+
     public void ShowCurrency(MONEYTYPE currencyType, int currencyValue)
     {
         _CurrencyIcon.sprite = _CurrencySprite[(int)currencyType];
@@ -79,34 +85,67 @@ public class UICurrencyItem : UIItemBase
         ShowCurrency(itemDataID, Ownvalue);
     }
 
-    public void ShowCostCurrency(MONEYTYPE currencyType, int costValue)
+    public void ShowCostCurrency(MONEYTYPE currencyType, int costValue, bool showOwnValue = true)
     {
-        int Ownvalue = 0;
-        if (currencyType == MONEYTYPE.GOLD)
+        if (showOwnValue)
         {
-            Ownvalue = PlayerDataPack.Instance.Gold;
-        }
-        else if (currencyType == MONEYTYPE.DIAMOND)
-        {
-            Ownvalue = PlayerDataPack.Instance.Diamond;
-        }
-        ShowCurrency(currencyType, Ownvalue);
+            int Ownvalue = 0;
+            if (currencyType == MONEYTYPE.GOLD)
+            {
+                Ownvalue = PlayerDataPack.Instance.Gold;
+            }
+            else if (currencyType == MONEYTYPE.DIAMOND)
+            {
+                Ownvalue = PlayerDataPack.Instance.Diamond;
+            }
+            ShowCurrency(currencyType, Ownvalue);
 
-        string currencyStr = "";
-        if (costValue > Ownvalue)
-        {
-            currencyStr = CommonDefine.GetEnableRedStr(0) + Ownvalue.ToString() + "</color>/" + costValue.ToString();
+
+            string currencyStr = "";
+            if (costValue > Ownvalue)
+            {
+                currencyStr = CommonDefine.GetEnableRedStr(0) + Ownvalue.ToString() + "</color>/" + costValue.ToString();
+            }
+            else
+            {
+                currencyStr = CommonDefine.GetEnableRedStr(1) + Ownvalue.ToString() + "</color>/" + costValue.ToString();
+            }
+            _CurrencyValue.text = currencyStr;
         }
         else
         {
-            currencyStr = CommonDefine.GetEnableRedStr(1) + Ownvalue.ToString() + "</color>/" + costValue.ToString();
+            int Ownvalue = 0;
+            if (currencyType == MONEYTYPE.GOLD)
+            {
+                Ownvalue = PlayerDataPack.Instance.Gold;
+            }
+            else if (currencyType == MONEYTYPE.DIAMOND)
+            {
+                Ownvalue = PlayerDataPack.Instance.Diamond;
+            }
+            ShowCurrency(currencyType, costValue);
+
+
+            string currencyStr = "";
+            if (costValue > Ownvalue)
+            {
+                currencyStr = CommonDefine.GetEnableRedStr(0) + costValue.ToString() + "</color>";
+            }
+            else
+            {
+                currencyStr = CommonDefine.GetEnableRedStr(1) + costValue.ToString() + "</color>";
+            }
+            _CurrencyValue.text = currencyStr;
         }
-        _CurrencyValue.text = currencyStr;
     }
 
-    public void ShowCostCurrency(string itemDataID, int costValue)
+    public void ShowCostCurrency(string itemDataID, int costValue, int ownCnt = -1)
     {
-        int Ownvalue = BackBagPack.Instance.PageItems.GetItemCnt(itemDataID);
+        int Ownvalue = ownCnt;
+        if (Ownvalue < 0)
+        {
+            Ownvalue = BackBagPack.Instance.PageItems.GetItemCnt(itemDataID);
+        }
         ShowCurrency(itemDataID, Ownvalue);
 
         string currencyStr = "";

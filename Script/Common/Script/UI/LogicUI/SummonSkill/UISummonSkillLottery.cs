@@ -94,47 +94,63 @@ public class UISummonSkillLottery : UIBase
 
     #region interface
 
+    private SummonSkillData.LotteryResult _LotteryResult;
+
     public void OnBtnBuyOne()
     {
-        List<SummonMotionData> summonData = null;
+        if (_LotteryResult != null)
+            return;
+
         if (_GoldPanel.activeSelf)
         {
-            summonData = SummonSkillData.Instance.LotteryGold(1);
+            _LotteryResult = SummonSkillData.Instance.LotteryGold(1);
         }
         else
         {
-            summonData = SummonSkillData.Instance.LotteryDiamond(1);
+            _LotteryResult = SummonSkillData.Instance.LotteryDiamond(1);
         }
 
-        if (summonData != null)
+        if (_LotteryResult != null)
         {
-            PlayerSummonAnim(summonData);
+            PlayerSummonAnim(_LotteryResult._SummonData);
         }
     }
 
     public void OnBtnBuyTen()
     {
-        List<SummonMotionData> summonData = null;
+        if (_LotteryResult != null)
+            return;
+
         if (_GoldPanel.activeSelf)
         {
-            summonData = SummonSkillData.Instance.LotteryGold(10);
+            _LotteryResult = SummonSkillData.Instance.LotteryGold(10);
         }
         else
         {
-            summonData = SummonSkillData.Instance.LotteryDiamond(10);
+            _LotteryResult = SummonSkillData.Instance.LotteryDiamond(10);
         }
 
-        if (summonData != null)
+        if (_LotteryResult != null)
         {
-            PlayerSummonAnim(summonData);
+            PlayerSummonAnim(_LotteryResult._SummonData);
         }
     }
 
     public void PlayerSummonAnim(List<SummonMotionData> summonDatas)
     {
-        UISummonGotAnim.ShowAsyn(summonDatas);
+        UISummonGotAnim.ShowAsyn(summonDatas, AnimFinish);
         //RefreshItems();
         UISummonSkillPack.RefreshPack();
+        RefreshItems();
+    }
+
+    public void AnimFinish()
+    {
+        if (_LotteryResult._ReturnItemNum > 0)
+        {
+            UISummonLotteryReturn.ShowAsyn(_LotteryResult._ReturnItem, _LotteryResult._ReturnItemNum);
+        }
+        _LotteryResult = null;
     }
 
     #endregion

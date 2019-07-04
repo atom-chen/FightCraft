@@ -41,9 +41,10 @@ public class UIStageInfoItem : UIItemSelect
         _ConditionTips = "";
 
         int stageLevel = _ShowItem._Level;
-        if (showItem._StageRecord.StageType == STAGE_TYPE.ACTIVITY)
+        if (showItem._StageRecord.StageType == STAGE_TYPE.ACT_GEM
+            || showItem._StageRecord.StageType == STAGE_TYPE.ACT_GOLD)
         {
-            stageLevel = RoleData.SelectRole.TotalLevel;
+            stageLevel = showItem._Level;
         }
         else
         {

@@ -27,6 +27,8 @@ public class UIRoleAttr : UIBase
 
     #endregion
 
+    #region distrubute attr
+
     public RoleAttrItem _RoleLevel;
     public RoleAttrItem _AttrLevel;
     public RoleAttrItem _UnDistrubutePoint;
@@ -47,8 +49,8 @@ public class UIRoleAttr : UIBase
 
     private void InitRoleAttrs()
     {
-        _RoleLevel.Show("RoleLevel", RoleData.SelectRole._RoleLevel);
-        _AttrLevel.Show("AttrLevel", RoleData.SelectRole._AttrLevel);
+        _RoleLevel.Show("RoleLevel", RoleData.SelectRole.RoleLevel);
+        _AttrLevel.Show("AttrLevel", RoleData.SelectRole.AttrLevel);
         _UnDistrubutePoint.Show("UnDistributePoint", RoleData.SelectRole.UnDistrubutePoint);
         _StrengthItem.Show(RoleAttrEnum.Strength.ToString(), RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Strength));
         _DexterityItem.Show(RoleAttrEnum.Dexterity.ToString(), RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Dexterity));
@@ -195,6 +197,8 @@ public class UIRoleAttr : UIBase
         InitRoleAttrs();
     }
 
+    #endregion
+
     #region show attr tips
 
     public Vector3[] _ShowPoses;
@@ -221,6 +225,15 @@ public class UIRoleAttr : UIBase
         }
 
         UITextTip.ShowMessageTip(showTips, _ShowPoses[type - 1]);
+    }
+
+    #endregion
+
+    #region role select
+
+    public void ChangeRole()
+    {
+        UIRoleSelect2.ShowAsyn();
     }
 
     #endregion

@@ -46,7 +46,7 @@ public class GemSuit
         }
     }
 
-    public static List<int> _ActAttrLevel = new List<int>() { 5, 10, 15, 20, 25 };
+    public static List<int> _ActAttrLevel = new List<int>() { 5, 10, 15, 20, 45 };
 
 
     private List<EquipExAttr> _ActSetAttrs = new List<EquipExAttr>();
@@ -106,6 +106,11 @@ public class GemSuit
             return;
         }
 
+        for (int i = 0; i < GemData.Instance.EquipedGemDatas.Count; ++i)
+        {
+            GemData.Instance.PutOff(GemData.Instance.EquipedGemDatas[i]);
+        }
+
         List<ItemGem> suitGems = new List<ItemGem>();
         for (int i = 0; i < gemSet.Gems.Count; ++i)
         {
@@ -134,16 +139,24 @@ public class GemSuit
             _ActLevel = -1;
             for (int i = 0; i < gemSuit.Value.Gems.Count; ++i)
             {
-                if (gemSuit.Value.Gems[i] == null)
-                {
-                    continue;
-                }
                 if (GemData.Instance.EquipedGemDatas[i] == null || !GemData.Instance.EquipedGemDatas[i].IsVolid())
                 {
                     break;
                 }
-                if (GemData.Instance.EquipedGemDatas[i].GemRecord.Class == gemSuit.Value.Gems[i]
+                if (gemSuit.Value.Gems[i] > 0
+                    && GemData.Instance.EquipedGemDatas[i].GemRecord.Class == gemSuit.Value.Gems[i]
                     && GemData.Instance.EquipedGemDatas[i].Level >= gemSuit.Value.MinGemLv)
+                {
+                    if (_ActLevel < 0)
+                    {
+                        _ActLevel = GemData.Instance.EquipedGemDatas[i].Level;
+                    }
+                    else
+                    {
+                        _ActLevel = Mathf.Min(_ActLevel, GemData.Instance.EquipedGemDatas[i].Level);
+                    }
+                }
+                else if (gemSuit.Value.Gems[i] < 0)
                 {
                     if (_ActLevel < 0)
                     {

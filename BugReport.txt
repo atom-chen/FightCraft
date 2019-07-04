@@ -1,11 +1,8 @@
-func:
-shop sell all
-
-fight:
-boss effect
-boss stage light direct
-easy boss AI
-name board
-UI direct
-new enemy AI/random stage map
-
+todo:
+lv.5,10 defulat weapon
+good packet and shop
+legendary redtip
+soul exp redtip
+legendary equip attr value
+legendary equip rate
+legendary data

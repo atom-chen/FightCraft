@@ -19,9 +19,15 @@
     <enumDesc>DOUBLE_BOSS</enumDesc>
   </enumColumn>
   <enumColumn>
-    <enumName>ACTIVITY</enumName>
-    <enumCode>ACTIVITY</enumCode>
+    <enumName>ACT_GOLD</enumName>
+    <enumCode>ACT_GOLD</enumCode>
     <enumValue>3</enumValue>
-    <enumDesc>ACTIVITY</enumDesc>
+    <enumDesc>ACT_GOLD</enumDesc>
+  </enumColumn>
+  <enumColumn>
+    <enumName>ACT_GEM</enumName>
+    <enumCode>ACT_GEM</enumCode>
+    <enumValue>4</enumValue>
+    <enumDesc>ACT_GEM</enumDesc>
   </enumColumn>
 </root>

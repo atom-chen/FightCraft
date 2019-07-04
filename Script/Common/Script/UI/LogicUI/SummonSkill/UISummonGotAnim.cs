@@ -2,16 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System;
 
 public class UISummonGotAnim : UIBase
 {
 
     #region static funs
 
-    public static void ShowAsyn(List<SummonMotionData> summonDatas)
+    public static void ShowAsyn(List<SummonMotionData> summonDatas, Action finishCallBack)
     {
         Hashtable hash = new Hashtable();
         hash.Add("SummonDatas", summonDatas);
+        hash.Add("FinishCallBack", finishCallBack);
         GameCore.Instance.UIManager.ShowUI("LogicUI/SummonSkill/UISummonGotAnim", UILayer.Sub2PopUI, hash);
     }
 
@@ -34,13 +36,26 @@ public class UISummonGotAnim : UIBase
     public UIContainerBase _SummonItemContainer;
 
     private List<SummonMotionData> _SummonDatas;
+    private Action _FinishCallBack;
 
     public override void Show(Hashtable hash)
     {
         base.Show(hash);
 
         _SummonDatas = (List<SummonMotionData>)hash["SummonDatas"];
+        _FinishCallBack = (Action)hash["FinishCallBack"];
         ShowItemPack();
+    }
+
+    public override void Hide()
+    {
+        base.Hide();
+
+        if (_FinishCallBack != null)
+        {
+            _FinishCallBack.Invoke();
+        }
+
     }
 
     private void ShowItemPack()

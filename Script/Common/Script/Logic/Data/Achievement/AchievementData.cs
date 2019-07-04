@@ -175,7 +175,7 @@ public class AchievementData : DataPackBase
 
     private void EventLevelUp(object go, Hashtable eventArgs)
     {
-        SetData(AchieveDataType.ConRoleLevel, RoleData.SelectRole._RoleLevel + RoleData.SelectRole._AttrLevel);
+        SetData(AchieveDataType.ConRoleLevel, RoleData.SelectRole.RoleLevel + RoleData.SelectRole.AttrLevel);
         SaveClass(false);
 
         _AchieveGroup[AchieveDataType.ConRoleLevel.ToString()].OnConditionEvent();

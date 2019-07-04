@@ -12,6 +12,7 @@ public class UIGemPackItem : UIItemSelect
     public Image _Quality;
     public Text _Name;
     public Text _Attr;
+    public Text _ExAttr;
     public Text _Level;
     public GameObject _UsingGO;
 
@@ -45,9 +46,18 @@ public class UIGemPackItem : UIItemSelect
 
         _Icon.gameObject.SetActive(true);
         _Quality.gameObject.SetActive(false);
-        _Name.text = showItem.GetName();
-        _Attr.text = showItem.GemAttr.GetAttrStr();
-        _Level.text = showItem.Level.ToString();
+        _Name.text = Tables.StrDictionary.GetFormatStr(30010, _ItemGem.ItemStackNum);
+        _Attr.text = showItem.GemAttr[0].GetAttrStr();
+        if (showItem.IsGemExtra())
+        {
+            _ExAttr.gameObject.SetActive(true);
+            _ExAttr.text = showItem.GemAttr[1].GetAttrStr();
+        }
+        else
+        {
+            _ExAttr.gameObject.SetActive(false);
+        }
+        _Level.text = "Lv." + showItem.Level.ToString();
 
         _UsingGO.SetActive(GemData.Instance.IsEquipedGem(_ItemGem));
     }

@@ -17,12 +17,24 @@ public class UIEquipAttrItem : UIItemBase
     private ItemEquip _ItemEquip;
     private EquipExAttr _ShowAttr;
 
+    public enum AttrItemDisplayMode
+    {
+        None,
+        Normal,
+        ZeroDisable,
+    }
+    private AttrItemDisplayMode _DisplayMode = AttrItemDisplayMode.Normal;
+
     public override void Show(Hashtable hash)
     {
         base.Show();
 
         var showItem = (EquipExAttr)hash["InitObj"];
         _ItemEquip = (ItemEquip)hash["ItemEquip"];
+        if (hash.ContainsKey("DisplayMode"))
+        {
+            _DisplayMode = (AttrItemDisplayMode)hash["DisplayMode"];
+        }
 
         ShowAttr(showItem);
     }
@@ -54,6 +66,14 @@ public class UIEquipAttrItem : UIItemBase
                 attrColor = ITEM_QUALITY.BLUE;
             }
             attrStr = CommonDefine.GetQualityColorStr(attrColor) + attrStr + valueStr + "</color>";
+        }
+        if (_DisplayMode == AttrItemDisplayMode.ZeroDisable && attr.Value == 0)
+        {
+            attrStr = CommonDefine.GetEnableGrayStr(0) + attrStr + "</color>";
+        }
+        else
+        {
+            attrStr = CommonDefine.GetEnableGrayStr(1) + attrStr + "</color>";
         }
         _AttrText.text = attrStr;
     }

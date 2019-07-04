@@ -14,7 +14,7 @@ public class Shop_Gambling
 
     public static void BuyItem(ItemShop itemShop)
     {
-        int level = Random.Range(RoleData.SelectRole._RoleLevel - 5, RoleData.SelectRole._RoleLevel + 5);
+        int level = Random.Range(RoleData.SelectRole.RoleLevel - 5, RoleData.SelectRole.RoleLevel + 5);
         level = Mathf.Clamp(level, 1, RoleData.MAX_ROLE_LEVEL);
 
         int quality = 0;

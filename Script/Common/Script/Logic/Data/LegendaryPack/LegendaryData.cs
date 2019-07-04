@@ -168,7 +168,7 @@ public class LegendaryData : SaveItemBase
         {
             if (equip.IsVolid())
             {
-                _LegendaryValue += (int)(GameDataValue.CalLvValue(equip.EquipLevel, equip.EquipItemRecord.Slot) * _ValueModify);
+                _LegendaryValue += (int)(GameDataValue.GetEquipLvValue(equip.EquipLevel, equip.EquipItemRecord.Slot) * _ValueModify);
             }
         }
     }

@@ -79,7 +79,7 @@ public class UISummonStageUpAttrItem : UIItemBase
             _BtnAddAttr.enabled = true;
         }
 
-        _AddValue.text = "+" + SummonMotionData.StageAttrAdd[_SummonAttrInfo.AttrIdx];
+        //_AddValue.text = "+" + SummonMotionData.StageAttrAdd[_SummonAttrInfo.AttrIdx];
         //_CostItem.ShowCost(_SummonMotionData.GetAttrCostItem(_SummonAttrInfo.AttrIdx), 1);
     }
 

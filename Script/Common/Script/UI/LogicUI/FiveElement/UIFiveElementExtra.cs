@@ -17,31 +17,42 @@ public class UIFiveElementExtra : UIBase
 
     public static void RefreshPack()
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UIFiveElementExtra>("LogicUI/FiveElement/UIFiveElementExtra");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIFiveElement>("LogicUI/FiveElement/UIFiveElement");
         if (instance == null)
             return;
 
         if (!instance.isActiveAndEnabled)
             return;
 
-        instance.RefreshInfo();
+        instance._UIFiveElementExtra.RefreshInfo();
+    }
+
+    public static void RefreshCost()
+    {
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIFiveElement>("LogicUI/FiveElement/UIFiveElement");
+        if (instance == null)
+            return;
+
+        if (!instance.isActiveAndEnabled)
+            return;
+
+        instance._UIFiveElementExtra.RefreshCostMoney();
     }
 
     #endregion
 
     #region 
 
-    public List<Text> _Attrs;
-    public List<Text> _AttrExPersent;
+    public List<UIFiveElementAttrItem> _Attrs;
 
     public UIContainerSelect _ElementItems;
 
-    private ItemFiveElement _ElementItem;
+    private int _ShowingIdx;
     private ItemFiveElement _SelectedMatItem;
 
     public void RefreshInfo()
     {
-        ShowItemInfo(_ElementItem);
+        ShowItemInfo(_ShowingIdx);
         ShowMaterialItems();
 
         RefreshFilter();
@@ -49,7 +60,8 @@ public class UIFiveElementExtra : UIBase
 
     public void ShowItemByIndex(int idx)
     {
-        ShowItemInfo(FiveElementData.Instance._UsingElements[idx]);
+        _ShowingIdx = idx;
+        ShowItemInfo(_ShowingIdx);
 
         ResetFilter();
         ShowMaterialItems();
@@ -58,30 +70,23 @@ public class UIFiveElementExtra : UIBase
         InitAttrFilter();
     }
 
-    private void ShowItemInfo(ItemFiveElement extraItem)
+    private void ShowItemInfo(int showIdx)
     {
-        _ElementItem = extraItem;
-        if (_ElementItem == null)
+        _ShowingIdx = showIdx;
+        if (showIdx < 0)
         {
-            _ElementItem = FiveElementData.Instance._UsingElements[0];
+            _ShowingIdx = 0;
+        }
+
+        var elementItem = FiveElementData.Instance._UsingElements[showIdx];
+        if (elementItem == null)
+        {
+            elementItem = FiveElementData.Instance._UsingElements[0];
         }
 
         for (int i = 0; i < _Attrs.Count; ++i)
         {
-            if (_ElementItem.ElementExAttrs.Count > i)
-            {
-                _Attrs[i].text = _ElementItem.ElementExAttrs[i].GetAttrStr(false);
-            }
-            else
-            {
-                var addRate = FiveElementData.Instance.GetAddExAttrRate(i);
-                _Attrs[i].text = GameDataValue.ConfigFloatToPersent(addRate).ToString() + "%";
-            }
-        }
-
-        for (int i = 0; i < _AttrExPersent.Count; ++i)
-        {
-            _AttrExPersent[i].text = FiveElementData.Instance.GetAttrAddRateStr(_ElementItem, i);
+            _Attrs[i].InitAttrItem(showIdx, i);
         }
     }
 
@@ -138,6 +143,11 @@ public class UIFiveElementExtra : UIBase
         else
         {
             _SelectedMatItem = null;
+            if (matItems.Count > 0)
+            {
+                selectedItems = new List<ItemFiveElement>();
+                selectedItems.Add(matItems[0]);
+            }
         }
 
         _ElementItems.InitSelectContent(matItems, selectedItems, OnMatItemClick);
@@ -271,7 +281,7 @@ public class UIFiveElementExtra : UIBase
         foreach (var elementAttr in GameDataValue._FiveElementAttrs)
         {
             bool containsAttr = false;
-            foreach (var exAttr in _ElementItem.EquipExAttrs)
+            foreach (var exAttr in FiveElementData.Instance._UsingElements[_ShowingIdx].EquipExAttrs)
             {
                 if (exAttr.AttrParams[0] == (int)elementAttr.AttrID)
                 {
@@ -304,7 +314,7 @@ public class UIFiveElementExtra : UIBase
         foreach (var elementAttr in GameDataValue._FiveElementAttrs)
         {
             bool containsAttr = false;
-            foreach (var exAttr in _ElementItem.EquipExAttrs)
+            foreach (var exAttr in FiveElementData.Instance._UsingElements[_ShowingIdx].EquipExAttrs)
             {
                 if (exAttr.AttrParams[0] == (int)elementAttr.AttrID)
                 {
@@ -354,13 +364,14 @@ public class UIFiveElementExtra : UIBase
         }
         else
         {
-            _CostMoney.ShowCostCurrency(MONEYTYPE.GOLD, GameDataValue.GetElementExtraCostMoney(_SelectedMatItem.Level));
+            var elementItem = FiveElementData.Instance._UsingElements[_ShowingIdx];
+            _CostMoney.ShowCostCurrency(MONEYTYPE.GOLD, GameDataValue.GetElementExtraCostMoney(elementItem), false);
         }
     }
 
     public void OnBtnExtraOK()
     {
-        if (_ElementItem == null)
+        if (_ShowingIdx < 0)
             return;
 
         if (_SelectedMatItem == null)
@@ -382,16 +393,45 @@ public class UIFiveElementExtra : UIBase
 
     public void OnBtnSell()
     {
-        string sellEnsure = Tables.StrDictionary.GetFormatStr(1350005, _SelectedMatItem.GetName(), _SelectedMatItem.ItemStackNum, FiveElementData.Instance.GetElementSellMoney(_SelectedMatItem));
-        UIMessageBox.Show(sellEnsure, () =>
+        Dictionary<int, Vector2> selectLevels = new Dictionary<int, Vector2>();
+        foreach (var element in FiveElementData.Instance._PackElements._PackItems)
         {
-            FiveElementData.Instance.SellElement(_SelectedMatItem);
-            RefreshInfo();
-        }, null);
-        
+            int elementLevel = element.GetLevel();
+            if (elementLevel <= 0)
+                continue;
+
+            if (selectLevels.ContainsKey(elementLevel))
+            {
+                continue;
+            }
+
+            selectLevels.Add(elementLevel, new Vector2(elementLevel, elementLevel));
+        }
+        UISellShopPack.ShowSellLevelSync(FiveElementData.Instance._PackElements.ToItemBases(), new List<Vector2>(selectLevels.Values), GetSellPrice, SellEquips);
     }
 
+    public int GetSellPrice(List<ItemBase> items)
+    {
+        int totalMoney = 0;
+        for (int i = 0; i < items.Count; ++i)
+        {
+            ItemFiveElement itemElement = items[i] as ItemFiveElement;
+            if (itemElement != null)
+            {
+                totalMoney += FiveElementData.Instance.GetElementSellMoney(itemElement);
+            }
+        }
+
+        return totalMoney;
+    }
+
+    public void SellEquips(List<ItemBase> items)
+    {
+        FiveElementData.Instance.SellElements(items);
+    }
     #endregion
+
+
 
 }
 

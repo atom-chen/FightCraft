@@ -82,7 +82,6 @@ public class UISummonSkillToolTips : UIBase
         _StarExp.text = string.Format("({0}/{1})", _SummonData.CurStarExp, _SummonData.CurStarLevelExp());
 
         _SkillDesc.text = Tables.StrDictionary.GetFormatStr(_SummonData.SummonRecord.SkillDesc, _SummonData.SummonRecord.SkillRate[_SummonData.StarLevel] * 100);
-        _AttrContainer.InitContentItem(_SummonData.SummonAttrs);
 
         if (SummonSkillData.Instance.IsSummonAct(_SummonData))
         {
@@ -92,6 +91,20 @@ public class UISummonSkillToolTips : UIBase
         else
         {
             _BtnAct.SetActive(true);
+            _BtnDisAct.SetActive(false);
+        }
+
+        if (!_IsLvUp)
+        {
+            _AttrContainer.gameObject.SetActive(true);
+            Hashtable hash = new Hashtable();
+            hash.Add("DisplayMode", UIEquipAttrItem.AttrItemDisplayMode.ZeroDisable);
+            _AttrContainer.InitContentItem(_SummonData.SummonAttrs, null, hash);
+        }
+        else
+        {
+            _AttrContainer.gameObject.SetActive(false);
+            _BtnAct.SetActive(false);
             _BtnDisAct.SetActive(false);
         }
     }
@@ -115,7 +128,23 @@ public class UISummonSkillToolTips : UIBase
 
     public void BtnStage()
     {
-        UISummonStageUp.ShowAsyn(_SummonData);
+        //UISummonStageUp.ShowAsyn(_SummonData);
+        if (!_IsLvUp)
+        {
+            SummonSkillData.Instance.StarUpSummonItem(_SummonData);
+            ShowItem();
+        }
+        else
+        {
+            var targetSummonData = SummonSkillData.Instance._SummonMotionList.GetItem(_SummonData.ItemDataID);
+            if (targetSummonData != null)
+            {
+                SummonSkillData.Instance.StarUpSummonItem(targetSummonData);
+            }
+            Hide();
+        }
+
+        UISummonSkillPack.RefreshPack();
     }
 
     public void BtnLevelUp()

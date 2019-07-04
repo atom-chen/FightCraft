@@ -37,7 +37,7 @@ public class UIEquipInfoRefresh : UIBase
         _ItemIcon.ShowItem(_ShowItem);
         _ShowItem = itemEquip;
         _Name.text = _ShowItem.GetEquipNameWithColor();
-        if (_ShowItem.RequireLevel > RoleData.SelectRole._RoleLevel)
+        if (_ShowItem.RequireLevel > RoleData.SelectRole.RoleLevel)
         {
             _Level.text = StrDictionary.GetFormatStr(10000) + " " + CommonDefine.GetEnableRedStr(0) + _ShowItem.RequireLevel + "</color>";
         }

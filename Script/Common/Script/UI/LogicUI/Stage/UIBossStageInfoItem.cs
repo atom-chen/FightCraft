@@ -1,40 +1,48 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
- 
 using UnityEngine.EventSystems;
 using System;
 using Tables;
 
-
+public class BossStageInfoItem
+{
+    public BossStageRecord _StageRecord;
+    public int _Level;
+    public int _StageIdx;
+}
 
 public class UIBossStageInfoItem : UIStageInfoItem
 {
-    protected BossStageRecord _ShowBossItem;
+    protected BossStageInfoItem _ShowBossItem;
     public override void Show(Hashtable hash)
     {
         base.Show();
 
-        var showItem = (BossStageRecord)hash["InitObj"];
+        var showItem = (BossStageInfoItem)hash["InitObj"];
         ShowStage(showItem);
     }
 
-    public void ShowStage(BossStageRecord showItem)
+    public void ShowStage(BossStageInfoItem showItem)
     {
         _ShowBossItem = showItem;
 
-        _StageName.text = StrDictionary.GetFormatStr(showItem.Name);
+        _StageName.text = StrDictionary.GetFormatStr(showItem._StageRecord.Name);
 
-        int stageID = int.Parse(showItem.Id);
-        if (RoleData.SelectRole._CombatValue < showItem.Combat)
+        int stageID = showItem._StageIdx;
+        int combatLimit = GameDataValue.GetBossStageLimitCombat(showItem._Level);
+        if (RoleData.SelectRole._CombatValue < combatLimit)
         {
-            _ConditionTips = CommonDefine.GetEnableRedStr(0) + StrDictionary.GetFormatStr(71104, showItem.Combat) + "</color>";
+            _ConditionTips = CommonDefine.GetEnableRedStr(0) + StrDictionary.GetFormatStr(71104, combatLimit) + "</color>";
         }
         else if (ActData.Instance._BossStageIdx + 1 < stageID)
         {
-            _ConditionTips = StrDictionary.GetFormatStr(71104, showItem.Combat);
+            _ConditionTips = StrDictionary.GetFormatStr(71104, combatLimit);
+        }
+        else
+        {
+            _ConditionTips = "";
         }
         _StageCondition.text = _ConditionTips;
 
@@ -52,7 +60,7 @@ public class UIBossStageInfoItem : UIStageInfoItem
     {
         if (_LockedGO.activeSelf)
         {
-            int stageId = int.Parse(_ShowBossItem.Id);
+            int stageId = _ShowBossItem._StageIdx;
             if (ActData.Instance._BossStageIdx < stageId)
             {
                 UIMessageTip.ShowMessageTip(71102);

@@ -68,12 +68,22 @@ public class ItemBase : SaveItemBase
 
     public virtual string GetNameWithColor()
     {
-        return CommonDefine.GetQualityColorStr(CommonItemRecord.Quality) + StrDictionary.GetFormatStr(CommonItemRecord.Name) + "</color>";
+        return CommonDefine.GetQualityColorStr(CommonItemRecord.Quality) + GetName() + "</color>";
     }
 
     public virtual string GetDesc()
     {
         return StrDictionary.GetFormatStr(CommonItemRecord.DescStrDict);
+    }
+
+    public virtual ITEM_QUALITY GetQuality()
+    {
+        return CommonItemRecord.Quality;
+    }
+
+    public virtual int GetLevel()
+    {
+        return 1;
     }
 
     public bool IsVolid()
@@ -111,11 +121,14 @@ public class ItemBase : SaveItemBase
         return Math.Max(0, num);
     }
 
-    public int SetStackNum(int num)
+    public int SetStackNum(int num, bool needSave = true)
     {
         int temp = num;
         ItemStackNum = GetVolidItemNum(temp);
-        SaveClass(true);
+        if (needSave)
+        {
+            SaveClass(true);
+        }
         return ItemStackNum;
     }
 

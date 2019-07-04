@@ -160,6 +160,7 @@ public class UIContainerBase : UIBase
     protected List<ContentPos> _ValueList = new List<ContentPos>();         // 内容的数组
     protected UIItemBase.ItemClick _OnClickItem;        // 单个内容Item点击回调
     protected UIItemBase.PanelClick _OnClickPanel;      // ...
+    protected Action _OnInitFinish;
 
     public delegate void ShowItemFinish();
     protected ShowItemFinish m_ShowItemFinish = null;

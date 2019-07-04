@@ -234,16 +234,23 @@ public class SummonSkillData : SaveItemBase
         RefreshLevel();
     }
 
-   
+
 
     #endregion
 
     #region lottery
 
+    public class LotteryResult
+    {
+        public List<SummonMotionData> _SummonData;
+        public string _ReturnItem;
+        public int _ReturnItemNum;
+    }
+
     public static string _GoldCostItem = "1200001";
     public static string _DiamondCostItem = "1200002";
 
-    public List<SummonMotionData> LotteryGold(int buyTimes)
+    public LotteryResult LotteryGold(int buyTimes)
     {
         var needGold = GetExCostGold(buyTimes);
         if (PlayerDataPack.Instance.Gold < needGold)
@@ -274,12 +281,20 @@ public class SummonSkillData : SaveItemBase
         }
 
         int exp = GameDataValue.GetSummonExp(SummonLevel, true);
-        AddSummonExp(exp * buyTimes);
+        //AddSummonExp(exp * buyTimes);
 
-        return AddLotteryItems(0, buyTimes);
+        var getSummonDatas = AddLotteryItems(0, buyTimes);
+        var returnNum = GetReturnNum(getSummonDatas, 0);
+
+        LotteryResult result = new LotteryResult();
+        result._SummonData = getSummonDatas;
+        result._ReturnItem = _GoldCostItem;
+        result._ReturnItemNum = returnNum;
+
+        return result;
     }
 
-    public List<SummonMotionData> LotteryDiamond(int buyTimes)
+    public LotteryResult LotteryDiamond(int buyTimes)
     {
         var needGold = GetExCostDiamond(buyTimes);
         if (PlayerDataPack.Instance.Diamond < needGold)
@@ -310,9 +325,17 @@ public class SummonSkillData : SaveItemBase
         }
 
         int exp = GameDataValue.GetSummonExp(SummonLevel, false);
-        AddSummonExp(exp * buyTimes);
+        //AddSummonExp(exp * buyTimes);
 
-        return AddLotteryItems(1, buyTimes);
+        var getSummonDatas = AddLotteryItems(1, buyTimes);
+        var returnNum = GetReturnNum(getSummonDatas, 1);
+
+        LotteryResult result = new LotteryResult();
+        result._SummonData = getSummonDatas;
+        result._ReturnItem = _DiamondCostItem;
+        result._ReturnItemNum = returnNum;
+
+        return result;
     }
 
     public int GetExCostGold(int buyTimes)
@@ -380,6 +403,44 @@ public class SummonSkillData : SaveItemBase
 
 
         return summonData;
+    }
+
+    public int GetReturnNum(List<SummonMotionData> lotteryDatas, int isGold)
+    {
+        int rareCnt = 0;
+        foreach (var lotteryData in lotteryDatas)
+        {
+            if (isGold == 0 && lotteryData.SummonRecord.Quality == ITEM_QUALITY.PURPER)
+            {
+                ++rareCnt;
+            }
+            else if (isGold == 1 && lotteryData.SummonRecord.Quality == ITEM_QUALITY.ORIGIN)
+            {
+                ++rareCnt;
+            }
+        }
+
+        int returnNum = 0;
+        if (rareCnt == 0)
+            returnNum = 2;
+        else if (rareCnt == 1)
+            returnNum = 1;
+        else
+            returnNum = 0;
+
+        if (returnNum == 0)
+            return returnNum;
+
+        if (isGold == 0)
+        {
+            BackBagPack.Instance.PageItems.AddItem(_GoldCostItem, returnNum);
+        }
+        else if(isGold == 1)
+        {
+            BackBagPack.Instance.PageItems.AddItem(_DiamondCostItem, returnNum);
+        }
+
+        return returnNum;
     }
 
     #endregion
@@ -555,7 +616,7 @@ public class SummonSkillData : SaveItemBase
 
         _SummonMatList.SaveClass(true);
         //summonData.AddExp(exp);
-        summonData.AddStarExp(starCnt);
+        //summonData.AddStarExp(starCnt);
         summonData.SaveClass(true);
 
         RefreshUsingIdx();
@@ -566,6 +627,24 @@ public class SummonSkillData : SaveItemBase
         return exp;
     }
 
+    public bool StarUpSummonItem(SummonMotionData summonData)
+    {
+        var matItem = _SummonMatList.GetItem(summonData.ItemDataID);
+        if (matItem == null)
+            return false;
+
+        int starExp = matItem.ItemStackNum;
+        int canAddExp = summonData.GetCanAddExp();
+        starExp = canAddExp > starExp ? starExp : canAddExp;
+
+        _SummonMatList.DecItem(summonData.ItemDataID, starExp);
+        _SummonMatList.SaveClass(true);
+
+        summonData.AddStarExp(starExp);
+        summonData.SaveClass(true);
+        return true;
+    }
+
     public int GetItemsExp(Dictionary<SummonMotionData, int> expItems)
     {
         int exp = 0;
@@ -573,10 +652,29 @@ public class SummonSkillData : SaveItemBase
         foreach(var expItem in expItems)
         {
             //exp += (expItem.Key.Exp + (int)expItem.Key.SummonRecord.Quality * 2 + 1) * expItem.Value;
-            exp += ((int)expItem.Key.SummonRecord.Quality + 1) * expItem.Value;
+            exp += (GetSummonExpByQuality(expItem.Key.SummonRecord.Quality)) * expItem.Value;
         }
 
         return exp;
+    }
+
+    public static int GetSummonExpByQuality(ITEM_QUALITY quality)
+    {
+        switch (quality)
+        {
+            case ITEM_QUALITY.WHITE:
+                return 10;
+            case ITEM_QUALITY.GREEN:
+                return 20;
+            case ITEM_QUALITY.BLUE:
+                return 50;
+            case ITEM_QUALITY.PURPER:
+                return 100;
+            case ITEM_QUALITY.ORIGIN:
+                return 200;
+        }
+
+        return 10;
     }
 
     public bool CanBeStage(SummonMotionData motionData)

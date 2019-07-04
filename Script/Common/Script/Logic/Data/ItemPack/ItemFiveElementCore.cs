@@ -55,7 +55,7 @@ public class ItemFiveElementCore : ItemFiveElement
         }
     }
     
-    public string GetElementNameWithColor()
+    public override string GetElementNameWithColor()
     {
         string equipName = StrDictionary.GetFormatStr(CommonItemRecord.NameStrDict);
         return CommonDefine.GetQualityColorStr(FiveElementCoreRecord.Quality) + equipName + "</color>";
@@ -162,6 +162,15 @@ public class ItemFiveElementCore : ItemFiveElement
         }
 
         return desc;
+    }
+
+    #endregion
+
+    #region 
+
+    public override ITEM_QUALITY GetQuality()
+    {
+        return FiveElementCoreRecord.Quality;
     }
 
     #endregion

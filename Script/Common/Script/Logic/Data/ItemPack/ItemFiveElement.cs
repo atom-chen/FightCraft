@@ -19,14 +19,18 @@ public class ItemFiveElement : ItemBase
 
     #region elevemt data
 
-    private static int MAX_INT_CNT = 2;
+    private static int MAX_INT_CNT = 5;
     public List<int> DynamicDataInt
     {
         get
         {
             if (_DynamicDataInt == null || _DynamicDataInt.Count == 0)
             {
-                _DynamicDataInt = new List<int>() { 0, 0, 0, 0 };
+                _DynamicDataInt = new List<int>();
+                for (int i = 0; i < MAX_INT_CNT; ++i)
+                {
+                    _DynamicDataInt.Add(0);
+                }
             }
             else if (_DynamicDataInt.Count < MAX_INT_CNT)
             {
@@ -43,21 +47,79 @@ public class ItemFiveElement : ItemBase
     {
         get
         {
-            if (DynamicDataInt.Count < 2)
-            {
-                DynamicDataInt.Add(0);
-            }
             return DynamicDataInt[1];
         }
         set
         {
-            if (DynamicDataInt.Count <2)
-            {
-                DynamicDataInt.Add(0);
-            }
             DynamicDataInt[1] = value;
         }
     }
+
+    public static int _MAX_LOCK_NUM = 3;
+    private List<int> _AttrLock;
+    public List<int> AttrLock
+    {
+        get
+        {
+            if(_AttrLock == null)
+            {
+                _AttrLock = new List<int>();
+                for (int i = 0; i < _MAX_LOCK_NUM; ++i)
+                {
+                    _AttrLock.Add(DynamicDataInt[2 + i]);
+                }
+            }
+            return _AttrLock;
+        }
+    }
+    public bool IsAttrLock(int idx)
+    {
+        return AttrLock.Contains(idx + 1);
+    }
+    public void ClearLock()
+    {
+        for (int i = 0; i < AttrLock.Count; ++i)
+        {
+            AttrLock[i] = 0;
+        }
+    }
+    public bool SetAttrLock(int idx, bool isLock)
+    {
+        int index = idx + 1;
+        if (isLock)
+        {
+            if (IsAttrLock(idx))
+                return false;
+            for (int i = 0; i < AttrLock.Count; ++i)
+            {
+                if (AttrLock[i] == 0)
+                {
+                    AttrLock[i] = index;
+                    DynamicDataInt[2 + i] = AttrLock[i];
+                    SaveClass(false);
+                    return true;
+                }
+            }
+        }
+        else
+        {
+            if (!IsAttrLock(idx))
+                return false;
+            for (int i = 0; i < AttrLock.Count; ++i)
+            {
+                if (AttrLock[i] == index)
+                {
+                    AttrLock[i] = 0;
+                    DynamicDataInt[2 + i] = AttrLock[i];
+                    SaveClass(false);
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+    
 
     private FiveElementRecord _FiveElementRecord;
     public FiveElementRecord FiveElementRecord
@@ -130,7 +192,7 @@ public class ItemFiveElement : ItemBase
         return ITEM_QUALITY.WHITE;
     }
 
-    public string GetElementNameWithColor()
+    public virtual string GetElementNameWithColor()
     {
         string equipName = StrDictionary.GetFormatStr(CommonItemRecord.NameStrDict);
         return CommonDefine.GetQualityColorStr(GetElementQuality()) + equipName + "</color>";
@@ -289,6 +351,10 @@ public class ItemFiveElement : ItemBase
         _EquipExAttrs = null;
     }
 
+    public override int GetLevel()
+    {
+        return Level;
+    }
     #endregion
 
 

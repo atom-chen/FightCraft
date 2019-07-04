@@ -55,7 +55,7 @@ public class UIGemTooltips : UIItemTooltips
         _ShowItem = _ItemGem;
         _GemInfo.ShowTips(_ItemGem);
 
-        _CostMat.ShowCostCurrency(_ItemGem.ItemDataID, GemData.Instance.GetLevelCostMat(_ItemGem));
+        _CostMat.ShowCostCurrency(_ItemGem.ItemDataID, GemData.Instance.GetLevelCostMat(_ItemGem), _ItemGem.ItemStackNum);
 
         _HideAfterBtn = false;
     }

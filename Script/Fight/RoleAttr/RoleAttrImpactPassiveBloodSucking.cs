@@ -12,8 +12,8 @@ public class RoleAttrImpactPassiveBloodSucking : RoleAttrImpactPassive
 
         var attrTab = Tables.TableReader.AttrValue.GetRecord(args[0].ToString());
 
-        _ActRate = attrTab.AttrParams[0];
-        _BloodRate = GameDataValue.ConfigIntToFloat(attrTab.AttrParams[1]);
+        _ActRate = GetValueFromTab(attrTab, args[1]);
+        _BloodRate = GetValue2FromTab(attrTab, args[1]);
         _ActCD = 0;
     }
 
@@ -36,9 +36,9 @@ public class RoleAttrImpactPassiveBloodSucking : RoleAttrImpactPassive
         List<int> copyAttrs = new List<int>(attrParams);
         int attrDescID = copyAttrs[0];
         var attrTab = Tables.TableReader.AttrValue.GetRecord(attrDescID.ToString());
-        var value1 = attrTab.AttrParams[0];
-        var value2 = attrTab.AttrParams[1];
-        var strFormat = StrDictionary.GetFormatStr(attrDescID, GameDataValue.ConfigFloatToPersent(value1), GameDataValue.ConfigIntToPersent((int)value2));
+        var value1 = GetValueFromTab(attrTab, attrParams[1]);
+        var value2 = GetValue2FromTab(attrTab, attrParams[1]);
+        var strFormat = StrDictionary.GetFormatStr(attrTab.StrParam[2], GameDataValue.ConfigIntToPersent(value1), GameDataValue.ConfigFloatToPersent(value2));
         return strFormat;
     }
 
@@ -48,17 +48,17 @@ public class RoleAttrImpactPassiveBloodSucking : RoleAttrImpactPassive
     private int _ActRate;
     private float _BloodRate;
 
-    private static float GetValueFromTab(AttrValueRecord attrRecord, int level)
+    private static int GetValueFromTab(AttrValueRecord attrRecord, int level)
     {
-        var theValue = GameDataValue.ConfigIntToFloat(attrRecord.AttrParams[0] + attrRecord.AttrParams[1] * level);
-        theValue = Mathf.Min(theValue, GameDataValue.ConfigIntToFloat(attrRecord.AttrParams[2]));
+        var theValue = (attrRecord.AttrParams[0] + attrRecord.AttrParams[1] * level);
+        theValue = Mathf.Min(theValue, (attrRecord.AttrParams[2]));
         return theValue;
     }
 
     private static float GetValue2FromTab(AttrValueRecord attrRecord, int level)
     {
-        var theValue = (attrRecord.AttrParams[3] + attrRecord.AttrParams[4] * level);
-        theValue = Mathf.Min(theValue, (attrRecord.AttrParams[5]));
+        var theValue = GameDataValue.ConfigIntToFloat(attrRecord.AttrParams[3] + attrRecord.AttrParams[4] * level);
+        theValue = Mathf.Min(theValue, GameDataValue.ConfigIntToFloat(attrRecord.AttrParams[5]));
         return theValue;
     }
 

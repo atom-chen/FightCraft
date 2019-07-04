@@ -269,37 +269,7 @@ public class TestFight : MonoBehaviour
         //equip
         foreach (var itemEquip in BackBagPack.Instance.PageEquips._PackItems)
         {
-            if (!itemEquip.IsVolid())
-                continue;
-
-            var equipedItem = RoleData.SelectRole.GetEquipItem(itemEquip.EquipItemRecord.Slot);
-            bool changeEquip = false;
-            if (equipedItem.IsVolid())
-            {
-                //if (itemEquip.EquipItemRecord.Slot == EQUIP_SLOT.WEAPON)
-                {
-                    if (itemEquip.EquipLevel > equipedItem.EquipLevel)
-                    {
-                        changeEquip = true;
-                    }
-                    else if(itemEquip.EquipQuality > equipedItem.EquipQuality)
-                    {
-                        changeEquip = true;
-                    }
-                    
-                }
-                //else
-                //{
-                //    if (itemEquip.CombatValue > equipedItem.CombatValue)
-                //        changeEquip = true;
-                //}
-            }
-            else
-            {
-                changeEquip = true;
-            }
-
-            if (changeEquip)
+            if (BackBagPack.Instance.IsEquipBetter(itemEquip))
             {
                 RoleData.SelectRole.PutOnEquip(itemEquip.EquipItemRecord.Slot, itemEquip);
             }
@@ -321,24 +291,9 @@ public class TestFight : MonoBehaviour
                     continue;
                 }
             }
-
-            if (itemEquip.EquipItemRecord.Slot == EQUIP_SLOT.WEAPON && itemEquip.RequireLevel > RoleData.SelectRole._RoleLevel)
-            {
-                if (storeWeapon == null)
-                {
-                    storeWeapon = itemEquip;
-                    continue;
-                }
-                else if(storeWeapon.BaseAttack < itemEquip.BaseAttack)
-                {
-                    ShopData.Instance.SellItem(storeWeapon, false);
-                    storeWeapon = itemEquip;
-                    continue;
-                }
-            }
-
-            ShopData.Instance.SellItem(itemEquip, false);
         }
+
+        BackBagPack.Instance.SellEquips(BackBagPack.Instance.PageEquips._PackItems);
     }
 
     public static void DelLevel()

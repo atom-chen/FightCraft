@@ -29,7 +29,7 @@ public class DamagePanel : InstanceBase<DamagePanel>
         var gameobj = ResourcePool.Instance.CreateFightSceneObj("UI/LogicUI/DamagePanel/DamagePanel");
     }
 
-    public static void ShowItem(Vector3 showWorldPos, int showValue1, int showValue2, ShowDamageType showType, int baseSize)
+    public static void ShowItem(Vector3 showWorldPos, int showValue1, int showValue2, RoleAttrManager.ShowDamageType showType, int baseSize)
     {
 
         var instance = DamagePanel.Instance;
@@ -51,7 +51,7 @@ public class DamagePanel : InstanceBase<DamagePanel>
 
     public DamageItem _UIItemPrefab;
 
-    private void ShowItemInner(Vector3 showWorldPos, int showValue1, int showValue2, ShowDamageType showType, int baseSize)
+    private void ShowItemInner(Vector3 showWorldPos, int showValue1, int showValue2, RoleAttrManager.ShowDamageType showType, int baseSize)
     {
         var itemBase = ResourcePool.Instance.GetIdleUIItem<DamageItem>(_UIItemPrefab.gameObject);
         itemBase.transform.SetParent(transform);

@@ -43,7 +43,7 @@ public class MonsterDrop
             dropItem.InitDrop(drop);
         }
 
-        int dropExp = GameDataValue.GetMonsterExp(monsterMotion.RoleAttrManager.MotionType, monsterMotion.RoleAttrManager.Level, RoleData.SelectRole._RoleLevel, ActData.Instance._StageMode);
+        int dropExp = GameDataValue.GetMonsterExp(monsterMotion.RoleAttrManager.MotionType, monsterMotion.RoleAttrManager.Level, RoleData.SelectRole.RoleLevel, ActData.Instance._StageMode);
         RoleData.SelectRole.AddExp(dropExp);
     }
 
@@ -63,7 +63,7 @@ public class MonsterDrop
             }
         }
 
-        var goldCnt = GameDataValue.GetGoldDropCnt(monsterType, level);
+        var goldCnt = GameDataValue.GetGoldDropCnt(monsterType, level, stageType);
         for (int i = 0; i < goldCnt; ++i)
         {
             var goldNum = GameDataValue.GetGoldDropNum(level);
@@ -74,28 +74,51 @@ public class MonsterDrop
             DropGold += goldNum;
         }
 
-        var dropGem = GameDataValue.GetGemMonsterDrop(level);
-        if(dropGem != null)
+        var dropGem = GameDataValue.GetGemMonsterDrop(level, stageType);
+        if (dropGem != null)
         {
             DropItemData dropItem = new DropItemData();
             dropItem._ItemBase = dropGem;
             dropList.Add(dropItem);
+
+            //Debug.Log("Drop Gem !!");
         }
 
-        var dropElement = GameDataValue.GetMonsterDropElement(level);
+        var dropElement = GameDataValue.GetMonsterDropElement(level, stageType);
         if (dropElement != null)
         {
             DropItemData dropItem = new DropItemData();
             dropItem._ItemBase = dropElement;
             dropList.Add(dropItem);
+
+            //Debug.Log("Drop Element !!");
         }
 
-        var dropElementCore = GameDataValue.GetMonsterDropElementCore(level);
+        var dropElementCore = GameDataValue.GetMonsterDropElementCore(level, stageType);
         if (dropElementCore != null)
         {
             DropItemData dropItem = new DropItemData();
             dropItem._ItemBase = dropElementCore;
             dropList.Add(dropItem);
+        }
+
+        if (monsterType == MOTION_TYPE.Hero)
+        { 
+            var dropBossTicket = GameDataValue.GetMonsterDropBossTicket(level, stageType);
+            if (dropBossTicket != null)
+            {
+                DropItemData dropItem = new DropItemData();
+                dropItem._ItemBase = dropBossTicket;
+                dropList.Add(dropItem);
+            }
+
+            var dropActTicket = GameDataValue.GetMonsterDropActTicket(level, stageType);
+            if (dropActTicket != null)
+            {
+                DropItemData dropItem = new DropItemData();
+                dropItem._ItemBase = dropActTicket;
+                dropList.Add(dropItem);
+            }
         }
 
         return dropList;
@@ -148,6 +171,10 @@ public class MonsterDrop
             else if (dropItemData._ItemBase is ItemFiveElement)
             {
                 FiveElementData.Instance.AddElementItem(dropItemData._ItemBase as ItemFiveElement);
+            }
+            else
+            {
+                BackBagPack.Instance.PageItems.AddItem(dropItemData._ItemBase.ItemDataID, dropItemData._ItemBase.ItemStackNum);
             }
 
         }

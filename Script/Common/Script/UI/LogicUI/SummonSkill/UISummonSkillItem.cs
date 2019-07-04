@@ -79,7 +79,7 @@ public class UISummonSkillItem : UIItemSelect
         }
         else
         {
-            _Level.text = "Lv." + _SummonMotionData.Level;
+            _Level.text = "Lv." + SummonSkillData.Instance.SummonLevel;
             for (int i = 0; i < _Stars.Length; ++i)
             {
                 if (i < _SummonMotionData.StarLevel)

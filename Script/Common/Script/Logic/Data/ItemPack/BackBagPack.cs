@@ -149,5 +149,78 @@ public class BackBagPack : DataPackBase
         PageItems.SortStack();
         PageItems.SortEmpty();
     }
+
+    public void SellEquips(List<ItemBase> items)
+    {
+        int totalMoney = 0;
+        for (int i = 0; i < items.Count; ++i)
+        {
+            ItemEquip itemEquip = items[i] as ItemEquip;
+            if (itemEquip != null)
+            {
+                totalMoney += GameDataValue.GetEquipSellGold(itemEquip);
+
+                BackBagPack.Instance.PageEquips.DecItem(itemEquip);
+                BackBagPack.Instance.PageEquips.SaveClass(true);
+            }
+        }
+
+        PlayerDataPack.Instance.AddGold(totalMoney);
+    }
+
+    public void SellEquips(List<ItemEquip> items)
+    {
+        int totalMoney = 0;
+        for (int i = 0; i < items.Count; ++i)
+        {
+            ItemEquip itemEquip = items[i] as ItemEquip;
+            if (itemEquip != null)
+            {
+                totalMoney += GameDataValue.GetEquipSellGold(itemEquip);
+
+                BackBagPack.Instance.PageEquips.DecItem(itemEquip);
+                BackBagPack.Instance.PageEquips.SaveClass(true);
+            }
+        }
+
+        PlayerDataPack.Instance.AddGold(totalMoney);
+    }
+
+    #region equip tip
+
+    public bool IsEquipBetter(ItemEquip equip)
+    {
+        if (equip == null || !equip.IsVolid())
+            return false;
+
+        if (!RoleData.SelectRole.IsCanEquipItem(equip.EquipItemRecord.Slot, equip))
+        {
+            return false;
+        }
+
+        var curEquip = RoleData.SelectRole.GetEquipItem(equip.EquipItemRecord.Slot);
+        if (curEquip == null || !curEquip.IsVolid())
+        {
+            return true;
+        }
+
+        if (equip.CombatValue > curEquip.CombatValue)
+            return true;
+
+        return false;
+    }
+
+    public bool IsAnyEquipBetter()
+    {
+        foreach (var equipItem in PageEquips._PackItems)
+        {
+            if (IsEquipBetter(equipItem))
+                return true;
+        }
+
+        return false;
+    }
+
+    #endregion
 }
 

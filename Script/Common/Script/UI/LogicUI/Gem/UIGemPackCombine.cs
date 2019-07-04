@@ -17,6 +17,8 @@ public class UIGemPackCombine : UIBase
     {
         ShowPackItems();
         InitCopyPack();
+
+        //UIGemPack.RefreshPack();
     }
 
     private void ShowPackItems()
@@ -44,29 +46,42 @@ public class UIGemPackCombine : UIBase
     private void ShowGemTooltipsLeft(UIItemBase uiItem)
     {
         UIGemItem uiGemItem = uiItem as UIGemItem;
+        if (uiGemItem == null || uiGemItem.ItemGem == null)
+            return;
+
         int idx = _CombinePack.IndexOf(uiGemItem);
-        _CopyPack[idx].SetTempNum(_CopyPack[idx].TempNum + 1);
-        uiGemItem.ShowGem(null);
+        _CopyPack[idx] = null;
+        _CombineGems[idx] = null;
+        uiGemItem.ShowGem(null, 0);
+
+        RefreshItems();
     }
 
     public void ShowGemTooltipsRight(UIGemItem gemItem)
     {
+        if (gemItem.TempNum == 0 && !gemItem.ItemGem.IsGemExtra())
+            return;
+
+        if (gemItem.ItemGem.IsGemExtra() && _CopyPack.Contains(gemItem))
+            return;
+
         int emptyPos = -1;
         for (int i = 0; i < _CombinePack.Count; ++i)
         {
             if (_CombinePack[i].ItemGem == null)
             {
                 emptyPos = i;
+                break;
             }
         }
 
         if (emptyPos < 0)
             return;
 
-        gemItem.SetTempNum(gemItem.TempNum - 1);
-        _CombinePack[emptyPos].ShowGem(gemItem.ItemGem);
-        _CombinePack[emptyPos].SetTempNum(-1);
+        _CombinePack[emptyPos].ShowGem(gemItem.ItemGem, 0);
+        _CombineGems[emptyPos] = gemItem.ItemGem;
         _CopyPack[emptyPos] = gemItem;
+        RefreshItems();
     }
 
     public void AutoFitCombine(Tables.GemTableRecord resultGemRecord)
@@ -98,6 +113,7 @@ public class UIGemPackCombine : UIBase
     #region 
 
     public List<UIGemItem> _CombinePack;
+    public List<ItemGem> _CombineGems;
 
     private List<UIGemItem> _CopyPack;
 
@@ -106,22 +122,25 @@ public class UIGemPackCombine : UIBase
         //if (_CopyPack == null)
         {
             _CopyPack = new List<UIGemItem>();
+            _CombineGems = new List<ItemGem>();
             for (int i = 0; i < _CombinePack.Count; ++i)
             {
                 _CopyPack.Add(null);
+                _CombineGems.Add(null);
             }
         }
     }
 
     private void ResetPacket()
     {
-        RefreshItems();
-        InitCopyPack();
-
         for (int i = 0; i < _CombinePack.Count; ++i)
         {
-            _CombinePack[i].ShowGem(null);
+            _CombinePack[i].ShowGem(null, 0);
         }
+
+        InitCopyPack();
+        RefreshItems();
+        
     }
 
     public void OnBtnCombine()
@@ -135,7 +154,7 @@ public class UIGemPackCombine : UIBase
             }
         }
 
-        if (GemData.Instance.GemCombine(combines))
+        if (GemData.Instance.CombineV2(combines))
         {
             ResetPacket();
         }
@@ -148,22 +167,82 @@ public class UIGemPackCombine : UIBase
 
     public void OnBtnCombineAll()
     {
-        if (_CopyPack[0].ItemGem != null && _CopyPack[0].ItemGem.IsVolid()
-            && _CopyPack[0].ItemGem.ItemDataID == _CopyPack[1].ItemGem.ItemDataID
-            && _CopyPack[0].ItemGem.ItemDataID == _CopyPack[2].ItemGem.ItemDataID
-            )
+        //if (_CopyPack[0].ItemGem != null && _CopyPack[0].ItemGem.IsVolid()
+        //    && _CopyPack[0].ItemGem.ItemDataID == _CopyPack[1].ItemGem.ItemDataID
+        //    && _CopyPack[0].ItemGem.ItemDataID == _CopyPack[2].ItemGem.ItemDataID
+        //    )
+        //{
+        //    string dictStr = Tables.StrDictionary.GetFormatStr(30007, Tables.StrDictionary.GetFormatStr(_CopyPack[0].ItemGem.CommonItemRecord.NameStrDict));
+        //    UIMessageBox.Show(dictStr, () =>
+        //    {
+        //        GemData.Instance.GemCombineSameAll(_CopyPack[0].ItemGem);
+        //        ResetPacket();
+        //    }, null);
+
+        //}
+        //else
+        //{
+        //    UIMessageTip.ShowMessageTip(30008);
+        //}
+
+        for (int i = 0; i < _DefaultCombine.Count; ++i)
         {
-            string dictStr = Tables.StrDictionary.GetFormatStr(30007, Tables.StrDictionary.GetFormatStr(_CopyPack[0].ItemGem.CommonItemRecord.NameStrDict));
-            UIMessageBox.Show(dictStr, () =>
-            {
-                GemData.Instance.GemCombineSameAll(_CopyPack[0].ItemGem);
-                ResetPacket();
-            }, null);
-            
+            TestCombineAll(i);
         }
-        else
+
+    }
+
+    private List<List<string>> _DefaultCombine = new List<List<string>>()
+    {
+        new List<string>() { "70001", "70002" },
+        new List<string>() { "70007", "70003" },
+        new List<string>() { "70008", "70004" },
+        new List<string>() { "70009", "70005" },
+        new List<string>() { "70010", "70006" },
+    };
+
+    private void TestCombineAll(int idx)
+    {
+        List<string> defaultCombine = _DefaultCombine[idx];
+        List<ItemGem> combines = new List<ItemGem>();
+        while (true)
         {
-            UIMessageTip.ShowMessageTip(30008);
+            combines.Clear();
+            ItemGem gemItem1 = GemData.Instance.PackExtraGemDatas.GetItem(defaultCombine[0]);
+            ItemGem gemItemMat1 = GemData.Instance.PackGemDatas.GetItem(defaultCombine[0]);
+            ItemGem gemItemMat11 = GemData.Instance.PackGemDatas.GetItem(defaultCombine[1]);
+
+            if (gemItem1 == null)
+            {
+                if (gemItemMat1 != null && gemItemMat1.ItemStackNum >= 3)
+                {
+                    combines.Add(gemItemMat1);
+                    combines.Add(gemItemMat1);
+                    combines.Add(gemItemMat1);
+                    GemData.Instance.CombineV2(combines);
+                    continue;
+                }
+            }
+            else
+            {
+                if (gemItemMat1 != null && gemItemMat1.ItemStackNum >= 2)
+                {
+                    combines.Add(gemItem1);
+                    combines.Add(gemItemMat1);
+                    combines.Add(gemItemMat1);
+                    GemData.Instance.CombineV2(combines);
+                    continue;
+                }
+                else if (gemItemMat11 != null && gemItemMat11.ItemStackNum >= 2)
+                {
+                    combines.Add(gemItem1);
+                    combines.Add(gemItemMat11);
+                    combines.Add(gemItemMat11);
+                    GemData.Instance.CombineV2(combines);
+                    continue;
+                }
+            }
+            return;
         }
     }
     #endregion

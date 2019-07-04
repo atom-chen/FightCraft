@@ -130,6 +130,26 @@ namespace Tables
                 pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[30]));
                 pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[31]));
                 pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[32]));
+                pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[33]));
+                pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[34]));
+                pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[35]));
+                pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[36]));
+                pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[37]));
+                pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[38]));
+                pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[39]));
+                pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[40]));
+                pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[41]));
+                pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[42]));
+                pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[43]));
+                pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[44]));
+                pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[45]));
+                pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[46]));
+                pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[47]));
+                pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[48]));
+                pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[49]));
+                pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[50]));
+                pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[51]));
+                pair.Value.Values.Add(TableReadBase.ParseInt(pair.Value.ValueStr[52]));
             }
         }
     }

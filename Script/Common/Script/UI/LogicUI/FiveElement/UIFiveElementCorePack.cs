@@ -18,6 +18,8 @@ public class UIFiveElementCorePack : UIBase
 
     private ItemFiveElementCore _ElementItem;
 
+    private int _ShowingType;
+
     public void RefreshInfo()
     {
         ShowItemInfo(_ElementItem);
@@ -27,6 +29,8 @@ public class UIFiveElementCorePack : UIBase
 
     public void ShowItemByIndex(int idx)
     {
+        _ShowingType = idx;
+        ShowPackItems();
         ShowItemInfo(FiveElementData.Instance._UsingCores[idx]);
     }
 
@@ -63,7 +67,18 @@ public class UIFiveElementCorePack : UIBase
 
     private void ShowPackItems()
     {
-        _CorePackContainer.InitSelectContent(FiveElementData.Instance._PackCores._PackItems, null, OnCoreItemClick);
+        List<ItemFiveElementCore> showCores = new List<ItemFiveElementCore>();
+        foreach (var itemCore in FiveElementData.Instance._PackCores._PackItems)
+        {
+            if (!itemCore.IsVolid())
+                continue;
+
+            if ((int)itemCore.FiveElementCoreRecord.ElementType == _ShowingType)
+            {
+                showCores.Add(itemCore);
+            }
+        }
+        _CorePackContainer.InitSelectContent(showCores, null, OnCoreItemClick);
     }
 
     private void OnCoreItemClick(object itemObj)
@@ -103,6 +118,38 @@ public class UIFiveElementCorePack : UIBase
         }
     }
 
+    public void OnBtnSell()
+    {
+        List<Tables.ITEM_QUALITY> equipQualities = new List<Tables.ITEM_QUALITY>()
+        {
+            Tables.ITEM_QUALITY.WHITE,
+            Tables.ITEM_QUALITY.GREEN,
+            Tables.ITEM_QUALITY.BLUE,
+            Tables.ITEM_QUALITY.PURPER,
+            Tables.ITEM_QUALITY.ORIGIN,
+        };
+        UISellShopPack.ShowSellQualitySync(FiveElementData.Instance._PackCores.ToItemBases(), equipQualities, GetSellPrice, SellEquips);
+    }
+
+    public int GetSellPrice(List<ItemBase> items)
+    {
+        int totalMoney = 0;
+        for (int i = 0; i < items.Count; ++i)
+        {
+            ItemFiveElementCore itemElement = items[i] as ItemFiveElementCore;
+            if (itemElement != null)
+            {
+                totalMoney += FiveElementData.Instance.GetCoreSellMoney(itemElement);
+            }
+        }
+
+        return totalMoney;
+    }
+
+    public void SellEquips(List<ItemBase> items)
+    {
+        FiveElementData.Instance.SellCores(items);
+    }
     #endregion
 
 }

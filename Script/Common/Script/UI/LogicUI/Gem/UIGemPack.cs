@@ -62,17 +62,46 @@ public class UIGemPack : UIBase
         instance._CombinePanel.AutoFitCombine(resultRecord);
     }
 
+    public static UIGemPackPunch GetUIGemPunch()
+    {
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIGemPack>("LogicUI/Gem/UIGemPack");
+        if (instance == null)
+            return null;
+
+        if (!instance.isActiveAndEnabled)
+            return null;
+
+        return instance._PunchPanel;
+    }
+
+    public static UIGemPackCombine GetUIGemCombine()
+    {
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIGemPack>("LogicUI/Gem/UIGemPack");
+        if (instance == null)
+            return null;
+
+        if (!instance.isActiveAndEnabled)
+            return null;
+
+        return instance._CombinePanel;
+    }
+
     #endregion
 
     public void OnTagSelect(int page)
     {
+        _GemPackPanel.SetActive(true);
         if (page == 2)
         {
             _GemPackPanel.SetActive(false);
         }
-        else
+        else if (page == 0)
         {
-            _GemPackPanel.SetActive(true);
+            RefreshForPunch();
+        }
+        else if (page == 1)
+        {
+            RefreshForCombine();
         }
     }
 
@@ -80,7 +109,7 @@ public class UIGemPack : UIBase
 
     public UIContainerSelect _GemPack;
 
-    //public UITagPanel _TagPanel;
+    public UITagPanel _TagPanel;
     public UIGemPackPunch _PunchPanel;
     public UIGemPackCombine _CombinePanel;
     public GameObject _GemPackPanel;
@@ -89,13 +118,44 @@ public class UIGemPack : UIBase
     {
         base.Show(hash);
 
-        _GemPack.InitContentItem(GemData.Instance.PackGemDatas._PackItems, OnPackItemClick, null, OnPackPanelItemClick);
+        //_GemPack.InitContentItem(GemData.Instance.PackGemDatas._PackItems, OnPackItemClick, null, OnPackPanelItemClick);
+        _TagPanel.ShowPage(0);
+        RefreshForPunch();
+
+        RefreshTips();
     }
 
     public void Refresh()
     {
+        if (_PunchPanel.isActiveAndEnabled)
+        {
+            RefreshForPunch();
+        }
+        else if (_CombinePanel.isActiveAndEnabled)
+        {
+            RefreshForCombine();
+        }
+        RefreshTips();
+    }
+
+    public void RefreshForPunch()
+    {
         //_GemPack.RefreshItems();
-        _GemPack.InitContentItem(GemData.Instance.PackGemDatas._PackItems, OnPackItemClick, null, OnPackPanelItemClick);
+        Hashtable hash = new Hashtable();
+        hash.Add("RefreshType", UIGemItem.GemRefreshType.PUNCH);
+        List<ItemGem> combineItems = new List<ItemGem>(GemData.Instance.PackExtraGemDatas._PackItems);
+        combineItems.AddRange(GemData.Instance.PackGemDatas._PackItems);
+        _GemPack.InitContentItem(combineItems, OnPackItemClick, hash, OnPackPanelItemClick);
+    }
+
+    public void RefreshForCombine()
+    {
+        //_GemPack.RefreshItems();
+        Hashtable hash = new Hashtable();
+        hash.Add("RefreshType", UIGemItem.GemRefreshType.COMBINE);
+        List<ItemGem> combineItems = new List<ItemGem>(GemData.Instance.PackExtraGemDatas._PackItems);
+        combineItems.AddRange(GemData.Instance.PackGemDatas._PackItems);
+        _GemPack.InitContentItem(combineItems, OnPackItemClick, hash, OnPackPanelItemClick);
     }
 
     private void OnPackItemClick(object gemItemObj)
@@ -104,8 +164,8 @@ public class UIGemPack : UIBase
         if (gemItem == null)
             return;
 
-        //int showingPage = _TagPanel.GetShowingPage();
-        //if (showingPage == 0)
+        int showingPage = _TagPanel.GetShowingPage();
+        if (showingPage == 0)
         {
             _PunchPanel.ShowGemTooltipsRight(gemItem);
         }
@@ -117,11 +177,11 @@ public class UIGemPack : UIBase
         if (gemItem == null)
             return;
 
-        //int showingPage = _TagPanel.GetShowingPage();
-        //if (showingPage == 1)
-        //{
-        //    _CombinePanel.ShowGemTooltipsRight(gemItem);
-        //}
+        int showingPage = _TagPanel.GetShowingPage();
+        if (showingPage == 1)
+        {
+            _CombinePanel.ShowGemTooltipsRight(gemItem);
+        }
     }
 
     #endregion
@@ -134,8 +194,25 @@ public class UIGemPack : UIBase
         Refresh();
     }
 
+    public void OnBtnLvUpAll()
+    {
+        GemData.Instance.AutoLevelAll();
+    }
+
     #endregion
 
+    #region redtip
+
+    public GameObject _EquipRedTips;
+    public GameObject _LvupRedTips;
+
+    public void RefreshTips()
+    {
+        _EquipRedTips.SetActive(GemData.Instance.IsAnyGemGanEquip());
+        _LvupRedTips.SetActive(GemData.Instance.IsAnyGemGanLvUp());
+    }
+
+    #endregion
 
 }
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Tables;
 using System;
 
-public class RoleData : SaveItemBase
+public class RoleData
 {
     //default info
     public string MainBaseName;
@@ -26,42 +26,55 @@ public class RoleData : SaveItemBase
         bool needSave = false;
         needSave |= InitLevel();
         needSave |= InitEquipList();
-
-        if (needSave)
-        {
-            SaveClass(true);
-        }
     }
 
     #region equipManager
 
-    [SaveField(1)]
-    public List<ItemEquip> _EquipList;
 
-    private bool InitEquipList()
+    private List<ItemEquip> _EquipList;
+    public List<ItemEquip> EquipList
     {
-        int equipSlotCnt = Enum.GetValues(typeof(EQUIP_SLOT)).Length;
-        if (_EquipList == null || _EquipList.Count != equipSlotCnt)
+        get
         {
             if (_EquipList == null)
             {
-                _EquipList = new List<ItemEquip>();
+                InitEquipList();
+            }
+            return _EquipList;
+        }
+    }
+
+    private bool InitEquipList()
+    {
+        int equipSlotCnt = Enum.GetValues(typeof(EQUIP_SLOT)).Length + 1;
+        if (PlayerDataPack.Instance._EquipList == null || PlayerDataPack.Instance._EquipList.Count != equipSlotCnt)
+        {
+            if (PlayerDataPack.Instance._EquipList == null)
+            {
+                PlayerDataPack.Instance._EquipList = new List<ItemEquip>();
             }
 
-            int startIdx = _EquipList.Count;
+            int startIdx = PlayerDataPack.Instance._EquipList.Count;
             for (int i = startIdx; i < equipSlotCnt; ++i)
             {
                 ItemEquip newItemEquip = new ItemEquip("-1");
                 //newItemEquip._SaveFileName = _SaveFileName + ".Equip" + i;
-                _EquipList.Add(newItemEquip);
+                PlayerDataPack.Instance._EquipList.Add(newItemEquip);
             }
-
-            var equipItem = ItemEquip.CreateBaseWeapon(Profession);
+            InitEquipFromPlayerData();
+            var equipItem = ItemEquip.CreateBaseWeapon(PROFESSION.BOY_DEFENCE);
             PutOnEquip(EQUIP_SLOT.WEAPON, equipItem);
+
+            var equipGirlItem = ItemEquip.CreateBaseWeapon(PROFESSION.GIRL_DOUGE);
+            PutOnEquip(EQUIP_SLOT.WEAPON, equipGirlItem);
 
             return true;
         }
-        foreach (var itemEquip in _EquipList)
+        else
+        {
+            InitEquipFromPlayerData();
+        }
+        foreach (var itemEquip in EquipList)
         {
             if (itemEquip.IsVolid())
             {
@@ -72,9 +85,38 @@ public class RoleData : SaveItemBase
         return false;
     }
 
+    private void InitEquipFromPlayerData()
+    {
+        _EquipList = new List<ItemEquip>();
+        int equipSlotCnt = Enum.GetValues(typeof(EQUIP_SLOT)).Length;
+        for (int i = 0; i < equipSlotCnt; ++i)
+        {
+            _EquipList.Add(PlayerDataPack.Instance._EquipList[i]);
+        }
+
+        if (Profession == PROFESSION.GIRL_DEFENCE || Profession == PROFESSION.GIRL_DOUGE)
+        {
+            _EquipList[0] = PlayerDataPack.Instance._EquipList[equipSlotCnt];
+        }
+        
+    }
+
     public ItemEquip GetEquipItem(EQUIP_SLOT equipSlot)
     {
-        return _EquipList[(int)equipSlot];
+        return EquipList[(int)equipSlot];
+    }
+
+    public ItemEquip GetEquipItemOtherWeaon()
+    {
+        if (Profession == PROFESSION.GIRL_DEFENCE || Profession == PROFESSION.GIRL_DOUGE)
+        {
+            return PlayerDataPack.Instance._EquipList[0];
+        }
+        else
+        {
+            int equipSlotCnt = Enum.GetValues(typeof(EQUIP_SLOT)).Length;
+            return PlayerDataPack.Instance._EquipList[equipSlotCnt];
+        }
     }
 
     public bool IsCanEquipItem(EQUIP_SLOT equipSlot, ItemEquip equipItem)
@@ -88,40 +130,68 @@ public class RoleData : SaveItemBase
         if (equipItem.EquipItemRecord.Slot != equipSlot)
             return false;
 
-        if (equipItem.RequireLevel > _RoleLevel)
+        if (equipItem.RequireLevel > RoleLevel)
         {
             return false;
         }
 
-        if (equipItem.EquipItemRecord.ProfessionLimit > 0 &&
-            ((equipItem.EquipItemRecord.ProfessionLimit >> (int)Profession) & 1) == 0)
-        {
-            return false;
-        }
+        //if (equipItem.EquipItemRecord.ProfessionLimit > 0 &&
+        //    ((equipItem.EquipItemRecord.ProfessionLimit >> (int)Profession) & 1) == 0)
+        //{
+        //    return false;
+        //}
 
         return true;
     }
 
-    public void PutOnEquip(EQUIP_SLOT equipSlot, ItemEquip equipItem)
+    public bool PutOnEquip(EQUIP_SLOT equipSlot, ItemEquip equipItem)
     {
         if (!IsCanEquipItem(equipSlot, equipItem))
-            return;
+            return false;
 
-        _EquipList[(int)equipSlot].ExchangeInfo(equipItem);
+        if (!equipItem.IsMatchRole(Profession))
+        {
+            if (equipSlot == EQUIP_SLOT.WEAPON)
+            {
+                if (Profession == PROFESSION.GIRL_DEFENCE || Profession == PROFESSION.GIRL_DOUGE)
+                {
+                    PlayerDataPack.Instance._EquipList[0].ExchangeInfo(equipItem);
+                }
+                else
+                {
+                    int equipSlotCnt = Enum.GetValues(typeof(EQUIP_SLOT)).Length;
+                    PlayerDataPack.Instance._EquipList[equipSlotCnt].ExchangeInfo(equipItem);
+                }
+            }
+        }
+        else
+        {
+            EquipList[(int)equipSlot].ExchangeInfo(equipItem);
+        }
 
         UIEquipPack.RefreshBagItems();
 
+        PlayerDataPack.Instance.SaveClass(true);
+
         CalculateAttr();
+
+        Hashtable hash = new Hashtable();
+        hash.Add("EquipInfo", equipItem);
+        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_EQUIP_PUT_ON, this, hash);
+
+        return true;
     }
 
     public void PutOffEquip(EQUIP_SLOT equipSlot, ItemEquip equipItem)
     {
-
+        EquipList[(int)equipSlot].CalculateCombatValue();
         var backPackPos = BackBagPack.Instance.AddEquip(equipItem);
 
         UIEquipPack.RefreshBagItems();
 
         CalculateAttr();
+
+        PlayerDataPack.Instance.SaveClass(true);
     }
 
 
@@ -192,15 +262,15 @@ public class RoleData : SaveItemBase
         roleAttr.SetValue(RoleAttrEnum.Dexterity, Dexterity);
         roleAttr.SetValue(RoleAttrEnum.Vitality, Vitality);
         roleAttr.SetValue(RoleAttrEnum.Intelligence, Intelligence);
-        roleAttr.SetValue(RoleAttrEnum.Attack, _RoleLevel * GameDataValue._AtkPerRoleLevel + GameDataValue._AtkRoleLevelBase);
-        roleAttr.SetValue(RoleAttrEnum.HPMax, _RoleLevel * GameDataValue._HPPerRoleLevel + GameDataValue._HPRoleLevelBase);
+        roleAttr.SetValue(RoleAttrEnum.Attack, RoleLevel * GameDataValue._AtkPerRoleLevel + GameDataValue._AtkRoleLevelBase);
+        roleAttr.SetValue(RoleAttrEnum.HPMax, RoleLevel * GameDataValue._HPPerRoleLevel + GameDataValue._HPRoleLevelBase);
         roleAttr.SetValue(RoleAttrEnum.CriticalHitChance, 500);
         roleAttr.SetValue(RoleAttrEnum.CriticalHitDamge, 5000);
     }
 
     public void SetEquipAttr(RoleAttrStruct roleAttr)
     {
-        foreach (var equipInfo in _EquipList)
+        foreach (var equipInfo in EquipList)
         {
             equipInfo.SetEquipAttr(roleAttr);
         }
@@ -290,64 +360,74 @@ public class RoleData : SaveItemBase
     public static int POINT_PER_ATTR_LEVEL = 1;
     public static int ATTR_PER_LEVEL = 0;
 
-    [SaveField(2)]
-    public int _RoleLevel;
+    public int RoleLevel
+    {
+        get
+        {
+            return PlayerDataPack.Instance.RoleLevel;
+        }
+    }
 
-    [SaveField(3)]
-    public int _AttrLevel;
+    public int AttrLevel
+    {
+        get
+        {
+            return 0;
+        }
+    }
 
     public int TotalLevel
     {
         get
         {
-            return _RoleLevel + _AttrLevel;
+            return RoleLevel + AttrLevel;
         }
     }
 
-    [SaveField(4)]
-    public int _CurExp;
+    public int CurExp
+    {
+        get
+        {
+            return PlayerDataPack.Instance.CurExp;
+        }
+    }
 
-    [SaveField(5)]
     private int _AddStrength = 0;
     public int Strength
     {
         get
         {
-            return (_RoleLevel + _AttrLevel) * ATTR_PER_LEVEL + _AddStrength;
+            return (RoleLevel + AttrLevel) * ATTR_PER_LEVEL + _AddStrength;
         }
     }
 
-    [SaveField(6)]
     private int _AddDexterity = 0;
     public int Dexterity
     {
         get
         {
-            return (_RoleLevel + _AttrLevel) * ATTR_PER_LEVEL + _AddDexterity;
+            return (RoleLevel + AttrLevel) * ATTR_PER_LEVEL + _AddDexterity;
         }
     }
 
-    [SaveField(7)]
     private int _AddVitality = 0;
     public int Vitality
     {
         get
         {
-            return (_RoleLevel + _AttrLevel) * ATTR_PER_LEVEL + _AddVitality;
+            return (RoleLevel + AttrLevel) * ATTR_PER_LEVEL + _AddVitality;
         }
     }
 
-    [SaveField(8)]
     private int _AddIntelligence = 0;
     public int Intelligence
     {
         get
         {
-            return (_RoleLevel + _AttrLevel) * ATTR_PER_LEVEL + _AddIntelligence;
+            return (RoleLevel + AttrLevel) * ATTR_PER_LEVEL + _AddIntelligence;
         }
     }
 
-    [SaveField(9)]
     private int _UnDistrubutePoint = 0;
     public int UnDistrubutePoint
     {
@@ -371,11 +451,11 @@ public class RoleData : SaveItemBase
 
     public bool InitLevel()
     {
-        if (_RoleLevel <= 0)
+        if (RoleLevel <= 0)
         {
-            _RoleLevel = 1;
+            PlayerDataPack.Instance.RoleLevel = 1;
         }
-        _LvUpExp = GameDataValue.GetLvUpExp(_RoleLevel, _AttrLevel);
+        _LvUpExp = GameDataValue.GetLvUpExp(RoleLevel, AttrLevel);
         return false;
     }
 
@@ -383,12 +463,12 @@ public class RoleData : SaveItemBase
     {
         //if (_RoleLevel < MAX_LEVEL)
         //{
-            _CurExp += value;
-            if (_CurExp >= _LvUpExp)
-            {
-                _CurExp -= _LvUpExp;
-                RoleLevelUp();
-            }
+        PlayerDataPack.Instance.CurExp += value;
+        if (CurExp >= _LvUpExp)
+        {
+            PlayerDataPack.Instance.CurExp -= _LvUpExp;
+            RoleLevelUp();
+        }
         //}
         //else
         //{
@@ -400,31 +480,30 @@ public class RoleData : SaveItemBase
         //    }
         //}
 
-        if (_CurExp > _LvUpExp)
+        if (CurExp > _LvUpExp)
         {
             AddExp(0);
         }
 
-        SaveClass(false);
     }
 
     private void RoleLevelUp()
     {
-        ++_RoleLevel;
+        ++PlayerDataPack.Instance.RoleLevel;
         _UnDistrubutePoint += POINT_PER_ROLE_LEVEL;
 
         CalculateAttr();
 
-        _LvUpExp = GameDataValue.GetLvUpExp(_RoleLevel, _AttrLevel);
+        _LvUpExp = GameDataValue.GetLvUpExp(RoleLevel, AttrLevel);
         GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_ROLE_LEVEL_UP, this, null);
     }
 
     private void AttrLevelUp()
     {
-        ++_AttrLevel;
+        return;
         _UnDistrubutePoint += POINT_PER_ATTR_LEVEL;
 
-        _LvUpExp = GameDataValue.GetLvUpExp(_RoleLevel, _AttrLevel);
+        _LvUpExp = GameDataValue.GetLvUpExp(RoleLevel, AttrLevel);
         GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_ROLE_LEVEL_UP, this, null);
     }
 
@@ -434,7 +513,7 @@ public class RoleData : SaveItemBase
         _AddDexterity = 0;
         _AddVitality = 0;
         _AddIntelligence = 0;
-        _UnDistrubutePoint = _RoleLevel * POINT_PER_ROLE_LEVEL + _AttrLevel * POINT_PER_ATTR_LEVEL;
+        _UnDistrubutePoint = RoleLevel * POINT_PER_ROLE_LEVEL + AttrLevel * POINT_PER_ATTR_LEVEL;
 
         CalculateAttr();
     }

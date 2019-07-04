@@ -20,7 +20,7 @@ public class UIGemPackRefresh : UIBase
     public void OnEnable()
     {
         List<ItemEquip> equipList = new List<ItemEquip>();
-        foreach (var equipItem in PlayerDataPack.Instance._SelectedRole._EquipList)
+        foreach (var equipItem in PlayerDataPack.Instance._SelectedRole.EquipList)
         {
             if (equipItem.IsVolid() && equipItem.EquipQuality > ITEM_QUALITY.WHITE)
             {
@@ -60,7 +60,7 @@ public class UIGemPackRefresh : UIBase
             _EquipContainer.InitSelectContent(equipList, null, OnSelectedEquip);
         }
 
-        _GemCost.ShowGem(null);
+        _GemCost.ShowGem(null, 0);
         _CostGem = null;
     }
 
@@ -72,7 +72,7 @@ public class UIGemPackRefresh : UIBase
 
         //ShowEquipInfo(equipItem, null);
 
-        if (PlayerDataPack.Instance._SelectedRole._EquipList.Contains(equipItem))
+        if (PlayerDataPack.Instance._SelectedRole.EquipList.Contains(equipItem))
         {
             _EquipTag.text = StrDictionary.GetFormatStr(10013);
         }
@@ -92,7 +92,7 @@ public class UIGemPackRefresh : UIBase
 
     private void OnSelectedGem(ItemGem itemGem)
     {
-        _GemCost.ShowGem(itemGem);
+        _GemCost.ShowGem(itemGem, 0);
         _CostGem = itemGem;
     }
 
@@ -113,7 +113,7 @@ public class UIGemPackRefresh : UIBase
         if (EquipRefresh.Instance.EquipRefreshMat(_SelectedEquip, _CostGem))
         {
             _EuipInfo.ShowTips(_SelectedEquip, null);
-            _GemCost.ShowGem(_CostGem);
+            _GemCost.ShowGem(_CostGem, 0);
         }
     }
 

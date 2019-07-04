@@ -13,10 +13,25 @@ public class UIBackPackItem : /*UIDragableItemBase*/ UIPackItemBase
     public Toggle _SellToggle;
 
     public ItemEquip _BackpackEquip;
+
+    public override void Show(Hashtable hash)
+    {
+        base.Show();
+
+        var showItem = (ItemBase)hash["InitObj"];
+        if (hash.ContainsKey("IsShowRedTips"))
+        {
+            _IsShowRedTips = (bool)hash["IsShowRedTips"];
+        }
+        ShowItem(showItem);
+
+        RefreshRedTips();
+    }
+
     public override void ShowItem(ItemBase showItem)
     {
         base.ShowItem(showItem);
-
+        _BackpackEquip = null;
         if (showItem == null || !showItem.IsVolid())
             return;
 
@@ -62,6 +77,13 @@ public class UIBackPackItem : /*UIDragableItemBase*/ UIPackItemBase
         }
     }
 
+    public override void Refresh()
+    {
+        base.Refresh();
+
+        RefreshRedTips();
+    }
+
     #region interaction
 
     public void SetSellMode(bool isSellMode, Tables.ITEM_QUALITY sellQuality = Tables.ITEM_QUALITY.WHITE)
@@ -94,6 +116,42 @@ public class UIBackPackItem : /*UIDragableItemBase*/ UIPackItemBase
 
         }
     }
+
+    #endregion
+
+    #region redtip
+
+    public GameObject _RedTips;
+
+    private bool _IsShowRedTips = false;
+
+    public void RefreshRedTips()
+    {
+        if (_RedTips == null)
+            return;
+
+        if (!_IsShowRedTips)
+        {
+            _RedTips.gameObject.SetActive(false);
+            return;
+        }
+
+        if (_BackpackEquip == null || !_BackpackEquip.IsVolid())
+        {
+            _RedTips.gameObject.SetActive(false);
+            return;
+        }
+
+        if (BackBagPack.Instance.IsEquipBetter(_BackpackEquip))
+        {
+            _RedTips.gameObject.SetActive(true);
+        }
+        else
+        {
+            _RedTips.gameObject.SetActive(false);
+        }
+    }
+
 
     #endregion
 }

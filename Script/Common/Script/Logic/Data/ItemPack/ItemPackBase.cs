@@ -7,6 +7,19 @@ public class ItemPackBase<T> : DataPackBase where T : ItemBase,new()
     [SaveField(1)]
     public List<T> _PackItems;
 
+    public List<ItemBase> ToItemBases()
+    {
+        List<ItemBase> itemBases = new List<ItemBase>();
+        for (int i = 0; i < _PackItems.Count; ++i)
+        {
+            if (_PackItems[i] != null && _PackItems[i].IsVolid())
+            {
+                itemBases.Add(_PackItems[i]);
+            }
+        }
+        return itemBases;
+    }
+
     public int _PackSize = -1;
 
     public void InitPack()
@@ -284,6 +297,10 @@ public class ItemPackBase<T> : DataPackBase where T : ItemBase,new()
         if (_PackSize < 0)
         {
             _PackItems.Remove(item);
+        }
+        else
+        {
+            item.ResetItem();
         }
         return true;
     }

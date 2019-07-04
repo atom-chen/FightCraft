@@ -19,8 +19,12 @@ namespace Tables
         public int DailyLimit { get; set; }
         public bool MutiBuy { get; set; }
         public string Class { get; set; }
+        public int ClassItemCnt { get; set; }
+        public int Prior { get; set; }
         public string Script { get; set; }
         public List<int> ScriptParam { get; set; }
+        public string ActScript { get; set; }
+        public List<string> ActScriptParam { get; set; }
         public ShopItemRecord(DataRecord dataRecord)
         {
             if (dataRecord != null)
@@ -30,6 +34,7 @@ namespace Tables
 
             }
             ScriptParam = new List<int>();
+            ActScriptParam = new List<string>();
         }
         public override string[] GetRecordStr()
         {
@@ -42,8 +47,15 @@ namespace Tables
             recordStrList.Add(TableWriteBase.GetWriteStr(DailyLimit));
             recordStrList.Add(TableWriteBase.GetWriteStr(MutiBuy));
             recordStrList.Add(TableWriteBase.GetWriteStr(Class));
+            recordStrList.Add(TableWriteBase.GetWriteStr(ClassItemCnt));
+            recordStrList.Add(TableWriteBase.GetWriteStr(Prior));
             recordStrList.Add(TableWriteBase.GetWriteStr(Script));
             foreach (var testTableItem in ScriptParam)
+            {
+                recordStrList.Add(TableWriteBase.GetWriteStr(testTableItem));
+            }
+            recordStrList.Add(TableWriteBase.GetWriteStr(ActScript));
+            foreach (var testTableItem in ActScriptParam)
             {
                 recordStrList.Add(TableWriteBase.GetWriteStr(testTableItem));
             }
@@ -117,10 +129,16 @@ namespace Tables
                 pair.Value.DailyLimit = TableReadBase.ParseInt(pair.Value.ValueStr[5]);
                 pair.Value.MutiBuy = TableReadBase.ParseBool(pair.Value.ValueStr[6]);
                 pair.Value.Class = TableReadBase.ParseString(pair.Value.ValueStr[7]);
-                pair.Value.Script = TableReadBase.ParseString(pair.Value.ValueStr[8]);
-                pair.Value.ScriptParam.Add(TableReadBase.ParseInt(pair.Value.ValueStr[9]));
-                pair.Value.ScriptParam.Add(TableReadBase.ParseInt(pair.Value.ValueStr[10]));
+                pair.Value.ClassItemCnt = TableReadBase.ParseInt(pair.Value.ValueStr[8]);
+                pair.Value.Prior = TableReadBase.ParseInt(pair.Value.ValueStr[9]);
+                pair.Value.Script = TableReadBase.ParseString(pair.Value.ValueStr[10]);
                 pair.Value.ScriptParam.Add(TableReadBase.ParseInt(pair.Value.ValueStr[11]));
+                pair.Value.ScriptParam.Add(TableReadBase.ParseInt(pair.Value.ValueStr[12]));
+                pair.Value.ScriptParam.Add(TableReadBase.ParseInt(pair.Value.ValueStr[13]));
+                pair.Value.ActScript = TableReadBase.ParseString(pair.Value.ValueStr[14]);
+                pair.Value.ActScriptParam.Add(TableReadBase.ParseString(pair.Value.ValueStr[15]));
+                pair.Value.ActScriptParam.Add(TableReadBase.ParseString(pair.Value.ValueStr[16]));
+                pair.Value.ActScriptParam.Add(TableReadBase.ParseString(pair.Value.ValueStr[17]));
             }
         }
     }

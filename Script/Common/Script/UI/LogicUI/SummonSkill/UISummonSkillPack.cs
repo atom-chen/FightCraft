@@ -122,7 +122,15 @@ public class UISummonSkillPack : UIBase
         }
         else
         {
-            UISummonSkillToolTips.ShowAsyn(summonItem.SummonMotionData, true);
+            if (_ShowingPage == 2)
+            {
+                UISummonSkillToolTips.ShowAsyn(summonItem.SummonMotionData, true);
+            }
+            else
+            {
+                UISummonSkillToolTips.ShowAsyn(summonItem.SummonMotionData, false);
+            }
+            
         }
     }
 
@@ -168,7 +176,7 @@ public class UISummonSkillPack : UIBase
             if (summonItem.SummonMotionData == null)
                 return;
 
-            UISummonSkillToolTips.ShowAsyn(summonItem.SummonMotionData, true);
+            UISummonSkillToolTips.ShowAsyn(summonItem.SummonMotionData, false);
         }
     }
 

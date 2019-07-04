@@ -21,6 +21,8 @@ public class UIGemPackPunch : UIBase, IDragablePack
     public void OnEnable()
     {
         ShowPackItems();
+
+        //UIGemPack.RefreshPack();
     }
 
     private void ShowPackItems()
@@ -33,9 +35,11 @@ public class UIGemPackPunch : UIBase, IDragablePack
             Hashtable hash = new Hashtable();
             hash.Add("InitObj", GemData.Instance.EquipedGemDatas[i]);
             hash.Add("DragPack", this);
+            hash.Add("RefreshType", 0);
             _GemPack[i].Show(hash);
             _GemPack[i]._InitInfo = GemData.Instance.EquipedGemDatas[i];
             _GemPack[i]._ClickEvent += ShowGemTooltipsLeft;
+            _GemPack[i].RefreshGemEquip(i);
         }
         //_BackPack.Show(null);
 
@@ -55,7 +59,8 @@ public class UIGemPackPunch : UIBase, IDragablePack
 
         for (int i = 0; i < _GemPack.Length; ++i)
         {
-            _GemPack[i].ShowGem(GemData.Instance.EquipedGemDatas[i]);
+            _GemPack[i].ShowGem(GemData.Instance.EquipedGemDatas[i], 0);
+            _GemPack[i].RefreshGemEquip(i);
         }
         //_EquipContainer.RefreshItems();
         //_BackPack.RefreshItems();
@@ -93,14 +98,15 @@ public class UIGemPackPunch : UIBase, IDragablePack
 
     public void ShowGemTooltipsRight(ItemGem gemItem)
     {
-        if (gemItem.ItemStackNum == 0)
-        {
-            UIGemTooltips.ShowAsynInType(gemItem, TooltipType.Single, new ToolTipFunc[1] { new ToolTipFunc(10012, LevelUp) });
-        }
-        else
-        {
-            UIGemTooltips.ShowAsynInType(gemItem, TooltipType.Single, new ToolTipFunc[2] { new ToolTipFunc(10007, PunchOn), new ToolTipFunc(10009, LevelUp) });
-        }
+        //if (gemItem.ItemStackNum == 0)
+        //{
+        //    UIGemTooltips.ShowAsynInType(gemItem, TooltipType.Single, new ToolTipFunc[1] { new ToolTipFunc(10012, LevelUp) });
+        //}
+        //else
+        //{
+        //    UIGemTooltips.ShowAsynInType(gemItem, TooltipType.Single, new ToolTipFunc[2] { new ToolTipFunc(10007, PunchOn), new ToolTipFunc(10009, LevelUp) });
+        //}
+        UIGemTooltips.ShowAsynInType(gemItem, TooltipType.Single, new ToolTipFunc[1] { new ToolTipFunc(10007, PunchOn) });
     }
     
     #endregion
@@ -154,10 +160,6 @@ public class UIGemPackPunch : UIBase, IDragablePack
         {
             ShowGemTooltipsRight(itemGem);
             RefreshItems();
-        }
-        else
-        {
-            UIMessageTip.ShowMessageTip(30003);
         }
     }
 
