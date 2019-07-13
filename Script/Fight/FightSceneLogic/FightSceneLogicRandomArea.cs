@@ -14,6 +14,7 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
 
         InitPos();
 
+        InitMons();
         //InitAreas();
     }
 
@@ -90,6 +91,7 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
     public int MainChatPosIdx { get; set; }
     public List<int> NormalMonster { get; set; }
     public int MagicMonster { get; set; }
+    public int BossID { get; set; }
 
     private int MainCharPosIdxInFightArea;
     private List<string> _ExcludeScene;
@@ -135,8 +137,6 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
             FightManager.Instance._CameraFollow._Distance = new Vector3(x, FightManager.Instance._CameraFollow._Distance.y, y);
         }
 
-        InitMons();
-
         if (_ExcludeScene == null)
         {
             _ExcludeScene = new List<string>();
@@ -165,15 +165,26 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
 
     private void InitMons()
     {
-        if (IsChangeToBoss)
-        {
-            int bossID = LogicManager.Instance.EnterStageInfo.ExParam[1];
-            NormalMonster = new List<int>() { GetRandomBoss() };
-        }
-        else
+        //if (IsChangeToBoss)
+        //{
+        //    int bossID = LogicManager.Instance.EnterStageInfo.ExParam[1];
+        //    NormalMonster = new List<int>() { bossID };
+        //}
+        //else
         {
             NormalMonster = GetRandomNormalMon();
             MagicMonster = GetRandomMagicMon();
+
+            if (FightSceneAreaRandom.IsDiffBossElite(ActData.Instance.GetNormalDiff()))
+            {
+                int bossID = LogicManager.Instance.EnterStageInfo.ExParam[2];
+                BossID = bossID;
+            }
+            else
+            {
+                int bossID = LogicManager.Instance.EnterStageInfo.ExParam[1];
+                BossID = bossID;
+            }
         }
     }
 
@@ -262,10 +273,15 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
 
     public static List<int> _NormalMon = new List<int>() { 21,23,25,27,29,33,37,48,50};
     public static List<int> _MagicMon = new List<int>() { 31, 39 };
-
+    public static List<int> _QiLin = new List<int>() { 43, 44,45 };
+    public static List<int> _QiLinEx = new List<int>() { 210, 211, 212 };
     public static List<int> _BossType = new List<int>()
     {
         1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20
+    };
+    public static List<int> _ExBossType = new List<int>()
+    {
+        101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120
     };
 
     public static string GetRandomScene(List<string> excludeScene = null)

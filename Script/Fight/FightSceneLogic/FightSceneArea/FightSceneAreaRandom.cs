@@ -128,61 +128,86 @@ public class FightSceneAreaRandom : FightSceneAreaBase
             monTotalCnt = Mathf.Min(_MonPoses.Count - maticTotalCnt, monTotalCnt);
         }
         List<int> monIds = new List<int>();
-        for (int i = 0; i < RandomLogic.NormalMonster.Count; ++i)
+        if (RandomLogic.IsChangeToBoss)
         {
-            if (i == RandomLogic.NormalMonster.Count - 1)
+            monIds.Add(RandomLogic.BossID);
+        }
+        else
+        {
+            for (int i = 0; i < RandomLogic.NormalMonster.Count; ++i)
             {
-                for (int j = monIds.Count; j < monTotalCnt; ++j)
+                if (i == RandomLogic.NormalMonster.Count - 1)
                 {
-                    monIds.Add(RandomLogic.NormalMonster[RandomLogic.NormalMonster.Count - 1]);
+                    for (int j = monIds.Count; j < monTotalCnt; ++j)
+                    {
+                        monIds.Add(RandomLogic.NormalMonster[RandomLogic.NormalMonster.Count - 1]);
+                    }
+                }
+                else
+                {
+                    int randomCnt = Random.Range(0, monTotalCnt - monIds.Count + 1);
+                    for (int j = 0; j < randomCnt; ++j)
+                    {
+                        monIds.Add(RandomLogic.NormalMonster[i]);
+                    }
                 }
             }
-            else
+            for (int i = 0; i < maticTotalCnt; ++i)
             {
-                int randomCnt = Random.Range(0, monTotalCnt - monIds.Count + 1);
-                for (int j = 0; j < randomCnt; ++j)
-                {
-                    monIds.Add(RandomLogic.NormalMonster[i]);
-                }
+                monIds.Add(RandomLogic.MagicMonster);
             }
         }
-        for (int i = 0; i < maticTotalCnt; ++i)
-        {
-            monIds.Add(RandomLogic.MagicMonster);
-        }
 
-        int eliteIdx = -1;
-        if (ActData.Instance.GetNormalDiff() > 1)
-        {
-            var eliteRate = FightManager.Instance.GetEliteMonsterRate();
-            var eliteRandom = Random.Range(0, GameDataValue.GetMaxRate());
 
-            if (eliteRandom < eliteRate)
-            {
-                eliteIdx = Random.Range(0, monIds.Count);
-            }
-        }
-        
+        //var stageDiffInfo = GetStageDiffInfo(ActData.Instance.GetNormalDiff(), monIds.Count);
+        int diff = ActData.Instance._NormalStageIdx;
+        var stageDiffInfo = GetStageDiffInfo(ActData.Instance._NormalStageIdx, monIds.Count);
+
         for (int i = 0; i < monIds.Count; ++i)
         {
-            bool isElite = false;
-            if (eliteIdx == i)
+            Tables.MOTION_TYPE motionType = Tables.MOTION_TYPE.Normal;
+            string monId = monIds[i].ToString();
+            if (stageDiffInfo.EliteIdxs.Contains(i))
             {
-                isElite = true;
+                motionType = Tables.MOTION_TYPE.Elite;
+            }
+            else if (stageDiffInfo.ExIdxs.Contains(i))
+            {
+                motionType = Tables.MOTION_TYPE.ExElite;
+            }
+            else if (stageDiffInfo.ExtraMonIdxs.Contains(i))
+            {
+                motionType = Tables.MOTION_TYPE.Normal;
+                monId = stageDiffInfo.ExtraMonID.ToString();
             }
 
             var rot = Quaternion.LookRotation(_MonLookTrans, Vector3.up);
-            MotionManager enemy = FightManager.Instance.InitEnemy(monIds[i].ToString(), _MonPoses[i], rot.eulerAngles, isElite);
+            MotionManager enemy = FightManager.Instance.InitEnemy(monIds[i].ToString(), _MonPoses[i], rot.eulerAngles, motionType);
 
             var enemyAI = enemy.gameObject.GetComponent<AI_Base>();
             enemyAI.GroupID = AreaID;
-            if (enemy.MonsterBase.MotionType == Tables.MOTION_TYPE.Hero)
+            if (motionType != Tables.MOTION_TYPE.Normal)
             {
-                var heroAi = enemyAI as AI_HeroBase;
-                if (heroAi != null)
+                var bossAI = enemyAI as AI_HeroBase;
+                if (bossAI != null)
                 {
-                    heroAi._IsRiseBoom = true;
+                    if (RandomLogic.IsChangeToBoss)
+                    {
+                        InitBossAILevel(diff, bossAI);
+                    }
+                    else if (stageDiffInfo.RandomBuffCnt > 0)
+                    {
+                        var passiveBuff = ResourceManager.Instance.GetInstanceGameObject("SkillMotion/CommonImpact/EliteRandomBuff");
+                        var randomBuff = passiveBuff.GetComponent<ImpactBuffRandomSub>();
+                        randomBuff._ActSubCnt = stageDiffInfo.RandomBuffCnt;
+                        bossAI._PassiveGO = randomBuff.transform;
+                    }
                 }
+                //var heroAi = enemyAI as AI_HeroBase;
+                //if (heroAi != null)
+                //{
+                //    heroAi._IsRiseBoom = true;
+                //}
             }
             _EnemyAI.Add(enemyAI);
         }
@@ -309,6 +334,308 @@ public class FightSceneAreaRandom : FightSceneAreaBase
             basePos.x = -basePos.x;
         }
     }
+
+    #endregion
+
+    #region stage diff
+
+    public class StageDiffInfo
+    {
+        public List<int> EliteIdxs = new List<int>();
+        public List<int> ExIdxs = new List<int>();
+        public List<int> ExtraMonIdxs = new List<int>();
+        public int ExtraMonID = -1;
+        public int RandomBuffCnt = 0;
+    }
+
+    public class StageDiffBossFishInfo
+    {
+        public int FishCnt = 0;
+        public int ElitCnt = 0;
+        public int ExCnt = 0;
+        public int QiLinCnt = 0;
+        public int ExQiLinCnt = 0;
+
+        public int MaxFishCnt = 4;
+        public int NormalBornCD = 5;
+        public int EliteDieCD = 15;
+    }
+
+    public static StageDiffInfo GetStageDiffInfo(int diff, int monCnt)
+    {
+        StageDiffInfo stageInfo = new StageDiffInfo();
+        switch (diff)
+        {
+            case 0:
+                break;
+            case 1:
+                if (Random.Range(0, 1) < 0.25)
+                {
+                    stageInfo.EliteIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
+                }
+                break;
+            case 2:
+                if (Random.Range(0, 1) < 0.5)
+                {
+                    stageInfo.EliteIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
+                }
+                break;
+            case 3:
+                if (Random.Range(0, 1) < 0.35)
+                {
+                    stageInfo.ExIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
+                }
+                break;
+            case 4:
+                if (Random.Range(0, 1) < 0.5)
+                {
+                    stageInfo.ExIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
+                }
+                break;
+            case 5:
+                if (Random.Range(0, 1) < 0.5)
+                {
+                    stageInfo.ExtraMonIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
+                    if (Random.Range(0, 1) < 0.5)
+                    {
+                        int qilinIdx = Random.Range(0, FightSceneLogicRandomArea._QiLin.Count);
+                        stageInfo.ExtraMonID = FightSceneLogicRandomArea._QiLin[qilinIdx];
+                    }
+                }
+                break;
+            case 6:
+                if (Random.Range(0, 1) < 0.35)
+                {
+                    stageInfo.ExtraMonIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
+                    float bossRate = Random.Range(0, 1);
+                    if (bossRate < 0.35f)
+                    {
+                        int bossIdx = Random.Range(0, FightSceneLogicRandomArea._BossType.Count);
+                        stageInfo.ExtraMonID = FightSceneLogicRandomArea._BossType[bossIdx];
+                    }
+                    else if(bossRate < 0.4f)
+                    {
+                        int qilinIdx = Random.Range(0, FightSceneLogicRandomArea._QiLin.Count);
+                        stageInfo.ExtraMonID = FightSceneLogicRandomArea._QiLin[qilinIdx];
+                    }
+                }
+                break;
+            case 7:
+                if (Random.Range(0, 1) < 0.5)
+                {
+                    stageInfo.ExtraMonIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
+                    float bossRate = Random.Range(0, 1);
+                    if (bossRate < 0.35f)
+                    {
+                        int bossIdx = Random.Range(0, FightSceneLogicRandomArea._BossType.Count);
+                        stageInfo.ExtraMonID = FightSceneLogicRandomArea._BossType[bossIdx];
+                    }
+                    else if (bossRate < 0.5f)
+                    {
+                        int qilinIdx = Random.Range(0, FightSceneLogicRandomArea._QiLin.Count);
+                        stageInfo.ExtraMonID = FightSceneLogicRandomArea._QiLin[qilinIdx];
+                    }
+                }
+                break;
+            case 8:
+                if (Random.Range(0, 1) < 0.6)
+                {
+                    stageInfo.ExtraMonIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
+                    float bossRate = Random.Range(0, 1);
+                    if (bossRate < 0.4f)
+                    {
+                        int bossIdx = Random.Range(0, FightSceneLogicRandomArea._BossType.Count);
+                        stageInfo.ExtraMonID = FightSceneLogicRandomArea._BossType[bossIdx];
+                    }
+                    else if (bossRate < 0.7f)
+                    {
+                        int qilinIdx = Random.Range(0, FightSceneLogicRandomArea._QiLinEx.Count);
+                        stageInfo.ExtraMonID = FightSceneLogicRandomArea._QiLinEx[qilinIdx];
+                    }
+                }
+                break;
+            case 9:
+                if (Random.Range(0, 1) < 0.6)
+                {
+                    stageInfo.ExtraMonIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
+                    float bossRate = Random.Range(0, 1);
+                    if (bossRate < 0.4f)
+                    {
+                        int bossIdx = Random.Range(0, FightSceneLogicRandomArea._BossType.Count);
+                        stageInfo.ExtraMonID = FightSceneLogicRandomArea._BossType[bossIdx];
+                    }
+                    else if (bossRate < 0.7f)
+                    {
+                        int qilinIdx = Random.Range(0, FightSceneLogicRandomArea._QiLinEx.Count);
+                        stageInfo.ExtraMonID = FightSceneLogicRandomArea._QiLinEx[qilinIdx];
+                    }
+                }
+                stageInfo.RandomBuffCnt = 1;
+                break;
+            case 10:
+                if (Random.Range(0, 1) < 0.6)
+                {
+                    stageInfo.ExtraMonIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
+                    float bossRate = Random.Range(0, 1);
+                    if (bossRate < 0.4f)
+                    {
+                        int bossIdx = Random.Range(0, FightSceneLogicRandomArea._BossType.Count);
+                        stageInfo.ExtraMonID = FightSceneLogicRandomArea._BossType[bossIdx];
+                    }
+                    else if (bossRate < 0.7f)
+                    {
+                        int qilinIdx = Random.Range(0, FightSceneLogicRandomArea._QiLinEx.Count);
+                        stageInfo.ExtraMonID = FightSceneLogicRandomArea._QiLinEx[qilinIdx];
+                    }
+                }
+                stageInfo.RandomBuffCnt = 2;
+                break;
+            default:
+                if (Random.Range(0, 1) < 0.6)
+                {
+                    stageInfo.ExtraMonIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
+                    float bossRate = Random.Range(0, 1);
+                    if (bossRate < 0.4f)
+                    {
+                        int bossIdx = Random.Range(0, FightSceneLogicRandomArea._BossType.Count);
+                        stageInfo.ExtraMonID = FightSceneLogicRandomArea._BossType[bossIdx];
+                    }
+                    else if (bossRate < 0.7f)
+                    {
+                        int qilinIdx = Random.Range(0, FightSceneLogicRandomArea._QiLinEx.Count);
+                        stageInfo.ExtraMonID = FightSceneLogicRandomArea._QiLinEx[qilinIdx];
+                    }
+                }
+                stageInfo.RandomBuffCnt = 2;
+                break;
+        }
+
+        return stageInfo;
+    }
+
+    public static bool IsDiffBossElite(int diff)
+    {
+        if (diff >= 5)
+            return true;
+        return false;
+    }
+
+    public void InitBossAILevel(int diff, AI_HeroBase aiBoss)
+    {
+        if (aiBoss == null)
+            return;
+        switch (diff)
+        {
+            case 0:
+                aiBoss._IsRiseBoom = false;
+                break;
+            case 1:
+                aiBoss._IsRiseBoom = true;
+                break;
+            case 2:
+                aiBoss.InitProtectTimes(1);
+                break;
+            case 3:
+                aiBoss.InitProtectTimes(1);
+                aiBoss._StageBuffHpPersent.Add(0.5f);
+                break;
+            case 4:
+                aiBoss.InitProtectTimes(2);
+                aiBoss._StageBuffHpPersent.Add(0.5f);
+                break;
+            case 5:
+                aiBoss.InitProtectTimes(2);
+                aiBoss._StageBuffHpPersent.Add(0.5f);
+                break;
+            case 6:
+                aiBoss.InitProtectTimes(2);
+                aiBoss._StageBuffHpPersent.Add(0.5f);
+                aiBoss.IsCancelNormalAttack = true;
+                break;
+            case 7:
+                aiBoss.InitProtectTimes(2);
+                aiBoss._StageBuffHpPersent.Add(2f);
+                aiBoss._StageBuffHpPersent.Add(0.6f);
+                aiBoss.IsCancelNormalAttack = true;
+                break;
+            default:
+                aiBoss.InitProtectTimes(2);
+                aiBoss._StageBuffHpPersent.Add(2f);
+                aiBoss._StageBuffHpPersent.Add(0.6f);
+                aiBoss.IsCancelNormalAttack = true;
+                break;
+        }
+    }
+
+    public static StageDiffBossFishInfo GetStageDiffBossFishInfo(int diff)
+    {
+        StageDiffBossFishInfo fishInfo = new StageDiffBossFishInfo();
+        switch (diff)
+        {
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+                break;
+            case 8:
+                fishInfo.FishCnt = 4;
+                break;
+            case 9:
+                fishInfo.FishCnt = 4;
+                fishInfo.ElitCnt = 1;
+                break;
+            case 10:
+                fishInfo.FishCnt = 4;
+                fishInfo.ElitCnt = 2;
+                break;
+            case 11:
+                fishInfo.FishCnt = 4;
+                fishInfo.ExCnt = 1;
+                break;
+            case 12:
+                fishInfo.FishCnt = 4;
+                fishInfo.ExCnt = 2;
+                break;
+            case 13:
+                fishInfo.FishCnt = -1;
+                break;
+            case 14:
+                fishInfo.FishCnt = -1;
+                fishInfo.ElitCnt = 1;
+                break;
+            case 15:
+                fishInfo.FishCnt = -1;
+                fishInfo.ExCnt = 1;
+                break;
+            case 16:
+                fishInfo.FishCnt = -1;
+                fishInfo.ExCnt = 1;
+                fishInfo.QiLinCnt = 1;
+                break;
+            case 17:
+                fishInfo.FishCnt = -1;
+                fishInfo.ExCnt = 1;
+                fishInfo.ExQiLinCnt = 1;
+                break;
+            default:
+                fishInfo.FishCnt = -1;
+                fishInfo.ExCnt = 1;
+                fishInfo.ExQiLinCnt = 1;
+                break;
+        }
+
+        return fishInfo;
+    }
+
+    #region boss fish
+
+
+
+    #endregion
 
     #endregion
 }

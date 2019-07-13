@@ -200,7 +200,7 @@ public class UIBossStageSelect : UIBase
             Hashtable hash = new Hashtable();
             MotionManager objMotion = new MotionManager();
             objMotion.RoleAttrManager = new RoleAttrManager();
-            objMotion.RoleAttrManager.InitEnemyAttr(monRecord, stageLevel);
+            objMotion.RoleAttrManager.InitEnemyAttr(monRecord, stageLevel, MOTION_TYPE.Normal);
             hash.Add("MonsterInfo", objMotion);
             GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_KILL_MONSTER, this, hash);
         }
@@ -219,7 +219,7 @@ public class UIBossStageSelect : UIBase
             Hashtable hash = new Hashtable();
             MotionManager objMotion = new MotionManager();
             objMotion.RoleAttrManager = new RoleAttrManager();
-            objMotion.RoleAttrManager.InitEnemyAttr(monRecord, stageLevel);
+            objMotion.RoleAttrManager.InitEnemyAttr(monRecord, stageLevel, MOTION_TYPE.Elite);
             hash.Add("MonsterInfo", objMotion);
             GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_KILL_MONSTER, this, hash);
         }
@@ -238,7 +238,7 @@ public class UIBossStageSelect : UIBase
             Hashtable hash = new Hashtable();
             MotionManager objMotion = new MotionManager();
             objMotion.RoleAttrManager = new RoleAttrManager();
-            objMotion.RoleAttrManager.InitEnemyAttr(monRecord, stageLevel);
+            objMotion.RoleAttrManager.InitEnemyAttr(monRecord, stageLevel, MOTION_TYPE.Hero);
             hash.Add("MonsterInfo", objMotion);
             GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_KILL_MONSTER, this, hash);
         }
@@ -371,7 +371,7 @@ public class UIBossStageSelect : UIBase
             Hashtable hash = new Hashtable();
             MotionManager objMotion = new MotionManager();
             objMotion.RoleAttrManager = new RoleAttrManager();
-            objMotion.RoleAttrManager.InitEnemyAttr(monRecord, stageLevel);
+            objMotion.RoleAttrManager.InitEnemyAttr(monRecord, stageLevel, MOTION_TYPE.Hero);
             hash.Add("MonsterInfo", objMotion);
             GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_KILL_MONSTER, this, hash);
         }

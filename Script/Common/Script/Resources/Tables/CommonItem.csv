@@ -312,13 +312,19 @@
 1600001,GoldTicket,GoldTicket,71001,1,FB_005,FB_005,5,Drop/Gem/Gem5,999
 1600002,GambleTicket,GoldTicket,71001,1,FB_005,FB_005,5,Drop/Gem/Gem5,999
 #gift packet,,,,,,,,,
-1700000,GoldPacket_AD_L,GoldPacket,71000,1,FB_005,FB_005,5,Drop/Gem/Gem5,999
-1700001,GoldPacket_CH_H,GoldPacket,71001,1,FB_005,FB_005,5,Drop/Gem/Gem5,999
-1700002,SummonGold_AD_L,GoldPacket,71000,1,FB_005,FB_005,5,Drop/Gem/Gem5,999
-1700003,SummonGold_CH_H,GoldPacket,71001,1,FB_005,FB_005,5,Drop/Gem/Gem5,999
-1700004,SummonDiamond_AD_L,GoldPacket,71000,1,FB_005,FB_005,5,Drop/Gem/Gem5,999
-1700005,SummonDiamond_CH_H,GoldPacket,71001,1,FB_005,FB_005,5,Drop/Gem/Gem5,999
-1700006,GambleTicket_AD_L,GoldPacket,71001,1,FB_005,FB_005,5,Drop/Gem/Gem5,999
-1700007,GambleTicket_CH_H,GoldPacket,71001,1,FB_005,FB_005,5,Drop/Gem/Gem5,999
+1700000,gold,gold,1700000,1710000,FB_005,FB_005,5,Drop/Gem/Gem5,999
+1700001,gold,gold,1700001,1710001,FB_005,FB_005,5,Drop/Gem/Gem5,999
+1700002,gold soul,gold soul,1700002,1710002,FB_005,FB_005,5,Drop/Gem/Gem5,999
+1700003,gold soul,gold soul,1700003,1710003,FB_005,FB_005,5,Drop/Gem/Gem5,999
+1700004,diamond soul,diamond soul,1700004,1710004,FB_005,FB_005,5,Drop/Gem/Gem5,999
+1700005,diamond soul,diamond soul,1700005,1710005,FB_005,FB_005,5,Drop/Gem/Gem5,999
+1700006,gambling,gambling,1700006,1710006,FB_005,FB_005,5,Drop/Gem/Gem5,999
+1700007,gambling,gambling,1700007,1710007,FB_005,FB_005,5,Drop/Gem/Gem5,999
+1700008,skill(diamond),skill(diamond),1700008,1710008,FB_005,FB_005,5,Drop/Gem/Gem5,999
+1700009,skill,skill,1700009,1710009,FB_005,FB_005,5,Drop/Gem/Gem5,999
+1700010,diamond soul 2,diamond soul 2,1700010,1710010,FB_005,FB_005,5,Drop/Gem/Gem5,999
+1700011,diamond soul 2,diamond soul 2,1700011,1710011,FB_005,FB_005,5,Drop/Gem/Gem5,999
+1700012,diamond soul one,diamond soul one,1700012,1710012,FB_005,FB_005,5,Drop/Gem/Gem5,999
+1700013,diamond soul one,diamond soul one,1700013,1710013,FB_005,FB_005,5,Drop/Gem/Gem5,999
 #skill,,,,,,,,,
 1800000,SkillCard,SkillCard,63000,63001,FB_005,FB_005,5,Drop/Gem/Gem5,999

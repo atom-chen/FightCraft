@@ -1,8 +1,10 @@
 todo:
+//good packet and shop
+//soul exp redtip
+//legendary redtip
+//legendary equip attr value
+//legendary equip rate
+//legendary data
 lv.5,10 defulat weapon
-good packet and shop
-legendary redtip
-soul exp redtip
-legendary equip attr value
-legendary equip rate
-legendary data
+charge
+loading tips

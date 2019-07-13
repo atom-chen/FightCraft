@@ -74,7 +74,7 @@ public class MonsterDrop
             DropGold += goldNum;
         }
 
-        var dropGem = GameDataValue.GetGemMonsterDrop(level, stageType);
+        var dropGem = GameDataValue.GetGemMonsterDrop(monsterType, level, stageType);
         if (dropGem != null)
         {
             DropItemData dropItem = new DropItemData();

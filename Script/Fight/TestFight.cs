@@ -285,7 +285,7 @@ public class TestFight : MonoBehaviour
             if (itemEquip.EquipQuality == ITEM_QUALITY.ORIGIN)
             {
                 ++_DropOrangeEquipCnt;
-                if (LegendaryData.Instance.IsCanCollect(itemEquip))
+                if (LegendaryData.Instance.IsCollectBetter(itemEquip))
                 {
                     LegendaryData.Instance.PutInEquip(itemEquip);
                     continue;
@@ -304,6 +304,17 @@ public class TestFight : MonoBehaviour
         }
 
         //SkillData.Instance.SkillLevelUp
+    }
+
+    public static void DelSkill()
+    {
+        foreach (var skillInfo in SkillData.Instance.ProfessionSkills)
+        {
+            if (skillInfo.SkillRecord.SkillType.Equals("61000"))
+            {
+                SkillData.Instance.SkillLevelUp(skillInfo.SkillRecord.Id.ToString());
+            }
+        }
     }
 
     public static void DelSkill(int type)
@@ -367,14 +378,115 @@ public class TestFight : MonoBehaviour
 
     public static void DelGem()
     {
-        var gemSetTab = TableReader.GemSet.GetRecord("120000");
-        GemSuit.Instance.UseGemSet(gemSetTab);
+        UIGemPackCombine.CombineAll();
 
-        foreach (var gemLv in gemSetTab.Gems)
+        if (GemSuit.Instance.ActSet == null)
         {
-            //var gemInfo = GemData.Instance.GetGemInfo(gemLv.Id);
-            //GemData.Instance.GemLevelUp(gemInfo);
+            var gemSetTab = TableReader.GemSet.GetRecord("120008");
+            GemSuit.Instance.UseGemSet(gemSetTab);
         }
+
+        if (GemSuit.Instance.ActSet == null)
+        {
+            for (int i = 0; i < GemData.Instance.EquipedGemDatas.Count; ++i)
+            {
+                foreach (var itemGem in GemData.Instance.PackExtraGemDatas._PackItems)
+                {
+                    if (GemData.Instance.IsEquipedGem(itemGem))
+                        continue;
+
+                    GemData.Instance.PutOnGem(itemGem, i);
+                }
+
+                foreach (var itemGem in GemData.Instance.PackGemDatas._PackItems)
+                {
+                    if (GemData.Instance.IsEquipedGem(itemGem))
+                        continue;
+
+                    GemData.Instance.PutOnGem(itemGem, i);
+                }
+            }
+        }
+
+        
+    }
+
+    #endregion
+
+    #region combat log
+
+    public static float GetDamageTotalRate()
+    {
+        int normalAtk = 0;
+        int skilltotal = 0;
+        int buffTotal = 0;
+        foreach (var skillInfo in SkillData.Instance.ProfessionSkills)
+        {
+            if (skillInfo.SkillRecord.SkillType.Equals("61000"))
+            {
+                if (skillInfo.SkillRecord.SkillInput.Equals("j"))
+                {
+                    normalAtk = GameDataValue.GetSkillDamageRate(skillInfo.SkillActureLevel, skillInfo.SkillRecord.EffectValue);
+                }
+                else if (skillInfo.SkillRecord.SkillInput.Equals("1")
+                    || skillInfo.SkillRecord.SkillInput.Equals("2")
+                    || skillInfo.SkillRecord.SkillInput.Equals("3"))
+                {
+                    skilltotal += GameDataValue.GetSkillDamageRate(skillInfo.SkillActureLevel, skillInfo.SkillRecord.EffectValue);
+                }
+                else if (skillInfo.SkillRecord.SkillInput.Equals("5")
+                    || skillInfo.SkillRecord.SkillInput.Equals("6"))
+                {
+                    buffTotal += Mathf.Abs( GameDataValue.GetSkillDamageRate(skillInfo.SkillActureLevel, skillInfo.SkillRecord.EffectValue));
+                }
+            }
+        }
+        float skillRate = GameDataValue.ConfigIntToFloat(normalAtk + skilltotal);
+        float buffRate = GameDataValue.ConfigIntToFloat(buffTotal) + 1;
+
+        float attrRate = 0;
+        foreach (var attr in RoleData.SelectRole._BaseAttr._ExAttr)
+        {
+            if (attr is RoleAttrImpactElementBullet)
+            {
+                var attrBullet = attr as RoleAttrImpactElementBullet;
+                attrRate += attrBullet._Damage;
+            }
+            else if (attr is RoleAttrImpactPassiveDamageArea
+                || attr is RoleAttrImpactPassiveHitEnemy
+                || attr is RoleAttrImpactPassiveLightCircleBuff)
+            {
+                attrRate += 0.2f;
+            }
+            else if (attr is RoleAttrImpactPassiveShadowHit)
+            {
+                var attrBullet = attr as RoleAttrImpactPassiveShadowHit;
+                float enhance = attrBullet._ShadowHitCnt * attrBullet._HitDamage;
+                attrRate += skilltotal * enhance;
+            }
+        }
+
+        return (skillRate + attrRate)* buffRate;
+    }
+
+    public static int GetDamageAttr()
+    {
+        var phyEnhance = 1 + GameDataValue.ConfigIntToFloat(RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.PhysicDamageEnhance));
+        float physic = RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Attack) * phyEnhance;
+
+        var fireEnhance = 1 + GameDataValue.ConfigIntToFloat(RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.FireEnhance));
+        float fire = RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.FireAttackAdd) * fireEnhance;
+
+        var coldEnhance = 1 + GameDataValue.ConfigIntToFloat(RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.ColdEnhance));
+        float cold = RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.ColdAttackAdd) * coldEnhance;
+
+        var lightEnhance = 1 + GameDataValue.ConfigIntToFloat(RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.LightingEnhance));
+        float light = RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.LightingAttackAdd) * lightEnhance;
+
+        var windEnhance = 1 + GameDataValue.ConfigIntToFloat(RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.WindEnhance));
+        float wind = RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.WindAttackAdd) * windEnhance;
+
+        return (int)(physic + fire + cold + light + wind);
     }
 
     #endregion

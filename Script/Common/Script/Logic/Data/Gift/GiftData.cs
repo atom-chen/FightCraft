@@ -28,7 +28,7 @@ public class GiftData : DataPackBase
 
     #endregion
 
-    public void InitGemData()
+    public void InitGiftData()
     {
         GameCore.Instance.EventController.RegisteEvent(EVENT_TYPE.EVENT_LOGIC_PASS_STAGE, StagePassEvent);
     }
@@ -62,6 +62,7 @@ public class GiftData : DataPackBase
             else
             {
                 ClearGift();
+                UIMainFun.RefreshGift();
             }
         }
     }
@@ -72,7 +73,7 @@ public class GiftData : DataPackBase
 
     #region gift
 
-    public List<GiftPacketRecord> _GiftItems = new List<GiftPacketRecord>();
+    public List<GiftPacketRecord> _GiftItems = null;
 
     private GiftPacketRecord _LockingGift;
 
@@ -88,6 +89,13 @@ public class GiftData : DataPackBase
                     randomGift.Add(giftRecrod.GroupID);
                 }
             }
+            else
+            {
+                if (randomGift.Contains(giftRecrod.GroupID))
+                {
+                    randomGift.Remove(giftRecrod.GroupID);
+                }
+            }
         }
 
         if (randomGift.Count == 0)
@@ -95,11 +103,13 @@ public class GiftData : DataPackBase
 
         int randomGroup = UnityEngine.Random.Range(0, randomGift.Count);
         _GiftItems = TableReader.GiftPacket.GiftPacketGroup[randomGift[randomGroup]];
+
+        UIMainFun.RefreshGift();
     }
 
     private void ClearGift()
     {
-        _GiftItems.Clear();
+        _GiftItems = null;
     }
 
     public void BuyGift(bool isAd)
@@ -155,7 +165,10 @@ public class GiftData : DataPackBase
                 }
             }
 
-            SetGiftGroupBuy(_LockingGift.GroupID);
+            SetGiftGroupBuy(_LockingGift);
+
+            ClearGift();
+            UIMainFun.RefreshGift();
         }
     }
 
@@ -171,10 +184,14 @@ public class GiftData : DataPackBase
         return _GiftBuyRecord.Contains(giftGroup);
     }
 
-    public void SetGiftGroupBuy(int giftGroup)
+    public void SetGiftGroupBuy(GiftPacketRecord giftRecord)
     {
-        _GiftBuyRecord.Add(giftGroup);
-        SaveClass(true);
+        if (giftRecord.ActScript.Equals("BuyOneTime")
+            && !IsGiftGroupPicked(giftRecord.GroupID))
+        {
+            _GiftBuyRecord.Add(giftRecord.GroupID);
+            SaveClass(true);
+        }        
     }
 
     public bool IsCanShowGift(GiftPacketRecord giftRecord)
@@ -186,7 +203,7 @@ public class GiftData : DataPackBase
         }
 
         if (giftRecord.LevelMin > RoleData.SelectRole.TotalLevel
-            || giftRecord.LevelMax < RoleData.SelectRole.TotalLevel)
+            || (giftRecord.LevelMax > 0 && giftRecord.LevelMax < RoleData.SelectRole.TotalLevel))
         {
             return false;
         }

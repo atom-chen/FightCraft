@@ -221,6 +221,17 @@ public class BackBagPack : DataPackBase
         return false;
     }
 
+    public bool IsAnyEquipCollectBetter()
+    {
+        foreach (var equipItem in PageEquips._PackItems)
+        {
+            if (!BackBagPack.Instance.IsEquipBetter(equipItem) && LegendaryData.Instance.IsCollectBetter(equipItem))
+                return true;
+        }
+
+        return false;
+    }
+
     #endregion
 }
 

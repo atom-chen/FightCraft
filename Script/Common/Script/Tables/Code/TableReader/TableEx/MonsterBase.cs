@@ -33,16 +33,29 @@ namespace Tables
 
     public partial class MonsterBase : TableFileBase
     {
+        Dictionary<int, List<MonsterBaseRecord>> _MonsterGroups;
 
-        public MonsterBaseRecord GetGroupElite(MonsterBaseRecord monsterBase)
+        public MonsterBaseRecord GetGroupMonType(MonsterBaseRecord monsterBase, MOTION_TYPE motionType)
         {
-            foreach (var record in Records)
+            if (_MonsterGroups == null)
             {
-                if (monsterBase.MotionGroup == record.Value.MotionGroup
-                    && record.Value.MotionType == MOTION_TYPE.Elite)
+                _MonsterGroups = new Dictionary<int, List<MonsterBaseRecord>>();
+                foreach (var record in Records)
                 {
-                    return record.Value;
+                    if (!_MonsterGroups.ContainsKey(record.Value.MotionGroup))
+                    {
+                        _MonsterGroups.Add(record.Value.MotionGroup, new List<MonsterBaseRecord>());
+                    }
+                    _MonsterGroups[record.Value.MotionGroup].Add(record.Value);
                 }
+
+            }
+
+            var monsterGroup = _MonsterGroups[monsterBase.MotionGroup];
+            for (int i = 0; i < monsterGroup.Count; ++i)
+            {
+                if (monsterGroup[i].MotionType == motionType)
+                    return monsterGroup[i];
             }
 
             return monsterBase;

@@ -68,27 +68,27 @@ public class ActData : DataPackBase
         _ProcessStageIdx = stageIdx;
         _StageMode = stageMode;
 
-        //if (stageMode == STAGE_TYPE.NORMAL)
-        //{
-        //    LogicManager.Instance.EnterFight(GetNormalStageRecord(_ProcessStageIdx));
-        //}
-        //else if (stageMode == STAGE_TYPE.ACT_GOLD)
-        //{
-        //    var stageRecord = TableReader.StageInfo.GetRecord(_ActStageRecord[0]);
-        //    if (useTicket)
-        //    {
-        //        ActData.Instance._ActConsumeTickets = 1;
-        //    }
-        //    LogicManager.Instance.EnterFight(stageRecord);
-        //}
         if (stageMode == STAGE_TYPE.NORMAL)
         {
-            TestPassStageOk();
+            LogicManager.Instance.EnterFight(GetNormalStageRecord(_ProcessStageIdx));
         }
         else if (stageMode == STAGE_TYPE.ACT_GOLD)
         {
-            TestPassAct(useTicket);
+            var stageRecord = TableReader.StageInfo.GetRecord(_ActStageRecord[0]);
+            if (useTicket)
+            {
+                ActData.Instance._ActConsumeTickets = 1;
+            }
+            LogicManager.Instance.EnterFight(stageRecord);
         }
+        //if (stageMode == STAGE_TYPE.NORMAL)
+        //{
+        //    TestPassStageOk();
+        //}
+        //else if (stageMode == STAGE_TYPE.ACT_GOLD)
+        //{
+        //    TestPassAct(useTicket);
+        //}
 
         int combatValue = 0;
         foreach (var equipItem in PlayerDataPack.Instance._SelectedRole.EquipList)
@@ -325,7 +325,7 @@ public class ActData : DataPackBase
             Hashtable hash = new Hashtable();
             MotionManager objMotion = new MotionManager();
             objMotion.RoleAttrManager = new RoleAttrManager();
-            objMotion.RoleAttrManager.InitEnemyAttr(monRecord, stageLevel);
+            objMotion.RoleAttrManager.InitEnemyAttr(monRecord, stageLevel, MOTION_TYPE.Normal);
             hash.Add("MonsterInfo", objMotion);
             GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_KILL_MONSTER, this, hash);
         }
@@ -344,7 +344,7 @@ public class ActData : DataPackBase
             Hashtable hash = new Hashtable();
             MotionManager objMotion = new MotionManager();
             objMotion.RoleAttrManager = new RoleAttrManager();
-            objMotion.RoleAttrManager.InitEnemyAttr(monRecord, stageLevel);
+            objMotion.RoleAttrManager.InitEnemyAttr(monRecord, stageLevel, MOTION_TYPE.Elite);
             hash.Add("MonsterInfo", objMotion);
             GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_KILL_MONSTER, this, hash);
         }
@@ -363,12 +363,12 @@ public class ActData : DataPackBase
             Hashtable hash = new Hashtable();
             MotionManager objMotion = new MotionManager();
             objMotion.RoleAttrManager = new RoleAttrManager();
-            objMotion.RoleAttrManager.InitEnemyAttr(monRecord, stageLevel);
+            objMotion.RoleAttrManager.InitEnemyAttr(monRecord, stageLevel, MOTION_TYPE.Hero);
             hash.Add("MonsterInfo", objMotion);
             GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_KILL_MONSTER, this, hash);
         }
 
-        //TestFight.DelAllEquip();
+        
     }
 
     private void TestPassAct(bool isUsingTicket)
@@ -406,12 +406,11 @@ public class ActData : DataPackBase
             Hashtable hash = new Hashtable();
             MotionManager objMotion = new MotionManager();
             objMotion.RoleAttrManager = new RoleAttrManager();
-            objMotion.RoleAttrManager.InitEnemyAttr(monRecord, stageLevel);
+            objMotion.RoleAttrManager.InitEnemyAttr(monRecord, stageLevel, MOTION_TYPE.Normal);
             hash.Add("MonsterInfo", objMotion);
             GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_KILL_MONSTER, this, hash);
         }
 
-        TestFight.DelAllEquip();
         ActData.Instance.PassStage(actRecord.StageType);
         //InitDiffs();
     }

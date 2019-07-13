@@ -384,6 +384,7 @@ public class SummonSkillData : SaveItemBase
         _SummonMotionList.SaveClass(true);
         _SummonMatList.SaveClass(true);
 
+        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_SOUL_REFRESH, this, null);
         RefreshCollection(summonList);
         return summonList;
     }
@@ -400,7 +401,6 @@ public class SummonSkillData : SaveItemBase
         {
             _SummonMatList.AddItem(summonID, 1);
         }
-
 
         return summonData;
     }
@@ -573,6 +573,8 @@ public class SummonSkillData : SaveItemBase
         _SummonMatList.DecItem(summonData);
 
         RefreshUsingIdx();
+
+        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_SOUL_REFRESH, this, null);
         //SaveClass(true);
     }
 
@@ -596,6 +598,7 @@ public class SummonSkillData : SaveItemBase
 
         UISummonSkillPack.RefreshPack();
 
+        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_SOUL_REFRESH, this, null);
         return exp;
     }
 
@@ -691,6 +694,18 @@ public class SummonSkillData : SaveItemBase
         {
             return false;
         }
+    }
+
+    public bool IsCanAbsorb()
+    {
+        for (int i = 0; i < SummonSkillData.Instance._SummonMatList._PackItems.Count; ++i)
+        {
+            if (!SummonSkillData.Instance.CanBeStage(SummonSkillData.Instance._SummonMatList._PackItems[i]))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public int GetItemsStarExp(SummonMotionData motionData, Dictionary<SummonMotionData, int> expItems)

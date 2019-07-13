@@ -44,7 +44,7 @@ public class UIEquipPack : UIBase,IDragablePack
         base.Init();
 
         //_BackPack = UIBackPack.GetUIBackPackInstance(transform);
-        _BackPack.OnShowPage(0, true);
+        _BackPack.OnShowPage(UIBackPack.BackPackPage.PAGE_EQUIP);
         _BackPack._OnItemSelectCallBack = ShowBackPackSelectItem;
         _BackPack._OnDragItemCallBack = OnDragItem;
         _BackPack._IsCanDropItemCallBack = IsCanDropItem;
@@ -57,7 +57,7 @@ public class UIEquipPack : UIBase,IDragablePack
 
         _TagPanel.ShowPage(0);
         ShowEquipPackItems();
-        _BackPack.OnShowPage(0, true);
+        _BackPack.OnShowPage(UIBackPack.BackPackPage.PAGE_EQUIP);
         RefreshCombat();
 
         _OtherRoleWeapon.gameObject.SetActive(false);
@@ -76,13 +76,13 @@ public class UIEquipPack : UIBase,IDragablePack
         }
         else if (page == 0)
         {
-            _BackPack.OnShowPage(0, true);
+            _BackPack.OnShowPage(UIBackPack.BackPackPage.PAGE_EQUIP);
             RefreshCombat();
             //ShowEquipPackItems();
         }
         else if (page == 1)
         {
-            _BackPack.OnShowPage(0, false);
+            _BackPack.OnShowPage(UIBackPack.BackPackPage.PAGE_LEGENDARY);
         }
     }
 

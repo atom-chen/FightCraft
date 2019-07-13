@@ -382,7 +382,7 @@ public class MotionManager : MonoBehaviour
         }
         else if (_MonsterBase != null)
         {
-            _RoleAttrManager.InitEnemyAttr(_MonsterBase, FightManager.Instance._FightLevel);
+            _RoleAttrManager.InitEnemyAttr(_MonsterBase, FightManager.Instance._FightLevel, _RoleAttrManager.MotionType);
             _MotionAnimPath = _MonsterBase.AnimPath;
         }
         else if (_SummonMotionData != null)

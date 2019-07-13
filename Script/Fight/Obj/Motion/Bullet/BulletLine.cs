@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class BulletLine : BulletBase
 {
@@ -54,6 +55,19 @@ public class BulletLine : BulletBase
         if (!_IsBulletHitLie && (targetMotion.MotionPrior == BaseMotionManager.LIE_PRIOR || targetMotion.MotionPrior == BaseMotionManager.RISE_PRIOR))
             return;
 
+        if (_HittedMotions != null)
+        {
+            if (_HittedMotions.Contains(targetMotion))
+            {
+                return;
+            }
+            else
+            {
+                _HittedMotions.Add(targetMotion);
+            }
+            Debug.Log("TriggetMotion hitted:" + _HittedMotions.Count);
+        }
+
         BulletHit(targetMotion);
         ++_AlreadyHitTimes;
 
@@ -62,4 +76,10 @@ public class BulletLine : BulletBase
             BulletFinish();
         }
     }
+
+    #region hit motion once
+
+    public List<MotionManager> _HittedMotions;
+
+    #endregion
 }

@@ -483,15 +483,15 @@ public class RoleAttrManager : MonoBehaviour
         _MotionType = MOTION_TYPE.MainChar;
     }
 
-    public void InitEnemyAttr(MonsterBaseRecord monsterBase, int level)
+    public void InitEnemyAttr(MonsterBaseRecord monsterBase, int level, MOTION_TYPE motionType)
     {
         _BaseMoveSpeed = 4;
         _Level = level;
         _MonsterValue = 1;
         
         _MonsterRecord = monsterBase;
-        _MotionType = _MonsterRecord.MotionType;
-        _BaseAttr = GetMonsterAttr(monsterBase, _Level, _MonsterRecord.MotionType);
+        _MotionType = motionType;
+        _BaseAttr = GetMonsterAttr(monsterBase, _Level, _MotionType);
 
         RefreshMoveSpeed();
         RefreshAttackSpeed();

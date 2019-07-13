@@ -6,6 +6,13 @@ using System;
 
 public class UIBackPack : UIBase, IDragablePack
 {
+    public enum BackPackPage
+    {
+        PAGE_EQUIP,
+        PAGE_ITEM,
+        PAGE_LEGENDARY,
+    }
+
     #region static
 
     public static UIBackPack GetUIBackPackInstance(Transform parentTrans)
@@ -42,7 +49,7 @@ public class UIBackPack : UIBase, IDragablePack
     public UIContainerSelect _ItemsContainer;
     public GameObject _BtnPanel;
 
-    private int _ShowingPage = 0;
+    private BackPackPage _ShowingPage = 0;
 
     #endregion
 
@@ -53,7 +60,7 @@ public class UIBackPack : UIBase, IDragablePack
         base.Show(hash);
 
 
-        OnShowPage(0, true);
+        OnShowPage(BackPackPage.PAGE_EQUIP);
     }
 
     public override void Hide()
@@ -61,19 +68,39 @@ public class UIBackPack : UIBase, IDragablePack
         base.Hide();
     }
 
-    public void OnShowPage(int page, bool isEquipPack = false)
+    public void OnShowPage(BackPackPage page)
     {
         _ShowingPage = page;
         Hashtable hash = new Hashtable();
         hash.Add("DragPack", this);
-        if (page == 0)
+        if (page == BackPackPage.PAGE_EQUIP)
         {
-            hash.Add("IsShowRedTips", isEquipPack);
+            hash.Add("RedTipType", RedTipType.EquipPack);
             _ItemsContainer.InitContentItem(BackBagPack.Instance.PageEquips._PackItems, ShowBackPackTooltips, hash);
         }
-        else
+        else if (page == BackPackPage.PAGE_ITEM)
         {
             _ItemsContainer.InitContentItem(BackBagPack.Instance.PageItems._PackItems, ShowBackPackTooltips, hash);
+        }
+        else if (page == BackPackPage.PAGE_LEGENDARY)
+        {
+            hash.Add("RedTipType", RedTipType.LegedaryPack);
+            List<ItemEquip> equipList = new List<ItemEquip>();
+            foreach (var equipItem in BackBagPack.Instance.PageEquips._PackItems)
+            {
+                if (LegendaryData.IsEquipLegendary(equipItem))
+                {
+                    equipList.Add(equipItem);
+                }
+            }
+            if (equipList.Count < BackBagPack._BAG_PAGE_SLOT_CNT)
+            {
+                for (int i = equipList.Count; i < BackBagPack._BAG_PAGE_SLOT_CNT; ++i)
+                {
+                    equipList.Add(null);
+                }
+            }
+            _ItemsContainer.InitContentItem(equipList, ShowBackPackTooltips, hash);
         }
 
         _BtnPanel.SetActive(true);
@@ -210,15 +237,19 @@ public class UIBackPack : UIBase, IDragablePack
 
     public void OnBtnRefresh()
     {
-        if (_ShowingPage == 0)
+        if (_ShowingPage == BackPackPage.PAGE_EQUIP)
         {
             BackBagPack.Instance.SortEquip();
         }
-        else if (_ShowingPage == 1)
+        else if (_ShowingPage == BackPackPage.PAGE_ITEM)
         {
             BackBagPack.Instance.SortItem();
         }
-        OnShowPage(_ShowingPage, true);
+        else if (_ShowingPage == BackPackPage.PAGE_LEGENDARY)
+        {
+            BackBagPack.Instance.SortItem();
+        }
+        OnShowPage(_ShowingPage);
     }
 
     public void SetBackPackSellMode(Tables.ITEM_QUALITY sellQuality)

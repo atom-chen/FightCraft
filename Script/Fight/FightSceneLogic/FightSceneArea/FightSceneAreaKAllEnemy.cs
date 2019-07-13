@@ -70,13 +70,13 @@ public class FightSceneAreaKAllEnemy : FightSceneAreaBase
 
         for(int i = 0; i< _EnemyBornPos.Length; ++i)
         {
-            bool isElite = false;
+            Tables.MOTION_TYPE motionType = Tables.MOTION_TYPE.Normal;
             if (eliteIdx == i)
             {
-                isElite = true;
+                motionType = Tables.MOTION_TYPE.Elite;
             }
 
-            MotionManager enemy = FightManager.Instance.InitEnemy(_EnemyBornPos[i]._EnemyDataID, _EnemyBornPos[i]._EnemyTransform.position, _EnemyBornPos[i]._EnemyTransform.rotation.eulerAngles, isElite);
+            MotionManager enemy = FightManager.Instance.InitEnemy(_EnemyBornPos[i]._EnemyDataID, _EnemyBornPos[i]._EnemyTransform.position, _EnemyBornPos[i]._EnemyTransform.rotation.eulerAngles, motionType);
             
             var enemyAI = enemy.gameObject.GetComponent<AI_Base>();
             enemyAI.GroupID = AreaID;

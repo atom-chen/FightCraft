@@ -57,12 +57,14 @@ public class GameDataValue
     private static float _LegHPToTorso = 0.5f;
     private static float _LegDefenceToTorso = 0.5f;
 
+    private static int _Default_Weapon_Atk = 100;
+
     public static int CalWeaponAttack(int equiplevel)
     {
         //var attrRecord = TableReader.EquipBaseAttr.GetEquipBaseAttr(equiplevel);
         //return attrRecord.Atk;
 
-        var attackValue = GetEquipLvValue(equiplevel) * 2 + 100;
+        var attackValue = GetEquipLvValue(equiplevel) * 2 + _Default_Weapon_Atk;
         return Mathf.CeilToInt(attackValue);
     }
 
@@ -846,15 +848,11 @@ public class GameDataValue
 
     public static int GetPhyDamage(int phyAtk, float damageRate, int enhance, int defence, int roleLevel)
     {
-        var equipRecord = TableReader.EquipBaseAttr.GetRecord(GetRoleLv(roleLevel).ToString());
-        float eleDamage = phyAtk * damageRate * (1 + ConfigIntToFloat(enhance));
-        float resistRate = 1;
-        if (defence > 0 && roleLevel > 0)
-        {
-            resistRate = (1 - (float)defence / (defence + equipRecord.DefenceStandar));
-        }
-
-        int finalDamage = Mathf.CeilToInt(eleDamage * resistRate);
+        float phyAtkDelta = (phyAtk - defence);
+        phyAtkDelta = Mathf.Max(phyAtkDelta, roleLevel);
+        float eleDamage = phyAtkDelta * damageRate * (1 + ConfigIntToFloat(enhance));
+        
+        int finalDamage = Mathf.CeilToInt(eleDamage);
         return finalDamage;
     }
 
@@ -1034,8 +1032,14 @@ public class GameDataValue
                     bool isOringe = false;
                     for (int i = 0; i < dropCnt; ++i)
                     {
-                        if (level <= 20)
-                            dropQuality = GameRandom.GetRandomLevel(0, 7000, 2000, (int)(1000 * exEquipRate));
+                        if (level <= 10)
+                            dropQuality = GameRandom.GetRandomLevel(0, 8000, 2000, (int)(0 * exEquipRate));
+                        else if (level <= 20)
+                            dropQuality = GameRandom.GetRandomLevel(0, 7000, 2500, (int)(500 * exEquipRate));
+                        else if (level <= 30)
+                            dropQuality = GameRandom.GetRandomLevel(0, 6000, 3000, (int)(1000 * exEquipRate));
+                        else if (level <= 40)
+                            dropQuality = GameRandom.GetRandomLevel(0, 5500, 3000, (int)(1500 * exEquipRate));
                         else if (level <= 50)
                             dropQuality = GameRandom.GetRandomLevel(0, 5000, 3000, (int)(2000 * exEquipRate));
                         else if (level <= 100)
@@ -1177,8 +1181,9 @@ public class GameDataValue
         {
             slotLevel = slotLevel - _EqiupLevelStep;
         }
-        
+
         return Mathf.Max(slotLevel, 1);
+        //return dropLevel;
     }
 
     public static List<ItemEquip> GetMonsterDropEquip(MOTION_TYPE motionType, MonsterBaseRecord monsterRecord, int level, STAGE_TYPE stageType)
@@ -1222,6 +1227,34 @@ public class GameDataValue
                 var equipValue = GetEquipLvValue(equipLevel, equipSlot);
                 var dropEquip = ItemEquip.CreateEquip(equipLevel, dropEquipQualitys[i], -1, (int)equipSlot);
                 dropEquipList.Add(dropEquip);
+            }
+        }
+
+        //sp drop
+        if (motionType == MOTION_TYPE.Hero && level == 5)
+        {
+            if (FunTipData.Instance.GetFunTip(FunTipData.FunTipType.Lv5Eqiup) == 0)
+            {
+                int proLimit = 5;
+                if (RoleData.SelectRole.Profession == PROFESSION.GIRL_DEFENCE
+                    || RoleData.SelectRole.Profession == PROFESSION.GIRL_DOUGE)
+                    proLimit = 10;
+                ItemEquip weapon = ItemEquip.CreateEquip(5, ITEM_QUALITY.PURPER, -1, 0, proLimit);
+                dropEquipList.Add(weapon);
+                FunTipData.Instance.SetFunTip(FunTipData.FunTipType.Lv5Eqiup, 1);
+            }
+        }
+        else if (motionType == MOTION_TYPE.Hero && level == 10)
+        {
+            if (FunTipData.Instance.GetFunTip(FunTipData.FunTipType.Lv10Equip) == 0)
+            {
+                int legendaryID = 120000;
+                if (RoleData.SelectRole.Profession == PROFESSION.GIRL_DEFENCE
+                    || RoleData.SelectRole.Profession == PROFESSION.GIRL_DOUGE)
+                    legendaryID = 120100;
+                ItemEquip weapon = ItemEquip.CreateEquip(10, ITEM_QUALITY.PURPER, legendaryID);
+                dropEquipList.Add(weapon);
+                FunTipData.Instance.SetFunTip(FunTipData.FunTipType.Lv10Equip, 1);
             }
         }
 
@@ -1399,7 +1432,7 @@ public class GameDataValue
 
     #region gem mat
 
-    public static int MONSTER_DROP_GEM_LEVEL = 10;
+    public static int MONSTER_DROP_GEM_LEVEL = 8;
 
     public static int GetGemLevelUpCostMoney(int level)
     {
@@ -1412,10 +1445,25 @@ public class GameDataValue
         return TableReader.AttrValueLevel.GetSpValue(level, 15);
     }
 
-    public static ItemGem GetGemMonsterDrop(int level, STAGE_TYPE stageType)
+    public static ItemGem GetGemMonsterDrop(MOTION_TYPE monsterType, int level, STAGE_TYPE stageType)
     {
         if (level < MONSTER_DROP_GEM_LEVEL)
             return null;
+
+        if (monsterType == MOTION_TYPE.Hero && level == MONSTER_DROP_GEM_LEVEL)
+        {
+            if (FunTipData.Instance.GetFunTip(FunTipData.FunTipType.Gem) == 0)
+            {
+                string defaultGemID = TableReader.GemTable.GetRandomRecord().Id;
+                ItemGem defaultGem = new ItemGem(defaultGemID);
+                defaultGem.Level = 1;
+                defaultGem.SetStackNum(1);
+
+                FunTipData.Instance.SetFunTip(FunTipData.FunTipType.Gem, 1);
+
+                return defaultGem;
+            }
+        }
 
         //if (stageType != STAGE_TYPE.ACT_GOLD)
         //    return null;
@@ -2022,192 +2070,55 @@ public class GameDataValue
             return stageIdx;
     }
 
-    public static float _MonsterHPParam = 0.012f;
-    public static float _MonsterAtkParam = 0.006f;
+    public static float _MotionNormalHPMofify = 1.0f;
+    public static float _MotionEliteHPMofify = 2.5f;
+    public static float _MotionExEliteHPMofify = 5.0f;
+    public static float _MotionHeroHPMofify = 15.0f;
 
     public static int GetMonsterHP(MonsterBaseRecord monsterBase, int roleLv, MOTION_TYPE monsterType)
     {
         int hpMax = 0;
-        float hpBase = ConfigIntToFloat(monsterBase.BaseAttr[2]);
-        MonsterAttrRecord attrRecord = null;
-        if (!TableReader.MonsterAttr.ContainsKey(roleLv.ToString()))
+        float monHpBase = ConfigIntToFloat(monsterBase.BaseAttr[2]);
+        float hpRate = ConfigIntToFloat(TableReader.AttrValueLevel.GetSpValue(roleLv, 30));
+        float hpBase = monHpBase * hpRate * (TableReader.AttrValueLevel.GetBaseValue(roleLv) + _Default_Weapon_Atk);
+        float motionHPMofity = _MotionNormalHPMofify;
+        switch (monsterType)
         {
-            if (roleLv <= 0)
-            {
-                attrRecord = TableReader.MonsterAttr.GetRecord("1");
-            }
-            else
-            {
-                attrRecord = TableReader.MonsterAttr.GetRecord("200");
-            }
+            case MOTION_TYPE.Normal:
+                motionHPMofity = _MotionNormalHPMofify;
+                break;
+            case MOTION_TYPE.Elite:
+                motionHPMofity = _MotionEliteHPMofify;
+                break;
+            case MOTION_TYPE.ExElite:
+                motionHPMofity = _MotionExEliteHPMofify;
+                break;
+            case MOTION_TYPE.Hero:
+                motionHPMofity = _MotionHeroHPMofify;
+                break;
         }
-        else
-        {
-            attrRecord = TableReader.MonsterAttr.GetRecord(roleLv.ToString());
-        }
-        hpMax = (int)(attrRecord.Attrs[2] * hpBase);
-        //if (roleLv <= 5)
-        //{
-        //    hpMax = (int)(CalWeaponAttack(roleLv) * hpBase + roleLv * 15 * hpBase);
-        //}
-        //else if (roleLv <= 10)
-        //{
-        //    var hpTemp = GetMonsterHP(monsterBase, 5, monsterType);
-        //    hpMax = (int)(hpTemp + (roleLv - 5) * 20 * hpBase);
-        //}
-        //else if (roleLv <= 20)
-        //{
-        //    var hpTemp = GetMonsterHP(monsterBase, 10, monsterType);
-        //    hpMax = (int)(hpTemp + (roleLv - 10) * 40 * hpBase);
-        //}
-        //else if (roleLv <= 30)
-        //{
-        //    var hpTemp = GetMonsterHP(monsterBase, 20, monsterType);
-        //    hpMax = (int)(hpTemp + (roleLv - 20) * 80 * hpBase);
-        //}
-        //else if (roleLv <= 40)
-        //{
-        //    var hpTemp = GetMonsterHP(monsterBase, 30, monsterType);
-        //    hpMax = (int)(hpTemp + (roleLv - 30) * 80 * hpBase);
-        //}
-        //else if (roleLv <= 50)
-        //{
-        //    var hpTemp = GetMonsterHP(monsterBase, 40, monsterType);
-        //    hpMax = (int)(hpTemp + (roleLv - 40) * 150 * hpBase);
-        //}
-        //else if (roleLv <= 60)
-        //{
-        //    var hpTemp = GetMonsterHP(monsterBase, 50, monsterType);
-        //    hpMax = (int)(hpTemp + (roleLv - 50) * 200 * hpBase);
-        //}
-        //else if (roleLv <= 70)
-        //{
-        //    var hpTemp = GetMonsterHP(monsterBase, 60, monsterType);
-        //    hpMax = (int)(hpTemp + (roleLv - 60) * 280 * hpBase);
-        //}
-        //else if (roleLv <= 80)
-        //{
-        //    var hpTemp = GetMonsterHP(monsterBase, 70, monsterType);
-        //    hpMax = (int)(hpTemp + (roleLv - 70) * 400 * hpBase);
-        //}
-        //else if (roleLv <= 90)
-        //{
-        //    var hpTemp = GetMonsterHP(monsterBase, 80, monsterType);
-        //    hpMax = (int)(hpTemp + (roleLv - 80) * 600 * hpBase);
-        //}
-        //else if (roleLv <= 100)
-        //{
-        //    var hpTemp = GetMonsterHP(monsterBase, 90, monsterType);
-        //    hpMax = (int)(hpTemp + (roleLv - 90) * 900 * hpBase);
-        //}
-        //else
-        //{
-        //    var hpTemp = GetMonsterHP(monsterBase, 100, monsterType);
-        //    hpMax = (int)(hpTemp + (roleLv - 100) * 1500 * hpBase);
-        //}
-
+        hpMax = (int)(hpBase * motionHPMofity);
+        
         return hpMax;
     }
 
     public static int GetMonsterAtk(MonsterBaseRecord monsterBase, int roleLv, MOTION_TYPE monsterType)
     {
         int atkValue = 0;
-        float atkBase = ConfigIntToFloat(monsterBase.BaseAttr[0]);
-        MonsterAttrRecord attrRecord = null;
-        if (!TableReader.MonsterAttr.ContainsKey(roleLv.ToString()))
-        {
-            if (roleLv <= 0)
-            {
-                attrRecord = TableReader.MonsterAttr.GetRecord("1");
-            }
-            else
-            {
-                attrRecord = TableReader.MonsterAttr.GetRecord("200");
-            }
-        }
-        else
-        {
-            attrRecord = TableReader.MonsterAttr.GetRecord(roleLv.ToString());
-        }
-        atkValue = (int)(attrRecord.Attrs[0] * atkBase);
-        //if (roleLv <= 10)
-        //{
-        //    atkValue = (int)(CalEquipTorsoHP(roleLv) * 2.0f + _HPRoleLevelBase);
-        //}
-        //else if (roleLv <= 20)
-        //{
-        //    var hpTemp = GetMonsterAtk(monsterBase, 10, monsterType);
-        //    atkValue = (int)(hpTemp + (roleLv - 10) * 30);
-        //}
-        //else if (roleLv <= 30)
-        //{
-        //    var hpTemp = GetMonsterAtk(monsterBase, 20, monsterType);
-        //    atkValue = (int)(hpTemp + (roleLv - 20) * 60);
-        //}
-        //else if (roleLv <= 40)
-        //{
-        //    var hpTemp = GetMonsterAtk(monsterBase, 30, monsterType);
-        //    atkValue = (int)(hpTemp + (roleLv - 30) * 80);
-        //}
-        //else if (roleLv <= 50)
-        //{
-        //    var hpTemp = GetMonsterAtk(monsterBase, 40, monsterType);
-        //    atkValue = (int)(hpTemp + (roleLv - 40) * 150);
-        //}
-        //else if (roleLv <= 60)
-        //{
-        //    var hpTemp = GetMonsterAtk(monsterBase, 50, monsterType);
-        //    atkValue = (int)(hpTemp + (roleLv - 50) * 200);
-        //}
-        //else if (roleLv <= 70)
-        //{
-        //    var hpTemp = GetMonsterAtk(monsterBase, 60, monsterType);
-        //    atkValue = (int)(hpTemp + (roleLv - 60) * 280);
-        //}
-        //else if (roleLv <= 80)
-        //{
-        //    var hpTemp = GetMonsterAtk(monsterBase, 70, monsterType);
-        //    atkValue = (int)(hpTemp + (roleLv - 70) * 400);
-        //}
-        //else if (roleLv <= 90)
-        //{
-        //    var hpTemp = GetMonsterAtk(monsterBase, 80, monsterType);
-        //    atkValue = (int)(hpTemp + (roleLv - 80) * 600);
-        //}
-        //else if (roleLv <= 100)
-        //{
-        //    var hpTemp = GetMonsterAtk(monsterBase, 90, monsterType);
-        //    atkValue = (int)(hpTemp + (roleLv - 90) * 900);
-        //}
-        //else
-        //{
-        //    var hpTemp = GetMonsterAtk(monsterBase, 100, monsterType);
-        //    atkValue = (int)(hpTemp + (roleLv - 100) * 1500);
-        //}
+        float monAtkBase = ConfigIntToFloat(monsterBase.BaseAttr[0]);
+        float atkBase = monAtkBase * TableReader.AttrValueLevel.GetSpValue(roleLv, 31) * TableReader.AttrValueLevel.GetBaseValue(roleLv);
+
+        atkValue = (int)(atkBase);
+        
         return atkValue;
     }
 
     public static int GetMonsterDef(MonsterBaseRecord monsterBase, int roleLv, MOTION_TYPE monsterType)
     {
         int defValue = 0;
-        float defBase = ConfigIntToFloat(monsterBase.BaseAttr[1]);
-        MonsterAttrRecord attrRecord = null;
-        if (!TableReader.MonsterAttr.ContainsKey(roleLv.ToString()))
-        {
-            if (roleLv <= 0)
-            {
-                attrRecord = TableReader.MonsterAttr.GetRecord("1");
-            }
-            else
-            {
-                attrRecord = TableReader.MonsterAttr.GetRecord("200");
-            }
-        }
-        else
-        {
-            attrRecord = TableReader.MonsterAttr.GetRecord(roleLv.ToString());
-        }
-        defValue = (int)(attrRecord.Attrs[1] * defBase);
+        float defBase = GetEquipLvValue(roleLv);
+
+        defValue = (int)(defBase);
         return defValue;
     }
 
@@ -2215,24 +2126,8 @@ public class GameDataValue
     {
         int defValue = 0;
         float defBase = ConfigIntToFloat(monsterBase.BaseAttr[2 + (int)elementType]);
-        MonsterAttrRecord attrRecord = null;
-        if (!TableReader.MonsterAttr.ContainsKey(roleLv.ToString()))
-        {
-            if (roleLv <= 0)
-            {
-                attrRecord = TableReader.MonsterAttr.GetRecord("1");
-            }
-            else
-            {
-                attrRecord = TableReader.MonsterAttr.GetRecord("200");
-            }
-        }
-        else
-        {
-            attrRecord = TableReader.MonsterAttr.GetRecord(roleLv.ToString());
-        }
-        ;
-        defValue = (int)(ConfigIntToFloat(attrRecord.Attrs[2 + (int)elementType]) * defBase);
+
+        defValue = (int)(defBase);
         return defValue;
     }
 

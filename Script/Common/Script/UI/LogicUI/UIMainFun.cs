@@ -26,18 +26,16 @@ public class UIMainFun : UIBase
         instance.UpdateMoneyInner();
     }
 
-    #endregion
-
-    #region 
-
-    public void OnEnable()
+    public static void RefreshGift()
     {
-        GameCore.Instance.EventController.RegisteEvent(EVENT_TYPE.EVENT_LOGIC_PASS_STAGE, StagePassEvent, -100);
-    }
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIMainFun>("LogicUI/UIMainFun");
+        if (instance == null)
+            return;
 
-    public void OnDisable()
-    {
-        GameCore.Instance.EventController.UnRegisteEvent(EVENT_TYPE.EVENT_LOGIC_PASS_STAGE, StagePassEvent);
+        if (!instance.isActiveAndEnabled)
+            return;
+
+        instance.RefreshGiftBtns();
     }
 
     #endregion
@@ -169,7 +167,7 @@ public class UIMainFun : UIBase
 
     public void RefreshGiftBtns()
     {
-        if (GiftData.Instance._GiftItems.Count > 0)
+        if (GiftData.Instance._GiftItems != null)
         {
             _AdGift.SetActive(true);
             _PurchGift.SetActive(true);
@@ -189,11 +187,6 @@ public class UIMainFun : UIBase
     public void OnBtnPurchGift()
     {
         UIGiftPack.ShowAsyn();
-    }
-
-    public void StagePassEvent(object go, Hashtable eventArgs)
-    {
-        RefreshGiftBtns();
     }
 
     #endregion

@@ -192,7 +192,15 @@ public class UIGemPackCombine : UIBase
 
     }
 
-    private List<List<string>> _DefaultCombine = new List<List<string>>()
+    public static void CombineAll()
+    {
+        for (int i = 0; i < _DefaultCombine.Count; ++i)
+        {
+            TestCombineAll(i);
+        }
+    }
+
+    private static List<List<string>> _DefaultCombine = new List<List<string>>()
     {
         new List<string>() { "70001", "70002" },
         new List<string>() { "70007", "70003" },
@@ -201,7 +209,7 @@ public class UIGemPackCombine : UIBase
         new List<string>() { "70010", "70006" },
     };
 
-    private void TestCombineAll(int idx)
+    private static void TestCombineAll(int idx)
     {
         List<string> defaultCombine = _DefaultCombine[idx];
         List<ItemGem> combines = new List<ItemGem>();

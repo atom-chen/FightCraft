@@ -6,6 +6,12 @@ using System.Collections;
 using UnityEngine.EventSystems;
 using System;
 
+public enum RedTipType
+{
+    None,
+    EquipPack,
+    LegedaryPack,
+}
 
 public class UIBackPackItem : /*UIDragableItemBase*/ UIPackItemBase
 {
@@ -19,9 +25,9 @@ public class UIBackPackItem : /*UIDragableItemBase*/ UIPackItemBase
         base.Show();
 
         var showItem = (ItemBase)hash["InitObj"];
-        if (hash.ContainsKey("IsShowRedTips"))
+        if (hash.ContainsKey("RedTipType"))
         {
-            _IsShowRedTips = (bool)hash["IsShowRedTips"];
+            _RedTipType = (RedTipType)hash["RedTipType"];
         }
         ShowItem(showItem);
 
@@ -123,32 +129,52 @@ public class UIBackPackItem : /*UIDragableItemBase*/ UIPackItemBase
 
     public GameObject _RedTips;
 
-    private bool _IsShowRedTips = false;
+    private RedTipType _RedTipType = RedTipType.None;
 
     public void RefreshRedTips()
     {
         if (_RedTips == null)
             return;
 
-        if (!_IsShowRedTips)
+        if (_RedTipType == RedTipType.None)
         {
             _RedTips.gameObject.SetActive(false);
             return;
         }
 
-        if (_BackpackEquip == null || !_BackpackEquip.IsVolid())
+        if (_RedTipType == RedTipType.EquipPack)
         {
-            _RedTips.gameObject.SetActive(false);
-            return;
-        }
+            if (_BackpackEquip == null || !_BackpackEquip.IsVolid())
+            {
+                _RedTips.gameObject.SetActive(false);
+                return;
+            }
 
-        if (BackBagPack.Instance.IsEquipBetter(_BackpackEquip))
-        {
-            _RedTips.gameObject.SetActive(true);
+            if (BackBagPack.Instance.IsEquipBetter(_BackpackEquip))
+            {
+                _RedTips.gameObject.SetActive(true);
+            }
+            else
+            {
+                _RedTips.gameObject.SetActive(false);
+            }
         }
-        else
+        else if (_RedTipType == RedTipType.LegedaryPack)
         {
-            _RedTips.gameObject.SetActive(false);
+            if (_BackpackEquip == null || !_BackpackEquip.IsVolid())
+            {
+                _RedTips.gameObject.SetActive(false);
+                return;
+            }
+
+            if (!BackBagPack.Instance.IsEquipBetter(_BackpackEquip) && LegendaryData.Instance.IsCollectBetter(_BackpackEquip))
+            {
+                _RedTips.gameObject.SetActive(true);
+            }
+            else
+            {
+                _RedTips.gameObject.SetActive(false);
+            }
         }
     }
 

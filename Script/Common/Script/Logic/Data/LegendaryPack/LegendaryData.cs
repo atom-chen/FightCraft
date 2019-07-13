@@ -110,16 +110,19 @@ public class LegendaryData : SaveItemBase
         }
     }
 
-    public bool IsCanCollect(ItemEquip itemEquip)
+    public bool IsCollectBetter(ItemEquip itemEquip)
     {
+        if (itemEquip == null || !itemEquip.IsVolid())
+            return false;
+
         if (!_LegendaryEquipDict.ContainsKey(itemEquip.EquipItemRecord))
             return false;
 
         var collectItem = _LegendaryEquipDict[itemEquip.EquipItemRecord];
-        if (collectItem == null)
+        if (collectItem == null || !collectItem.IsVolid())
             return true;
 
-        return !collectItem.IsVolid();
+        return collectItem.EquipLevel < itemEquip.EquipLevel;
     }
 
     public bool PutInEquip(ItemEquip equip)
@@ -192,12 +195,14 @@ public class LegendaryData : SaveItemBase
 
     public static bool IsEquipLegendary(ItemEquip equip)
     {
+        if (equip == null || !equip.IsVolid())
+            return false;
         return equip.EquipItemRecord.EquipClass == EQUIP_CLASS.Legendary;
     }
 
     #endregion
 
-    #region 
+    #region attr
 
     public class LegendaryShadowAttrInfo
     {
@@ -207,9 +212,9 @@ public class LegendaryData : SaveItemBase
 
     public List<LegendaryShadowAttrInfo> _ShadowInfos = new List<LegendaryShadowAttrInfo>()
     {
-        new LegendaryShadowAttrInfo() { _NeedValue = 82, _Level=3},
-        new LegendaryShadowAttrInfo() { _NeedValue = 74, _Level=2},
-        new LegendaryShadowAttrInfo() { _NeedValue = 66, _Level=1},
+        new LegendaryShadowAttrInfo() { _NeedValue = 74, _Level=3},
+        new LegendaryShadowAttrInfo() { _NeedValue = 56, _Level=2},
+        new LegendaryShadowAttrInfo() { _NeedValue = 40, _Level=1},
         //new LegendaryShadowAttrInfo() { _NeedValue = 3, _Level=3},
         //new LegendaryShadowAttrInfo() { _NeedValue = 2, _Level=2},
         //new LegendaryShadowAttrInfo() { _NeedValue = 1, _Level=1},
@@ -217,9 +222,7 @@ public class LegendaryData : SaveItemBase
 
     public static string _SpecilImpact = "3002";
 
-    public float _AtkParam = 0.06f;
-    public float _HpParam = 0.25f;
-    public static float _ValueModify = 0.1f;
+    public static float _ValueModify = 0.25f;
 
     public LegendaryShadowAttrInfo GetNextShadowLv(int level)
     {
@@ -245,8 +248,8 @@ public class LegendaryData : SaveItemBase
         //if (_LegendaryValue == 0)
         //    return;
 
-        _ExAttrs.Add(EquipExAttr.GetBaseExAttr(RoleAttrEnum.Attack, GameDataValue.GetValueAttr(RoleAttrEnum.Attack, _LegendaryValue)));
-        _ExAttrs.Add(EquipExAttr.GetBaseExAttr(RoleAttrEnum.HPMax, GameDataValue.GetValueAttr(RoleAttrEnum.HPMax, _LegendaryValue)));
+        _ExAttrs.Add(EquipExAttr.GetBaseExAttr(RoleAttrEnum.Attack, _LegendaryValue));
+        _ExAttrs.Add(EquipExAttr.GetBaseExAttr(RoleAttrEnum.HPMax, _LegendaryValue));
 
         var attrRecord = TableReader.AttrValue.GetRecord(_SpecilImpact);
         foreach (var shadowInfo in _ShadowInfos)

@@ -56,8 +56,8 @@ public class RoleAttrImpactPassiveShadowHit : RoleAttrImpactPassive
 
     #region 
 
-    private int _ShadowHitCnt;
-    private float _HitDamage;
+    public int _ShadowHitCnt;
+    public float _HitDamage;
 
     private static int GetValueFromTab(AttrValueRecord attrRecord, int level)
     {

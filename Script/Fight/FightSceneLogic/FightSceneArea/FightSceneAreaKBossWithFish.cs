@@ -196,18 +196,23 @@ public class FightSceneAreaKBossWithFish : FightSceneAreaBase
         switch (_BossAILevel)
         {
             case 0:
+                aiBoss._IsRiseBoom = false;
                 break;
             case 1:
-                aiBoss.InitProtectTimes(1);
+                aiBoss._IsRiseBoom = true;
                 break;
             case 2:
-                aiBoss.InitProtectTimes(2);
+                aiBoss.InitProtectTimes(1);
                 break;
             case 3:
-                aiBoss.InitProtectTimes(2);
+                aiBoss.InitProtectTimes(1);
                 aiBoss._StageBuffHpPersent.Add(0.5f);
                 break;
             case 4:
+                aiBoss.InitProtectTimes(2);
+                aiBoss._StageBuffHpPersent.Add(0.5f);
+                break;
+            case 5:
                 aiBoss.InitProtectTimes(2);
                 aiBoss._StageBuffHpPersent.Add(0.6f);
                 aiBoss.IsCancelNormalAttack = true;

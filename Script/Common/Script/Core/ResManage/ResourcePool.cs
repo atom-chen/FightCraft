@@ -166,7 +166,7 @@ public class ResourcePool : InstanceBase<ResourcePool>
             instance.gameObject.SetActive(false);
             _MonsterBasePrefab.Add(monIds[i], instance);
 
-            var monElite = Tables.TableReader.MonsterBase.GetGroupElite(monsterTab);
+            var monElite = Tables.TableReader.MonsterBase.GetGroupMonType(monsterTab, Tables.MOTION_TYPE.Elite);
             if (_MonsterBasePrefab.ContainsKey(monElite.Id))
                 continue;
             if (monElite != null)
@@ -174,6 +174,16 @@ public class ResourcePool : InstanceBase<ResourcePool>
                 var instanceElite = ResourceManager.Instance.GetGameObject("ModelBase/" + monElite.MotionPath);
                 instanceElite.gameObject.SetActive(false);
                 _MonsterBasePrefab.Add(monElite.Id, instanceElite);
+            }
+
+            var monEx = Tables.TableReader.MonsterBase.GetGroupMonType(monsterTab, Tables.MOTION_TYPE.ExElite);
+            if (_MonsterBasePrefab.ContainsKey(monEx.Id))
+                continue;
+            if (monEx != null)
+            {
+                var instanceEx = ResourceManager.Instance.GetGameObject("ModelBase/" + monEx.MotionPath);
+                instanceEx.gameObject.SetActive(false);
+                _MonsterBasePrefab.Add(monEx.Id, instanceEx);
             }
         }
     }

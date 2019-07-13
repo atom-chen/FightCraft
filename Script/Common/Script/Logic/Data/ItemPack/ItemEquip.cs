@@ -758,6 +758,7 @@ public class ItemEquip : ItemBase
         if (legencyEquip != null)
         {
             profession = legencyEquip.ProfessionLimit;
+            equipSlot = legencyEquip.Slot;
         }
 
         if(profession <= 0)
@@ -803,7 +804,7 @@ public class ItemEquip : ItemBase
         if (legencyEquip != null)
         {
             var exLevel = GameDataValue.GetLegencyLv(itemEquip.EquipLevel);
-            EquipExAttr legencyAttr = legencyEquip.ExAttr[exLevel - 1].GetExAttr(equipLevel);
+            EquipExAttr legencyAttr = legencyEquip.ExAttr[exLevel - 1].GetExAttr(exLevel);
             itemEquip.AddExAttr(legencyAttr);
         }
 

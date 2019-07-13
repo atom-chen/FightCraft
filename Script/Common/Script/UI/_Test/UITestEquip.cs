@@ -122,9 +122,33 @@ public class UITestEquip : UIBase
         int targetLevel = int.Parse(_TargetLevel.text);
 
         int lastLevel = RoleData.SelectRole.TotalLevel;
+        Dictionary<int, List<float>> levelValues = new Dictionary<int, List<float>>();
+
+        if (!levelValues.ContainsKey(1))
+        {
+            levelValues.Add(1, new List<float>());
+        }
+        levelValues[1].Add(TestFight.GetDamageAttr());
+        levelValues[1].Add(TestFight.GetDamageTotalRate());
+
         while (targetLevel > RoleData.SelectRole.TotalLevel)
         {
+            
             ActData.Instance.StartDefaultStage();
+
+            TestFight.DelAllEquip();
+            TestFight.DelSkill();
+            TestFight.DelGem();
+
+            if (!levelValues.ContainsKey(RoleData.SelectRole.TotalLevel))
+            {
+                levelValues.Add(RoleData.SelectRole.TotalLevel, new List<float>());
+            }
+            var damage = TestFight.GetDamageAttr();
+            var damageRate = TestFight.GetDamageTotalRate();
+            Debug.Log(string.Format("AutoLevel Damage:{0}, Rage:{1}", damage, damageRate));
+            levelValues[RoleData.SelectRole.TotalLevel].Add(damage);
+            levelValues[RoleData.SelectRole.TotalLevel].Add(damageRate);
 
             if (_TestAct.isOn && RoleData.SelectRole.TotalLevel >= ActData._MAX_START_ACT_LEVEL)
             {
@@ -132,11 +156,32 @@ public class UITestEquip : UIBase
                 {
                     lastLevel = RoleData.SelectRole.TotalLevel;
                     ActData.Instance.StartStage(1, STAGE_TYPE.ACT_GOLD, _TestActAD.isOn);
+
+                    TestFight.DelAllEquip();
+                    TestFight.DelSkill();
+                    TestFight.DelGem();
+
+                    var damageAct = TestFight.GetDamageAttr();
+                    var damageRateAct = TestFight.GetDamageTotalRate();
+                    levelValues[RoleData.SelectRole.TotalLevel].Add(damageAct);
+                    levelValues[RoleData.SelectRole.TotalLevel].Add(damageRateAct);
                 }
             }
         }
 
-        
+        string filePath = Application.dataPath + "/combatLog.txt";
+        StreamWriter writer = new StreamWriter(filePath);
+        foreach (var levelValue in levelValues)
+        {
+            string line = levelValue.Key.ToString();
+            for (int i = 0; i < levelValue.Value.Count; ++i)
+            {
+                line += "\t" + levelValue.Value[i].ToString();
+            }
+            writer.WriteLine(line);
+        }
+
+        writer.Close();
     }
 
     private void GetLevelStage(int level, ref int diff, ref int stageIdx)
@@ -231,7 +276,7 @@ public class UITestEquip : UIBase
                     var monLastId = kenemyArea._EnemyBornPos[kenemyArea._EnemyBornPos.Length - 1]._EnemyDataID;
                     if (diff > 1)
                     {
-                        var monId = TableReader.MonsterBase.GetGroupElite(TableReader.MonsterBase.GetRecord(monLastId));
+                        var monId = TableReader.MonsterBase.GetGroupMonType(TableReader.MonsterBase.GetRecord(monLastId), MOTION_TYPE.Elite);
                         monsterIds.Add(monId.Id);
                         ++eliteCnt;
                     }
@@ -285,7 +330,7 @@ public class UITestEquip : UIBase
             Hashtable hash = new Hashtable();
             MotionManager objMotion = new MotionManager();
             objMotion.RoleAttrManager = new RoleAttrManager();
-            objMotion.RoleAttrManager.InitEnemyAttr(monRecord, level);
+            objMotion.RoleAttrManager.InitEnemyAttr(monRecord, level, MOTION_TYPE.Normal);
             hash.Add("MonsterInfo", objMotion);
             GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_KILL_MONSTER, this, hash);
 

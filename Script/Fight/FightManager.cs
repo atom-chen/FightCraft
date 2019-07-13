@@ -238,12 +238,12 @@ public class FightManager : InstanceBase<FightManager>
         }
     }
 
-    public MotionManager InitEnemy(string monsterID, Vector3 pos, Vector3 rot, bool isElite = false)
+    public MotionManager InitEnemy(string monsterID, Vector3 pos, Vector3 rot, Tables.MOTION_TYPE motionType = Tables.MOTION_TYPE.Normal)
     {
         Tables.MonsterBaseRecord monsterBase = Tables.TableReader.MonsterBase.GetRecord(monsterID);
-        if (isElite)
+        if (motionType != Tables.MOTION_TYPE.Normal)
         {
-            monsterBase = Tables.TableReader.MonsterBase.GetGroupElite(monsterBase);
+            monsterBase = Tables.TableReader.MonsterBase.GetGroupMonType(monsterBase, motionType);
         }
         if (monsterBase == null)
             return null;

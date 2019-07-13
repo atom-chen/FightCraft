@@ -38,6 +38,9 @@ public class LogicManager
 
     public void StartLoadRole(int idx)
     {
+        FunTipData.Instance.LoadClass(true);
+        FunTipData.Instance.InitFunTipData();
+
         GemData.Instance.LoadClass(true);
         GemData.Instance.InitGemData();
 
@@ -73,7 +76,8 @@ public class LogicManager
         ItemPackTest.Instance.LoadClass(true);
         ItemPackTest.Instance.Init();
 
-        GiftData.Instance.InitGemData();
+        GiftData.Instance.LoadClass(true);
+        GiftData.Instance.InitGiftData();
 
         UIMainFun.ShowAsyn();
     }

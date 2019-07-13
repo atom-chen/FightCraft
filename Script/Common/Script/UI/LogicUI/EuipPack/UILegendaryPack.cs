@@ -52,7 +52,7 @@ public class UILegendaryPack : UIBase,IDragablePack
     public void RefreshEquipItems()
     {
         _LegencyContainer.RefreshItems();
-        _EquipPack._BackPack.RefreshItems();
+        _EquipPack._BackPack.OnShowPage(UIBackPack.BackPackPage.PAGE_LEGENDARY);
     }
 
     public void ShowBackPackSelectItem(ItemBase itemObj)

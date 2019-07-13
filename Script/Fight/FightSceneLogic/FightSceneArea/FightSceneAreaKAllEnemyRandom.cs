@@ -9,13 +9,13 @@ public class FightSceneAreaKAllEnemyRandom : FightSceneAreaKAllEnemy
 
     public int _EliteCnt = 1;
     public List<string> _EliteRandomIDs = new List<string>()
-    {"21","23","25","27","33","37","48","50","31","39", "43", "44", "45"};
+    {"21","23","25","27","29","33","37","48","50","31","39", "43", "44", "45"};
     public int _ExEliteCnt = 0;
     public bool _IsSameEx = true;
     public List<string> _ExEliteRandomIDs = new List<string>()
     {"201","202","203","204","205","205","206","207","208","209", "210", "211"};
     public List<string> _NormaRandomIDs = new List<string>()
-    {"21","23","25","27","33","37","48","50","31","39"};
+    {"21","23","25","27","29","33","37","48","50","31","39"};
     public int _RandomBuffEliteCnt = 0;
     public GameObject _RandomBuffPassiveGO;
 
@@ -64,7 +64,7 @@ public class FightSceneAreaKAllEnemyRandom : FightSceneAreaKAllEnemy
             }
 
             Debug.Log("Init Random Mon:" + enemyDataID);
-            MotionManager enemy = FightManager.Instance.InitEnemy(enemyDataID, _EnemyBornPos[i]._EnemyTransform.position, _EnemyBornPos[i]._EnemyTransform.rotation.eulerAngles, false);
+            MotionManager enemy = FightManager.Instance.InitEnemy(enemyDataID, _EnemyBornPos[i]._EnemyTransform.position, _EnemyBornPos[i]._EnemyTransform.rotation.eulerAngles);
             
             var enemyAI = enemy.gameObject.GetComponent<AI_Base>();
             _EnemyAI.Add(enemyAI);
