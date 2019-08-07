@@ -84,7 +84,7 @@ namespace Tables
         public static string GetTableText(string tableName)
         {
             //var tableAsset = ResourceManager.Instance.GetTableStr(tableName);
-            var tableAsset = ResourceManager.Instance.GetTable(tableName);
+            var tableAsset = ResourceManager.GetTable(tableName);
             if (!string.IsNullOrEmpty(tableAsset))
             {
                 return tableAsset;

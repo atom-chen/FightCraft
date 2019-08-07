@@ -3,7 +3,8 @@ guid: 3f293f7d251c8cc469113b473353b4a1
 timeCreated: 1501486213
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/hero_daji_01_am
+  assetBundleVariant: common

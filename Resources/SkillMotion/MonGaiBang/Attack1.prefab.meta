@@ -3,7 +3,8 @@ guid: afe9880990a1c1c4488cd11416ca03ba
 timeCreated: 1506500989
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/mongaibang/attack1
+  assetBundleVariant: common

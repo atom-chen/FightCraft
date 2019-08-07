@@ -3,7 +3,8 @@ guid: 6119b11676032064eb28fc793fda8a3e
 timeCreated: 1506598894
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/bullets/monster/bullet_daoshi_fire_boom
+  assetBundleVariant: common

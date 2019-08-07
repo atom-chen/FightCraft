@@ -3,7 +3,8 @@ guid: 076e0fcac1ed1ee498b10306882c8e3f
 timeCreated: 1497510672
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/fightscenelogic/fightlogic_shamo_10
+  assetBundleVariant: common

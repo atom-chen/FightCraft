@@ -3,6 +3,8 @@ guid: 876b0ba11df4bda4485d116de9b114e1
 timeCreated: 1489146111
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heroleizhenzi/act_fly_01
+  assetBundleVariant: common

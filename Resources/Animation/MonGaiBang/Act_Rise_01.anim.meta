@@ -3,6 +3,8 @@ guid: 0fd38de63005d1c44880ef371e7392cd
 timeCreated: 1488542584
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/mongaibang/act_rise_01
+  assetBundleVariant: common

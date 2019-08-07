@@ -3,6 +3,8 @@ guid: 995606a8a51d6494f8b8d2dc2047ac54
 timeCreated: 1489125150
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herodianwei/act_fly_01
+  assetBundleVariant: common

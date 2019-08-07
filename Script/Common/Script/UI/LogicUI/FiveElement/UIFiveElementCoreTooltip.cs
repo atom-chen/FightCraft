@@ -17,7 +17,7 @@ public class UIFiveElementCoreTooltip : UIItemTooltips
         Hashtable hash = new Hashtable();
         hash.Add("ItemElementCore", itemElement);
         hash.Add("ToolTipFun", funcs);
-        GameCore.Instance.UIManager.ShowUI("LogicUI/FiveElement/UIFiveElementCoreTooltips", UILayer.MessageUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIFiveElementCoreTooltip, UILayer.MessageUI, hash);
     }
 
     public static void ShowAsynInType(ItemFiveElementCore itemElement, TooltipType toolTipType, params ToolTipFunc[] funcs)
@@ -26,12 +26,12 @@ public class UIFiveElementCoreTooltip : UIItemTooltips
         hash.Add("ItemElementCore", itemElement);
         hash.Add("ToolTipFun", funcs);
         hash.Add("TooltipType", toolTipType);
-        GameCore.Instance.UIManager.ShowUI("LogicUI/FiveElement/UIFiveElementCoreTooltips", UILayer.MessageUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIFiveElementCoreTooltip, UILayer.MessageUI, hash);
     }
 
     public new static void HideAsyn()
     {
-        UIManager.Instance.HideUI("LogicUI/FiveElement/UIFiveElementCoreTooltips");
+        UIManager.Instance.HideUI(UIConfig.UIFiveElementCoreTooltip.AssetPath);
     }
 
     #endregion

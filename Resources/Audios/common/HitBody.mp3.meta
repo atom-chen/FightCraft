@@ -3,6 +3,7 @@ guid: e2f36b5916e804c4d852d32067cb93a7
 timeCreated: 1522999893
 licenseType: Pro
 AudioImporter:
+  externalObjects: {}
   serializedVersion: 6
   defaultSettings:
     loadType: 0
@@ -16,7 +17,8 @@ AudioImporter:
   normalize: 1
   preloadAudioData: 1
   loadInBackground: 0
+  ambisonic: 0
   3D: 1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/audios/common/hitbody
+  assetBundleVariant: common

@@ -17,7 +17,7 @@ public class UITestEquip : UIBase
     public static void ShowAsyn()
     {
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("LogicUI/BagPack/UITestEquip", UILayer.PopUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UITestEquip, UILayer.PopUI, hash);
     }
 
     public static void ActBuffInFight()
@@ -43,7 +43,6 @@ public class UITestEquip : UIBase
     {
         base.Show(hash);
 
-        StageEnemyCnts();
         InitBuffAttr();
     }
 
@@ -241,137 +240,7 @@ public class UITestEquip : UIBase
     {
         TestFight.DelAllEquip();
     }
-
-    private PassNormalInfo TestPassNormalStage(int level, int diff, ref int exp, ref int gold)
-    {
-        PassNormalInfo passInfo = new PassNormalInfo();
-
-        
-        //var areas = sceneGO.GetComponentsInChildren<FightSceneAreaKAllEnemy>(true);
-        //var bossAreas = sceneGO.GetComponentInChildren<FightSceneAreaKBossWithFish>(true);
-        List<string> monsterIds = new List<string>();
-        int eliteCnt = 0;
-        if (level <= 20)
-        {
-            GameObject sceneLogicGO = null;
-            if (level < 10)
-            {
-                sceneLogicGO = ResourceManager.Instance.GetGameObject("FightSceneLogic/FightLogic_Stage_0" + level);
-            }
-            else
-            {
-                sceneLogicGO = ResourceManager.Instance.GetGameObject("FightSceneLogic/FightLogic_Stage_" + level);
-            }
-            var areaPass = sceneLogicGO.GetComponent<FightSceneLogicPassArea>();
-            foreach (var enemyArea in areaPass._FightArea)
-            {
-                if (enemyArea is FightSceneAreaKAllEnemy)
-                {
-                    var kenemyArea = enemyArea as FightSceneAreaKAllEnemy;
-                    for (int i = 0; i < kenemyArea._EnemyBornPos.Length - 1; ++i)
-                    {
-                        monsterIds.Add(kenemyArea._EnemyBornPos[i]._EnemyDataID);
-                    }
-
-                    var monLastId = kenemyArea._EnemyBornPos[kenemyArea._EnemyBornPos.Length - 1]._EnemyDataID;
-                    if (diff > 1)
-                    {
-                        var monId = TableReader.MonsterBase.GetGroupMonType(TableReader.MonsterBase.GetRecord(monLastId), MOTION_TYPE.Elite);
-                        monsterIds.Add(monId.Id);
-                        ++eliteCnt;
-                    }
-                    else
-                    {
-                        monsterIds.Add(monLastId);
-                    }
-                }
-                else if (enemyArea is FightSceneAreaKBossWithFish)
-                {
-                    var bossArea = enemyArea as FightSceneAreaKBossWithFish;
-                    monsterIds.Add(bossArea._BossMotionID);
-                }
-            }
-        }
-        else
-        {
-            for (int i = 0; i < 120; ++i)
-            {
-                monsterIds.Add("21");
-            }
-            for (int i = 0; i < 18; ++i)
-            {
-                monsterIds.Add("22");
-            }
-            monsterIds.Add("20");
-        }
-
-        
-        Dictionary<string, int> items = new Dictionary<string, int>();
-        foreach (var monId in monsterIds)
-        {
-            var monRecord = TableReader.MonsterBase.GetRecord(monId);
-            var monsterDrops = MonsterDrop.GetMonsterDrops(monRecord, monRecord.MotionType, level);
-            foreach (var dropItem in monsterDrops)
-            {
-                gold += dropItem._DropGold;
-                passInfo._Gold += dropItem._DropGold;
-                MonsterDrop.PickItem(dropItem);
-
-                if (dropItem._ItemEquip != null)
-                {
-                    ++passInfo._DropEquipCnt;
-                }
-            }
-            int dropExp = GameDataValue.GetMonsterExp(monRecord.MotionType, level, level);
-            exp += dropExp;
-            passInfo._Exp += dropExp;
-            RoleData.SelectRole.AddExp(dropExp);
-
-            Hashtable hash = new Hashtable();
-            MotionManager objMotion = new MotionManager();
-            objMotion.RoleAttrManager = new RoleAttrManager();
-            objMotion.RoleAttrManager.InitEnemyAttr(monRecord, level, MOTION_TYPE.Normal);
-            hash.Add("MonsterInfo", objMotion);
-            GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_KILL_MONSTER, this, hash);
-
-        }
-        passInfo._MonsterCnt = monsterIds.Count;
-
-        TestFight.DelAllEquip();
-        TestFight.DelLevel();
-        TestFight.DelSkill(2);
-        //TestFight.DelRefresh();
-        TestFight.DelGem();
-
-        //foreach (var dropItem in items)
-        //{
-        //    Debug.Log("Drop Item :" + dropItem.Key + "," + dropItem.Value);
-        //}
-        //Debug.Log("Drop Exp:" + exp + ", Gold:" + gold);
-
-        return passInfo;
-    }
-
-    public void StageEnemyCnts()
-    {
-        for (int i = 1; i < 21; ++i)
-        {
-            var stageRecord = TableReader.StageInfo.GetRecord(i.ToString());
-            var sceneGO = ResourceManager.Instance.GetGameObject("FightSceneLogic/" + stageRecord.FightLogicPath);
-            var fightLogic = sceneGO.GetComponent<FightSceneLogicPassArea>();
-            int enemyCnt = 0;
-            foreach (var area in fightLogic._FightArea)
-            {
-                if (area is FightSceneAreaKAllEnemy)
-                {
-                    enemyCnt += (area as FightSceneAreaKAllEnemy)._EnemyBornPos.Length;
-                }
-            }
-
-            Debug.Log("Scene " + i + " area enemy cnt:" + enemyCnt);
-        }
-    }
-
+    
     #endregion
 
     #region global buff test

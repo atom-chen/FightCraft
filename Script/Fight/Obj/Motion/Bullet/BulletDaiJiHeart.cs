@@ -58,8 +58,9 @@ public class BulletDaiJiHeart : BulletBase
                 if (_SubEffect != null)
                 {
                     //ResourcePool.Instance.PlaySceneEffect(_SubEffect, transform.position, Vector3.zero);
-                    var effectInstance = SkillMotion.PlayDynamicEffect(_SubEffect);
-                    effectInstance.transform.position = transform.position;
+                    Hashtable hash = new Hashtable();
+                    hash.Add("WorldPos", transform.position);
+                    var effectInstance = SkillMotion.PlayDynamicEffect(_SubEffect, hash);
                 }
 
                 BulletFinish();
@@ -77,7 +78,7 @@ public class BulletDaiJiHeart : BulletBase
         }
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         Debug.Log("OnTriggerEnter:" + other.ToString());
         var targetMotion = other.GetComponentInParent<MotionManager>();
@@ -88,8 +89,9 @@ public class BulletDaiJiHeart : BulletBase
 
         if (_SubEffect != null)
         {
-            var effectInstance = SkillMotion.PlayDynamicEffect(_SubEffect);
-            effectInstance.transform.position = transform.position;
+            Hashtable hash = new Hashtable();
+            hash.Add("WorldPos", transform.position);
+            var effectInstance = SkillMotion.PlayDynamicEffect(_SubEffect, hash);
             //ResourcePool.Instance.PlaySceneEffect(_SubEffect, transform.position, Vector3.zero);
         }
 

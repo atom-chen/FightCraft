@@ -3,6 +3,8 @@ guid: f3be92dcd7a41724abd25d6b8cde254f
 timeCreated: 1489118158
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herodaji/act_hit_01
+  assetBundleVariant: common

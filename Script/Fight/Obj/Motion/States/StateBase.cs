@@ -43,17 +43,28 @@ public class StateBase
         return "";
     }
 
-    public virtual void InitState(MotionManager motionManager)
+    public virtual void InitAnimation(MotionManager motionManager)
     {
         _MotionManager = motionManager;
-
         string animName = GetAnimName();
         if (!string.IsNullOrEmpty(animName))
         {
-            string animPath = "Animation/" + _MotionManager._MotionAnimPath + "/" + animName;
-            _Animation = ResourceManager.Instance.GetAnimationClip(animPath);
-        }
+            string animPath = motionManager._MotionAnimPath + "/" + animName;
+            ResourceManager.Instance.LoadAnimation(animPath, (resName, resData, hash) =>
+            {
+                _Animation = resData;
+                InitState(motionManager);
 
+            }, null);
+        }
+        else
+        {
+            InitState(motionManager);
+        }
+    }
+
+    public virtual void InitState(MotionManager motionManager)
+    {
         if (_Animation != null)
         {
             _MotionManager.InitAnimation(_Animation);
@@ -67,9 +78,13 @@ public class StateBase
 
     public virtual void StartState(params object[] args)
     {
-        if (_Animation != null)
+        if (_MotionManager != null && _Animation != null)
         {
             _MotionManager.PlayAnimation(_Animation);
+        }
+        else
+        {
+            _MotionManager.StartCoroutine(StartAnim());
         }
     }
 
@@ -86,6 +101,15 @@ public class StateBase
     public virtual void StateUpdate()
     { }
 
+    public IEnumerator StartAnim()
+    {
+        
+        while (_Animation == null)
+        {
+            yield return null;
+        }
+        _MotionManager.PlayAnimation(_Animation);
+    }
     #endregion
 
     protected Vector2 GetVector2(object arg)

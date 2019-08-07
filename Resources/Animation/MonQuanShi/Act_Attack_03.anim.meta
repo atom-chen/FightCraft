@@ -3,6 +3,8 @@ guid: 54e9589310f5b1a40aa0867facb7af16
 timeCreated: 1489211968
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monquanshi/act_attack_03
+  assetBundleVariant: common

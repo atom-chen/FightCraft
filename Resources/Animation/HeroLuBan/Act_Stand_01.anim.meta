@@ -3,6 +3,8 @@ guid: 8ed293f5413cd0d409ce39671147baf7
 timeCreated: 1489146159
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heroluban/act_stand_01
+  assetBundleVariant: common

@@ -3,6 +3,8 @@ guid: faa6c2ef8947a6943b9b5fccbcd2a217
 timeCreated: 1489146112
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heroleizhenzi/act_attack_01
+  assetBundleVariant: common

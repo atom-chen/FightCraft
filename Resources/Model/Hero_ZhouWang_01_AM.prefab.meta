@@ -3,7 +3,8 @@ guid: 3abe3bedc247df647926863e28f3f3fc
 timeCreated: 1501486272
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/hero_zhouwang_01_am
+  assetBundleVariant: common

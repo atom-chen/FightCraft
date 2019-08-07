@@ -3,6 +3,8 @@ guid: b495ef8970d7c3044ac0b78da6e5d1e2
 timeCreated: 1487378818
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herocaocao/act_rise_01
+  assetBundleVariant: common

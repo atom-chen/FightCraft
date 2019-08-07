@@ -5,6 +5,7 @@ using UnityEngine;
 public class ImpactAvator : ImpactBase
 {
     private EffectAfterAnim _AvatorEffect;
+    private string _AvatorEffectName = "Effect/Skill/Effect_Char_AfterAnim";
 
     public int _AvatorCnt;
     public float _AvatorDamage;
@@ -12,12 +13,10 @@ public class ImpactAvator : ImpactBase
     public override void Init(ObjMotionSkillBase skillMotion, SelectBase selector)
     {
         base.Init(skillMotion, selector);
-
-        var avatorEffectGO = ResourceManager.Instance.GetEffect("Skill/Effect_Char_AfterAnim");
-        _AvatorEffect = avatorEffectGO.GetComponent<EffectAfterAnim>();
-
-        selector._EventAnim = skillMotion._NextAnim[0];
-        selector._EventFrame.Add(0);
+        ResourcePool.Instance.LoadEffect(_AvatorEffectName, (resName, effect, hash)=>
+        {
+            _AvatorEffect = effect as EffectAfterAnim;
+        }, null);
     }
 
     public override void ActImpact(MotionManager senderManager, MotionManager reciverManager)

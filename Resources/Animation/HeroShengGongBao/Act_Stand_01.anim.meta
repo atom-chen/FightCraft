@@ -3,6 +3,8 @@ guid: 2655412589bf018458e7e720823822ac
 timeCreated: 1489146205
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heroshenggongbao/act_stand_01
+  assetBundleVariant: common

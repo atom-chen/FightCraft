@@ -3,6 +3,8 @@ guid: ea556b00442a76540b813a5d58f3fd95
 timeCreated: 1489146205
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heroshenggongbao/act_fly_01
+  assetBundleVariant: common

@@ -132,6 +132,17 @@ public class SummonSkillData : SaveItemBase
     public void SetUsingSummon(int idx, SummonMotionData summonData)
     {
         _UsingSummon[idx] = summonData;
+        if (summonData == null)
+        {
+            for (int i = 0; i < USING_SUMMON_NUM - 1; ++i)
+            {
+                if (_UsingSummon[i] == null)
+                {
+                    _UsingSummon[i] = _UsingSummon[i + 1];
+                    _UsingSummon[i + 1] = null;
+                }
+            }
+        }
         RefreshUsingIdx();
     }
 

@@ -28,7 +28,7 @@ public class UIMessageTip : UIBase
     {
         Hashtable hash = new Hashtable();
         hash.Add("Message", strTip);
-        GameCore.Instance.UIManager.ShowUI("LogicUI/Message/UIMessageTip", UILayer.MessageUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIMessageTip, UILayer.MessageUI, hash);
     }
 
     #region 

@@ -3,6 +3,8 @@ guid: 03fc978ec7e24314e950487687392714
 timeCreated: 1489146253
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herowuzetian/act_attack_01
+  assetBundleVariant: common

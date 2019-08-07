@@ -3,6 +3,8 @@ guid: 5c5ab2f72a70e3c48a6e4480f87d3aa1
 timeCreated: 1489212295
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/itemmuxiang/act_hit_01
+  assetBundleVariant: common

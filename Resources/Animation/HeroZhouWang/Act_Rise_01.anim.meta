@@ -3,6 +3,8 @@ guid: 9e7cdee26020b1e4c9781d2b34a608fd
 timeCreated: 1489146408
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herozhouwang/act_rise_01
+  assetBundleVariant: common

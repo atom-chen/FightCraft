@@ -3,6 +3,8 @@ guid: 760990f47d5a14041906537c2362e20e
 timeCreated: 1489126439
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herodirenjie/act_move_01
+  assetBundleVariant: common

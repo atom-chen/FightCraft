@@ -11,7 +11,7 @@ public class UILogin : UIBase
     public static void ShowAsyn()
     {
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("SystemUI/UILogin", UILayer.BaseUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UILogin, UILayer.BaseUI, hash);
     }
 
     #endregion

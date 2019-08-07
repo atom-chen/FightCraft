@@ -3,6 +3,8 @@ guid: 7c896610195287744aedb14d6eef0b0f
 timeCreated: 1489146229
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herowenzhong/act_hit_01
+  assetBundleVariant: common

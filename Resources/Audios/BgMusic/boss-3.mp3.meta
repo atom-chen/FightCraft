@@ -1,6 +1,7 @@
 fileFormatVersion: 2
 guid: c3e06b0c097ac6342952c0b840ff08e6
 AudioImporter:
+  externalObjects: {}
   serializedVersion: 6
   defaultSettings:
     loadType: 1
@@ -14,7 +15,8 @@ AudioImporter:
   normalize: 1
   preloadAudioData: 1
   loadInBackground: 0
+  ambisonic: 0
   3D: 1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/audios/bgmusic/boss-3
+  assetBundleVariant: common

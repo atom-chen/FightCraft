@@ -20,7 +20,7 @@ public class BulletBaseTotem : BulletBase
         BulletFinish();
     }
     
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         Debug.Log("ontriggerenter");
         var targetMotion = other.GetComponentInParent<MotionManager>();

@@ -3,6 +3,8 @@ guid: 857ad4387e5a1ae488b9d12c758c8e3b
 timeCreated: 1487378201
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herobaiqi/act_hit_01
+  assetBundleVariant: common

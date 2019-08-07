@@ -11,17 +11,11 @@ public class ImpactBuffQiLinHitSub : ImpactBuffBeHitSub
 
     public override void ActBuff(MotionManager senderManager, MotionManager reciverManager)
     {
+        _ActedTimes = _ActTimes;
+        _QiLinIceBuff.SetPlayEffectCnt(_ActTimes);
+
         base.ActBuff(senderManager, reciverManager);
 
-        _ActedTimes = _ActTimes;
-        if (_DynamicEffect != null)
-        {
-            _QiLinIceBuff = _DynamicEffect.GetComponent<EffectQiLinIceBuff>();
-            if (_QiLinIceBuff != null)
-            {
-                _QiLinIceBuff.PlayEffectCnt(_ActTimes);
-            }
-        }
     }
 
     public override void HitAct(MotionManager hitSender, ImpactHit hitImpact)
@@ -29,7 +23,15 @@ public class ImpactBuffQiLinHitSub : ImpactBuffBeHitSub
         base.HitAct(hitSender, hitImpact);
 
         ++_ActedTimes;
-        _QiLinIceBuff.DecEffect();
+        if (_QiLinIceBuff == null && _DynamicEffect > 0 && ReciveMotion._DynamicEffects.ContainsKey(_DynamicEffect))
+        {
+
+            _QiLinIceBuff = ReciveMotion._DynamicEffects[_DynamicEffect].GetComponent<EffectQiLinIceBuff>();
+        }
+        if (_QiLinIceBuff != null)
+        {
+            _QiLinIceBuff.DecEffect();
+        }
 
         if (_ActedTimes == 0)
         {

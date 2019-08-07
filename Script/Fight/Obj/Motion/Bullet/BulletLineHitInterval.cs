@@ -65,7 +65,7 @@ public class BulletLineHitInterval : BulletBase
         PlayNoHitAudio();
     }
     
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         var targetMotion = other.GetComponentInParent<MotionManager>();
         if (targetMotion == null)

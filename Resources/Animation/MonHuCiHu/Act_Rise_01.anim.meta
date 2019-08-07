@@ -3,6 +3,8 @@ guid: 36946bc51f4560042aab93c1a5bfa804
 timeCreated: 1488372868
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monhucihu/act_rise_01
+  assetBundleVariant: common

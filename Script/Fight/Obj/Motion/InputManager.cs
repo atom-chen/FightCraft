@@ -11,11 +11,6 @@ public class InputManager : InstanceBase<InputManager>
 	void Start ()
     {
         SetInstance(this);
-
-        if (_NormalAttack == null)
-        {
-            _NormalAttack = _InputMotion.GetComponentInChildren<ObjMotionSkillAttack>();
-        }
     }
 
     void OnDestory()
@@ -26,6 +21,9 @@ public class InputManager : InstanceBase<InputManager>
 	// Update is called once per frame
 	void Update ()
     {
+        if (InputMotion == null)
+            return;
+
 #if UNITY_EDITOR
         Axis = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 #endif
@@ -34,25 +32,45 @@ public class InputManager : InstanceBase<InputManager>
         if (!_EmulateMode)
 #endif
         {
-            _InputMotion.InputDirect(CameraAxis);
+            InputMotion.InputDirect(CameraAxis);
         }
 
         //if (_InputMotion.ActingSkill == null)
         {
-            foreach (var skill in _InputMotion._StateSkill._SkillMotions)
+            foreach (var skill in InputMotion._StateSkill._SkillMotions)
             {
                 if (IsKeyHold(skill.Key))
                 {
                     //_InputMotion.ActSkill(skill.Value);
-                    _InputMotion.InputSkill(skill.Key);
+                    InputMotion.InputSkill(skill.Key);
                 }
             }
         }
         CharSkill();
         UpdateSummonSkill();
+
+        if (GameCore.Instance._IsTestMode)
+        {
+            if (IsKeyHold("t"))
+            {
+                TestFight.TestDrop();
+            }
+        }
     }
 
-    public MotionManager _InputMotion;
+    private MotionManager _InputMotion;
+    public MotionManager InputMotion
+    {
+        get
+        {
+            return _InputMotion;
+        }
+        set
+        {
+            _InputMotion = value;
+            _NormalAttack = _InputMotion.GetComponentInChildren<ObjMotionSkillAttack>();
+        }
+    }
 
     #region input 
     private Vector2 _LastAxis;
@@ -180,18 +198,18 @@ public class InputManager : InstanceBase<InputManager>
 
         if (IsKeyHold("j"))
         {
-            _InputMotion.ActSkill(_InputMotion._StateSkill._SkillMotions["j"]);
+            InputMotion.ActSkill(InputMotion._StateSkill._SkillMotions["j"]);
         }
 
         if (IsKeyHold("k"))
         {
-            if (_InputMotion.ActingSkill == _NormalAttack && _NormalAttack.CurStep > 0 && _NormalAttack.CurStep < 4 && _NormalAttack.CanNextInput)
+            if (InputMotion.ActingSkill == _NormalAttack && _NormalAttack.CurStep > 0 && _NormalAttack.CurStep < 4 && _NormalAttack.CanNextInput)
             {
                 string inputKey = (_NormalAttack.CurStep).ToString();
-                if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
+                if (InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
                 {
                     SetRotate();
-                    _InputMotion.ActSkill(_InputMotion._StateSkill._SkillMotions[inputKey]);
+                    InputMotion.ActSkill(InputMotion._StateSkill._SkillMotions[inputKey]);
                 }
             }
             else
@@ -199,7 +217,7 @@ public class InputManager : InstanceBase<InputManager>
                 if (FightSkillManager.Instance.CanReuseSkill() && FightSkillManager.Instance.ReuseSkillBase.IsCanActSkill())
                 {
                     SetRotate();
-                    _InputMotion.ActSkill(FightSkillManager.Instance.ReuseSkillBase);
+                    InputMotion.ActSkill(FightSkillManager.Instance.ReuseSkillBase);
                     FightSkillManager.Instance.ResetReuseSkill();
                     return;
                 }
@@ -212,10 +230,10 @@ public class InputManager : InstanceBase<InputManager>
                 //}
 
                 string inputKey = "k";
-                if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey) && _InputMotion._StateSkill._SkillMotions[inputKey].IsCanActSkill())
+                if (InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey) && InputMotion._StateSkill._SkillMotions[inputKey].IsCanActSkill())
                 {
                     SetRotate();
-                    _InputMotion.ActSkill(_InputMotion._StateSkill._SkillMotions[inputKey]);
+                    InputMotion.ActSkill(InputMotion._StateSkill._SkillMotions[inputKey]);
                 }
 
             }
@@ -223,53 +241,53 @@ public class InputManager : InstanceBase<InputManager>
 
         if (IsKeyHold("u"))
         {
-            if (_InputMotion.ActingSkill== _NormalAttack && _NormalAttack.CurStep > 0 && _NormalAttack.CurStep < 4 /*&& _NormalAttack.CanNextInput*/)
+            if (InputMotion.ActingSkill== _NormalAttack && _NormalAttack.CurStep > 0 && _NormalAttack.CurStep < 4 /*&& _NormalAttack.CanNextInput*/)
             {
                 string inputKey = "6";
                 Hashtable hash = new Hashtable();
                 hash.Add("AttackStep", _NormalAttack.CurStep);
 
-                if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
+                if (InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
                 {
-                    _InputMotion.ActSkill(_InputMotion._StateSkill._SkillMotions[inputKey], hash);
+                    InputMotion.ActSkill(InputMotion._StateSkill._SkillMotions[inputKey], hash);
                 }
             }
-            else if(_InputMotion.ActingSkill != _NormalAttack)
+            else if(InputMotion.ActingSkill != _NormalAttack)
             {
                 string inputKey = "5";
-                if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey) && _InputMotion._StateSkill._SkillMotions[inputKey].IsCanActSkill())
+                if (InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey) && InputMotion._StateSkill._SkillMotions[inputKey].IsCanActSkill())
                 {
-                    _InputMotion.ActSkill(_InputMotion._StateSkill._SkillMotions[inputKey]);
+                    InputMotion.ActSkill(InputMotion._StateSkill._SkillMotions[inputKey]);
                 }
             }
         }
 
         if (IsKeyHold("l"))
         {
-            if (_InputMotion._ActionState == _InputMotion._StateHit
-                || _InputMotion._ActionState == _InputMotion._StateFly
-                || _InputMotion._ActionState == _InputMotion._StateLie
-                || _InputMotion._ActionState == _InputMotion._StateRise)
+            if (InputMotion._ActionState == InputMotion._StateHit
+                || InputMotion._ActionState == InputMotion._StateFly
+                || InputMotion._ActionState == InputMotion._StateLie
+                || InputMotion._ActionState == InputMotion._StateRise)
             {
                 string inputKey = "8";
-                if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
+                if (InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
                 {
-                    _InputMotion.ActSkill(_InputMotion._StateSkill._SkillMotions[inputKey]);
+                    InputMotion.ActSkill(InputMotion._StateSkill._SkillMotions[inputKey]);
                 }
             }
             else
             {
                 string inputKey = "4";
-                if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
+                if (InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
                 {
-                    _InputMotion.ActSkill(_InputMotion._StateSkill._SkillMotions[inputKey]);
+                    InputMotion.ActSkill(InputMotion._StateSkill._SkillMotions[inputKey]);
                 }
                 else
                 {
                     inputKey = "7";
-                    if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
+                    if (InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
                     {
-                        _InputMotion.ActSkill(_InputMotion._StateSkill._SkillMotions[inputKey]);
+                        InputMotion.ActSkill(InputMotion._StateSkill._SkillMotions[inputKey]);
                     }
                 }
             }
@@ -283,13 +301,13 @@ public class InputManager : InstanceBase<InputManager>
 
         if (GlobalValPack.Instance.IsRotToAnimTarget && AimTarget.Instance.LockTarget != null)
         {
-            _InputMotion.SetLookAt(AimTarget.Instance.LockTarget.transform.position);
+            InputMotion.SetLookAt(AimTarget.Instance.LockTarget.transform.position);
         }
         else
         {
             if (CameraAxis != Vector2.zero)
             {
-                _InputMotion.SetLookRotate(new Vector3(CameraAxis.x, 0, CameraAxis.y));
+                InputMotion.SetLookRotate(new Vector3(CameraAxis.x, 0, CameraAxis.y));
             }
         }
     }
@@ -301,20 +319,20 @@ public class InputManager : InstanceBase<InputManager>
 
         if (input == ("j"))
         {
-            return _InputMotion._StateSkill._SkillMotions["j"];
+            return InputMotion._StateSkill._SkillMotions["j"];
         }
 
         if (input == ("k"))
         {
-            if (_InputMotion.ActingSkill == _NormalAttack && _NormalAttack.CurStep > 0 && _NormalAttack.CurStep < 4 && _NormalAttack.CanNextInput)
+            if (InputMotion.ActingSkill == _NormalAttack && _NormalAttack.CurStep > 0 && _NormalAttack.CurStep < 4 && _NormalAttack.CanNextInput)
             {
                 string inputKey = (_NormalAttack.CurStep).ToString();
-                if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
+                if (InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
                 {
-                    return _InputMotion._StateSkill._SkillMotions[inputKey];
+                    return InputMotion._StateSkill._SkillMotions[inputKey];
                 }
             }
-            else if (_InputMotion.ActingSkill == null)
+            else if (InputMotion.ActingSkill == null)
             {
                 if (FightSkillManager.Instance.ReuseSkillBase != null)
                 {
@@ -323,9 +341,9 @@ public class InputManager : InstanceBase<InputManager>
 
                 {
                     string inputKey = "k0";
-                    if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
+                    if (InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
                     {
-                        return  (_InputMotion._StateSkill._SkillMotions[inputKey]);
+                        return  (InputMotion._StateSkill._SkillMotions[inputKey]);
                     }
                 }
             }
@@ -333,53 +351,53 @@ public class InputManager : InstanceBase<InputManager>
 
         if (input == ("u"))
         {
-            if (_InputMotion.ActingSkill == _NormalAttack && _NormalAttack.CurStep > 0 && _NormalAttack.CurStep < 4 && _NormalAttack.CanNextInput)
+            if (InputMotion.ActingSkill == _NormalAttack && _NormalAttack.CurStep > 0 && _NormalAttack.CurStep < 4 && _NormalAttack.CanNextInput)
             {
                 string inputKey = "6";
                 Hashtable hash = new Hashtable();
                 hash.Add("AttackStep", _NormalAttack.CurStep);
 
-                if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
+                if (InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
                 {
-                    return  (_InputMotion._StateSkill._SkillMotions[inputKey]);
+                    return  (InputMotion._StateSkill._SkillMotions[inputKey]);
                 }
             }
-            else if (_InputMotion.ActingSkill == null)
+            else if (InputMotion.ActingSkill == null)
             {
                 string inputKey = "5";
-                if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
+                if (InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
                 {
-                    return  (_InputMotion._StateSkill._SkillMotions[inputKey]);
+                    return  (InputMotion._StateSkill._SkillMotions[inputKey]);
                 }
             }
         }
 
         if (input == ("l"))
         {
-            if (_InputMotion._ActionState == _InputMotion._StateHit
-                || _InputMotion._ActionState == _InputMotion._StateFly
-                || _InputMotion._ActionState == _InputMotion._StateLie
-                || _InputMotion._ActionState == _InputMotion._StateRise)
+            if (InputMotion._ActionState == InputMotion._StateHit
+                || InputMotion._ActionState == InputMotion._StateFly
+                || InputMotion._ActionState == InputMotion._StateLie
+                || InputMotion._ActionState == InputMotion._StateRise)
             {
                 string inputKey = "8";
-                if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
+                if (InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
                 {
-                    return (_InputMotion._StateSkill._SkillMotions[inputKey]);
+                    return (InputMotion._StateSkill._SkillMotions[inputKey]);
                 }
             }
             else
             {
                 string inputKey = "4";
-                if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
+                if (InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
                 {
-                    return (_InputMotion._StateSkill._SkillMotions[inputKey]);
+                    return (InputMotion._StateSkill._SkillMotions[inputKey]);
                 }
                 else
                 {
                     inputKey = "7";
-                    if (_InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
+                    if (InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey))
                     {
-                        return (_InputMotion._StateSkill._SkillMotions[inputKey]);
+                        return (InputMotion._StateSkill._SkillMotions[inputKey]);
                     }
                 }
             }
@@ -502,6 +520,7 @@ public class InputManager : InstanceBase<InputManager>
         if (IsKeyHold("h"))
         {
             SummonSkill.Instance.UseSummonSkill();
+            UISkillBar.RefreshSummonIcon();
         }
     }
 

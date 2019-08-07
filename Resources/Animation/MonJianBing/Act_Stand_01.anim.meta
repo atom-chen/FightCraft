@@ -3,6 +3,8 @@ guid: bd6ed1111c8e0bd478f95cd09477a97f
 timeCreated: 1489211871
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monjianbing/act_stand_01
+  assetBundleVariant: common

@@ -12,12 +12,12 @@ public class UIEquipPack : UIBase,IDragablePack
     public static void ShowAsyn()
     {
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("LogicUI/BagPack/UIEquipPack", UILayer.PopUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIEquipPack, UILayer.PopUI, hash);
     }
 
     public static void RefreshBagItems()
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UIEquipPack>("LogicUI/BagPack/UIEquipPack");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIEquipPack>(UIConfig.UIEquipPack);
         if (instance == null)
             return;
 

@@ -3,6 +3,8 @@ guid: 08117c88715004748aa053a9553a5637
 timeCreated: 1487291533
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/mainchargirl/act_roll_01
+  assetBundleVariant: common

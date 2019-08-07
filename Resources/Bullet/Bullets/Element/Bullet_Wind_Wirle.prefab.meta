@@ -3,7 +3,8 @@ guid: c7fbf5541c0211b44831bf28c0aa24cb
 timeCreated: 1509439354
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/bullets/element/bullet_wind_wirle
+  assetBundleVariant: common

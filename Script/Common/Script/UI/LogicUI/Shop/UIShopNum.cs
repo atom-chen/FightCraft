@@ -13,7 +13,7 @@ public class UIShopNum : UIBase
         Hashtable hash = new Hashtable();
         hash.Add("ItemShop", itemShop);
         hash.Add("CallBack", callBack);
-        GameCore.Instance.UIManager.ShowUI("LogicUI/Shop/UIShopNumInput", UILayer.MessageUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIShopNum, UILayer.MessageUI, hash);
     }
 
     #region 

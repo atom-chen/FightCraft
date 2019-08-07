@@ -3,7 +3,8 @@ guid: f8e0b644d2727b74db8eba0b72e504f7
 timeCreated: 1515583607
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/bullets/monster/riseboombullet
+  assetBundleVariant: common

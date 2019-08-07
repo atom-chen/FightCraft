@@ -3,6 +3,8 @@ guid: 9d83050764b067649b4acb484d7c7e4c
 timeCreated: 1487255765
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/maincharboy/act_roll_01
+  assetBundleVariant: common

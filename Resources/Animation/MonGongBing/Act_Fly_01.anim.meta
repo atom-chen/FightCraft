@@ -3,6 +3,8 @@ guid: cac625f142b94fa4fb19499c6d8a793f
 timeCreated: 1488542974
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/mongongbing/act_fly_01
+  assetBundleVariant: common

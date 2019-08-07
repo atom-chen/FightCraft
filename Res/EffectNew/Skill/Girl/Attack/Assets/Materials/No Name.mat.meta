@@ -3,7 +3,8 @@ guid: 0e7db5e25769a2f4eb56e44eda93bf09
 timeCreated: 1494119664
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: -1
   userData: 
-  assetBundleName: scene/depend_plane
+  assetBundleName: depend/depend_a9d55eff7bb4d8393fdb2f4970794260
   assetBundleVariant: common

@@ -32,11 +32,20 @@ public class TestFight : MonoBehaviour
 
     void Start()
     {
-        InputManager.Instance._EmulateMode = true;
         _NormalAttack = gameObject.GetComponentInChildren<ObjMotionSkillAttack>();
         InitDefence();
 
         _Instance = this;
+    }
+
+    private void OnEnable()
+    {
+        InputManager.Instance._EmulateMode = true;
+    }
+
+    private void OnDisable()
+    {
+        InputManager.Instance._EmulateMode = false;
     }
 
     #region find target
@@ -231,6 +240,8 @@ public class TestFight : MonoBehaviour
 
     private void SomeOneSuperArmor(object go, Hashtable eventArgs)
     {
+        if (!InputManager.Instance._EmulateMode)
+            return;
         MotionManager motion = (MotionManager)eventArgs["Motion"];
         if (motion == null || motion == FightManager.Instance.MainChatMotion)
             return;
@@ -490,5 +501,12 @@ public class TestFight : MonoBehaviour
     }
 
     #endregion
+
+    public static void TestDrop()
+    {
+        var monRecord = TableReader.MonsterBase.GetRecord("1");
+
+        MonsterDrop.MonsterDropItems(monRecord, MOTION_TYPE.Hero, 10, FightManager.Instance.MainChatMotion.transform);
+    }
 
 }

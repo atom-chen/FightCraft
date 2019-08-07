@@ -3,7 +3,8 @@ guid: b10bbb2ea3a6dcf499cc07931ed117f0
 timeCreated: 1508158135
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/bullets/monster/bullet_mutong_explor
+  assetBundleVariant: common

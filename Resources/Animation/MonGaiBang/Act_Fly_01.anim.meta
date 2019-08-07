@@ -3,6 +3,8 @@ guid: aeec02e5f65b2df41a5dd4b941dc35ad
 timeCreated: 1488542583
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/mongaibang/act_fly_01
+  assetBundleVariant: common

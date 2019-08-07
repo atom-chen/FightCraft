@@ -11,12 +11,12 @@ public class UITestBuff : UIBase
     public static void ShowAsyn()
     {
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("LogicUI/GlobalBuff/UITestBuff", UILayer.PopUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UITestBuff, UILayer.PopUI, hash);
     }
 
     public static void ActBuffInFight()
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UITestBuff>("LogicUI/GlobalBuff/UITestBuff");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UITestBuff>(UIConfig.UITestBuff);
         if (instance == null)
             return;
 

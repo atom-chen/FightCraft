@@ -3,6 +3,8 @@ guid: 68c9982dedc38ec4fa6f4074cd4ed203
 timeCreated: 1489150572
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/elite/eliteheronezha
+  assetBundleVariant: common

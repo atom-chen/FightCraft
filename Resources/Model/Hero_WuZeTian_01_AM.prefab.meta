@@ -3,7 +3,8 @@ guid: 8ab10ae74cbefb5468e9478f2ee8caa2
 timeCreated: 1501486255
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/hero_wuzetian_01_am
+  assetBundleVariant: common

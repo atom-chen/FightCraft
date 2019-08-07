@@ -1,7 +1,8 @@
 fileFormatVersion: 2
 guid: 36c774a2493f466449ef843659ffec21
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: -1
   userData: 
-  assetBundleName: scene/depend_stage_shamo_01_terrain
+  assetBundleName: depend/depend_f9b847bfb23c133cbce15a0125917c3c
   assetBundleVariant: common

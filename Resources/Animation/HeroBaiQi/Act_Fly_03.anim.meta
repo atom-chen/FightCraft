@@ -3,6 +3,8 @@ guid: 769548d90d2fd4c429dca60c33a8de44
 timeCreated: 1487378200
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herobaiqi/act_fly_03
+  assetBundleVariant: common

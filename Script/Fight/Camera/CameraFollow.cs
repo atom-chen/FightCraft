@@ -21,6 +21,9 @@ public class CameraFollow : MonoBehaviour
 
     public void UpdatePos()
     {
+        if (_FollowObj == null)
+            return;
+
         transform.position = _FollowObj.transform.position + _Distance;
         transform.LookAt(_FollowObj.transform);
     }

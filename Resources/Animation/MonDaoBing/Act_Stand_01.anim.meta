@@ -3,6 +3,8 @@ guid: cad08653d5a41884d9e45417c8973ce5
 timeCreated: 1488541193
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/mondaobing/act_stand_01
+  assetBundleVariant: common

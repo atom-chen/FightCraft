@@ -3,6 +3,8 @@ guid: 072d627630eac95418d00eaa8fe4fa4e
 timeCreated: 1488372868
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monhucihu/act_fly_01
+  assetBundleVariant: common

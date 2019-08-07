@@ -3,6 +3,8 @@ guid: 8e48684e5b5d3a04ea40fe3ed79c8c45
 timeCreated: 1494938882
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/bullets/monster/bullet_huoqiu
+  assetBundleVariant: common

@@ -3,6 +3,8 @@ guid: 25f456c32efa58649b7fa1917235217e
 timeCreated: 1489146180
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heronezha/act_rise_01
+  assetBundleVariant: common

@@ -3,6 +3,8 @@ guid: 2d1179e6a3afdbe47bf048932ba733c3
 timeCreated: 1488542584
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/mongaibang/act_move_01
+  assetBundleVariant: common

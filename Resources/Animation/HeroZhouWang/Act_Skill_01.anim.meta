@@ -3,6 +3,8 @@ guid: aae2b8eeb4bb3f04f87d2f92f953353a
 timeCreated: 1489146409
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herozhouwang/act_skill_01
+  assetBundleVariant: common

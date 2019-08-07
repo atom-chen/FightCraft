@@ -149,15 +149,41 @@ public class AI_Base : MonoBehaviour
         if (_AISkills.Count == 0)
             return;
 
-        if (_CombatLevel == 1)
-            return;
-
-        if (_CombatInfos.ContainsKey(_CombatLevel))
+        foreach (var aiskill in _AISkills)
         {
-            var combatInfo = _CombatInfos[_CombatLevel];
-            foreach (var aiskill in _AISkills)
+            if (aiskill.MonDamageRate != 1)
             {
-                aiskill.AfterSkillWait = aiskill.AfterSkillWait * combatInfo.AfterSkillWait;
+                var skillDamages = aiskill.SkillBase.GetComponentsInChildren<ImpactDamage>(true);
+                foreach (var damage in skillDamages)
+                {
+                    damage._DamageRate *= aiskill.MonDamageRate;
+                }
+
+                var bulletDamages = aiskill.SkillBase.GetComponentsInChildren<BulletEmitterBase>(true);
+                foreach (var bulletEmitter in bulletDamages)
+                {
+                    bulletEmitter._Damage *= aiskill.MonDamageRate;
+                }
+            }
+        }
+        
+        if (_CombatLevel > 1)
+        {
+            if (_CombatInfos.ContainsKey(_CombatLevel))
+            {
+                var combatInfo = _CombatInfos[_CombatLevel];
+                foreach (var aiskill in _AISkills)
+                {
+                    aiskill.AfterSkillWait = aiskill.AfterSkillWait * combatInfo.AfterSkillWait;
+                    var skillDamages = aiskill.SkillBase.GetComponentsInChildren<ImpactDamage>(true);
+                    foreach (var damage in skillDamages)
+                    {
+                        if (damage._IsCharSkillDamage)
+                        {
+                            damage._DamageRate *= aiskill.MonDamageRate;
+                        }
+                    }
+                }
             }
         }
     }
@@ -175,6 +201,7 @@ public class AI_Base : MonoBehaviour
         public float ReadyTime = 0;
         public float StartCD = -1;
         public float AfterSkillWait = 1;
+        public float MonDamageRate = 1;
 
         public float FirstHitTime { get; set; }
         public float LastUseSkillTime { get; set; }
@@ -294,43 +321,23 @@ public class AI_Base : MonoBehaviour
 
         if (_ActValue < 0)
         {
-            //int aiLevel = _SelfMotion.RoleAttrManager.Level / 10;
-            //aiLevel = Mathf.Clamp(aiLevel, 1, 10);
-
-            //if (_SelfMotion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.Normal)
-            //{
-            //    _ActValue = aiLevel * 60 + 1000;
-            //}
-            //else if (_SelfMotion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.Elite)
-            //{
-            //    _ActValue = 10000;
-            //}
-            //else if (_SelfMotion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.Hero)
-            //{
-            //    _ActValue = 10000;
-            //}
-            //if (_AtkRate < 0)
-            //{
-            //    if (_SelfMotion.MonsterBase != null)
-            //        _AtkRate = _SelfMotion.MonsterBase.AtkRate;
-            //    else
-            //        _AtkRate = 1;
-            //}
-            //_ActValue = (int)(_ActValue * _AtkRate);
-            //_ActValue = (int)(_ActValue * Time.fixedDeltaTime);
-
-            //foreach (var skillInfo in _AISkills)
-            //{
-            //    if (_SelfMotion.RoleAttrManager.Level < 100)
-            //    {
-            //        skillInfo.SkillInterval += 2 * (100 - _SelfMotion.RoleAttrManager.Level) / 100;
-            //        _ComondSkillCD = 2 * (100 - _SelfMotion.RoleAttrManager.Level);
-            //    }
-            //}
-
-            //if (_SelfMotion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.Normal)
+            float diffModify = 1 + ActData.Instance.GetNormalDiff() * 0.2f;
+            diffModify = Mathf.Clamp(diffModify, 1, 2);
+            if (_SelfMotion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.Normal)
             {
-                _ActValue = 1000;
+                _ActValue = (int)(500 * diffModify);
+            }
+            else if (_SelfMotion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.Elite)
+            {
+                _ActValue = (int)(2000 * diffModify);
+            }
+            else if (_SelfMotion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.ExElite)
+            {
+                _ActValue = (int)(3000 * diffModify);
+            }
+            else if (_SelfMotion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.Hero)
+            {
+                _ActValue = 10000;
             }
         }
 
@@ -398,6 +405,9 @@ public class AI_Base : MonoBehaviour
 
     public bool IsActMove()
     {
+        if(this is AI_HeroBase)
+            return false;
+
         if (_SelfMotion._ActionState != _SelfMotion._StateIdle
             && _SelfMotion._ActionState != _SelfMotion._StateMove)
         {
@@ -555,8 +565,9 @@ public class AI_Base : MonoBehaviour
         {
             if (_HitProtectedPrefab == null)
             {
-                var buffGO = ResourceManager.Instance.GetGameObject("SkillMotion/CommonImpact/HitProtectedBuff");
-                _HitProtectedPrefab = buffGO.GetComponent<ImpactBuff>();
+                //var buffGO = ResourceManager.Instance.GetGameObject("SkillMotion/CommonImpact/HitProtectedBuff");
+                //_HitProtectedPrefab = buffGO.GetComponent<ImpactBuff>();
+                _HitProtectedPrefab = ResourcePool.Instance.GetConfig<ImpactBuff>(ResourcePool.ConfigEnum.HitProtectedBuff);
             }
             return _HitProtectedPrefab;
         }
@@ -624,26 +635,31 @@ public class AI_Base : MonoBehaviour
         }
 
         //protect times
-        if (_HittingSkill != null && _HittingSkill != impactHit.SkillMotion && !(_HittingSkill is ObjMotionSkillBuff))
-        {   
+        if (_HittingSkill != null 
+            && _HittingSkill != impactHit.SkillMotion 
+            && !(_HittingSkill is ObjMotionSkillBuff)
+            && !(_HittingSkill is ObjMotionSkillAttack))
+        {
             if (_ProtectTimes.Count > 0)
             {
                 ReleaseHit();
                 return;
             }
         }
-        else if(_HittingSkill != null)
-        {
-            if (_ProtectTimes.Count > 0)
-            {
-                return;
-            }
-        }
+        //else if (_HittingSkill != null)
+        //{
+        //    if (_ProtectTimes.Count > 0)
+        //    {
+        //        return;
+        //    }
+        //}
 
-        _HittingSkill = impactHit.SkillMotion;
+        
 
-        if (_HitDict[impactHit.SkillMotion._ActInput].SkillActTimes != impactHit.SkillMotion._SkillActTimes)
+        if (_HitDict[impactHit.SkillMotion._ActInput].SkillActTimes != impactHit.SkillMotion._SkillActTimes
+            && _HittingSkill != impactHit.SkillMotion)
         {
+            _HittingSkill = impactHit.SkillMotion;
             if (_ProtectTimes.ContainsKey(impactHit.SkillMotion._ActInput))
             {
                 --_ProtectTimes[impactHit.SkillMotion._ActInput];
@@ -683,7 +699,7 @@ public class AI_Base : MonoBehaviour
                 }
             }
         }
-        
+        _HittingSkill = impactHit.SkillMotion;
     }
 
     private void ReleaseHit()
@@ -712,6 +728,7 @@ public class AI_Base : MonoBehaviour
     }
 
     #endregion
+    
 }
 
 

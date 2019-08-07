@@ -3,7 +3,8 @@ guid: 4f6b8f57f6429c2429ee9b2532e3a3ed
 timeCreated: 1501659050
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/monjianbing/skill1
+  assetBundleVariant: common

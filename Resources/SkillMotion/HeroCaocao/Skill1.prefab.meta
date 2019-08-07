@@ -3,6 +3,8 @@ guid: 0fbbd08ddf88d024993add3b225cfad8
 timeCreated: 1489113790
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/herocaocao/skill1
+  assetBundleVariant: common

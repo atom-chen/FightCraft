@@ -3,6 +3,8 @@ guid: ef22bff3f06ea0c4da5b1c705be0f9a3
 timeCreated: 1488374277
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monfubing/act_fly_01
+  assetBundleVariant: common

@@ -3,6 +3,8 @@ guid: 09e52a7eb4ceab34496c5c8d5fc67b66
 timeCreated: 1489212639
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/monjianbing
+  assetBundleVariant: common

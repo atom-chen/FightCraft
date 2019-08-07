@@ -3,6 +3,7 @@ guid: a3d6a51c79deed3449dc250fc953048c
 timeCreated: 1523003512
 licenseType: Pro
 AudioImporter:
+  externalObjects: {}
   serializedVersion: 6
   defaultSettings:
     loadType: 0
@@ -16,7 +17,8 @@ AudioImporter:
   normalize: 1
   preloadAudioData: 1
   loadInBackground: 0
+  ambisonic: 0
   3D: 1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/audios/common/hitswordslap2
+  assetBundleVariant: common

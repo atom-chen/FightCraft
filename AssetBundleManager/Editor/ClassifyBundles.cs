@@ -3,133 +3,25 @@ using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
+using System.Security.Cryptography;
 
 public class ClassifyBundles : MonoBehaviour
 {
-    public static string ASSET_PATH = "/Project3D/BundleData";
 
-    public static string BUNDLE_MAIN_BASE_UI = "MainBase";
 
-    [MenuItem("ProTool/ClassifyBundles/Scene")]
-    public static void ClassifySceneBundles()
+    #region 
+
+    public static void AddResourceDict(Dictionary<string, string> resources, string path, string bundleName)
     {
-        string sysPath = Application.dataPath + "/FightCraft/Res/Scenes";
-        string[] filePaths = Directory.GetFiles(sysPath, "*.unity", SearchOption.AllDirectories);
-
-        Dictionary<string, List<string>> resCallTimes = new Dictionary<string, List<string>>();
-
-        List<string> bundleNameList = new List<string>();
-        foreach (var file in filePaths)
+        string resAssetPath = path.Replace(Application.dataPath, "Assets").Replace("\\", "/");
+        if (!resources.ContainsKey(resAssetPath))
         {
-            if (file.Contains("login") || file.Contains("CeShi"))
-            {//登陆场景不进bundle
-                continue;
-            }
-
-            string dataFile = file.Replace(Application.dataPath, "Assets");
-            string fileName = Path.GetFileNameWithoutExtension(file).ToLower();
-            string bundleName = "scene/" + fileName;
-            bundleNameList.Add(fileName);
-            var prefabImporter = AssetImporter.GetAtPath(dataFile);
-            if (prefabImporter != null)
-            {
-                prefabImporter.assetBundleName = "scene/" + fileName.ToLower();
-                prefabImporter.assetBundleVariant = "common";
-
-                if (prefabImporter.assetBundleName.Contains(" "))
-                {
-                    Debug.LogError("File name contains space!! " + fileName);
-                }
-            }
-
-            Object assetData = AssetDatabase.LoadAssetAtPath<Object>(dataFile);
-            Object[] dependObjs = EditorUtility.CollectDependencies(new Object[1] { assetData });
-            foreach (var dependObj in dependObjs)
-            {
-                if (dependObj == null)
-                    continue;
-
-                if (dependObj is GameObject)
-                {
-                    string dependObjPath = AssetDatabase.GetAssetPath(dependObj);
-                    if (resCallTimes.ContainsKey(dependObjPath))
-                    {
-                        if (resCallTimes[dependObjPath].Contains(file))
-                        {
-                            continue;
-                        }
-                        else
-                        {
-                            resCallTimes[dependObjPath].Add(file);
-                        }
-                    }
-                    else
-                    {
-                        resCallTimes.Add(dependObjPath, new List<string>() { file });
-                    }
-
-                    if (dependObj is Texture2D)
-                    {
-                        SetTextureImporter(dependObj);
-                    }
-                }
-            }
-        }
-
-        foreach (var dependObj in resCallTimes)
-        {
-            if (dependObj.Key.EndsWith("meta") || dependObj.Key.EndsWith("cs"))
-                continue;
-
-            //if (dependObj.Value.Count == 1)
-            //    continue;
-
-            Object assetData = AssetDatabase.LoadAssetAtPath<Object>(dependObj.Key);
-            if (bundleNameList.Contains(assetData.name))
-            {
-                Debug.LogError("Res has the same name:" + dependObj.Key);
-            }
-            bundleNameList.Add(assetData.name);
-            ClassifySceneModel(assetData);
-
+            resources.Add(resAssetPath, bundleName);
         }
     }
 
-    public static void ClassifySceneModel(Object sceneModel)
-    {
-        string bundleName = "scene/depend_" + sceneModel.name;
-
-        Object[] dependObjs = EditorUtility.CollectDependencies(new Object[1] { sceneModel });
-        foreach (var dependObj in dependObjs)
-        {
-            if (dependObj is UnityEngine.Mesh
-                        || dependObj is Texture2D
-                        || dependObj is Material
-                        || dependObj is Animator
-                        || dependObj is RuntimeAnimatorController)
-            {
-                string dependObjPath = AssetDatabase.GetAssetPath(dependObj);
-                var dependImporter = AssetImporter.GetAtPath(dependObjPath);
-
-                if (dependImporter != null)
-                {
-
-                    dependImporter.assetBundleName = bundleName;
-                    dependImporter.assetBundleVariant = "common";
-
-                    if (dependImporter.assetBundleName.Contains(" "))
-                    {
-                        Debug.LogError("File name contains space!! " + dependObj.name);
-                    }
-                }
-
-                //AssetDatabase.ImportAsset(dependObjPath, ImportAssetOptions.ForceUpdate);
-            }
-        }
-    }
-    
-    [MenuItem("ProTool/ClassifyBundles/ClearAll")]
-    public static void ClearAllBundleName()
+    public static void SetResourceBundleName(Dictionary<string, string> resources)
     {
         string[] bundleNames = AssetDatabase.GetAllAssetBundleNames();
         foreach (var bundleName in bundleNames)
@@ -145,211 +37,236 @@ public class ClassifyBundles : MonoBehaviour
                 }
             }
         }
-    }
 
-    private static void ClassifySingleFile(string[] files, string className)
-    {
-        foreach (var file in files)
+        Dictionary<string, string> dependBundles = new Dictionary<string, string>();
+        foreach (var res in resources)
         {
-            string dataFile = file.Replace(Application.dataPath, "Assets");
-            Object assetData = AssetDatabase.LoadAssetAtPath<Object>(dataFile);
-            Object[] dependObjs = EditorUtility.CollectDependencies(new Object[1] { assetData });
-            string prefabPath = AssetDatabase.GetAssetPath(assetData);
-            var prefabImporter = AssetImporter.GetAtPath(prefabPath);
-            prefabImporter.assetBundleName = className + "/" + assetData.name;
-            prefabImporter.assetBundleVariant = "common";
-
-            foreach (var dependObj in dependObjs)
-            {
-                if (dependObj is TextAsset)
-                    continue;
-
-                string dependObjPath = AssetDatabase.GetAssetPath(dependObj);
-                var dependImporter = AssetImporter.GetAtPath(dependObjPath);
-                if (dependImporter != null /*&& string.IsNullOrEmpty(dependImporter.assetBundleName)*/)
-                {
-                    dependImporter.assetBundleName = className + "/" + assetData.name;
-                    dependImporter.assetBundleVariant = "common";
-
-                    if (dependImporter.assetBundleName.Contains(" "))
-                    {
-                        Debug.LogError("File name contains space!! " + assetData.name);
-                    }
-                }
-            }
-
-        }
-    }
-
-    private static void ClassifyAllDependFile(string[] files, string className)
-    {
-        foreach (var file in files)
-        {
-            string dataFile = file.Replace(Application.dataPath, "Assets");
-            Object assetData = AssetDatabase.LoadAssetAtPath<Object>(dataFile);
-            Object[] dependObjs = EditorUtility.CollectDependencies(new Object[1] { assetData });
-            string prefabPath = AssetDatabase.GetAssetPath(assetData);
-            var prefabImporter = AssetImporter.GetAtPath(prefabPath);
-            prefabImporter.assetBundleName = className;
-            prefabImporter.assetBundleVariant = "common";
-
-            foreach (var dependObj in dependObjs)
-            {
-                if (dependObj is TextAsset)
-                    continue;
-
-                string dependObjPath = AssetDatabase.GetAssetPath(dependObj);
-                var dependImporter = AssetImporter.GetAtPath(dependObjPath);
-                if (dependImporter != null /*&& string.IsNullOrEmpty(dependImporter.assetBundleName)*/)
-                {
-                    dependImporter.assetBundleName = className;
-                    dependImporter.assetBundleVariant = "common";
-
-                    if (dependImporter.assetBundleName.Contains(" "))
-                    {
-                        Debug.LogError("File name contains space!! " + className);
-                    }
-                }
-            }
-
-        }
-    }
-
-    private static void ClassifyAllFile(string[] files, string bundleName)
-    {
-        foreach (var file in files)
-        {
-            string dataFile = file.Replace(Application.dataPath, "Assets");
-            var prefabImporter = AssetImporter.GetAtPath(dataFile);
+            string resAssetPath = res.Key;
+            var prefabImporter = AssetImporter.GetAtPath(resAssetPath);
             if (prefabImporter != null)
             {
-                prefabImporter.assetBundleName = bundleName;
+                prefabImporter.assetBundleName = res.Value;
+                prefabImporter.assetBundleVariant = "common";
+            }
+            Debug.Log("SetResourceBundleName:" + res.Value + "," + resAssetPath);
+
+            Object assetData = AssetDatabase.LoadAssetAtPath<Object>(resAssetPath);
+            Object[] dependObjs = EditorUtility.CollectDependencies(new Object[1] { assetData });
+            foreach (var dependObj in dependObjs)
+            {
+                if (dependObj == null)
+                    continue;
+
+                if (dependObj is UnityEngine.Mesh
+                        || dependObj is Texture2D
+                        || dependObj is Material
+                        || dependObj is Animation
+                        || dependObj is AudioClip
+                        || dependObj is GameObject
+                        || dependObj is Shader
+                        )
+                {
+                    string dependObjPath = AssetDatabase.GetAssetPath(dependObj);
+                    if (dependObjPath.Contains("unity default resources"))
+                        continue;
+
+                    if (dependObjPath.StartsWith("Resources/"))
+                        continue;
+
+                    string dependObjObsorbPath = dependObjPath;
+                    if (resources.ContainsKey(dependObjObsorbPath))
+                        continue;
+
+                    if (dependObj == assetData)
+                        continue;
+
+                    if (!dependBundles.ContainsKey(dependObjPath))
+                    {
+                        dependBundles.Add(dependObjPath, "");
+                    }
+                    dependBundles[dependObjPath] += res.Value;
+
+                    if (dependObj is Shader)
+                    {
+                        dependBundles[dependObjPath] = "Shader";
+                    }
+                }
+            }
+        }
+
+        foreach (var dependBundle in dependBundles)
+        {
+            string dependBundleName = "Depend/Depend_" + EncryptWithMD5(dependBundle.Value);
+            if (dependBundle.Value.Equals("Shader"))
+            {
+                dependBundleName = "Shader";
+            }
+            //Debug.Log("SetResourceBundleName:" + dependBundleName + "," + dependBundle.Key);
+            var prefabImporter = AssetImporter.GetAtPath(dependBundle.Key);
+            if (prefabImporter != null)
+            {
+                prefabImporter.assetBundleName = dependBundleName;
                 prefabImporter.assetBundleVariant = "common";
             }
         }
+
+
     }
 
-    private static void ClassifyAllSingleFile(string[] files, string path)
+    public static void ClassifyScene(Dictionary<string, string> resBundels)
     {
-        foreach (var file in files)
+        string sysPath = Application.dataPath + "/FightCraft/Res/Scenes";
+        string[] filePaths = Directory.GetFiles(sysPath, "*.unity", SearchOption.AllDirectories);
+        Dictionary<string, string> sceneDict = new Dictionary<string, string>();
+        foreach (var sceneFile in filePaths)
         {
-            string dataFile = file.Replace(Application.dataPath, "Assets");
-            string fileName = Path.GetFileNameWithoutExtension(file).ToLower();
-            var prefabImporter = AssetImporter.GetAtPath(dataFile);
-            if (prefabImporter != null)
-            {
-                prefabImporter.assetBundleName = path + "/" + fileName;
-                prefabImporter.assetBundleVariant = "common";
-            }
+            string sceneName = Path.GetFileNameWithoutExtension(sceneFile);
+            sceneDict.Add(sceneName, sceneFile);
         }
-    }
 
-    #region 
-
-    private const int MAXPER = 512;
-
-    private static void SetTextureImporter(Object dependObj)
-    {
-        string filePath = AssetDatabase.GetAssetPath(dependObj);
-        var importer = AssetImporter.GetAtPath(filePath);
-        TextureImporter resImporter = importer as TextureImporter;
-        if (resImporter == null)
-            return;
-
-        resImporter.mipmapEnabled = false;
-
-        AssetDatabase.ImportAsset(importer.assetPath, ImportAssetOptions.ForceUpdate);
-    }
-
-    private static Dictionary<Object, string> ClassDependObj(Dictionary<Object, List<string>> dependObjs)
-    {
-        Dictionary<Object, string> classedObjs = new Dictionary<Object, string>();
-        int independCount = 1;
-
-        foreach (var dependObj in dependObjs)
+        foreach (var stageInfo in Tables.TableReader.StageInfo.Records.Values)
         {
-            if (dependObj.Value.Count == 1)
-                continue;
+            string sceneLogicPath = Application.dataPath + "FightCraft/Resources/FightSceneLogic/" + stageInfo.FightLogicPath;
+            string sceneLogicBundleName = "FightSceneLogic/" + stageInfo.FightLogicPath;
+            AddResourceDict(resBundels, sceneLogicPath, sceneLogicBundleName);
 
-            if (classedObjs.ContainsKey(dependObj.Key))
-                continue;
-
-            classedObjs.Add(dependObj.Key, "dependIdx" + independCount);
-            foreach (var otherDependObj in dependObjs)
+            foreach (var sceneName in stageInfo.ScenePath)
             {
-                if (dependObj.Key == otherDependObj.Key)
+                if (string.IsNullOrEmpty(sceneName))
                     continue;
 
-                if (dependObj.Value.Count != otherDependObj.Value.Count)
-                    continue;
-
-                bool isSameRef = true;
-                foreach (string refStr in dependObj.Value)
+                if (sceneDict.ContainsKey(sceneName))
                 {
-                    if (!otherDependObj.Value.Contains(refStr))
-                    {
-                        isSameRef = false;
-                        break;
-                    }
-                }
-
-                if (isSameRef)
-                {
-                    classedObjs.Add(otherDependObj.Key, "dependIdx" + independCount);
+                    AddResourceDict(resBundels, sceneDict[sceneName], "Scene/" + sceneName);
                 }
             }
-            ++independCount;
-
         }
 
-        return classedObjs;
-    }
-
-    private static Dictionary<string, string> ClassDependObjCommon(Dictionary<string, List<string>> dependObjs)
-    {
-        List<List<string>> commonConflict = new List<List<string>>();
-        commonConflict.Add(new List<string>());
-
-        Dictionary<string, string> classedObjs = new Dictionary<string, string>();
-        int independCount = 1;
-
-        Dictionary<string, int> dependFold = new Dictionary<string, int>();
-        int effectDependIdx = 0;
-        foreach (var dependObj in dependObjs)
+        foreach (var sceneName in FightSceneLogicRandomArea._ShaMoScene)
         {
-            if (dependObj.Value.Count == 1)
+            if (string.IsNullOrEmpty(sceneName))
                 continue;
 
-            if (classedObjs.ContainsKey(dependObj.Key))
-                continue;
-
-            if (string.IsNullOrEmpty(dependObj.Key))
-                continue;
-
-            if (dependObj.Key == "Resources" || dependObj.Key == "Library")
-                continue;
-
-            string dependObjFold = Path.GetDirectoryName(dependObj.Key);
-            int dependIdx = 0;
-            if (dependFold.ContainsKey(dependObjFold))
+            if (sceneDict.ContainsKey(sceneName))
             {
-                dependIdx = dependFold[dependObjFold];
+                AddResourceDict(resBundels, sceneDict[sceneName], "Scene/" + sceneName);
             }
-            else
-            {
-                dependIdx = effectDependIdx;
-                dependFold.Add(dependObjFold, effectDependIdx);
-                ++effectDependIdx;
-            }
-
-   
-            classedObjs.Add(dependObj.Key, "depend_" + dependIdx);
-            
-
         }
 
-        return classedObjs;
+        foreach (var sceneName in FightSceneLogicRandomArea._CaoYuanScene)
+        {
+            if (string.IsNullOrEmpty(sceneName))
+                continue;
+
+            if (sceneDict.ContainsKey(sceneName))
+            {
+                AddResourceDict(resBundels, sceneDict[sceneName], "Scene/" + sceneName);
+            }
+        }
+
+        foreach (var sceneName in FightSceneLogicRandomArea._BingYuanScene)
+        {
+            if (string.IsNullOrEmpty(sceneName))
+                continue;
+
+            if (sceneDict.ContainsKey(sceneName))
+            {
+                AddResourceDict(resBundels, sceneDict[sceneName], "Scene/" + sceneName);
+            }
+        }
+
+        foreach (var sceneName in FightSceneLogicRandomArea._DiChengScene)
+        {
+            if (string.IsNullOrEmpty(sceneName))
+                continue;
+
+            if (sceneDict.ContainsKey(sceneName))
+            {
+                AddResourceDict(resBundels, sceneDict[sceneName], "Scene/" + sceneName);
+            }
+        }
+
+        foreach (var sceneName in FightSceneLogicRandomArea._BossScene)
+        {
+            if (string.IsNullOrEmpty(sceneName))
+                continue;
+
+            if (sceneDict.ContainsKey(sceneName))
+            {
+                AddResourceDict(resBundels, sceneDict[sceneName], "Scene/" + sceneName);
+            }
+        }
     }
 
+    public static void ClassifyAssets(Dictionary<string, string> resBundels, string fold)
+    {
+        string sysPath = Application.dataPath + "/FightCraft/BundleAssets/" + fold;
+        string[] filePaths = Directory.GetFiles(sysPath, "*.*", SearchOption.AllDirectories);
+        
+        foreach (var sceneFile in filePaths)
+        {
+            if (sceneFile.EndsWith(".meta")
+                || sceneFile.EndsWith(".shader"))
+            {
+                continue;
+            }
+            string bundleName = sceneFile.Replace(sysPath, "Asset/" + fold);
+            bundleName = bundleName.Replace(Path.GetExtension(bundleName), "");
+            //resBundels.Add(sceneFile, bundleName);
+            AddResourceDict(resBundels, sceneFile, bundleName);
+        }
+    }
+
+    public static void ClassifyUI(Dictionary<string, string> resBundels)
+    {
+        var uiPathInfos = typeof(UIConfig).GetFields(System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
+        foreach (var uiInfo in uiPathInfos)
+        {
+            if (uiInfo.FieldType != typeof(AssetInfo))
+                continue;
+
+            var uipathInfo = uiInfo.GetValue(null) as AssetInfo;
+            string uipath = Application.dataPath + "/FightCraft/BundleAssets/UI/" + uipathInfo.AssetPath + ".prefab";
+            //resBundels.Add(uipath, "UI" + uipathInfo.AssetPath);
+            AddResourceDict(resBundels, uipath, "UI/" + uipathInfo.AssetPath);
+        }
+    }
+
+    [MenuItem("ProTool/ClassifyRes/ClassifyAllBundles")]
+    public static void ClassifyAllBundles()
+    {
+        Tables.TableReader.ReadTables();
+
+        Dictionary<string, string> resBundles = new Dictionary<string, string>();
+        ClassifyScene(resBundles);
+        ClassifyAssets(resBundles, "Animation");
+        ClassifyAssets(resBundles, "Audios");
+        ClassifyAssets(resBundles, "Bullet");
+        ClassifyAssets(resBundles, "Common");
+        ClassifyAssets(resBundles, "Effect");
+        ClassifyAssets(resBundles, "Model");
+        ClassifyAssets(resBundles, "ModelBase");
+        ClassifyAssets(resBundles, "SkillMotion");
+        ClassifyAssets(resBundles, "Drop");
+        ClassifyAssets(resBundles, "FightSceneLogic");
+        ClassifyUI(resBundles);
+
+        SetResourceBundleName(resBundles);
+        AssetDatabase.Refresh();
+    }
+
+    public static string EncryptWithMD5(string source)
+    {
+        byte[] sor = Encoding.UTF8.GetBytes(source);
+        MD5 md5 = MD5.Create();
+        byte[] result = md5.ComputeHash(sor);
+        StringBuilder strbul = new StringBuilder(40);
+        for (int i = 0; i < result.Length; i++)
+        {
+            strbul.Append(result[i].ToString("x2"));//加密结果"x2"结果为32位,"x3"结果为48位,"x4"结果为64位
+
+        }
+        return strbul.ToString();
+    }
     #endregion
 }

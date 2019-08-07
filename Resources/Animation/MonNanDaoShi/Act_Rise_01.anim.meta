@@ -3,6 +3,8 @@ guid: 03de29b8c839da940bd3ff4dc701e040
 timeCreated: 1489211923
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monnandaoshi/act_rise_01
+  assetBundleVariant: common

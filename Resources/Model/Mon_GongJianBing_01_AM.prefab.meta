@@ -3,7 +3,8 @@ guid: 14b7e0d078d7b454093269bf7d907f9a
 timeCreated: 1501486341
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/mon_gongjianbing_01_am
+  assetBundleVariant: common

@@ -28,8 +28,16 @@ public class UIFightSkillInfo : UIItemBase
     public void InitSkillInfo(FightSkillInfo fightSkillInfo)
     {
         _FightSkillInfo = fightSkillInfo;
-        _StoreTimes.text = fightSkillInfo._StoreCnt.ToString();
-        _SkillInput.text = fightSkillInfo._SkillInput.ToString();
+        if (fightSkillInfo._StoreCnt > 0)
+        {
+            _StoreTimes.text = fightSkillInfo._StoreCnt.ToString();
+        }
+        else
+        {
+            _StoreTimes.text = "";
+        }
+        _SkillInput.text = "";
+        ResourceManager.Instance.SetImage(_SkillIcon, fightSkillInfo._SkillIcon);
     }
 
     public void UpdateCD()

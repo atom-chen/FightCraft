@@ -3,6 +3,8 @@ guid: b3d366d9e1115ce499abb06e66dee2c0
 timeCreated: 1489148616
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/_modelbase
+  assetBundleVariant: common

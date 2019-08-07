@@ -3,6 +3,8 @@ guid: e580e4b7532234f4a83079bad003f2fc
 timeCreated: 1489146376
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herozhaoyun/act_hit_01
+  assetBundleVariant: common

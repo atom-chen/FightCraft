@@ -3,7 +3,8 @@ guid: 06dfbc9f15f3cd84f958447e1c57d5ee
 timeCreated: 1507678557
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/herozhaoyun/buff1
+  assetBundleVariant: common

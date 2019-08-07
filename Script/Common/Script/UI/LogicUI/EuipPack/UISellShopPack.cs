@@ -19,7 +19,7 @@ public class UISellShopPack : UIBase
         hash.Add("SelectQualities", selectQualities);
         hash.Add("GetItemPrice", getItemPrice);
         hash.Add("SellItems", sellItems);
-        GameCore.Instance.UIManager.ShowUI("LogicUI/BagPack/UISellShopPack", UILayer.SubPopUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UISellShopPack, UILayer.SubPopUI, hash);
     }
 
     public static void ShowSellLevelSync(List<ItemBase> toSellItems, List<Vector2> selectLevels, GetItemPrice getItemPrice, SellItems sellItems)
@@ -29,7 +29,7 @@ public class UISellShopPack : UIBase
         hash.Add("SelectLevels", selectLevels);
         hash.Add("GetItemPrice", getItemPrice);
         hash.Add("SellItems", sellItems);
-        GameCore.Instance.UIManager.ShowUI("LogicUI/BagPack/UISellShopPack", UILayer.SubPopUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UISellShopPack, UILayer.SubPopUI, hash);
     }
 
     #endregion

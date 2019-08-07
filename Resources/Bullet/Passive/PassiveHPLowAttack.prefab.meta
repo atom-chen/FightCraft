@@ -3,7 +3,8 @@ guid: 5bd0e4addda32d543b4b4ba3d1b8953b
 timeCreated: 1511438868
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/passive/passivehplowattack
+  assetBundleVariant: common

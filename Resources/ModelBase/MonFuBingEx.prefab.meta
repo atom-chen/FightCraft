@@ -3,6 +3,8 @@ guid: eea3125468a2726429482d6b3e7bf6cf
 timeCreated: 1488374876
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/monfubingex
+  assetBundleVariant: common

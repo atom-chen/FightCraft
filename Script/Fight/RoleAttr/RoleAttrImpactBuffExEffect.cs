@@ -27,8 +27,11 @@ public class RoleAttrImpactBuffExEffect : RoleAttrImpactBase
             return;
 
         var skillMotion = roleMotion._StateSkill._SkillMotions[_SkillInput];
-        var impactGO = ResourceManager.Instance.GetInstanceGameObject("SkillMotion\\CommonImpact\\" + _ImpactName);
-        impactGO.transform.SetParent(skillMotion.transform);
+        ResourcePool.Instance.LoadConfig("SkillMotion\\CommonImpact\\" + _ImpactName, (resName, resGO, hash) =>
+        {
+            var impactGO = resGO;
+            impactGO.transform.SetParent(skillMotion.transform);
+        }, null);
 
     }
 

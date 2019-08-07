@@ -3,6 +3,8 @@ guid: 27c5799c5924faa45a74631ed4bff0ae
 timeCreated: 1489146229
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herowenzhong/act_move_01
+  assetBundleVariant: common

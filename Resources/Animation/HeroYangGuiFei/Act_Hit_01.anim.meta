@@ -3,6 +3,8 @@ guid: b19a58403adccaa4f903723faab1e40b
 timeCreated: 1489146300
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heroyangguifei/act_hit_01
+  assetBundleVariant: common

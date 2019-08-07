@@ -3,6 +3,8 @@ guid: 62debf8a7f4e19b43a6346f8d53b2360
 timeCreated: 1489146159
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heroluban/act_hit_01
+  assetBundleVariant: common

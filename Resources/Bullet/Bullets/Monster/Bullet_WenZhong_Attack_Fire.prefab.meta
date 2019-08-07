@@ -3,6 +3,8 @@ guid: 25810f30de33f7b46ad8288e31799289
 timeCreated: 1490435154
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/bullets/monster/bullet_wenzhong_attack_fire
+  assetBundleVariant: common

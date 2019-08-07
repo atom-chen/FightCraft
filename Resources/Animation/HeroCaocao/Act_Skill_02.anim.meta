@@ -3,6 +3,8 @@ guid: 85f54664a2877f24b882380082802303
 timeCreated: 1487378818
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herocaocao/act_skill_02
+  assetBundleVariant: common

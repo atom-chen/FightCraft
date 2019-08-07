@@ -3,6 +3,8 @@ guid: 3a8fb4fadae034e4ab43dcc776a6c7c9
 timeCreated: 1489146228
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herowenzhong/act_attack_01
+  assetBundleVariant: common

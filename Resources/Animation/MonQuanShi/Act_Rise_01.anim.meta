@@ -3,6 +3,8 @@ guid: 98884104a1fc550418efa407aa5d0475
 timeCreated: 1489211968
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monquanshi/act_rise_01
+  assetBundleVariant: common

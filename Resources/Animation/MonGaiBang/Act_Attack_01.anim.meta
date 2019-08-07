@@ -3,6 +3,8 @@ guid: 1eb8eedb1abd8d84f8e11d9cea354251
 timeCreated: 1488542583
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/mongaibang/act_attack_01
+  assetBundleVariant: common

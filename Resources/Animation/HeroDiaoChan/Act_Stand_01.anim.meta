@@ -3,6 +3,8 @@ guid: 60c0c8f5e65f8cf4e9ada4dd24cf74e6
 timeCreated: 1489125820
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herodiaochan/act_stand_01
+  assetBundleVariant: common

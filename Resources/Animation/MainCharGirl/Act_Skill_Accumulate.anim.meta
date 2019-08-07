@@ -3,6 +3,8 @@ guid: d8314e72a3c5b2a4faa7cb7097f9b2e3
 timeCreated: 1487291535
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/mainchargirl/act_skill_accumulate
+  assetBundleVariant: common

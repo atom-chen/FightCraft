@@ -3,6 +3,8 @@ guid: 167e2e74014c69d45b92fc39bc2861b9
 timeCreated: 1488972897
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/effect/skill/effect_char_afteranim
+  assetBundleVariant: common

@@ -3,7 +3,8 @@ guid: c1600479eb16e9c40a598fd88248b1f2
 timeCreated: 1518241916
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/herobaiqi/baiqipassive
+  assetBundleVariant: common

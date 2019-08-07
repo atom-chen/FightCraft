@@ -19,21 +19,26 @@ public class RoleAttrImpactLightRevange : RoleAttrImpactPassive
         if (!roleMotion._StateSkill._SkillMotions.ContainsKey(_SkillInput))
             return;
 
-        var buffGO = ResourceManager.Instance.GetInstanceGameObject("Bullet\\Passive\\" + _ImpactName);
-        buffGO.transform.SetParent(roleMotion.BuffBindPos.transform);
-        var bulletScripts = buffGO.GetComponentsInChildren<ImpactBuff>();
-        foreach (var buff in bulletScripts)
+        ResourcePool.Instance.LoadConfig("Bullet\\Passive\\" + _ImpactName, (resName, resGO, hash) =>
         {
-            var subBuffs2 = buffGO.GetComponentsInChildren<BulletEmitterBase>();
-            foreach (var subBuff in subBuffs2)
+            var buffGO = resGO;
+            buffGO.transform.SetParent(roleMotion.BuffBindPos.transform);
+            var bulletScripts = buffGO.GetComponentsInChildren<ImpactBuff>();
+            foreach (var buff in bulletScripts)
             {
-                if (subBuff.gameObject == buffGO)
-                    continue;
-                subBuff._Damage = _Damage;
-            }
+                var subBuffs2 = buffGO.GetComponentsInChildren<BulletEmitterBase>();
+                foreach (var subBuff in subBuffs2)
+                {
+                    if (subBuff.gameObject == buffGO)
+                        continue;
+                    subBuff._Damage = _Damage;
+                }
 
-            buff.ActImpact(roleMotion, roleMotion);
-        }
+                buff.ActImpact(roleMotion, roleMotion);
+            }
+        }, null);
+
+        
     }
 
     public override void ModifySkillAfterInit(MotionManager roleMotion)

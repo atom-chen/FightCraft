@@ -3,6 +3,8 @@ guid: 5af8ced86b14cd744bc0ab30769a9cd1
 timeCreated: 1488972315
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/maincharboy/skill1
+  assetBundleVariant: common

@@ -3,6 +3,8 @@ guid: d8a07fc77a243c240bc24d11d02ad892
 timeCreated: 1489212424
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/trapjianta/act_stand_01
+  assetBundleVariant: common

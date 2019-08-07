@@ -3,6 +3,8 @@ guid: d879ead885f10374a8c046508a471fd5
 timeCreated: 1489146407
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herozhouwang/act_stand_01
+  assetBundleVariant: common

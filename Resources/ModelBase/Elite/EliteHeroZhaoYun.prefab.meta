@@ -3,6 +3,8 @@ guid: 8df23939042a1cf4baab7ff837354e37
 timeCreated: 1489150588
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/elite/eliteherozhaoyun
+  assetBundleVariant: common

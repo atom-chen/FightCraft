@@ -3,6 +3,8 @@ guid: 175d2aa743837ad4abfd7652fe8c5d31
 timeCreated: 1489212014
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monshashou/act_fly_01
+  assetBundleVariant: common

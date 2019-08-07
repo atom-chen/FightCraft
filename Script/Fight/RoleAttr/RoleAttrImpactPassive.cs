@@ -18,13 +18,18 @@ public class RoleAttrImpactPassive : RoleAttrImpactBase
         if (!roleMotion._StateSkill._SkillMotions.ContainsKey(_SkillInput))
             return;
 
-        var buffGO = ResourceManager.Instance.GetInstanceGameObject("Bullet\\Passive\\" + _ImpactName);
-        buffGO.transform.SetParent(roleMotion.BuffBindPos.transform);
-        var buffs = buffGO.GetComponents<ImpactBuff>();
-        foreach (var buff in buffs)
+        
+
+        ResourcePool.Instance.LoadConfig("Bullet\\Passive\\" + _ImpactName, (resName, resGO, hash) =>
         {
-            buff.ActImpact(roleMotion, roleMotion);
-        }
+            var buffGO = resGO;
+            buffGO.transform.SetParent(roleMotion.BuffBindPos.transform);
+            var buffs = buffGO.GetComponents<ImpactBuff>();
+            foreach (var buff in buffs)
+            {
+                buff.ActImpact(roleMotion, roleMotion);
+            }
+        }, null);
     }
 
     public override bool AddData(List<int> attrParam)

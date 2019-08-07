@@ -3,7 +3,8 @@ guid: cf797509c4fd3b94292e32c1501825cf
 timeCreated: 1509453326
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/emitter/element/impactattr24_b2_lighteye
+  assetBundleVariant: common

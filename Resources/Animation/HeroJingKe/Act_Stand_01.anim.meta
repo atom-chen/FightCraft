@@ -3,6 +3,8 @@ guid: 770188535e55593498aaba7c5a256aca
 timeCreated: 1489145258
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herojingke/act_stand_01
+  assetBundleVariant: common

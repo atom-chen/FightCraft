@@ -3,6 +3,8 @@ guid: 033a150add05cdb42a2076fec2d119af
 timeCreated: 1489125150
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herodianwei/act_hit_01
+  assetBundleVariant: common

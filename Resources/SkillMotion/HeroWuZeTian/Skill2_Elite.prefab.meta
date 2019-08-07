@@ -3,7 +3,8 @@ guid: dd5494e73627797468545e44e862d617
 timeCreated: 1518250744
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/herowuzetian/skill2_elite
+  assetBundleVariant: common

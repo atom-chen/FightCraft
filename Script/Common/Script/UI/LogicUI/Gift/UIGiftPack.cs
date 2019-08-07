@@ -12,12 +12,12 @@ public class UIGiftPack : UIBase
     {
         UIGlobalBuff._ShowType = 1;
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("LogicUI/Gift/UIGiftTipPack", UILayer.BaseUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIGiftPack, UILayer.BaseUI, hash);
     }
 
     public static void Refresh()
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UIGiftPack>("LogicUI/Gift/UIGiftTipPack");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIGiftPack>(UIConfig.UIGiftPack);
         if (instance == null)
             return;
 

@@ -3,7 +3,8 @@ guid: c05e660a081b1934c8011eea34caaf6b
 timeCreated: 1508223962
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/bullets/monster/bullet_wenzhong_skill_ice
+  assetBundleVariant: common

@@ -3,7 +3,8 @@ guid: 952cb92d19b162343adf3b22c7e7ae5f
 timeCreated: 1505821408
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/commonimpact/accumulate
+  assetBundleVariant: common

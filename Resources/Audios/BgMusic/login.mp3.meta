@@ -1,6 +1,7 @@
 fileFormatVersion: 2
 guid: 2c5c8bd605000d14ebbd8046dc87ee24
 AudioImporter:
+  externalObjects: {}
   serializedVersion: 6
   defaultSettings:
     loadType: 1
@@ -14,7 +15,8 @@ AudioImporter:
   normalize: 1
   preloadAudioData: 1
   loadInBackground: 0
+  ambisonic: 0
   3D: 1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/audios/bgmusic/login
+  assetBundleVariant: common

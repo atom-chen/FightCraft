@@ -3,6 +3,8 @@ guid: c3fa33e6c6d3ecd4e9b302dd1bf0bf28
 timeCreated: 1487291533
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/mainchargirl/act_fall_01
+  assetBundleVariant: common

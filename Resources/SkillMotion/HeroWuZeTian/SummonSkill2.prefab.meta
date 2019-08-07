@@ -3,7 +3,8 @@ guid: 283279082a7234c41bbc10b132cb280d
 timeCreated: 1502802708
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/herowuzetian/summonskill2
+  assetBundleVariant: common

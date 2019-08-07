@@ -3,7 +3,8 @@ guid: adcd8dd91bf974d4c950db8db9937c3a
 timeCreated: 1502422051
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/bullets/monster/bullet_leizhenzi_lightball
+  assetBundleVariant: common

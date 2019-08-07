@@ -3,7 +3,8 @@ guid: ab43de7a25574db46bba175bf3d8e705
 timeCreated: 1506570362
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/mongongbing/attack1_ice
+  assetBundleVariant: common

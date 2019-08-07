@@ -3,6 +3,8 @@ guid: 317749624fe86ba4b9a51b5927d38327
 timeCreated: 1489146229
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herowenzhong/act_fly_01
+  assetBundleVariant: common

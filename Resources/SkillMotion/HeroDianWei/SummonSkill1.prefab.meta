@@ -3,6 +3,8 @@ guid: 146796a289a85624e98bd44512f875f3
 timeCreated: 1489125620
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/herodianwei/summonskill1
+  assetBundleVariant: common

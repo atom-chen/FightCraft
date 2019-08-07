@@ -3,7 +3,8 @@ guid: a3653ffa8e148d543b23288218b4e38b
 timeCreated: 1526645350
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/bullets/element/bullet_fenghuang
+  assetBundleVariant: common

@@ -3,6 +3,8 @@ guid: fb155acd90eb6ba4e9c017c63ec4e884
 timeCreated: 1489146343
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heroyangjian/act_buff_01
+  assetBundleVariant: common

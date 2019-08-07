@@ -3,6 +3,8 @@ guid: 496c411ef174df847b92938e11a6dfa4
 timeCreated: 1489212013
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monshashou/act_attack_02
+  assetBundleVariant: common

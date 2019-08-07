@@ -2,7 +2,18 @@ fileFormatVersion: 2
 guid: 962307ad00559f64ebfbdc3bb7f26406
 timeCreated: 1492825718
 licenseType: Pro
-PVRImporter:
+IHVImageFormatImporter:
+  externalObjects: {}
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
+  isReadable: 0
+  sRGBTexture: 1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/drop/gem/texture2d/drop_028_001
+  assetBundleVariant: common

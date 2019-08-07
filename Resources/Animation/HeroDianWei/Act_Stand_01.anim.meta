@@ -3,6 +3,8 @@ guid: 2f3f4533d869591468c2bdea627b7b57
 timeCreated: 1489125150
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herodianwei/act_stand_01
+  assetBundleVariant: common

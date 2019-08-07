@@ -3,7 +3,8 @@ guid: 0c24a7fa1a60a534bb7d6d799fedc373
 timeCreated: 1507037787
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/heroxishi/skill1
+  assetBundleVariant: common

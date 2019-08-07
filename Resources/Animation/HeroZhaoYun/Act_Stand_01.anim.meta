@@ -3,6 +3,8 @@ guid: 5a416e561b973d64e977d39497ebff14
 timeCreated: 1489146376
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herozhaoyun/act_stand_01
+  assetBundleVariant: common

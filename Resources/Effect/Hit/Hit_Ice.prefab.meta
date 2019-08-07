@@ -3,7 +3,8 @@ guid: 16e1af141ac2d384484f9659194c3fbb
 timeCreated: 1506564053
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/effect/hit/hit_ice
+  assetBundleVariant: common

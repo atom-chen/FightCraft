@@ -3,6 +3,8 @@ guid: 85629ba2a049b6a439159a68b37caa94
 timeCreated: 1487255765
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/maincharboy/act_attack_ex
+  assetBundleVariant: common

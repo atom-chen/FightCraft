@@ -3,6 +3,8 @@ guid: 67741b5f744e5684f8de00782022f1a4
 timeCreated: 1487255767
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/maincharboy/act_hw_super_01_start
+  assetBundleVariant: common

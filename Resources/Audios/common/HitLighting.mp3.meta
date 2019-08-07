@@ -3,6 +3,7 @@ guid: 1ecac92c604d1b348af5cbbb0de841ea
 timeCreated: 1523351518
 licenseType: Pro
 AudioImporter:
+  externalObjects: {}
   serializedVersion: 6
   defaultSettings:
     loadType: 0
@@ -16,7 +17,8 @@ AudioImporter:
   normalize: 1
   preloadAudioData: 1
   loadInBackground: 0
+  ambisonic: 0
   3D: 1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/audios/common/hitlighting
+  assetBundleVariant: common

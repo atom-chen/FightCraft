@@ -39,6 +39,16 @@ public class FightSceneLogicBase : MonoBehaviour
         }
     }
 
+    public virtual List<string> GetLogicMonIDs()
+    {
+        return new List<string>();
+    }
+
+    public virtual List<string> GetLogicScenes()
+    {
+        return null;
+    }
+
     #endregion
 
     #region timmer

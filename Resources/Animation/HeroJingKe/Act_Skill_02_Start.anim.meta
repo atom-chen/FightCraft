@@ -3,6 +3,8 @@ guid: 7237ef6ee677237498710dac6e9dfbfa
 timeCreated: 1489145257
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herojingke/act_skill_02_start
+  assetBundleVariant: common

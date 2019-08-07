@@ -3,6 +3,8 @@ guid: a697fa9cdd35b5d4cbc85e9bee01c740
 timeCreated: 1488541193
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/mondaobing/act_hit_01
+  assetBundleVariant: common

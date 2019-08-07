@@ -31,7 +31,8 @@ public class AI_HeroBase : AI_Base
 
     protected override bool StartSkill()
     {
-        return false;
+        if (!IsRandomActSkill())
+            return false;
 
         if (Time.time - _AfterSkillTime < _AfterSkillWait)
             return false;
@@ -111,13 +112,16 @@ public class AI_HeroBase : AI_Base
         if (!_IsRiseBoom)
             return;
 
-        var riseBoom = ResourceManager.Instance.GetInstanceGameObject("SkillMotion/CommonImpact/RiseBoomSkill");
-        var motionTrans = transform.Find("Motion");
-        riseBoom.transform.SetParent(motionTrans);
-        riseBoom.transform.localPosition = Vector3.zero;
-        riseBoom.transform.localRotation = Quaternion.Euler(Vector3.zero);
+        ResourcePool.Instance.LoadConfig("SkillMotion/CommonImpact/RiseBoomSkill", (resName, resGO, hash) =>
+        {
+            var riseBoom = resGO;
+            var motionTrans = transform.Find("Motion");
+            riseBoom.transform.SetParent(motionTrans);
+            riseBoom.transform.localPosition = Vector3.zero;
+            riseBoom.transform.localRotation = Quaternion.Euler(Vector3.zero);
 
-        _RiseBoom = riseBoom.GetComponent<ImpactBase>();
+            _RiseBoom = riseBoom.GetComponent<ImpactBase>();
+        }, null);
         
     }
 
@@ -154,8 +158,9 @@ public class AI_HeroBase : AI_Base
         {
             if (_SuperArmorPrefab == null)
             {
-                var buffGO = ResourceManager.Instance.GetGameObject("SkillMotion/CommonImpact/SuperArmor");
-                _SuperArmorPrefab = buffGO.GetComponent<ImpactBuff>();
+                //var buffGO = ResourceManager.Instance.GetGameObject("SkillMotion/CommonImpact/SuperArmor");
+                //_SuperArmorPrefab = buffGO.GetComponent<ImpactBuff>();
+                _SuperArmorPrefab = ResourcePool.Instance.GetConfig<ImpactBuff>(ResourcePool.ConfigEnum.SuperArmor);
             }
             return _SuperArmorPrefab;
         }
@@ -168,8 +173,9 @@ public class AI_HeroBase : AI_Base
         {
             if (_SuperArmorBlockPrefab == null)
             {
-                var buffGO = ResourceManager.Instance.GetGameObject("SkillMotion/CommonImpact/SuperArmorBlock");
-                _SuperArmorBlockPrefab = buffGO.GetComponent<ImpactBuff>();
+                //var buffGO = ResourceManager.Instance.GetGameObject("SkillMotion/CommonImpact/SuperArmorBlock");
+                //_SuperArmorBlockPrefab = buffGO.GetComponent<ImpactBuff>();
+                _SuperArmorBlockPrefab = ResourcePool.Instance.GetConfig<ImpactBuff>(ResourcePool.ConfigEnum.SuperArmorBlock);
             }
             return _SuperArmorBlockPrefab;
         }
@@ -421,8 +427,9 @@ public class AI_HeroBase : AI_Base
         {
             if (_BulletBlockBuffPrefab == null)
             {
-                var buffGO = ResourceManager.Instance.GetGameObject("SkillMotion/CommonImpact/BlockBullet");
-                _BulletBlockBuffPrefab = buffGO.GetComponent<ImpactBuff>();
+                //var buffGO = ResourceManager.Instance.GetGameObject("SkillMotion/CommonImpact/BlockBullet");
+                //_BulletBlockBuffPrefab = buffGO.GetComponent<ImpactBuff>();
+                _BulletBlockBuffPrefab = ResourcePool.Instance.GetConfig<ImpactBuff>(ResourcePool.ConfigEnum.BlockBullet);
             }
             return _BulletBlockBuffPrefab;
         }

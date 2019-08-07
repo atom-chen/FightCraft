@@ -3,6 +3,8 @@ guid: f4ce647875a07ca4294ca5dbbf771266
 timeCreated: 1489211923
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monnandaoshi/act_fly_01
+  assetBundleVariant: common

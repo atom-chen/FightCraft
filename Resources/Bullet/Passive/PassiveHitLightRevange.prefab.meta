@@ -3,7 +3,8 @@ guid: 9d9c0151b8404d74d998e6e31e64b599
 timeCreated: 1511528237
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/passive/passivehitlightrevange
+  assetBundleVariant: common

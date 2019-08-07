@@ -3,7 +3,8 @@ guid: a042fe4eba67a6c459caeb4f624e4366
 timeCreated: 1509431819
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/emitter/element/impactattr3_g2_windblade
+  assetBundleVariant: common

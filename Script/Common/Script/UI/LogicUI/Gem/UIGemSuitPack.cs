@@ -12,7 +12,7 @@ public class UIGemSuitPack : UIBase
     public static void ShowAsyn()
     {
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("LogicUI/Gem/UIGemSuitPack", UILayer.SubPopUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIGemSuitPack, UILayer.SubPopUI, hash);
     }
 
     #endregion

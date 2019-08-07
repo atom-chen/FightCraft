@@ -3,7 +3,8 @@ guid: f260ffd001d83cb469c917763804112c
 timeCreated: 1501486225
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/hero_direnjie_01_am
+  assetBundleVariant: common

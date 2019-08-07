@@ -17,12 +17,12 @@ public class UIGemTooltips : UIItemTooltips
         Hashtable hash = new Hashtable();
         hash.Add("ItemGem", itemBase);
         hash.Add("ToolTipFun", funcs);
-        GameCore.Instance.UIManager.ShowUI("LogicUI/Gem/UIGemTooltips", UILayer.MessageUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIGemTooltips, UILayer.MessageUI, hash);
     }
 
     public new static void HideAsyn()
     {
-        UIManager.Instance.HideUI("LogicUI/Gem/UIGemTooltips");
+        UIManager.Instance.HideUI(UIConfig.UIGemTooltips.AssetPath);
     }
 
     public static void ShowAsynInType(ItemGem itemBase, TooltipType toolTipType, params ToolTipFunc[] funcs)
@@ -31,7 +31,7 @@ public class UIGemTooltips : UIItemTooltips
         hash.Add("ItemGem", itemBase);
         hash.Add("ToolTipFun", funcs);
         hash.Add("TooltipType", toolTipType);
-        GameCore.Instance.UIManager.ShowUI("LogicUI/Gem/UIGemTooltips", UILayer.MessageUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIGemTooltips, UILayer.MessageUI, hash);
     }
 
     #endregion

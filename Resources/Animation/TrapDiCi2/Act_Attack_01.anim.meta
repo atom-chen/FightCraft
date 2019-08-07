@@ -3,6 +3,8 @@ guid: 29ad3624618ca124694a018b3dada0bd
 timeCreated: 1489212402
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/trapdici2/act_attack_01
+  assetBundleVariant: common

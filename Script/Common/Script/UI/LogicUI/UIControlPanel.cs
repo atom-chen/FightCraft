@@ -19,12 +19,12 @@ public class UIControlPanel : UIBase, IPointerClickHandler
     public static void ShowAsyn()
     {
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("LogicUI/UIControlPanel", UILayer.ControlUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIControlPanel, UILayer.ControlUI, hash);
     }
 
     public static void AddClickEvent(OnPointClick pointEvent)
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UIControlPanel>("LogicUI/UIControlPanel");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIControlPanel>(UIConfig.UIControlPanel);
         if (instance == null)
             return;
 
@@ -36,7 +36,7 @@ public class UIControlPanel : UIBase, IPointerClickHandler
 
     public static void RemoveClickEvent(OnPointClick pointEvent)
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UIControlPanel>("LogicUI/UIControlPanel");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIControlPanel>(UIConfig.UIControlPanel);
         if (instance == null)
             return;
 

@@ -3,6 +3,8 @@ guid: cf8d65d9fe2ae1f43bcdbc06d233016e
 timeCreated: 1492825398
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/drop/body01/body02
+  assetBundleVariant: common

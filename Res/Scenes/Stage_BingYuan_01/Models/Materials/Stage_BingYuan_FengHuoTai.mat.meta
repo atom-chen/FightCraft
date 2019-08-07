@@ -1,7 +1,8 @@
 fileFormatVersion: 2
 guid: ae14dcd0f4116c84ca59c33cf29c733e
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: -1
   userData: 
-  assetBundleName: scene/depend_stage_bingyuan_04_terrain
+  assetBundleName: depend/depend_3d5f57dc9d4004df26964937b19137e6
   assetBundleVariant: common

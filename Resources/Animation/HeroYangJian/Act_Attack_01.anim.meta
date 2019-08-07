@@ -3,6 +3,8 @@ guid: 9d70d7aa5e112084ea981cff770be1eb
 timeCreated: 1489146343
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heroyangjian/act_attack_01
+  assetBundleVariant: common

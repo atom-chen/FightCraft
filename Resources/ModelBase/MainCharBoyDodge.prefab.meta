@@ -3,7 +3,8 @@ guid: fd965cc3f6aaf0847aebff4264dbd300
 timeCreated: 1502886711
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/maincharboydodge
+  assetBundleVariant: common

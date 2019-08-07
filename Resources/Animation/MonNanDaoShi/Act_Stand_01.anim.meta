@@ -3,6 +3,8 @@ guid: dc7b65498080da74e80dd697b49741f6
 timeCreated: 1489211924
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monnandaoshi/act_stand_01
+  assetBundleVariant: common

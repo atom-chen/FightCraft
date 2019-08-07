@@ -3,6 +3,8 @@ guid: 3f0234d826cc7ee4d976bb0c92266644
 timeCreated: 1489112402
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/herobaiqi/summonskill2
+  assetBundleVariant: common

@@ -3,7 +3,8 @@ guid: f0cc7ef7b176de74ea2e8871e2097ce2
 timeCreated: 1511440217
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/passive/passivelightingbuff
+  assetBundleVariant: common

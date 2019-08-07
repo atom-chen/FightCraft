@@ -31,12 +31,15 @@ public class RoleAttrImpactAccumulate : RoleAttrImpactBase
                 return;
 
             var skillMotion = roleMotion._StateSkill._SkillMotions[_SkillInput];
-            var impactGO = ResourceManager.Instance.GetInstanceGameObject("SkillMotion\\CommonImpact\\" + _ImpactName);
-            impactGO.transform.SetParent(skillMotion.transform);
+            ResourcePool.Instance.LoadConfig("SkillMotion\\CommonImpact\\" + _ImpactName, (resName, resGO, hash) =>
+            {
+                resGO.transform.SetParent(skillMotion.transform);
 
-            var bulletEmitterEle = impactGO.GetComponent<ImpactAccumulate>();
-            bulletEmitterEle._AccumulateTime = _AccumulateTime;
-            bulletEmitterEle._AccumulateDamage = _DamageEnhance;
+                var bulletEmitterEle = resGO.GetComponent<ImpactAccumulate>();
+                bulletEmitterEle._AccumulateTime = _AccumulateTime;
+                bulletEmitterEle._AccumulateDamage = _DamageEnhance;
+            }, null);
+
         }
         else
         {
@@ -47,12 +50,14 @@ public class RoleAttrImpactAccumulate : RoleAttrImpactBase
                     && !skillMotion._ActInput.Equals("3"))
                     continue;
 
-                var impactGO = ResourceManager.Instance.GetInstanceGameObject("SkillMotion\\CommonImpact\\" + _ImpactName);
-                impactGO.transform.SetParent(skillMotion.transform);
+                ResourcePool.Instance.LoadConfig("SkillMotion\\CommonImpact\\" + _ImpactName, (resName, resGO, hash) =>
+                {
+                    resGO.transform.SetParent(skillMotion.transform);
 
-                var bulletEmitterEle = impactGO.GetComponent<ImpactAccumulate>();
-                bulletEmitterEle._AccumulateTime = _AccumulateTime;
-                bulletEmitterEle._AccumulateDamage = _DamageEnhance;
+                    var bulletEmitterEle = resGO.GetComponent<ImpactAccumulate>();
+                    bulletEmitterEle._AccumulateTime = _AccumulateTime;
+                    bulletEmitterEle._AccumulateDamage = _DamageEnhance;
+                }, null);
             }
         }
     }

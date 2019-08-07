@@ -3,6 +3,8 @@ guid: 9ab30c75e36fd9d4d938d83206460b0b
 timeCreated: 1487291535
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/mainchargirl/act_s_super_01
+  assetBundleVariant: common

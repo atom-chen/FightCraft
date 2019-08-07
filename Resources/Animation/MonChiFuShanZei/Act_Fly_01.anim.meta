@@ -3,6 +3,8 @@ guid: 5ab1c0c4dcf28a14faaa99c87b7e4538
 timeCreated: 1488370699
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monchifushanzei/act_fly_01
+  assetBundleVariant: common

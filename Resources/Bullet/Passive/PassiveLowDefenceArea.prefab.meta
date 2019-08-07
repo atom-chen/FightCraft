@@ -3,7 +3,8 @@ guid: 3003c1ddbe598cd4ea2645c8fa9b8dd8
 timeCreated: 1511436552
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/passive/passivelowdefencearea
+  assetBundleVariant: common

@@ -3,7 +3,8 @@ guid: eb862a7e698a43846863a9b2ec336ee2
 timeCreated: 1526631118
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/bullets/element/bullet_stone_boom2
+  assetBundleVariant: common

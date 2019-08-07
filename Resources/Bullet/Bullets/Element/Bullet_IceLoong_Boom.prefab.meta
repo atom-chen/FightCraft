@@ -3,7 +3,8 @@ guid: 998547cbf0fd22b479c42c6c9a166707
 timeCreated: 1526631498
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/bullets/element/bullet_iceloong_boom
+  assetBundleVariant: common

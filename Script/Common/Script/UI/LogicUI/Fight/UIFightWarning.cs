@@ -17,14 +17,14 @@ public class UIFightWarning : UIBase
     {
         Hashtable hash = new Hashtable();
         hash.Add("ShowFight", true);
-        GameCore.Instance.UIManager.ShowUI("LogicUI/Fight/UIFightWarning", UILayer.BaseUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIFightWarning, UILayer.BaseUI, hash);
     }
 
     public static void ShowBossAsyn()
     {
         Hashtable hash = new Hashtable();
         hash.Add("ShowBoss", true);
-        GameCore.Instance.UIManager.ShowUI("LogicUI/Fight/UIFightWarning", UILayer.BaseUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIFightWarning, UILayer.BaseUI, hash);
     }
 
     public static void ShowDirectAsyn(Transform directFrom, Transform directTo)
@@ -32,7 +32,7 @@ public class UIFightWarning : UIBase
         Hashtable hash = new Hashtable();
         hash.Add("ShowDirectFrom", directFrom);
         hash.Add("ShowDirectTo", directTo);
-        GameCore.Instance.UIManager.ShowUI("LogicUI/Fight/UIFightWarning", UILayer.BaseUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIFightWarning, UILayer.BaseUI, hash);
     }
 
     #endregion

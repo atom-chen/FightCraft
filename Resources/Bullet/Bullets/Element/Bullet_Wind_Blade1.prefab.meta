@@ -3,7 +3,8 @@ guid: 591ae9df9d956ef4cae3e3faad3011d5
 timeCreated: 1509431716
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/bullets/element/bullet_wind_blade1
+  assetBundleVariant: common

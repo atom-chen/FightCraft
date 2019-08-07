@@ -3,7 +3,8 @@ guid: 0bcf3376f051c24499a885bf38996f0d
 timeCreated: 1509432567
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/emitter/element/impactattr5_g2_heartboom
+  assetBundleVariant: common

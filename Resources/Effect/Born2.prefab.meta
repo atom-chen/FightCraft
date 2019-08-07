@@ -3,7 +3,8 @@ guid: 116b2d6cd7cfe2e44a28bc1df0a917ae
 timeCreated: 1516938997
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/effect/born2
+  assetBundleVariant: common

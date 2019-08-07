@@ -3,6 +3,8 @@ guid: c4ab31407c573a242bf0cc925bd478cc
 timeCreated: 1489146110
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heroleizhenzi/act_move_01
+  assetBundleVariant: common

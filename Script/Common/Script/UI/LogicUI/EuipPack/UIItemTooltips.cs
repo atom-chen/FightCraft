@@ -30,7 +30,7 @@ public class UIItemTooltips : UIBase
         Hashtable hash = new Hashtable();
         hash.Add("ItemBase", itembase);
         hash.Add("ToolTipFun", funcs);
-        GameCore.Instance.UIManager.ShowUI("LogicUI/BagPack/UIItemTooltips", UILayer.MessageUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIItemTooltips, UILayer.MessageUI, hash);
     }
 
     public static void ShowShopAsyn(ItemBase itembase, bool isBuy, MONEYTYPE priceType, int priceValue,  params ToolTipFunc[] funcs)
@@ -41,12 +41,12 @@ public class UIItemTooltips : UIBase
         hash.Add("PriceType", priceType);
         hash.Add("PriceValue", priceValue);
         hash.Add("ToolTipFun", funcs);
-        GameCore.Instance.UIManager.ShowUI("LogicUI/BagPack/UIItemTooltips", UILayer.MessageUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIItemTooltips, UILayer.MessageUI, hash);
     }
 
     public static void HideAsyn()
     {
-        UIManager.Instance.HideUI("LogicUI/BagPack/UIItemTooltips");
+        UIManager.Instance.HideUI(UIConfig.UIItemTooltips.AssetPath);
     }
 
     #endregion

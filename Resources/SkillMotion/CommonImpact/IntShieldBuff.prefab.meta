@@ -3,7 +3,8 @@ guid: 5e3cb49b2d69160489cef892fbf29b7b
 timeCreated: 1502440622
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/commonimpact/intshieldbuff
+  assetBundleVariant: common

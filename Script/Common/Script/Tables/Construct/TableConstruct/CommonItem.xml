@@ -102,6 +102,16 @@
     <constructRepeat>1</constructRepeat>
   </constructColumn>
   <constructColumn>
+    <constructName>DropScale</constructName>
+    <constructCode>DropScale</constructCode>
+    <constructType1>基本类型</constructType1>
+    <constructType2>
+      <constructType2>附点数</constructType2>
+    </constructType2>
+    <constructDefault>0</constructDefault>
+    <constructRepeat>1</constructRepeat>
+  </constructColumn>
+  <constructColumn>
     <constructName>StackNum</constructName>
     <constructCode>StackNum</constructCode>
     <constructType1>基本类型</constructType1>

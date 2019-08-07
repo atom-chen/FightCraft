@@ -3,7 +3,8 @@ guid: 4e3edf9f410e19049918d67f2652d39a
 timeCreated: 1506588418
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/bullets/monster/bullet_daoshi_fire_arraw
+  assetBundleVariant: common

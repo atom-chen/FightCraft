@@ -3,6 +3,8 @@ guid: d9a69156d15380d47982900b4d919a13
 timeCreated: 1489146343
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heroyangjian/act_rise_01
+  assetBundleVariant: common

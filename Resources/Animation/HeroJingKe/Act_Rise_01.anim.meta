@@ -3,6 +3,8 @@ guid: be85843066e88504892233e5c156d4a6
 timeCreated: 1489145257
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herojingke/act_rise_01
+  assetBundleVariant: common

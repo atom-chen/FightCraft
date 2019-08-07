@@ -3,6 +3,8 @@ guid: 0a547912a0cccb34e9a18dbdc1356ed6
 timeCreated: 1489146275
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heroxishi/act_move_01
+  assetBundleVariant: common

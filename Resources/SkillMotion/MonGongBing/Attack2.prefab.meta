@@ -3,7 +3,8 @@ guid: 4d4a82e3edb5c51489964187a5cd8f9f
 timeCreated: 1501493628
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/mongongbing/attack2
+  assetBundleVariant: common

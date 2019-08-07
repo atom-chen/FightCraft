@@ -3,6 +3,8 @@ guid: ff247bec4840b414ea3e5e84fa180bde
 timeCreated: 1489146138
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herolianpo/act_attack_01
+  assetBundleVariant: common

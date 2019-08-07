@@ -3,7 +3,8 @@ guid: 101dc359b45aa4649bddebc40afe8eae
 timeCreated: 1510314534
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/passive/passiveresistwind
+  assetBundleVariant: common

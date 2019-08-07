@@ -3,6 +3,8 @@ guid: 7417917a67a61d74a9ed83022003a91f
 timeCreated: 1489212116
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monshuangdaobing/act_rise_01
+  assetBundleVariant: common

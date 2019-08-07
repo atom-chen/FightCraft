@@ -3,6 +3,8 @@ guid: 5b885a8ef533cd64d8f6ab3e786bf939
 timeCreated: 1490435152
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/bullets/summon/bullet_jianshi_da_summon
+  assetBundleVariant: common

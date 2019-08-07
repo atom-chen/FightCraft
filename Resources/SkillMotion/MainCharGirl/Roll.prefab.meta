@@ -3,6 +3,8 @@ guid: 9175f8f5770848348b62b726834d5238
 timeCreated: 1489116044
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/mainchargirl/roll
+  assetBundleVariant: common

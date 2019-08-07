@@ -3,7 +3,8 @@ guid: b021adfe11fae22468f9766c749ba426
 timeCreated: 1508406081
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/mainchargirl/debuffhiteffect
+  assetBundleVariant: common

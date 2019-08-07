@@ -3,6 +3,8 @@ guid: 6d7a1bb90c21ac64faa768d4222fd194
 timeCreated: 1487378200
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herobaiqi/act_stand_01
+  assetBundleVariant: common

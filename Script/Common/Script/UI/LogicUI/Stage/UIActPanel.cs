@@ -18,7 +18,7 @@ public class UIActPanel : UIBase
     {
         Hashtable hash = new Hashtable();
         hash.Add("IsShowTip", isShowTip);
-        GameCore.Instance.UIManager.ShowUI("LogicUI/Stage/UIActPanel", UILayer.PopUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIActPanel, UILayer.PopUI, hash);
     }
 
     #endregion

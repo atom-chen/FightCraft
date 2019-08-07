@@ -3,6 +3,8 @@ guid: 6ee384093582c9e40921dba7d9dca8ed
 timeCreated: 1489146300
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heroyangguifei/act_rise_01
+  assetBundleVariant: common

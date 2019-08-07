@@ -3,6 +3,8 @@ guid: 276bccb0f39186c4d906fa7b48d6eabd
 timeCreated: 1487291532
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/mainchargirl/act_s_attack_03
+  assetBundleVariant: common

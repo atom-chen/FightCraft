@@ -12,12 +12,12 @@ public class UISummonStageUp : UIBase
     {
         Hashtable hash = new Hashtable();
         hash.Add("SummonData", summonDatas);
-        GameCore.Instance.UIManager.ShowUI("LogicUI/SummonSkill/UISummonStageUp", UILayer.Sub2PopUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UISummonStageUp, UILayer.Sub2PopUI, hash);
     }
 
     public static void ShowAddAttr(int idx)
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UISummonStageUp>("LogicUI/SummonSkill/UISummonStageUp");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UISummonStageUp>(UIConfig.UISummonStageUp);
         if (instance == null)
             return;
 
@@ -29,7 +29,7 @@ public class UISummonStageUp : UIBase
 
     public static void Refresh()
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UISummonStageUp>("LogicUI/SummonSkill/UISummonStageUp");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UISummonStageUp>(UIConfig.UISummonStageUp);
         if (instance == null)
             return;
 

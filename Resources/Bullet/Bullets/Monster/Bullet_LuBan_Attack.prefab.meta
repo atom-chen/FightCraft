@@ -3,7 +3,8 @@ guid: d33627ce0b7e69547bc91c1afab38702
 timeCreated: 1506570204
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/bullets/monster/bullet_luban_attack
+  assetBundleVariant: common

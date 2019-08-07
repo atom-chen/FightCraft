@@ -12,12 +12,12 @@ public class UIGemCombineSet : UIBase
     public static void ShowAsyn()
     {
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("LogicUI/Gem/UIGemCombineSet", UILayer.SubPopUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIGemCombineSet, UILayer.SubPopUI, hash);
     }
 
     public static void HideAsyn()
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UIGemCombineSet>("LogicUI/Gem/UIGemCombineSet");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIGemCombineSet>(UIConfig.UIGemCombineSet);
         if (instance == null)
             return;
 

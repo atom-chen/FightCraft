@@ -23,7 +23,7 @@ public class UITextTip : UIBase
         Hashtable hash = new Hashtable();
         hash.Add("Message", strTip);
         hash.Add("ShowPos", showPos);
-        GameCore.Instance.UIManager.ShowUI("LogicUI/Message/UITextTip", UILayer.MessageUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UITextTip, UILayer.MessageUI, hash);
     }
 
     #region 

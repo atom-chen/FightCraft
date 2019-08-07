@@ -3,7 +3,8 @@ guid: 2ebe2fc6747eecb44ab241cfaf8ee045
 timeCreated: 1509448218
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/emitter/element/impactattr27_g3_fireloong
+  assetBundleVariant: common

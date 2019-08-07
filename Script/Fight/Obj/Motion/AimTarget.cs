@@ -151,6 +151,9 @@ public class AimTarget : InstanceBase<AimTarget>
 
     private void ReSelectTargets()
     {
+        if (FightManager.Instance.MainChatMotion == null)
+            return;
+
         _SelectedTarget = SelectTargetCommon.GetFrontMotions(FightManager.Instance.MainChatMotion, 8, 180, SelectTargetCommon.SelectSortType.Distance, SelectTargetType.Enemy);
         if (_SelectedTarget.Count == 0)
             return;

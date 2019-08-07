@@ -3,6 +3,8 @@ guid: 47f17e4a65ce77b44a2d7deb53e33c5a
 timeCreated: 1487378201
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herobaiqi/act_attack_all
+  assetBundleVariant: common

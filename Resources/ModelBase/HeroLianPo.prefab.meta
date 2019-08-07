@@ -3,6 +3,8 @@ guid: 872c3aa5edf94b0499606a5bc7550f8f
 timeCreated: 1489150568
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/herolianpo
+  assetBundleVariant: common

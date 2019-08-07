@@ -3,6 +3,8 @@ guid: 6b84746a082b74f49aa9ae6c1e310dc0
 timeCreated: 1489144860
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/herodirenjie/attack
+  assetBundleVariant: common

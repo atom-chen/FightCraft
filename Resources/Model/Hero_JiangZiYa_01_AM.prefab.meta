@@ -3,7 +3,8 @@ guid: 27cc0291da22bc643a3f9da58d38a8b8
 timeCreated: 1501486229
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/hero_jiangziya_01_am
+  assetBundleVariant: common

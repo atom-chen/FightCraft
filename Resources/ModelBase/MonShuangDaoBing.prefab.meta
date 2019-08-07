@@ -3,6 +3,8 @@ guid: 180df89c556f11141afe7516bee7bc29
 timeCreated: 1489212760
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/monshuangdaobing
+  assetBundleVariant: common

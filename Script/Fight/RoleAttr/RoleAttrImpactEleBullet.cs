@@ -16,12 +16,15 @@ public class RoleAttrImpactEleBullet: RoleAttrImpactBase
             return;
 
         var skillMotion = roleMotion._StateSkill._SkillMotions[_SkillInput];
-        var impactGO = ResourceManager.Instance.GetInstanceGameObject("Bullet\\Emitter\\Element\\" + _ImpactName);
-        impactGO.transform.SetParent(skillMotion.transform);
 
-        var bulletEmitterEle = impactGO.GetComponent<BulletEmitterElement>();
-        bulletEmitterEle._Rate = _Rate;
-        bulletEmitterEle._Damage = _Damage;
+        ResourcePool.Instance.LoadConfig("Bullet\\Emitter\\Element\\" + _ImpactName, (resName, resGO, hash) =>
+        {
+            resGO.transform.SetParent(skillMotion.transform);
+
+            var bulletEmitterEle = resGO.GetComponent<BulletEmitterElement>();
+            bulletEmitterEle._Rate = _Rate;
+            bulletEmitterEle._Damage = _Damage;
+        }, null);
     }
 
     #region 

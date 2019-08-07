@@ -13,13 +13,25 @@ public class BulletAlert : BulletBase
     {
         if (_AlertPrefab == null)
         {
-            _AlertPrefab = ResourceManager.Instance.GetInstanceGameObject("Bullet/Bullets/AlertBase");
+            ResourcePool.Instance.LoadConfig("Bullet/Bullets/AlertBase", (resName, resGO, hash) =>
+            {
+                _AlertPrefab = resGO;
+
+                var alertGO = ResourcePool.Instance.GetIdleUIItem<BulletAlert>(_AlertPrefab);
+                alertGO.transform.SetParent(bullet);
+                alertGO.transform.localPosition = Vector3.zero;
+                alertGO.GetComponentInChildren<ParticleSystem>().startSize = range;
+                alertGO.StartCoroutine(alertGO.HidePrefab(time));
+            }, null);
         }
-        var alertGO = ResourcePool.Instance.GetIdleUIItem<BulletAlert>(_AlertPrefab);
-        alertGO.transform.SetParent(bullet);
-        alertGO.transform.localPosition = Vector3.zero;
-        alertGO.GetComponentInChildren<ParticleSystem>().startSize = range;
-        alertGO.StartCoroutine(alertGO.HidePrefab(time));
+        else
+        {
+            var alertGO = ResourcePool.Instance.GetIdleUIItem<BulletAlert>(_AlertPrefab);
+            alertGO.transform.SetParent(bullet);
+            alertGO.transform.localPosition = Vector3.zero;
+            alertGO.GetComponentInChildren<ParticleSystem>().startSize = range;
+            alertGO.StartCoroutine(alertGO.HidePrefab(time));
+        }
     }
 
     #endregion

@@ -12,7 +12,7 @@ public class UISystemSetting : UIBase
     public static void ShowAsyn()
     {
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("LogicUI/UISystemSetting", UILayer.BaseUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UISystemSetting, UILayer.BaseUI, hash);
     }
 
     #endregion

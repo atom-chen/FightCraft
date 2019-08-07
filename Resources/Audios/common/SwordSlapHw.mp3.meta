@@ -3,6 +3,7 @@ guid: ed7f8638c055ebe4a8b6aede0307362f
 timeCreated: 1523003152
 licenseType: Pro
 AudioImporter:
+  externalObjects: {}
   serializedVersion: 6
   defaultSettings:
     loadType: 0
@@ -16,7 +17,8 @@ AudioImporter:
   normalize: 1
   preloadAudioData: 1
   loadInBackground: 0
+  ambisonic: 0
   3D: 1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/audios/common/swordslaphw
+  assetBundleVariant: common

@@ -3,7 +3,8 @@ guid: 5eba085001cda2d4da899728d4f5b75c
 timeCreated: 1509439263
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/emitter/element/impactattr22_g3_iceboom
+  assetBundleVariant: common

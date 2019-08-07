@@ -3,7 +3,8 @@ guid: b7e69f2d693cefd40a91ab82bfef311f
 timeCreated: 1509451279
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/emitter/element/impactattr10_b1_fireboom3
+  assetBundleVariant: common

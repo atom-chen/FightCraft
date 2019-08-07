@@ -3,7 +3,8 @@ guid: b5ef4f83bd35abb43bf0d06c2e568171
 timeCreated: 1501486258
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/hero_xishi_01_am
+  assetBundleVariant: common

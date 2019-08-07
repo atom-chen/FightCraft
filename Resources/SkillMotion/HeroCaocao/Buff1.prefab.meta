@@ -3,6 +3,8 @@ guid: 37ffcde725fac334ab79a424386d5229
 timeCreated: 1489113799
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/herocaocao/buff1
+  assetBundleVariant: common

@@ -3,7 +3,8 @@ guid: 479bf5ad7681cba4ba9aaaf67e49f64a
 timeCreated: 1506602258
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/monqilin/skillblack
+  assetBundleVariant: common

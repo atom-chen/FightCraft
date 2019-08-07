@@ -3,7 +3,8 @@ guid: 008acd6b5fb31ec4c8a6028893ebe751
 timeCreated: 1509959845
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/passive/passivedamagelimit
+  assetBundleVariant: common

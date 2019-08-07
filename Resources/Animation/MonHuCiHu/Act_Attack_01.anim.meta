@@ -3,6 +3,8 @@ guid: b12667132efb6a349a20758899177779
 timeCreated: 1488372868
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monhucihu/act_attack_01
+  assetBundleVariant: common

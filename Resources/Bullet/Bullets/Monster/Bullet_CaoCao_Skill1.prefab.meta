@@ -3,7 +3,8 @@ guid: 9bd2f3801ad918c4f8bda22c0440e6e4
 timeCreated: 1507726501
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/bullets/monster/bullet_caocao_skill1
+  assetBundleVariant: common

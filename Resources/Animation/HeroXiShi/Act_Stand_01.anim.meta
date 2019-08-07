@@ -3,6 +3,8 @@ guid: 27e934da2281f274c8decedf59d2769a
 timeCreated: 1489146276
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heroxishi/act_stand_01
+  assetBundleVariant: common

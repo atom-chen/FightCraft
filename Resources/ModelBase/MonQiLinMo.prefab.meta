@@ -3,6 +3,8 @@ guid: 6bc891e6cb0934940902d1759fe8d9f0
 timeCreated: 1489215672
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/monqilinmo
+  assetBundleVariant: common

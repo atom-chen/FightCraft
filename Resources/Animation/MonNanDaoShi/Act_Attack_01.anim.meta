@@ -3,6 +3,8 @@ guid: d3441d966b5f1d04db4cbbe903e2b506
 timeCreated: 1489211923
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monnandaoshi/act_attack_01
+  assetBundleVariant: common

@@ -3,6 +3,8 @@ guid: 749845c8a2a6d6e4a83b6d886f6ae272
 timeCreated: 1489146159
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heroluban/act_skill_01
+  assetBundleVariant: common

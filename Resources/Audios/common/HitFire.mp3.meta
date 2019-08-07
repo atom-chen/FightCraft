@@ -3,6 +3,7 @@ guid: 1f0bf6f8c4da4274cbe3ca6219a761dd
 timeCreated: 1523351519
 licenseType: Pro
 AudioImporter:
+  externalObjects: {}
   serializedVersion: 6
   defaultSettings:
     loadType: 0
@@ -16,7 +17,8 @@ AudioImporter:
   normalize: 1
   preloadAudioData: 1
   loadInBackground: 0
+  ambisonic: 0
   3D: 1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/audios/common/hitfire
+  assetBundleVariant: common

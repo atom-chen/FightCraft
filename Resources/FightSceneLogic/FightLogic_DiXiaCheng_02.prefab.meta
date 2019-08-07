@@ -3,7 +3,8 @@ guid: 248fe2b5e28f00e4eb2bbde1b4d5af4a
 timeCreated: 1498569198
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/fightscenelogic/fightlogic_dixiacheng_02
+  assetBundleVariant: common

@@ -16,12 +16,12 @@ public class UILegendaryItemTooltips : UIBase
         Hashtable hash = new Hashtable();
         hash.Add("EquipItem", equipItem);
         hash.Add("ToolTipFun", funcs);
-        GameCore.Instance.UIManager.ShowUI("LogicUI/BagPack/UILegendaryItemTooltips", UILayer.MessageUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UILegendaryItemTooltips, UILayer.MessageUI, hash);
     }
     
     public static void HideAsyn()
     {
-        UIManager.Instance.HideUI("LogicUI/BagPack/UILegendaryItemTooltips");
+        UIManager.Instance.HideUI(UIConfig.UILegendaryItemTooltips.AssetPath);
     }
 
     #endregion

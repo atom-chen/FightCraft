@@ -3,7 +3,8 @@ guid: 41a4a2049c534224ca0e689e5243681b
 timeCreated: 1508406065
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/mainchargirl/buffhit
+  assetBundleVariant: common

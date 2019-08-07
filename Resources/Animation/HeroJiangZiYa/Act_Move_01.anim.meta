@@ -3,6 +3,8 @@ guid: 8b950973359357d439f367afef1ba131
 timeCreated: 1489144892
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herojiangziya/act_move_01
+  assetBundleVariant: common

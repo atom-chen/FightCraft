@@ -13,12 +13,12 @@ public class UISummonSkillToolTips : UIBase
         Hashtable hash = new Hashtable();
         hash.Add("SummonData", summonDatas);
         hash.Add("IsLVUp", isLvUp);
-        GameCore.Instance.UIManager.ShowUI("LogicUI/SummonSkill/UISummonSkillToolTips", UILayer.SubPopUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UISummonSkillToolTips, UILayer.SubPopUI, hash);
     }
 
     public static void ShowAddExp(SummonMotionData summonData, int exp)
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UISummonSkillToolTips>("LogicUI/SummonSkill/UISummonSkillToolTips");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UISummonSkillToolTips>(UIConfig.UISummonSkillToolTips);
         if (instance == null)
             return;
 
@@ -30,7 +30,7 @@ public class UISummonSkillToolTips : UIBase
 
     public static void Refresh()
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UISummonSkillToolTips>("LogicUI/SummonSkill/UISummonSkillToolTips");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UISummonSkillToolTips>(UIConfig.UISummonSkillToolTips);
         if (instance == null)
             return;
 

@@ -3,6 +3,8 @@ guid: 650e8ae67e1f63d45a98d92cd2e8f709
 timeCreated: 1489126225
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/herodiaochan/skill1
+  assetBundleVariant: common

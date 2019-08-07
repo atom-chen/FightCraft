@@ -3,7 +3,8 @@ guid: 821ab8c9c9148ea488677fc9e65c38e5
 timeCreated: 1505821408
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/commonimpact/exattack
+  assetBundleVariant: common

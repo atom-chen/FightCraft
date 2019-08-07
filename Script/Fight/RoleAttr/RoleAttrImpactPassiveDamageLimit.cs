@@ -18,11 +18,14 @@ public class RoleAttrImpactPassiveDamageLimit : RoleAttrImpactPassive
         if (!roleMotion._StateSkill._SkillMotions.ContainsKey(_SkillInput))
             return;
 
-        var buffGO = ResourceManager.Instance.GetInstanceGameObject("Bullet\\Passive\\" + _ImpactName);
-        buffGO.transform.SetParent(roleMotion.BuffBindPos.transform);
-        var buff = buffGO.GetComponent<ImpactBuffDamageLimit>();
-        buff._LimitHPPersent = _LimitPersent;
-        buff.ActImpact(roleMotion, roleMotion);
+        ResourcePool.Instance.LoadConfig("Bullet\\Passive\\" + _ImpactName, (resName, resGO, hash) =>
+        {
+            var buffGO = resGO;
+            buffGO.transform.SetParent(roleMotion.BuffBindPos.transform);
+            var buff = buffGO.GetComponent<ImpactBuffDamageLimit>();
+            buff._LimitHPPersent = _LimitPersent;
+            buff.ActImpact(roleMotion, roleMotion);
+        }, null);
     }
 
     public new static string GetAttrDesc(List<int> attrParams)

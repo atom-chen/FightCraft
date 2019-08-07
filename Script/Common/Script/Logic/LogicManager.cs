@@ -154,21 +154,19 @@ public class LogicManager
 
         GameCore.Instance.UIManager.HideAllUI();
 
-        UILoadingScene.ShowAsyn(_EnterStageInfo);
+        UILoadingScene.ShowEnterFightAsyn();
     }
 
     public void EnterFightFinish()
     {
         UIControlPanel.ShowAsyn();
 
-        InitFightScene();
-
         UIJoyStick.ShowAsyn();
         UISkillBar.ShowAsyn();
         UIDropNamePanel.ShowAsyn();
         UIHPPanel.ShowAsyn();
         UIPlayerFrame.ShowAsyn();
-        UITargetFrame.ShowAsyn();
+        //UITargetFrame.ShowAsyn(null);
         UIFuncInFight.ShowAsyn();
 
         //UIDamagePanel.ShowAsyn();
@@ -183,10 +181,11 @@ public class LogicManager
         
         //var sceneLoader = GameCore.Instance.SceneManager.ChangeLogicScene();
         GameCore.Instance.UIManager.DestoryAllUI();
+        GameObject.Destroy(FightManager.Instance.gameObject);
         UILoadingScene.ShowAsyn(GameDefine.GAMELOGIC_SCENE_NAME);
     }
 
-    private void InitFightScene()
+    public void InitFightScene()
     {
         GameObject fightGO = new GameObject("FightManager");
         fightGO.AddComponent<FightManager>();

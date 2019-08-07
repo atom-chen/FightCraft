@@ -3,6 +3,8 @@ guid: 53f3491c48482514aa2d6d7b1561ba11
 timeCreated: 1489146139
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herolianpo/act_stand_01
+  assetBundleVariant: common

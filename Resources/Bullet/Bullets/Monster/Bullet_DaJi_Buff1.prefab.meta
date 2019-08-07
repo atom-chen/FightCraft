@@ -3,6 +3,8 @@ guid: 446a7fe51c8e23347b732cda8402a1c5
 timeCreated: 1490102412
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/bullets/monster/bullet_daji_buff1
+  assetBundleVariant: common

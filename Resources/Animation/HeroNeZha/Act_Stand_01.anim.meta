@@ -3,6 +3,8 @@ guid: 939bc453e6b46c54296c398faec9689b
 timeCreated: 1489146179
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heronezha/act_stand_01
+  assetBundleVariant: common

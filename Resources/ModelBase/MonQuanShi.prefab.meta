@@ -3,6 +3,8 @@ guid: 62b55888488fc864aaa8fbd1db3dc479
 timeCreated: 1489212751
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/monquanshi
+  assetBundleVariant: common

@@ -3,6 +3,8 @@ guid: c52e6c56f603780439763e37f642ce7d
 timeCreated: 1489146408
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herozhouwang/act_buff_01
+  assetBundleVariant: common

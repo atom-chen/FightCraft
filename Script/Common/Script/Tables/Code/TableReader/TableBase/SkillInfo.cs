@@ -16,6 +16,7 @@ namespace Tables
         public string Desc { get; set; }
         public int NameStrDict { get; set; }
         public int DescStrDict { get; set; }
+        public string Icon { get; set; }
         public int Profession { get; set; }
         public string SkillInput { get; set; }
         public string SkillType { get; set; }
@@ -47,6 +48,7 @@ namespace Tables
             recordStrList.Add(TableWriteBase.GetWriteStr(Desc));
             recordStrList.Add(TableWriteBase.GetWriteStr(NameStrDict));
             recordStrList.Add(TableWriteBase.GetWriteStr(DescStrDict));
+            recordStrList.Add(TableWriteBase.GetWriteStr(Icon));
             recordStrList.Add(TableWriteBase.GetWriteStr(Profession));
             recordStrList.Add(TableWriteBase.GetWriteStr(SkillInput));
             recordStrList.Add(TableWriteBase.GetWriteStr(SkillType));
@@ -139,29 +141,30 @@ namespace Tables
                 pair.Value.Desc = TableReadBase.ParseString(pair.Value.ValueStr[2]);
                 pair.Value.NameStrDict = TableReadBase.ParseInt(pair.Value.ValueStr[3]);
                 pair.Value.DescStrDict = TableReadBase.ParseInt(pair.Value.ValueStr[4]);
-                pair.Value.Profession = TableReadBase.ParseInt(pair.Value.ValueStr[5]);
-                pair.Value.SkillInput = TableReadBase.ParseString(pair.Value.ValueStr[6]);
-                pair.Value.SkillType = TableReadBase.ParseString(pair.Value.ValueStr[7]);
-                if (!string.IsNullOrEmpty(pair.Value.ValueStr[8]))
+                pair.Value.Icon = TableReadBase.ParseString(pair.Value.ValueStr[5]);
+                pair.Value.Profession = TableReadBase.ParseInt(pair.Value.ValueStr[6]);
+                pair.Value.SkillInput = TableReadBase.ParseString(pair.Value.ValueStr[7]);
+                pair.Value.SkillType = TableReadBase.ParseString(pair.Value.ValueStr[8]);
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[9]))
                 {
-                    pair.Value.SkillAttr =  TableReader.AttrValue.GetRecord(pair.Value.ValueStr[8]);
+                    pair.Value.SkillAttr =  TableReader.AttrValue.GetRecord(pair.Value.ValueStr[9]);
                 }
                 else
                 {
                     pair.Value.SkillAttr = null;
                 }
-                pair.Value.StartRoleLevel = TableReadBase.ParseInt(pair.Value.ValueStr[9]);
-                pair.Value.StartPreSkill = TableReadBase.ParseInt(pair.Value.ValueStr[10]);
-                pair.Value.StartPreSkillLv = TableReadBase.ParseInt(pair.Value.ValueStr[11]);
-                pair.Value.NextLvInterval = TableReadBase.ParseInt(pair.Value.ValueStr[12]);
-                pair.Value.MaxLevel = TableReadBase.ParseInt(pair.Value.ValueStr[13]);
-                pair.Value.EffectValue.Add(TableReadBase.ParseInt(pair.Value.ValueStr[14]));
+                pair.Value.StartRoleLevel = TableReadBase.ParseInt(pair.Value.ValueStr[10]);
+                pair.Value.StartPreSkill = TableReadBase.ParseInt(pair.Value.ValueStr[11]);
+                pair.Value.StartPreSkillLv = TableReadBase.ParseInt(pair.Value.ValueStr[12]);
+                pair.Value.NextLvInterval = TableReadBase.ParseInt(pair.Value.ValueStr[13]);
+                pair.Value.MaxLevel = TableReadBase.ParseInt(pair.Value.ValueStr[14]);
                 pair.Value.EffectValue.Add(TableReadBase.ParseInt(pair.Value.ValueStr[15]));
                 pair.Value.EffectValue.Add(TableReadBase.ParseInt(pair.Value.ValueStr[16]));
-                pair.Value.CostStep.Add(TableReadBase.ParseInt(pair.Value.ValueStr[17]));
+                pair.Value.EffectValue.Add(TableReadBase.ParseInt(pair.Value.ValueStr[17]));
                 pair.Value.CostStep.Add(TableReadBase.ParseInt(pair.Value.ValueStr[18]));
                 pair.Value.CostStep.Add(TableReadBase.ParseInt(pair.Value.ValueStr[19]));
-                pair.Value.Pos = TableReadBase.ParseInt(pair.Value.ValueStr[20]);
+                pair.Value.CostStep.Add(TableReadBase.ParseInt(pair.Value.ValueStr[20]));
+                pair.Value.Pos = TableReadBase.ParseInt(pair.Value.ValueStr[21]);
             }
         }
     }

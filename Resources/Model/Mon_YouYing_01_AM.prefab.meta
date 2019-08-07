@@ -3,7 +3,8 @@ guid: 1ba938d24e0361f44894714bdd23b0dd
 timeCreated: 1501486412
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/mon_youying_01_am
+  assetBundleVariant: common

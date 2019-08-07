@@ -3,6 +3,8 @@ guid: e397dce5823489e41941878a5a36ff16
 timeCreated: 1489150570
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/heroluban
+  assetBundleVariant: common

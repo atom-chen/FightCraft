@@ -3,6 +3,8 @@ guid: b466d50c8ec8af746b267111f6f28704
 timeCreated: 1489146275
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heroxishi/act_attack_01
+  assetBundleVariant: common

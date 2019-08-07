@@ -3,6 +3,8 @@ guid: 8dddfa2a3ae53cd4cbfa38e339264458
 timeCreated: 1489212755
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/monshashou
+  assetBundleVariant: common

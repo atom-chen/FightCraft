@@ -3,7 +3,8 @@ guid: 400eb4eb86cf9444e900e5e4569f60b8
 timeCreated: 1502422254
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/emitter/monster/lianpoboom
+  assetBundleVariant: common

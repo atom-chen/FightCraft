@@ -3,6 +3,8 @@ guid: ceb6a4e5cada6f645acc6f8339e50451
 timeCreated: 1488542974
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/mongongbing/act_stand_01
+  assetBundleVariant: common

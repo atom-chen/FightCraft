@@ -3,6 +3,8 @@ guid: f98c4a0c6759b564da47e10f6d15abf6
 timeCreated: 1489215106
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/monnandaoshiex
+  assetBundleVariant: common

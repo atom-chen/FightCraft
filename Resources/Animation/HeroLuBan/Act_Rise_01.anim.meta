@@ -3,6 +3,8 @@ guid: 04f6d83d6bd0d9a438d1ef395e183879
 timeCreated: 1489146159
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heroluban/act_rise_01
+  assetBundleVariant: common

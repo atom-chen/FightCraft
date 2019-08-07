@@ -3,6 +3,8 @@ guid: 32fd4e8682c81a5498a3dd5172788bdd
 timeCreated: 1489146300
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heroyangguifei/act_buff_01
+  assetBundleVariant: common

@@ -3,7 +3,8 @@ guid: da4cff5a1e77d444f8f85375d59ff783
 timeCreated: 1501486232
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/hero_jingke_01_am
+  assetBundleVariant: common

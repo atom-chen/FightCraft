@@ -75,7 +75,7 @@ public class BulletHitDelay : BulletBase
         _Collider.enabled = false;
     }
     
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         var targetMotion = other.GetComponentInParent<MotionManager>();
         if (targetMotion == null)

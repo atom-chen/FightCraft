@@ -3,6 +3,8 @@ guid: be0ad01c4c0c90e40b235785329757f7
 timeCreated: 1496827961
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/fightscenelogic/fightlogic_bingyuan_04
+  assetBundleVariant: common

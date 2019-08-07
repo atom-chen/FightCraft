@@ -12,7 +12,7 @@ public class UICostGemPanel : UIBase
     {
         Hashtable hash = new Hashtable();
         hash.Add("SelectGemCallBack", selectGemCallBack);
-        GameCore.Instance.UIManager.ShowUI("LogicUI/Gem/UICostGemPanel", UILayer.SubPopUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UICostGemPanel, UILayer.SubPopUI, hash);
     }
 
     #endregion

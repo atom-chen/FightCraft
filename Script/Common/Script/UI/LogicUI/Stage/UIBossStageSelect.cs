@@ -17,7 +17,7 @@ public class UIBossStageSelect : UIBase
     public static void ShowAsyn()
     {
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("LogicUI/Stage/UIBossStageSelect", UILayer.PopUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIBossStageSelect, UILayer.PopUI, hash);
     }
 
     #endregion

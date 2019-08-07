@@ -3,6 +3,8 @@ guid: 5ba1240aba6341e4ebb22acf8195d0f4
 timeCreated: 1488541193
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/mondaobing/act_rise_01
+  assetBundleVariant: common

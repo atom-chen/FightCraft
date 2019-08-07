@@ -3,6 +3,8 @@ guid: 7e38596ebaa994f4080302855e7080d6
 timeCreated: 1487291533
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/mainchargirl/act_move_01
+  assetBundleVariant: common

@@ -3,7 +3,8 @@ guid: ed419f24214b5c94b877bf5f9a513dc4
 timeCreated: 1509354016
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/bullets/summon/bullet_zhouwang_boom_summon
+  assetBundleVariant: common

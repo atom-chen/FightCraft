@@ -3,7 +3,8 @@ guid: 93dd9592ff159a442be9162565ef799a
 timeCreated: 1508229066
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/bullets/monster/bullet_wenzhong_skill_fire_boom
+  assetBundleVariant: common

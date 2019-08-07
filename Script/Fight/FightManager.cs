@@ -10,32 +10,93 @@ public class FightManager : InstanceBase<FightManager>
     void Awake ()
     {
         SetInstance(this);
+        DontDestroyOnLoad(this);
         _InitProcess = 0;
-
-        StartCoroutine(InitFightManager());
+        _InitStep = InitStep.InitScene;
     }
 
-    IEnumerator InitFightManager()
+    void Update()
     {
-        InitResourcePool();
-        _InitProcess = 0.2f;
-        yield return new WaitForFixedUpdate();
+        if (_InitStep != InitStep.InitFinish)
+        {
+            InitUpdate();
+        }
+    }
 
-        InitScene();
-        _InitProcess = 0.2f;
+    public enum InitStep
+    {
+        None,
+        InitScene,
+        InitSceneWait,
+        InitSceneFinish,
 
-        InitMainRole();
-        _InitProcess = 0.4f;
+        InitMainRole,
+        InitMainRoleWait,
+        InitMainRoleFinish,
+        
+        InitCamera,
+        InitCameraWait,
+        InitCameraFinish,
 
-        InitCamera();
-        _InitProcess = 0.7f;
+        InitUI,
+        InitUIWait,
+        InitUIFinish,
 
-        UIDamagePanel.ShowAsyn();
-        AimTargetPanel.ShowAsyn();
+        InitMonster,
+        InitMonsterWait,
+        InitMonsterFinish,
 
-        InitMonsterPrefab();
-        _InitProcess = 1f;
-        yield return new WaitForFixedUpdate();
+        InitFinish
+    }
+    private InitStep _InitStep;
+    void InitUpdate()
+    {
+        if (_InitStep == InitStep.InitScene)
+        {
+            _InitStep = InitStep.InitSceneWait;
+            StartCoroutine(InitScene());
+            _InitProcess = 0.0f;
+        }
+        else if (_InitStep == InitStep.InitSceneWait)
+        {
+            _InitProcess += 0.01f;
+            _InitProcess = Mathf.Min(_InitProcess, 0.7f);
+        }
+        else if (_InitStep == InitStep.InitSceneFinish)
+        {
+            InitCamera();
+            _InitStep = InitStep.InitMainRoleWait;
+            StartCoroutine(InitMainRole());
+            _InitProcess = 0.8f;
+        }
+        else if (_InitStep == InitStep.InitMainRoleWait)
+        {
+            _InitProcess += 0.01f;
+            _InitProcess = Mathf.Min(_InitProcess, 0.8f);
+        }
+        else if (_InitStep == InitStep.InitMainRoleFinish)
+        {
+            UIDamagePanel.ShowAsyn();
+            AimTargetPanel.ShowAsyn();
+
+            _InitStep = InitStep.InitMonsterWait;
+            StartCoroutine(InitMonsterPrefab());
+
+            
+            _InitProcess = 0.81f;
+        }
+        else if (_InitStep == InitStep.InitMonsterWait)
+        {
+            _InitProcess += 0.01f;
+            _InitProcess = Mathf.Min(_InitProcess, 0.99f);
+        }
+        else if (_InitStep == InitStep.InitMonsterFinish)
+        {
+            ResourcePool.Instance.InitDefaultRes();
+            StartSceneLogic();
+            _InitProcess = 1.0f;
+            _InitStep = InitStep.InitFinish;
+        }
     }
 
     #region Init
@@ -73,20 +134,20 @@ public class FightManager : InstanceBase<FightManager>
         sceneCamera.cullingMask &= ~(1 << LayerMask.NameToLayer("UI"));
         //cameraRoot.AddComponent<AudioListener>();
 
-        var subUICamera = ResourceManager.Instance.GetInstanceGameObject("Common/SubUICamera");
-        subUICamera.transform.SetParent(sceneCamera.transform);
-        subUICamera.transform.localPosition = Vector3.zero;
-        subUICamera.transform.localRotation = Quaternion.Euler(Vector3.zero);
+        //var subUICamera = ResourceManager.Instance.GetInstanceGameObject("Common/SubUICamera");
+        //subUICamera.transform.SetParent(sceneCamera.transform);
+        //subUICamera.transform.localPosition = Vector3.zero;
+        //subUICamera.transform.localRotation = Quaternion.Euler(Vector3.zero);
 
         _ActingRegion = 0;
         _CameraFollow = cameraRoot.AddComponent<CameraFollow>();
-        _CameraFollow._FollowObj = _MainChatMotion.gameObject;
+        //_CameraFollow._FollowObj = _MainChatMotion.gameObject;
         _CameraFollow._Distance = LogicManager.Instance.EnterStageInfo.CameraOffset[_ActingRegion];
 
         var globalEffect = cameraRoot.AddComponent<GlobalEffect>();
         var inputManager = cameraRoot.AddComponent<InputManager>();
         var aimManager = cameraRoot.AddComponent<AimTarget>();
-        inputManager._InputMotion = _MainChatMotion;
+        //inputManager._InputMotion = _MainChatMotion;
 
         for (int i = 0; i < LogicManager.Instance.EnterStageInfo.ValidScenePath.Count; ++i)
         {
@@ -107,20 +168,21 @@ public class FightManager : InstanceBase<FightManager>
 
 
         _FightLevel = ActData.Instance.GetStageLevel();
+
+        _InitStep = InitStep.InitCameraFinish;
     }
 
     private void InitResourcePool()
     {
-        gameObject.AddComponent<ResourcePool>();
+        //gameObject.AddComponent<ResourcePool>();
     }
 
-    private void InitMonsterPrefab()
+    private IEnumerator InitMonsterPrefab()
     {
-        var fightLogic = _FightScene as FightSceneLogicPassArea;
-        if (fightLogic == null)
-            return;
+        var initMonList = _FightScene.GetLogicMonIDs();
+        yield return ResourcePool.Instance.InitMonsterBase(initMonList);
 
-        ResourcePool.Instance.InitMonsterBase(fightLogic.GetLogicMonIDs());
+        _InitStep = InitStep.InitMonsterFinish;
     }
 
     #endregion
@@ -141,51 +203,41 @@ public class FightManager : InstanceBase<FightManager>
         {
             return _MainChatMotion;
         }  
+        set
+        {
+            _MainChatMotion = value;
+        }
     }
 
-    private void InitMainRole()
+    private IEnumerator InitMainRole()
     {
         string mainBaseName = PlayerDataPack.Instance._SelectedRole.MainBaseName;
         string modelName = PlayerDataPack.Instance._SelectedRole.ModelName;
         string weaponName = PlayerDataPack.Instance._SelectedRole.GetWeaponModelName();
 
-        var mainBase = ResourceManager.Instance.GetInstanceGameObject("ModelBase/" + mainBaseName);
-        _MainChatMotion = mainBase.GetComponent<MotionManager>();
+        yield return (ResourcePool.Instance.LoadCharModel(mainBaseName, modelName, weaponName, (resName, mainMotion, hash) =>
+       {
+           MainChatMotion = mainMotion;
 
-        _MainChatMotion.SetPosition(_FightScene._MainCharBornPos.position);
-        _MainChatMotion.SetRotate(_FightScene._MainCharBornPos.rotation.eulerAngles);
-        mainBase.tag = "Player";
-        //_MainChatMotion.InitRoleAttr();
+       }, null));
 
-        var model = ResourceManager.Instance.GetInstanceGameObject("Model/" + modelName);
-        model.transform.SetParent(mainBase.transform);
-        model.transform.localPosition = Vector3.zero;
-        model.transform.localRotation = Quaternion.Euler(Vector3.zero);
-
-        var weapon = ResourceManager.Instance.GetInstanceGameObject("Model/" + weaponName);
-        var weaponTrans = model.transform.Find("center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon");
-        var weaponTransChild = weaponTrans.GetComponentsInChildren<Transform>();
-        for (int i = weapon.transform.childCount - 1; i >= 0; --i)
-        {
-            weapon.transform.GetChild(i).SetParent(weaponTrans.parent);
-        }
-        foreach (var oldWeaponChild in weaponTransChild)
-        {
-            GameObject.Destroy(oldWeaponChild.gameObject);
-        }
-        GameObject.Destroy(weapon.gameObject);
-
-        //PlayerDataPack.Instance._SelectedRole.InitExAttrs();
-        var motionTran = mainBase.transform.Find("Motion");
-
+        var motionTran = MainChatMotion.transform.Find("Motion");
         GlobalBuffData.Instance.ActBuffInFight();
         UITestEquip.ActBuffInFight();
-        SummonSkill.Instance.InitSummonMotions();
+
+        
+        yield return SummonSkill.Instance.InitSummonMotions();
+
         List<string> skillMotions = SkillData.Instance.GetRoleSkills();
 
         foreach (var skillMotion in skillMotions)
         {
-            var motionObj = ResourceManager.Instance.GetInstanceGameObject("SkillMotion/" + PlayerDataPack.Instance._SelectedRole.MotionFold + "/" + skillMotion);
+            GameObject motionObj = null;
+            yield return ResourceManager.Instance.LoadPrefab("SkillMotion/" + PlayerDataPack.Instance._SelectedRole.MotionFold + "/" + skillMotion, (subResName, subResGO, subCallBack) =>
+            {
+                motionObj = subResGO;
+            });
+
             if (motionObj != null)
             {
                 motionObj.transform.SetParent(motionTran);
@@ -203,18 +255,27 @@ public class FightManager : InstanceBase<FightManager>
         {
             if (impact is RoleAttrImpactAddSkill)
             {
-                var skillBase = (impact as RoleAttrImpactAddSkill).GetSkillBase();
-                skillBase.transform.SetParent(motionTran);
-                skillBase.transform.localPosition = Vector3.zero;
-                skillBase.gameObject.SetActive(true);
+                var addSkillImpact = (impact as RoleAttrImpactAddSkill);
+                yield return StartCoroutine(addSkillImpact.GetSkillBase());
+                addSkillImpact._AddSkill.transform.SetParent(motionTran);
+                addSkillImpact._AddSkill.transform.localPosition = Vector3.zero;
+                addSkillImpact._AddSkill.gameObject.SetActive(true);
             }
         }
 
-        _MainChatMotion.InitMotion();
-        FightLayerCommon.SetPlayerLayer(_MainChatMotion);
+        MainChatMotion.InitMotion();
+        FightLayerCommon.SetPlayerLayer(MainChatMotion);
         //UIHPPanel.ShowHPItem(_MainChatMotion);
 
-        GameCore.Instance.EventController.RegisteEvent( EVENT_TYPE.EVENT_LOGIC_ROLE_LEVEL_UP, RoleLevelUp);
+        GameCore.Instance.EventController.RegisteEvent(EVENT_TYPE.EVENT_LOGIC_ROLE_LEVEL_UP, RoleLevelUp);
+
+        _InitStep = InitStep.InitMainRoleFinish;
+
+        if (_CameraFollow != null)
+        {
+            _CameraFollow._FollowObj = MainChatMotion.gameObject;
+            InputManager.Instance.InputMotion = MainChatMotion;
+        }
     }
 
     private void SetSkillElement(string skillName, ObjMotionSkillBase skillBase)
@@ -276,6 +337,11 @@ public class FightManager : InstanceBase<FightManager>
             mainBase.NavAgent.radius = mainBase.NavAgent.radius * mainBase.Animation.transform.localScale.x;
         }
 
+        if (motionType == Tables.MOTION_TYPE.Hero)
+        {
+            UITargetFrame.ShowAsyn(mainBase);
+        }
+
         ++_SceneEnemyCnt;
 
         return mainBase;
@@ -320,27 +386,32 @@ public class FightManager : InstanceBase<FightManager>
 
     private FightSceneLogicBase _FightScene;
 
-    private void InitScene()
+    private IEnumerator InitScene()
     {
-        var sceneGO = ResourcePool.Instance.CreateFightSceneObj("FightSceneLogic/" + LogicManager.Instance.EnterStageInfo.FightLogicPath);
-        sceneGO.SetActive(true);
-        _FightScene = sceneGO.GetComponent<FightSceneLogicBase>();
-        if (_FightScene is FightSceneLogicRandomArea)
-        { }
-        else
+        yield return ResourceManager.Instance.LoadPrefab("FightSceneLogic/" + LogicManager.Instance.EnterStageInfo.FightLogicPath, (subResName, subResGO, subCallBack) =>
         {
-            var areaGroups = GameObject.FindObjectsOfType<AreaGroup>();
-            foreach (var area in areaGroups)
-            {
-                area.gameObject.SetActive(false);
-            }
+            _FightScene = subResGO.GetComponent<FightSceneLogicBase>();
+        });
+
+        _FightScene.transform.SetParent(transform);
+        var needLoadScene = _FightScene.GetLogicScenes();
+        if (needLoadScene == null)
+        {
+            needLoadScene = LogicManager.Instance.EnterStageInfo.GetValidScenePath();
         }
-        StartCoroutine(StartSceneLogic());
+
+        yield return ResourceManager.Instance.LoadLevelAsync(needLoadScene[0], false);
+        for (int i = 1; i < needLoadScene.Count; ++i)
+        {
+            yield return ResourceManager.Instance.LoadLevelAsync(needLoadScene[i], true);
+        }
+
+        _InitStep = InitStep.InitSceneFinish;
     }
 
-    private IEnumerator StartSceneLogic()
+    private void StartSceneLogic()
     {
-        yield return new WaitForFixedUpdate();
+        _FightScene.gameObject.SetActive(true);
         _FightScene.StartLogic();
     }
 
@@ -387,6 +458,8 @@ public class FightManager : InstanceBase<FightManager>
 
     #region region teleport
 
+    public string _PlayBornEffect = "Born2";
+
     public void TeleportToNextRegion(Transform destTrans, bool transScene = true)
     {
         FightManager.Instance.MainChatMotion.SetPosition(destTrans.position);
@@ -413,28 +486,29 @@ public class FightManager : InstanceBase<FightManager>
 
     public void RoleLevelUp(object sender, Hashtable arg)
     {
-        var effectPrefab = ResourceManager.Instance.GetEffect("Born2");
-        var effectSingle = effectPrefab.GetComponent<EffectSingle>();
-        var effectInstance = FightManager.Instance.MainChatMotion.PlayDynamicEffect(effectSingle);
-        effectInstance.transform.position = FightManager.Instance.MainChatMotion.transform.position;
-
+        Hashtable hash = new Hashtable();
+        hash.Add("WorldPos", FightManager.Instance.MainChatMotion.transform.position);
+        var effectID = FightManager.Instance.MainChatMotion.PlayDynamicEffect(_PlayBornEffect, hash);
+        
+        
     }
 
     public void MoveToNewScene(string sceneName)
     {
         var sceneCnt = SceneManager.sceneCount;
-        for (int i = 0; i < sceneCnt; ++i)
+        //for (int i = 0; i < sceneCnt; ++i)
         {
-            var sceneInfo = SceneManager.GetSceneAt(i);
-            if (sceneInfo.name == sceneName)
-            {
-                SceneManager.MoveGameObjectToScene(_CameraFollow.gameObject, sceneInfo);
-                SceneManager.MoveGameObjectToScene(MainChatMotion.gameObject, sceneInfo);
-                SceneManager.MoveGameObjectToScene(gameObject, sceneInfo);
-                //SceneManager.MoveGameObjectToScene(_FightScene.gameObject, sceneInfo);
+            var sceneInfo = SceneManager.GetSceneByName(sceneName);
 
-                SceneManager.SetActiveScene(sceneInfo);
-            }
+            //var spGO = GameObject.Find(sceneName + "_SP");
+            //spGO.gameObject.SetActive(true);
+            SceneManager.MoveGameObjectToScene(_CameraFollow.gameObject, sceneInfo);
+            SceneManager.MoveGameObjectToScene(MainChatMotion.gameObject, sceneInfo);
+            SceneManager.MoveGameObjectToScene(gameObject, sceneInfo);
+            //SceneManager.MoveGameObjectToScene(_FightScene.gameObject, sceneInfo);
+
+            SceneManager.SetActiveScene(sceneInfo);
+
         }
     }
 

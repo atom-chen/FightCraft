@@ -11,7 +11,7 @@ public class UIFiveElementValueTip : UIBase
     public static void ShowAsyn()
     {
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("LogicUI/FiveElement/UIFiveElementValueTip", UILayer.PopUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIFiveElementValueTip, UILayer.PopUI, hash);
     }
 
     #endregion

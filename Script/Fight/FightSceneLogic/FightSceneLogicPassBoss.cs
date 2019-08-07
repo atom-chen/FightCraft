@@ -15,18 +15,24 @@ public class FightSceneLogicPassBoss : FightSceneLogicPassArea
         var bossStage = TableReader.BossStage.GetRecord(ActData.Instance._ProcessStageIdx.ToString());
         for (int i = 0; i < _FightArea.Count; ++i)
         {
-            var sceneGO = ResourcePool.Instance.CreateFightSceneObj("FightSceneLogic/BossStage/" + bossStage.FightLogic[i]);
-            _FightArea[i] = sceneGO.GetComponent<FightSceneAreaBase>();
-            sceneGO.SetActive(true);
-            sceneGO.transform.SetParent(_PlayerTeleportPoses[i].parent);
-            sceneGO.transform.position = _PlayerTeleportPoses[i].position;
-
-            if (_FightArea[i] is FightSceneAreaKBossWithFish)
+            ResourcePool.Instance.LoadConfig("FightSceneLogic/BossStage/" + bossStage.FightLogic[i], (resName, resGO, callbackHash)=>
             {
-                var bossArea = _FightArea[i] as FightSceneAreaKBossWithFish;
-                bossArea._BossMotionID = bossStage.BossID.Id;
-                bossArea.SetBossAILevel(bossStage.Difficult);
-            }
+
+                var sceneGO = resGO;
+                _FightArea[i] = sceneGO.GetComponent<FightSceneAreaBase>();
+                sceneGO.SetActive(true);
+                sceneGO.transform.SetParent(_PlayerTeleportPoses[i].parent);
+                sceneGO.transform.position = _PlayerTeleportPoses[i].position;
+
+                if (_FightArea[i] is FightSceneAreaKBossWithFish)
+                {
+                    var bossArea = _FightArea[i] as FightSceneAreaKBossWithFish;
+                    bossArea._BossMotionID = bossStage.BossID.Id;
+                    bossArea.SetBossAILevel(bossStage.Difficult);
+                }
+            }, null);
+
+            
         }
 
         for (int i = 0; i < _AreaGates.Count; ++i)

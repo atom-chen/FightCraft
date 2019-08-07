@@ -3,6 +3,8 @@ guid: b4421d9a2dbdf0a42845774badebcc99
 timeCreated: 1487255765
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/maincharboy/act_hit_01
+  assetBundleVariant: common

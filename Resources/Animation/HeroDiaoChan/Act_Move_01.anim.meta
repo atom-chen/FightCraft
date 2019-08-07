@@ -3,6 +3,8 @@ guid: 3a9e3cbec064eec49918bd77e130fd71
 timeCreated: 1489125820
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herodiaochan/act_move_01
+  assetBundleVariant: common

@@ -3,7 +3,8 @@ guid: af957925d986f414ba75ce2e110a69d9
 timeCreated: 1506566290
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/effect/hit/hit_wind
+  assetBundleVariant: common

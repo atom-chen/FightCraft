@@ -3,7 +3,8 @@ guid: 41722ab26efb9d84db0f853c40ad78ea
 timeCreated: 1507035942
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/heroluban/attack
+  assetBundleVariant: common

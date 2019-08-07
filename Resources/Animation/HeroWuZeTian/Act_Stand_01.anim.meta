@@ -3,6 +3,8 @@ guid: 8ff1750b36f094d42a421f20bc836295
 timeCreated: 1489146252
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herowuzetian/act_stand_01
+  assetBundleVariant: common

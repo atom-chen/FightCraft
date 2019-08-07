@@ -3,6 +3,8 @@ guid: fd6738ecb2cd8494b95022840ddc8a79
 timeCreated: 1489146376
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herozhaoyun/act_move_01
+  assetBundleVariant: common

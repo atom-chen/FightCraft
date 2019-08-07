@@ -3,7 +3,8 @@ guid: 1ab23f61dd98a2a439d6bb8128c2ad1b
 timeCreated: 1502278795
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/commonimpact/skillsuperarmor
+  assetBundleVariant: common

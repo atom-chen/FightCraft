@@ -3,7 +3,8 @@ guid: 4171ca1e7cc80f24f82f429d3ea5a404
 timeCreated: 1511438995
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/passive/passiveattrwind
+  assetBundleVariant: common

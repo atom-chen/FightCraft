@@ -1,7 +1,8 @@
 fileFormatVersion: 2
 guid: 097ccf42842eb2d49a038046ac6423e6
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: -1
   userData: 
-  assetBundleName: scene/depend_stage_zhucheng_terrain
+  assetBundleName: depend/depend_a0903acd41d2c847af2c4f367292ebe5
   assetBundleVariant: common

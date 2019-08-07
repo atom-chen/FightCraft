@@ -12,7 +12,7 @@ public class UISummonCollections : UIBase
     public static void ShowAsyn()
     {
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("LogicUI/SummonSkill/UISummonCollections", UILayer.SubPopUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UISummonCollections, UILayer.SubPopUI, hash);
     }
 
     #endregion

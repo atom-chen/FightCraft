@@ -3,6 +3,8 @@ guid: 18f6aec5e46ec494ca7d7c6945846ed7
 timeCreated: 1489145256
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herojingke/act_move_01
+  assetBundleVariant: common

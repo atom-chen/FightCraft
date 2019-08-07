@@ -3,7 +3,8 @@ guid: fde1f884bb8aaaa4ebeef7f13c279cb1
 timeCreated: 1501486430
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/trap_dici_02_am
+  assetBundleVariant: common

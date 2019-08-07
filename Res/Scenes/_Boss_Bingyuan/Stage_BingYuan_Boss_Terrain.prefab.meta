@@ -3,7 +3,8 @@ guid: b5fa350151b7e0f4c824efbad0a87571
 timeCreated: 1521765944
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: scene/depend_stage_bingyuan_boss_terrain
+  assetBundleName: depend/depend_c07ff93369a5b890c0b97c0938573c8f
   assetBundleVariant: common

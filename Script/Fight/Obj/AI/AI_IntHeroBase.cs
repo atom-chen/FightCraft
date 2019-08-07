@@ -21,7 +21,8 @@ public class AI_IntHeroBase : AI_HeroBase
     {
         base.InitCrazyBuff();
 
-        var buffGO = ResourceManager.Instance.GetGameObject("SkillMotion/CommonImpact/IntShieldBuff");
+        //var buffGO = ResourceManager.Instance.GetGameObject("SkillMotion/CommonImpact/IntShieldBuff");
+        var buffGO = ResourcePool.Instance.GetConfig<Transform>(ResourcePool.ConfigEnum.IntShieldBuff);
         _Strtage2Buff = buffGO.GetComponents<ImpactBuff>();
     }
     

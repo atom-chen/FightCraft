@@ -3,7 +3,8 @@ guid: 65d8c4b27f4fbff4fbcc9bd9b92a51ae
 timeCreated: 1501486437
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/trap_paoluo_01_am
+  assetBundleVariant: common

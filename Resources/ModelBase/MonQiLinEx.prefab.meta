@@ -3,6 +3,8 @@ guid: e355942414f6023458b572f1394c5b0a
 timeCreated: 1489212746
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/monqilinex
+  assetBundleVariant: common

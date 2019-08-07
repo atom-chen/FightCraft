@@ -12,12 +12,12 @@ public class UISummonLevelUpSelect : UIBase
     {
         Hashtable hash = new Hashtable();
         hash.Add("SummonMotion", summonMotion);
-        GameCore.Instance.UIManager.ShowUI("LogicUI/SummonSkill/UISummonLevelUpSelect", UILayer.Sub2PopUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UISummonLevelUpSelect, UILayer.Sub2PopUI, hash);
     }
 
     public static void OnSelectMat(SummonMotionData matMotion, int addNum)
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UISummonLevelUpSelect>("LogicUI/SummonSkill/UISummonLevelUpSelect");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UISummonLevelUpSelect>(UIConfig.UISummonLevelUpSelect);
         if (instance == null)
             return;
 
@@ -29,7 +29,7 @@ public class UISummonLevelUpSelect : UIBase
 
     public static void RefreshPack()
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UISummonLevelUpSelect>("LogicUI/SummonSkill/UISummonLevelUpSelect");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UISummonLevelUpSelect>(UIConfig.UISummonLevelUpSelect);
         if (instance == null)
             return;
 

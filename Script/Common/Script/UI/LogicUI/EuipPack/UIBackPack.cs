@@ -13,28 +13,6 @@ public class UIBackPack : UIBase, IDragablePack
         PAGE_LEGENDARY,
     }
 
-    #region static
-
-    public static UIBackPack GetUIBackPackInstance(Transform parentTrans)
-    {
-        var tempGO = ResourceManager.Instance.GetUI("LogicUI/BagPack/UIBackPack");
-        if (tempGO != null)
-        {
-            var uiGO = GameObject.Instantiate(tempGO);
-
-            uiGO.transform.SetParent(parentTrans);
-            uiGO.transform.localPosition = Vector3.zero;
-            uiGO.transform.localRotation = Quaternion.Euler(Vector3.zero);
-            uiGO.transform.localScale = Vector3.one;
-
-            var backPack = uiGO.GetComponent<UIBackPack>();
-            return backPack;
-        }
-        return null;
-    }
-
-    #endregion
-
     public delegate void OnSelectItem(ItemBase itemBase);
     public OnSelectItem _OnItemSelectCallBack;
 

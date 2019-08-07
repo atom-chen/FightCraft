@@ -3,7 +3,8 @@ guid: 7c2a2f144eb20484f9c7f4c0af79c568
 timeCreated: 1510314523
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/passive/passiveresistlighting
+  assetBundleVariant: common

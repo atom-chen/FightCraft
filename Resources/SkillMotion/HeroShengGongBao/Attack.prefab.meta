@@ -3,7 +3,8 @@ guid: a0c742b34766f3942833c02fbbe6bd16
 timeCreated: 1507037298
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/heroshenggongbao/attack
+  assetBundleVariant: common

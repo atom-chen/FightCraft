@@ -79,22 +79,34 @@ public class DropItem : MonoBehaviour
 
     private void InitGoldModel(int gold)
     {
-        var obj = ResourceManager.Instance.GetInstanceGameObject("Drop/Drop_055/Drop_055");
-        obj.transform.SetParent(transform);
-        obj.transform.localPosition = Vector3.zero;
+        ResourceManager.Instance.LoadPrefab("Drop/Gold/Gold", (resName, resGO, hash) =>
+        {
+            resGO.transform.SetParent(transform);
+            resGO.transform.localPosition = new Vector3(0, 0.34f, 0);
 
-        int randomAngle = Random.Range(0, 360);
-        obj.transform.localRotation = Quaternion.Euler(0, randomAngle, 0);
+            //int randomAngle = Random.Range(0, 360);
+            //resGO.transform.localRotation = Quaternion.Euler(0, randomAngle, 0);
+        }, null);
     }
 
     private void InitItemModel(ItemBase itembase)
     {
-        var obj = ResourceManager.Instance.GetInstanceGameObject(itembase.CommonItemRecord.DropItem);
-        obj.transform.SetParent(transform);
-        obj.transform.localPosition = Vector3.zero;
+        ResourceManager.Instance.LoadPrefab(itembase.CommonItemRecord.DropItem, (resName, resGO, hash) =>
+        {
+            resGO.transform.SetParent(transform);
 
-        int randomAngle = Random.Range(0, 360);
-        obj.transform.localRotation = Quaternion.Euler(0, randomAngle, 0);
+            if (itembase.CommonItemRecord.DropItem.Contains("Weapon"))
+            {
+                resGO.transform.localPosition = new Vector3(0,0.12f,0);
+                int randomAngle = Random.Range(0, 360);
+                resGO.transform.localRotation = Quaternion.Euler(90, randomAngle, 0);
+                resGO.transform.localScale *= itembase.CommonItemRecord.DropScale;
+            }
+            else
+            {
+                resGO.transform.localPosition = Vector3.zero;
+            }
+        }, null);
     }
 
     private void UpdateDropPos()
@@ -113,8 +125,13 @@ public class DropItem : MonoBehaviour
 
     #region 
 
+    private float _TriggerPickTime = 1.2f;
+
     void OnTriggerEnter(Collider other)
     {
+        if (Time.time - _StartTime < _TriggerPickTime)
+            return;
+        
         PickDropItem();
     }
 

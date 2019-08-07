@@ -1,6 +1,7 @@
 fileFormatVersion: 2
 guid: 7eff6f43de737a641a8338e3f158ac2d
 AudioImporter:
+  externalObjects: {}
   serializedVersion: 6
   defaultSettings:
     loadType: 1
@@ -14,7 +15,8 @@ AudioImporter:
   normalize: 1
   preloadAudioData: 1
   loadInBackground: 0
+  ambisonic: 0
   3D: 1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/audios/bgmusic/stage-2
+  assetBundleVariant: common

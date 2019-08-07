@@ -16,7 +16,7 @@ public class UIJoyStick : UIBase, IDragHandler, IPointerUpHandler, IPointerDownH
     public static void ShowAsyn()
     {
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("LogicUI/Fight/UIJoyStick", UILayer.BaseUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIJoyStick, UILayer.BaseUI, hash);
     }
 
     #endregion

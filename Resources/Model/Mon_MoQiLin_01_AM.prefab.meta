@@ -3,7 +3,8 @@ guid: 37d054c15311f5340b62e385b6e1dd86
 timeCreated: 1501486363
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/mon_moqilin_01_am
+  assetBundleVariant: common

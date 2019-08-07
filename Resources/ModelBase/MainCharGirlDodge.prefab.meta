@@ -3,6 +3,8 @@ guid: 72c36ecc97f6e794f887afc8409fd845
 timeCreated: 1487291511
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/mainchargirldodge
+  assetBundleVariant: common

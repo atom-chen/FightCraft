@@ -3,6 +3,8 @@ guid: f41be4265f0a0424a94f3bd023fb9a02
 timeCreated: 1490953684
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/char_girl_01_am
+  assetBundleVariant: common

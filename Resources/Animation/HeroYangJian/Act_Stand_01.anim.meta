@@ -3,6 +3,8 @@ guid: 9c00e357a78c003429ae33bc721b6fcf
 timeCreated: 1489146344
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heroyangjian/act_stand_01
+  assetBundleVariant: common

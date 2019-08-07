@@ -1447,6 +1447,13 @@ public class GameDataValue
 
     public static ItemGem GetGemMonsterDrop(MOTION_TYPE monsterType, int level, STAGE_TYPE stageType)
     {
+        //string randomIDTest = TableReader.GemTable.GetRandomRecord().Id;
+        //ItemGem itemGemTest = new ItemGem(randomIDTest);
+        //itemGemTest.Level = 1;
+        //itemGemTest.SetStackNum(1);
+
+        //return itemGemTest;
+
         if (level < MONSTER_DROP_GEM_LEVEL)
             return null;
 
@@ -1488,6 +1495,8 @@ public class GameDataValue
 
     #region summon
 
+    public static int _SOUL_START_LEVEL = 25;
+
     public static int GetSummonCostGold(int level)
     {
         return 15000;
@@ -1517,7 +1526,13 @@ public class GameDataValue
 
     public static int GetSummonAtk(int level)
     {
-        return level;
+        int summonLevel = level + _SOUL_START_LEVEL - 1;
+        return Tables.TableReader.AttrValueLevel.GetSpValue(level + _SOUL_START_LEVEL - 1, 32) * CalLvValue(summonLevel);
+    }
+
+    public static float GetSummonDamageRate(int level)
+    {
+        return ConfigIntToFloat( Tables.TableReader.AttrValueLevel.GetSpValue(level + _SOUL_START_LEVEL - 1, 33));
     }
 
     #endregion

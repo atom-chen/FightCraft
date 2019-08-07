@@ -3,7 +3,8 @@ guid: 084de0112b22bd44e98bf1eb684dfe4f
 timeCreated: 1506655731
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/monshuangdaobing/attack
+  assetBundleVariant: common

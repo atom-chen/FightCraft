@@ -3,6 +3,8 @@ guid: 38fec3da2d641934493bb71d42b3d42f
 timeCreated: 1496829252
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/fightscenelogic/fightlogic_caoyuan_01
+  assetBundleVariant: common

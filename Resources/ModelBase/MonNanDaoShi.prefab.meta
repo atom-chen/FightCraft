@@ -3,6 +3,8 @@ guid: 37e75534776ea894aa8a06b5d26d2394
 timeCreated: 1489212731
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/monnandaoshi
+  assetBundleVariant: common

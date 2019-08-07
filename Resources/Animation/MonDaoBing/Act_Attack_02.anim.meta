@@ -3,6 +3,8 @@ guid: 18ea71dd2bdb2764cbe141b32545edc4
 timeCreated: 1488541193
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/mondaobing/act_attack_02
+  assetBundleVariant: common

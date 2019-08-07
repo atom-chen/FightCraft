@@ -10,6 +10,19 @@ public class BulletDelay : BulletBase
     {
         base.Init(senderMotion, emitterBase);
 
-        Invoke("BulletFinish", 1);
+        //Invoke("BulletFinish", 1);
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        var targetMotion = other.GetComponentInParent<MotionManager>();
+        if (targetMotion == null)
+            return;
+
+        if (!_IsBulletHitLie && targetMotion.MotionPrior == BaseMotionManager.LIE_PRIOR)
+            return;
+
+        BulletHit(targetMotion);
+        PlayHitAudio();
     }
 }

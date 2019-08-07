@@ -3,6 +3,8 @@ guid: db88c2e79d767624eb440731e780b857
 timeCreated: 1490354631
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/bullets/monster/bullet_xishi_buff1
+  assetBundleVariant: common

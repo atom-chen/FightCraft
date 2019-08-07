@@ -3,6 +3,8 @@ guid: b16f0ce185475f84fbde45c2ae0170f7
 timeCreated: 1489125821
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herodiaochan/act_skill_01
+  assetBundleVariant: common

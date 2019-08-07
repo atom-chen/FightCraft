@@ -3,6 +3,8 @@ guid: f3a3153d623c3134abb69c5915886416
 timeCreated: 1488976812
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/weapon_hw_09_sm
+  assetBundleVariant: common

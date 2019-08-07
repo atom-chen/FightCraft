@@ -3,7 +3,8 @@ guid: 5e72a6a9a5f2a4c40a98a75e077dc438
 timeCreated: 1505216225
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/maincharboy/exattack
+  assetBundleVariant: common

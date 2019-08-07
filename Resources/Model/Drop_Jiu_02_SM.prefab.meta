@@ -3,7 +3,8 @@ guid: 4dd8ce3be18291849b8efa78af695672
 timeCreated: 1501486202
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/drop_jiu_02_sm
+  assetBundleVariant: common

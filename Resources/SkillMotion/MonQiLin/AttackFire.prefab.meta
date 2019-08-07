@@ -3,7 +3,8 @@ guid: 321b00228b6aa3643a2f9c47d662b423
 timeCreated: 1506652627
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/monqilin/attackfire
+  assetBundleVariant: common

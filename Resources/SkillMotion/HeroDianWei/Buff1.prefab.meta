@@ -3,6 +3,8 @@ guid: 03cf0c15e781510409ee220c9f6f160d
 timeCreated: 1489125622
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/herodianwei/buff1
+  assetBundleVariant: common

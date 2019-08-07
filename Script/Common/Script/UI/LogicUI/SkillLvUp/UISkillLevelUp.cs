@@ -13,7 +13,7 @@ public class UISkillLevelUp : UIBase
     public static void ShowAsyn()
     {
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("LogicUI/SkillLvUp/UISkillLevelUp", UILayer.PopUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UISkillLevelUp, UILayer.PopUI, hash);
     }
 
     #endregion

@@ -3,7 +3,8 @@ guid: e7449c624a0630c45887ab7ca69df58c
 timeCreated: 1509434373
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/bullets/element/effect_g1_fire
+  assetBundleVariant: common

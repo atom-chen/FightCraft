@@ -3,6 +3,8 @@ guid: e189d29a589882549a705775ead3e438
 timeCreated: 1488542975
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/mongongbing/act_move_01
+  assetBundleVariant: common

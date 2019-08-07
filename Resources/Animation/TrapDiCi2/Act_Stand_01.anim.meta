@@ -3,6 +3,8 @@ guid: ef536d3f0cfb80b41b8f570be98d15fa
 timeCreated: 1489212402
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/trapdici2/act_stand_01
+  assetBundleVariant: common

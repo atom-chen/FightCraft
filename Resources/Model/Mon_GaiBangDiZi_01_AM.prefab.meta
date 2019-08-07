@@ -3,7 +3,8 @@ guid: fa4d450df695b5647a4d2ffbbc4ff994
 timeCreated: 1501486316
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/mon_gaibangdizi_01_am
+  assetBundleVariant: common

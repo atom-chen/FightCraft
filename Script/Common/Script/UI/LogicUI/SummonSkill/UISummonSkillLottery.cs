@@ -12,19 +12,19 @@ public class UISummonSkillLottery : UIBase
     {
         Hashtable hash = new Hashtable();
         hash.Add("GoldPanel", 1);
-        GameCore.Instance.UIManager.ShowUI("LogicUI/SummonSkill/UISummonSkillLottery", UILayer.SubPopUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UISummonSkillLottery, UILayer.SubPopUI, hash);
     }
 
     public static void ShowDiamondAsyn()
     {
         Hashtable hash = new Hashtable();
         hash.Add("DiamondPanel", 1);
-        GameCore.Instance.UIManager.ShowUI("LogicUI/SummonSkill/UISummonSkillLottery", UILayer.SubPopUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UISummonSkillLottery, UILayer.SubPopUI, hash);
     }
 
     public static void RefreshPack()
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UISummonSkillLottery>("LogicUI/SummonSkill/UISummonSkillLottery");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UISummonSkillLottery>(UIConfig.UISummonSkillLottery);
         if (instance == null)
             return;
 

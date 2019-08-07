@@ -3,6 +3,8 @@ guid: 76271982a92cb8040b3526cf9b3a7916
 timeCreated: 1488370005
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monniuchangjiaomanniu/act_stand_01
+  assetBundleVariant: common

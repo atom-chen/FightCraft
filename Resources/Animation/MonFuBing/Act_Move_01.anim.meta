@@ -3,6 +3,8 @@ guid: c640ef62ab5b3464b940a8bbd32e6373
 timeCreated: 1488374278
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monfubing/act_move_01
+  assetBundleVariant: common

@@ -3,7 +3,8 @@ guid: 5c626b043dad0b240ab174a229629137
 timeCreated: 1501486187
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/drop_baoxiang_01_sm
+  assetBundleVariant: common

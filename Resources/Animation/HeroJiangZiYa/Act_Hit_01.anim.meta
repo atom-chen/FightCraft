@@ -3,6 +3,8 @@ guid: b347692bd423a0f41893006bbfea2aa4
 timeCreated: 1489144892
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herojiangziya/act_hit_01
+  assetBundleVariant: common

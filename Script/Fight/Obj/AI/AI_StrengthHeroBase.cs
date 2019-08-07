@@ -22,7 +22,8 @@ public class AI_StrengthHeroBase : AI_HeroBase
     {
         base.InitCrazyBuff();
 
-        var buffGO = ResourceManager.Instance.GetGameObject("SkillMotion/CommonImpact/StrBuff");
+        //var buffGO = ResourceManager.Instance.GetGameObject("SkillMotion/CommonImpact/StrBuff");
+        var buffGO = ResourcePool.Instance.GetConfig<Transform>(ResourcePool.ConfigEnum.StrBuff);
         _Strtage2Buff = buffGO.GetComponents<ImpactBuff>();
     }
     

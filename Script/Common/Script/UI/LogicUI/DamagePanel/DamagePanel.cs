@@ -26,7 +26,8 @@ public class DamagePanel : InstanceBase<DamagePanel>
 
     public static void ShowAsyn()
     {
-        var gameobj = ResourcePool.Instance.CreateFightSceneObj("UI/LogicUI/DamagePanel/DamagePanel");
+        Hashtable hash = new Hashtable();
+        GameCore.Instance.UIManager.ShowUI(UIConfig.DamagePanel, UILayer.PopUI, hash);
     }
 
     public static void ShowItem(Vector3 showWorldPos, int showValue1, int showValue2, RoleAttrManager.ShowDamageType showType, int baseSize)

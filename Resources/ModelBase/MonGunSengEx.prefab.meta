@@ -3,6 +3,8 @@ guid: 4b5796d5cb0bdd64f80d5f0333d77e31
 timeCreated: 1488543657
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/mongunsengex
+  assetBundleVariant: common

@@ -3,6 +3,8 @@ guid: aa942f2a6c72c3f46a02ba8a4a3bb641
 timeCreated: 1492825398
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/drop/body01/mesh/body01(clone)
+  assetBundleVariant: common

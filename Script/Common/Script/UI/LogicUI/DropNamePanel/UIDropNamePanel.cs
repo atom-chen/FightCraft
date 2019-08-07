@@ -9,7 +9,7 @@ public class UIDropNamePanel : UIInstanceBase<UIDropNamePanel>
     public static void ShowAsyn()
     {
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("LogicUI/DropNamePanel/UIDropNamePanel", UILayer.BaseUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIDropNamePanel, UILayer.BaseUI, hash);
     }
 
     public static void ShowDropItem(DropItem dropItem)

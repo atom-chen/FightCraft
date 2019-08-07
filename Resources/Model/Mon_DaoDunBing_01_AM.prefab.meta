@@ -3,7 +3,8 @@ guid: 11abcbd4ead9c814a91f81c278542e3f
 timeCreated: 1501486300
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/mon_daodunbing_01_am
+  assetBundleVariant: common

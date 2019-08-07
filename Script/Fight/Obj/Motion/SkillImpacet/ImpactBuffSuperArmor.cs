@@ -6,6 +6,8 @@ public class ImpactBuffSuperArmor : ImpactBuff
     public EffectController _HitEffect;
     public float _BlockTime = 0.0f;
 
+    private EffectOutLine _DynamicBuffEffect;
+
     public override void ActBuff(MotionManager senderManager, MotionManager reciverManager)
     {
         if (_BuffOwner._ActionState == _BuffOwner._StateCatch
@@ -41,7 +43,16 @@ public class ImpactBuffSuperArmor : ImpactBuff
 
         if (_HitEffect != null)
             _BuffOwner.PlaySkillEffect(_HitEffect);
-        ((EffectOutLine)_DynamicEffect).PlayHitted();
+
+        if (_DynamicBuffEffect == null && _DynamicEffect > 0 && ReciveMotion._DynamicEffects.ContainsKey(_DynamicEffect))
+        {
+
+            _DynamicBuffEffect = ReciveMotion._DynamicEffects[_DynamicEffect].GetComponent<EffectOutLine>();
+        }
+        if (_DynamicBuffEffect != null)
+        {
+            _DynamicBuffEffect.PlayHitted();
+        }
 
         Hashtable hash = new Hashtable();
         hash.Add("Motion", _SenderMotion);

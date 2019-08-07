@@ -37,14 +37,17 @@ public class SummonSkill
         return _SummonMotions.Count;
     }
 
-    public void InitSummonMotions()
+    public IEnumerator InitSummonMotions()
     {
         _CurSummonIdx = 0;
         _SummonMotions.Clear();
+
         for (int i = 0; i < SummonSkillData.Instance._UsingSummon.Count; ++i)
         {
             if (SummonSkillData.Instance._UsingSummon[i] == null)
                 continue;
+
+            yield return ResourcePool.Instance.InitSummonMotions(SummonSkillData.Instance._UsingSummon[i].SummonRecord.MonsterBase);
 
             var monsterBase = SummonSkillData.Instance._UsingSummon[i].SummonRecord.MonsterBase;
             var summonMotion = ResourcePool.Instance.GetIdleMotion(SummonSkillData.Instance._UsingSummon[i].SummonRecord.MonsterBase);
@@ -54,6 +57,7 @@ public class SummonSkill
             var meshRenders = summonMotion.Animation.GetComponentsInChildren<SkinnedMeshRenderer>();
             foreach (var meshRender in meshRenders)
             {
+                meshRender.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
                 var mainTex = meshRender.material.GetTexture("_MainTex");
                 meshRender.material.shader = shader;
                 meshRender.material.SetTexture("_MainTex", mainTex);
@@ -73,7 +77,8 @@ public class SummonSkill
 
             FightLayerCommon.SetFriendLayer(summonMotion);
             var summonAI = summonMotion.GetComponent<AI_SummonSkill>();
-            _SummonMotions.Add(monsterBase.Id, summonAI);
+            summonAI.InitSkillDamageRate(GameDataValue.GetSummonDamageRate(SummonSkillData.Instance._UsingSummon[i].Level));
+            _SummonMotions.Add(SummonSkillData.Instance._UsingSummon[i].SummonRecord.Id, summonAI);
             summonMotion.Animation.transform.localScale = summonMotion.Animation.transform.localScale * summonAI._ModelSizeFixed;
         }
     }
@@ -82,26 +87,27 @@ public class SummonSkill
     {
         if (SummonSkillData.Instance._UsingSummon[idx] != null)
         {
-            return SummonAndSkill(SummonSkillData.Instance._UsingSummon[idx].SummonRecord.MonsterBase.Id, SummonSkillData.Instance._UsingSummon[idx].SummonRecord.ActSkillIdx, masterMotion);
+            return SummonAndSkill(SummonSkillData.Instance._UsingSummon[idx], SummonSkillData.Instance._UsingSummon[idx].SummonRecord.ActSkillIdx, masterMotion);
         }
         return false;
     }
 
-    public bool SummonAndSkill(string motionID, int skillIdx, MotionManager masterMotion)
+    public bool SummonAndSkill(SummonMotionData summonData, int skillIdx, MotionManager masterMotion)
     {
         AI_SummonSkill summonAI = null;
-        if (_SummonMotions.ContainsKey(motionID))
+        if (_SummonMotions.ContainsKey(summonData.SummonRecord.Id))
         {
-            summonAI = _SummonMotions[motionID];
+            summonAI = _SummonMotions[summonData.SummonRecord.Id];
         }
         else
         {
-            var monsterBase = Tables.TableReader.MonsterBase.GetRecord(motionID);
+            var monsterBase = Tables.TableReader.SummonSkill.GetRecord(summonData.SummonRecord.Id).MonsterBase;
             var summonMotion = ResourcePool.Instance.GetIdleMotion(monsterBase);
             summonMotion.InitRoleAttr(monsterBase);
             summonMotion.InitMotion();
             FightLayerCommon.SetFriendLayer(summonMotion);
             summonAI = summonMotion.GetComponent<AI_SummonSkill>();
+            summonAI.InitSkillDamageRate(GameDataValue.GetSummonDamageRate(summonData.Level));
         }
 
         Vector3 pos = masterMotion.transform.position + masterMotion.transform.forward * summonAI._SummonPosZ;
@@ -125,10 +131,20 @@ public class SummonSkill
     #region act skill
 
     private int _CurSummonIdx = 0;
+    public int CurSummonIdx
+    {
+        get
+        {
+            return _CurSummonIdx;
+        }
+    }
 
     public void UseSummonSkill()
     {
         if (SummonSkillData.Instance._UsingSummon.Count <= _CurSummonIdx)
+            return;
+
+        if (SummonSkillData.Instance._UsingSummon[_CurSummonIdx] == null)
             return;
 
         if (FightSkillManager.Instance.IsSummonSkillInCD(SummonSkillData.Instance._UsingSummon[_CurSummonIdx]))
@@ -142,8 +158,15 @@ public class SummonSkill
             {
                 _CurSummonIdx = 0;
             }
+            for (int i = 0; i < SummonSkillData.USING_SUMMON_NUM; ++i)
+            {
+                if (SummonSkillData.Instance._UsingSummon[i] != null && i != curIdx)
+                {
+                    FightSkillManager.Instance.SetSummonCD(SummonSkillData.Instance._UsingSummon[i], SummonSkillData._SummonCommonCD, true);
+                }
+            }
             FightSkillManager.Instance.SetSummonCD(SummonSkillData.Instance._UsingSummon[curIdx], SummonSkillData.Instance.SummonSkillCD, false);
-            FightSkillManager.Instance.SetSummonCD(SummonSkillData.Instance._UsingSummon[_CurSummonIdx], SummonSkillData._SummonCommonCD, true);
+            //FightSkillManager.Instance.SetSummonCD(SummonSkillData.Instance._UsingSummon[_CurSummonIdx], SummonSkillData._SummonCommonCD, true);
         }
 
 

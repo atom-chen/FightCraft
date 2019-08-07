@@ -3,6 +3,8 @@ guid: 0e5300f1b7265164d9d80946f276201d
 timeCreated: 1489146252
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herowuzetian/act_skill_02
+  assetBundleVariant: common

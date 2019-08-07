@@ -3,7 +3,8 @@ guid: 925513bddd8a1f545bc7f531763eeb81
 timeCreated: 1508243390
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/bullets/monster/bullet_yangjian_lazer2
+  assetBundleVariant: common

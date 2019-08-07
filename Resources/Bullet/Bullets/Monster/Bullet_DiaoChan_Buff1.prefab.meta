@@ -3,6 +3,8 @@ guid: 00f9b7466c6f7754c9952106cb126098
 timeCreated: 1490188686
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/bullets/monster/bullet_diaochan_buff1
+  assetBundleVariant: common

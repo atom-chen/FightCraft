@@ -3,7 +3,8 @@ guid: 904b36ebc68dfb144a982b6552dae5f2
 timeCreated: 1506654336
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/monquanshi/attack
+  assetBundleVariant: common

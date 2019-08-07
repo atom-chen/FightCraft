@@ -3,6 +3,8 @@ guid: bb18874505020624e8b4415f4073ba21
 timeCreated: 1488972299
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/maincharboy/dush
+  assetBundleVariant: common

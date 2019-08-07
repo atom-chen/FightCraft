@@ -3,7 +3,8 @@ guid: 5ae937446f6fdbf42be67845a1b745d6
 timeCreated: 1507808202
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/herojiangziya/hitlight
+  assetBundleVariant: common

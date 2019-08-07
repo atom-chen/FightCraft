@@ -3,6 +3,8 @@ guid: 4549202ff47c51143baadfb615669f8e
 timeCreated: 1488370673
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/monchifushanzei
+  assetBundleVariant: common

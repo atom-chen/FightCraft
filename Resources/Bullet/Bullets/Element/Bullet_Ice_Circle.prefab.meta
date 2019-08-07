@@ -3,7 +3,8 @@ guid: 600d9d9d8741f2145ab190a58cd35efa
 timeCreated: 1509500501
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/bullets/element/bullet_ice_circle
+  assetBundleVariant: common

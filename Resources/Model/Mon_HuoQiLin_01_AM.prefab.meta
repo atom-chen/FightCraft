@@ -3,7 +3,8 @@ guid: 5a82ba696816eaa4da256363ec008802
 timeCreated: 1501486348
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/mon_huoqilin_01_am
+  assetBundleVariant: common

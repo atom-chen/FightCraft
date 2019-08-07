@@ -3,7 +3,8 @@ guid: f5261bfdb09d435409e20c84725ee9e1
 timeCreated: 1501486238
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/hero_lianpo_01_am
+  assetBundleVariant: common

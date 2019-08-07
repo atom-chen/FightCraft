@@ -3,7 +3,8 @@ guid: 97c1f7ac002831c4c9b06c67d28d1fc2
 timeCreated: 1502884296
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/mongunseng/attack1
+  assetBundleVariant: common

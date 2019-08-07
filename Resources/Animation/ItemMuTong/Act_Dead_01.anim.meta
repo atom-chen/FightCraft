@@ -3,6 +3,8 @@ guid: 843c28e44b996194b90cfd8071a11535
 timeCreated: 1489212274
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/itemmutong/act_dead_01
+  assetBundleVariant: common

@@ -3,7 +3,8 @@ guid: ce5991607cd11c94c983d0ee92454698
 timeCreated: 1501486434
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/trap_jianta_01_am
+  assetBundleVariant: common

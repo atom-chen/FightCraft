@@ -17,7 +17,7 @@ public class UIFiveElementTooltip : UIItemTooltips
         Hashtable hash = new Hashtable();
         hash.Add("ItemElement", itemElement);
         hash.Add("ToolTipFun", funcs);
-        GameCore.Instance.UIManager.ShowUI("LogicUI/FiveElement/UIFiveElementTooltips", UILayer.MessageUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIFiveElementTooltip, UILayer.MessageUI, hash);
     }
 
     public static void ShowAsynInType(ItemFiveElement itemElement, TooltipType toolTipType, params ToolTipFunc[] funcs)
@@ -26,7 +26,7 @@ public class UIFiveElementTooltip : UIItemTooltips
         hash.Add("ItemElement", itemElement);
         hash.Add("ToolTipFun", funcs);
         hash.Add("TooltipType", toolTipType);
-        GameCore.Instance.UIManager.ShowUI("LogicUI/FiveElement/UIFiveElementTooltips", UILayer.MessageUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIFiveElementTooltip, UILayer.MessageUI, hash);
     }
 
     public new static void ShowShopAsyn(ItemFiveElement itemElement, bool isBuy, MONEYTYPE priceType, int priceValue, params ToolTipFunc[] funcs)
@@ -37,7 +37,7 @@ public class UIFiveElementTooltip : UIItemTooltips
         hash.Add("PriceType", priceType);
         hash.Add("PriceValue", priceValue);
         hash.Add("ToolTipFun", funcs);
-        GameCore.Instance.UIManager.ShowUI("LogicUI/FiveElement/UIFiveElementTooltips", UILayer.MessageUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIFiveElementTooltip, UILayer.MessageUI, hash);
     }
 
     public new static void HideAsyn()

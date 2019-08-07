@@ -15,6 +15,7 @@ public class UISkillLevelItem : UIItemSelect
 
     public Text _SkillNameText;
     public Text _SkillLevelText;
+    public Image _Icon;
 
     public ItemSkill _SkillItem;
 
@@ -30,6 +31,7 @@ public class UISkillLevelItem : UIItemSelect
         string skillName = Tables.StrDictionary.GetFormatStr(skillRecord.NameStrDict);
         _SkillNameText.text = skillName;
         _SkillLevelText.text = "Lv." + _SkillItem.SkillActureLevel + "/" + _SkillItem.SkillRecord.MaxLevel;
+        ResourceManager.Instance.SetImage(_Icon, skillRecord.Icon);
     }
 
     public override void Refresh()

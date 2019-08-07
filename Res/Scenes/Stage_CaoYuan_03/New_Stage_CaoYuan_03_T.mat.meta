@@ -1,7 +1,8 @@
 fileFormatVersion: 2
 guid: 935a5afef9d50a144be8d0eb657a7cff
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: -1
   userData: 
-  assetBundleName: scene/depend_stage_caoyuan_03_terrain
+  assetBundleName: depend/depend_f21db697d6e5c9880540e085638c1029
   assetBundleVariant: common

@@ -3,6 +3,8 @@ guid: 4123e91c4c9842346963335cc8676b30
 timeCreated: 1489112405
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/herobaiqi/buff1
+  assetBundleVariant: common

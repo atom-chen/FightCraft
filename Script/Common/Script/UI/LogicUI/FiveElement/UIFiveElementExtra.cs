@@ -12,12 +12,12 @@ public class UIFiveElementExtra : UIBase
     {
         Hashtable hash = new Hashtable();
         hash.Add("ExtraItem", extraItem);
-        GameCore.Instance.UIManager.ShowUI("LogicUI/FiveElement/UIFiveElementExtra", UILayer.SubPopUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIFiveElementExtra, UILayer.SubPopUI, hash);
     }
 
     public static void RefreshPack()
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UIFiveElement>("LogicUI/FiveElement/UIFiveElement");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIFiveElement>(UIConfig.UIFiveElementExtra);
         if (instance == null)
             return;
 
@@ -29,7 +29,7 @@ public class UIFiveElementExtra : UIBase
 
     public static void RefreshCost()
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UIFiveElement>("LogicUI/FiveElement/UIFiveElement");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIFiveElement>(UIConfig.UIFiveElementExtra);
         if (instance == null)
             return;
 

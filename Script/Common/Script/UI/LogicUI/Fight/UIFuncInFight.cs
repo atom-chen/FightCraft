@@ -14,13 +14,13 @@ public class UIFuncInFight : UIBase
     public static void ShowAsyn()
     {
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("LogicUI/Fight/UIFuncInFight", UILayer.BaseUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIFuncInFight, UILayer.BaseUI, hash);
 
     }
 
     public static void StopFightTime()
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UIFuncInFight>("LogicUI/Fight/UIFuncInFight");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIFuncInFight>(UIConfig.UIFuncInFight);
         if (instance == null)
             return;
 
@@ -30,11 +30,20 @@ public class UIFuncInFight : UIBase
 
     public static void UpdateSkillInfoUI()
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UIFuncInFight>("LogicUI/Fight/UIFuncInFight");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIFuncInFight>(UIConfig.UIFuncInFight);
         if (instance == null)
             return;
 
         instance.UpdateSkillInfo();
+    }
+
+    public static void UpdateKillMonster(int curCnt, int maxCnt)
+    {
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIFuncInFight>(UIConfig.UIFuncInFight);
+        if (instance == null)
+            return;
+
+        instance.SetMonsterKillCnt(curCnt, maxCnt);
     }
 
     #endregion
@@ -58,7 +67,8 @@ public class UIFuncInFight : UIBase
 
     public void OnBtnExit()
     {
-        UIMessageBox.Show(100000, OnExitOk, null);
+        //UIMessageBox.Show(100000, OnExitOk, null);
+        UIFightSetting.ShowAsyn();
     }
 
     private void OnExitOk()
@@ -119,6 +129,28 @@ public class UIFuncInFight : UIBase
             {
                 _UIFightInfos[i].gameObject.SetActive(false);
             }
+        }
+    }
+
+    #endregion
+
+    #region kill monster
+
+    public Text _KillMonsterText;
+
+    private void SetMonsterKillCnt(int curCnt, int maxCnt)
+    {
+        if (maxCnt < 0 && curCnt < 0)
+        {
+            _KillMonsterText.text = "";
+        }
+        else if (maxCnt < 0 && curCnt >= 0)
+        {
+            _KillMonsterText.text = curCnt.ToString();
+        }
+        else 
+        {
+            _KillMonsterText.text = string.Format("{0}/{1}", curCnt, maxCnt);
         }
     }
 

@@ -3,6 +3,8 @@ guid: 9780450ce0da1574db9cb7a082c1ab59
 timeCreated: 1487378137
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/herobaiqi
+  assetBundleVariant: common

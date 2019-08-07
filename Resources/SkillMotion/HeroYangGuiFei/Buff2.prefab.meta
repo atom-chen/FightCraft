@@ -3,7 +3,8 @@ guid: 9941606fa2c30914bb118eda4f9fed66
 timeCreated: 1507038002
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/heroyangguifei/buff2
+  assetBundleVariant: common

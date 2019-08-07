@@ -24,18 +24,34 @@ public class MapPosObj : MonoBehaviour
             return;
         }
 
-        var obj = ResourceManager.Instance.GetInstanceGameObject("ModelBase/" + monsterBase.Name);
-        obj.transform.SetParent(transform);
-        obj.transform.localPosition = Vector3.zero;
-        obj.transform.localRotation = Quaternion.Euler(Vector3.zero);
-        obj.name = "ShowChil";
-        obj.SetActive(true);
+        StartCoroutine(ShowModel(monsterBase));
+        
+    }
 
-        var modelObj = ResourceManager.Instance.GetInstanceGameObject("Model/" + monsterBase.ModelPath);
-        modelObj.transform.SetParent(obj.transform);
-        modelObj.transform.localPosition = Vector3.zero;
-        modelObj.transform.localRotation = Quaternion.Euler(Vector3.zero);
-        modelObj.SetActive(true);
+    private IEnumerator ShowModel(Tables.MonsterBaseRecord monsterBase)
+    {
+        GameObject modelBase = null;
+        yield return ResourceManager.Instance.LoadPrefab("ModelBase/" + monsterBase.Name, (resName, resData, hash) =>
+        {
+            var resource = resData;
+            modelBase = GameObject.Instantiate(resource);
+            modelBase.transform.SetParent(transform);
+            modelBase.transform.localPosition = Vector3.zero;
+            modelBase.transform.localRotation = Quaternion.Euler(Vector3.zero);
+            modelBase.name = "ShowChil";
+            modelBase.SetActive(true);
+        });
+
+
+        yield return ResourceManager.Instance.LoadPrefab("Model/" + monsterBase.ModelPath, (resName, resData, hash) =>
+        {
+            var modelRes = resData;
+            var modelObj = GameObject.Instantiate(modelRes);
+            modelObj.transform.SetParent(modelBase.transform);
+            modelObj.transform.localPosition = Vector3.zero;
+            modelObj.transform.localRotation = Quaternion.Euler(Vector3.zero);
+            modelObj.SetActive(true);
+        });
     }
 
     public void RemoveShow()

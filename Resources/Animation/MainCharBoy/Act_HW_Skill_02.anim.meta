@@ -3,6 +3,8 @@ guid: cb7126aeb13b9f34ea1701a6b64757df
 timeCreated: 1487255766
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/maincharboy/act_hw_skill_02
+  assetBundleVariant: common

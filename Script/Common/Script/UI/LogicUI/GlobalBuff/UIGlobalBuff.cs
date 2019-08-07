@@ -12,19 +12,19 @@ public class UIGlobalBuff : UIBase
     {
         UIGlobalBuff._ShowType = 1;
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("LogicUI/GlobalBuff/UIGlobalBuff", UILayer.PopUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIGlobalBuff, UILayer.PopUI, hash);
     }
 
     public static void ShowAttrAsyn()
     {
         UIGlobalBuff._ShowType = 2;
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("LogicUI/GlobalBuff/UIGlobalBuff", UILayer.PopUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIGlobalBuff, UILayer.PopUI, hash);
     }
 
     public static void RefreshBuffs()
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UIGlobalBuff>("LogicUI/GlobalBuff/UIGlobalBuff");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIGlobalBuff>(UIConfig.UIGlobalBuff);
         if (instance == null)
             return;
 

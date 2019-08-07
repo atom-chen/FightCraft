@@ -3,7 +3,8 @@ guid: bc6382caa0366454ebda66a856ed5a39
 timeCreated: 1508240076
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/bullets/summon/bullet_wenzhong_skill_wind_boom_summon
+  assetBundleVariant: common

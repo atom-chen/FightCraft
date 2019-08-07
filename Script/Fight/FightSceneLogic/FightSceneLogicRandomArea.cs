@@ -12,10 +12,12 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
     {
         base.StartLogic();
 
-        InitPos();
+        InitPos(0);
 
-        InitMons();
+        //InitMons();
         //InitAreas();
+
+        UIFuncInFight.UpdateKillMonster(0, _FindBossKillCnt);
     }
 
     protected override void UpdateLogic()
@@ -25,25 +27,96 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
         for (int i = 0; i < _ActingGroup._FightAreas.Count; ++i)
         {
             if (i == MainCharPosIdxInFightArea)
-                continue;
-
-            if (!_ActingGroup._FightAreas[i].AreaStrated)
             {
-                //float dis = Vector3.Distance(FightManager.Instance.MainChatMotion.transform.position, area.transform.position);
-                float dis = AI_Base.GetPathLength(FightManager.Instance.MainChatMotion.transform.position, _ActingGroup._FightAreas[i].transform.position);
+                
+                continue;
+            }
 
-                if (dis < 25)
-                {
-                    _ActingGroup._FightAreas[i].InitArea();
-                }
+            if (_ActingGroup._FightAreas[i].AreaStrated)
+            {
+                _ActingGroup._FightAreas[i].UpdateArea();
+            }
+            
+        }
+
+        UpdateArea();
+    }
+
+    #region area distance
+
+    private List<FightSceneAreaRandom> _WaitingArea;
+    private static int _WatchingAreaCnt = 3;
+    private static int _StartInitCnt = 2;
+
+    private void UpdateArea()
+    {
+        if (_WaitingArea == null)
+        {
+            InitArea();
+            return;
+        }
+
+        int watchingCnt = _WaitingArea.Count > _WatchingAreaCnt?_WatchingAreaCnt: _WaitingArea.Count;
+        for (int i = 0; i < watchingCnt; ++i)
+        {
+            _WaitingArea[i]._DistanceToPlayer = AI_Base.GetPathLength(FightManager.Instance.MainChatMotion.transform.position, _WaitingArea[i].transform.position);
+            if (_WaitingArea[i]._DistanceToPlayer < 25)
+            {
+                _WaitingArea[i].InitArea();
+                _WaitingArea.RemoveAt(i);
+                return;
+            }
+        }
+
+        
+    }
+
+    private void InitArea()
+    {
+        if (_WaitingArea == null)
+        {
+            _WaitingArea = new List<FightSceneAreaRandom>(_ActingGroup._FightAreas);
+            _WaitingArea.RemoveAt(MainCharPosIdxInFightArea);
+
+            for (int i = 0; i < _WaitingArea.Count; ++i)
+            {
+                _WaitingArea[i]._DistanceToPlayer = AI_Base.GetPathLength(FightManager.Instance.MainChatMotion.transform.position, _WaitingArea[i].transform.position);
+            }
+
+            _WaitingArea.Sort((areaA, areaB) =>
+            {
+                if (areaA._DistanceToPlayer > areaB._DistanceToPlayer)
+                    return 1;
+                else if (areaA._DistanceToPlayer < areaB._DistanceToPlayer)
+                    return -1;
+                else
+                    return 0;
+            });
+
+            int initCnt = _WaitingArea.Count > _StartInitCnt ? _StartInitCnt : _WaitingArea.Count;
+            for (int i = 0; i < initCnt; ++i)
+            {
+                _WaitingArea[0].InitArea();
+                _WaitingArea.RemoveAt(0);
             }
         }
     }
 
+    
+
+    #endregion
+
     #region motion die
 
-    public static int _FindBossKillCnt = 120;
+    public static int _FindBossKillCnt = 1;
     private int _KillCnt = 0;
+    public int KillMonsterCnt
+    {
+        get
+        {
+            return _KillCnt;
+        }
+    }
     private bool _IsChangeToBoss = false;
     public bool IsChangeToBoss
     {
@@ -53,9 +126,25 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
         }
     }
 
+    private bool _StartBossArea = false;
+    public bool StartBossArea
+    {
+        get
+        {
+            return _StartBossArea;
+        }
+    }
+
     public override void MotionDie(MotionManager motion)
     {
+        if (motion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.MainChar)
+        {
+            LogicFinish(false);
+            return;
+        }
+
         ++_KillCnt;
+        UIFuncInFight.UpdateKillMonster(_KillCnt, _FindBossKillCnt);
         if (_KillCnt >= _FindBossKillCnt)
         {
             if (!_IsChangeToBoss)
@@ -69,20 +158,59 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
         {
             LogicFinish(true);
         }
+
+        for (int i = 0; i < _ActingGroup._FightAreas.Count; ++i)
+        {
+            if (i == MainCharPosIdxInFightArea)
+            {
+
+                continue;
+            }
+
+            if (_ActingGroup._FightAreas[i].AreaStrated)
+            {
+                _ActingGroup._FightAreas[i].MotionDie(motion);
+            }
+
+        }
     }
 
     private void CreateTeleport()
     {
-        var teleportGO = ResourceManager.Instance.GetGameObject("Common/TeleportRed");
-        var teleportInstance = GameObject.Instantiate(teleportGO);
-        teleportInstance.transform.position = FightManager.Instance.MainChatMotion.transform.position;
-        var gate = teleportInstance.AddComponent<AreaGateRandom>();
-        gate.RandomLogic = this;
+        Hashtable hash = new Hashtable();
+        hash.Add("RandomLogic", this);
+        ResourceManager.Instance.LoadPrefab("Common/TeleportRed", InitTeleportCallBack, hash);   
     }
 
+    private void InitTeleportCallBack(string uiName, GameObject teleportGO, Hashtable hashtable)
+    {
+        teleportGO.transform.position = FightManager.Instance.MainChatMotion.transform.position;
+        var gate = teleportGO.AddComponent<AreaGateRandom>();
+        gate.RandomLogic = (FightSceneLogicRandomArea)hashtable["RandomLogic"];
+    }
     #endregion
 
     #region 
+
+    public override List<string> GetLogicMonIDs()
+    {
+        InitMons();
+        List<string> monIds = new List<string>();
+        foreach (var normalMon in NormalMonster)
+        {
+            monIds.Add(normalMon.ToString());
+        }
+        monIds.Add(MagicMonster.ToString());
+        monIds.Add(BossID.ToString());
+        return monIds;
+    }
+
+    public override List<string> GetLogicScenes()
+    {
+        InitScenes();
+
+        return PreLoadScenes;
+    }
 
     #endregion
 
@@ -92,14 +220,23 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
     public List<int> NormalMonster { get; set; }
     public int MagicMonster { get; set; }
     public int BossID { get; set; }
+    public List<string> PreLoadScenes { get; set; }
 
     private int MainCharPosIdxInFightArea;
     private List<string> _ExcludeScene;
     private string _CurActScene;
 
-    private void InitPos()
+    private int _CurActSceneIdx = 0;
+    private void InitPos(int actSceneIdx)
     {
-        _ActingGroup = GameObject.Find("RandomAreas").GetComponent<AreaGroup>();
+        if (_ActingGroup != null)
+        {
+            _ActingGroup._LightGO.SetActive(false);
+            _ActingGroup.gameObject.SetActive(false);
+        }
+        _CurActSceneIdx = actSceneIdx;
+        _ActingGroup = GameObject.Find(PreLoadScenes[_CurActSceneIdx] + "_RandomAreas").GetComponent<AreaGroup>();
+        _WaitingArea = null;
         //_ActingGroup.gameObject.SetActive(false);
         for (int i = 0; i < _ActingGroup._FightAreas.Count; ++i)
         {
@@ -137,16 +274,16 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
             FightManager.Instance._CameraFollow._Distance = new Vector3(x, FightManager.Instance._CameraFollow._Distance.y, y);
         }
 
-        if (_ExcludeScene == null)
-        {
-            _ExcludeScene = new List<string>();
-            _ExcludeScene.Add(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
-            _CurActScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-        }
-        else
-        {
-            _CurActScene = _ExcludeScene[_ExcludeScene.Count - 1];
-        }
+        //if (_ExcludeScene == null)
+        //{
+        //    _ExcludeScene = new List<string>();
+        //    _ExcludeScene.Add(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+        //    _CurActScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        //}
+        //else
+        //{
+        //    _CurActScene = _ExcludeScene[_ExcludeScene.Count - 1];
+        //}
 
         _ActingGroup._LightGO.SetActive(true);
     }
@@ -188,6 +325,12 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
         }
     }
 
+    private void InitScenes()
+    {
+        PreLoadScenes = GetRandomScenes(LogicManager.Instance.EnterStageInfo.ExParam[0], 3);
+        PreLoadScenes.Add(GetBossScene(PreLoadScenes));
+    }
+
     public string GetNextScene()
     {
         string nextScene = "";
@@ -214,12 +357,31 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
 
         var oldSceneName = _CurActScene;
 
-        InitPos();
+
+        if (IsChangeToBoss)
+        {
+            _CurActSceneIdx = PreLoadScenes.Count - 1;
+        }
+        else
+        {
+            _CurActSceneIdx = _CurActSceneIdx + 1;
+            if (_CurActSceneIdx == PreLoadScenes.Count - 1)
+            {
+                _CurActSceneIdx = 0;
+            }
+        }
+        _CurActScene = PreLoadScenes[_CurActSceneIdx];
+        InitPos(_CurActSceneIdx);
+        
 
         FightManager.Instance.MoveToNewScene(_CurActScene);
-        UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(oldSceneName);
+        //UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(oldSceneName);
 
-        InitAreas();
+        //InitAreas();
+        if (_IsChangeToBoss)
+        {
+            _StartBossArea = true;
+        }
     }
 
     #endregion
@@ -360,6 +522,35 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
 
         int idx = Random.Range(0, includeScenes.Count);
         return includeScenes[idx];
+    }
+
+    public static List<string> GetRandomScenes(int type, int count)
+    {
+        List<string> includeScenes = new List<string>();
+        List<string> baseScene = null;
+        switch (type)
+        {
+            case 1:
+                baseScene = _ShaMoScene;
+                break;
+            case 2:
+                baseScene = _CaoYuanScene;
+                break;
+            case 3:
+                baseScene = _BingYuanScene;
+                break;
+            case 4:
+                baseScene = _DiChengScene;
+                break;
+        }
+
+        var randomIdx = GameRandom.GetIndependentRandoms(0, baseScene.Count, count);
+        foreach (var sceneIdx in randomIdx)
+        {
+            includeScenes.Add(baseScene[sceneIdx]);
+        }
+
+        return includeScenes;
     }
 
     public static string GetBossScene(List<string> excludeScene)

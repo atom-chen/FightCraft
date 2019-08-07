@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -6,6 +7,8 @@ public class UIBase : MonoBehaviour
 {
     public string UIPath;
     public UILayer UILayer;
+    public Text UINameText;
+    public int NameID;
 
     #region fiex fun
 
@@ -15,7 +18,10 @@ public class UIBase : MonoBehaviour
     }
     public virtual void Init()
     {
-
+        if (UINameText != null)
+        {
+            UINameText.text = Tables.StrDictionary.GetFormatStr(NameID);
+        }
     }
 
     #endregion

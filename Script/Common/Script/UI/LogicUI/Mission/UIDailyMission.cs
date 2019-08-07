@@ -17,7 +17,7 @@ public class UIDailyMission : UIBase
     public static void ShowAsyn()
     {
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("LogicUI/Mission/UIDailyMission", UILayer.PopUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIDailyMission, UILayer.PopUI, hash);
     }
 
     #endregion

@@ -3,6 +3,8 @@ guid: 0f94e3970c83a8648aef3b806a4540cb
 timeCreated: 1489211871
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monjianbing/act_fly_01
+  assetBundleVariant: common

@@ -14,12 +14,13 @@ public class ResourceConfig : MonoBehaviour
         {
             if (_Instance == null)
             {
-                var obj = ResourceManager.Instance.GetInstanceGameObject("ResourceConfig");
-                _Instance = obj.GetComponent<ResourceConfig>();
+                _Instance = ResourcePool.Instance.GetConfig<ResourceConfig>(ResourcePool.ConfigEnum.ResourceConfig);
             }
             return _Instance;
         }
     }
+
+
 
     #endregion
 
@@ -27,7 +28,9 @@ public class ResourceConfig : MonoBehaviour
 
     void Awake()
     {
-        DontDestroyOnLoad(this);
+        //DontDestroyOnLoad(this);
+
+        
     }
 
     #endregion

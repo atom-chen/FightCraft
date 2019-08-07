@@ -3,6 +3,8 @@ guid: 9f2c63022ad5bc74d8b6533654ac63ce
 timeCreated: 1489146110
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heroleizhenzi/act_rise_01
+  assetBundleVariant: common

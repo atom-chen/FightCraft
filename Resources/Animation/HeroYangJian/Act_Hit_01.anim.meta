@@ -3,6 +3,8 @@ guid: ecffe349e723dab4c8afc64429d2d714
 timeCreated: 1489146343
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heroyangjian/act_hit_01
+  assetBundleVariant: common

@@ -3,7 +3,8 @@ guid: 3f532b2dc890a0c4b88abb7b8f1aeafc
 timeCreated: 1505821408
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/commonimpact/avator
+  assetBundleVariant: common

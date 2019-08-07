@@ -3,7 +3,8 @@ guid: b07351a0404844547a63f20daeb5a459
 timeCreated: 1506654338
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/monquanshi/skill1
+  assetBundleVariant: common

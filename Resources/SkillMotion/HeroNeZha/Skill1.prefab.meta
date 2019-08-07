@@ -3,7 +3,8 @@ guid: 32ebbe9b0bfeba54f8d745b428b48493
 timeCreated: 1507037041
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/heronezha/skill1
+  assetBundleVariant: common

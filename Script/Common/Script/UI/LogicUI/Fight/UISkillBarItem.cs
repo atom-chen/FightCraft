@@ -13,30 +13,36 @@ public class UISkillBarItem : UIItemSelect
     public Image _UseTipImage;
     public string _SkillInput;
     public Text _StoreTimes;
+    public Image _Icon;
 
     public bool IsSkillAct
     {
         get; set;
     }
 
-    void Update()
-    {
-        if (_UseTipImage.gameObject.activeInHierarchy)
-        {
-            _UseTipImage.fillAmount -= _Step * Time.deltaTime;
-            if (_UseTipImage.fillAmount <= 0)
-            {
-                //InputManager.Instance.ResetReuseSkill();
-            }
-        }
+    //void Update()
+    //{
+    //    if (_UseTipImage.gameObject.activeInHierarchy)
+    //    {
+    //        _UseTipImage.fillAmount -= _Step * Time.deltaTime;
+    //        if (_UseTipImage.fillAmount <= 0)
+    //        {
+    //            //InputManager.Instance.ResetReuseSkill();
+    //        }
+    //    }
 
-        UpdateCD();
-    }
+    //    UpdateCD();
+    //}
 
-    public void InitSkillIcon()
+    public void InitSkill()
     {
         _CDImage.fillAmount = 0;
         _UseTipImage.fillAmount = 0;
+    }
+
+    public void SetSkillIcon(string heroIcon)
+    {
+        ResourceManager.Instance.SetImage(_Icon, heroIcon);
     }
 
     public void BtnSkill()

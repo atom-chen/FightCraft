@@ -3,6 +3,8 @@ guid: 8abff0b028157254fb7e367fdf6e63ba
 timeCreated: 1489214861
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/monjianbingex
+  assetBundleVariant: common

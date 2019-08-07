@@ -11,12 +11,12 @@ public class UIGemPack : UIBase
     public static void ShowAsyn()
     {
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("LogicUI/Gem/UIGemPack", UILayer.PopUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIGemPack, UILayer.PopUI, hash);
     }
 
     public static void RefreshPack()
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UIGemPack>("LogicUI/Gem/UIGemPack");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIGemPack>(UIConfig.UIGemPack);
         if (instance == null)
             return;
 
@@ -28,7 +28,7 @@ public class UIGemPack : UIBase
 
     public static void RefreshPunchPack()
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UIGemPack>("LogicUI/Gem/UIGemPack");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIGemPack>(UIConfig.UIGemPack);
         if (instance == null)
             return;
 
@@ -40,7 +40,7 @@ public class UIGemPack : UIBase
 
     public static UIContainerBase GetGemPack()
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UIGemPack>("LogicUI/Gem/UIGemPack");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIGemPack>(UIConfig.UIGemPack);
         if (instance == null)
             return null;
 
@@ -52,7 +52,7 @@ public class UIGemPack : UIBase
 
     public static void SetGemCombine(Tables.GemTableRecord resultRecord)
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UIGemPack>("LogicUI/Gem/UIGemPack");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIGemPack>(UIConfig.UIGemPack);
         if (instance == null)
             return;
 
@@ -64,7 +64,7 @@ public class UIGemPack : UIBase
 
     public static UIGemPackPunch GetUIGemPunch()
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UIGemPack>("LogicUI/Gem/UIGemPack");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIGemPack>(UIConfig.UIGemPack);
         if (instance == null)
             return null;
 
@@ -76,7 +76,7 @@ public class UIGemPack : UIBase
 
     public static UIGemPackCombine GetUIGemCombine()
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UIGemPack>("LogicUI/Gem/UIGemPack");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIGemPack>(UIConfig.UIGemPack);
         if (instance == null)
             return null;
 

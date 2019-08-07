@@ -1,7 +1,8 @@
 fileFormatVersion: 2
 guid: 0a54997e3942da349a85cd85b2063e3a
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: -1
   userData: 
-  assetBundleName: scene/depend_stage_01_01_terrain
+  assetBundleName: depend/depend_8839e8ef5c097e557b73ad51f802d40b
   assetBundleVariant: common

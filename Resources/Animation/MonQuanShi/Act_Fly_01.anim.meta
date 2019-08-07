@@ -3,6 +3,8 @@ guid: 2e666534526f35741afa05e05865e574
 timeCreated: 1489211968
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monquanshi/act_fly_01
+  assetBundleVariant: common

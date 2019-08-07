@@ -3,7 +3,8 @@ guid: 2d239bfca237c9b4291e6ff230410494
 timeCreated: 1516946810
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: depend/depend_ea55aae523d8a997420a41696d8d1a15
+  assetBundleVariant: common

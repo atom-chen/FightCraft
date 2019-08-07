@@ -11,6 +11,9 @@ public class ObjMotionSkillDefence : ObjMotionSkillBase
 
     void Update()
     {
+        if (MotionManager == null)
+            return;
+
         _DefenceTime -= Time.deltaTime;
         if (_DefenceTime <= 0 && !InputManager.Instance.IsKeyHold("l"))
         {

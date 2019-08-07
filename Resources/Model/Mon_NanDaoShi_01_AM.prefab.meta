@@ -3,7 +3,8 @@ guid: 2771b96dbe2bac843b29de167e2d1af7
 timeCreated: 1501486366
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/mon_nandaoshi_01_am
+  assetBundleVariant: common

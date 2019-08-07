@@ -341,7 +341,7 @@ public class SummonMotionData : ItemBase
             atkSpeedValue = StageAttrValues[4];
         }
 
-        //_SummonAttrs.Add(EquipExAttr.GetBaseExAttr(StageAttrEnums[0], atkValue));
+        _SummonAttrs.Add(EquipExAttr.GetBaseExAttr(StageAttrEnums[0], atkValue));
         _SummonAttrs.Add(EquipExAttr.GetBaseExAttr(StageAttrEnums[1], critiDmgValue));
         _SummonAttrs.Add(EquipExAttr.GetBaseExAttr(StageAttrEnums[2], critiRateValue));
         _SummonAttrs.Add(EquipExAttr.GetBaseExAttr(StageAttrEnums[3], riseHandSpeedValue));

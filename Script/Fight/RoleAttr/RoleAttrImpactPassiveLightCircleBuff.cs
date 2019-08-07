@@ -21,23 +21,27 @@ public class RoleAttrImpactPassiveLightCircleBuff : RoleAttrImpactPassive
         if (!roleMotion._StateSkill._SkillMotions.ContainsKey(_SkillInput))
             return;
 
-        var buffGO = ResourceManager.Instance.GetInstanceGameObject("Bullet\\Passive\\" + _ImpactName);
-        buffGO.transform.SetParent(roleMotion.BuffBindPos.transform);
-        var buffs = buffGO.GetComponents<ImpactBuffAttackSub>();
-        foreach (var buff in buffs)
-        {
-            var subBuffs2 = buffGO.GetComponentsInChildren<ImpactDamage>();
-            foreach (var subBuff in subBuffs2)
-            {
-                if (subBuff.gameObject == buffGO)
-                    continue;
-                subBuff._DamageRate = _Damage;
-            }
 
-            buff._ActCD = _ActCD;
-            buff._Rate = _ActRate;
-            buff.ActImpact(roleMotion, roleMotion);
-        }
+        ResourcePool.Instance.LoadConfig("Bullet\\Passive\\" + _ImpactName, (resName, resGO, hash) =>
+        {
+            var buffGO = resGO;
+            buffGO.transform.SetParent(roleMotion.BuffBindPos.transform);
+            var buffs = buffGO.GetComponents<ImpactBuffAttackSub>();
+            foreach (var buff in buffs)
+            {
+                var subBuffs2 = buffGO.GetComponentsInChildren<ImpactDamage>();
+                foreach (var subBuff in subBuffs2)
+                {
+                    if (subBuff.gameObject == buffGO)
+                        continue;
+                    subBuff._DamageRate = _Damage;
+                }
+
+                buff._ActCD = _ActCD;
+                buff._Rate = _ActRate;
+                buff.ActImpact(roleMotion, roleMotion);
+            }
+        }, null);
     }
 
     public new static string GetAttrDesc(List<int> attrParams)

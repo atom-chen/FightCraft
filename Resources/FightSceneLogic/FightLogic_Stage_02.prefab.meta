@@ -3,7 +3,8 @@ guid: 0fa8331ce8a1c6249bcf453bb6ae60a6
 timeCreated: 1517224343
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/fightscenelogic/fightlogic_stage_02
+  assetBundleVariant: common

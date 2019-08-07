@@ -3,6 +3,8 @@ guid: 93acbab23a43cf84bba9a0f6525f92d3
 timeCreated: 1487255764
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/maincharboy/act_stand_01
+  assetBundleVariant: common

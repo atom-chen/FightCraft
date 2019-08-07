@@ -3,7 +3,8 @@ guid: 17d010b061805834f979392617b7c2c0
 timeCreated: 1506654809
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/monshashou/attack
+  assetBundleVariant: common

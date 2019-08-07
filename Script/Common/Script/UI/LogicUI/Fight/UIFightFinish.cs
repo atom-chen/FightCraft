@@ -17,7 +17,7 @@ public class UIFightFinish : UIBase
     {
         Hashtable hash = new Hashtable();
         hash.Add("IsWin", isWin);
-        GameCore.Instance.UIManager.ShowUI("LogicUI/Fight/UIFightFinish", UILayer.BaseUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIFightFinish, UILayer.BaseUI, hash);
     }
 
     #endregion

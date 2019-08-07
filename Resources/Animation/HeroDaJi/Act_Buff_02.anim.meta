@@ -3,6 +3,8 @@ guid: fcd135dc07a964049a45003a89e67fec
 timeCreated: 1489118158
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herodaji/act_buff_02
+  assetBundleVariant: common

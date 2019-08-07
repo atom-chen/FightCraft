@@ -3,6 +3,8 @@ guid: ca662f04e44644f4480e03f1bed271e2
 timeCreated: 1489126222
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/herodiaochan/summonskill1
+  assetBundleVariant: common

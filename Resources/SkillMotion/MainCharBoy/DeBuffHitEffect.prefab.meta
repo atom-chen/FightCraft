@@ -3,7 +3,8 @@ guid: e0cb410978d454745b478ea3ad444941
 timeCreated: 1508406081
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/maincharboy/debuffhiteffect
+  assetBundleVariant: common

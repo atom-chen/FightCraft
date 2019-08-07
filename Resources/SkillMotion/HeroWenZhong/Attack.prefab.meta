@@ -3,7 +3,8 @@ guid: 348217af651268f43a99fecad8dfb2bb
 timeCreated: 1507037571
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/herowenzhong/attack
+  assetBundleVariant: common

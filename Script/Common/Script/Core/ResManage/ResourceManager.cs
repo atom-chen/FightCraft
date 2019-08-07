@@ -2,91 +2,337 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using AssetBundles;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-
-public class ResourceManager
+public class ResourceManager:MonoBehaviour
 {
     #region 唯一
+
+    public static bool _ResFromBundle = false;
 
     private static ResourceManager _Instance = null;
     public static ResourceManager Instance
     {
         get
         {
-            if (_Instance == null)
-            {
-                _Instance = new ResourceManager();
-            }
             return _Instance;
         }
     }
 
-    private ResourceManager() { }
+    public static void InitResourceManager()
+    {
+        GameObject resourceGo = new GameObject("ResourceManager");
+        resourceGo.AddComponent<ResourceManager>();
+
+        
+    }
+
+    void Start()
+    {
+        if (_ResFromBundle)
+        {
+            StartCoroutine(Initialize());
+        }
+        else
+        {
+            DontDestroyOnLoad(gameObject);
+            _Instance = this;
+            gameObject.AddComponent<ResourcePool>();
+        }
+    }
+
+    protected IEnumerator Initialize()
+    {
+        // Don't destroy the game object as we base on it to run the loading script.
+        DontDestroyOnLoad(gameObject);
+
+        InitializeSourceURL();
+
+        // Initialize AssetBundleManifest which loads the AssetBundleManifest object.
+        var request = AssetBundleManager.Initialize();
+        Debug.Log("Initialize:" + Time.time);
+        if (request != null)
+            yield return request;
+        Debug.Log("Initialize 2:" + Time.time);
+        _Instance = this;
+
+        gameObject.AddComponent<ResourcePool>();
+    }
+
+    void InitializeSourceURL()
+    {
+        // If ODR is available and enabled, then use it and let Xcode handle download requests.
+#if ENABLE_IOS_ON_DEMAND_RESOURCES
+        if (UnityEngine.iOS.OnDemandResources.enabled)
+        {
+            AssetBundleManager.SetSourceAssetBundleURL("odr://");
+            return;
+        }
+#endif
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
+        // With this code, when in-editor or using a development builds: Always use the AssetBundle Server
+        // (This is very dependent on the production workflow of the project.
+        //      Another approach would be to make this configurable in the standalone player.)
+        //AssetBundleManager.SetDevelopmentAssetBundleServer();
+        AssetBundleManager.SetSourceAssetBundleDirectory("");
+        return;
+#else
+        // Use the following code if AssetBundles are embedded in the project for example via StreamingAssets folder etc:
+        AssetBundleManager.SetSourceAssetBundleURL(Application.streamingAssetsPath + "/");
+        // Or customize the URL based on your deployment or configuration
+        //AssetBundleManager.SetSourceAssetBundleURL("http://www.MyWebsite/MyAssetBundles");
+        return;
+#endif
+    }
+
+    #endregion
+
+    #region load from bundle
+
+    protected IEnumerator InstantiateGameObjectAsync(string assetBundleName, string assetName, LoadBundleAssetCallback<GameObject> callBack, Hashtable param)
+    {
+        if (_ResFromBundle)
+        {
+            AssetBundleLoadAssetOperation request = AssetBundleManager.LoadAssetAsync(assetBundleName, assetName, typeof(GameObject));
+            if (request == null)
+            {
+                Debug.LogError("Failed AssetBundleLoadAssetOperation on " + assetName + " from the AssetBundle " + assetBundleName + ".");
+                yield break;
+            }
+            yield return StartCoroutine(request);
+
+            GameObject prefab = request.GetAsset<GameObject>();
+            var instanceGO = GameObject.Instantiate(prefab);
+
+            if (callBack != null)
+                callBack.Invoke(assetName, instanceGO, param);
+        }
+        else
+        {
+            GameObject prefab = Resources.Load<GameObject>(assetBundleName);
+            var instanceGO = GameObject.Instantiate(prefab);
+
+            if (callBack != null)
+                callBack.Invoke(assetName, instanceGO, param);
+        }
+    }
+
+    protected IEnumerator InstantiateAudioAsync(string assetBundleName, string assetName, LoadBundleAssetCallback<AudioClip> callBack, Hashtable param)
+    {
+        if (_ResFromBundle)
+        {
+            AssetBundleLoadAssetOperation request = AssetBundleManager.LoadAssetAsync(assetBundleName, assetName, typeof(AudioClip));
+            if (request == null)
+            {
+                Debug.LogError("Failed AssetBundleLoadAssetOperation on " + assetName + " from the AssetBundle " + assetBundleName + ".");
+                yield break;
+            }
+            yield return StartCoroutine(request);
+
+            AudioClip resData = request.GetAsset<AudioClip>();
+
+            if (callBack != null)
+                callBack.Invoke(assetName, resData, param);
+        }
+        else
+        {
+            AudioClip resData = Resources.Load<AudioClip>(assetBundleName);
+
+            if (callBack != null)
+                callBack.Invoke(assetName, resData, param);
+        }
+    }
+
+    protected IEnumerator InstantiateAnimationAsync(string assetBundleName, string assetName, LoadBundleAssetCallback<AnimationClip> callBack, Hashtable param)
+    {
+        if (_ResFromBundle)
+        {
+            AssetBundleLoadAssetOperation request = AssetBundleManager.LoadAssetAsync(assetBundleName, assetName, typeof(AnimationClip));
+            if (request == null)
+            {
+                Debug.LogError("Failed AssetBundleLoadAssetOperation on " + assetName + " from the AssetBundle " + assetBundleName + ".");
+                yield break;
+            }
+            yield return StartCoroutine(request);
+
+            AnimationClip resData = request.GetAsset<AnimationClip>();
+
+            if (callBack != null)
+                callBack.Invoke(assetName, resData, param);
+        }
+        else
+        {
+            AnimationClip resData = Resources.Load<AnimationClip>(assetBundleName);
+
+            if (callBack != null)
+                callBack.Invoke(assetName, resData, param);
+        }
+    }
+
+    protected IEnumerator InstantiateSpriteAsync(string assetBundleName, string assetName, LoadBundleAssetCallback<Sprite> callBack, Hashtable param)
+    {
+        if (_ResFromBundle)
+        {
+            AssetBundleLoadAssetOperation request = AssetBundleManager.LoadAssetAsync(assetBundleName, assetName, typeof(Sprite));
+            if (request == null)
+            {
+                Debug.LogError("Failed AssetBundleLoadAssetOperation on " + assetName + " from the AssetBundle " + assetBundleName + ".");
+                yield break;
+            }
+            yield return StartCoroutine(request);
+
+            Sprite resData = request.GetAsset<Sprite>();
+
+            if (callBack != null)
+                callBack.Invoke(assetName, resData, param);
+        }
+        else
+        {
+            Sprite resData = Resources.Load<Sprite>(assetBundleName);
+
+            if (callBack != null)
+                callBack.Invoke(assetName, resData, param);
+        }
+    }
 
     #endregion
 
     #region 
 
-    bool _IsFromBundle = false;
-
-    public GameObject GetUI(string resName)
+    public void LoadUI(string uiName, LoadBundleAssetCallback<GameObject> callBack, Hashtable param)
     {
-        if (_IsFromBundle)
+        string bundleName = "UI/" + uiName;
+        string assetName = System.IO.Path.GetFileNameWithoutExtension(bundleName);
+        if (_ResFromBundle)
         {
-            return GetUIBundle(resName);
+            bundleName = bundleName + ".common";
+            bundleName = bundleName.ToLower();
+        }
+        StartCoroutine(InstantiateGameObjectAsync(bundleName, assetName, callBack, param));
+    }
+
+    public void LoadPrefab(string prefabName, LoadBundleAssetCallback<GameObject> callBack, Hashtable param)
+    {
+        string bundleName = prefabName;
+        if (_ResFromBundle)
+        {
+            bundleName = "Asset/" + prefabName + ".common";
+            bundleName = bundleName.ToLower();
+        }
+        string assetName = System.IO.Path.GetFileNameWithoutExtension(bundleName);
+        StartCoroutine(InstantiateGameObjectAsync(bundleName, assetName, callBack, param));
+    }
+
+    public IEnumerator LoadPrefab(string prefabName, LoadBundleAssetCallback<GameObject> callBack)
+    {
+        string bundleName = "Asset/" + prefabName + ".common";
+        string assetName = System.IO.Path.GetFileNameWithoutExtension(bundleName);
+
+        if (_ResFromBundle)
+        {
+            AssetBundleLoadAssetOperation request = AssetBundleManager.LoadAssetAsync(bundleName.ToLower(), assetName, typeof(GameObject));
+            if (request == null)
+            {
+                Debug.LogError("Failed AssetBundleLoadAssetOperation on " + assetName + " from the AssetBundle " + bundleName + ".");
+                yield break;
+            }
+            yield return StartCoroutine(request);
+
+            GameObject prefab = request.GetAsset<GameObject>();
+            Debug.Log("LoadPrefab:" + prefabName);
+            var instanceGO = GameObject.Instantiate(prefab);
+
+            callBack.Invoke(assetName, instanceGO, null);
         }
         else
         {
-            return GetUIRes(resName);
+            GameObject resData = Resources.Load<GameObject>(prefabName);
+            var instanceGO = GameObject.Instantiate(resData);
+
+            if (callBack != null)
+                callBack.Invoke(assetName, instanceGO, null);
         }
     }
 
-    #endregion
-
-    #region Assetbundle
-
-    AssetBundle _UIBundle;
-    public GameObject GetUIBundle(string path)
+    public void LoadAudio(string prefabName, LoadBundleAssetCallback<AudioClip> callBack, Hashtable param)
     {
-        if (_UIBundle == null)
+        string bundleName = "Audios/" + prefabName;
+        if (_ResFromBundle)
         {
-            string mUrl = GetStreamingAssetsPath() + "ui";
-            WWW www = WWW.LoadFromCacheOrDownload(mUrl, 1);
-            _UIBundle = www.assetBundle;
+            bundleName = "Asset/" + bundleName + ".common";
+            bundleName = bundleName.ToLower();
         }
-
-        string name = GetFileNameFromPath(path);
-        GameObject tempGO = _UIBundle.LoadAsset(name) as GameObject;
-        return tempGO;
+        string assetName = System.IO.Path.GetFileNameWithoutExtension(bundleName);
+        StartCoroutine(InstantiateAudioAsync(bundleName, assetName, callBack, param));
     }
 
-    public string GetFileNameFromPath(string path)
+    public void LoadAnimation(string prefabName, LoadBundleAssetCallback<AnimationClip> callBack, Hashtable param)
     {
-        int lastPathIdx = path.LastIndexOf("/");
-        string name = path;
-        if (lastPathIdx > 0)
-            name = path.Substring(lastPathIdx + 1);
-        return name;
+        string bundleName = "Animation/" + prefabName;
+        if (_ResFromBundle)
+        {
+            bundleName = "Asset/" + bundleName + ".common";
+            bundleName = bundleName.ToLower();
+        }
+        string assetName = System.IO.Path.GetFileNameWithoutExtension(bundleName);
+        StartCoroutine(InstantiateAnimationAsync(bundleName, assetName, callBack, param));
     }
 
-    public static string GetStreamingAssetsPath()
+    public IEnumerator LoadLevelAsync(string levelName, bool isAdditive)
     {
-        string filepath = "";
-#if UNITY_EDITOR
-        filepath = "file:///" + Application.dataPath + "/StreamingAssets/";
-        Debug.Log("editor");
-#elif UNITY_STANDALONE_WIN
-        filepath = "file:///" + Application.dataPath + "/StreamingAssets/";
-        Debug.Log("UNITY_STANDALONE_WIN");
-#elif UNITY_IPHONE
-	    filepath = Application.dataPath +"/Raw/";
-        Debug.Log("IPHONE");
-#elif UNITY_ANDROID
-	    filepath = "jar:file://" + Application.dataPath + "!/assets/";
-        Debug.Log("android");
-#endif
-        return filepath;
+        if (_ResFromBundle)
+        {
+            string sceneAssetBundle = "Scene/" + levelName + ".common";
+
+            AssetBundleLoadOperation request = AssetBundleManager.LoadLevelAsync(sceneAssetBundle.ToLower(), levelName, isAdditive);
+            if (request == null)
+                yield break;
+            yield return StartCoroutine(request);
+        }
+        else
+        {
+            yield return SceneManager.LoadSceneAsync(levelName, isAdditive ? LoadSceneMode.Additive : LoadSceneMode.Single);
+        }
     }
+
+    public void SetImage(Image image, string spriteName, LoadBundleAssetCallback<Sprite> callBack = null, Hashtable hash = null)
+    {
+        var valid = false;
+        if (image != null)
+        {
+            if (image.sprite == null)
+            {
+                image.enabled = false;
+                valid = true;
+            }
+            else
+            {
+                valid = !image.sprite.name.Equals(spriteName);
+            }
+        }
+        if (!valid)
+            return;
+
+        string bundleName = "Icon/" + spriteName;
+        if (_ResFromBundle)
+        {
+            bundleName = "Asset/" + bundleName + ".common";
+            bundleName = bundleName.ToLower();
+        }
+        string assetName = System.IO.Path.GetFileNameWithoutExtension(bundleName);
+        StartCoroutine(InstantiateSpriteAsync(bundleName, assetName, (resName, resData, hashParam)=>
+        {
+            image.sprite = resData;
+            if (callBack != null)
+            {
+                callBack.Invoke(resName, resData, hash);
+            }
+        }, null));
+    }
+
+
 
     #endregion
 
@@ -100,53 +346,55 @@ public class ResourceManager
     public const string RES_AUDIO_PATH = "Audios/";
     public const string RES_TEXTURE_PATH = "Texture/";
 
-    public Sprite GetSprite(string resName)
-    {
-        string resPath = RES_SPRITE_PATH + resName;
-        var resource = Resources.Load<Sprite>(resPath);
-        if (resource == null)
-        {
-            Debug.LogError("Resource error:" + resPath);
-        }
-        return resource;
-    }
+    public const string RES_EDITOR_FOLD = "Assets/FightCraft/BundleAssets/";
 
-    public Texture GetTexture(string resName)
-    {
-        string resPath = RES_TEXTURE_PATH + resName;
-        var resource = Resources.Load<Texture>(resPath);
-        if (resource == null)
-        {
-            Debug.LogError("Resource error:" + resPath);
-        }
-        return resource;
-    }
+    //public Sprite GetSprite(string resName)
+    //{
+    //    string resPath = RES_EDITOR_FOLD + RES_SPRITE_PATH + resName;
+    //    var resource = UnityEditor.AssetDatabase.LoadAssetAtPath<Sprite>(resPath);
+    //    if (resource == null)
+    //    {
+    //        Debug.LogError("Resource error:" + resPath);
+    //    }
+    //    return resource;
+    //}
 
-    public GameObject GetGameObject(string resPath)
-    {
-        //string resPath = RES_PREFAB_PATH + resName;
-        var resource = Resources.Load<GameObject>(resPath);
-        if (resource == null)
-        {
-            Debug.LogError("Resource error:" + resPath);
-        }
-        return resource;
-    }
+    //public Texture GetTexture(string resName)
+    //{
+    //    string resPath = RES_EDITOR_FOLD + RES_TEXTURE_PATH + resName;
+    //    var resource = UnityEditor.AssetDatabase.LoadAssetAtPath<Texture>(resPath);
+    //    if (resource == null)
+    //    {
+    //        Debug.LogError("Resource error:" + resPath);
+    //    }
+    //    return resource;
+    //}
 
-    public GameObject GetInstanceGameObject(string resPath)
-    {
-        //string resPath = RES_PREFAB_PATH + resName;
-        var resource = Resources.Load<GameObject>(resPath);
-        if (resource == null)
-        {
-            Debug.LogError("Resource error:" + resPath);
-            return null;
-        }
-        var instanceGO = GameObject.Instantiate<GameObject>(resource);
-        return instanceGO;
-    }
+    //public GameObject GetGameObject(string resName)
+    //{
+    //    string resPath = RES_EDITOR_FOLD + resName;
+    //    var resource = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(resPath);
+    //    if (resource == null)
+    //    {
+    //        Debug.LogError("Resource error:" + resPath);
+    //    }
+    //    return resource;
+    //}
 
-    public string GetTable(string resName)
+    //public GameObject GetInstanceGameObject(string resPath)
+    //{
+    //    string resDataPath = RES_EDITOR_FOLD + resPath;
+    //    var resource = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(resDataPath);
+    //    if (resource == null)
+    //    {
+    //        Debug.LogError("Resource error:" + resPath);
+    //        return null;
+    //    }
+    //    var instanceGO = GameObject.Instantiate<GameObject>(resource);
+    //    return instanceGO;
+    //}
+
+    public static string GetTable(string resName)
     {
         string resPath = RES_TABLE_PATH + resName;
         var resource = Resources.Load<TextAsset>(resPath);
@@ -157,49 +405,49 @@ public class ResourceManager
         return resource.text;
     }
 
-    public GameObject GetEffect(string resName)
-    {
-        string resPath = RES_EFFECT_PATH + resName;
-        var resource = Resources.Load<GameObject>(resPath);
-        if (resource == null)
-        {
-            Debug.LogError("Resource error:" + resPath);
-        }
-        return resource;
-    }
+    //public GameObject GetEffect(string resName)
+    //{
+    //    string resPath = RES_EDITOR_FOLD + RES_EFFECT_PATH + resName;
+    //    var resource = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(resPath);
+    //    if (resource == null)
+    //    {
+    //        Debug.LogError("Resource error:" + resPath);
+    //    }
+    //    return resource;
+    //}
 
-    public GameObject GetUIRes(string resName)
-    {
-        string resPath = RES_UI_PATH + resName;
-        var resource = Resources.Load<GameObject>(resPath);
-        if (resource == null)
-        {
-            Debug.LogError("Resource error:" + resPath);
-        }
-        return resource;
-    }
+    //public GameObject GetUIRes(string resName)
+    //{
+    //    string resPath = RES_EDITOR_FOLD + RES_UI_PATH + resName + ".prefab";
+    //    var resource = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(resPath);
+    //    if (resource == null)
+    //    {
+    //        Debug.LogError("Resource error:" + resPath);
+    //    }
+    //    return resource;
+    //}
 
-    public AudioClip GetAudioClip(string resName)
-    {
-        string resPath = RES_AUDIO_PATH + resName;
-        var resource = Resources.Load<AudioClip>(resPath);
-        if (resource == null)
-        {
-            Debug.LogError("Resource error:" + resPath);
-        }
-        return resource;
-    }
+    //public AudioClip GetAudioClip(string resName)
+    //{
+    //    string resPath = RES_EDITOR_FOLD + RES_AUDIO_PATH + resName;
+    //    var resource = UnityEditor.AssetDatabase.LoadAssetAtPath<AudioClip>(resPath);
+    //    if (resource == null)
+    //    {
+    //        Debug.LogError("Resource error:" + resPath);
+    //    }
+    //    return resource;
+    //}
 
-    public AnimationClip GetAnimationClip(string resName)
-    {
-        string resPath = resName;
-        var resource = Resources.Load<AnimationClip>(resPath);
-        if (resource == null)
-        {
-            Debug.LogError("Resource error:" + resPath);
-        }
-        return resource;
-    }
+    //public AnimationClip GetAnimationClip(string resName)
+    //{
+    //    string resPath = RES_EDITOR_FOLD + resName;
+    //    var resource = UnityEditor.AssetDatabase.LoadAssetAtPath<AnimationClip>(resPath);
+    //    if (resource == null)
+    //    {
+    //        Debug.LogError("Resource error:" + resPath);
+    //    }
+    //    return resource;
+    //}
 
     public void DestoryObj(GameObject obj)
     {
@@ -208,3 +456,8 @@ public class ResourceManager
     #endregion
 }
 
+#region asset load callback
+
+public delegate void LoadBundleAssetCallback<in T>(string assetName, T assetItem, Hashtable hashTable) where T : UnityEngine.Object;
+
+#endregion

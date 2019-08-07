@@ -3,6 +3,8 @@ guid: af0421be3ab1e1f4795681c04db52649
 timeCreated: 1487255767
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/maincharboy/act_hw_ca_01_end
+  assetBundleVariant: common

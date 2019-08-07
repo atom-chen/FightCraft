@@ -3,6 +3,8 @@ guid: e0e758abf95294e47b374da03e0bba5e
 timeCreated: 1488542975
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/mongongbing/act_attack_01
+  assetBundleVariant: common

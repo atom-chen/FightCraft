@@ -3,6 +3,8 @@ guid: f128c2f739318fe43acab4c1bd2080cf
 timeCreated: 1488542966
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/mongongbing
+  assetBundleVariant: common

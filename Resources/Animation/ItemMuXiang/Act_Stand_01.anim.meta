@@ -3,6 +3,8 @@ guid: 970f1073bb71dd8418a6882ddd418519
 timeCreated: 1489212295
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/itemmuxiang/act_stand_01
+  assetBundleVariant: common

@@ -3,6 +3,8 @@ guid: e99762b5fe9a7284283db6ac3981660d
 timeCreated: 1489125820
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herodiaochan/act_hit_01
+  assetBundleVariant: common

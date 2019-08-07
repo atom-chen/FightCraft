@@ -3,6 +3,8 @@ guid: cb7dbdd8d6de7d7458eb6a38564e0e8e
 timeCreated: 1488373342
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monhutiebeiyaohu/act_move_01
+  assetBundleVariant: common

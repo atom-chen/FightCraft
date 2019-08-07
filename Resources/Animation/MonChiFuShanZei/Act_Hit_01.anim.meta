@@ -3,6 +3,8 @@ guid: 977dd6600fbd17c4fb1e8c13fe88d6ac
 timeCreated: 1488370699
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monchifushanzei/act_hit_01
+  assetBundleVariant: common

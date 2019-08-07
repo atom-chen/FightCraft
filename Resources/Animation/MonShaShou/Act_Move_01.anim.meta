@@ -3,6 +3,8 @@ guid: b913b865e3867f64e91a2ddf78fb76ad
 timeCreated: 1489212013
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monshashou/act_move_01
+  assetBundleVariant: common

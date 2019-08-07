@@ -3,7 +3,8 @@ guid: 69a3a18593c423b488578c5088c20762
 timeCreated: 1507034073
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/heroleizhenzi/buff3
+  assetBundleVariant: common

@@ -3,6 +3,8 @@ guid: 61771515b69ec9947ba3a2a15ee31ec6
 timeCreated: 1488370700
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monchifushanzei/act_attack_02
+  assetBundleVariant: common

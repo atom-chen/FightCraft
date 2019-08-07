@@ -3,6 +3,8 @@ guid: ab97f714fd65b35439578ab232e3e15c
 timeCreated: 1488374277
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monfubing/act_stand_01
+  assetBundleVariant: common

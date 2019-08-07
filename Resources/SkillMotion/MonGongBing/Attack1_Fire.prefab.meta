@@ -3,7 +3,8 @@ guid: d6bbe737693abf240941347661955406
 timeCreated: 1506570360
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/mongongbing/attack1_fire
+  assetBundleVariant: common

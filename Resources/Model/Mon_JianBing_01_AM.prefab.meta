@@ -3,7 +3,8 @@ guid: 4b566b4f68660294d8d4a5c0bfdda871
 timeCreated: 1501486356
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/mon_jianbing_01_am
+  assetBundleVariant: common

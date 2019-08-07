@@ -11,7 +11,7 @@ public class UIRoleSelect : UIBase
     public static void ShowAsyn()
     {
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("LogicUI/UIRoleSelect", UILayer.PopUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIRoleSelect, UILayer.PopUI, hash);
     }
 
     #endregion
@@ -30,10 +30,18 @@ public class UIRoleSelect : UIBase
 
         for (int i = 0; i < PlayerDataPack._MAX_ROLE_CNT; ++i)
         {
-            GetCharModel(i);
+            InitCharModel(i);
         }
 
         SelectRole(_SelectRoleID);
+    }
+
+    private void OnDestroy()
+    {
+        //foreach (var animGO in _ShowAnims)
+        //{
+        //    GameObject.Destroy(animGO);
+        //}
     }
 
     #endregion
@@ -66,8 +74,11 @@ public class UIRoleSelect : UIBase
 
     private List<UIModelAnim> _ShowAnims = new List<UIModelAnim>();
 
+    private int _DefaultShowIdx = -1;
+
     public void ShowModel(int idx)
     {
+        
         for (int i = 0; i < _UICameraTexture.Length; ++i)
         {
             if (i != idx)
@@ -78,46 +89,42 @@ public class UIRoleSelect : UIBase
             else
             {
                 _UICameraTexture[i].gameObject.SetActive(true);
-                _ShowAnims[i].PlayAnim();
+                if (_ShowAnims[i] != null)
+                {
+                    _ShowAnims[i].PlayAnim();
+                    _DefaultShowIdx = -1;
+                }
+                else
+                {
+                    _DefaultShowIdx = idx;
+                }
                 _GrayImgs[i].SetActive(false);
             }
         }
     }
 
-    public GameObject GetCharModel(int idx)
+    public void InitCharModel(int idx)
     {
-        string mainBaseName = PlayerDataPack.Instance._RoleList[idx].MainBaseName;
+        _ShowAnims.Add(null);
         string modelName = PlayerDataPack.Instance._RoleList[idx].ModelName;
         string weaponName = PlayerDataPack.Instance._RoleList[idx].DefaultWeaponModel;
 
-        var model = ResourceManager.Instance.GetInstanceGameObject("Model/" + modelName);
-        model.transform.localPosition = Vector3.zero;
-        model.transform.localRotation = Quaternion.Euler(Vector3.zero);
-
-        var weapon = ResourceManager.Instance.GetInstanceGameObject("Model/" + weaponName);
-        var weaponTrans = model.transform.Find("center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/righthand/rightweapon");
-        var weaponTransChild = weaponTrans.GetComponentsInChildren<Transform>();
-        for (int i = weapon.transform.childCount - 1; i >= 0; --i)
+        StartCoroutine(ResourcePool.Instance.LoadCharModel(modelName, weaponName, (resName, resGO, hash)=>
         {
-            weapon.transform.GetChild(i).SetParent(weaponTrans.parent);
-        }
-        foreach (var oldWeaponChild in weaponTransChild)
-        {
-            GameObject.Destroy(oldWeaponChild.gameObject);
-        }
-        GameObject.Destroy(weapon.gameObject);
+            var modelAnim = resGO.AddComponent<UIModelAnim>();
+            List<AnimationClip> anims = new List<AnimationClip>();
+            anims.Add(_Anims[idx * 2]);
+            anims.Add(_Anims[idx * 2 + 1]);
+            modelAnim.InitAnim(anims);
 
-
-        var modelAnim = model.AddComponent<UIModelAnim>();
-        List<AnimationClip> anims = new List<AnimationClip>();
-        anims.Add(_Anims[idx * 2]);
-        anims.Add(_Anims[idx * 2 + 1]);
-        modelAnim.InitAnim(anims);
-
-        _ShowAnims.Add(modelAnim);
-
-        _UICameraTexture[idx].InitShowGO(model);
-        return model;
+            _ShowAnims[idx] = (modelAnim);
+            _UICameraTexture[idx].InitShowGO(resGO);
+            if (_DefaultShowIdx == idx)
+            {
+                ShowModel(_DefaultShowIdx);
+            }
+        }, null));
+        
     }
 
     #endregion

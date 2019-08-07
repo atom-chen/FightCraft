@@ -3,7 +3,8 @@ guid: ea66842ac34e17f4982beaad7960c782
 timeCreated: 1511356633
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/passive/passiveicecircle
+  assetBundleVariant: common

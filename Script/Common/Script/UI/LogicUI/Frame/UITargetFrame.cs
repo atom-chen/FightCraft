@@ -8,13 +8,23 @@ public class UITargetFrame : UIBase
 
     #region static funs
 
-    public static void ShowAsyn()
+    public static void ShowAsyn(MotionManager motion)
     {
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("LogicUI/Frame/UITargetFrame", UILayer.BaseUI, hash);
+        hash.Add("Motion", motion);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UITargetFrame, UILayer.BaseUI, hash);
     }
 
     #endregion
+
+    public override void Show(Hashtable hash)
+    {
+        base.Show(hash);
+        _TargetMotion = (MotionManager)hash["Motion"];
+        if (_TargetMotion == null)
+            return;
+        ResourceManager.Instance.SetImage(_Icon, _TargetMotion.RoleAttrManager.MonsterRecord.HeadIcon);
+    }
 
     void Update()
     {
@@ -27,6 +37,7 @@ public class UITargetFrame : UIBase
     public GameObject _FrameRoot;
     public Slider _HPProcess;
     public Text _HPText;
+    public Image _Icon;
 
     private MotionManager _TargetMotion;
 
@@ -35,12 +46,12 @@ public class UITargetFrame : UIBase
         if (!AimTarget.Instance)
             return;
 
-        if (AimTarget.Instance.LockTarget != null
-            && _TargetMotion != AimTarget.Instance.LockTarget)
-        {
-            _TargetMotion = AimTarget.Instance.LockTarget;
-            _TargetAI = null;
-        }
+        //if (AimTarget.Instance.LockTarget != null
+        //    && _TargetMotion != AimTarget.Instance.LockTarget)
+        //{
+        //    _TargetMotion = AimTarget.Instance.LockTarget;
+        //    _TargetAI = null;
+        //}
 
         if (_TargetMotion != null)
         {
@@ -104,7 +115,7 @@ public class UITargetFrame : UIBase
             for (int j = 0; j < _HitPretects[i]._HitProtectGOs.Count; ++j)
             {
                 if (_TargetAI._ProtectTimes.ContainsKey(_HitPretects[i]._SkillInput)
-                    && j < _TargetAI._ProtectTimes[_HitPretects[i]._SkillInput])
+                    && j == _TargetAI._ProtectTimes[_HitPretects[i]._SkillInput] - 1)
                 {
                     _HitPretects[i]._HitProtectGOs[j].SetActive(true);
                 }

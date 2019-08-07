@@ -498,6 +498,9 @@ public class MotionManager : MonoBehaviour
 
     public bool IsCanAddBuff(ImpactBuff newBuff)
     {
+        if (IsMotionDie)
+            return false;
+
         foreach (var buff in _ImpactBuffs)
         {
             if (!buff.IsCanAddBuff(newBuff))
@@ -676,8 +679,15 @@ public class MotionManager : MonoBehaviour
             return _PlayingEffect;
         }
     }
+    public Dictionary<int, EffectController> _DynamicEffects = new Dictionary<int, EffectController>();
+    private int _DynamicEffectID = 0;
+    public int GetDynamicEffectID()
+    {
+        ++_DynamicEffectID;
+        return _DynamicEffectID;
+    }
 
-    public void PlaySkillEffect(EffectController effect, float speed = -1, ElementType elementType = ElementType.None)
+    public EffectController PlaySkillEffect(EffectController effect, float speed = -1, ElementType elementType = ElementType.None)
     {
         if (!_SkillEffects.ContainsKey(effect.name))
         {
@@ -695,6 +705,8 @@ public class MotionManager : MonoBehaviour
             _PlayingEffect.PlayEffect(RoleAttrManager.AttackSpeed);
         else
             _PlayingEffect.PlayEffect(speed);
+
+        return _PlayingEffect;
     }
 
     public void StopSkillEffect(EffectController effect)
@@ -705,6 +717,17 @@ public class MotionManager : MonoBehaviour
         if (_SkillEffects.ContainsKey(effect.name))
         {
             _SkillEffects[effect.name].HideEffect();
+        }
+    }
+
+    public void StopSkillEffect(string effectName)
+    {
+        if (string.IsNullOrEmpty(effectName))
+            return;
+
+        if (_SkillEffects.ContainsKey(effectName))
+        {
+            _SkillEffects[effectName].HideEffect();
         }
     }
 
@@ -753,10 +776,21 @@ public class MotionManager : MonoBehaviour
         return _BindTransform[bindName];
     }
 
-    public EffectController PlayDynamicEffect(EffectController effect, Hashtable hashParam = null)
+    public int PlayDynamicEffect(string effectName, Hashtable hashParam = null)
+    {
+        int dynamicEffectID = 0;
+        ResourcePool.Instance.LoadEffect(effectName, (resName, effect, callBackHash) =>
+        {
+            dynamicEffectID = PlayDynamicEffect(effect, callBackHash);
+        }, null);
+
+        return dynamicEffectID;
+    }
+
+    public int PlayDynamicEffect(EffectController effect, Hashtable hashParam = null)
     {
         var idleEffect = ResourcePool.Instance.GetIdleEffect(effect);
-        idleEffect.transform.SetParent(GetBindTransform(effect._BindPos));
+        idleEffect.transform.SetParent(GetBindTransform(idleEffect._BindPos));
         idleEffect.transform.localPosition = Vector3.zero;
         idleEffect.transform.localRotation = Quaternion.Euler(Vector3.zero);
 
@@ -771,27 +805,39 @@ public class MotionManager : MonoBehaviour
                 idleEffect.transform.rotation = ((Quaternion)hashParam["Rotation"]);
             }
         }
-        idleEffect._EffectLastTime = effect._EffectLastTime;
-        if(hashParam == null)
+        //idleEffect._EffectLastTime = effect._EffectLastTime;
+        if (hashParam == null)
             idleEffect.PlayEffect();
         else
             idleEffect.PlayEffect(hashParam);
+
+        int dynamicEffectID = GetDynamicEffectID();
+        _DynamicEffects.Add(dynamicEffectID, idleEffect);
         if (idleEffect._EffectLastTime > 0)
         {
-            StartCoroutine(StopDynamicEffect(idleEffect));
+            StartCoroutine(StopDynamicEffect(dynamicEffectID));
         }
-        return idleEffect;
+
+        return dynamicEffectID;
     }
 
-    public IEnumerator StopDynamicEffect(EffectController effct)
+    public IEnumerator StopDynamicEffect(int effctID)
     {
+        if (!_DynamicEffects.ContainsKey(effctID))
+            yield break;
+
+        var effct = _DynamicEffects[effctID];
         yield return new WaitForSeconds( effct._EffectLastTime);
         
-        StopDynamicEffectImmediately(effct);
+        StopDynamicEffectImmediately(effctID);
     }
 
-    public void StopDynamicEffectImmediately(EffectController effct)
+    public void StopDynamicEffectImmediately(int effctID)
     {
+        if (!_DynamicEffects.ContainsKey(effctID))
+            return;
+
+        var effct = _DynamicEffects[effctID];
         if (ResourcePool.Instance.IsEffectInRecvl(effct))
             return;
 
@@ -1165,31 +1211,31 @@ public class MotionManager : MonoBehaviour
     private void InitState()
     {
         _StateIdle = new StateIdle();
-        _StateIdle.InitState(this);
+        _StateIdle.InitAnimation(this);
 
         _StateMove = new StateMove();
-        _StateMove.InitState(this);
+        _StateMove.InitAnimation(this);
 
         _StateHit = new StateHit();
-        _StateHit.InitState(this);
+        _StateHit.InitAnimation(this);
 
         _StateFly = new StateFly();
-        _StateFly.InitState(this);
+        _StateFly.InitAnimation(this);
 
         _StateCatch = new StateCatch();
-        _StateCatch.InitState(this);
+        _StateCatch.InitAnimation(this);
 
         _StateRise = new StateRise();
-        _StateRise.InitState(this);
+        _StateRise.InitAnimation(this);
 
         _StateLie = new StateLie();
-        _StateLie.InitState(this);
+        _StateLie.InitAnimation(this);
 
         _StateDie = new StateDie();
-        _StateDie.InitState(this);
+        _StateDie.InitAnimation(this);
 
         _StateSkill = new StateSkill();
-        _StateSkill.InitState(this);
+        _StateSkill.InitAnimation(this);
 
         _AIBases = new List<AI_Base>( gameObject.GetComponents<AI_Base>());
 

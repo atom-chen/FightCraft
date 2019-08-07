@@ -66,7 +66,7 @@ public class ImpactBuff : ImpactBase
 
     protected MotionManager _BuffSender;
     protected MotionManager _BuffOwner;
-    protected EffectController _DynamicEffect;
+    protected int _DynamicEffect;
     protected bool _IsActingBuff = false;
 
     protected Dictionary<MotionManager, List<ImpactBuff>> _ReciverDict = new Dictionary<MotionManager, List<ImpactBuff>>();

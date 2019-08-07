@@ -3,6 +3,8 @@ guid: 58fb8903e8f3bd84c8918eccfb21bcb1
 timeCreated: 1489146139
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herolianpo/act_hit_01
+  assetBundleVariant: common

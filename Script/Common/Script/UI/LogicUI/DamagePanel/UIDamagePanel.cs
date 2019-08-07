@@ -14,7 +14,7 @@ public class UIDamagePanel : UIBase
     {
         Hashtable hash = new Hashtable();
         hash.Add("IndependCanvas", true);
-        GameCore.Instance.UIManager.ShowUI("LogicUI/DamagePanel/UIDamagePanel", UILayer.BaseUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIDamagePanel, UILayer.BaseUI, hash);
     }
 
     public static void ShowItem(Vector3 showWorldPos, int showValue1, int showValue2, RoleAttrManager.ShowDamageType showType, int baseSize)
@@ -22,7 +22,7 @@ public class UIDamagePanel : UIBase
         if (!GameCore.Instance)
             return;
 
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UIDamagePanel>("LogicUI/DamagePanel/UIDamagePanel");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIDamagePanel>(UIConfig.UIDamagePanel);
         if (instance == null)
             return;
 

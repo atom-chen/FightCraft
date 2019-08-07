@@ -70,7 +70,7 @@ public class BulletDiaoChanBingCi : BulletBase
         base.BulletFinish();
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         Debug.Log("OnTriggerEnter:" + other.ToString());
         var targetMotion = other.GetComponentInParent<MotionManager>();

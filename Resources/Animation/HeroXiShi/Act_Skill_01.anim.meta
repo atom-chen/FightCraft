@@ -3,6 +3,8 @@ guid: a2b372e3533eeb24783bd939f6005636
 timeCreated: 1489146275
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heroxishi/act_skill_01
+  assetBundleVariant: common

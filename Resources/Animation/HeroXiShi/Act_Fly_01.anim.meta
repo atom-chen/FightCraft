@@ -3,6 +3,8 @@ guid: c2ddc03cce4e185419e67764a21edb50
 timeCreated: 1489146275
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heroxishi/act_fly_01
+  assetBundleVariant: common

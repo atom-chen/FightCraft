@@ -3,7 +3,8 @@ guid: eb5f171228d3ac241b60562c1976af84
 timeCreated: 1506655734
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/monshuangdaobing/skill1
+  assetBundleVariant: common

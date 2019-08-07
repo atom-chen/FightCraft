@@ -3,7 +3,8 @@ guid: d5c87cadccead9348a0941287dd6f956
 timeCreated: 1501486353
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/mon_huweiduizhang_01_am
+  assetBundleVariant: common

@@ -3,7 +3,8 @@ guid: a59e64e1ed189cf4f958c87383ab405f
 timeCreated: 1501486280
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/mon_changjiaomanniu_01_am
+  assetBundleVariant: common

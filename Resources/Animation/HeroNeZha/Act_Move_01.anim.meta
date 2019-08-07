@@ -3,6 +3,8 @@ guid: 1d97ab7fbef07d643a7e3f093c90f5c8
 timeCreated: 1489146179
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heronezha/act_move_01
+  assetBundleVariant: common

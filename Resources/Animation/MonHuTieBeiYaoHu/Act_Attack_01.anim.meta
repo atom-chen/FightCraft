@@ -3,6 +3,8 @@ guid: 276ea556e0f1860409930a741b0c6f69
 timeCreated: 1488373342
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monhutiebeiyaohu/act_attack_01
+  assetBundleVariant: common

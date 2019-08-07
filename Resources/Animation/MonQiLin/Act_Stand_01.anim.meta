@@ -3,6 +3,8 @@ guid: 5af32885c7e4f174f8ac12fed7e9d6dc
 timeCreated: 1489211808
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monqilin/act_stand_01
+  assetBundleVariant: common

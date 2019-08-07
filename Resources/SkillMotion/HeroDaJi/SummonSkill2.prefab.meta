@@ -3,7 +3,8 @@ guid: 7a89394347b20ed46aa2db8312a40299
 timeCreated: 1518243065
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/herodaji/summonskill2
+  assetBundleVariant: common

@@ -3,6 +3,8 @@ guid: 3be74de349da2f84d82e2e2a72d35f87
 timeCreated: 1489150581
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/heroxishi
+  assetBundleVariant: common

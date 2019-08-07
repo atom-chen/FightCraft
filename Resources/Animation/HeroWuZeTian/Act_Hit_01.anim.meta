@@ -3,6 +3,8 @@ guid: e3de8f13be8b3f849a3b06f94b7da2b4
 timeCreated: 1489146253
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herowuzetian/act_hit_01
+  assetBundleVariant: common

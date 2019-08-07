@@ -3,6 +3,8 @@ guid: 1ebf5045336a1944eaa309eaa2b386ef
 timeCreated: 1488374278
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monfubing/act_attack_01
+  assetBundleVariant: common

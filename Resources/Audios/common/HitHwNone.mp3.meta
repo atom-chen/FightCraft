@@ -3,6 +3,7 @@ guid: 31d5a5bbbf4d2884ea5be6da1cb39bc0
 timeCreated: 1523006563
 licenseType: Pro
 AudioImporter:
+  externalObjects: {}
   serializedVersion: 6
   defaultSettings:
     loadType: 0
@@ -16,7 +17,8 @@ AudioImporter:
   normalize: 1
   preloadAudioData: 1
   loadInBackground: 0
+  ambisonic: 0
   3D: 1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/audios/common/hithwnone
+  assetBundleVariant: common

@@ -3,6 +3,8 @@ guid: c92e997f70c9ca04e8656fd59a6713ac
 timeCreated: 1488543465
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/mongunseng/act_attack_01
+  assetBundleVariant: common

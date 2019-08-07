@@ -3,6 +3,8 @@ guid: e15e841017e6f014281ff998ef4c8de4
 timeCreated: 1489212066
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monying/act_fly_01
+  assetBundleVariant: common

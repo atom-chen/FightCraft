@@ -3,6 +3,8 @@ guid: 9cd1e663d696f814d8149b00471ff649
 timeCreated: 1489145210
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/herojingke
+  assetBundleVariant: common

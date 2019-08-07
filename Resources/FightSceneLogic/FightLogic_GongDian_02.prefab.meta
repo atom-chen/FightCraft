@@ -3,6 +3,8 @@ guid: 6bd6747db11278f43928065cba0ee23e
 timeCreated: 1494501529
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/fightscenelogic/fightlogic_gongdian_02
+  assetBundleVariant: common

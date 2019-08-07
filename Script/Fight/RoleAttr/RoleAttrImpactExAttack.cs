@@ -31,31 +31,10 @@ public class RoleAttrImpactExAttack : RoleAttrImpactBase
                 return;
 
             var skillMotion = roleMotion._StateSkill._SkillMotions[_SkillInput];
-            var impactGO = ResourceManager.Instance.GetInstanceGameObject("SkillMotion\\CommonImpact\\" + _ImpactName);
-            impactGO.transform.SetParent(skillMotion.transform);
 
-            var damages = skillMotion.GetComponentsInChildren<ImpactDamage>(true);
-            float damageValue = 0;
-            foreach (var impDamage in damages)
+            ResourcePool.Instance.LoadConfig("SkillMotion\\CommonImpact\\" + _ImpactName, (resName, resGO, hash) =>
             {
-                if (impDamage._IsCharSkillDamage)
-                    damageValue += impDamage._DamageRate;
-            }
-
-            var bulletEmitterEle = impactGO.GetComponent<ImpactExAttack>();
-            bulletEmitterEle._AttackTimes = _AttackTimes;
-            bulletEmitterEle._Damage = damageValue * _Damage / _AttackTimes;
-        }
-        else
-        {
-            foreach (var skillMotion in roleMotion._StateSkill._SkillMotions.Values)
-            {
-                if (!skillMotion._ActInput.Equals("1")
-                    && !skillMotion._ActInput.Equals("2")
-                    && !skillMotion._ActInput.Equals("3"))
-                    continue;
-
-                var impactGO = ResourceManager.Instance.GetInstanceGameObject("SkillMotion\\CommonImpact\\" + _ImpactName);
+                var impactGO = resGO;
                 impactGO.transform.SetParent(skillMotion.transform);
 
                 var damages = skillMotion.GetComponentsInChildren<ImpactDamage>(true);
@@ -69,6 +48,36 @@ public class RoleAttrImpactExAttack : RoleAttrImpactBase
                 var bulletEmitterEle = impactGO.GetComponent<ImpactExAttack>();
                 bulletEmitterEle._AttackTimes = _AttackTimes;
                 bulletEmitterEle._Damage = damageValue * _Damage / _AttackTimes;
+            }, null);
+            
+        }
+        else
+        {
+            foreach (var skillMotion in roleMotion._StateSkill._SkillMotions.Values)
+            {
+                if (!skillMotion._ActInput.Equals("1")
+                    && !skillMotion._ActInput.Equals("2")
+                    && !skillMotion._ActInput.Equals("3"))
+                    continue;
+
+                ResourcePool.Instance.LoadConfig("SkillMotion\\CommonImpact\\" + _ImpactName, (resName, resGO, hash) =>
+                {
+
+                    var impactGO = resGO;
+                    impactGO.transform.SetParent(skillMotion.transform);
+
+                    var damages = skillMotion.GetComponentsInChildren<ImpactDamage>(true);
+                    float damageValue = 0;
+                    foreach (var impDamage in damages)
+                    {
+                        if (impDamage._IsCharSkillDamage)
+                            damageValue += impDamage._DamageRate;
+                    }
+
+                    var bulletEmitterEle = impactGO.GetComponent<ImpactExAttack>();
+                    bulletEmitterEle._AttackTimes = _AttackTimes;
+                    bulletEmitterEle._Damage = damageValue * _Damage / _AttackTimes;
+                }, null);
             }
         }
     }

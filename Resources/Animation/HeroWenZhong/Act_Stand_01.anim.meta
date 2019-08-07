@@ -3,6 +3,8 @@ guid: b2bb5bae7b6ebca4d80f2c18f08f6152
 timeCreated: 1489146229
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herowenzhong/act_stand_01
+  assetBundleVariant: common

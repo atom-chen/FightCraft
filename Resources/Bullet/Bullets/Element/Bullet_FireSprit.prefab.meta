@@ -3,7 +3,8 @@ guid: b63a0a5aabdcca2448ee28e49f5cbb4a
 timeCreated: 1526635406
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/bullets/element/bullet_firesprit
+  assetBundleVariant: common

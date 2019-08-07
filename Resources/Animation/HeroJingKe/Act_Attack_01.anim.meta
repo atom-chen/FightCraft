@@ -3,6 +3,8 @@ guid: 316f1a77d1c12894eafcd5a6267ed972
 timeCreated: 1489145256
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herojingke/act_attack_01
+  assetBundleVariant: common

@@ -24,7 +24,7 @@ public class UIEquipTooltips : UIItemTooltips
         Hashtable hash = new Hashtable();
         hash.Add("ItemEquip", itemEquip);
         hash.Add("ToolTipFun", funcs);
-        GameCore.Instance.UIManager.ShowUI("LogicUI/BagPack/UIEquipTooltips", UILayer.MessageUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIEquipTooltips, UILayer.MessageUI, hash);
     }
 
     public static void ShowAsynInType(ItemEquip itemEquip, TooltipType toolTipType, params ToolTipFunc[] funcs)
@@ -33,7 +33,7 @@ public class UIEquipTooltips : UIItemTooltips
         hash.Add("ItemEquip", itemEquip);
         hash.Add("ToolTipFun", funcs);
         hash.Add("TooltipType", toolTipType);
-        GameCore.Instance.UIManager.ShowUI("LogicUI/BagPack/UIEquipTooltips", UILayer.MessageUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIEquipTooltips, UILayer.MessageUI, hash);
     }
 
     public new static void ShowShopAsyn(ItemBase itembase, bool isBuy, MONEYTYPE priceType, int priceValue, params ToolTipFunc[] funcs)
@@ -44,12 +44,12 @@ public class UIEquipTooltips : UIItemTooltips
         hash.Add("PriceType", priceType);
         hash.Add("PriceValue", priceValue);
         hash.Add("ToolTipFun", funcs);
-        GameCore.Instance.UIManager.ShowUI("LogicUI/BagPack/UIEquipTooltips", UILayer.MessageUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIEquipTooltips, UILayer.MessageUI, hash);
     }
 
     public new static void HideAsyn()
     {
-        UIManager.Instance.HideUI("LogicUI/BagPack/UIEquipTooltips");
+        UIManager.Instance.HideUI(UIConfig.UIEquipTooltips.AssetPath);
     }
 
     #endregion

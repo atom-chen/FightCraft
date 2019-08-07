@@ -146,7 +146,7 @@ public class FightSceneLogicPassArea : FightSceneLogicBase
 
     #endregion
 
-    public virtual List<string> GetLogicMonIDs()
+    public override List<string> GetLogicMonIDs()
     {
         List<string> monIds = new List<string>();
 

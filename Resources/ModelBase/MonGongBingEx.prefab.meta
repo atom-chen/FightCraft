@@ -3,6 +3,8 @@ guid: 1995f28ef23108f458516ec973dce465
 timeCreated: 1488542966
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/mongongbingex
+  assetBundleVariant: common

@@ -3,6 +3,8 @@ guid: 485a169c7d961da45bfdde19d0e20c8f
 timeCreated: 1489211871
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monjianbing/act_rise_01
+  assetBundleVariant: common

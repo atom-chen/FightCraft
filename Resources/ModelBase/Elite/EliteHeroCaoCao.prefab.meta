@@ -3,7 +3,8 @@ guid: b48cb5ffb8f84424691ee124253d622e
 timeCreated: 1518175512
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/elite/eliteherocaocao
+  assetBundleVariant: common

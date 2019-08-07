@@ -3,7 +3,8 @@ guid: a9bbf16abe17d2c4595356d96a0232e4
 timeCreated: 1506600765
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/monnandaoshi/skill_fire
+  assetBundleVariant: common

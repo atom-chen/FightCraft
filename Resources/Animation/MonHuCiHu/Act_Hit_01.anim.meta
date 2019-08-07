@@ -3,6 +3,8 @@ guid: 05400d1907a810743978291cc712f94c
 timeCreated: 1488372868
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monhucihu/act_hit_01
+  assetBundleVariant: common

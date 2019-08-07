@@ -3,6 +3,8 @@ guid: c44b6190a3106a84ca5e54ec275a9128
 timeCreated: 1489212067
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monying/act_rise_01
+  assetBundleVariant: common

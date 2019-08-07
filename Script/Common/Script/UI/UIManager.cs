@@ -77,20 +77,54 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private GameObject InitUI(string path)
+    private void InitUICallBack(string uiName, GameObject uiGO, Hashtable hashtable)
     {
-        var tempGO = ResourceManager.Instance.GetUI(path);
-        if (tempGO != null)
-        {
-            var uiGO = GameObject.Instantiate(tempGO);
+        UILayer uilayer = (UILayer)hashtable["UILayer"];
+        string uiPath = (string)hashtable["UIPath"];
 
-            uiGO.transform.position = Vector3.zero;
-            var trans = uiGO.GetComponent<RectTransform>();
+        if (_UIObjs.ContainsKey(uiPath))
+        {
+            _UIObjs[uiPath].Show(hashtable);
+            GameObject.Destroy(uiGO);
+            return;
+        }
+
+        uiGO.transform.position = Vector3.zero;
+        var trans = uiGO.GetComponent<RectTransform>();
+        trans.anchoredPosition = Vector2.zero;
+        trans.sizeDelta = Vector2.zero;
+
+        uiGO.transform.localScale = new Vector3(1, 1, 1);
+        
+        if (!hashtable.ContainsKey("IndependCanvas"))
+        {
+            uiGO.transform.SetParent(_UILayers[uilayer]);
+        }
+        else
+        {
+            uiGO.transform.SetParent(ResourcePool.Instance.transform);
+        }
+
+        if (trans != null)
+        {
             trans.anchoredPosition = Vector2.zero;
             trans.sizeDelta = Vector2.zero;
-            return uiGO;
+            trans.localScale = Vector3.one;
         }
-        return null;
+        else
+        {
+            uiGO.transform.position = Vector3.zero;
+            uiGO.transform.localScale = Vector3.one;
+        }
+
+        var script = uiGO.GetComponent<UIBase>();
+        uiGO.name = script.GetType().Name;
+        script.UIPath = uiPath;
+        script.UILayer = uilayer;
+
+        _UIObjs.Add(uiPath, script);
+
+        script.Show(hashtable);
     }
 
     private Dictionary<string, UIBase> _UIObjs = new Dictionary<string, UIBase>();
@@ -105,47 +139,18 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            var obj = InitUI(uiPath);
-
-            obj.transform.localScale = new Vector3(1, 1, 1);
-            if (!hashtable.ContainsKey("IndependCanvas"))
-            {
-                obj.transform.SetParent(_UILayers[uilayer]);
-            }
-            else
-            {
-                obj.transform.SetParent(ResourcePool.Instance.transform);
-            }
-            var trans = obj.GetComponent<RectTransform>();
-            if (trans != null)
-            {
-                trans.anchoredPosition = Vector2.zero;
-                trans.sizeDelta = Vector2.zero;
-                trans.localScale = Vector3.one;
-            }
-            else
-            {
-                obj.transform.position = Vector3.zero;
-                obj.transform.localScale = Vector3.one;
-            }
-
-            var script = obj.GetComponent<UIBase>();
-            obj.name = script.GetType().Name;
-            script.UIPath = uiPath;
-            script.UILayer = uilayer;
-
-            _UIObjs.Add(uiPath, script);
-
-            script.Show(hashtable);
+            hashtable.Add("UILayer", uilayer);
+            hashtable.Add("UIPath", uiPath);
+            ResourceManager.Instance.LoadUI(uiPath, InitUICallBack, hashtable);
         }
 
         //UIShowed(uiPath, uilayer, _UIObjs[uiPath]);
     }
 
     //异步显示
-    public void ShowUI(string uiPath, UILayer uilayer, Hashtable hashtable = null)
+    public void ShowUI(AssetInfo uiinfo, UILayer uilayer, Hashtable hashtable = null)
     {
-        ShowOrCreateUI(uiPath, uilayer, hashtable);
+        ShowOrCreateUI(uiinfo.AssetPath, uilayer, hashtable);
     }
 
     //public IEnumerator ShowAsyn(string uiPath, UILayer uilayer, Hashtable hashtable)
@@ -222,10 +227,10 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public T GetUIInstance<T>(string uipath)
+    public T GetUIInstance<T>(AssetInfo uiasset)
     {
-        if (_UIObjs.ContainsKey(uipath))
-            return _UIObjs[uipath].GetComponent<T>();
+        if (_UIObjs.ContainsKey(uiasset.AssetPath))
+            return _UIObjs[uiasset.AssetPath].GetComponent<T>();
 
         return default(T);
     }

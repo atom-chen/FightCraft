@@ -3,6 +3,8 @@ guid: 362f299a5f2dfe84cb00bc0e7a8545ef
 timeCreated: 1487378818
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herocaocao/act_buff_01
+  assetBundleVariant: common

@@ -3,6 +3,8 @@ guid: 5a78f6dc0a058f241b8e00a92e70fa1e
 timeCreated: 1488973850
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/char_boy_01_jl_am
+  assetBundleVariant: common

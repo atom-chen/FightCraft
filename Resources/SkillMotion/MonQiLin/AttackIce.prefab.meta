@@ -3,7 +3,8 @@ guid: 0c758d252e2a13d4183bc4c3d359b0bf
 timeCreated: 1506652635
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/monqilin/attackice
+  assetBundleVariant: common

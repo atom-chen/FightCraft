@@ -3,7 +3,8 @@ guid: cdd85528ef89c194f8ba7a950856627b
 timeCreated: 1502278795
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/commonimpact/blockbullet
+  assetBundleVariant: common

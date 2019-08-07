@@ -3,7 +3,8 @@ guid: f4f7c66a5e1496648b5e8946a39e5d52
 timeCreated: 1502884298
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/mongunseng/summonskill1
+  assetBundleVariant: common

@@ -3,6 +3,8 @@ guid: 052d8ddf2ba135147828459548ecc56b
 timeCreated: 1489146179
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heronezha/act_hit_01
+  assetBundleVariant: common

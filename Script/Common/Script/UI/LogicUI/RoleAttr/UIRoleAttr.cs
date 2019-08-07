@@ -11,7 +11,7 @@ public class UIRoleAttr : UIBase
     public static void ShowAsyn()
     {
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("LogicUI/RoleAttr/UIRoleAttr", UILayer.PopUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIRoleAttr, UILayer.PopUI, hash);
     }
 
     #endregion

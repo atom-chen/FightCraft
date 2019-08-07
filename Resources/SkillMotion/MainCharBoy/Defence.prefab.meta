@@ -3,6 +3,8 @@ guid: c09beadcdc114fd4882708d79f7a1d1b
 timeCreated: 1488972430
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/maincharboy/defence
+  assetBundleVariant: common

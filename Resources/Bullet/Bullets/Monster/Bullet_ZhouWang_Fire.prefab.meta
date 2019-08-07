@@ -3,7 +3,8 @@ guid: 2f23e013e324cb1469d1e7e4ff204485
 timeCreated: 1509354714
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/bullets/monster/bullet_zhouwang_fire
+  assetBundleVariant: common

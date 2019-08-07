@@ -3,7 +3,8 @@ guid: 097244ef0fa219041a6a418543ee508a
 timeCreated: 1511355794
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/passive/passiveattrdec
+  assetBundleVariant: common

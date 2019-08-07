@@ -9,14 +9,23 @@ public class UIHPPanel : UIInstanceBase<UIHPPanel>
     public static void ShowAsyn()
     {
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("LogicUI/HPPanel/UIHPPanel", UILayer.BaseUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIHPPanel, UILayer.BaseUI, hash);
     }
 
+    static List<Hashtable> _ShowHpMotions = new List<Hashtable>();
     public static void ShowHPItem(MotionManager motionManager)
     {
         Hashtable hash = new Hashtable();
         hash.Add("InitObj", motionManager);
-        Instance.ShowItem(hash);
+        if (Instance != null)
+        {
+            
+            Instance.ShowItem(hash);
+        }
+        else
+        {
+            _ShowHpMotions.Add(hash);
+        }
 
         Debug.Log("ShowHPItem:" + motionManager.name);
     }
@@ -32,6 +41,20 @@ public class UIHPPanel : UIInstanceBase<UIHPPanel>
     #endregion
 
     public UIHPItem _UIHPItemPrefab;
+
+    public override void Show(Hashtable hash)
+    {
+        base.Show(hash);
+
+        if (_ShowHpMotions != null)
+        {
+            foreach (var showMotion in _ShowHpMotions)
+            {
+                ShowItem(showMotion);
+            }
+            _ShowHpMotions.Clear();
+        }
+    }
 
     private void ShowItem(Hashtable args)
     {

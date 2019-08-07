@@ -3,7 +3,8 @@ guid: a9a8a8a869837a744a3f931b7b8e9283
 timeCreated: 1503403524
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/mainchargirl/defence
+  assetBundleVariant: common

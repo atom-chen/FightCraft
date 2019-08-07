@@ -3,6 +3,8 @@ guid: 7386e6b3c92e2834280073660bd22eaa
 timeCreated: 1489211808
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monqilin/act_move_01
+  assetBundleVariant: common

@@ -3,7 +3,8 @@ guid: adaa0f3d4d8ef2e409aea88267be567b
 timeCreated: 1501493630
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/mongongbing/summonskill2
+  assetBundleVariant: common

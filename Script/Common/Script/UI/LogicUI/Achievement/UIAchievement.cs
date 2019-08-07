@@ -17,7 +17,7 @@ public class UIAchievement : UIBase
     public static void ShowAsyn()
     {
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("LogicUI/Achievement/UIAchievement", UILayer.PopUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIAchievement, UILayer.PopUI, hash);
     }
 
     #endregion

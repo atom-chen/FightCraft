@@ -34,13 +34,13 @@ public class BulletLineColliderSize : BulletLine
         }
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        Debug.Log("OnTriggerEnter:" + other.ToString());
         var targetMotion = other.GetComponentInParent<MotionManager>();
         if (targetMotion == null)
             return;
 
         TriggetMotion(targetMotion);
     }
+
 }

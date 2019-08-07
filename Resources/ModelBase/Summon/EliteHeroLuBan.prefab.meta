@@ -3,6 +3,8 @@ guid: 60953cd9cdae709499bb2bce05b17676
 timeCreated: 1489150570
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/summon/eliteheroluban
+  assetBundleVariant: common

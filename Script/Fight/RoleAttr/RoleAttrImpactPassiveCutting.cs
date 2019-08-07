@@ -18,15 +18,18 @@ public class RoleAttrImpactPassiveCutting : RoleAttrImpactPassive
 
     public override void ModifySkillAfterInit(MotionManager roleMotion)
     {
-        var buffGO = ResourceManager.Instance.GetInstanceGameObject("Bullet\\Passive\\" + _ImpactName);
-        buffGO.transform.SetParent(roleMotion.BuffBindPos.transform);
-        var buffs = buffGO.GetComponents<ImpactBuffCutting>();
-        foreach (var buff in buffs)
+        ResourcePool.Instance.LoadConfig("Bullet\\Passive\\" + _ImpactName, (resName, resGO, hash) =>
         {
-            buff._Rate = _ActRate;
-            buff._DmgRate = _AttachDmgRate;
-            buff.ActImpact(roleMotion, roleMotion);
-        }
+            var buffGO = resGO;
+            buffGO.transform.SetParent(roleMotion.BuffBindPos.transform);
+            var buffs = buffGO.GetComponents<ImpactBuffCutting>();
+            foreach (var buff in buffs)
+            {
+                buff._Rate = _ActRate;
+                buff._DmgRate = _AttachDmgRate;
+                buff.ActImpact(roleMotion, roleMotion);
+            }
+        }, null);
     }
 
     public new static string GetAttrDesc(List<int> attrParams)

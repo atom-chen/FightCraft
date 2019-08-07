@@ -3,7 +3,8 @@ guid: 713b476eab49d1f4e9546e06eeaa102c
 timeCreated: 1509451167
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/emitter/element/impactattr8_b1_ice
+  assetBundleVariant: common

@@ -3,7 +3,8 @@ guid: d9e084f401c6ea544a2489f2de766cdb
 timeCreated: 1501486400
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/mon_shuiniu_01_am
+  assetBundleVariant: common

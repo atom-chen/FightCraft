@@ -3,6 +3,8 @@ guid: f04d15c844f01434fa6bd64c3373f2bf
 timeCreated: 1489212013
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monshashou/act_stand_01
+  assetBundleVariant: common

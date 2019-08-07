@@ -3,6 +3,8 @@ guid: ef32bdbbc253abc43a5d491f1665edaf
 timeCreated: 1488976829
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/weapon_s_12_sm
+  assetBundleVariant: common

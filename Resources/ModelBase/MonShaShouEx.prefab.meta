@@ -3,6 +3,8 @@ guid: aaa1af778930f0546ac8d3e5dc87674e
 timeCreated: 1489216089
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/monshashouex
+  assetBundleVariant: common

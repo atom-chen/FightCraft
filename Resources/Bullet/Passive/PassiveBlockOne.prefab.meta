@@ -3,7 +3,8 @@ guid: dc12dcefa09ea494bbd0010bbd95d7e8
 timeCreated: 1510053726
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/passive/passiveblockone
+  assetBundleVariant: common

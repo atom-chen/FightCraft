@@ -3,7 +3,8 @@ guid: 336bfe8d86ed4aa469fc7b509e8712b2
 timeCreated: 1526625326
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/bullets/element/bullet_lighteninghit
+  assetBundleVariant: common

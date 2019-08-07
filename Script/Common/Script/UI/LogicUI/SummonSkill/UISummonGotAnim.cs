@@ -14,12 +14,12 @@ public class UISummonGotAnim : UIBase
         Hashtable hash = new Hashtable();
         hash.Add("SummonDatas", summonDatas);
         hash.Add("FinishCallBack", finishCallBack);
-        GameCore.Instance.UIManager.ShowUI("LogicUI/SummonSkill/UISummonGotAnim", UILayer.Sub2PopUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UISummonGotAnim, UILayer.Sub2PopUI, hash);
     }
 
     public static void RefreshPack()
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UISummonSkillPack>("LogicUI/SummonSkill/UISummonGotAnim");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UISummonSkillPack>(UIConfig.UISummonGotAnim);
         if (instance == null)
             return;
 
@@ -54,6 +54,7 @@ public class UISummonGotAnim : UIBase
         if (_FinishCallBack != null)
         {
             _FinishCallBack.Invoke();
+            _FinishCallBack = null;
         }
 
     }

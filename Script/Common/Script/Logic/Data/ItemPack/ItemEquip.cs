@@ -729,6 +729,44 @@ public class ItemEquip : ItemBase
         return itemEquip;
     }
 
+    public static ItemEquip CreateBaseCloth(PROFESSION profession)
+    {
+        int equipItem = 10001;
+        if (profession == PROFESSION.GIRL_DEFENCE || profession == PROFESSION.GIRL_DOUGE)
+        {
+            equipItem = 10001;
+        }
+        ItemEquip itemEquip = new ItemEquip(equipItem.ToString());
+        itemEquip.EquipLevel = 1;
+        itemEquip.EquipQuality = ITEM_QUALITY.WHITE;
+        itemEquip.EquipValue = 10;
+        itemEquip.RequireLevel = 1;
+        itemEquip.CommonItemDataID = equipItem;
+
+        itemEquip.CalculateCombatValue();
+
+        return itemEquip;
+    }
+
+    public static ItemEquip CreateBaseShoes(PROFESSION profession)
+    {
+        int equipItem = 11001;
+        if (profession == PROFESSION.GIRL_DEFENCE || profession == PROFESSION.GIRL_DOUGE)
+        {
+            equipItem = 11001;
+        }
+        ItemEquip itemEquip = new ItemEquip(equipItem.ToString());
+        itemEquip.EquipLevel = 1;
+        itemEquip.EquipQuality = ITEM_QUALITY.WHITE;
+        itemEquip.EquipValue = 10;
+        itemEquip.RequireLevel = 1;
+        itemEquip.CommonItemDataID = equipItem;
+
+        itemEquip.CalculateCombatValue();
+
+        return itemEquip;
+    }
+
     public static ItemEquip CreateEquip(int level, Tables.ITEM_QUALITY quality, int legencyEquipID = -1, int equipSlotIdx = -1, int prePro = -1)
     {
         Tables.ITEM_QUALITY equipQuality = quality;

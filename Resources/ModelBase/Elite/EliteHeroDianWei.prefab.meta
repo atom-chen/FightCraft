@@ -3,6 +3,8 @@ guid: 6ceec78e115373d4da530d12c167545b
 timeCreated: 1489125271
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/elite/eliteherodianwei
+  assetBundleVariant: common

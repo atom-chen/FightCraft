@@ -3,6 +3,8 @@ guid: 2dd4c9407318e924e99403103d32d76c
 timeCreated: 1488371800
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monchuibing/act_stand_01
+  assetBundleVariant: common

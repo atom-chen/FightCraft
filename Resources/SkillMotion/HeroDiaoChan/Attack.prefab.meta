@@ -3,6 +3,8 @@ guid: f4118675505c6d641b565ee024a49fb3
 timeCreated: 1489126222
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/herodiaochan/attack
+  assetBundleVariant: common

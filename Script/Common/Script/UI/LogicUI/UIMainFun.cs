@@ -11,12 +11,12 @@ public class UIMainFun : UIBase
     public static void ShowAsyn()
     {
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("LogicUI/UIMainFun", UILayer.BaseUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIMainFun, UILayer.BaseUI, hash);
     }
 
     public static void UpdateMoney()
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UIMainFun>("LogicUI/UIMainFun");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIMainFun>(UIConfig.UIMainFun);
         if (instance == null)
             return;
 
@@ -28,7 +28,7 @@ public class UIMainFun : UIBase
 
     public static void RefreshGift()
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UIMainFun>("LogicUI/UIMainFun");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIMainFun>(UIConfig.UIMainFun);
         if (instance == null)
             return;
 

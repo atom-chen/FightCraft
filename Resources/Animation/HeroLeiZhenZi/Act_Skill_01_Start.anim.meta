@@ -3,6 +3,8 @@ guid: aaa219dc1882c4a49af2917fb032d32e
 timeCreated: 1489146111
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heroleizhenzi/act_skill_01_start
+  assetBundleVariant: common

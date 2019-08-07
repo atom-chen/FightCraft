@@ -3,7 +3,8 @@ guid: af484b74cc2ee1d46b9a1c4b78b1a6d5
 timeCreated: 1502440622
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/commonimpact/dexaccelatebuff
+  assetBundleVariant: common

@@ -15,7 +15,7 @@ public class ImpactBuffConcealInNormal : ImpactBuff
         base.ActBuff(senderManager, ownerManager);
         if (_ConcealActEffect != null)
         {
-            _DynamicConcealEffect = ownerManager.PlayDynamicEffect(_ConcealActEffect);
+            _DynamicConcealEffect = ownerManager.PlaySkillEffect(_ConcealActEffect);
         }
     }
 

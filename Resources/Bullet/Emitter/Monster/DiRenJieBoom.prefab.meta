@@ -3,7 +3,8 @@ guid: de3451f6d35c328468d79d2d090a4718
 timeCreated: 1502422254
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/emitter/monster/direnjieboom
+  assetBundleVariant: common

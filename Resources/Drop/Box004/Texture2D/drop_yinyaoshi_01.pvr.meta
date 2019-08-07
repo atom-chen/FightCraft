@@ -2,7 +2,18 @@ fileFormatVersion: 2
 guid: e2f6a7eeeeba0ba48b3e4c0f0fd4553d
 timeCreated: 1492825719
 licenseType: Pro
-PVRImporter:
+IHVImageFormatImporter:
+  externalObjects: {}
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
+  isReadable: 0
+  sRGBTexture: 1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/drop/box004/texture2d/drop_yinyaoshi_01
+  assetBundleVariant: common

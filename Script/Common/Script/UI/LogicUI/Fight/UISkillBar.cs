@@ -11,7 +11,7 @@ public class UISkillBar : UIBase
     public static void ShowAsyn()
     {
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("LogicUI/Fight/UISkillBar", UILayer.BaseUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UISkillBar, UILayer.BaseUI, hash);
     }
 
     public static void SetSkillUseTips(string input, float time)
@@ -19,7 +19,7 @@ public class UISkillBar : UIBase
         if (GameCore.Instance == null)
             return;
 
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UISkillBar>("LogicUI/Fight/UISkillBar");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UISkillBar>(UIConfig.UISkillBar);
         if (instance == null)
             return;
 
@@ -31,7 +31,7 @@ public class UISkillBar : UIBase
 
     public static void SetAimTypeStatic(AimTarget.AimTargetType aimType)
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UISkillBar>("LogicUI/Fight/UISkillBar");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UISkillBar>(UIConfig.UISkillBar);
         if (instance == null)
             return;
 
@@ -44,6 +44,7 @@ public class UISkillBar : UIBase
     public void Update()
     {
         UpdateCD();
+        UpdateSummonCD();
     }
 
     #endregion
@@ -59,10 +60,29 @@ public class UISkillBar : UIBase
     {
         base.Init();
 
+        InitEmulate();
+    }
+
+    public override void Show()
+    {
+        base.Show();
+
         _Buttons.Add("j", _ButtonJ);
         _Buttons.Add("k", _ButtonK);
         _Buttons.Add("l", _ButtonL);
         _Buttons.Add("u", _ButtonU);
+
+        if (RoleData.SelectRole.Profession == Tables.PROFESSION.BOY_DEFENCE
+            || RoleData.SelectRole.Profession == Tables.PROFESSION.GIRL_DEFENCE)
+        {
+            _ButtonL.SetSkillIcon("skill/skillbar_defence");
+        }
+        else
+        {
+            _ButtonL.SetSkillIcon("skill/skillbar_dodge");
+        }
+
+        InitSummonBtns();
     }
 
     public bool IsKeyDown(string key)
@@ -129,6 +149,21 @@ public class UISkillBar : UIBase
     #region emulate
 
     public TestFight _TestFight;
+    public GameObject _BtnEmulate;
+    public GameObject _BtnEmulateTips;
+
+    public void InitEmulate()
+    {
+        if (GameCore.Instance._IsTestMode)
+        {
+            _BtnEmulate.SetActive(true);
+        }
+        else
+        {
+            _BtnEmulate.SetActive(false);
+        }
+        _BtnEmulateTips.SetActive(false);
+    }
 
     public void OnEmulate()
     {
@@ -141,17 +176,73 @@ public class UISkillBar : UIBase
         }
 
         _TestFight.enabled = !_TestFight.enabled;
+        _BtnEmulateTips.SetActive(_TestFight.enabled);
     }
 
     #endregion
 
     #region summon
 
-    public UISkillBarItem _SummonBtn;
-    
+    public UISkillBarItem[] _SummonBtns;
+
+    private int _CurSummonIdx = -1;
+
     public void OnBtnSummon()
     {
-        SummonSkill.Instance.UseSummonSkill();    
+        SummonSkill.Instance.UseSummonSkill();
+        RefreshSummonIcon();
+    }
+
+    public void InitSummonBtns()
+    {
+        for (int i = 0; i < SummonSkillData.USING_SUMMON_NUM; ++i)
+        {
+            if (SummonSkillData.Instance._UsingSummon[i] != null)
+            {
+                _SummonBtns[i].gameObject.SetActive(true);
+            }
+            else
+            {
+                _SummonBtns[i].gameObject.SetActive(false);
+            }
+        }
+
+        RefreshSummonIcon();
+    }
+
+    public void RefreshSummonIcon()
+    {
+        if (_CurSummonIdx != SummonSkill.Instance.CurSummonIdx)
+        {
+            _CurSummonIdx = SummonSkill.Instance.CurSummonIdx;
+            for (int i = 0; i < SummonSkillData.USING_SUMMON_NUM; ++i)
+            {
+                if (SummonSkillData.Instance._UsingSummon[_CurSummonIdx] != null)
+                {
+                    _SummonBtns[i].SetSkillIcon(SummonSkillData.Instance._UsingSummon[_CurSummonIdx].SummonRecord.MonsterBase.HeadIcon);
+                    _SummonBtns[i]._SkillInput = SummonSkillData.Instance._UsingSummon[_CurSummonIdx].SummonRecord.Id;
+                }
+
+                ++_CurSummonIdx;
+                if (_CurSummonIdx == SummonSkill.Instance.GetSummonMotionCnt())
+                {
+                    _CurSummonIdx = 0;
+                }
+            }
+        }
+    }
+
+    public void UpdateSummonCD()
+    {
+        foreach (var skillBtn in _SummonBtns)
+        {
+            if (skillBtn.gameObject.activeSelf)
+            {
+                float skillCDPro = FightSkillManager.Instance.GetSkillCDPro(skillBtn._SkillInput);
+                skillBtn.SetCDPro(skillCDPro);
+            }
+        }
+        
     }
 
     #endregion

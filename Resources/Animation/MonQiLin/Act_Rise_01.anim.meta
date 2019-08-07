@@ -3,6 +3,8 @@ guid: c947b6d4e823cd248a373a73e4efb232
 timeCreated: 1489211808
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monqilin/act_rise_01
+  assetBundleVariant: common

@@ -3,6 +3,8 @@ guid: 763f4d00ca8b1d04fbb399ec2a7ef497
 timeCreated: 1489125761
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/elite/eliteherodiaochan
+  assetBundleVariant: common

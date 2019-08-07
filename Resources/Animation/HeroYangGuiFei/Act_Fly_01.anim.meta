@@ -3,6 +3,8 @@ guid: bbeaa7b52242cff4a8d1cdf1675406fe
 timeCreated: 1489146300
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heroyangguifei/act_fly_01
+  assetBundleVariant: common

@@ -32,17 +32,21 @@ public class ImpactAccumulate : ImpactBase
         base.Init(skillMotion, selector);
 
         string animPath = "Animation/" + SkillMotion.MotionManager._MotionAnimPath + "/Act_Skill_Accumulate";
-        _AccumulateAnim = ResourceManager.Instance.GetAnimationClip(animPath);
-        if (_AccumulateAnim == null)
+        ResourceManager.Instance.LoadAnimation(animPath, (resName, resData, hash)=>
         {
-            Debug.LogError("ImpactAccumulate init anim error: animPath");
-            return;
-        }
+            _AccumulateAnim = resData;
+            if (_AccumulateAnim == null)
+            {
+                Debug.LogError("ImpactAccumulate init anim error: animPath");
+                return;
+            }
 
-        SkillMotion._NextAnim.Insert(0, _AccumulateAnim);
-        SkillMotion._NextEffect.Insert(0, null);
-        skillMotion.MotionManager.AnimationEvent.AddSelectorEvent(_AccumulateAnim, 0, selector._ColliderID);
-        skillMotion.MotionManager.AnimationEvent.AddSelectorFinishEvent(_AccumulateAnim, 2.0f, selector._ColliderID);
+            SkillMotion._NextAnim.Insert(0, _AccumulateAnim);
+            SkillMotion._NextEffect.Insert(0, null);
+            skillMotion.MotionManager.AnimationEvent.AddSelectorEvent(_AccumulateAnim, 0, selector._ColliderID);
+            skillMotion.MotionManager.AnimationEvent.AddSelectorFinishEvent(_AccumulateAnim, 2.0f, selector._ColliderID);
+        }, null);
+        
     }
 
     public override void ActImpact(MotionManager senderManager, MotionManager reciverManager)
@@ -82,7 +86,7 @@ public class ImpactAccumulate : ImpactBase
 
     public EffectController _EffectController;
 
-    private EffectController _DynamicEffect;
+    private int _DynamicEffect;
 
     public void PlayEffect()
     {
@@ -94,7 +98,7 @@ public class ImpactAccumulate : ImpactBase
         if (_DynamicEffect != null)
         {
             SenderMotion.StopDynamicEffect(_DynamicEffect);
-            _DynamicEffect = null;
+            _DynamicEffect = -1;
         }
     }
 

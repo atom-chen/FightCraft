@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using System.Collections;
@@ -9,263 +9,219 @@ using System.Net.Sockets;
 
 namespace AssetBundles
 {
-	public class BuildScript
-	{
-		public static string overloadedDevelopmentServerURL = "";
-	
-		public static void BuildAssetBundles()
-		{
-			// Choose the output path according to the build target.
-			string outputPath = Path.Combine(Utility.AssetBundlesOutputPath, Utility.GetPlatformName());
-			if (!Directory.Exists(outputPath) )
-				Directory.CreateDirectory (outputPath);
-	
-			//@TODO: use append hash... (Make sure pipeline works correctly with it.)
-			BuildPipeline.BuildAssetBundles (outputPath, BuildAssetBundleOptions.DisableWriteTypeTree, EditorUserBuildSettings.activeBuildTarget);
-            Debug.Log("BuildPipeline.BuildAssetBundles finish");
+    public class BuildScript
+    {
+        public static string overloadedDevelopmentServerURL = "";
 
-            WriteUpdate(outputPath);
-        }
-	
-		public static void WriteServerURL()
-		{
-			string downloadURL;
-			if (string.IsNullOrEmpty(overloadedDevelopmentServerURL) == false)
-			{
-				downloadURL = overloadedDevelopmentServerURL;
-			}
-			else
-			{
-				IPHostEntry host;
-				string localIP = "";
-				host = Dns.GetHostEntry(Dns.GetHostName());
-				foreach (IPAddress ip in host.AddressList)
-				{
-					if (ip.AddressFamily == AddressFamily.InterNetwork)
-					{
-						localIP = ip.ToString();
-						break;
-					}
-				}
-				downloadURL = "http://"+localIP+":7888/";
-			}
-			
-			string assetBundleManagerResourcesDirectory = "Assets/AssetBundleManager/Resources";
-			string assetBundleUrlPath = Path.Combine (assetBundleManagerResourcesDirectory, "AssetBundleServerURL.bytes");
-			Directory.CreateDirectory(assetBundleManagerResourcesDirectory);
-			File.WriteAllText(assetBundleUrlPath, downloadURL);
-			AssetDatabase.Refresh();
-		}
-	
-		public static void BuildPlayer()
-		{
-			var outputPath = EditorUtility.SaveFolderPanel("Choose Location of the Built Game", "", "");
-			if (outputPath.Length == 0)
-				return;
-	
-			string[] levels = GetLevelsFromBuildSettings();
-			if (levels.Length == 0)
-			{
-				Debug.Log("Nothing to build.");
-				return;
-			}
-	
-			string targetName = GetBuildTargetName(EditorUserBuildSettings.activeBuildTarget);
-			if (targetName == null)
-				return;
-	
-			// Build and copy AssetBundles.
-			BuildScript.BuildAssetBundles();
-			WriteServerURL();
-	
-			BuildOptions option = EditorUserBuildSettings.development ? BuildOptions.Development : BuildOptions.None;
-			BuildPipeline.BuildPlayer(levels, outputPath + targetName, EditorUserBuildSettings.activeBuildTarget, option);
-		}
-		
-		public static void BuildStandalonePlayer()
-		{
-			var outputPath = EditorUtility.SaveFolderPanel("Choose Location of the Built Game", "", "");
-			if (outputPath.Length == 0)
-				return;
-			
-			string[] levels = GetLevelsFromBuildSettings();
-			if (levels.Length == 0)
-			{
-				Debug.Log("Nothing to build.");
-				return;
-			}
-			
-			string targetName = GetBuildTargetName(EditorUserBuildSettings.activeBuildTarget);
-			if (targetName == null)
-				return;
-			
-			// Build and copy AssetBundles.
-			BuildScript.BuildAssetBundles();
-			BuildScript.CopyAssetBundlesTo(Path.Combine(Application.streamingAssetsPath, Utility.AssetBundlesOutputPath) );
-			AssetDatabase.Refresh();
-			
-			BuildOptions option = EditorUserBuildSettings.development ? BuildOptions.Development : BuildOptions.None;
-			BuildPipeline.BuildPlayer(levels, outputPath + targetName, EditorUserBuildSettings.activeBuildTarget, option);
-		}
-	
-		public static string GetBuildTargetName(BuildTarget target)
-		{
-			switch(target)
-			{
-			case BuildTarget.Android :
-				return "/test.apk";
-			case BuildTarget.StandaloneWindows:
-			case BuildTarget.StandaloneWindows64:
-				return "/test.exe";
-			case BuildTarget.StandaloneOSXIntel:
-			case BuildTarget.StandaloneOSXIntel64:
-			case BuildTarget.StandaloneOSX:
-				return "/test.app";
-			case BuildTarget.WebGL:
-				return "";
-				// Add more build targets for your own.
-			default:
-				Debug.Log("Target not implemented.");
-				return null;
-			}
-		}
-	
-		static void CopyAssetBundlesTo(string outputPath)
-		{
-			// Clear streaming assets folder.
-			FileUtil.DeleteFileOrDirectory(Application.streamingAssetsPath);
-			Directory.CreateDirectory(outputPath);
-	
-			string outputFolder = Utility.GetPlatformName();
-	
-			// Setup the source folder for assetbundles.
-			var source = Path.Combine(Path.Combine(System.Environment.CurrentDirectory, Utility.AssetBundlesOutputPath), outputFolder);
-			if (!System.IO.Directory.Exists(source) )
-				Debug.Log("No assetBundle output folder, try to build the assetBundles first.");
-	
-			// Setup the destination folder for assetbundles.
-			var destination = System.IO.Path.Combine(outputPath, outputFolder);
-			if (System.IO.Directory.Exists(destination) )
-				FileUtil.DeleteFileOrDirectory(destination);
-			
-			FileUtil.CopyFileOrDirectory(source, destination);
-		}
-	
-		static string[] GetLevelsFromBuildSettings()
-		{
-			List<string> levels = new List<string>();
-			for(int i = 0 ; i < EditorBuildSettings.scenes.Length; ++i)
-			{
-				if (EditorBuildSettings.scenes[i].enabled)
-					levels.Add(EditorBuildSettings.scenes[i].path);
-			}
-	
-			return levels.ToArray();
-		}
-
-        #region for asset update
-
-        public static string VersionFold = "versionData";
-        public static string VersionFileName = "ResVersion.txt";
-        public static string ResFileListName = "update.info";
-
-        public static void WriteUpdate(string bundleFold)
+        static public string CreateAssetBundleDirectory()
         {
-            string[] bundleNames = AssetDatabase.GetAllAssetBundleNames();
+            // Choose the output path according to the build target.
+            string outputPath = Path.Combine(Utility.AssetBundlesOutputPath, Utility.GetPlatformName());
+            if (!Directory.Exists(outputPath))
+                Directory.CreateDirectory(outputPath);
 
-            //string versionFoldPath = Path.Combine(bundleFold, VersionFold);
-            //if (!Directory.Exists(versionFoldPath))
-            //{
-            //    Directory.CreateDirectory(versionFoldPath);
-            //}
+            return outputPath;
+        }
 
-            string updateFilePath = Path.Combine(bundleFold, ResFileListName);
-            if (File.Exists(updateFilePath))
+        public static void BuildAssetBundles()
+        {
+            BuildAssetBundles(null);
+        }
+
+        public static void BuildAssetBundles(AssetBundleBuild[] builds)
+        {
+            // Choose the output path according to the build target.
+            string outputPath = CreateAssetBundleDirectory();
+
+            var options = BuildAssetBundleOptions.None| BuildAssetBundleOptions.ChunkBasedCompression;
+
+            bool shouldCheckODR = EditorUserBuildSettings.activeBuildTarget == BuildTarget.iOS;
+#if UNITY_TVOS
+            shouldCheckODR |= EditorUserBuildSettings.activeBuildTarget == BuildTarget.tvOS;
+#endif
+            if (shouldCheckODR)
             {
-                File.Delete(updateFilePath);
+#if ENABLE_IOS_ON_DEMAND_RESOURCES
+                if (PlayerSettings.iOS.useOnDemandResources)
+                    options |= BuildAssetBundleOptions.UncompressedAssetBundle;
+#endif
+#if ENABLE_IOS_APP_SLICING
+                options |= BuildAssetBundleOptions.UncompressedAssetBundle;
+#endif
             }
 
-            StreamWriter streamWriter = new StreamWriter(updateFilePath);
-
-            WriteManifest(streamWriter);
-            foreach (var bundleFile in bundleNames)
+            if (builds == null || builds.Length == 0)
             {
-                if (!bundleFile.Contains("."))
-                    continue;
-
-                string bundlePath = Path.Combine(bundleFold, bundleFile);
-                string md5 = /*GCGame.Utils.GetMD5Hash(bundlePath)*/"";
-
-                FileInfo fileInfo = new FileInfo(bundlePath);
-                long size = fileInfo.Length;
-
-                streamWriter.WriteLine(bundleFile + ":" + md5 + ":" + size);
+                //@TODO: use append hash... (Make sure pipeline works correctly with it.)
+                BuildPipeline.BuildAssetBundles(outputPath, options, EditorUserBuildSettings.activeBuildTarget);
             }
-            streamWriter.Close();
-
-            int versionValue = 0;
-
-            string versionFilePath = Path.Combine(bundleFold, VersionFileName);
-
-            StreamReader versionReader = new StreamReader(versionFilePath);
-            if (versionReader != null)
+            else
             {
-                string versionStr = versionReader.ReadLine();
-                versionReader.Close();
+                BuildPipeline.BuildAssetBundles(outputPath, builds, options, EditorUserBuildSettings.activeBuildTarget);
+            }
+        }
 
-                File.Delete(versionFilePath);
-
-
-                if (!string.IsNullOrEmpty(versionStr))
+        public static void WriteServerURL()
+        {
+            string downloadURL;
+            if (string.IsNullOrEmpty(overloadedDevelopmentServerURL) == false)
+            {
+                downloadURL = overloadedDevelopmentServerURL;
+            }
+            else
+            {
+                IPHostEntry host;
+                string localIP = "";
+                host = Dns.GetHostEntry(Dns.GetHostName());
+                foreach (IPAddress ip in host.AddressList)
                 {
-                    int.TryParse(versionStr, out versionValue);
+                    if (ip.AddressFamily == AddressFamily.InterNetwork)
+                    {
+                        localIP = ip.ToString();
+                        break;
+                    }
                 }
-                ++versionValue;
+                downloadURL = "http://" + localIP + ":7888/";
             }
 
-            StreamWriter versionWriter = new StreamWriter(versionFilePath);
-            versionWriter.WriteLine(versionValue.ToString());
-            versionWriter.Close();
+            string assetBundleManagerResourcesDirectory = "Assets/AssetBundleManager/Resources";
+            string assetBundleUrlPath = Path.Combine(assetBundleManagerResourcesDirectory, "AssetBundleServerURL.bytes");
+            Directory.CreateDirectory(assetBundleManagerResourcesDirectory);
+            File.WriteAllText(assetBundleUrlPath, downloadURL);
+            AssetDatabase.Refresh();
         }
 
-        public static void WriteManifest(StreamWriter streamWriter)
+        public static void BuildPlayer()
         {
-            string sourceFile = Path.Combine(Utility.AssetBundlesOutputPath, Utility.GetPlatformName()) + "/" + Utility.GetPlatformName();
-            string destFile = sourceFile + ".common";
-            string fileName = Utility.GetPlatformName() + ".common";
+            var outputPath = EditorUtility.SaveFolderPanel("Choose Location of the Built Game", "", "");
+            if (outputPath.Length == 0)
+                return;
 
-            if(File.Exists(destFile))
-                File.Delete(destFile);
-            File.Copy(sourceFile, destFile);
+            string[] levels = GetLevelsFromBuildSettings();
+            if (levels.Length == 0)
+            {
+                Debug.Log("Nothing to build.");
+                return;
+            }
 
-            string md5 = /*GCGame.Utils.GetMD5Hash(destFile)*/ "";
+            string targetName = GetBuildTargetName(EditorUserBuildSettings.activeBuildTarget);
+            if (targetName == null)
+                return;
 
-            FileInfo fileInfo = new FileInfo(destFile);
-            long size = fileInfo.Length;
+            // Build and copy AssetBundles.
+            BuildScript.BuildAssetBundles();
+            WriteServerURL();
 
-            streamWriter.WriteLine(fileName + ":" + md5 + ":" + size);
-
-
+#if UNITY_5_4 || UNITY_5_3 || UNITY_5_2 || UNITY_5_1 || UNITY_5_0
+            BuildOptions option = EditorUserBuildSettings.development ? BuildOptions.Development : BuildOptions.None;
+            BuildPipeline.BuildPlayer(levels, outputPath + targetName, EditorUserBuildSettings.activeBuildTarget, option);
+#else
+            BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();
+            buildPlayerOptions.scenes = levels;
+            buildPlayerOptions.locationPathName = outputPath + targetName;
+            buildPlayerOptions.assetBundleManifestPath = GetAssetBundleManifestFilePath();
+            buildPlayerOptions.target = EditorUserBuildSettings.activeBuildTarget;
+            buildPlayerOptions.options = EditorUserBuildSettings.development ? BuildOptions.Development : BuildOptions.None;
+            BuildPipeline.BuildPlayer(buildPlayerOptions);
+#endif
         }
 
-
-        public static string ReadCRC(string manifestFilePath)
+        public static void BuildStandalonePlayer()
         {
-            StreamReader streamReader = new StreamReader(manifestFilePath);
-            if (streamReader == null)
-                return "";
+            var outputPath = EditorUtility.SaveFolderPanel("Choose Location of the Built Game", "", "");
+            if (outputPath.Length == 0)
+                return;
 
-            streamReader.ReadLine();
-            string crcLine = streamReader.ReadLine();
-            string[] crcSplits = crcLine.Split(':');
+            string[] levels = GetLevelsFromBuildSettings();
+            if (levels.Length == 0)
+            {
+                Debug.Log("Nothing to build.");
+                return;
+            }
 
-            if (crcSplits.Length < 2)
-                return "";
+            string targetName = GetBuildTargetName(EditorUserBuildSettings.activeBuildTarget);
+            if (targetName == null)
+                return;
 
-            streamReader.Close();
-            return crcSplits[1].Trim(' ', '\t');
+            // Build and copy AssetBundles.
+            BuildScript.BuildAssetBundles();
+            BuildScript.CopyAssetBundlesTo(Path.Combine(Application.streamingAssetsPath, Utility.AssetBundlesOutputPath));
+            AssetDatabase.Refresh();
+
+#if UNITY_5_4 || UNITY_5_3 || UNITY_5_2 || UNITY_5_1 || UNITY_5_0
+            BuildOptions option = EditorUserBuildSettings.development ? BuildOptions.Development : BuildOptions.None;
+            BuildPipeline.BuildPlayer(levels, outputPath + targetName, EditorUserBuildSettings.activeBuildTarget, option);
+#else
+            BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();
+            buildPlayerOptions.scenes = levels;
+            buildPlayerOptions.locationPathName = outputPath + targetName;
+            buildPlayerOptions.assetBundleManifestPath = GetAssetBundleManifestFilePath();
+            buildPlayerOptions.target = EditorUserBuildSettings.activeBuildTarget;
+            buildPlayerOptions.options = EditorUserBuildSettings.development ? BuildOptions.Development : BuildOptions.None;
+            BuildPipeline.BuildPlayer(buildPlayerOptions);
+#endif
         }
 
-        #endregion
+        public static string GetBuildTargetName(BuildTarget target)
+        {
+            switch (target)
+            {
+                case BuildTarget.Android:
+                    return "/test.apk";
+                case BuildTarget.StandaloneWindows:
+                case BuildTarget.StandaloneWindows64:
+                    return "/test.exe";
+                case BuildTarget.StandaloneOSXIntel:
+                case BuildTarget.StandaloneOSXIntel64:
+                case BuildTarget.StandaloneOSX:
+                    return "/test.app";
+                case BuildTarget.WebGL:
+                case BuildTarget.iOS:
+                    return "";
+                // Add more build targets for your own.
+                default:
+                    Debug.Log("Target not implemented.");
+                    return null;
+            }
+        }
+
+        static void CopyAssetBundlesTo(string outputPath)
+        {
+            // Clear streaming assets folder.
+            FileUtil.DeleteFileOrDirectory(Application.streamingAssetsPath);
+            Directory.CreateDirectory(outputPath);
+
+            string outputFolder = Utility.GetPlatformName();
+
+            // Setup the source folder for assetbundles.
+            var source = Path.Combine(Path.Combine(System.Environment.CurrentDirectory, Utility.AssetBundlesOutputPath), outputFolder);
+            if (!System.IO.Directory.Exists(source))
+                Debug.Log("No assetBundle output folder, try to build the assetBundles first.");
+
+            // Setup the destination folder for assetbundles.
+            var destination = System.IO.Path.Combine(outputPath, outputFolder);
+            if (System.IO.Directory.Exists(destination))
+                FileUtil.DeleteFileOrDirectory(destination);
+
+            FileUtil.CopyFileOrDirectory(source, destination);
+        }
+
+        static string[] GetLevelsFromBuildSettings()
+        {
+            List<string> levels = new List<string>();
+            for (int i = 0; i < EditorBuildSettings.scenes.Length; ++i)
+            {
+                if (EditorBuildSettings.scenes[i].enabled)
+                    levels.Add(EditorBuildSettings.scenes[i].path);
+            }
+
+            return levels.ToArray();
+        }
+
+        static string GetAssetBundleManifestFilePath()
+        {
+            var relativeAssetBundlesOutputPathForPlatform = Path.Combine(Utility.AssetBundlesOutputPath, Utility.GetPlatformName());
+            return Path.Combine(relativeAssetBundlesOutputPathForPlatform,  Utility.GetPlatformName()) + ".manifest";
+        }
     }
 }

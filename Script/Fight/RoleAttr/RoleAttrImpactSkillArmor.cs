@@ -23,13 +23,19 @@ public class RoleAttrImpactSkillArmor : RoleAttrImpactPassive
 
     public override void ModifySkillBeforeInit(MotionManager roleMotion)
     {
-        var impactGO = ResourceManager.Instance.GetInstanceGameObject("SkillMotion\\CommonImpact\\" + _ImpactName);
-        impactGO.transform.SetParent(roleMotion.BuffBindPos.transform);
-        var buffs = impactGO.GetComponents<ImpactBuff>();
-        foreach (var buff in buffs)
+        ResourcePool.Instance.LoadConfig("SkillMotion\\CommonImpact\\" + _ImpactName, (resName, resGO, hash) =>
         {
-            buff.ActImpact(roleMotion, roleMotion);
-        }
+            var impactGO = resGO;
+            impactGO.transform.SetParent(roleMotion.BuffBindPos.transform);
+            var buffs = impactGO.GetComponents<ImpactBuff>();
+            foreach (var buff in buffs)
+            {
+                buff.ActImpact(roleMotion, roleMotion);
+            }
+        }, null);
+
+
+        
 
     }
 

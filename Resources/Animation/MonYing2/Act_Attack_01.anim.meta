@@ -3,6 +3,8 @@ guid: e9b3c029940372546a13b450b7f7058d
 timeCreated: 1489212184
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monying2/act_attack_01
+  assetBundleVariant: common

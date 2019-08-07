@@ -3,6 +3,8 @@ guid: be597520e89296c408e5cb0126fa8ac7
 timeCreated: 1492825389
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/drop/box001/box001
+  assetBundleVariant: common

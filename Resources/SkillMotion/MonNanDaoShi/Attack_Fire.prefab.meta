@@ -3,7 +3,8 @@ guid: 5322d5d0bc012e1419188cbf3942080f
 timeCreated: 1506597767
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/monnandaoshi/attack_fire
+  assetBundleVariant: common

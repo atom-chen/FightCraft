@@ -3,6 +3,8 @@ guid: db835605654a6cb4894408d96229fefd
 timeCreated: 1487291535
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/mainchargirl/act_stand_01
+  assetBundleVariant: common

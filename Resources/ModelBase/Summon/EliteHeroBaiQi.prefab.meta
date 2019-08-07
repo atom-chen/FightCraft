@@ -3,6 +3,8 @@ guid: ed2faaf10113d514d8ef49c98df357e4
 timeCreated: 1487378137
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/summon/eliteherobaiqi
+  assetBundleVariant: common

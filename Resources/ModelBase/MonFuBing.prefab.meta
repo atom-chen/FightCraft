@@ -3,6 +3,8 @@ guid: f72709823d1d6b34180b2579a8cb5584
 timeCreated: 1488374218
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/monfubing
+  assetBundleVariant: common

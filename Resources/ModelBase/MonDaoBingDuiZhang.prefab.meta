@@ -3,6 +3,8 @@ guid: 7a90b66b4d621974b881639850a17085
 timeCreated: 1488542247
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/mondaobingduizhang
+  assetBundleVariant: common

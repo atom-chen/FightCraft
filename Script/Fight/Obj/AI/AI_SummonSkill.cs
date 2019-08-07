@@ -13,6 +13,8 @@ public class AI_SummonSkill : AI_Base
         {
             InitSkillStarSpeed(_AISkills[i].SkillBase);
         }
+
+        InitSummon();
     }
 
     protected override void AIUpdate()
@@ -45,6 +47,14 @@ public class AI_SummonSkill : AI_Base
         _DispearTime = _DispearTimeStatic;
     }
 
+    public void InitSkillDamageRate(float damageRate)
+    {
+        foreach (var aiSkill in _AISkills)
+        {
+            aiSkill.MonDamageRate *= damageRate;
+        }
+    }
+
     public void UseSkill(int idx)
     {
         if (_AISkills.Count <= idx)
@@ -53,6 +63,7 @@ public class AI_SummonSkill : AI_Base
         PlayShow();
         if (_SelfMotion.ActingSkill != null)
         {
+            _SkillStartTime = -1;
             _SelfMotion.ActingSkill.FinishSkill();
         }
         StartCoroutine(UseSkillDelay(idx));
@@ -106,14 +117,21 @@ public class AI_SummonSkill : AI_Base
     {
         if (_SummonEffect == null)
         {
-            var showEffectGO = ResourceManager.Instance.GetInstanceGameObject(_SummonShowEffectPath);
-            _SummonEffect = showEffectGO.GetComponent<EffectSingle>();
+            ResourcePool.Instance.LoadConfig(_SummonShowEffectPath, (resName, resGO, hash) =>
+            {
+                var showEffectGO = resGO;
+                _SummonEffect = showEffectGO.GetComponent<EffectSingle>();
+            }, null);
         }
 
         if (_DesummonEffect == null)
         {
-            var hideEffectGO = ResourceManager.Instance.GetInstanceGameObject(_SummonHideEffectPath);
-            _DesummonEffect = hideEffectGO.GetComponent<EffectSingle>();
+            ResourcePool.Instance.LoadConfig(_SummonShowEffectPath, (resName, resGO, hash) =>
+            {
+                var hideEffectGO = resGO;
+                _DesummonEffect = hideEffectGO.GetComponent<EffectSingle>();
+            }, null);
+            
         }
     }
 

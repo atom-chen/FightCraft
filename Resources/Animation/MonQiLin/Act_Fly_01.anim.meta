@@ -3,6 +3,8 @@ guid: 0863afbab6bd06c40b7386f678235f3b
 timeCreated: 1489211808
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monqilin/act_fly_01
+  assetBundleVariant: common

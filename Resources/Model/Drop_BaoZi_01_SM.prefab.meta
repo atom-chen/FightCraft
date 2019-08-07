@@ -3,7 +3,8 @@ guid: 97ba8a5771ca5c343b2811f2c71e08f8
 timeCreated: 1501486192
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/drop_baozi_01_sm
+  assetBundleVariant: common

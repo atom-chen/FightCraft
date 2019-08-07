@@ -16,7 +16,7 @@ public class UITestAttr : UIBase
     public static void ShowAsyn()
     {
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("LogicUI/BagPack/UITestAttr", UILayer.PopUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UITestAttr, UILayer.PopUI, hash);
     }
 
     #endregion

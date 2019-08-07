@@ -3,7 +3,8 @@ guid: 2bee2adb496c2ef4d98c5d8635962a4c
 timeCreated: 1502802702
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/herowuzetian/attack
+  assetBundleVariant: common

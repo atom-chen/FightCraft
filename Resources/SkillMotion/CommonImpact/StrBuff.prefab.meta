@@ -3,7 +3,8 @@ guid: 0f48e6442def80c40b88889b4715869d
 timeCreated: 1502440622
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/commonimpact/strbuff
+  assetBundleVariant: common

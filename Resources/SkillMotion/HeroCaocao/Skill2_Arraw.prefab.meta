@@ -3,7 +3,8 @@ guid: 88030aa0220c3c34e821356471e8f95b
 timeCreated: 1507681427
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/herocaocao/skill2_arraw
+  assetBundleVariant: common

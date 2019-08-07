@@ -3,6 +3,8 @@ guid: ad69736292687d743bb707ae2424ac72
 timeCreated: 1488541193
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/mondaobing/act_move_01
+  assetBundleVariant: common

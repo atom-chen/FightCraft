@@ -26,18 +26,21 @@ public class ImpactExAttack : ImpactBase
         base.Init(skillMotion, selector);
 
         string skillPath = "SkillMotion/" + skillMotion.MotionManager._MotionAnimPath + "/AttackEx";
-        var skillObj = ResourceManager.Instance.GetInstanceGameObject(skillPath);
-        _ExAttackSkill = skillObj.GetComponent<ObjMotionSkillBase>();
-        var hitCollider = skillObj.GetComponentInChildren<SelectCollider>();
-        if (hitCollider != null)
+        ResourcePool.Instance.LoadConfig(skillPath, (resName, resGO, hash) =>
         {
-            while (hitCollider._EventFrame.Count > _AttackTimes)
+            _ExAttackSkill = resGO.GetComponent<ObjMotionSkillBase>();
+            var hitCollider = resGO.GetComponentInChildren<SelectCollider>();
+            if (hitCollider != null)
             {
-                hitCollider._EventFrame.RemoveAt(hitCollider._EventFrame.Count - 1);
+                while (hitCollider._EventFrame.Count > _AttackTimes)
+                {
+                    hitCollider._EventFrame.RemoveAt(hitCollider._EventFrame.Count - 1);
+                }
             }
-        }
-        _ExAttackSkill.transform.SetParent(skillMotion.transform.parent);
-        _ExAttackSkill.Init();
+            _ExAttackSkill.transform.SetParent(skillMotion.transform.parent);
+            _ExAttackSkill.Init();
+        }, null);
+
     }
 
     public override void ActImpact(MotionManager senderManager, MotionManager reciverManager)

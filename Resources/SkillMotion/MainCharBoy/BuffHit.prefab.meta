@@ -3,7 +3,8 @@ guid: bc3c07b3e6f1c0b429f6619d8f57fbc7
 timeCreated: 1508848468
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/maincharboy/buffhit
+  assetBundleVariant: common

@@ -3,7 +3,8 @@ guid: aa364b3471c6ce643ac66581bddbf58d
 timeCreated: 1501486248
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/hero_shengongbao_01_am
+  assetBundleVariant: common

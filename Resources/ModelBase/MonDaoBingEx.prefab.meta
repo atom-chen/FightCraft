@@ -3,6 +3,8 @@ guid: 138d72722d5b79b43b23a721988f5ec1
 timeCreated: 1488542247
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/mondaobingex
+  assetBundleVariant: common

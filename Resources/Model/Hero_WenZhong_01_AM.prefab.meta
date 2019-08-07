@@ -3,7 +3,8 @@ guid: 78068d9c2a5680d4697275f78390448d
 timeCreated: 1501486251
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/hero_wenzhong_01_am
+  assetBundleVariant: common

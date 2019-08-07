@@ -3,7 +3,8 @@ guid: 3e40f38f8fb4e684b8534f19af732ee6
 timeCreated: 1505216189
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/mainchargirl/exattack
+  assetBundleVariant: common

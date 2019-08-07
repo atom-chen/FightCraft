@@ -3,6 +3,8 @@ guid: d6c6016b83ef79b4aaee41cf61e21508
 timeCreated: 1489150576
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/elite/eliteherowenzhong
+  assetBundleVariant: common

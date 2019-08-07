@@ -3,7 +3,8 @@ guid: 98987b8404b3e1b4497d494189d2c203
 timeCreated: 1507034592
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/herolianpo/buff1
+  assetBundleVariant: common

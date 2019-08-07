@@ -3,6 +3,8 @@ guid: 0d644a206e0ff884b977de7ae0109789
 timeCreated: 1489150568
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/elite/eliteherolianpo
+  assetBundleVariant: common

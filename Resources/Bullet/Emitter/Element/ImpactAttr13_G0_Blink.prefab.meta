@@ -3,7 +3,8 @@ guid: f311a5cd456f26c4cb0da2aa66009bf6
 timeCreated: 1509435422
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/emitter/element/impactattr13_g0_blink
+  assetBundleVariant: common

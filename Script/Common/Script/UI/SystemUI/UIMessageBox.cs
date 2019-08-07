@@ -29,7 +29,7 @@ public class UIMessageBox : UIPopBase
         hash.Add("BtnType", btnType);
         hash.Add("ClickBackHide", clickBackHide);
         //GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_UI_SHOW_MESSAGEBOX, null, hash);
-        GameCore.Instance.UIManager.ShowUI("SystemUI/UIMessageBox", UILayer.MessageUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIMessageBox, UILayer.MessageUI, hash);
     }
 
     public static void ShowWithDontShotTodayTips(string message, string showType, Action okAction = null, Action cancelAction = null, BtnType btnType = BtnType.OKBTN, bool clickBackHide = true)
@@ -51,7 +51,7 @@ public class UIMessageBox : UIPopBase
         hash.Add("ClickBackHide", clickBackHide);
         hash.Add("WithDontShowToday", showType);
         //GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_UI_SHOW_MESSAGEBOX, null, hash);
-        GameCore.Instance.UIManager.ShowUI("SystemUI/UIMessageBox", UILayer.MessageUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIMessageBox, UILayer.MessageUI, hash);
     }
 
     public static void Show(string message, Action okAction, Action cancelAction, string okText, string cancelText, BtnType btnType = BtnType.YESNOBTN, bool clickBackHide = false)
@@ -65,7 +65,7 @@ public class UIMessageBox : UIPopBase
         hash.Add("BtnType", btnType);
         hash.Add("ClickBackHide", clickBackHide);
         //GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_UI_SHOW_MESSAGEBOX, null, hash);
-        GameCore.Instance.UIManager.ShowUI("SystemUI/UIMessageBox", UILayer.MessageUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIMessageBox, UILayer.MessageUI, hash);
     }
 
     #endregion

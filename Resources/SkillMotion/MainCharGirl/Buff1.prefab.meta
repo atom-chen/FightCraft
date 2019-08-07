@@ -3,6 +3,8 @@ guid: 5361aa12d95f2be4fbb9210ec66111ad
 timeCreated: 1489116008
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/mainchargirl/buff1
+  assetBundleVariant: common

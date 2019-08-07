@@ -16,12 +16,12 @@ public class UIStageSelect : UIBase
     public static void ShowAsyn()
     {
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("LogicUI/Stage/UIStageSelect", UILayer.PopUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIStageSelect, UILayer.PopUI, hash);
     }
 
     public static int GetSelectedDiff()
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UIStageSelect>("LogicUI/Stage/UIStageSelect");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIStageSelect>(UIConfig.UIStageSelect);
         if (instance == null)
             return -1;
 

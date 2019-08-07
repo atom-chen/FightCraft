@@ -3,7 +3,8 @@ guid: 94e86450b3a7d184a94d4c5292a5abe2
 timeCreated: 1502422254
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/emitter/monster/caocaoarrawattack
+  assetBundleVariant: common

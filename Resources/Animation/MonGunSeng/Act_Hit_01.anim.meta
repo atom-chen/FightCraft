@@ -3,6 +3,8 @@ guid: c549641ef0be8224093dc3760a639044
 timeCreated: 1488543465
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/mongunseng/act_hit_01
+  assetBundleVariant: common

@@ -50,6 +50,7 @@ public class EffectOutLine : EffectController
             if (go != null)
             {
                 _SkinnedMesh = gameObject.GetComponent<SkinnedMeshRenderer>();
+                _SkinnedMesh.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             }
             else
             {
@@ -60,6 +61,7 @@ public class EffectOutLine : EffectController
                         continue;
 
                     _SkinnedMesh = objMesh;
+                    _SkinnedMesh.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
                 }
             }
             //_SkinnedMesh = motion.GetComponentInChildren<SkinnedMeshRenderer>();

@@ -3,6 +3,8 @@ guid: 6117d049692490045a1c7960978bec34
 timeCreated: 1490435154
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/bullets/monster/bullet_baiqi_boom
+  assetBundleVariant: common

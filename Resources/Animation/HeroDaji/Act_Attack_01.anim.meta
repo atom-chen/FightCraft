@@ -3,6 +3,8 @@ guid: e0c4b9bebdcc201489a70446369dd94f
 timeCreated: 1489118158
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herodaji/act_attack_01
+  assetBundleVariant: common

@@ -19,14 +19,24 @@ public class GameCore : MonoBehaviour
 
     public void Start()
     {
-        Tables.TableReader.ReadTables();
-        UILogin.ShowAsyn();
-
-        AssetBundles.AssetBundleManager.SetAssetBundlePath();
-        AssetBundles.AssetBundleManager.Initialize();
+        ResourceManager.InitResourceManager();
+        StartCoroutine(UpdateInit());
     }
 
     public void Update()
+    {
+        UpdateQuit();
+#if UNITY_EDITOR
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            LogicManager.Instance.CleanUpSave();
+        }
+
+#endif
+    }
+
+    void UpdateQuit()
     {
         if ((Application.platform == RuntimePlatform.Android
         || Application.platform == RuntimePlatform.WindowsPlayer
@@ -48,23 +58,41 @@ public class GameCore : MonoBehaviour
                 LogicManager.Instance.QuitGame();
                 Debug.Log("save data");
             }, null);
-            
+
         }
-
-#if UNITY_EDITOR
-
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            LogicManager.Instance.CleanUpSave();
-        }
-
-#endif
     }
+
+    
 
     void OnApplicationQuit()
     {
         LogicManager.Instance.QuitGame();
     }
+    #endregion
+
+    #region start logic
+
+    IEnumerator UpdateInit()
+    {
+        while (!_HasInitLogic)
+        {
+            if (ResourceManager.Instance != null && ResourcePool.Instance != null)
+            {
+                StartGameLogic();
+                break;
+            }
+
+            yield return new WaitForFixedUpdate();
+        }
+    }
+
+    bool _HasInitLogic = false;
+    void StartGameLogic()
+    {
+        Tables.TableReader.ReadTables();
+        UILogin.ShowAsyn();
+    }
+
     #endregion
 
     #region 唯一
@@ -100,6 +128,7 @@ public class GameCore : MonoBehaviour
     #region 
 
     public int _StrVersion = 0;
+    public bool _IsTestMode = true;
 
     #endregion
 

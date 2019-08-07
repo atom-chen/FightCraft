@@ -3,7 +3,8 @@ guid: ab773fb646d059a4188c7f4b68a9ad8a
 timeCreated: 1507035947
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/heroluban/buff2
+  assetBundleVariant: common

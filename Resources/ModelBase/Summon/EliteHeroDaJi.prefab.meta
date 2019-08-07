@@ -3,6 +3,8 @@ guid: 081bd1f387503e745aa9de3b8a888309
 timeCreated: 1489118199
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/summon/eliteherodaji
+  assetBundleVariant: common

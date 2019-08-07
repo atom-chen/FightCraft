@@ -3,7 +3,8 @@ guid: 06d87f8b18bcbc5498bc6152bc15d216
 timeCreated: 1518243065
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/herodaji/buff2
+  assetBundleVariant: common

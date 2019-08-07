@@ -27,13 +27,18 @@ public class RoleAttrImpactDodgeNoDamage : RoleAttrImpactBase
             return;
 
         var skillMotion = roleMotion._StateSkill._SkillMotions[_SkillInput];
-        var impactGO = ResourceManager.Instance.GetInstanceGameObject("SkillMotion\\CommonImpact\\" + _ImpactName);
-        impactGO.transform.SetParent(skillMotion.transform);
-        impactGO.transform.localPosition = Vector3.zero;
-        impactGO.transform.localRotation = Quaternion.Euler(0, 0, 0);
 
-        var buff = impactGO.GetComponentInChildren<ImpactBuff>();
-        buff._LastTime = _BuffLastTime;
+        ResourcePool.Instance.LoadConfig("SkillMotion\\CommonImpact\\" + _ImpactName, (resName, resGO, hash) =>
+        {
+
+            var impactGO = resGO;
+            impactGO.transform.SetParent(skillMotion.transform);
+            impactGO.transform.localPosition = Vector3.zero;
+            impactGO.transform.localRotation = Quaternion.Euler(0, 0, 0);
+
+            var buff = impactGO.GetComponentInChildren<ImpactBuff>();
+            buff._LastTime = _BuffLastTime;
+        }, null);
 
     }
 

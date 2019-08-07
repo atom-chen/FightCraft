@@ -3,7 +3,8 @@ guid: fda6739e8f28628479c66afaa80a9776
 timeCreated: 1501486235
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/hero_leizhenzi_01_am
+  assetBundleVariant: common

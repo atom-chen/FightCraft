@@ -3,6 +3,8 @@ guid: 4ae93be133f10f049af7710065852f6d
 timeCreated: 1489125150
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herodianwei/act_buff_01
+  assetBundleVariant: common

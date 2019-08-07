@@ -3,6 +3,8 @@ guid: 04c8ff093c525b642b88b4052a98bac2
 timeCreated: 1489126439
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herodirenjie/act_fly_01
+  assetBundleVariant: common

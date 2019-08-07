@@ -3,6 +3,8 @@ guid: 9fe1a129c98d043429646b8e5ab5e574
 timeCreated: 1489211871
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monjianbing/act_attack_02
+  assetBundleVariant: common

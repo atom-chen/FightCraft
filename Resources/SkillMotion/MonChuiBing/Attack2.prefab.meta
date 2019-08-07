@@ -3,7 +3,8 @@ guid: 15b8ca8d10e798f4eabd29261312ffee
 timeCreated: 1506496440
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/monchuibing/attack2
+  assetBundleVariant: common

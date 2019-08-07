@@ -3,6 +3,8 @@ guid: e18ef848f2f60cb43808f2984c55687d
 timeCreated: 1488543466
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/mongunseng/act_stand_01
+  assetBundleVariant: common

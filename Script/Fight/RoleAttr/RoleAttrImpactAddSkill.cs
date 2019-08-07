@@ -39,10 +39,14 @@ public class RoleAttrImpactAddSkill : RoleAttrImpactBase
         return strFormat;
     }
 
-    public ObjMotionSkillBase GetSkillBase()
+    public ObjMotionSkillBase _AddSkill;
+    public IEnumerator GetSkillBase()
     {
-        var impactGO = ResourceManager.Instance.GetInstanceGameObject("Bullet\\Emitter\\Element\\" + _ImpactName);
-        return impactGO.GetComponent<ObjMotionSkillBase>();
+        return ResourceManager.Instance.LoadPrefab("Bullet\\Emitter\\Element\\" + _ImpactName, (resName, resGO, hash) =>
+        {
+            _AddSkill = resGO.GetComponent<ObjMotionSkillBase>();
+        });
+        
     }
 
     #region 

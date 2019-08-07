@@ -3,6 +3,8 @@ guid: 3cca0c16fcb3cd341a78108358210bcc
 timeCreated: 1487255765
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/maincharboy/act_fly_01
+  assetBundleVariant: common

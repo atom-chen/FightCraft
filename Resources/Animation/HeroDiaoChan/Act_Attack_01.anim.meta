@@ -3,6 +3,8 @@ guid: a29752f3df4980742a01b3973398e076
 timeCreated: 1489125820
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herodiaochan/act_attack_01
+  assetBundleVariant: common

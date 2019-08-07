@@ -20,22 +20,26 @@ public class RoleAttrImpactPassiveAttackBless : RoleAttrImpactPassive
         if (!roleMotion._StateSkill._SkillMotions.ContainsKey(_SkillInput))
             return;
 
-        var buffGO = ResourceManager.Instance.GetInstanceGameObject("Bullet\\Passive\\" + _ImpactName);
-        buffGO.transform.SetParent(roleMotion.BuffBindPos.transform);
-        var buffs = buffGO.GetComponents<ImpactBuffAttackSub>();
-        foreach (var buff in buffs)
+        ResourcePool.Instance.LoadConfig("Bullet\\Passive\\" + _ImpactName, (resName, resGO, hash) =>
         {
-            var subBuffs2 = buffGO.GetComponentsInChildren<ImpactBuffAttrAdd>();
-            foreach (var subBuff in subBuffs2)
+            var buffGO = resGO;
+            buffGO.transform.SetParent(roleMotion.BuffBindPos.transform);
+            var buffs = buffGO.GetComponents<ImpactBuffAttackSub>();
+            foreach (var buff in buffs)
             {
-                if (subBuff.gameObject == buffGO)
-                    continue;
-                subBuff._AddValue = _AttrValue;
-            }
+                var subBuffs2 = buffGO.GetComponentsInChildren<ImpactBuffAttrAdd>();
+                foreach (var subBuff in subBuffs2)
+                {
+                    if (subBuff.gameObject == buffGO)
+                        continue;
+                    subBuff._AddValue = _AttrValue;
+                }
 
-            buff._Rate = _ActRate;
-            buff.ActImpact(roleMotion, roleMotion);
-        }
+                buff._Rate = _ActRate;
+                buff.ActImpact(roleMotion, roleMotion);
+            }
+        }, null);
+        
     }
 
     public new static string GetAttrDesc(List<int> attrParams)

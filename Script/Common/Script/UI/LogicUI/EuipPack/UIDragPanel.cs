@@ -13,12 +13,12 @@ public class UIDragPanel : UIBase
     {
         Hashtable hash = new Hashtable();
         hash.Add("DragItem", dragItem);
-        GameCore.Instance.UIManager.ShowUI("LogicUI/BagPack/UIDragPanel", UILayer.MessageUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIDragPanel, UILayer.MessageUI, hash);
     }
 
     public static void DragItem(PointerEventData eventData)
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UIDragPanel>("LogicUI/BagPack/UIDragPanel");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIDragPanel>(UIConfig.UIDragPanel);
         if (instance == null)
             return;
 
@@ -30,7 +30,7 @@ public class UIDragPanel : UIBase
 
     public static void SetDragOnItem(UIDragableItemBase dragOnItem)
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UIDragPanel>("LogicUI/BagPack/UIDragPanel");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIDragPanel>(UIConfig.UIDragPanel);
         if (instance == null)
             return;
 
@@ -42,7 +42,7 @@ public class UIDragPanel : UIBase
 
     public static bool IsDragingItem()
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UIDragPanel>("LogicUI/BagPack/UIDragPanel");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIDragPanel>(UIConfig.UIDragPanel);
         if (instance == null)
             return false;
 
@@ -54,7 +54,7 @@ public class UIDragPanel : UIBase
 
     public static UIDragableItemBase GetDragingItem()
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UIDragPanel>("LogicUI/BagPack/UIDragPanel");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIDragPanel>(UIConfig.UIDragPanel);
         if (instance == null)
             return null;
 

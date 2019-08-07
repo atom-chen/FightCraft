@@ -3,6 +3,8 @@ guid: ebaee90628397634c9f194a2b84f9f8c
 timeCreated: 1489118159
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herodaji/act_skill_01_hit
+  assetBundleVariant: common

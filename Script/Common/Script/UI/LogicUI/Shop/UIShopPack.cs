@@ -12,12 +12,12 @@ public class UIShopPack : UIBase
     public static void ShowAsyn()
     {
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("LogicUI/Shop/UIShopPack", UILayer.PopUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIShopPack, UILayer.PopUI, hash);
     }
 
     public static void RefreshShopItems()
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UIShopPack>("LogicUI/Shop/UIShopPack");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIShopPack>(UIConfig.UIShopPack);
         if (instance == null)
             return;
 

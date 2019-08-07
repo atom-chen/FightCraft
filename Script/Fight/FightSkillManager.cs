@@ -88,6 +88,7 @@ public class FightSkillManager
             skillInfo = new FightSkillInfo();
             _FightSkillDict.Add(skillInfo);
             skillInfo._SkillInput = skillBase._ActInput;
+            skillInfo._SkillIcon = SkillData.Instance.GetSkillIcon(skillInfo._SkillInput);
             skillInfo._StoreCntLimit = skillBase._StoreUseTimes;
             skillInfo._StoreCnt = skillInfo._StoreCntLimit - 1;
             skillInfo._CDTime = skillBase._SkillCD;
@@ -188,6 +189,8 @@ public class FightSkillManager
                 skillInfo = new FightSkillInfo();
                 _FightSkillDict.Add(skillInfo);
                 skillInfo._SkillInput = skillBase._ActInput;
+                skillInfo._SkillIcon = SkillData.Instance.GetSkillIcon(skillInfo._SkillInput);
+
                 skillInfo._StoreCntLimit = skillBase._StoreUseTimes;
             }
 
@@ -351,13 +354,14 @@ public class FightSkillManager
             skillInfo = new FightSkillInfo();
             _FightSkillDict.Add(skillInfo);
             skillInfo._SkillInput = summonData.SummonRecordID;
+            skillInfo._SkillIcon = summonData.SummonRecord.MonsterBase.HeadIcon;
             skillInfo._CDTime = cdTime;
             skillInfo._LastActCD = Time.time;
             skillInfo._ShowInUI = !isCommonCD;
         }
         else
         {
-            var nowCD = Time.time - skillInfo._LastActCD;
+            var nowCD = skillInfo._CDTime - (Time.time - skillInfo._LastActCD);
             if (cdTime > nowCD)
             {
                 skillInfo._CDTime = cdTime;
@@ -392,6 +396,31 @@ public class FightSkillManager
             return false;
 
         return true;
+    }
+
+    public float GetSkillCDPro(string input)
+    {
+
+        var skillInfo = _FightSkillDict.Find((skillinfo) =>
+        {
+            if (skillinfo._SkillInput == input)
+            {
+                return true;
+            }
+            return false;
+        });
+
+        if (skillInfo == null)
+        {
+            return 0;
+        }
+
+        if (skillInfo._StoreCnt > 0)
+            return 0;
+
+        float cdPro = (skillInfo._CDTime - (Time.time - skillInfo._LastActCD)) / skillInfo._CDTime;
+
+        return cdPro;
     }
 
     #endregion

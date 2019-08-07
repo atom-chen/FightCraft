@@ -3,6 +3,8 @@ guid: 5e4823af88d0d994caf65d463d54d91c
 timeCreated: 1489211871
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monjianbing/act_hit_01
+  assetBundleVariant: common

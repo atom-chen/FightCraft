@@ -3,7 +3,8 @@ guid: 962c3e3e1f5f2434183749ac57f330a3
 timeCreated: 1501486409
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/mon_tiebeiyaohu_01_am
+  assetBundleVariant: common

@@ -3,7 +3,8 @@ guid: bfb649a3234066c4a9f351d75ac5c60e
 timeCreated: 1508836563
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/commonimpact/dodgedeximpact
+  assetBundleVariant: common

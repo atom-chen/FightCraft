@@ -3,6 +3,8 @@ guid: a21ad2174520b674d94631a8b79d4587
 timeCreated: 1488371801
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monchuibing/act_move_01
+  assetBundleVariant: common

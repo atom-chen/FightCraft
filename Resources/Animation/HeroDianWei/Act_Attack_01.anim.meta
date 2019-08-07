@@ -3,6 +3,8 @@ guid: a8afeeaa78bc0b94eae946ab23e6bf4e
 timeCreated: 1489125149
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herodianwei/act_attack_01
+  assetBundleVariant: common

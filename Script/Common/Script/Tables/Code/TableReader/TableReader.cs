@@ -90,6 +90,8 @@ namespace Tables
         public static SummonSkillAttr SummonSkillAttr { get; internal set; }
 //
         public static SummonSkillLottery SummonSkillLottery { get; internal set; }
+//
+        public static LoadingTips LoadingTips { get; internal set; }
 
         public static void ReadTables()
         {
@@ -127,6 +129,7 @@ namespace Tables
             SummonSkill = new SummonSkill(TableReadBase.GetTableText("SummonSkill"), false);
             SummonSkillAttr = new SummonSkillAttr(TableReadBase.GetTableText("SummonSkillAttr"), false);
             SummonSkillLottery = new SummonSkillLottery(TableReadBase.GetTableText("SummonSkillLottery"), false);
+            LoadingTips = new LoadingTips(TableReadBase.GetTableText("LoadingTips"), false);
 
             //初始化所有表
             Achievement.CoverTableContent();
@@ -162,6 +165,7 @@ namespace Tables
             SummonSkill.CoverTableContent();
             SummonSkillAttr.CoverTableContent();
             SummonSkillLottery.CoverTableContent();
+            LoadingTips.CoverTableContent();
         }
 
         #endregion

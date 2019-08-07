@@ -22,8 +22,11 @@ public class AI_DexHeroBase : AI_HeroBase
     {
         base.InitCrazyBuff();
 
-        var buffGO = ResourceManager.Instance.GetGameObject("SkillMotion/CommonImpact/DexAccelateBuff");
+        //var buffGO = ResourceManager.Instance.GetGameObject("SkillMotion/CommonImpact/DexAccelateBuff");
+        var buffGO = ResourcePool.Instance.GetConfig<Transform>(ResourcePool.ConfigEnum.DexAccelateBuff);
         _Strtage2Buff = buffGO.GetComponents<ImpactBuff>();
+
+
     }
     
 
@@ -41,14 +44,18 @@ public class AI_DexHeroBase : AI_HeroBase
 
     private void InitBlockSkill()
     {
-        var blockSkill = ResourceManager.Instance.GetInstanceGameObject("SkillMotion/BlockSkill");
-        var motionTrans = _SelfMotion.transform.Find("Motion");
-        blockSkill.transform.SetParent(motionTrans);
-        _SkillBlock = blockSkill.GetComponent<ObjMotionSkillBase>();
-        _SkillBlock._NextAnim[0] = _BlockAnim;
-        _SkillBlock.Init();
+        ResourcePool.Instance.LoadConfig("SkillMotion/BlockSkill", (resName, resGO, hash) =>
+        {
+            var blockSkill = resGO;
+            var motionTrans = _SelfMotion.transform.Find("Motion");
+            blockSkill.transform.SetParent(motionTrans);
+            _SkillBlock = blockSkill.GetComponent<ObjMotionSkillBase>();
+            _SkillBlock._NextAnim[0] = _BlockAnim;
+            _SkillBlock.Init();
 
-        _LastBlockTime = -_BlockCD;
+            _LastBlockTime = -_BlockCD;
+        }, null);
+        
     }
 
     private void HitEvent(object sender, Hashtable eventArgs)

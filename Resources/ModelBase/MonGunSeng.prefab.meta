@@ -3,6 +3,8 @@ guid: 0900ec0df3c15f340ad79a198cd49008
 timeCreated: 1488543431
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/mongunseng
+  assetBundleVariant: common

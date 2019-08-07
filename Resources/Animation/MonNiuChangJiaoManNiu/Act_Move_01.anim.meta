@@ -3,6 +3,8 @@ guid: 3df8bff25a564cc41a95c839e1cb44d4
 timeCreated: 1488370005
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monniuchangjiaomanniu/act_move_01
+  assetBundleVariant: common

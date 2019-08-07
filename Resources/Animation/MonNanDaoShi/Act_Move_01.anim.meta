@@ -3,6 +3,8 @@ guid: ee7eaf7163866724693fe48646674b48
 timeCreated: 1489211923
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monnandaoshi/act_move_01
+  assetBundleVariant: common

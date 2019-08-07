@@ -3,7 +3,8 @@ guid: 5e92797bcf645434d9a5387f463e7820
 timeCreated: 1501486296
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/mon_cihu_01_am
+  assetBundleVariant: common

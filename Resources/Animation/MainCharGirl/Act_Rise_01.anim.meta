@@ -3,6 +3,8 @@ guid: 2fe48ba67d73dc848bd36731e3d2da6b
 timeCreated: 1487291533
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/mainchargirl/act_rise_01
+  assetBundleVariant: common

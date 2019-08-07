@@ -3,7 +3,8 @@ guid: 2ae3df19b87faaf4f85f66625b747e41
 timeCreated: 1507678974
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/herozhouwang/skill1
+  assetBundleVariant: common

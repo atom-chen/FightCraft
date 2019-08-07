@@ -3,6 +3,8 @@ guid: d8e96983f25ae1e4cb4f5eb946270aad
 timeCreated: 1488542767
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/mongaibangduizhang
+  assetBundleVariant: common

@@ -3,7 +3,8 @@ guid: 05226b648bfb9094cabf30a3371541fb
 timeCreated: 1501486416
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/npc_s_mutong_01_am
+  assetBundleVariant: common

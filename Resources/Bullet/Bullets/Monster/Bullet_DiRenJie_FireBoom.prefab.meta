@@ -3,7 +3,8 @@ guid: ae4452d5972f71547bd72e447326abcc
 timeCreated: 1502422051
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/bullets/monster/bullet_direnjie_fireboom
+  assetBundleVariant: common

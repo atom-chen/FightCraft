@@ -3,6 +3,8 @@ guid: 09464049533ea964d8254c7e3065b77b
 timeCreated: 1489146377
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herozhaoyun/act_rise_01
+  assetBundleVariant: common

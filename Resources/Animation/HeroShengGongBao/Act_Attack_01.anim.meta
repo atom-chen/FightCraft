@@ -3,6 +3,8 @@ guid: 63e960532d2c96744b14dbd7a40cee5b
 timeCreated: 1489146205
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heroshenggongbao/act_attack_01
+  assetBundleVariant: common

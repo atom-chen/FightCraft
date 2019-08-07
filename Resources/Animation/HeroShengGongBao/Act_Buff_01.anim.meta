@@ -3,6 +3,8 @@ guid: c99a8e638332c8945a8b669190fcb95e
 timeCreated: 1489146205
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heroshenggongbao/act_buff_01
+  assetBundleVariant: common

@@ -16,9 +16,10 @@ public class ImpactBuffShadowHit : ImpactBuff
     {
         base.ActBuff(senderManager, ownerManager);
 
+        _EffectAfterAnim._Interval = _HitDuration;
+        _EffectAfterAnim._FadeOut = _HitDuration * _ShadowCnt;
+
         _DynamicEffect = ownerManager.PlayDynamicEffect(_EffectAfterAnim);
-        (_DynamicEffect as EffectAfterAnim)._Interval = _HitDuration;
-        (_DynamicEffect as EffectAfterAnim)._FadeOut = _HitDuration * _ShadowCnt;
     }
 
     public override void UpdateBuff()

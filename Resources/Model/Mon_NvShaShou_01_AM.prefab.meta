@@ -3,7 +3,8 @@ guid: 21fea445bcb0ef04bb1e33b14a3cfa4d
 timeCreated: 1501486373
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/mon_nvshashou_01_am
+  assetBundleVariant: common

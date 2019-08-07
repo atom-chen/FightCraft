@@ -14,7 +14,7 @@ public class UISummonLotteryReturn : UIBase
         Hashtable hash = new Hashtable();
         hash.Add("ItemID", itemID);
         hash.Add("ItemNum", itemNum);
-        GameCore.Instance.UIManager.ShowUI("LogicUI/SummonSkill/UISummonLotteryReturn", UILayer.MessageUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UISummonLotteryReturn, UILayer.MessageUI, hash);
     }
 
     #endregion

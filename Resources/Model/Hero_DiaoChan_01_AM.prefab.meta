@@ -3,7 +3,8 @@ guid: 1775b42af66ea8443b9f5f4eb2c25560
 timeCreated: 1501486219
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/hero_diaochan_01_am
+  assetBundleVariant: common

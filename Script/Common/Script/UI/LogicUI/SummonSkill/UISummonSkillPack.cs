@@ -11,12 +11,12 @@ public class UISummonSkillPack : UIBase
     public static void ShowAsyn()
     {
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("LogicUI/SummonSkill/UISummonSkillPack", UILayer.PopUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UISummonSkillPack, UILayer.PopUI, hash);
     }
 
     public static void RefreshPack()
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UISummonSkillPack>("LogicUI/SummonSkill/UISummonSkillPack");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UISummonSkillPack>(UIConfig.UISummonSkillPack);
         if (instance == null)
             return;
 

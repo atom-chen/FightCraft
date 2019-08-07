@@ -3,6 +3,8 @@ guid: 58da178450621934ead7c705360902a7
 timeCreated: 1488371800
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monchuibing/act_fly_01
+  assetBundleVariant: common

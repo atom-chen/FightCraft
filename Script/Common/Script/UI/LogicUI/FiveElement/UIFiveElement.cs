@@ -11,12 +11,12 @@ public class UIFiveElement : UIBase
     public static void ShowAsyn()
     {
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("LogicUI/FiveElement/UIFiveElement", UILayer.PopUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIFiveElement, UILayer.PopUI, hash);
     }
 
     public static void RefreshPack()
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UIFiveElement>("LogicUI/FiveElement/UIFiveElement");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIFiveElement>(UIConfig.UIFiveElement);
         if (instance == null)
             return;
 
@@ -29,7 +29,7 @@ public class UIFiveElement : UIBase
 
     public static int GetSelectedIdx()
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UIFiveElement>("LogicUI/FiveElement/UIFiveElement");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIFiveElement>(UIConfig.UIFiveElement);
         if (instance == null)
             return -1;
 
@@ -42,7 +42,7 @@ public class UIFiveElement : UIBase
 
     public static void SetSelectedIdx(int idx)
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UIFiveElement>("LogicUI/FiveElement/UIFiveElement");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIFiveElement>(UIConfig.UIFiveElement);
         if (instance == null)
             return;
 

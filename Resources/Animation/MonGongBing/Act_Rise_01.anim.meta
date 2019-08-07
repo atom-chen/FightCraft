@@ -3,6 +3,8 @@ guid: 4b4eb2d201325954b8474b1864e15878
 timeCreated: 1488542975
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/mongongbing/act_rise_01
+  assetBundleVariant: common

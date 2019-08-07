@@ -7,6 +7,9 @@ public class ObjMotionSkillBuff : ObjMotionSkillBase
 
     void Update()
     {
+        if (MotionManager == null)
+            return;
+
         if (_CanNextInput && _IsCanActAfterBuff)
         {
             if (InputManager.Instance.IsKeyHold("k") || InputManager.Instance.IsKeyHold(_ActSkillInput))

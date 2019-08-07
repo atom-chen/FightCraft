@@ -3,6 +3,8 @@ guid: 7f568b918af09a64484dfde213c37118
 timeCreated: 1489212184
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monying2/act_hit_01
+  assetBundleVariant: common

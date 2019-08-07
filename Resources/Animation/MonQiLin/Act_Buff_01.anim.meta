@@ -3,6 +3,8 @@ guid: f78559bfac6c0c141b9ea59d1c883a72
 timeCreated: 1489211808
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monqilin/act_buff_01
+  assetBundleVariant: common

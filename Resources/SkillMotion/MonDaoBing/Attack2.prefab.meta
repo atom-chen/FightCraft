@@ -3,7 +3,8 @@ guid: 837ebc4df2ac1614a828f2481bacc395
 timeCreated: 1506497833
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/mondaobing/attack2
+  assetBundleVariant: common

@@ -3,6 +3,8 @@ guid: 8a6cfda8b6d7ec84b8292ba5faa79283
 timeCreated: 1489146111
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heroleizhenzi/act_stand_01
+  assetBundleVariant: common

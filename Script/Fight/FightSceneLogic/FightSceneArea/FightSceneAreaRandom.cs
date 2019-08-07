@@ -21,22 +21,24 @@ public class FightSceneAreaRandom : FightSceneAreaBase
     {
         base.UpdateArea();
 
-        if (!_IsEnemyAlert)
-        {
-            foreach (var ai in _EnemyAI)
-            {
-                if (ai == null)
-                {
-                    continue;
-                }
+        //if (!_IsEnemyAlert)
+        //{
+        //    foreach (var ai in _EnemyAI)
+        //    {
+        //        if (ai == null)
+        //        {
+        //            continue;
+        //        }
 
-                if (Vector3.Distance(ai.transform.position, FightManager.Instance.MainChatMotion.transform.position) < _EnemyAlertDistance)
-                {
-                    _IsEnemyAlert = true;
-                    SetAllAlert();
-                }
-            }
-        }
+        //        if (Vector3.Distance(ai.transform.position, FightManager.Instance.MainChatMotion.transform.position) < _EnemyAlertDistance)
+        //        {
+        //            _IsEnemyAlert = true;
+        //            SetAllAlert();
+        //        }
+        //    }
+        //}
+
+        UpdateFish();
     }
 
     public override void MotionDie(MotionManager motion)
@@ -74,13 +76,30 @@ public class FightSceneAreaRandom : FightSceneAreaBase
 
     private void StepMotionDie(MotionManager motion)
     {
-
-        ++_DeadEnemyCnt;
-
-        if (_DeadEnemyCnt >= _MonPoses.Count)
+        if (IsBossArea())
         {
-            FinishArea();
+            if (motion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.Hero)
+            {
+                //FinishArea();
+            }
+            else
+            {
+                FishDie(motion);
+            }
         }
+        //else
+        //{
+        //    var ai = motion.GetComponent<AI_Base>();
+        //    if (_EnemyAI.Contains(ai))
+        //    {
+        //        _EnemyAI.Remove(ai);
+        //    }
+
+        //    if (_EnemyAI.Count == 0)
+        //    {
+        //        FinishArea();
+        //    }
+        //}
     }
 
     public void ClearAllEnemy()
@@ -110,6 +129,12 @@ public class FightSceneAreaRandom : FightSceneAreaBase
     private Vector3 _MonTrans;
     private Vector3 _MonLookTrans;
     private List<Vector3> _MonPoses = new List<Vector3>();
+    
+
+    public bool IsBossArea()
+    {
+        return _MonPoses.Count == 1;
+    }
 
     public void InitRandomMonsters()
     {
@@ -118,7 +143,7 @@ public class FightSceneAreaRandom : FightSceneAreaBase
 
         int maticTotalCnt = GameRandom.GetRandomLevel(7, 3) + 1;
         int monTotalCnt = GameRandom.GetRandomLevel(5, 3, 2) + 7 - maticTotalCnt;
-        if (_MonPoses.Count == 1)
+        if (IsBossArea())
         {
             maticTotalCnt = 0;
             monTotalCnt = 1;
@@ -127,10 +152,14 @@ public class FightSceneAreaRandom : FightSceneAreaBase
         {
             monTotalCnt = Mathf.Min(_MonPoses.Count - maticTotalCnt, monTotalCnt);
         }
+
         List<int> monIds = new List<int>();
-        if (RandomLogic.IsChangeToBoss)
+        _BossFishInfo = null;
+        int diff = ActData.Instance._NormalStageIdx;
+        if (IsBossArea())
         {
             monIds.Add(RandomLogic.BossID);
+            _BossFishInfo = GetStageDiffBossFishInfo(diff);
         }
         else
         {
@@ -160,8 +189,8 @@ public class FightSceneAreaRandom : FightSceneAreaBase
 
 
         //var stageDiffInfo = GetStageDiffInfo(ActData.Instance.GetNormalDiff(), monIds.Count);
-        int diff = ActData.Instance._NormalStageIdx;
-        var stageDiffInfo = GetStageDiffInfo(ActData.Instance._NormalStageIdx, monIds.Count);
+        
+        var stageDiffInfo = GetStageDiffInfo(diff, monIds.Count);
 
         for (int i = 0; i < monIds.Count; ++i)
         {
@@ -180,6 +209,10 @@ public class FightSceneAreaRandom : FightSceneAreaBase
                 motionType = Tables.MOTION_TYPE.Normal;
                 monId = stageDiffInfo.ExtraMonID.ToString();
             }
+            if (RandomLogic.BossID == monIds[i])
+            {
+                motionType = Tables.MOTION_TYPE.Hero;
+            }
 
             var rot = Quaternion.LookRotation(_MonLookTrans, Vector3.up);
             MotionManager enemy = FightManager.Instance.InitEnemy(monIds[i].ToString(), _MonPoses[i], rot.eulerAngles, motionType);
@@ -191,14 +224,13 @@ public class FightSceneAreaRandom : FightSceneAreaBase
                 var bossAI = enemyAI as AI_HeroBase;
                 if (bossAI != null)
                 {
-                    if (RandomLogic.IsChangeToBoss)
+                    if (IsBossArea())
                     {
                         InitBossAILevel(diff, bossAI);
                     }
                     else if (stageDiffInfo.RandomBuffCnt > 0)
                     {
-                        var passiveBuff = ResourceManager.Instance.GetInstanceGameObject("SkillMotion/CommonImpact/EliteRandomBuff");
-                        var randomBuff = passiveBuff.GetComponent<ImpactBuffRandomSub>();
+                        var randomBuff = ResourcePool.Instance.GetConfig<ImpactBuffRandomSub>(ResourcePool.ConfigEnum.RandomBuff);
                         randomBuff._ActSubCnt = stageDiffInfo.RandomBuffCnt;
                         bossAI._PassiveGO = randomBuff.transform;
                     }
@@ -235,7 +267,7 @@ public class FightSceneAreaRandom : FightSceneAreaBase
     private void InitMonPos()
     {
         _MonPoses.Clear();
-        if (RandomLogic.IsChangeToBoss)
+        if (RandomLogic.StartBossArea)
         {
             _MonPoses.Add(transform.position);
         }
@@ -335,6 +367,201 @@ public class FightSceneAreaRandom : FightSceneAreaBase
         }
     }
 
+
+
+    #endregion
+
+    #region update fish
+
+    public List<Transform> _BossFishPoses;
+
+    private StageDiffBossFishInfo _BossFishInfo;
+    private bool _InitFish = false;
+    public enum MonsterEliteType
+    {
+        None,
+        Normal,
+        Elite,
+        Ex,
+        QiLin,
+        ExQiLin,
+    }
+    private float _CreateMonTimeCD = 0;
+    List<MotionManager> _FishMotion = new List<MotionManager>();
+    MotionManager _FishEliteMotion;
+
+    private void UpdateFish()
+    {
+        if (_BossFishInfo == null)
+            return;
+
+        if (_BossFishInfo.FishCnt == 0)
+            return;
+
+        if (!_InitFish)
+        {
+            List<Vector3> initPos = new List<Vector3>();
+            initPos.Add(transform.position + new Vector3(1.5f, 0, 1.5f));
+            initPos.Add(transform.position + new Vector3(1.5f, 0, -1.5f));
+            initPos.Add(transform.position + new Vector3(-1.5f, 0, 1.5f));
+            initPos.Add(transform.position + new Vector3(-1.5f, 0, -1.5f));
+
+            _FishMotion.Clear();
+            var rot = Quaternion.LookRotation(_MonLookTrans, Vector3.up);
+            for (int i = 0; i < initPos.Count; ++i)
+            {
+                string randomFish = GetRandomFish().ToString();
+                MonsterEliteType eliteType = GetMonsterType(i + 1);
+                Tables.MOTION_TYPE motionType = Tables.MOTION_TYPE.Normal;
+                if (eliteType == MonsterEliteType.Elite)
+                {
+                    motionType = Tables.MOTION_TYPE.Elite;
+                }
+                else if (eliteType == MonsterEliteType.Ex)
+                {
+                    motionType = Tables.MOTION_TYPE.ExElite;
+                }
+                else if (eliteType == MonsterEliteType.QiLin)
+                {
+                    randomFish = FightSceneLogicRandomArea._QiLin[Random.Range(0, FightSceneLogicRandomArea._QiLin.Count)].ToString();
+                }
+                else if (eliteType == MonsterEliteType.ExQiLin)
+                {
+                    randomFish = FightSceneLogicRandomArea._QiLin[Random.Range(0, FightSceneLogicRandomArea._QiLinEx.Count)].ToString();
+                }
+
+                MotionManager enemy = FightManager.Instance.InitEnemy(randomFish, initPos[i], rot.eulerAngles, motionType);
+                _FishMotion.Add(enemy);
+                if (eliteType == MonsterEliteType.Normal)
+                {
+                    _CreateMonTimeCD = Time.time + _BossFishInfo.NormalBornCD;
+                }
+                else
+                {
+                    _CreateMonTimeCD = Time.time + _BossFishInfo.EliteDieCD;
+                    _FishEliteMotion = enemy;
+                }
+            }
+            _InitFish = true;
+        }
+
+        if (_FishMotion.Count < _BossFishInfo.MaxFishCnt && _CreateMonTimeCD <= Time.time)
+        {
+            string randomFish = GetRandomFish().ToString();
+            MonsterEliteType eliteType = GetMonsterType(-1);
+            if (eliteType == MonsterEliteType.None)
+                return;
+
+            Tables.MOTION_TYPE motionType = Tables.MOTION_TYPE.Normal;
+            if (eliteType == MonsterEliteType.Elite)
+            {
+                motionType = Tables.MOTION_TYPE.Elite;
+            }
+            else if (eliteType == MonsterEliteType.Ex)
+            {
+                motionType = Tables.MOTION_TYPE.ExElite;
+            }
+            else if (eliteType == MonsterEliteType.QiLin)
+            {
+                motionType = Tables.MOTION_TYPE.Elite;
+                randomFish = FightSceneLogicRandomArea._QiLin[Random.Range(0, FightSceneLogicRandomArea._QiLin.Count)].ToString();
+            }
+            else if (eliteType == MonsterEliteType.ExQiLin)
+            {
+                motionType = Tables.MOTION_TYPE.ExElite;
+                randomFish = FightSceneLogicRandomArea._QiLin[Random.Range(0, FightSceneLogicRandomArea._QiLinEx.Count)].ToString();
+            }
+
+            var rot = Quaternion.LookRotation(_MonLookTrans, Vector3.up);
+            MotionManager enemy = FightManager.Instance.InitEnemy(randomFish, GetFarPos(), rot.eulerAngles, motionType);
+            _FishMotion.Add(enemy);
+            if (eliteType == MonsterEliteType.Normal)
+            {
+                _CreateMonTimeCD = Time.time + _BossFishInfo.NormalBornCD;
+            }
+            else
+            {
+                _CreateMonTimeCD = Time.time + _BossFishInfo.EliteDieCD;
+                _FishEliteMotion = enemy;
+            }
+        }
+    }
+
+    private Vector3 GetFarPos()
+    {
+        List<Vector3> farPoses = new List<Vector3>();
+        foreach (var fishTrans in _BossFishPoses)
+        {
+            if (Vector3.Distance(FightManager.Instance.MainChatMotion.transform.position, fishTrans.position) > _EnemyAlertDistance)
+            {
+                farPoses.Add(fishTrans.position);
+            }
+        }
+
+        return farPoses[Random.Range(0, farPoses.Count)];
+    }
+
+    private MonsterEliteType GetMonsterType(int initIdx)
+    {
+        if (initIdx > 0 && _BossFishInfo.ElitRate >= initIdx)
+            return MonsterEliteType.Elite;
+
+        if (initIdx > 0 && _BossFishInfo.ExRate >= initIdx)
+            return MonsterEliteType.Ex;
+
+        if (_FishEliteMotion != null)
+            return MonsterEliteType.Normal;
+
+        MonsterEliteType eliteType = MonsterEliteType.None;
+        float randomRate = Random.Range(0, 1.0f);
+        if (randomRate < _BossFishInfo.ElitRate)
+        {
+            eliteType = MonsterEliteType.Elite;
+        }
+        else if (randomRate < _BossFishInfo.ElitRate + _BossFishInfo.ExRate)
+        {
+            eliteType = MonsterEliteType.Ex;
+        }
+        else if (randomRate < _BossFishInfo.ElitRate + _BossFishInfo.ExRate + _BossFishInfo.QiLinRate)
+        {
+            eliteType = MonsterEliteType.QiLin;
+        }
+        else if (randomRate < _BossFishInfo.ElitRate + _BossFishInfo.ExRate + _BossFishInfo.QiLinRate + _BossFishInfo.ExQiLinRate)
+        {
+            eliteType = MonsterEliteType.ExQiLin;
+        }
+        else
+        {
+            eliteType = MonsterEliteType.Normal;
+        }
+
+        return eliteType;
+    }
+
+    private int GetRandomFish()
+    {
+        if (GameRandom.IsInRate(2000))
+        {
+            return RandomLogic.MagicMonster;
+        }
+        else
+        {
+            return RandomLogic.NormalMonster[Random.Range(0, RandomLogic.NormalMonster.Count)];
+        }
+    }
+
+    private void FishDie(MotionManager dieMotion)
+    {
+        if (_BossFishInfo == null)
+            return;
+
+        if (_FishMotion.Contains(dieMotion))
+            _FishMotion.Remove(dieMotion);
+
+        if (_FishEliteMotion == dieMotion)
+            _FishEliteMotion = null;
+    }
+
     #endregion
 
     #region stage diff
@@ -351,10 +578,10 @@ public class FightSceneAreaRandom : FightSceneAreaBase
     public class StageDiffBossFishInfo
     {
         public int FishCnt = 0;
-        public int ElitCnt = 0;
-        public int ExCnt = 0;
-        public int QiLinCnt = 0;
-        public int ExQiLinCnt = 0;
+        public float ElitRate = 0;
+        public float ExRate = 0;
+        public float QiLinRate = 0;
+        public float ExQiLinRate = 0;
 
         public int MaxFishCnt = 4;
         public int NormalBornCD = 5;
@@ -527,38 +754,54 @@ public class FightSceneAreaRandom : FightSceneAreaBase
         switch (diff)
         {
             case 0:
+                aiBoss._IsContainsNormalAtk = false;
                 aiBoss._IsRiseBoom = false;
                 break;
             case 1:
+                aiBoss._IsContainsNormalAtk = false;
                 aiBoss._IsRiseBoom = true;
                 break;
             case 2:
+                aiBoss._IsContainsNormalAtk = true;
+                aiBoss._IsRiseBoom = true;
                 aiBoss.InitProtectTimes(1);
                 break;
             case 3:
+                aiBoss._IsContainsNormalAtk = true;
+                aiBoss._IsRiseBoom = true;
                 aiBoss.InitProtectTimes(1);
                 aiBoss._StageBuffHpPersent.Add(0.5f);
                 break;
             case 4:
+                aiBoss._IsContainsNormalAtk = true;
+                aiBoss._IsRiseBoom = true;
                 aiBoss.InitProtectTimes(2);
                 aiBoss._StageBuffHpPersent.Add(0.5f);
                 break;
             case 5:
+                aiBoss._IsContainsNormalAtk = true;
+                aiBoss._IsRiseBoom = true;
                 aiBoss.InitProtectTimes(2);
                 aiBoss._StageBuffHpPersent.Add(0.5f);
                 break;
             case 6:
+                aiBoss._IsContainsNormalAtk = true;
+                aiBoss._IsRiseBoom = true;
                 aiBoss.InitProtectTimes(2);
                 aiBoss._StageBuffHpPersent.Add(0.5f);
                 aiBoss.IsCancelNormalAttack = true;
                 break;
             case 7:
+                aiBoss._IsContainsNormalAtk = true;
+                aiBoss._IsRiseBoom = true;
                 aiBoss.InitProtectTimes(2);
                 aiBoss._StageBuffHpPersent.Add(2f);
                 aiBoss._StageBuffHpPersent.Add(0.6f);
                 aiBoss.IsCancelNormalAttack = true;
                 break;
             default:
+                aiBoss._IsContainsNormalAtk = true;
+                aiBoss._IsRiseBoom = true;
                 aiBoss.InitProtectTimes(2);
                 aiBoss._StageBuffHpPersent.Add(2f);
                 aiBoss._StageBuffHpPersent.Add(0.6f);
@@ -586,45 +829,51 @@ public class FightSceneAreaRandom : FightSceneAreaBase
                 break;
             case 9:
                 fishInfo.FishCnt = 4;
-                fishInfo.ElitCnt = 1;
+                fishInfo.ElitRate = 1;
                 break;
             case 10:
                 fishInfo.FishCnt = 4;
-                fishInfo.ElitCnt = 2;
+                fishInfo.ElitRate = 2;
                 break;
             case 11:
                 fishInfo.FishCnt = 4;
-                fishInfo.ExCnt = 1;
+                fishInfo.ExRate = 1;
                 break;
             case 12:
                 fishInfo.FishCnt = 4;
-                fishInfo.ExCnt = 2;
+                fishInfo.ExRate = 2;
                 break;
             case 13:
                 fishInfo.FishCnt = -1;
                 break;
             case 14:
                 fishInfo.FishCnt = -1;
-                fishInfo.ElitCnt = 1;
+                fishInfo.ElitRate = 0.5f;
                 break;
             case 15:
                 fishInfo.FishCnt = -1;
-                fishInfo.ExCnt = 1;
+                fishInfo.ElitRate = 0.4f;
+                fishInfo.ExRate = 0.25f;
                 break;
             case 16:
                 fishInfo.FishCnt = -1;
-                fishInfo.ExCnt = 1;
-                fishInfo.QiLinCnt = 1;
+                fishInfo.ElitRate = 0.3f;
+                fishInfo.ExRate = 0.25f;
+                fishInfo.QiLinRate = 0.15f;
                 break;
             case 17:
                 fishInfo.FishCnt = -1;
-                fishInfo.ExCnt = 1;
-                fishInfo.ExQiLinCnt = 1;
+                fishInfo.ElitRate = 0.2f;
+                fishInfo.ExRate = 0.2f;
+                fishInfo.QiLinRate = 0.2f;
+                fishInfo.ExQiLinRate = 0.2f;
                 break;
             default:
                 fishInfo.FishCnt = -1;
-                fishInfo.ExCnt = 1;
-                fishInfo.ExQiLinCnt = 1;
+                fishInfo.ElitRate = 0.25f;
+                fishInfo.ExRate = 0.25f;
+                fishInfo.QiLinRate = 0.25f;
+                fishInfo.ExQiLinRate = 0.25f;
                 break;
         }
 
@@ -636,6 +885,12 @@ public class FightSceneAreaRandom : FightSceneAreaBase
 
 
     #endregion
+
+    #endregion
+
+    #region 
+
+    public float _DistanceToPlayer;
 
     #endregion
 }

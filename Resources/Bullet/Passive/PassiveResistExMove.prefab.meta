@@ -3,7 +3,8 @@ guid: c37b44b2edfb8c1429fc2fb738d8196b
 timeCreated: 1510315427
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/passive/passiveresistexmove
+  assetBundleVariant: common

@@ -3,6 +3,8 @@ guid: cfc7944bbfa72e443a394fb25edf8ef0
 timeCreated: 1489125820
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herodiaochan/act_rise_01
+  assetBundleVariant: common

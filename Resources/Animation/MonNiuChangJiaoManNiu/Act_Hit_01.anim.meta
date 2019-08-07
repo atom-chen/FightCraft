@@ -3,6 +3,8 @@ guid: c6ba67a1c0e695f45946d27d12cb7d0c
 timeCreated: 1488370006
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monniuchangjiaomanniu/act_hit_01
+  assetBundleVariant: common

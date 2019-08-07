@@ -3,6 +3,8 @@ guid: 41e7ab510709e3c47b09b3a1a49749c9
 timeCreated: 1489146204
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heroshenggongbao/act_skill_01
+  assetBundleVariant: common

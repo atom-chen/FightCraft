@@ -3,7 +3,8 @@ guid: fe805902eaf340d4b96bdfd06f23f709
 timeCreated: 1501486242
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/hero_luban_01_am
+  assetBundleVariant: common

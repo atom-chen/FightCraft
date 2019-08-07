@@ -3,6 +3,8 @@ guid: be388246688f9ac4585f84e49a30f840
 timeCreated: 1489146252
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herowuzetian/act_rise_01
+  assetBundleVariant: common

@@ -3,6 +3,8 @@ guid: e945a03c7fd027245b127ad0899bc7a6
 timeCreated: 1489146204
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heroshenggongbao/act_rise_01
+  assetBundleVariant: common

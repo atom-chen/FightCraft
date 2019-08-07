@@ -3,7 +3,8 @@ guid: 1bc76fd10f34d6040aab9750be5fa859
 timeCreated: 1507898784
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/heroleizhenzi/lightcirclehit
+  assetBundleVariant: common

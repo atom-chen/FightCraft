@@ -3,6 +3,8 @@ guid: a095501e74a5a464aaed423acbce3d9d
 timeCreated: 1488972309
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/maincharboy/buff2
+  assetBundleVariant: common

@@ -10,18 +10,26 @@ public class AreaGateRandom : AreaGate
     {
         if (_Teleporting)
         {
-            AddNextScene();
+            //AddNextScene();
             var timeDelta = Time.time - _StartingTime;
-            if (_AsyncLoad != null)
+            //if (_AsyncLoad != null && _AsyncLoad.progress == 1)
+            //{
+            //    var process = Mathf.Min(_AsyncLoad.progress, timeDelta / _TeleProcessTime);
+            //    FightManager.Instance.MainChatMotion.SkillProcessing = process;
+            //    if (FightManager.Instance.MainChatMotion.SkillProcessing >= 1)
+            //    {
+            //        TeleportAct();
+            //        FightManager.Instance.MainChatMotion.SkillProcessing = 0;
+            //        _Teleporting = false;
+            //    }
+            //}
+            float process = timeDelta / _TeleportTime;
+            FightManager.Instance.MainChatMotion.SkillProcessing = process;
+            if (FightManager.Instance.MainChatMotion.SkillProcessing >= 1)
             {
-                var process = Mathf.Min(_AsyncLoad.progress, timeDelta / _TeleProcessTime);
-                FightManager.Instance.MainChatMotion.SkillProcessing = process;
-                if (FightManager.Instance.MainChatMotion.SkillProcessing >= 1)
-                {
-                    TeleportAct();
-                    FightManager.Instance.MainChatMotion.SkillProcessing = 0;
-                    _Teleporting = false;
-                }
+                TeleportAct();
+                FightManager.Instance.MainChatMotion.SkillProcessing = 0;
+                _Teleporting = false;
             }
         }
         else
@@ -37,6 +45,12 @@ public class AreaGateRandom : AreaGate
         //FightManager.Instance.TeleportToNextRegion(_DestPos, _IsTransScene);
         RandomLogic.TeleportToNext();
     }
+
+    #region teleport time
+
+    public float _TeleportTime = 1.5f;
+
+    #endregion
 
     #region act next scene
 
@@ -54,7 +68,7 @@ public class AreaGateRandom : AreaGate
             return;
 
         _IsAddNextScene = true;
-
+        _StartingTime = Time.time;
         string nextScene = RandomLogic.GetNextScene();
         _AsyncLoad = SceneManager.LoadSceneAsync(nextScene, LoadSceneMode.Additive);
     }

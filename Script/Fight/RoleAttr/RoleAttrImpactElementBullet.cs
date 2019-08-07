@@ -20,15 +20,18 @@ public class RoleAttrImpactElementBullet : RoleAttrImpactBase
             return;
 
         var skillMotion = roleMotion._StateSkill._SkillMotions[_SkillInput];
-        var impactGO = ResourceManager.Instance.GetInstanceGameObject("Bullet\\Emitter\\Element\\" + _ImpactName);
-        impactGO.transform.SetParent(skillMotion.transform);
-        impactGO.transform.localPosition = Vector3.zero;
-        impactGO.transform.localRotation = Quaternion.Euler(Vector3.zero);
-        var bulletEmitterEle = impactGO.GetComponentsInChildren<BulletEmitterBase>();
-        foreach (var bulletEmitter in bulletEmitterEle)
+
+        ResourcePool.Instance.LoadConfig("Bullet\\Emitter\\Element\\" + _ImpactName, (resName, resGO, hash) =>
         {
-            bulletEmitter._Damage = _Damage;
-        }
+            resGO.transform.SetParent(skillMotion.transform);
+            resGO.transform.localPosition = Vector3.zero;
+            resGO.transform.localRotation = Quaternion.Euler(Vector3.zero);
+            var bulletEmitterEle = resGO.GetComponentsInChildren<BulletEmitterBase>();
+            foreach (var bulletEmitter in bulletEmitterEle)
+            {
+                bulletEmitter._Damage = _Damage;
+            }
+        }, null);
     }
 
     public override bool AddData(List<int> attrParam)

@@ -31,7 +31,7 @@ public class UIDropNameItem : UIItemBase
 
         _HeightDelta.x = 0;
         _HeightDelta.z = 0;
-        _HeightDelta.y += 0.2f;
+        _HeightDelta.y = 1.5f;
 
         _DropName.text = _DropItem._DropName;
         _Picked = false;

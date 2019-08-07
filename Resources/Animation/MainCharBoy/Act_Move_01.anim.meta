@@ -3,6 +3,8 @@ guid: ac5ccdfb334bc694bad8e946584ca0b3
 timeCreated: 1487255764
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/maincharboy/act_move_01
+  assetBundleVariant: common

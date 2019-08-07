@@ -3,7 +3,8 @@ guid: 3765ed94af10f3f46be83fc01389ef0a
 timeCreated: 1526623716
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/bullets/element/bullet_fireboom3
+  assetBundleVariant: common

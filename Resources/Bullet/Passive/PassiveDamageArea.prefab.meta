@@ -3,7 +3,8 @@ guid: 2a5eb518e94453d459f49cb84e3e2403
 timeCreated: 1511436555
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/passive/passivedamagearea
+  assetBundleVariant: common

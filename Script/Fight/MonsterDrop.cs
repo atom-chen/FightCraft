@@ -29,22 +29,44 @@ public class MonsterDrop
     public static void MonsterDropItems(MotionManager monsterMotion)
     {
 
-        var drops = GetMonsterDrops(monsterMotion.MonsterBase, monsterMotion.RoleAttrManager.MotionType, monsterMotion.RoleAttrManager.Level, ActData.Instance._StageMode);
+        //var drops = GetMonsterDrops(monsterMotion.MonsterBase, monsterMotion.RoleAttrManager.MotionType, monsterMotion.RoleAttrManager.Level, ActData.Instance._StageMode);
+        //var randomPoses = GameRandom.GetIndependentRandoms(0, 16, drops.Count);
+        //int posIdx = 0;
+        //foreach (var drop in drops)
+        //{
+        //    var pos = GetDropPos(monsterMotion.transform, randomPoses[posIdx]);
+        //    ++posIdx;
+        //    drop._DropPos = pos;
+        //    drop._MonsterPos = monsterMotion.transform.position;
+        //    ResourceManager.Instance.LoadPrefab("Drop/DropItem", (resName, resGO, hash)=>
+        //    {
+        //        DropItem dropItem = resGO.GetComponent<DropItem>();
+        //        dropItem.InitDrop(drop);
+        //    }, null);
+        //}
+        MonsterDropItems(monsterMotion.MonsterBase, monsterMotion.RoleAttrManager.MotionType, monsterMotion.RoleAttrManager.Level, monsterMotion.transform);
+
+        int dropExp = GameDataValue.GetMonsterExp(monsterMotion.RoleAttrManager.MotionType, monsterMotion.RoleAttrManager.Level, RoleData.SelectRole.RoleLevel, ActData.Instance._StageMode);
+        RoleData.SelectRole.AddExp(dropExp);
+    }
+
+    public static void MonsterDropItems(MonsterBaseRecord monsterBase, MOTION_TYPE motionType, int level, Transform dropBasePos)
+    {
+        var drops = GetMonsterDrops(monsterBase, motionType, level, ActData.Instance._StageMode);
         var randomPoses = GameRandom.GetIndependentRandoms(0, 16, drops.Count);
         int posIdx = 0;
         foreach (var drop in drops)
         {
-            var pos = GetDropPos(monsterMotion, randomPoses[posIdx]);
+            var pos = GetDropPos(dropBasePos, randomPoses[posIdx]);
             ++posIdx;
             drop._DropPos = pos;
-            drop._MonsterPos = monsterMotion.transform.position;
-            var obj = ResourceManager.Instance.GetInstanceGameObject("Drop/DropItem");
-            DropItem dropItem = obj.GetComponent<DropItem>();
-            dropItem.InitDrop(drop);
+            drop._MonsterPos = dropBasePos.position;
+            ResourceManager.Instance.LoadPrefab("Drop/DropItem", (resName, resGO, hash) =>
+            {
+                DropItem dropItem = resGO.GetComponent<DropItem>();
+                dropItem.InitDrop(drop);
+            }, null);
         }
-
-        int dropExp = GameDataValue.GetMonsterExp(monsterMotion.RoleAttrManager.MotionType, monsterMotion.RoleAttrManager.Level, RoleData.SelectRole.RoleLevel, ActData.Instance._StageMode);
-        RoleData.SelectRole.AddExp(dropExp);
     }
 
     public static int DropGold = 0;
@@ -124,7 +146,7 @@ public class MonsterDrop
         return dropList;
     }
     
-    private static Vector3 GetDropPos(MotionManager monsterMotion, int posIdx)
+    private static Vector3 GetDropPos(Transform monsterMotion, int posIdx)
     {
         int rangeParam = posIdx / 8;
         int angleParam = posIdx % 8;

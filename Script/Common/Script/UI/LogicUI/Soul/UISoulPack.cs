@@ -11,12 +11,12 @@ public class UISoulPack : UIBase
     public static void ShowAsyn()
     {
         Hashtable hash = new Hashtable();
-        GameCore.Instance.UIManager.ShowUI("LogicUI/Soul/UISoulPack", UILayer.PopUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UISoulPack, UILayer.PopUI, hash);
     }
 
     public static void RefreshBagItems()
     {
-        var instance = GameCore.Instance.UIManager.GetUIInstance<UISoulPack>("LogicUI/Soul/UISoulPack");
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UISoulPack>(UIConfig.UISoulPack);
         if (instance == null)
             return;
 

@@ -3,7 +3,8 @@ guid: af3c574f71b57704abc7da0b0af1362d
 timeCreated: 1509437580
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/bullets/element/bullet_fire_sprite
+  assetBundleVariant: common

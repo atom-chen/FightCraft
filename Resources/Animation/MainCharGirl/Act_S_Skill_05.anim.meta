@@ -3,6 +3,8 @@ guid: 02e70dfaba3378647b8e6794ea160cb3
 timeCreated: 1487291534
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/mainchargirl/act_s_skill_05
+  assetBundleVariant: common

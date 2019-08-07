@@ -3,6 +3,8 @@ guid: ab95fc76b2a138442bbf0e72151cbea1
 timeCreated: 1489146158
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heroluban/act_buff_01
+  assetBundleVariant: common

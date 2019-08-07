@@ -3,6 +3,8 @@ guid: 7914c79c44d8899439d1c9e4b67b7f4b
 timeCreated: 1488543466
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/mongunseng/act_fly_01
+  assetBundleVariant: common

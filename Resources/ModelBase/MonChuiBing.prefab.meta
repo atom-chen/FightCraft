@@ -3,6 +3,8 @@ guid: 2ebd216a672882f469aa7cb504e6c1be
 timeCreated: 1488371740
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/monchuibing
+  assetBundleVariant: common

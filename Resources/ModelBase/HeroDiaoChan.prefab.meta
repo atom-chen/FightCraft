@@ -3,6 +3,8 @@ guid: 671f18725a9662045a598c756659ca42
 timeCreated: 1489125761
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/modelbase/herodiaochan
+  assetBundleVariant: common

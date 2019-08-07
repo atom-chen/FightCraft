@@ -3,6 +3,8 @@ guid: 5727fb95cc562754783d2f3f7988954f
 timeCreated: 1489146138
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herolianpo/act_skill_01
+  assetBundleVariant: common

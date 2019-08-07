@@ -3,6 +3,8 @@ guid: b5b7e8191bb3557429f4e550f494b225
 timeCreated: 1488543465
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/mongunseng/act_move_01
+  assetBundleVariant: common

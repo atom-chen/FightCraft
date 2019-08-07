@@ -3,6 +3,8 @@ guid: 622ae0a9ba629af4ca5eb6ae693e45b2
 timeCreated: 1489146275
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/heroxishi/act_hit_01
+  assetBundleVariant: common

@@ -3,6 +3,8 @@ guid: 141afe817248aa74f9df46e244aae4dd
 timeCreated: 1487255766
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/maincharboy/act_skill_accumulate
+  assetBundleVariant: common

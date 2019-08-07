@@ -3,6 +3,8 @@ guid: 6d3723b497f6aad4691bc01094ade039
 timeCreated: 1489145256
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herojingke/act_fly_01
+  assetBundleVariant: common

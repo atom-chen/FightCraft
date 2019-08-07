@@ -23,23 +23,26 @@ public class RoleAttrImpactPassiveShadowHit : RoleAttrImpactPassive
         //if (!roleMotion._StateSkill._SkillMotions.ContainsKey(_SkillInput))
         //    return;
 
-        var buffGO = ResourceManager.Instance.GetInstanceGameObject("SkillMotion/CommonImpact/ShadowHit");
-        buffGO.transform.SetParent(roleMotion.BuffBindPos.transform);
-        var buffs = buffGO.GetComponents<ImpactBuff>(); 
-        foreach (var buff in buffs)
+        ResourcePool.Instance.LoadConfig("SkillMotion/CommonImpact/ShadowHit", (resName, resGO, hash) =>
         {
-            var subBuffs = buffGO.GetComponentsInChildren<ImpactBuffShadowHit>();
-            foreach (var subBuff in subBuffs)
+            var buffGO = resGO;
+            buffGO.transform.SetParent(roleMotion.BuffBindPos.transform);
+            var buffs = buffGO.GetComponents<ImpactBuff>();
+            foreach (var buff in buffs)
             {
-                if (subBuff.gameObject == buffGO)
-                    continue;
-                subBuff._ShadowCnt = _ShadowHitCnt;
-                subBuff._DamageRate = _HitDamage;
+                var subBuffs = buffGO.GetComponentsInChildren<ImpactBuffShadowHit>();
+                foreach (var subBuff in subBuffs)
+                {
+                    if (subBuff.gameObject == buffGO)
+                        continue;
+                    subBuff._ShadowCnt = _ShadowHitCnt;
+                    subBuff._DamageRate = _HitDamage;
+                }
+
+                buff.ActImpact(roleMotion, roleMotion);
             }
-
-            buff.ActImpact(roleMotion, roleMotion);
-        }
-
+        }, null);
+        
     }
 
     public new static string GetAttrDesc(List<int> attrParams)

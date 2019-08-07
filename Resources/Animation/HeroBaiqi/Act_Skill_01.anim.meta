@@ -3,6 +3,8 @@ guid: fa5465e1edae3a4499fa5634dafc6fb8
 timeCreated: 1487378200
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herobaiqi/act_skill_01
+  assetBundleVariant: common

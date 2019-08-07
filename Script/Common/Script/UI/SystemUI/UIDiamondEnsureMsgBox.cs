@@ -23,7 +23,7 @@ public class UIDiamondEnsureMsgBox : UIPopBase
         hash.Add("OkAction", (Action)okAction);
         hash.Add("CancelAction", cancelAction);
         //GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_UI_SHOW_MESSAGEBOX, null, hash);
-        GameCore.Instance.UIManager.ShowUI("SystemUI/UIDiamondEnsureMsgBox", UILayer.MessageUI, hash);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIDiamondEnsureMsgBox, UILayer.MessageUI, hash);
     }
 
     #endregion

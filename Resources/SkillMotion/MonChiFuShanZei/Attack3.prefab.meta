@@ -3,7 +3,8 @@ guid: a4fea6f3d4c2ed34782407b97f049130
 timeCreated: 1501487719
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/monchifushanzei/attack3
+  assetBundleVariant: common

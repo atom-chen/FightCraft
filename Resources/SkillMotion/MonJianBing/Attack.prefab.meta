@@ -3,7 +3,8 @@ guid: f8aed90850f3dd145b69e78194ee1c17
 timeCreated: 1501659048
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/monjianbing/attack
+  assetBundleVariant: common

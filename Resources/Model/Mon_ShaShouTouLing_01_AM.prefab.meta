@@ -3,7 +3,8 @@ guid: b8f58bce2114d3b4d9890f54324634ee
 timeCreated: 1501486389
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/mon_shashoutouling_01_am
+  assetBundleVariant: common

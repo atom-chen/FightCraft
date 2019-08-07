@@ -3,6 +3,8 @@ guid: 448863c173e9d2546b1eee3c1719ea6a
 timeCreated: 1488972351
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/maincharboy/roll
+  assetBundleVariant: common

@@ -3,7 +3,8 @@ guid: 883b7367fa5cffb44b5c9b08b6ee03da
 timeCreated: 1509434600
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/emitter/element/impactattr9_g1_enhancefire
+  assetBundleVariant: common

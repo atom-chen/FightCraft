@@ -3,6 +3,8 @@ guid: 1dfb0d49c32fbfe4b893d336908f56a1
 timeCreated: 1488371801
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monchuibing/act_hit_01
+  assetBundleVariant: common

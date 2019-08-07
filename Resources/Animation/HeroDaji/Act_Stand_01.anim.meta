@@ -3,6 +3,8 @@ guid: c707efd444fc6ac4fa565353c07f236c
 timeCreated: 1489118159
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herodaji/act_stand_01
+  assetBundleVariant: common

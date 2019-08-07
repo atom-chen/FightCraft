@@ -3,7 +3,8 @@ guid: 4714356dd27f1b846969f70c7b2ba256
 timeCreated: 1506652632
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/monqilin/bufffire
+  assetBundleVariant: common

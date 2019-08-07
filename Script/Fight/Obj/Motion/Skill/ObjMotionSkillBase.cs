@@ -108,7 +108,6 @@ public class ObjMotionSkillBase : MonoBehaviour
 
     public bool StartSkill(Hashtable exHash = null)
     {
-        Debug.Log("StartSkill:" + _ActInput + ",Time:" + Time.time);
         if (!IsCanActSkill())
             return false;
 

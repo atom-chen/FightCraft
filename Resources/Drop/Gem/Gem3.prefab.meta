@@ -3,6 +3,8 @@ guid: 21b23b75f6c5ac14bbb4fce33d8e7d80
 timeCreated: 1492825396
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/drop/gem/gem3
+  assetBundleVariant: common

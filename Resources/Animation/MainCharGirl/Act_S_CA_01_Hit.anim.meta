@@ -3,6 +3,8 @@ guid: cbe6d02e40629814e8d8bb7cef106d0c
 timeCreated: 1487291533
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/mainchargirl/act_s_ca_01_hit
+  assetBundleVariant: common

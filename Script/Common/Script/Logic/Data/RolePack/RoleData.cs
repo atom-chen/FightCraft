@@ -68,6 +68,12 @@ public class RoleData
             var equipGirlItem = ItemEquip.CreateBaseWeapon(PROFESSION.GIRL_DOUGE);
             PutOnEquip(EQUIP_SLOT.WEAPON, equipGirlItem);
 
+            var equipCloth = ItemEquip.CreateBaseCloth(PROFESSION.GIRL_DOUGE);
+            PutOnEquip(EQUIP_SLOT.TORSO, equipCloth);
+
+            var equipShoes = ItemEquip.CreateBaseShoes(PROFESSION.GIRL_DOUGE);
+            PutOnEquip(EQUIP_SLOT.LEGS, equipShoes);
+
             return true;
         }
         else

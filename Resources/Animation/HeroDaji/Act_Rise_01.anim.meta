@@ -3,6 +3,8 @@ guid: 0bc3823fd62a8c6448269ba0bba0d9dc
 timeCreated: 1489118158
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/herodaji/act_rise_01
+  assetBundleVariant: common

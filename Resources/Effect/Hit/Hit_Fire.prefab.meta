@@ -3,7 +3,8 @@ guid: ecc44f74b40f4b647985a34b2073ecb6
 timeCreated: 1506517145
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/effect/hit/hit_fire
+  assetBundleVariant: common

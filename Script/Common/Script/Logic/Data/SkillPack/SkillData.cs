@@ -51,6 +51,19 @@ public class SkillData : SaveItemBase
         }
     }
 
+    public string GetSkillIcon(string input)
+    {
+        foreach (var itemSkill in ProfessionSkills)
+        {
+            if (itemSkill.SkillRecord.SkillInput.Equals(input))
+            {
+                return itemSkill.SkillRecord.Icon;
+            }
+        }
+
+        return "";
+    }
+
     private bool InitSkill()
     {
         if (Tables.TableReader.SkillInfo == null)
@@ -71,7 +84,8 @@ public class SkillData : SaveItemBase
                 _ProfessionSkills.Add(skillInfo);
 
                 if (skillInfo.SkillRecord.SkillAttr.AttrImpact == "RoleAttrImpactSkillDamage"
-                    || skillInfo.SkillRecord.SkillAttr.AttrImpact == "RoleAttrImpactBuffRate")
+                    || skillInfo.SkillRecord.SkillAttr.AttrImpact == "RoleAttrImpactBuffRate"
+                    || skillInfo.SkillRecord.SkillAttr.AttrImpact == "RoleAttrImpactBuffActSkill" /*默认学会*/)
                 {
                     if (skillInfo.SkillLevel == 0)
                     {
@@ -80,6 +94,8 @@ public class SkillData : SaveItemBase
                         isNeedSave = true;
                     }
                 }
+
+
             }
         }
 
@@ -156,7 +172,7 @@ public class SkillData : SaveItemBase
         {
             if (spSkill1)
             {
-                skillMotions.Add("Skill1.1.2");
+                skillMotions.Add("Skill1_1_2");
             }
             else
             {
@@ -165,7 +181,7 @@ public class SkillData : SaveItemBase
 
             if (spSkill2)
             {
-                skillMotions.Add("Skill2.1.2");
+                skillMotions.Add("Skill2_1_2");
             }
             else
             {
@@ -174,7 +190,7 @@ public class SkillData : SaveItemBase
 
             if (spSkill3)
             {
-                skillMotions.Add("Skill3.1.2");
+                skillMotions.Add("Skill3_1_2");
             }
             else
             {
@@ -185,29 +201,29 @@ public class SkillData : SaveItemBase
         {
             if (spSkill1)
             {
-                skillMotions.Add("Skill1.2.2");
+                skillMotions.Add("Skill1_2_2");
             }
             else
             {
-                skillMotions.Add("Skill1.2");
+                skillMotions.Add("Skill1_2");
             }
 
             if (spSkill2)
             {
-                skillMotions.Add("Skill2.2.2");
+                skillMotions.Add("Skill2_2_2");
             }
             else
             {
-                skillMotions.Add("Skill2.2");
+                skillMotions.Add("Skill2_2");
             }
 
             if (spSkill3)
             {
-                skillMotions.Add("Skill3.2.2");
+                skillMotions.Add("Skill3_2_2");
             }
             else
             {
-                skillMotions.Add("Skill3.2");
+                skillMotions.Add("Skill3_2");
             }
         }
 

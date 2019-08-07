@@ -3,6 +3,8 @@ guid: 629378c37a1ea0c4c860021dc13b192a
 timeCreated: 1490435154
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/bullets/monster/bullet_jianshi_su
+  assetBundleVariant: common

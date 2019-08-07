@@ -3,7 +3,8 @@ guid: fcbffbf3573ce5b4ca6ee7fe4a7d07ea
 timeCreated: 1506759338
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/herojingke/skill2
+  assetBundleVariant: common

@@ -17,21 +17,21 @@ public class UICameraTexture : UIBase, IDragHandler
         public GameObject _ShowingModel;
     }
 
-    private static Stack<FakeShowObj> _IdleFakeList = new Stack<FakeShowObj>();
-    private FakeShowObj GetIdleFakeShow()
-    {
-        if (_IdleFakeList != null && _IdleFakeList.Count > 0)
-        {
-            var popFakeObj = _IdleFakeList.Pop();
-            if (popFakeObj._ObjCamera != null)
-            {
-                popFakeObj._ObjCamera.gameObject.SetActive(true);
-                return popFakeObj;
-            }
-        }
+    //private static Stack<FakeShowObj> _IdleFakeList = new Stack<FakeShowObj>();
+    //private FakeShowObj GetIdleFakeShow()
+    //{
+    //    if (_IdleFakeList != null && _IdleFakeList.Count > 0)
+    //    {
+    //        var popFakeObj = _IdleFakeList.Pop();
+    //        if (popFakeObj._ObjCamera != null)
+    //        {
+    //            popFakeObj._ObjCamera.gameObject.SetActive(true);
+    //            return popFakeObj;
+    //        }
+    //    }
 
-        return CreateNewFake();
-    }
+    //    return CreateNewFake();
+    //}
 
     private FakeShowObj CreateNewFake()
     {
@@ -54,22 +54,22 @@ public class UICameraTexture : UIBase, IDragHandler
         return fakeObj;
     }
 
-    private void CGFakeObj(FakeShowObj fakeObj)
-    {
-        if(fakeObj!=null)
-        {
-            if(fakeObj._ObjTransorm!=null)
-            {
-                fakeObj._ObjCamera = null;
-                fakeObj._ObjTransorm.gameObject.SetActive(false);
-                GameObject.Destroy(fakeObj._ObjTransorm.gameObject);
-                fakeObj._ObjTransorm = null;
-            }
-        }
-        //_IdleFakeList.Push(fakeObj);
-    }
+    //private void CGFakeObj(FakeShowObj fakeObj)
+    //{
+    //    if(fakeObj!=null)
+    //    {
+    //        if(fakeObj._ObjTransorm!=null)
+    //        {
+    //            fakeObj._ObjCamera = null;
+    //            fakeObj._ObjTransorm.gameObject.SetActive(false);
+    //            GameObject.Destroy(fakeObj._ObjTransorm.gameObject);
+    //            fakeObj._ObjTransorm = null;
+    //        }
+    //    }
+    //    //_IdleFakeList.Push(fakeObj);
+    //}
 
-    private static FakeShowObj _FakeMainPlayer = null;
+    //private static FakeShowObj _FakeMainPlayer = null;
 
     #endregion
 
@@ -85,12 +85,10 @@ public class UICameraTexture : UIBase, IDragHandler
         if (_FakeObj == null || _FakeObj._ObjTransorm==null)
         {
             _RawImage.color = new Color(1, 1, 1, 0);
-            _FakeObj = GetIdleFakeShow();
+            _FakeObj = CreateNewFake();
             if (_FakeObj != null && _FakeObj._ObjCamera != null)
             {
                 _FakeObj._ObjCamera.transform.SetParent(null);
-                if(gameObject.activeInHierarchy)
-                    StartCoroutine(SetFakeObjScele());
             }
             _RawImage.texture = _FakeObj._ObjTexture;
             //_RawImage.material = Resources.Load<Material>("Material/UIRenderTex");
@@ -100,8 +98,6 @@ public class UICameraTexture : UIBase, IDragHandler
 
     void OnEnable()
     {
-        StartCoroutine(SetFakeObjScele());
-        //避免模型没加载完成会白底闪一下的问题
         if (_RawImage != null)
         {
             if (_FakeObj == null || _FakeObj._ShowingModel == null)
@@ -113,21 +109,12 @@ public class UICameraTexture : UIBase, IDragHandler
         _RawImage.gameObject.SetActive(true);
     }
 
-    IEnumerator SetFakeObjScele()
-    {
-        yield return new WaitForEndOfFrame();
-        if (_FakeObj != null && _FakeObj._ObjCamera != null)
-        {
-            _FakeObj._ObjCamera.transform.SetParent(transform, true);
-        }
-    }
-
     public void OnDestroy()
     {
-        if (_FakeObj != null)
-        {
-            CGFakeObj(_FakeObj);
-        }
+        //if (_FakeObj != null)
+        //{
+        //    CGFakeObj(_FakeObj);
+        //}
         _FakeObj = null;
     }
 
@@ -139,6 +126,7 @@ public class UICameraTexture : UIBase, IDragHandler
     public void InitShowGO(GameObject showObj)
     {
         InitImage();
+        
         if (_FakeObj == null)
             return;
         if (_FakeObj._ObjTransorm == null)
@@ -148,6 +136,7 @@ public class UICameraTexture : UIBase, IDragHandler
         if (_FakeObj._ShowingModel != null && showObj.name == _FakeObj._ShowingModel.name)
             return;
 
+        _FakeObj._ObjCamera.transform.SetParent(transform, true);
         _FakeObj._ShowingModel = showObj;
         _FakeObj._ShowingModel.transform.SetParent(_FakeObj._ObjTransorm);
         _FakeObj._ShowingModel.transform.localPosition = Vector3.zero;

@@ -3,7 +3,8 @@ guid: 02f9a247831976048ba7d025ec713519
 timeCreated: 1506652638
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/monqilin/buffice
+  assetBundleVariant: common

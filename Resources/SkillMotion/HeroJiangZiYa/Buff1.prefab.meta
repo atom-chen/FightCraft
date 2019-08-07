@@ -3,7 +3,8 @@ guid: 1fb63df2889dd4a4b87afedf0359bd1d
 timeCreated: 1506758098
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/herojiangziya/buff1
+  assetBundleVariant: common

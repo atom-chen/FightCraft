@@ -3,7 +3,8 @@ guid: 19b7c49c26de6494a9dfb22541dd80fd
 timeCreated: 1510306126
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/bullet/passive/passivethorn
+  assetBundleVariant: common

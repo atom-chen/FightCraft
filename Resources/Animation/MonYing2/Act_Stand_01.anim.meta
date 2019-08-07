@@ -3,6 +3,8 @@ guid: cb7b7dad464c28a478ca63446c5b6782
 timeCreated: 1489212183
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/animation/monying2/act_stand_01
+  assetBundleVariant: common

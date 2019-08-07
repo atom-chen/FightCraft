@@ -3,7 +3,8 @@ guid: 729a1d992c0ef414797b26fbfa327ff1
 timeCreated: 1501489109
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/model/mon_dafubing_01_am
+  assetBundleVariant: common

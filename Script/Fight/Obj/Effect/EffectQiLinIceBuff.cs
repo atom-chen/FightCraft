@@ -9,17 +9,34 @@ public class EffectQiLinIceBuff : EffectController
         UpdateRot();
     }
 
+    public override void PlayEffect()
+    {
+        base.PlayEffect();
+
+        PlayEffectCnt();
+    }
+
     #region effect
-    
+
     public GameObject _EffectSingle;
     public float _Distance;
     public float _RotSpeed;
 
     private List<GameObject> _PlayingEffect = new List<GameObject>();
     private float _WorldRotY = 0;
+    private int _PlayEffectCnt = 3;
+    public void SetPlayEffectCnt(int cnt)
+    {
+        _PlayEffectCnt = cnt;
+    }
 
+    public void PlayEffectCnt()
+    {
+        PlayEffectCnt(_PlayEffectCnt);
+    }
     public void PlayEffectCnt(int count)
     {
+        _PlayEffectCnt = count;
         float angle = 360 / count;
         for (int i = count; i > 0; --i)
         {

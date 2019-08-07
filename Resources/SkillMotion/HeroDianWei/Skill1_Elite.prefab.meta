@@ -3,6 +3,8 @@ guid: f9152abad516b894f8b3d9834c746400
 timeCreated: 1489125620
 licenseType: Pro
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: -1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: asset/skillmotion/herodianwei/skill1_elite
+  assetBundleVariant: common
