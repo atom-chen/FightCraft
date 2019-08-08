@@ -114,13 +114,15 @@ public class UIFightWarning : UIBase
     public Transform _DirectFrom;
     public Transform _DirectTo;
 
+    public Animation _Animation;
+
     public static Vector3 _Axis = Vector3.zero;
 
     private void ShowDirectUpdate()
     {
         if (_DirectFrom == null || _DirectTo == null)
         {
-            _GOLabel.SetActive(false);
+            //_GOLabel.SetActive(false);
             _DirectGO.SetActive(false);
             return;
         }
@@ -177,8 +179,18 @@ public class UIFightWarning : UIBase
         _DirectFrom = directFrom;
         _DirectTo = directTo;
 
-        _GOLabel.SetActive(true);
+        //_GOLabel.SetActive(true);
         _DirectGO.SetActive(true);
+        _Animation.Play("UIFightWarning");
+    }
+
+    public void ShowDirectEnd()
+    {
+        _DirectFrom = null;
+        _DirectTo = null;
+
+        //_GOLabel.SetActive(false);
+        _DirectGO.SetActive(false);
     }
 
     #endregion

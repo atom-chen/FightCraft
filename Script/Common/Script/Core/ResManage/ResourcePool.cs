@@ -71,6 +71,7 @@ public class ResourcePool : InstanceBase<ResourcePool>
         ResourceManager.Instance.LoadPrefab(effectPath, (effectName, effectGo, callBackHash) =>
         {
             EffectController effct = effectGo.GetComponent<EffectController>();
+            effct.transform.SetParent(transform);
             effct.name = effectName;
             _LoadedEffects.Add(effectRes, effct);
             callBack.Invoke(effectRes, _LoadedEffects[effectRes], callBackHash);
@@ -413,14 +414,14 @@ public class ResourcePool : InstanceBase<ResourcePool>
             {
                 modelObj.AddComponent<Animation>();
             }
-
-            var animEvent = modelObj.GetComponent<AnimationEventManager>();
-            if (animEvent == null)
-            {
-                modelObj.AddComponent<AnimationEventManager>();
-            }
-
         }
+
+        var animEvent = modelObj.GetComponent<AnimationEventManager>();
+        if (animEvent != null)
+        {
+            GameObject.DestroyImmediate(animEvent);
+        }
+        modelObj.AddComponent<AnimationEventManager>();
 
         modelObj.gameObject.SetActive(true);
         modelObj.transform.SetParent(motion.transform);

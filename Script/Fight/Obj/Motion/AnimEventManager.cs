@@ -69,15 +69,22 @@ public class AnimEventManager : MonoBehaviour
         animEvent.functionName = "SpecilEventCallBack";
         animEvent.stringParameter = funcName;
 
+        bool animContainsEvent = false;
         foreach (var selectorEvent in animClip.events)
         {
             if (selectorEvent.time == animEvent.time && funcName == selectorEvent.stringParameter)
-                return;
+            {
+                animContainsEvent = true;
+                break;
+            }
         }
 
-        animClip.AddEvent(animEvent);
+        if (!animContainsEvent)
+        {
+            animClip.AddEvent(animEvent);
+        }
 
-        if(!_AnimCallBack.ContainsKey(funcName))
+        if (!_AnimCallBack.ContainsKey(funcName))
             _AnimCallBack.Add(funcName, callBack);
     }
 

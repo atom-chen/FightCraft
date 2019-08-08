@@ -21,6 +21,11 @@ public class FightManager : InstanceBase<FightManager>
         {
             InitUpdate();
         }
+        else
+        {
+            WarningUpdate();
+        }
+
     }
 
     public enum InitStep
@@ -413,6 +418,8 @@ public class FightManager : InstanceBase<FightManager>
     {
         _FightScene.gameObject.SetActive(true);
         _FightScene.StartLogic();
+
+        InitWarning();
     }
 
     public void OnObjDie()
@@ -517,6 +524,129 @@ public class FightManager : InstanceBase<FightManager>
     #region main
 
     public FightSkillManager _FightSkillManager;
+
+    #endregion
+
+    #region warning update 
+
+    private MotionManager _EnemyMotion;
+    private float _EnemyDistance;
+    private Transform _NextAreaPos;
+    private float _AreaDistance;
+    private static float _WarningDistance = 12.0f;
+    private float _StopFightTime = 0;
+    private static float _WarningShowAfterFight = 6.0f;
+
+    private void InitWarning()
+    {
+        _StopFightTime = Time.time;
+    }
+
+    private bool FindWarningEnemy()
+    {
+        if (_EnemyMotion != null && !_EnemyMotion.IsMotionDie)
+        {
+            float distance = Vector3.Distance(MainChatMotion.transform.position, _EnemyMotion.transform.position);
+            if (distance < _WarningDistance)
+            {
+                _EnemyDistance = 0;
+                _EnemyMotion = null;
+                return false;
+            }
+        }
+
+        _EnemyMotion = null;
+        //var motions = GameObject.FindObjectsOfType<MotionManager>();
+        _EnemyDistance = 99;
+        foreach (var motion in _MonMotion)
+        {
+            if (!motion.IsMotionDie)
+            {
+                float distance = Vector3.Distance(MainChatMotion.transform.position, motion.transform.position);
+                if (distance < _WarningDistance)
+                    return false;
+
+                if (distance < _EnemyDistance)
+                {
+                    _EnemyMotion = motion;
+                    _EnemyDistance = distance;
+                }
+            }
+        }
+
+        return _EnemyMotion != null;
+    }
+
+    private bool FindNextArea()
+    {
+        var fightRandom = GameObject.FindObjectsOfType<AreaGateRandom>();
+        _AreaDistance = 99;
+        foreach (var areaGate in fightRandom)
+        {
+            float distance = Vector3.Distance(MainChatMotion.transform.position, areaGate.transform.position);
+            if (distance < _WarningDistance)
+            {
+                _WarningDistance = 0;
+                return false;
+            }
+
+            if (distance < _AreaDistance)
+            {
+                _NextAreaPos = areaGate.transform;
+                _AreaDistance = distance;
+            }
+
+        }
+
+        if (_NextAreaPos == null)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public void WarningUpdate()
+    {
+        if (MainChatMotion._ActionState != MainChatMotion._StateIdle
+            && MainChatMotion._ActionState != MainChatMotion._StateMove)
+        {
+            _StopFightTime = Time.time;
+            return;
+        }
+
+        if (_WarningShowAfterFight > Time.time - _StopFightTime)
+            return;
+
+        bool findWarningEnemy = FindWarningEnemy();
+        bool findWarningArea = FindNextArea();
+
+        Transform warningPos = null;
+        if (findWarningEnemy && findWarningArea)
+        {
+            if (_AreaDistance > _EnemyDistance)
+            {
+                warningPos = _EnemyMotion.transform;
+            }
+            else
+            {
+                warningPos = _NextAreaPos;
+            }
+        }
+        else if (findWarningEnemy && _WarningDistance > 0)
+        {
+            warningPos = _EnemyMotion.transform;
+        }
+        else if (findWarningArea && _EnemyDistance > 0)
+        {
+            warningPos = _NextAreaPos;
+        }
+
+        if (FightManager.Instance.MainChatMotion != null)
+        {
+            UIFightWarning.ShowDirectAsyn(FightManager.Instance.MainChatMotion.transform, warningPos);
+            _StopFightTime = Time.time;
+        }
+    }
 
     #endregion
 }

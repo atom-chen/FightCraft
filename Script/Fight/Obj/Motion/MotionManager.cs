@@ -21,11 +21,12 @@ public class MotionManager : MonoBehaviour
         InitRoleAttr();
 
         _Animaton = GetComponentInChildren<Animation>();
-        _AnimationEvent = GetComponentInChildren<AnimEventManager>();
-        if (_AnimationEvent == null)
+        _AnimationEvent = _Animaton.gameObject.GetComponent<AnimEventManager>();
+        if (_AnimationEvent != null)
         {
-            _AnimationEvent = _Animaton.gameObject.AddComponent<AnimEventManager>();
+            GameObject.DestroyImmediate(_AnimationEvent);
         }
+        _AnimationEvent = _Animaton.gameObject.AddComponent<AnimEventManager>();
         _AnimationEvent.Init();
 
         //_BaseMotionManager = GetComponent<BaseMotionManager>();

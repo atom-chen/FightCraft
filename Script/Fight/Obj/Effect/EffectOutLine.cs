@@ -27,6 +27,7 @@ public class EffectOutLine : EffectController
         base.HideEffect();
 
         RemoveMaterial();
+        _SkinnedMesh = null;
     }
 
     public void Update()
@@ -72,8 +73,10 @@ public class EffectOutLine : EffectController
             return;
         //foreach(SkinnedMeshRenderer curMeshRender in meshes)
         {
-
-            _MatInstance = GameObject.Instantiate<Material>(_OutLineMaterial);
+            if (_MatInstance == null)
+            {
+                _MatInstance = GameObject.Instantiate<Material>(_OutLineMaterial);
+            }
             Material[] newMaterialArray = new Material[_SkinnedMesh.materials.Length + 1];
             newMaterialArray[0] = _MatInstance;
             for (int i = 1; i < _SkinnedMesh.materials.Length + 1; i++)
