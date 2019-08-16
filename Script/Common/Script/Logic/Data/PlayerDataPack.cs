@@ -96,6 +96,9 @@ public class PlayerDataPack : DataPackBase
 
     #region char
 
+    [SaveField(6)]
+    public int _LastSelectRole;
+
     public List<RoleData> _RoleList;
 
     public RoleData _SelectedRole;
@@ -129,6 +132,7 @@ public class PlayerDataPack : DataPackBase
                 _RoleList[i].ModelName = "Char_Boy_01_JL_AM";
                 _RoleList[i].Profession = PROFESSION.BOY_DEFENCE;
                 _RoleList[i].DefaultWeaponModel = "Weapon_HW_01_SM";
+                _RoleList[i].IconName = "hero/hero_p_shuangshoufu";
             }
             else if (i == 1)
             {
@@ -137,6 +141,7 @@ public class PlayerDataPack : DataPackBase
                 _RoleList[i].ModelName = "Char_Girl_01_AM";
                 _RoleList[i].Profession = PROFESSION.GIRL_DOUGE;
                 _RoleList[i].DefaultWeaponModel = "Weapon_S_01_SM";
+                _RoleList[i].IconName = "hero/hero_p_danshoujian";
             }
             else if (i == 2)
             {
@@ -145,20 +150,23 @@ public class PlayerDataPack : DataPackBase
                 _RoleList[i].ModelName = "Char_Boy_01_AM";
                 _RoleList[i].Profession = PROFESSION.BOY_DOUGE;
                 _RoleList[i].DefaultWeaponModel = "Weapon_HW_01_SM";
+                _RoleList[i].IconName = "hero/hero_p_shuangshoufu";
             }
             else if (i == 3)
             {
-                _RoleList[i].MainBaseName = "MainCharBoyDodge";
+                _RoleList[i].MainBaseName = "MainCharGirlDefence";
                 _RoleList[i].MotionFold = "MainCharGirl";
                 _RoleList[i].ModelName = "Char_Girl_02_AM";
                 _RoleList[i].Profession = PROFESSION.GIRL_DEFENCE;
                 _RoleList[i].DefaultWeaponModel = "Weapon_S_01_SM";
+                _RoleList[i].IconName = "hero/hero_p_danshoujian";
             }
         }
     }
 
     public void SelectRole(int roleIdx)
     {
+        _LastSelectRole = roleIdx;
         Debug.Log("_RoleList.Count:" + _RoleList.Count);
         if (roleIdx >= 0 && roleIdx < _RoleList.Count)
         {
@@ -171,6 +179,8 @@ public class PlayerDataPack : DataPackBase
         SkillData.Instance.InitSkills();
 
         _SelectedRole.CalculateAttr();
+
+        SaveClass(false);
     }
 
     #endregion

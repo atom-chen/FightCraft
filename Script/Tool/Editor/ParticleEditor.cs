@@ -112,9 +112,9 @@ public class ParticleEditor : Editor
             if (render.sharedMaterial.shader == null)
                 continue;
 
-            if (render.sharedMaterial.shader.name.Contains("TDGame"))
+            //if (render.sharedMaterial.shader.name.Contains("TDGame"))
             {
-                render.sharedMaterial.shader = Shader.Find("Mobile/Particles/Additive");
+                render.sharedMaterial.shader = Shader.Find("Mobile/Diffuse/Additive");
                 Debug.Log("Change shader:" + particleObj.name);
             }
         }

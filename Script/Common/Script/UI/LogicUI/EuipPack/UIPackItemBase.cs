@@ -32,6 +32,8 @@ public class UIPackItemBase : UIItemSelect
 
         var showItem = (ItemBase)hash["InitObj"];
         ShowItem(showItem);
+        ResourceManager.Instance.SetImage(_Icon, showItem.CommonItemRecord.Icon);
+        ResourceManager.Instance.SetImage(_Quality, CommonDefine.GetQualityIcon(showItem.GetQuality()));
     }
 
     public override void Refresh()

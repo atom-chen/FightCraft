@@ -124,6 +124,13 @@ public class ResourcePool : InstanceBase<ResourcePool>
 
     public void ClearEffects()
     {
+        foreach (var idleEffectKeys in _IdleEffects.Values)
+        {
+            foreach (var idleEffect in idleEffectKeys)
+            {
+                GameObject.Destroy(idleEffect);
+            }
+        }
         _IdleEffects = new Dictionary<string, Stack<EffectController>>();
     }
 
@@ -182,6 +189,13 @@ public class ResourcePool : InstanceBase<ResourcePool>
 
     public void ClearBullets()
     {
+        foreach (var idleResKeys in _IdleBullets.Values)
+        {
+            foreach (var idleRes in idleResKeys)
+            {
+                GameObject.Destroy(idleRes);
+            }
+        }
         _IdleBullets = new Dictionary<string, Stack<BulletBase>>();
     }
 
@@ -459,6 +473,13 @@ public class ResourcePool : InstanceBase<ResourcePool>
 
     public void ClearObjs()
     {
+        foreach (var idleResKeys in _IdleModel.Values)
+        {
+            foreach (var idleRes in idleResKeys)
+            {
+                GameObject.Destroy(idleRes);
+            }
+        }
         _IdleModel = new Dictionary<string, Stack<GameObject>>();
     }
 
@@ -595,6 +616,13 @@ public class ResourcePool : InstanceBase<ResourcePool>
 
     public void ClearUIItems()
     {
+        foreach (var idleResKeys in _IdleUIItems.Values)
+        {
+            foreach (var idleRes in idleResKeys)
+            {
+                GameObject.Destroy(idleRes);
+            }
+        }
         _IdleUIItems = new Dictionary<string, Stack<GameObject>>();
     }
 

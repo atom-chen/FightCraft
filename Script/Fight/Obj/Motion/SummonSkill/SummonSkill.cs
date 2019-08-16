@@ -103,7 +103,7 @@ public class SummonSkill
         {
             var monsterBase = Tables.TableReader.SummonSkill.GetRecord(summonData.SummonRecord.Id).MonsterBase;
             var summonMotion = ResourcePool.Instance.GetIdleMotion(monsterBase);
-            summonMotion.InitRoleAttr(monsterBase);
+            summonMotion.InitRoleAttr(monsterBase, Tables.MOTION_TYPE.Normal);
             summonMotion.InitMotion();
             FightLayerCommon.SetFriendLayer(summonMotion);
             summonAI = summonMotion.GetComponent<AI_SummonSkill>();

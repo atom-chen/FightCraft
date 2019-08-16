@@ -56,7 +56,8 @@ public class UIBackPackItem : /*UIDragableItemBase*/ UIPackItemBase
                     _Num.text = "";
             }
         }
-        _Icon.gameObject.SetActive(true);
+        ResourceManager.Instance.SetImage(_Icon, showItem.CommonItemRecord.Icon);
+        ResourceManager.Instance.SetImage(_Quality, CommonDefine.GetQualityIcon(showItem.GetQuality()));
 
         if (_SellToggle != null)
         {

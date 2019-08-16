@@ -38,6 +38,7 @@ public class UIEquipPack : UIBase,IDragablePack
     public UITagPanel _TagPanel;
     public UIBackPackItem _OtherRoleWeapon;
     public Text _Combat;
+    public Image _CharIcon;
 
     public override void Init()
     {
@@ -49,6 +50,9 @@ public class UIEquipPack : UIBase,IDragablePack
         _BackPack._OnDragItemCallBack = OnDragItem;
         _BackPack._IsCanDropItemCallBack = IsCanDropItem;
         RefreshCombat();
+
+        ResourceManager.Instance.SetImage(_CharIcon, RoleData.SelectRole.IconName);
+        
     }
 
     public override void Show(Hashtable hash)

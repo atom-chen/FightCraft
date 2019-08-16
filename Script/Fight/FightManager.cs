@@ -23,7 +23,7 @@ public class FightManager : InstanceBase<FightManager>
         }
         else
         {
-            WarningUpdate();
+            //WarningUpdate();
         }
 
     }
@@ -137,6 +137,7 @@ public class FightManager : InstanceBase<FightManager>
         sceneCamera.transform.localPosition = Vector3.zero;
         sceneCamera.transform.localRotation = Quaternion.Euler(Vector3.zero);
         sceneCamera.cullingMask &= ~(1 << LayerMask.NameToLayer("UI"));
+        sceneCamera.nearClipPlane = 2;
         //cameraRoot.AddComponent<AudioListener>();
 
         //var subUICamera = ResourceManager.Instance.GetInstanceGameObject("Common/SubUICamera");
@@ -216,6 +217,11 @@ public class FightManager : InstanceBase<FightManager>
 
     private IEnumerator InitMainRole()
     {
+        ResourcePool.Instance.ClearObjs();
+        ResourcePool.Instance.ClearEffects();
+        ResourcePool.Instance.ClearBullets();
+        ResourcePool.Instance.ClearUIItems();
+
         string mainBaseName = PlayerDataPack.Instance._SelectedRole.MainBaseName;
         string modelName = PlayerDataPack.Instance._SelectedRole.ModelName;
         string weaponName = PlayerDataPack.Instance._SelectedRole.GetWeaponModelName();
@@ -307,7 +313,7 @@ public class FightManager : InstanceBase<FightManager>
     public MotionManager InitEnemy(string monsterID, Vector3 pos, Vector3 rot, Tables.MOTION_TYPE motionType = Tables.MOTION_TYPE.Normal)
     {
         Tables.MonsterBaseRecord monsterBase = Tables.TableReader.MonsterBase.GetRecord(monsterID);
-        if (motionType != Tables.MOTION_TYPE.Normal)
+        if (motionType != Tables.MOTION_TYPE.Normal&& motionType != Tables.MOTION_TYPE.Hero)
         {
             monsterBase = Tables.TableReader.MonsterBase.GetGroupMonType(monsterBase, motionType);
         }
@@ -317,8 +323,9 @@ public class FightManager : InstanceBase<FightManager>
         var mainBase = ResourcePool.Instance.GetIdleMotion(monsterBase);
         mainBase.SetPosition(pos);
         mainBase.SetRotate(rot);
-        
-        mainBase.InitRoleAttr(monsterBase);
+
+        mainBase.InitRoleAttr(monsterBase, motionType);
+        //mainBase.RoleAttrManager.MotionType = motionType;
         mainBase.InitMotion();
         FightLayerCommon.SetEnemyLayer(mainBase);
 
@@ -336,6 +343,11 @@ public class FightManager : InstanceBase<FightManager>
         {
             mainBase.Animation.transform.localScale = mainBase.Animation.transform.localScale * 1.2f;
             mainBase.NavAgent.radius = mainBase.NavAgent.radius * mainBase.Animation.transform.localScale.x * 1.2f;
+        }
+        else if(monsterBase.MotionType == Tables.MOTION_TYPE.Hero && motionType != Tables.MOTION_TYPE.Hero)
+        {
+            mainBase.Animation.transform.localScale = mainBase.Animation.transform.localScale * 0.8f;
+            mainBase.NavAgent.radius = mainBase.NavAgent.radius * mainBase.Animation.transform.localScale.x * 0.8f;
         }
         else
         {

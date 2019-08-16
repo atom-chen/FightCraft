@@ -73,6 +73,38 @@ public class CommonDefine
         return itemName;
     }
 
+    public static string GetQualityIcon(ITEM_QUALITY quality)
+    {
+        switch (quality)
+        {
+            case ITEM_QUALITY.WHITE:
+                return "Quality/quality_1";
+            case ITEM_QUALITY.GREEN:
+                return "Quality/quality_2";
+            case ITEM_QUALITY.BLUE:
+                return "Quality/quality_3";
+            case ITEM_QUALITY.PURPER:
+                return "Quality/quality_4";
+            case ITEM_QUALITY.ORIGIN:
+                return "Quality/quality_5";
+            default:
+                return "Quality/quality_1";
+        }
+    }
+
+    public static string GetMoneyIcon(MONEYTYPE moneyType)
+    {
+        switch (moneyType)
+        {
+            case MONEYTYPE.GOLD:
+                return "money/money_gold";
+            case MONEYTYPE.DIAMOND:
+                return "money/money_diamond";
+            default:
+                return "money/money_gold";
+        }
+    }
+
     /// <summary>
     /// color 转换hex
     /// </summary>

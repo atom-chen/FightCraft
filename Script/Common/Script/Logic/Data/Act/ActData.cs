@@ -165,8 +165,8 @@ public class ActData : DataPackBase
 
     public int GetNormalDiff()
     {
-        return _NormalStageIdx / _MAX_NORMAL_DIFF;
-        //return _NormalStageIdx;
+        //return _NormalStageIdx / _MAX_NORMAL_DIFF;
+        return _NormalStageIdx;
     }
 
     public StageInfoRecord GetNormalStageRecord(int processStageIdx)

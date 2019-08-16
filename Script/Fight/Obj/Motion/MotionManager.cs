@@ -322,12 +322,21 @@ public class MotionManager : MonoBehaviour
     #region roleAttr
 
     private Tables.MonsterBaseRecord _MonsterBase;
+    private Tables.MOTION_TYPE _MotionType = Tables.MOTION_TYPE.Normal;
 
     public Tables.MonsterBaseRecord MonsterBase
     {
         get
         {
             return _MonsterBase;
+        }
+    }
+
+    public Tables.MOTION_TYPE MotionType
+    {
+        get
+        {
+            return _MotionType;
         }
     }
 
@@ -355,9 +364,10 @@ public class MotionManager : MonoBehaviour
         }
     }
 
-    public void InitRoleAttr(Tables.MonsterBaseRecord monsterBase)
+    public void InitRoleAttr(Tables.MonsterBaseRecord monsterBase, Tables.MOTION_TYPE motonType)
     {
         _MonsterBase = monsterBase;
+        _MotionType = motonType;
     }
 
     public void InitRoleAttr(SummonMotionData summonData)
@@ -383,7 +393,7 @@ public class MotionManager : MonoBehaviour
         }
         else if (_MonsterBase != null)
         {
-            _RoleAttrManager.InitEnemyAttr(_MonsterBase, FightManager.Instance._FightLevel, _RoleAttrManager.MotionType);
+            _RoleAttrManager.InitEnemyAttr(_MonsterBase, FightManager.Instance._FightLevel, MotionType);
             _MotionAnimPath = _MonsterBase.AnimPath;
         }
         else if (_SummonMotionData != null)
@@ -435,7 +445,7 @@ public class MotionManager : MonoBehaviour
 
     public void MotionDisappear()
     {
-        if (FightManager.Instance != null)
+        if (FightManager.Instance != null && RoleAttrManager.MotionType != Tables.MOTION_TYPE.MainChar)
         {
             FightManager.Instance.ObjDisapear(this);
         }
@@ -994,7 +1004,7 @@ public class MotionManager : MonoBehaviour
 
         transform.rotation = Quaternion.LookRotation(derectV3);
         _NavAgent.speed = RoleAttrManager.MoveSpeed;
-        _NavAgent.SetDestination(destPoint);
+        _NavAgent.Move(derectV3.normalized * RoleAttrManager.MoveSpeed * Time.fixedDeltaTime);
     }
 
     public void MoveTarget(Vector3 targetPos)

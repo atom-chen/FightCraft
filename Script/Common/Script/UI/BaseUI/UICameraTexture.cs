@@ -48,7 +48,7 @@ public class UICameraTexture : UIBase, IDragHandler
         fakeObj._ObjCamera.orthographicSize = (cameraSize <= 0 ? 1 : cameraSize);
         fakeObj._ObjCamera.targetTexture = fakeObj._ObjTexture;
         //fakeObj._ObjCamera.cullingMask = _CameraPrefab.layer;
-        fakeObj._ObjCamera.depthTextureMode = DepthTextureMode.MotionVectors;
+        fakeObj._ObjCamera.depthTextureMode = DepthTextureMode.Depth;
         ++_CallTimes;
 
         return fakeObj;
@@ -136,8 +136,14 @@ public class UICameraTexture : UIBase, IDragHandler
         if (_FakeObj._ShowingModel != null && showObj.name == _FakeObj._ShowingModel.name)
             return;
 
+        if (_FakeObj._ShowingModel != null)
+        {
+            _FakeObj._ShowingModel.SetActive(false);
+        }
+
         _FakeObj._ObjCamera.transform.SetParent(transform, true);
         _FakeObj._ShowingModel = showObj;
+        _FakeObj._ShowingModel.SetActive(true);
         _FakeObj._ShowingModel.transform.SetParent(_FakeObj._ObjTransorm);
         _FakeObj._ShowingModel.transform.localPosition = Vector3.zero;
         _FakeObj._ShowingModel.transform.localRotation = Quaternion.Euler(Vector3.zero);

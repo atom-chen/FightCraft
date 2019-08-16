@@ -17,7 +17,7 @@ public class MonsterTestMonager : MonoBehaviour
         mainBase.SetPosition(_Position.position);
         mainBase.SetRotate(_Position.rotation.eulerAngles);
 
-        mainBase.InitRoleAttr(monsterBase);
+        mainBase.InitRoleAttr(monsterBase, Tables.MOTION_TYPE.Normal);
         mainBase.InitMotion();
         FightLayerCommon.SetEnemyLayer(mainBase);
 

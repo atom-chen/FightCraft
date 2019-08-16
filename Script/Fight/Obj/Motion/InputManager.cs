@@ -19,7 +19,7 @@ public class InputManager : InstanceBase<InputManager>
     }
 	
 	// Update is called once per frame
-	void Update ()
+	void FixedUpdate()
     {
         if (InputMotion == null)
             return;

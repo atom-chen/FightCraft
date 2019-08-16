@@ -68,7 +68,8 @@ public class UIFuncInFight : UIBase
     public void OnBtnExit()
     {
         //UIMessageBox.Show(100000, OnExitOk, null);
-        UIFightSetting.ShowAsyn();
+        //UIFightSetting.ShowAsyn();
+        UISystemSetting.ShowAsyn(true);
     }
 
     private void OnExitOk()

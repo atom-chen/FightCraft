@@ -202,6 +202,17 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
         }
         monIds.Add(MagicMonster.ToString());
         monIds.Add(BossID.ToString());
+        if (QiLin > 0)
+        {
+            monIds.Add(QiLin.ToString());
+        }
+        if (ExtraBoss != null)
+        {
+            foreach (var boss in ExtraBoss)
+            {
+                monIds.Add(boss.ToString());
+            }
+        }
         return monIds;
     }
 
@@ -221,6 +232,8 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
     public int MagicMonster { get; set; }
     public int BossID { get; set; }
     public List<string> PreLoadScenes { get; set; }
+    public List<int> ExtraBoss { get; set; }
+    public int QiLin { get; set; }
 
     private int MainCharPosIdxInFightArea;
     private List<string> _ExcludeScene;
@@ -250,6 +263,7 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
         {
             areaGates[i].RandomLogic = this;
             areaGates[i].gameObject.SetActive(true);
+            areaGates[i].InitEffect();
         }
 
         MainChatPosIdx = Random.Range(0,  _ActingGroup._TeleAreas.Count);
@@ -257,6 +271,18 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
         _MainCharBornPos = _ActingGroup._TeleAreas[MainChatPosIdx].transform;
         MainCharPosIdxInFightArea = _ActingGroup._FightAreas.IndexOf(_ActingGroup._TeleAreas[MainChatPosIdx]);
         _ActingGroup._TeleAreas[MainChatPosIdx].gameObject.SetActive(false);
+        for (int i = 0; i < _ActingGroup._TeleAreas.Count; ++i)
+        {
+            if (i != MainChatPosIdx)
+            {
+                _ActingGroup._TeleAreas[i].RandomLogic = this;
+                _ActingGroup._TeleAreas[i].gameObject.SetActive(true);
+                var areaGate = _ActingGroup._TeleAreas[i].gameObject.AddComponent<AreaGateRandom>();
+                areaGate.RandomLogic = this;
+                areaGate.InitEffect();
+            }
+        }
+
         if (FightManager.Instance.MainChatMotion != null)
         {
             FightManager.Instance.MainChatMotion.SetPosition(_MainCharBornPos.position);
@@ -322,7 +348,30 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
                 int bossID = LogicManager.Instance.EnterStageInfo.ExParam[1];
                 BossID = bossID;
             }
+
+            if (FightSceneAreaRandom.IsQiLin(ActData.Instance.GetNormalDiff()) && FightSceneAreaRandom.IsExQiLin(ActData.Instance.GetNormalDiff()))
+            {
+                int qilinIdx = Random.Range(0, FightSceneLogicRandomArea._QiLinEx.Count);
+                QiLin = FightSceneLogicRandomArea._QiLinEx[qilinIdx];
+            }
+            else if (FightSceneAreaRandom.IsQiLin(ActData.Instance.GetNormalDiff()) && !FightSceneAreaRandom.IsExQiLin(ActData.Instance.GetNormalDiff()))
+            {
+                int qilinIdx = Random.Range(0, FightSceneLogicRandomArea._QiLin.Count);
+                QiLin = FightSceneLogicRandomArea._QiLin[qilinIdx];
+            }
+
+            if (FightSceneAreaRandom.IsExtraHero(ActData.Instance.GetNormalDiff()))
+            {
+                var independIdxs = GameRandom.GetIndependentRandoms(0, _BossType.Count, 3);
+                ExtraBoss = new List<int>();
+                foreach (var idx in independIdxs)
+                {
+                    ExtraBoss.Add(_BossType[idx]);
+                }
+
+            }
         }
+        
     }
 
     private void InitScenes()

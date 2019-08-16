@@ -20,6 +20,7 @@ public class AreaGate : MonoBehaviour
 
     public Transform _DestPos;
     public bool _IsTransScene = true;
+    public bool _NeedInitEffect = true;
     public static float _TeleDistance = 3;
     public static float _TeleProcessTime = 1;
 
@@ -91,6 +92,18 @@ public class AreaGate : MonoBehaviour
         UnityEngine.AI.NavMeshHit navMeshHit = new UnityEngine.AI.NavMeshHit();
         if (UnityEngine.AI.NavMesh.SamplePosition(transform.position, out navMeshHit, 10, UnityEngine.AI.NavMesh.AllAreas))
             transform.position = navMeshHit.position;
+
+       
+    }
+
+    public void InitEffect()
+    {
+        ResourceManager.Instance.LoadPrefab("Common/Teleport", (resName, resGO, hash) =>
+        {
+            resGO.transform.SetParent(transform);
+            resGO.transform.localPosition = new Vector3(0, 0.2f, 0);
+            resGO.transform.localRotation = Quaternion.Euler(Vector3.zero);
+        }, null);
     }
 
     #endregion

@@ -12,6 +12,7 @@ public class RoleData
     public string ModelName;
     public PROFESSION Profession;
     public string DefaultWeaponModel;
+    public string IconName;
 
     public static RoleData SelectRole
     {

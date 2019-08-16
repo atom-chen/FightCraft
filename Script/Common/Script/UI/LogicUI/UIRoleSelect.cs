@@ -18,21 +18,20 @@ public class UIRoleSelect : UIBase
 
     #region 
 
-    public Text _RoleLevel;
-    public Text _AttrLevel;
-    public UICameraTexture[] _UICameraTexture;
-    public GameObject[] _GrayImgs;
+    public UICameraTexture _UICameraTexture;
+    public GameObject[] _ProMain;
+    public GameObject[] _ProSub;
     public AnimationClip[] _Anims;
 
     public override void Show(Hashtable hash)
     {
         base.Show(hash);
 
-        for (int i = 0; i < PlayerDataPack._MAX_ROLE_CNT; ++i)
-        {
-            InitCharModel(i);
-        }
-
+        //for (int i = 0; i < PlayerDataPack._MAX_ROLE_CNT; ++i)
+        //{
+        //    InitCharModel(i);
+        //}
+        _SelectRoleID = PlayerDataPack.Instance._LastSelectRole;
         SelectRole(_SelectRoleID);
     }
 
@@ -49,18 +48,78 @@ public class UIRoleSelect : UIBase
     #region event
 
     private int _SelectRoleID = 0;
+    private int _SelectSex = 0;
+    private List<int> _SelectRecords = new List<int>() { 0, 1 };
 
     public void SelectRole(int roleID)
     {
         _SelectRoleID = roleID;
-        Debug.Log("_RoleList.Count:" + PlayerDataPack.Instance._RoleList.Count);
-        _RoleLevel.text = PlayerDataPack.Instance._RoleList[_SelectRoleID].RoleLevel.ToString();
-        _AttrLevel.text = PlayerDataPack.Instance._RoleList[_SelectRoleID].AttrLevel.ToString();
+        if (_SelectRoleID == (int)Tables.PROFESSION.BOY_DEFENCE)
+        {
+            _SelectSex = 0;
+            _ProMain[0].SetActive(true);
+            _ProMain[1].SetActive(false);
+            _ProSub[0].SetActive(true);
+            _ProSub[1].SetActive(false);
+        }
+        else if(_SelectRoleID == (int)Tables.PROFESSION.BOY_DOUGE)
+        {
+            _SelectSex = 0;
+            _ProMain[0].SetActive(true);
+            _ProMain[1].SetActive(false);
+            _ProSub[0].SetActive(false);
+            _ProSub[1].SetActive(true);
 
-        //var roleData = GetCharModel(roleID);
-        
-        //_Desc.text = Tables.StrDictionary.GetFormatStr(1010 + roleID);
+        }
+        else if (_SelectRoleID == (int)Tables.PROFESSION.GIRL_DEFENCE)
+        {
+            _SelectSex = 1;
+            _ProMain[0].SetActive(false);
+            _ProMain[1].SetActive(true);
+            _ProSub[0].SetActive(true);
+            _ProSub[1].SetActive(false);
+
+        }
+        else
+        {
+            _SelectSex = 1;
+            _ProMain[0].SetActive(false);
+            _ProMain[1].SetActive(true);
+            _ProSub[0].SetActive(false);
+            _ProSub[1].SetActive(true);
+        }
+        _SelectRecords[_SelectSex] = _SelectRoleID;
         ShowModel(roleID);
+    }
+
+    public void OnProSelect1(int idx)
+    {
+        //_SelectSex = idx;
+        SelectRole(_SelectRecords[idx]);
+    }
+
+    public void OnProSelect2(int idx)
+    {
+
+        if (_SelectSex == 0 && idx == 0)
+        {
+            _SelectRoleID = 0;
+        }
+        else if(_SelectSex == 0 && idx == 1)
+        {
+            _SelectRoleID = 2;
+        }
+        else if (_SelectSex == 1 && idx == 0)
+        {
+            _SelectRoleID = 3;
+        }
+        else if (_SelectSex == 1 && idx == 1)
+        {
+            _SelectRoleID = 1;
+        }
+        //_SelectRecords[_SelectSex] = _SelectRoleID;
+
+        SelectRole(_SelectRoleID);
     }
 
     public void OnBtnOK()
@@ -72,58 +131,43 @@ public class UIRoleSelect : UIBase
 
     #region gameobj
 
-    private List<UIModelAnim> _ShowAnims = new List<UIModelAnim>();
+    private Dictionary<int, UIModelAnim> _ShowAnims = new Dictionary<int, UIModelAnim>();
 
     private int _DefaultShowIdx = -1;
 
     public void ShowModel(int idx)
     {
-        
-        for (int i = 0; i < _UICameraTexture.Length; ++i)
-        {
-            if (i != idx)
-            {
-                _UICameraTexture[i].gameObject.SetActive(false);
-                _GrayImgs[i].SetActive(true);
-            }
-            else
-            {
-                _UICameraTexture[i].gameObject.SetActive(true);
-                if (_ShowAnims[i] != null)
-                {
-                    _ShowAnims[i].PlayAnim();
-                    _DefaultShowIdx = -1;
-                }
-                else
-                {
-                    _DefaultShowIdx = idx;
-                }
-                _GrayImgs[i].SetActive(false);
-            }
-        }
+
+        InitCharModel(idx);
     }
 
     public void InitCharModel(int idx)
     {
-        _ShowAnims.Add(null);
-        string modelName = PlayerDataPack.Instance._RoleList[idx].ModelName;
-        string weaponName = PlayerDataPack.Instance._RoleList[idx].DefaultWeaponModel;
-
-        StartCoroutine(ResourcePool.Instance.LoadCharModel(modelName, weaponName, (resName, resGO, hash)=>
+        if (!_ShowAnims.ContainsKey(idx))
         {
-            var modelAnim = resGO.AddComponent<UIModelAnim>();
-            List<AnimationClip> anims = new List<AnimationClip>();
-            anims.Add(_Anims[idx * 2]);
-            anims.Add(_Anims[idx * 2 + 1]);
-            modelAnim.InitAnim(anims);
+            _ShowAnims.Add(idx, null);
+            string modelName = PlayerDataPack.Instance._RoleList[idx].ModelName;
+            string weaponName = PlayerDataPack.Instance._RoleList[idx].DefaultWeaponModel;
 
-            _ShowAnims[idx] = (modelAnim);
-            _UICameraTexture[idx].InitShowGO(resGO);
-            if (_DefaultShowIdx == idx)
+            StartCoroutine(ResourcePool.Instance.LoadCharModel(modelName, weaponName, (resName, resGO, hash) =>
             {
-                ShowModel(_DefaultShowIdx);
-            }
-        }, null));
+                var modelAnim = resGO.AddComponent<UIModelAnim>();
+                List<AnimationClip> anims = new List<AnimationClip>();
+                anims.Add(_Anims[idx * 2]);
+                anims.Add(_Anims[idx * 2 + 1]);
+                modelAnim.InitAnim(anims);
+
+                _ShowAnims[idx] = (modelAnim);
+                _UICameraTexture.InitShowGO(resGO);
+                _ShowAnims[idx].PlayAnim();
+
+            }, null));
+        }
+        else
+        {
+            _UICameraTexture.InitShowGO(_ShowAnims[idx].gameObject);
+            _ShowAnims[idx].PlayAnim();
+        }
         
     }
 

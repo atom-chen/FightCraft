@@ -405,9 +405,6 @@ public class AI_Base : MonoBehaviour
 
     public bool IsActMove()
     {
-        if(this is AI_HeroBase)
-            return false;
-
         if (_SelfMotion._ActionState != _SelfMotion._StateIdle
             && _SelfMotion._ActionState != _SelfMotion._StateMove)
         {
@@ -419,15 +416,15 @@ public class AI_Base : MonoBehaviour
             return false;
         }
 
-        //float distance = Vector3.Distance(transform.position, _TargetMotion.transform.position);
-        //float bornDis = Vector3.Distance(transform.position, _BornPos);
-        var pathToTarget = GetPath(transform.position, _TargetMotion.transform.position);
-        var pathToBorn = GetPath(transform.position, _BornPos);
-        if (pathToTarget == null || pathToBorn == null)
-            return false;
+        float distance = Vector3.Distance(transform.position, _TargetMotion.transform.position);
+        float bornDis = Vector3.Distance(transform.position, _BornPos);
+        //var pathToTarget = GetPath(transform.position, _TargetMotion.transform.position);
+        //var pathToBorn = GetPath(transform.position, _BornPos);
+        //if (pathToTarget == null || pathToBorn == null)
+        //    return false;
 
-        float distance = GetPathLength(pathToTarget);
-        float bornDis = GetPathLength(pathToBorn);
+        //float distance = GetPathLength(pathToTarget);
+        //float bornDis = GetPathLength(pathToBorn);
 
         if (_CloseWait > 0)
         {
