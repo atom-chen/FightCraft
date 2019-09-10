@@ -207,7 +207,9 @@ public class AI_HeroBase : AI_Base
 
         float attackConlliderTime = _SelfMotion.AnimationEvent.GetAnimFirstColliderEventTime(objMotionSkill._NextAnim[0], objMotionSkill._SuperArmorColliderID);
         if (attackConlliderTime < 0)
-            return 0;
+        {
+            attackConlliderTime = objMotionSkill._NextAnim[0].length - 0.05f;
+        }
 
         _SelfMotion.AnimationEvent.AddEvent(objMotionSkill._NextAnim[0], 0, AttackStart);
         _SelfMotion.AnimationEvent.AddEvent(objMotionSkill._NextAnim[0], attackConlliderTime + 0.05f, AttackCollider);

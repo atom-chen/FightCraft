@@ -12,7 +12,10 @@ public class ImpactBuffQiLinHitSub : ImpactBuffBeHitSub
     public override void ActBuff(MotionManager senderManager, MotionManager reciverManager)
     {
         _ActedTimes = _ActTimes;
-        _QiLinIceBuff.SetPlayEffectCnt(_ActTimes);
+        if (_QiLinIceBuff != null)
+        {
+            _QiLinIceBuff.SetPlayEffectCnt(_ActTimes);
+        }
 
         base.ActBuff(senderManager, reciverManager);
 

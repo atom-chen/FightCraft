@@ -15,6 +15,14 @@ public class FightSceneLogicPassGold : FightSceneLogicPassArea
 
     public override void StartLogic()
     {
+        if (FightManager.Instance.MainChatMotion != null)
+        {
+            FightManager.Instance.MainChatMotion.SetPosition(_MainCharBornPos.position);
+            FightManager.Instance.MainChatMotion.SetRotate(_MainCharBornPos.rotation.eulerAngles);
+        }
+        var actGroup = FightManager.Instance._AreaGroups[LogicManager.Instance.EnterStageInfo.ValidScenePath[0]];
+        actGroup._LightGO.SetActive(true);
+
         StartCoroutine(StartLogicDelay());
     }
 

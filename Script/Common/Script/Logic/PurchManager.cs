@@ -29,39 +29,44 @@ public class PurchManager
 
     private Action _PurchCallback;
 
-    public void Purch(int idx, Action callBack)
+    public void Purch(string idx, Action callBack)
     {
         _PurchCallback = callBack;
         //watch movie
 
-        PurchFinish();
+        var chargeRecord = Tables.TableReader.Recharge.GetRecord(idx);
+        Hashtable eventHash = new Hashtable();
+        eventHash.Add("OrderID", idx);
+        eventHash.Add("PurchID", idx);
+        eventHash.Add("PurchPrice", chargeRecord.Price);
+        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_IAP_REQ, this, eventHash);
+
+        UILoadingTips.ShowAsyn();
+
+        GameCore.Instance.StartCoroutine(PurchFinish(idx));
+        //PurchFinish(idx);
     }
 
-    public void PurchFinish()
+    public IEnumerator PurchFinish(string idx)
     {
+        yield return new WaitForSeconds(1.0f);
+
+        UILoadingTips.HideAsyn();
+
         if (_PurchCallback != null)
             _PurchCallback.Invoke();
+
+        var chargeRecord = Tables.TableReader.Recharge.GetRecord(idx);
+        PlayerDataPack.Instance.AddDiamond(chargeRecord.Num);
+
+        Hashtable eventHash = new Hashtable();
+        eventHash.Add("OrderID", idx);
+        eventHash.Add("PurchID", idx);
+        eventHash.Add("PurchPrice", chargeRecord.Price);
+        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_IAP_SUCESS, this, eventHash);
     }
 
     #endregion
 
-    #region ad
-
-    private Action _WatchADCallback;
-
-    public void WatchAD(Action callBack)
-    {
-        _WatchADCallback = callBack;
-        //watch movie
-
-        WatchADFinish();
-    }
-
-    public void WatchADFinish()
-    {
-        if (_WatchADCallback != null)
-            _WatchADCallback.Invoke();
-    }
-
-    #endregion
+    
 }

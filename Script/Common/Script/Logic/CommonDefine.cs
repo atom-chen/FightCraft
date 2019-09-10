@@ -54,7 +54,7 @@ public class CommonDefine
         switch (isEnable)
         {
             case 1:
-                return "<color=#000000>";
+                return "<color=#A8CACAFF>";
             case 0:
                 return "<color=#777777>";
         }
@@ -89,6 +89,25 @@ public class CommonDefine
                 return "Quality/quality_5";
             default:
                 return "Quality/quality_1";
+        }
+    }
+
+    public static string GetQualityFramIcon(ITEM_QUALITY quality)
+    {
+        switch (quality)
+        {
+            case ITEM_QUALITY.WHITE:
+                return "Quality/1";
+            case ITEM_QUALITY.GREEN:
+                return "Quality/2";
+            case ITEM_QUALITY.BLUE:
+                return "Quality/3";
+            case ITEM_QUALITY.PURPER:
+                return "Quality/4";
+            case ITEM_QUALITY.ORIGIN:
+                return "Quality/5";
+            default:
+                return "Quality/1";
         }
     }
 

@@ -36,6 +36,7 @@ public class UIConfig
     public static AssetInfo UIRoleSelect = new AssetInfo("LogicUI/UIRoleSelect");
     public static AssetInfo UIRoleSelect2 = new AssetInfo("LogicUI/RoleAttr/UIRoleSelect2");
     public static AssetInfo UIMainFun = new AssetInfo("LogicUI/UIMainFun");
+    public static AssetInfo UILoadingTips = new AssetInfo("LogicUI/UILoadingTips");
     public static AssetInfo UIControlPanel = new AssetInfo("LogicUI/UIControlPanel");
     public static AssetInfo UIAchievement = new AssetInfo("LogicUI/Achievement/UIAchievement");
     public static AssetInfo UIDamagePanel = new AssetInfo("LogicUI/DamagePanel/UIDamagePanel");
@@ -66,6 +67,7 @@ public class UIConfig
     public static AssetInfo UIGemPack = new AssetInfo("LogicUI/Gem/UIGemPack");
     public static AssetInfo UIGemSuitPack = new AssetInfo("LogicUI/Gem/UIGemSuitPack");
     public static AssetInfo UIGiftPack = new AssetInfo("LogicUI/Gift/UIGiftTipPack");
+    public static AssetInfo UIGiftGetTips = new AssetInfo("LogicUI/Gift/UIGiftGetTips");
     public static AssetInfo UIGlobalBuff = new AssetInfo("LogicUI/GlobalBuff/UIGlobalBuff");
     public static AssetInfo UIHPPanel = new AssetInfo("LogicUI/HPPanel/UIHPPanel");
     public static AssetInfo UIMessageTip = new AssetInfo("LogicUI/Message/UIMessageTip");
@@ -74,6 +76,7 @@ public class UIConfig
     public static AssetInfo UIRoleAttr = new AssetInfo("LogicUI/RoleAttr/UIRoleAttr");
     public static AssetInfo UIShopNum = new AssetInfo("LogicUI/Shop/UIShopNumInput");
     public static AssetInfo UIShopPack = new AssetInfo("LogicUI/Shop/UIShopPack");
+    public static AssetInfo UIRechargePack = new AssetInfo("LogicUI/Shop/UIRechargePack");
     public static AssetInfo UISkillLevelUp = new AssetInfo("LogicUI/SkillLvUp/UISkillLevelUp");
     public static AssetInfo UISoulPack = new AssetInfo("LogicUI/Soul/UISoulPack");
     public static AssetInfo UIActPanel = new AssetInfo("LogicUI/Stage/UIActPanel");

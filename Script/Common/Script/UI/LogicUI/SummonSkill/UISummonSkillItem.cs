@@ -15,6 +15,8 @@ public class UISummonSkillItem : UIItemSelect
     public Text _Level;
     public GameObject[] _Stars;
     public GameObject _ArraySelect;
+    public GameObject _EquipTag;
+    public bool _IsLargeIcon = false;
 
     protected SummonMotionData _SummonMotionData;
     public SummonMotionData SummonMotionData
@@ -68,6 +70,15 @@ public class UISummonSkillItem : UIItemSelect
 
         _InfoPanel.SetActive(true);
         _Name.text = CommonDefine.GetQualityColorStr(_SummonMotionData.SummonRecord.Quality) + StrDictionary.GetFormatStr(_SummonMotionData.SummonRecord.NameDict) + "</color>";
+        if (!_IsLargeIcon)
+        {
+            ResourceManager.Instance.SetImage(_Icon, summonData.SummonRecord.MonsterBase.HeadIcon);
+        }
+        else
+        {
+            ResourceManager.Instance.SetImage(_Icon, summonData.SummonRecord.MonsterBase.CardIcon);
+        }
+        ResourceManager.Instance.SetImage(_Quality, CommonDefine.GetQualityFramIcon(summonData.SummonRecord.Quality));
 
         if (_IsMaterial)
         {
@@ -90,6 +101,18 @@ public class UISummonSkillItem : UIItemSelect
                 {
                     _Stars[i].gameObject.SetActive(false);
                 }
+            }
+        }
+
+        if (_EquipTag != null)
+        {
+            if (SummonSkillData.Instance.IsSummonAct(summonData))
+            {
+                _EquipTag.SetActive(true);
+            }
+            else
+            {
+                _EquipTag.SetActive(false);
             }
         }
     }

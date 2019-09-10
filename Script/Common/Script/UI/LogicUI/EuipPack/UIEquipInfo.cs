@@ -59,7 +59,7 @@ public class UIEquipInfo : UIItemInfo
         {
             _Level.text = StrDictionary.GetFormatStr(10000) + " " + _ShowEquip.RequireLevel;
         }
-        _Value.text = StrDictionary.GetFormatStr(10001) + " " + _ShowEquip.CombatValue;
+        _Value.text = StrDictionary.GetFormatStr(2300077) + " " + _ShowEquip.CombatValue;
 
         if (_ProfessionLimit != null)
         {

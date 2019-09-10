@@ -1,10 +1,4 @@
-todo:
-//stage area act
-//boss stage light
-//mon atk
-//mon ai
-//random mon kill num/decrease,show
-defence skill hole to use
-to bundle
-charge
-loading tips
+stage diff tips;
+monster/boss atk
+monster init idle anim
+fail tip

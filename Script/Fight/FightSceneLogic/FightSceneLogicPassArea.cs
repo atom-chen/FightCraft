@@ -39,7 +39,7 @@ public class FightSceneLogicPassArea : FightSceneLogicBase
 
         foreach (var area in _FightArea)
         {
-            if (!area.AreaStrated)
+            if (area.AreaState == AreaState.None)
             {
                 if (area is FightSceneAreaKShowTeleport)
                     continue;
@@ -65,7 +65,7 @@ public class FightSceneLogicPassArea : FightSceneLogicBase
 
         foreach (var area in _FightArea)
         {
-            if (area.AreaStrated && !area.AreaFinished)
+            if (area.AreaState == AreaState.Acting)
             {
                 if (area is FightSceneAreaKShowTeleport)
                     continue;

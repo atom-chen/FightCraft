@@ -38,56 +38,63 @@ public class UISummonSkillLottery : UIBase
 
     #region 
 
-    public GameObject _GoldPanel;
-    public GameObject _DiamondPanel;
-    public UICurrencyItem _CostOne;
-    public UICurrencyItem _CostTen;
-    public UICurrencyItem _CostItem;
+    public UICurrencyItem _GoldOne;
+    public UICurrencyItem _GoldTen;
+    public UICurrencyItem _DiamondOne;
+    public UICurrencyItem _DiamondTen;
 
     public override void Show(Hashtable hash)
     {
         base.Show(hash);
 
-        if (hash.ContainsKey("GoldPanel"))
-        {
-            ShowGoldPanel();
-        }
-        else if (hash.ContainsKey("DiamondPanel"))
-        {
-            ShowDiamondPanel();
-        }
+        ShowLotteryPanel();
     }
 
-    private void ShowGoldPanel()
+    private void ShowLotteryPanel()
     {
-        _GoldPanel.SetActive(true);
-        _DiamondPanel.SetActive(false);
-
-        _CostOne.ShowCurrency(MONEYTYPE.GOLD, GameDataValue.GetSummonCostGold(SummonSkillData.Instance.SummonLevel));
-        _CostTen.ShowCurrency(MONEYTYPE.GOLD, GameDataValue.GetSummonCostGold(SummonSkillData.Instance.SummonLevel) * 10);
-        _CostItem.ShowOwnCurrency(SummonSkillData._GoldCostItem);
-    }
-
-    private void ShowDiamondPanel()
-    {
-        _GoldPanel.SetActive(false);
-        _DiamondPanel.SetActive(true);
-
-        _CostOne.ShowCurrency(MONEYTYPE.DIAMOND, GameDataValue.GetSummonCostDiamond(SummonSkillData.Instance.SummonLevel));
-        _CostTen.ShowCurrency(MONEYTYPE.DIAMOND, GameDataValue.GetSummonCostDiamond(SummonSkillData.Instance.SummonLevel) * 10);
-        _CostItem.ShowOwnCurrency(SummonSkillData._DiamondCostItem);
-    }
-
-    public void RefreshItems()
-    {
-        if (_GoldPanel.activeSelf)
+        int backPackItem = BackBagPack.Instance.PageItems.GetItemCnt(SummonSkillData._GoldCostItem);
+        if (backPackItem > 0)
         {
-            ShowGoldPanel();
+            _GoldOne.ShowOwnCurrency(SummonSkillData._GoldCostItem);
         }
         else
         {
-            ShowDiamondPanel();
+            _GoldOne.ShowCurrency(MONEYTYPE.GOLD, GameDataValue.GetSummonCostGold(SummonSkillData.Instance.SummonLevel));
         }
+
+        if (backPackItem > 10)
+        {
+            _GoldTen.ShowCostCurrency(SummonSkillData._GoldCostItem, 10, -1);
+        }
+        else
+        {
+            _GoldTen.ShowCurrency(MONEYTYPE.GOLD, GameDataValue.GetSummonCostGold(SummonSkillData.Instance.SummonLevel));
+        }
+
+        int backPackDiamondItem = BackBagPack.Instance.PageItems.GetItemCnt(SummonSkillData._DiamondCostItem);
+        if (backPackDiamondItem > 0)
+        {
+            _DiamondOne.ShowOwnCurrency(SummonSkillData._DiamondCostItem);
+        }
+        else
+        {
+            _DiamondOne.ShowCurrency(MONEYTYPE.DIAMOND, GameDataValue.GetSummonCostDiamond(SummonSkillData.Instance.SummonLevel));
+        }
+
+        if (backPackDiamondItem > 10)
+        {
+            _DiamondTen.ShowCostCurrency(SummonSkillData._DiamondCostItem, 10, -1);
+        }
+        else
+        {
+            _DiamondTen.ShowCurrency(MONEYTYPE.DIAMOND, GameDataValue.GetSummonCostDiamond(SummonSkillData.Instance.SummonLevel));
+        }
+    }
+
+
+    public void RefreshItems()
+    {
+        ShowLotteryPanel();
     }
 
     #endregion
@@ -96,12 +103,12 @@ public class UISummonSkillLottery : UIBase
 
     private SummonSkillData.LotteryResult _LotteryResult;
 
-    public void OnBtnBuyOne()
+    public void OnBtnBuyOne(bool isGold)
     {
         if (_LotteryResult != null)
             return;
 
-        if (_GoldPanel.activeSelf)
+        if (isGold)
         {
             _LotteryResult = SummonSkillData.Instance.LotteryGold(1);
         }
@@ -116,12 +123,12 @@ public class UISummonSkillLottery : UIBase
         }
     }
 
-    public void OnBtnBuyTen()
+    public void OnBtnBuyTen(bool isGold)
     {
         if (_LotteryResult != null)
             return;
 
-        if (_GoldPanel.activeSelf)
+        if (isGold)
         {
             _LotteryResult = SummonSkillData.Instance.LotteryGold(10);
         }

@@ -63,7 +63,9 @@ public class UISkillLevelUp : UIBase
 
     private void InitSkillItems(string skillClass)
     {
-        _SkillInfos.InitSelectContent(_SkillClasses[skillClass], null, SelectSkillItem);
+        List<ItemSkill> selectedSkill = new List<ItemSkill>();
+        selectedSkill.Add(_SkillClasses[skillClass][0]);
+        _SkillInfos.InitSelectContent(_SkillClasses[skillClass], selectedSkill, SelectSkillItem);
     }
 
     private void SelectSkillItem(object selectItem)

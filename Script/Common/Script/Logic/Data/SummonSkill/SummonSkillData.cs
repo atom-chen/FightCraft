@@ -302,6 +302,11 @@ public class SummonSkillData : SaveItemBase
         result._ReturnItem = _GoldCostItem;
         result._ReturnItemNum = returnNum;
 
+        Hashtable eventHash = new Hashtable();
+        eventHash.Add("LotteryResult", result);
+        eventHash.Add("LotteryType", 1);
+        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_SOUL_LOTTERY, this, eventHash);
+
         return result;
     }
 
@@ -345,6 +350,11 @@ public class SummonSkillData : SaveItemBase
         result._SummonData = getSummonDatas;
         result._ReturnItem = _DiamondCostItem;
         result._ReturnItemNum = returnNum;
+
+        Hashtable eventHash = new Hashtable();
+        eventHash.Add("LotteryResult", result);
+        eventHash.Add("LotteryType", 2);
+        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_SOUL_LOTTERY, this, eventHash);
 
         return result;
     }
@@ -418,6 +428,9 @@ public class SummonSkillData : SaveItemBase
 
     public int GetReturnNum(List<SummonMotionData> lotteryDatas, int isGold)
     {
+        if (lotteryDatas.Count < 10)
+            return 0;
+
         int rareCnt = 0;
         foreach (var lotteryData in lotteryDatas)
         {

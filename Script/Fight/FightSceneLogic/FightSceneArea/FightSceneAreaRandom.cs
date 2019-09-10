@@ -9,11 +9,16 @@ public class FightSceneAreaRandom : FightSceneAreaBase
         base.StartArea();
     }
 
+    public override void FinishArea()
+    {
+        _AreaState = AreaState.Finished;
+    }
+
     public override void InitArea()
     {
         base.InitArea();
 
-        _AreaStarted = true;
+        _AreaState = AreaState.Acting;
         InitRandomMonsters();
     }
 
@@ -21,24 +26,53 @@ public class FightSceneAreaRandom : FightSceneAreaBase
     {
         base.UpdateArea();
 
-        //if (!_IsEnemyAlert)
-        //{
-        //    foreach (var ai in _EnemyAI)
-        //    {
-        //        if (ai == null)
-        //        {
-        //            continue;
-        //        }
+        if (AreaState == AreaState.Acting)
+        {
+            UpdateFish();
 
-        //        if (Vector3.Distance(ai.transform.position, FightManager.Instance.MainChatMotion.transform.position) < _EnemyAlertDistance)
-        //        {
-        //            _IsEnemyAlert = true;
-        //            SetAllAlert();
-        //        }
-        //    }
-        //}
+            var distance = Vector3.Distance(FightManager.Instance.MainChatMotion.transform.position, transform.position);
+            if (distance > FightSceneLogicRandomArea._InitAreaPos)
+            {
+                HideArea();
+            }
+        }
+        else if (AreaState == AreaState.Hiding)
+        {
+            var distance = Vector3.Distance(FightManager.Instance.MainChatMotion.transform.position, transform.position);
+            if (distance < FightSceneLogicRandomArea._InitAreaPos)
+            {
+                ResumeArea();
+            }
+        }
 
-        UpdateFish();
+    }
+
+    public void HideArea()
+    {
+        foreach (var ai in _EnemyAI)
+        {
+            if (ai._SelfMotion == null)
+                return;
+
+            if (ai._SelfMotion._ActionState == ai._SelfMotion._StateIdle)
+            {
+                ai.gameObject.SetActive(false);
+            }
+            else
+            {
+                return;
+            }
+        }
+        _AreaState = AreaState.Hiding;
+    }
+
+    public void ResumeArea()
+    {
+        foreach (var ai in _EnemyAI)
+        {
+            ai.gameObject.SetActive(true);
+        }
+        _AreaState = AreaState.Acting;
     }
 
     public override void MotionDie(MotionManager motion)
@@ -87,19 +121,20 @@ public class FightSceneAreaRandom : FightSceneAreaBase
                 FishDie(motion);
             }
         }
-        //else
-        //{
-        //    var ai = motion.GetComponent<AI_Base>();
-        //    if (_EnemyAI.Contains(ai))
-        //    {
-        //        _EnemyAI.Remove(ai);
-        //    }
+        else
+        {
+            var ai = motion.GetComponent<AI_Base>();
+            if (_EnemyAI.Contains(ai))
+            {
+                _EnemyAI.Remove(ai);
+            }
 
-        //    if (_EnemyAI.Count == 0)
-        //    {
-        //        FinishArea();
-        //    }
-        //}
+            if (_EnemyAI.Count == 0)
+            {
+                //FinishArea();
+                _AreaState = AreaState.Finished;
+            }
+        }
     }
 
     public void ClearAllEnemy()

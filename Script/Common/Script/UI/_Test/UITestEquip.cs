@@ -183,6 +183,17 @@ public class UITestEquip : UIBase
         writer.Close();
     }
 
+    public void BtnLevel()
+    {
+        int targetLevel = int.Parse(_TargetLevel.text);
+        while (RoleData.SelectRole.TotalLevel < targetLevel)
+        {
+            int exp = GameDataValue.GetLvUpExp(RoleData.SelectRole.TotalLevel, 1);
+            RoleData.SelectRole.AddExp(exp);
+        }
+        
+    }
+
     private void GetLevelStage(int level, ref int diff, ref int stageIdx)
     {
         diff = level / 20 + 1;
@@ -239,6 +250,11 @@ public class UITestEquip : UIBase
     public void OnTestDelEquips()
     {
         TestFight.DelAllEquip();
+    }
+
+    public void SetTestMode(bool isTestMode)
+    {
+        TestFight.TestMode = isTestMode;
     }
     
     #endregion
@@ -342,5 +358,7 @@ public class UITestEquip : UIBase
     }
 
     #endregion
+
+
 }
 

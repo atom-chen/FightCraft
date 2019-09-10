@@ -32,21 +32,24 @@ public class UIFightFinish : UIBase
 
     public GameObject _WinGO;
     public GameObject _LoseGO;
+    public Animation _Animation;
 
     public override void Show(Hashtable hash)
     {
         base.Show(hash);
 
         bool isWin = (bool)hash["IsWin"];
-        if (_WinGO)
+        if (isWin)
         {
             _WinGO.SetActive(true);
             _LoseGO.SetActive(false);
+            _Animation.Play("UIFightFinishWin");
         }
         else
         {
             _WinGO.SetActive(false);
             _LoseGO.SetActive(true);
+            _Animation.Play("UIFightFinishLose");
         }
 
         UIFuncInFight.StopFightTime();
@@ -64,6 +67,7 @@ public class UIFightFinish : UIBase
     public void OnBtnExitFight()
     {
         FightManager.Instance.LogicFinish(true);
+        Hide();
     }
 
     #endregion

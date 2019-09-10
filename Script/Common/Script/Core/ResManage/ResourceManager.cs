@@ -324,6 +324,7 @@ public class ResourceManager:MonoBehaviour
         string assetName = System.IO.Path.GetFileNameWithoutExtension(bundleName);
         StartCoroutine(InstantiateSpriteAsync(bundleName, assetName, (resName, resData, hashParam)=>
         {
+            image.enabled = true;
             image.sprite = resData;
             if (callBack != null)
             {

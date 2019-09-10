@@ -82,7 +82,8 @@ public class UIShopItem : UIItemSelect
             _SellOutFlag.SetActive(false);
         }
         _Icon.gameObject.SetActive(true);
-
+        ResourceManager.Instance.SetImage(_Icon, showItem.CommonItemRecord.Icon);
+        ResourceManager.Instance.SetImage(_Quality, CommonDefine.GetQualityIcon(showItem.CommonItemRecord.Quality));
         _BuyPrice.ShowCurrency((MONEYTYPE)showItem.ShopRecord.MoneyType, showItem.BuyPrice);
 
 
@@ -107,6 +108,8 @@ public class UIShopItem : UIItemSelect
         _SellOutFlag.SetActive(false);
 
         _Icon.gameObject.SetActive(true);
+        ResourceManager.Instance.SetImage(_Icon, showItem.CommonItemRecord.Icon);
+        ResourceManager.Instance.SetImage(_Quality, CommonDefine.GetQualityIcon(showItem.CommonItemRecord.Quality));
 
         int itemCnt = BackBagPack.Instance.PageItems.GetItemCnt(ShopData._GAMBLING_COST_ITEM_ID);
         if (itemCnt > 0)

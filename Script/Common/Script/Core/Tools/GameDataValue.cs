@@ -768,6 +768,7 @@ public class GameDataValue
     public static EquipExAttr GetGemAttr(RoleAttrEnum attr, int value)
     {
         EquipExAttr exAttr = EquipExAttr.GetBaseExAttr(attr, value);
+        exAttr.AttrQuality = ITEM_QUALITY.BLUE;
         return exAttr;
     }
 
@@ -856,6 +857,14 @@ public class GameDataValue
         return finalDamage;
     }
 
+    public static int GetTotalDamage(int finalDmg, int levelDelta)
+    {
+        int levelDeltaIdx = levelDelta + 20;
+        int levelDeltaValue = TableReader.AttrValueLevel.GetSpValue(levelDeltaIdx, 28);
+        int deltaValue = (int)(finalDmg * (1 + ConfigIntToFloat(levelDeltaValue)));
+        return deltaValue;
+    }
+
     public static bool IsCriticleHit(int criticleRate)
     {
         int randomRate = Random.Range(0, 10001);
@@ -891,7 +900,7 @@ public class GameDataValue
         int monCnt = TableReader.AttrValueLevel.GetSpValue(playerLv, 14);
         if (playerLv > 20)
         {
-            monCnt += 60;
+            monCnt += 25;
         }
         else
         {
@@ -948,6 +957,8 @@ public class GameDataValue
 
     private static List<int> _EquipLevels = new List<int>() { 0, 1, 2, 3,3 };
     private static int _EqiupLevelStep = 5;
+    public static int _EquipDropLevelMinDelta = 5;
+    public static int _EquipDropLevelMaxDelta = 5;
 
     private static List<ITEM_QUALITY> GetDropQualitys(MOTION_TYPE motionType, MonsterBaseRecord monsterRecord, int level, STAGE_TYPE stageType)
     {
@@ -1193,6 +1204,16 @@ public class GameDataValue
         if (dropEquipQualitys.Count == 0)
             return dropEquipList;
 
+        int levelDelta = RoleData.SelectRole.TotalLevel - level;
+        int equipDropLevel = level;
+        if (levelDelta > _EquipDropLevelMinDelta)
+        {
+            equipDropLevel = RoleData.SelectRole.TotalLevel - _EquipDropLevelMinDelta;
+        }
+        else if(levelDelta < -_EquipDropLevelMaxDelta)
+        {
+            equipDropLevel = RoleData.SelectRole.TotalLevel + _EquipDropLevelMinDelta;
+        }
         for (int i = 0; i < dropEquipQualitys.Count; ++i)
         {
             if (dropEquipQualitys[i] == ITEM_QUALITY.ORIGIN)
@@ -1206,7 +1227,7 @@ public class GameDataValue
                 if (dropItem == null)
                 {
                     var equipSlot = GetRandomItemSlot(dropEquipQualitys[i]);
-                    var equipLevel = GetEquipLv(equipSlot, level);
+                    var equipLevel = GetEquipLv(equipSlot, equipDropLevel);
                     var equipValue = GetEquipLvValue(equipLevel, equipSlot);
                     var dropEquip = ItemEquip.CreateEquip(equipLevel, dropEquipQualitys[i], -1, (int)equipSlot);
                     dropEquipList.Add(dropEquip);
@@ -1214,7 +1235,7 @@ public class GameDataValue
                 else
                 {
                     var dropEquipTab = TableReader.EquipItem.GetRecord(dropItem.Id);
-                    var equipLevel = GetEquipLv(dropEquipTab.Slot, level);
+                    var equipLevel = GetEquipLv(dropEquipTab.Slot, equipDropLevel);
                     var equipValue = GetEquipLvValue(equipLevel, dropEquipTab.Slot);
                     var dropEquip = ItemEquip.CreateEquip(equipLevel, dropEquipQualitys[i], int.Parse(dropItem.Id), (int)dropEquipTab.Slot);
                     dropEquipList.Add(dropEquip);
@@ -1223,7 +1244,7 @@ public class GameDataValue
             else
             {
                 var equipSlot = GetRandomItemSlot(dropEquipQualitys[i]);
-                var equipLevel = GetEquipLv(equipSlot, level);
+                var equipLevel = GetEquipLv(equipSlot, equipDropLevel);
                 var equipValue = GetEquipLvValue(equipLevel, equipSlot);
                 var dropEquip = ItemEquip.CreateEquip(equipLevel, dropEquipQualitys[i], -1, (int)equipSlot);
                 dropEquipList.Add(dropEquip);
@@ -1582,7 +1603,12 @@ public class GameDataValue
         rate = rate + ActData.Instance.GetActDropGoldNumAdd() * rate;
         float dropNum = goldValue;
 
-        return Mathf.CeilToInt(dropNum * random * rate);
+        float levelDelta = 1;
+        int lvdelta = (level - RoleData.SelectRole.TotalLevel) + 20;
+        levelDelta = (ConfigIntToFloat(TableReader.AttrValueLevel.GetSpValue(lvdelta, 28)) + 1);
+        
+
+        return Mathf.CeilToInt(dropNum * random * rate * levelDelta);
     }
 
     public static int GetGoldDropCnt(STAGE_TYPE stageType, params int[] rates)
@@ -2195,6 +2221,15 @@ public class GameDataValue
 
         return damage;
     }
+
+    #endregion
+
+    #region function level
+
+    public static int ACT_GOLD_START = 15;
+    public static int SKILL_TALENT_START = 18;
+    public static int ROLE_SELECT = 40;
+    public static int EQUIP_REFRESH = 50;
 
     #endregion
 

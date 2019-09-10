@@ -47,7 +47,7 @@ public class StateBase
     {
         _MotionManager = motionManager;
         string animName = GetAnimName();
-        if (!string.IsNullOrEmpty(animName))
+        if (!string.IsNullOrEmpty(animName) && _Animation == null)
         {
             string animPath = motionManager._MotionAnimPath + "/" + animName;
             ResourceManager.Instance.LoadAnimation(animPath, (resName, resData, hash) =>

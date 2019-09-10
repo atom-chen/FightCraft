@@ -23,6 +23,11 @@ public class EffectFollowPlayer : MonoBehaviour
 
     public void Update()
     {
+        if (FightManager.Instance.MainChatMotion == null)
+        {
+            RevEffect();
+            return;
+        }
         _Speed = _Speed + _Accelate * Time.deltaTime;
         _Speed = Mathf.Min(_Speed, _MaxSpeed);
         Vector3 pickPos = FightManager.Instance.MainChatMotion.transform.position + new Vector3(0, 1, 0);

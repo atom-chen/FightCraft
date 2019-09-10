@@ -154,35 +154,41 @@ public class LogicManager
 
         GameCore.Instance.UIManager.HideAllUI();
 
+        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_ENTER_STAGE, this, null);
+
         UILoadingScene.ShowEnterFightAsyn();
     }
 
     public void EnterFightFinish()
     {
+        UIHPPanel.ShowAsyn();
         UIControlPanel.ShowAsyn();
-
         UIJoyStick.ShowAsyn();
         UISkillBar.ShowAsyn();
         UIDropNamePanel.ShowAsyn();
-        UIHPPanel.ShowAsyn();
         UIPlayerFrame.ShowAsyn();
-        //UITargetFrame.ShowAsyn(null);
         UIFuncInFight.ShowAsyn();
-
-        //UIDamagePanel.ShowAsyn();
-        //DamagePanel.ShowAsyn();
-        //AimTargetPanel.ShowAsyn();
 
         GameCore.Instance._SoundManager.PlayBGMusic(EnterStageInfo.Audio);
     }
 
     public void ExitFight()
     {
-        
-        //var sceneLoader = GameCore.Instance.SceneManager.ChangeLogicScene();
+        //GameCore.Instance.UIManager.DestoryAllUI();
+        //GameObject.Destroy(FightManager.Instance.gameObject);
+        //UILoadingScene.ShowAsyn(GameDefine.GAMELOGIC_SCENE_NAME);
+
+        UISkillBar.HideAsyn();
+        UIMainFun.ShowAsynInFight();
+    }
+
+    public void ExitFightScene()
+    {
         GameCore.Instance.UIManager.DestoryAllUI();
         GameObject.Destroy(FightManager.Instance.gameObject);
         UILoadingScene.ShowAsyn(GameDefine.GAMELOGIC_SCENE_NAME);
+
+        //UIMainFun.ShowAsynInFight();
     }
 
     public void InitFightScene()

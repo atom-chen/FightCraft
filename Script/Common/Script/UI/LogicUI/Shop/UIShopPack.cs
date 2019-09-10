@@ -116,7 +116,7 @@ public class UIShopPack : UIBase
         }
         else if (_SelectedItem is ItemEquip)
         {
-            _Desc.text = _SelectedItem.GetDesc();
+            _Desc.text = Tables.StrDictionary.GetFormatStr(2300078);
             _Name.text = (_SelectedItem as ItemEquip).GetName();
         }
         else if (_SelectedItem is ItemFiveElementCore)
@@ -177,9 +177,9 @@ public class UIShopPack : UIBase
 
     public void MutiBuyCallBack(ItemShop shopItem, int num)
     {
-        for (int i = 0; i < num; ++i)
+        //for (int i = 0; i < num; ++i)
         {
-            ShopData.Instance.BuyItem(shopItem);
+            ShopData.Instance.BuyItem(shopItem, num);
         }
         RefreshItems();
     }

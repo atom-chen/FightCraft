@@ -51,11 +51,11 @@ public class ActData : DataPackBase
             _DefaultStage = _NormalStageIdx + 1;
         }
 
-        if (_DefaultStage >= RoleData.SelectRole.TotalLevel)
-        {
-            _DefaultStage = RoleData.SelectRole.TotalLevel;
-        }
-        else 
+        //if (_DefaultStage >= RoleData.SelectRole.TotalLevel)
+        //{
+        //    _DefaultStage = RoleData.SelectRole.TotalLevel;
+        //}
+        //else 
         {
             _DefaultStage = _NormalStageIdx + 1;
         }
@@ -63,23 +63,51 @@ public class ActData : DataPackBase
         StartStage(_DefaultStage, STAGE_TYPE.NORMAL);
     }
 
+    public void StartCurrentStage()
+    {
+        if (_ProcessStageIdx > 0)
+        {
+            StartStage(_ProcessStageIdx, STAGE_TYPE.NORMAL);
+        }
+        else
+        {
+            StartDefaultStage();
+        }
+    }
+
     public void StartStage(int stageIdx, Tables.STAGE_TYPE stageMode, bool useTicket = false)
     {
         _ProcessStageIdx = stageIdx;
         _StageMode = stageMode;
 
-        if (stageMode == STAGE_TYPE.NORMAL)
+        if (TestFight.TestMode)
         {
-            LogicManager.Instance.EnterFight(GetNormalStageRecord(_ProcessStageIdx));
-        }
-        else if (stageMode == STAGE_TYPE.ACT_GOLD)
-        {
-            var stageRecord = TableReader.StageInfo.GetRecord(_ActStageRecord[0]);
-            if (useTicket)
+            if (stageMode == STAGE_TYPE.NORMAL)
             {
-                ActData.Instance._ActConsumeTickets = 1;
+                TestPassStageOk();
             }
-            LogicManager.Instance.EnterFight(stageRecord);
+            else if (stageMode == STAGE_TYPE.ACT_GOLD)
+            {
+                TestPassAct(useTicket);
+            }
+
+            UIStageSelect.Refresh();
+        }
+        else
+        {
+            if (stageMode == STAGE_TYPE.NORMAL)
+            {
+                LogicManager.Instance.EnterFight(GetNormalStageRecord(_ProcessStageIdx));
+            }
+            else if (stageMode == STAGE_TYPE.ACT_GOLD)
+            {
+                var stageRecord = TableReader.StageInfo.GetRecord(_ActStageRecord[0]);
+                if (useTicket)
+                {
+                    ActData.Instance._ActConsumeTickets = 1;
+                }
+                LogicManager.Instance.EnterFight(stageRecord);
+            }
         }
         //if (stageMode == STAGE_TYPE.NORMAL)
         //{
@@ -145,10 +173,18 @@ public class ActData : DataPackBase
 
     public static int _MAX_NORMAL_DIFF = 9;
     public static int _CIRCLE_STAGE_COUNT = 20;
-    public static int _MAX_NROMAL_PRE_STAGE = 10;
+    public static int _MAX_NROMAL_PRE_STAGE = 20;
 
     public void SetPassNormalStage(int stageIdx)
     {
+        if (FightManager.Instance != null)
+        {
+            int passStageTime = TableReader.AttrValueLevel.GetSpValue(stageIdx, 35);
+            float deltaTime = passStageTime - (Time.time - FightManager.Instance._LogicStartTime);
+            if (deltaTime < 0)
+                return;
+        }
+
         if (_NormalStageIdx >= stageIdx)
             return;
 
@@ -165,8 +201,8 @@ public class ActData : DataPackBase
 
     public int GetNormalDiff()
     {
-        //return _NormalStageIdx / _MAX_NORMAL_DIFF;
-        return _NormalStageIdx;
+        return _NormalStageIdx / _CIRCLE_STAGE_COUNT;
+        //return _NormalStageIdx;
     }
 
     public StageInfoRecord GetNormalStageRecord(int processStageIdx)
@@ -309,8 +345,8 @@ public class ActData : DataPackBase
         }
         else
         {
-            normalMonstarCnt = 180;
-            eliteMonsterCnt = 20;
+            normalMonstarCnt = 60;
+            eliteMonsterCnt = 5;
         }
 
         for (int i = 0; i < normalMonstarCnt; ++i)

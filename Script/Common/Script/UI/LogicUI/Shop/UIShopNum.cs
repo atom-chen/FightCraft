@@ -71,9 +71,9 @@ public class UIShopNum : UIBase
         _MinValue = minValue;
         Value = initValue;
 
-        _NumProcess.minValue = _MinValue;
-        _NumProcess.maxValue = _MaxValue;
-        _NumProcess.value = initValue;
+        //_NumProcess.minValue = _MinValue;
+        //_NumProcess.maxValue = _MaxValue;
+        //_NumProcess.value = initValue;
 
         _UICurrencyItem.ShowCurrency((MONEYTYPE)_ItemShop.ShopRecord.MoneyType, _ItemShop.BuyPrice * initValue);
     }
@@ -88,9 +88,10 @@ public class UIShopNum : UIBase
 
     public void OnTextInput()
     {
-        _NumProcess.value = Value;
+        //_NumProcess.value = Value;
 
-        _UICurrencyItem.ShowCurrency((MONEYTYPE)_ItemShop.ShopRecord.MoneyType, (int)(_ItemShop.BuyPrice * _NumProcess.value));
+        int num = int.Parse(_InputField.text);
+        _UICurrencyItem.ShowCurrency((MONEYTYPE)_ItemShop.ShopRecord.MoneyType, (int)(_ItemShop.BuyPrice * num));
     }
 
     public void OnBtnOk()

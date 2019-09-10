@@ -33,10 +33,11 @@ public class UISummonGotAnim : UIBase
 
     #region pack
 
-    public UIContainerBase _SummonItemContainer;
+    public List<UISummonSkillGotAnimItem> _AnimItems;
 
     private List<SummonMotionData> _SummonDatas;
     private Action _FinishCallBack;
+    private int _PlayingIdx = 0;
 
     public override void Show(Hashtable hash)
     {
@@ -60,8 +61,32 @@ public class UISummonGotAnim : UIBase
     }
 
     private void ShowItemPack()
-    {   
-        _SummonItemContainer.InitContentItem(_SummonDatas);
+    {
+        for (int i = 0; i < _AnimItems.Count; ++i)
+        {
+            if (_SummonDatas.Count > i)
+            {
+                _AnimItems[i].gameObject.SetActive(true);
+                _AnimItems[i].InitSummonMotion(_SummonDatas[i]);
+            }
+            else
+            {
+                _AnimItems[i].gameObject.SetActive(false);
+            }
+        }
+        _PlayingIdx = 0;
+        StartCoroutine(ShowAnim());
+    }
+
+    private IEnumerator ShowAnim()
+    {
+        while (_AnimItems.Count > _PlayingIdx && _AnimItems[_PlayingIdx].gameObject.activeSelf)
+        {
+            _AnimItems[_PlayingIdx].PlayShow();
+            ++_PlayingIdx;
+            yield return new WaitForSeconds(0.5f);
+        }
+
     }
 
     #endregion

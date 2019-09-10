@@ -23,9 +23,11 @@ public class AreaGate : MonoBehaviour
     public bool _NeedInitEffect = true;
     public static float _TeleDistance = 3;
     public static float _TeleProcessTime = 1;
+    public static float _TeleTipsTime = 5;
 
     protected bool _Teleporting = false;
     protected float _StartingTime = 0;
+    protected float _TipsStart = 0;
 
     protected virtual void TeleportUpdate()
     {
@@ -36,8 +38,9 @@ public class AreaGate : MonoBehaviour
         if (mainChar == null)
             return;
 
+        var distance = Vector3.Distance(transform.position, mainChar.transform.position);
         if (mainChar._ActionState == mainChar._StateIdle &&
-            Vector3.Distance(transform.position, mainChar.transform.position) < _TeleDistance)
+            distance < _TeleDistance)
         {
             if (!_Teleporting)
             {
@@ -51,11 +54,17 @@ public class AreaGate : MonoBehaviour
         {
             if (_Teleporting)
             {
-                UpdateTeleProcesing();
                 _Teleporting = false;
                 _StartingTime = 0;
 
             }
+            UpdateTeleProcesing();
+        }
+
+        if (distance < _TeleDistance && Time.time - _TipsStart > _TeleTipsTime)
+        {
+            _TipsStart = Time.time;
+            UIMessageTip.ShowMessageTip(2300082);
         }
 
     }

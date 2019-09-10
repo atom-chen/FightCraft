@@ -93,7 +93,7 @@ public class UIGemPackPunch : UIBase, IDragablePack
         if (gemItem == null || !gemItem.IsVolid())
             return;
 
-        UIGemTooltips.ShowAsynInType(gemItem, TooltipType.GemSuitAttr, new ToolTipFunc[2] { new ToolTipFunc(10008, PunchOff), new ToolTipFunc(10009, LevelUp) });
+        UIGemTooltips.ShowAsynInType(gemItem, TooltipType.GemSuitAttr, new ToolTipFunc[1] { new ToolTipFunc(10008, PunchOff)});
     }
 
     public void ShowGemTooltipsRight(ItemGem gemItem)
@@ -155,12 +155,12 @@ public class UIGemPackPunch : UIBase, IDragablePack
 
     private void LevelUp(ItemBase itemBase)
     {
-        ItemGem itemGem = itemBase as ItemGem;
-        if (GemData.Instance.GemLevelUp(itemGem))
-        {
-            ShowGemTooltipsRight(itemGem);
-            RefreshItems();
-        }
+        //ItemGem itemGem = itemBase as ItemGem;
+        //if (GemData.Instance.GemLevelUp(itemGem))
+        //{
+        //    ShowGemTooltipsRight(itemGem);
+        //    RefreshItems();
+        //}
     }
 
     private void ItemRefresh(object sender, Hashtable args)

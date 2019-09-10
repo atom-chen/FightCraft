@@ -33,7 +33,7 @@ public class UIGemItem : /*UIDragableItemBase*/ UIPackItemBase
 
     public override void Show(Hashtable hash)
     {
-        base.Show(hash);
+        //base.Show(hash);
 
         var showItem = (ItemGem)hash["InitObj"];
         GemRefreshType refreshType = GemRefreshType.NONE;
@@ -99,30 +99,17 @@ public class UIGemItem : /*UIDragableItemBase*/ UIPackItemBase
             _TestAttrName.text = RoleAttrImpactBaseAttr.GetAttrDesc(showItem.GemAttr[0].AttrParams);
         }
 
-        //if (_DisableGO != null)
-        //{
-        //    if (showItem.Level > 0)
-        //    {
-        //        _DisableGO.SetActive(false);
-        //    }
-        //    else
-        //    {
-        //        _DisableGO.SetActive(true);
-        //    }
-        //}
-
-        //if (_UsingGO != null)
-        //{
-        //    if (GemData.Instance.IsEquipedGem(showItem.ItemDataID))
-        //    {
-        //        _UsingGO.SetActive(true);
-        //    }
-        //    else
-        //    {
-        //        _UsingGO.SetActive(false);
-        //    }
-        //}
+        _Quality.gameObject.SetActive(true);
+        if (showItem.IsGemExtra())
+        {
+            ResourceManager.Instance.SetImage(_Quality, CommonDefine.GetQualityIcon(Tables.ITEM_QUALITY.BLUE));
+        }
+        else
+        {
+            ResourceManager.Instance.SetImage(_Quality, CommonDefine.GetQualityIcon(Tables.ITEM_QUALITY.GREEN));
+        }
         _Icon.gameObject.SetActive(true);
+        ResourceManager.Instance.SetImage(_Icon, showItem.CommonItemRecord.Icon);
 
         RefreshRedTip();
     }
@@ -133,8 +120,10 @@ public class UIGemItem : /*UIDragableItemBase*/ UIPackItemBase
 
         if (_DisableGO != null)
         {
-
+            _Icon.gameObject.SetActive(false);
             _DisableGO.SetActive(false);
+            _UsingGO.SetActive(false);
+            _Quality.gameObject.SetActive(false);
         }
     }
 
@@ -170,7 +159,7 @@ public class UIGemItem : /*UIDragableItemBase*/ UIPackItemBase
 
                 if (TempNum == _ShowedItem.ItemStackNum)
                 {
-                    _Num.text = CommonDefine.GetEnableGrayStr(1) + TempNum.ToString() + "</color>";
+                    _Num.text = CommonDefine.GetEnableGrayStr(2) + TempNum.ToString() + "</color>";
                 }
                 else
                 {

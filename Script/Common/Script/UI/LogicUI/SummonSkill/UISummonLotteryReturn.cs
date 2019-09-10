@@ -22,6 +22,8 @@ public class UISummonLotteryReturn : UIBase
     #region 
 
     public Text _Tips;
+    public Image _Icon;
+    public Text _ItemNum;
 
     public override void Show(Hashtable hash)
     {
@@ -30,7 +32,8 @@ public class UISummonLotteryReturn : UIBase
         string itemID = (string)hash["ItemID"];
         int itemNum = (int)hash["ItemNum"];
 
-        string itemName = CommonDefine.GetQualityItemName(itemID) + "*" + itemNum.ToString();
+        var commonItem = TableReader.CommonItem.GetRecord(itemID);
+        string itemName = CommonDefine.GetQualityItemName(itemID, true) + "*" + itemNum.ToString();
         string tipInfo = "";
         if (itemNum == 1)
         {
@@ -41,6 +44,9 @@ public class UISummonLotteryReturn : UIBase
             tipInfo = StrDictionary.GetFormatStr(1260001, itemName);
         }
         _Tips.text = tipInfo;
+
+        ResourceManager.Instance.SetImage(_Icon, commonItem.Icon);
+        _ItemNum.text = "*" + itemNum.ToString();
     }
 
     #endregion

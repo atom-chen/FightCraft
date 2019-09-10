@@ -27,6 +27,10 @@ I:\资源\APK资源3\封魔大陆\assets\skill
 I:\资源\APK资源3\龙骑士传\res\language_com\ui\battle\buff
 F:\资源\APK资源5\时空物语-2d骨骼\assets\activity\icon
 F:\资源\APK资源5\时空物语-2d骨骼\assets\animation\loading
+F:\资源\APK资源7\逆时空.次元学院-卡牌UI\assets\iphonehd\main
+F:\资源\APK资源7\逆时空.次元学院-卡牌UI\assets\iphonehd\magic
+F:\资源\APK资源7\黑瞳圣女-卡牌UI\assets\res\icon\skill
+F:\资源\APK资源8\校花的贴身高手-2d骨骼卡通\assets\res\ui
 
 Focus：
 F:\资源\APK资源5\时空物语-2d骨骼\assets\animation\loading

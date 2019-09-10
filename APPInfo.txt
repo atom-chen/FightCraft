@@ -1,0 +1,2 @@
+Name:chinese heroes
+key:combat 2 free,

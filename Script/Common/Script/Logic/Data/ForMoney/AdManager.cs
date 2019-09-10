@@ -27,11 +27,17 @@ public class AdManager
 
     private Action _AdVideoCallBack;
 
+    public void PrepareVideo()
+    {
+        PlatformHelper.Instance.LoadVideoAD();
+    }
+
     public void WatchAdVideo(Action finishCallBack)
     {
-        //todo
         _AdVideoCallBack = finishCallBack;
-        WatchAdVideoFinish();
+
+        PlatformHelper.Instance.GetLocationPermission();
+        PlatformHelper.Instance.ShowVideoAD();
     }
 
     public void WatchAdVideoFinish()
@@ -39,6 +45,56 @@ public class AdManager
         if (_AdVideoCallBack != null)
         {
             _AdVideoCallBack.Invoke();
+        }
+    }
+
+    #endregion
+
+    #region ad inter
+
+    public float _ShowInterADTime = 4.0f;
+    public float _StartInterADTime;
+    public bool _IsInterADPrepared = false;
+
+    private int _LoadSceneTimes = 0;
+    private int _ShowAdLoadTimes = 1;
+    private bool _IsShowInterAD = false;
+    public bool IsShowInterAD
+    {
+        get
+        {
+            return _IsShowInterAD;
+        }
+    }
+
+    public void PrepareInterAD()
+    {
+        PlatformHelper.Instance.LoadInterAD();
+    }
+
+    public void LoadedInterAD()
+    {
+        _IsInterADPrepared = true;
+    }
+
+    public void ShowInterAD()
+    {
+        _IsInterADPrepared = false;
+        _StartInterADTime = Time.time;
+        PlatformHelper.Instance.ShowInterAD();
+    }
+
+    public void AddLoadSceneTimes()
+    {
+        ++_LoadSceneTimes;
+        if (_LoadSceneTimes % _ShowAdLoadTimes == 0)
+        {
+            LoadedInterAD();
+            _IsShowInterAD = true;
+        }
+        else
+        {
+            _IsShowInterAD = false;
         }
     }
 

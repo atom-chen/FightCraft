@@ -60,8 +60,16 @@ public class UILegendaryItemTooltips : UIBase
 
         if (_Desc != null)
         {
-            var attrDesc = EquipExAttr.GetAttrStr(_EquipItem.ExAttr[0].AttrImpact, new System.Collections.Generic.List<int>() {int.Parse(_EquipItem.ExAttr[0].Id), 1 });
-            _Desc.text = attrDesc;
+            if (_EquipItem.ExAttr[0].AttrImpact.Equals("RoleAttrImpactBaseAttr"))
+            {
+                var attrDesc = EquipExAttr.GetAttrStr(_EquipItem.ExAttr[0].AttrImpact, _EquipItem.ExAttr[0].AttrParams);
+                _Desc.text = attrDesc;
+            }
+            else
+            {
+                var attrDesc = EquipExAttr.GetAttrStr(_EquipItem.ExAttr[0].AttrImpact, new System.Collections.Generic.List<int>() { int.Parse(_EquipItem.ExAttr[0].Id), 1 });
+                _Desc.text = attrDesc;
+            }
         }
     }
 

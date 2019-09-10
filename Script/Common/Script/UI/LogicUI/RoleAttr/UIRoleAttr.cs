@@ -17,12 +17,18 @@ public class UIRoleAttr : UIBase
     #endregion
 
     #region 
+    public Image _CharIcon;
 
     public override void Show(Hashtable hash)
     {
         base.Show(hash);
 
         InitRoleAttrs();
+
+        ResourceManager.Instance.SetImage(_CharIcon, RoleData.SelectRole.IconName);
+
+        RefreshFuncBtn();
+
     }
 
     #endregion
@@ -30,72 +36,19 @@ public class UIRoleAttr : UIBase
     #region distrubute attr
 
     public RoleAttrItem _RoleLevel;
-    public RoleAttrItem _AttrLevel;
-    public RoleAttrItem _UnDistrubutePoint;
-    public RoleAttrItem _StrengthItem;
-    public RoleAttrItem _DexterityItem;
-    public RoleAttrItem _IntelligenceItem;
-    public RoleAttrItem _VitalityItem;
-    public GameObject _BtnAddStrength;
-    public GameObject _BtnDexterity;
-    public GameObject _BtnIntelligence;
-    public GameObject _BtnVitality;
-    public GameObject _BtnAddStrength10;
-    public GameObject _BtnDexterity10;
-    public GameObject _BtnIntelligence10;
-    public GameObject _BtnVitality10;
 
     public UIContainerBase _AttrItemContainer;
 
     private void InitRoleAttrs()
     {
-        _RoleLevel.Show("RoleLevel", RoleData.SelectRole.RoleLevel);
-        _AttrLevel.Show("AttrLevel", RoleData.SelectRole.AttrLevel);
-        _UnDistrubutePoint.Show("UnDistributePoint", RoleData.SelectRole.UnDistrubutePoint);
-        _StrengthItem.Show(RoleAttrEnum.Strength.ToString(), RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Strength));
-        _DexterityItem.Show(RoleAttrEnum.Dexterity.ToString(), RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Dexterity));
-        _IntelligenceItem.Show(RoleAttrEnum.Intelligence.ToString(), RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Intelligence));
-        _VitalityItem.Show(RoleAttrEnum.Vitality.ToString(), RoleData.SelectRole._BaseAttr.GetValue(RoleAttrEnum.Vitality));
-
-        if (RoleData.SelectRole.UnDistrubutePoint >= 10)
-        {
-            _BtnAddStrength10.gameObject.SetActive(true);
-            _BtnDexterity10.gameObject.SetActive(true);
-            _BtnIntelligence10.gameObject.SetActive(true);
-            _BtnVitality10.gameObject.SetActive(true);
-
-            _BtnAddStrength.gameObject.SetActive(true);
-            _BtnDexterity.gameObject.SetActive(true);
-            _BtnIntelligence.gameObject.SetActive(true);
-            _BtnVitality.gameObject.SetActive(true);
-        }
-        else if (RoleData.SelectRole.UnDistrubutePoint > 0)
-        {
-            _BtnAddStrength10.gameObject.SetActive(false);
-            _BtnDexterity10.gameObject.SetActive(false);
-            _BtnIntelligence10.gameObject.SetActive(false);
-            _BtnVitality10.gameObject.SetActive(false);
-
-            _BtnAddStrength.gameObject.SetActive(true);
-            _BtnDexterity.gameObject.SetActive(true);
-            _BtnIntelligence.gameObject.SetActive(true);
-            _BtnVitality.gameObject.SetActive(true);
-        }
-        else
-        {
-            _BtnAddStrength10.gameObject.SetActive(false);
-            _BtnDexterity10.gameObject.SetActive(false);
-            _BtnIntelligence10.gameObject.SetActive(false);
-            _BtnVitality10.gameObject.SetActive(false);
-
-            _BtnAddStrength.gameObject.SetActive(false);
-            _BtnDexterity.gameObject.SetActive(false);
-            _BtnIntelligence.gameObject.SetActive(false);
-            _BtnVitality.gameObject.SetActive(false);
-        }
-
+        _RoleLevel.Show(Tables.StrDictionary.GetFormatStr(1008), RoleData.SelectRole.RoleLevel);
+        
         List<AttrPair> pair = new List<AttrPair>();
 
+        pair.Add(new AttrPair(RoleAttrEnum.Strength));
+        pair.Add(new AttrPair(RoleAttrEnum.Dexterity));
+        pair.Add(new AttrPair(RoleAttrEnum.Intelligence));
+        pair.Add(new AttrPair(RoleAttrEnum.Vitality));
         pair.Add(new AttrPair(RoleAttrEnum.Attack));
         pair.Add(new AttrPair(RoleAttrEnum.Defense));
         pair.Add(new AttrPair(RoleAttrEnum.HPMax));
@@ -120,83 +73,7 @@ public class UIRoleAttr : UIBase
 
         _AttrItemContainer.InitContentItem(pair);
     }
-
-    public void OnDistrubuteStr(bool isPress)
-    {
-        if (!isPress)
-            return;
-
-        RoleData.SelectRole.DistributePoint(1, 1);
-        InitRoleAttrs();
-    }
-
-    public void OnDistrubuteDex(bool isPress)
-    {
-        if (!isPress)
-            return;
-        RoleData.SelectRole.DistributePoint(2, 1);
-        InitRoleAttrs();
-    }
-
-    public void OnDistrubuteInt(bool isPress)
-    {
-        if (!isPress)
-            return;
-
-        RoleData.SelectRole.DistributePoint(3, 1);
-        InitRoleAttrs();
-    }
-
-    public void OnDistrubuteVit(bool isPress)
-    {
-        if (!isPress)
-            return;
-
-        RoleData.SelectRole.DistributePoint(4, 1);
-        InitRoleAttrs();
-    }
-
-    public void OnDistrubuteStr10(bool isPress)
-    {
-        if (!isPress)
-            return;
-
-        RoleData.SelectRole.DistributePoint(1, 10);
-        InitRoleAttrs();
-    }
-
-    public void OnDistrubuteDex10(bool isPress)
-    {
-        if (!isPress)
-            return;
-        RoleData.SelectRole.DistributePoint(2, 10);
-        InitRoleAttrs();
-    }
-
-    public void OnDistrubuteInt10(bool isPress)
-    {
-        if (!isPress)
-            return;
-
-        RoleData.SelectRole.DistributePoint(3, 10);
-        InitRoleAttrs();
-    }
-
-    public void OnDistrubuteVit10(bool isPress)
-    {
-        if (!isPress)
-            return;
-
-        RoleData.SelectRole.DistributePoint(4, 10);
-        InitRoleAttrs();
-    }
-
-    public void OnResetPoints()
-    {
-        RoleData.SelectRole.ResetPoints();
-        InitRoleAttrs();
-    }
-
+    
     #endregion
 
     #region show attr tips
@@ -234,6 +111,24 @@ public class UIRoleAttr : UIBase
     public void ChangeRole()
     {
         UIRoleSelect2.ShowAsyn();
+    }
+
+    #endregion
+
+    #region func open
+
+    public Button _BtnChangeRole;
+
+    public void RefreshFuncBtn()
+    {
+        if (RoleData.SelectRole.TotalLevel >= GameDataValue.ROLE_SELECT)
+        {
+            _BtnChangeRole.interactable = true;
+        }
+        else
+        {
+            _BtnChangeRole.interactable = false;
+        }
     }
 
     #endregion

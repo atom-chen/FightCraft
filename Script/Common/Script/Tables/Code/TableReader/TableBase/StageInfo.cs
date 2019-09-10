@@ -20,6 +20,7 @@ namespace Tables
         public List<Vector3> CameraOffset { get; set; }
         public string Audio { get; set; }
         public List<int> ExParam { get; set; }
+        public string Icon { get; set; }
         public StageInfoRecord(DataRecord dataRecord)
         {
             if (dataRecord != null)
@@ -53,6 +54,7 @@ namespace Tables
             {
                 recordStrList.Add(TableWriteBase.GetWriteStr(testTableItem));
             }
+            recordStrList.Add(TableWriteBase.GetWriteStr(Icon));
 
             return recordStrList.ToArray();
         }
@@ -134,6 +136,7 @@ namespace Tables
                 pair.Value.ExParam.Add(TableReadBase.ParseInt(pair.Value.ValueStr[16]));
                 pair.Value.ExParam.Add(TableReadBase.ParseInt(pair.Value.ValueStr[17]));
                 pair.Value.ExParam.Add(TableReadBase.ParseInt(pair.Value.ValueStr[18]));
+                pair.Value.Icon = TableReadBase.ParseString(pair.Value.ValueStr[19]);
             }
         }
     }

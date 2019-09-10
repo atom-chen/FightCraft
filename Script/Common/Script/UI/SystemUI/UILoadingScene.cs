@@ -66,6 +66,12 @@ public class UILoadingScene : UIBase
             _IsEnterFight = true;
             LogicManager.Instance.InitFightScene();
         }
+
+        if (AdManager.Instance.IsShowInterAD)
+        {
+            Debug.Log("AdManager.Instance.ShowInterAD");
+            AdManager.Instance.ShowInterAD();
+        }
     }
     
     public void FixedUpdate()
@@ -75,6 +81,8 @@ public class UILoadingScene : UIBase
             _LoadProcess.value = FightManager.Instance.InitProcess;
             if (FightManager.Instance.InitProcess == 1)
             {
+                AdManager.Instance.AddLoadSceneTimes();
+
                 LogicManager.Instance.EnterFightFinish();
                 base.Destory();
             }
@@ -84,6 +92,8 @@ public class UILoadingScene : UIBase
             _LoadProcess.value = (Time.time - _StartTime) * 0.66f;
             if (_LoadProcess.value >=1 && SceneManager.GetActiveScene().name == _LoadingSceneName)
             {
+                AdManager.Instance.AddLoadSceneTimes();
+
                 LogicManager.Instance.StartLogic();
                 base.Destory();
             }

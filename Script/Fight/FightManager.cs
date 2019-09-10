@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using Tables;
 
 public class FightManager : InstanceBase<FightManager>
 {
@@ -24,6 +25,12 @@ public class FightManager : InstanceBase<FightManager>
         else
         {
             //WarningUpdate();
+            if (_CountDown)
+            {
+                _LogicFightTime = (int)(_LogicPassTime - (Time.time - _LogicStartTime));
+                if (_LogicFightTime < 0)
+                    _LogicFightTime = 0;
+            }
         }
 
     }
@@ -54,10 +61,19 @@ public class FightManager : InstanceBase<FightManager>
         InitFinish
     }
     private InitStep _InitStep;
+
+    public float _LogicFightTime = 0;
+    public float _LogicPassTime = 0;
+    public float _LogicStartTime = 0;
+    public bool _CountDown = true;
     void InitUpdate()
     {
+
         if (_InitStep == InitStep.InitScene)
         {
+            _CountDown = false;
+            _LogicFightTime = -1;
+            _LogicPassTime = -1;
             _InitStep = InitStep.InitSceneWait;
             StartCoroutine(InitScene());
             _InitProcess = 0.0f;
@@ -101,6 +117,11 @@ public class FightManager : InstanceBase<FightManager>
             StartSceneLogic();
             _InitProcess = 1.0f;
             _InitStep = InitStep.InitFinish;
+
+            _LogicPassTime = TableReader.AttrValueLevel.GetSpValue(ActData.Instance._ProcessStageIdx, 35);
+            _LogicFightTime = _LogicPassTime;
+            _LogicStartTime = Time.time;
+            _CountDown = true;
         }
     }
 
@@ -155,22 +176,22 @@ public class FightManager : InstanceBase<FightManager>
         var aimManager = cameraRoot.AddComponent<AimTarget>();
         //inputManager._InputMotion = _MainChatMotion;
 
-        for (int i = 0; i < LogicManager.Instance.EnterStageInfo.ValidScenePath.Count; ++i)
-        {
-            var spGO = GameObject.Find(LogicManager.Instance.EnterStageInfo.ValidScenePath[i] + "_SP");
-            if (spGO == null)
-                Debug.LogError("spGO none:" + LogicManager.Instance.EnterStageInfo.ValidScenePath[i]);
-            _SceneSPObj.Add(spGO);
+        //for (int i = 0; i < LogicManager.Instance.EnterStageInfo.ValidScenePath.Count; ++i)
+        //{
+        //    var spGO = GameObject.Find(LogicManager.Instance.EnterStageInfo.ValidScenePath[i] + "_SP");
+        //    if (spGO == null)
+        //        Debug.LogError("spGO none:" + LogicManager.Instance.EnterStageInfo.ValidScenePath[i]);
+        //    _SceneSPObj.Add(spGO);
 
-            if (i > 0)
-            {
-                _SceneSPObj[i].SetActive(false);
-            }
-        }
-        if (_SceneSPObj.Count > 0)
-        {
-            _SceneSPObj[0].SetActive(true);
-        }
+        //    if (i > 0)
+        //    {
+        //        _SceneSPObj[i].SetActive(false);
+        //    }
+        //}
+        //if (_SceneSPObj.Count > 0)
+        //{
+        //    _SceneSPObj[0].SetActive(true);
+        //}
 
 
         _FightLevel = ActData.Instance.GetStageLevel();
@@ -287,6 +308,8 @@ public class FightManager : InstanceBase<FightManager>
             _CameraFollow._FollowObj = MainChatMotion.gameObject;
             InputManager.Instance.InputMotion = MainChatMotion;
         }
+
+        UIHPPanel.ShowHPItem(MainChatMotion, false);
     }
 
     private void SetSkillElement(string skillName, ObjMotionSkillBase skillBase)
@@ -375,8 +398,13 @@ public class FightManager : InstanceBase<FightManager>
 
     public void ObjCorpse(MotionManager objMotion)
     {
-        _FightScene.MotionDie(objMotion);
         
+    }
+
+    public void OnObjDie(MotionManager objMotion)
+    {
+        _FightScene.MotionDie(objMotion);
+
         --_SceneEnemyCnt;
 
         if (objMotion.MonsterBase != null)
@@ -403,6 +431,8 @@ public class FightManager : InstanceBase<FightManager>
 
     private FightSceneLogicBase _FightScene;
 
+    public Dictionary<string, AreaGroup> _AreaGroups = new Dictionary<string, AreaGroup>();
+
     private IEnumerator InitScene()
     {
         yield return ResourceManager.Instance.LoadPrefab("FightSceneLogic/" + LogicManager.Instance.EnterStageInfo.FightLogicPath, (subResName, subResGO, subCallBack) =>
@@ -418,9 +448,16 @@ public class FightManager : InstanceBase<FightManager>
         }
 
         yield return ResourceManager.Instance.LoadLevelAsync(needLoadScene[0], false);
+        var actGroup = GameObject.Find(needLoadScene[0] + "_RandomAreas").GetComponent<AreaGroup>();
+        _AreaGroups.Add(needLoadScene[0], actGroup);
         for (int i = 1; i < needLoadScene.Count; ++i)
         {
             yield return ResourceManager.Instance.LoadLevelAsync(needLoadScene[i], true);
+
+            actGroup = GameObject.Find(needLoadScene[i] + "_RandomAreas").GetComponent<AreaGroup>();
+            actGroup._LightGO.SetActive(false);
+            actGroup.transform.parent.gameObject.SetActive(false);
+            _AreaGroups.Add(needLoadScene[i], actGroup);
         }
 
         _InitStep = InitStep.InitSceneFinish;
@@ -434,14 +471,12 @@ public class FightManager : InstanceBase<FightManager>
         InitWarning();
     }
 
-    public void OnObjDie()
-    {
-
-    }
+    
 
     public void StagePass()
     {
         ActData.Instance.PassStage(LogicManager.Instance.EnterStageInfo.StageType);
+        _CountDown = false;
     }
 
     public void LogicFinish(bool isWin)
@@ -506,9 +541,11 @@ public class FightManager : InstanceBase<FightManager>
     public void RoleLevelUp(object sender, Hashtable arg)
     {
         Hashtable hash = new Hashtable();
-        hash.Add("WorldPos", FightManager.Instance.MainChatMotion.transform.position);
-        var effectID = FightManager.Instance.MainChatMotion.PlayDynamicEffect(_PlayBornEffect, hash);
-        
+        if (FightManager.Instance != null && FightManager.Instance.MainChatMotion != null)
+        {
+            hash.Add("WorldPos", FightManager.Instance.MainChatMotion.transform.position);
+            var effectID = FightManager.Instance.MainChatMotion.PlayDynamicEffect(_PlayBornEffect, hash);
+        }
         
     }
 

@@ -46,7 +46,7 @@ Shader "TYImage/Shadow" {
          	float2 uv = float2(input.tex.xy);
          	float4 clr  = tex2D(_MainTex,  uv);
         	
-        	return (float4(clr.r * _MainColor.r, clr.g * _MainColor.g, clr.b * _MainColor.b, clr.r*_MainColor.a));
+        	return (float4(clr.r * _MainColor.r, clr.g * _MainColor.g, clr.b * _MainColor.b, clr.a*_MainColor.a));
          }
  
          ENDCG

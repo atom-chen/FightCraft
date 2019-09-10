@@ -428,6 +428,7 @@ public class MotionManager : MonoBehaviour
             _RoleAttrManager.AddHP(1);
         }
         Profiler.EndSample();
+        FightManager.Instance.OnObjDie(this);
     }
 
     public void MotionCorpse()

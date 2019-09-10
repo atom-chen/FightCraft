@@ -509,4 +509,6 @@ public class TestFight : MonoBehaviour
         MonsterDrop.MonsterDropItems(monRecord, MOTION_TYPE.Hero, 10, FightManager.Instance.MainChatMotion.transform);
     }
 
+    public static bool TestMode = false;
+
 }

@@ -12,12 +12,22 @@ public class UIHPItem : UIItemBase
     public MotionManager _ObjMotion;
     private Transform _FollowTransform;
     private Vector3 _HeightDelta;
+    private bool _IsShowHP = true;
 
     public override void Show(Hashtable hash)
     {
         base.Show(hash);
 
         _ObjMotion = hash["InitObj"] as MotionManager;
+        _IsShowHP = (bool)hash["ShowHP"];
+        if (_IsShowHP)
+        {
+            _HPProcess.gameObject.SetActive(true);
+        }
+        else
+        {
+            _HPProcess.gameObject.SetActive(false);
+        }
         _RectTransform = GetComponent<RectTransform>();
         _FollowTransform = _ObjMotion.AnimationEvent.transform;
         var transform = _FollowTransform.Find("center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck");
@@ -50,7 +60,10 @@ public class UIHPItem : UIItemBase
         }
 
         //_HPProcess.value = _ObjMotion.RoleAttrManager.HPPersent;
-        ActHPProcess();
+        if (_IsShowHP)
+        {
+            ActHPProcess();
+        }
 
         ActMPProcess();
 

@@ -76,6 +76,13 @@ public class GiftData : DataPackBase
     public List<GiftPacketRecord> _GiftItems = null;
 
     private GiftPacketRecord _LockingGift;
+    public GiftPacketRecord LockingGift
+    {
+        get
+        {
+            return _LockingGift;
+        }
+    }
 
     private void RefreshGift()
     {
@@ -112,7 +119,7 @@ public class GiftData : DataPackBase
         _GiftItems = null;
     }
 
-    public void BuyGift(bool isAd)
+    public void SetLockingGift(bool isAd)
     {
         if (isAd)
         {
@@ -122,6 +129,10 @@ public class GiftData : DataPackBase
         {
             _LockingGift = _GiftItems[1];
         }
+    }
+
+    public void BuyGift()
+    {
         //buy to do
         if (_LockingGift.PacketType == 1)
         {

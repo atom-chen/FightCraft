@@ -56,25 +56,41 @@ public class UIEquipAttrItem : UIItemBase
         //if (_ShowAttr.AttrQuality > 0)
         {
             valueStr = string.Format("({0})", StrDictionary.GetFormatStr(GameDataValue._ExAttrQualityStrDict[(int)_ShowAttr.AttrQuality]));
-            valueStr = CommonDefine.GetQualityColorStr(attr.AttrQuality) + valueStr + "</color>";
+            
         }
-        if (_ItemEquip != null)
+
+        if (_DisplayMode == AttrItemDisplayMode.ZeroDisable)
         {
-            var attrColor = attr.AttrQuality;
-            if (attrColor < ITEM_QUALITY.ORIGIN)
+            if (attr.Value == 0)
             {
-                attrColor = ITEM_QUALITY.BLUE;
+                attrStr = CommonDefine.GetEnableGrayStr(0) + attrStr + "</color>";
             }
-            attrStr = CommonDefine.GetQualityColorStr(attrColor) + attrStr + valueStr + "</color>";
-        }
-        if (_DisplayMode == AttrItemDisplayMode.ZeroDisable && attr.Value == 0)
-        {
-            attrStr = CommonDefine.GetEnableGrayStr(0) + attrStr + "</color>";
+            else
+            {
+                attrStr = CommonDefine.GetEnableGrayStr(1) + attrStr + "</color>";
+            }
         }
         else
         {
-            attrStr = CommonDefine.GetEnableGrayStr(1) + attrStr + "</color>";
+            if (_ItemEquip != null)
+            {
+                var attrColor = attr.AttrQuality;
+                if (attrColor < ITEM_QUALITY.ORIGIN)
+                {
+                    attrColor = ITEM_QUALITY.BLUE;
+                }
+                attrStr = CommonDefine.GetQualityColorStr(attrColor) + attrStr + valueStr + "</color>";
+            }
+            else
+            {
+                //if (attr.AttrQuality >= 0)
+                //{
+                //    valueStr = CommonDefine.GetQualityColorStr(attr.AttrQuality) + valueStr + "</color>";
+                //}
+                attrStr = CommonDefine.GetQualityColorStr(attr.AttrQuality) + attrStr + "</color>";
+            }
         }
+        
         _AttrText.text = attrStr;
     }
 

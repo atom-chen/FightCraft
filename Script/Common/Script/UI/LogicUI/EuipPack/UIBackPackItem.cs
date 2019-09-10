@@ -39,7 +39,11 @@ public class UIBackPackItem : /*UIDragableItemBase*/ UIPackItemBase
         base.ShowItem(showItem);
         _BackpackEquip = null;
         if (showItem == null || !showItem.IsVolid())
+        {
+            _Icon.gameObject.SetActive(false);
+            _Quality.gameObject.SetActive(false);
             return;
+        }
 
         if (_Num != null)
         {
@@ -56,6 +60,9 @@ public class UIBackPackItem : /*UIDragableItemBase*/ UIPackItemBase
                     _Num.text = "";
             }
         }
+
+        _Icon.gameObject.SetActive(true);
+        _Quality.gameObject.SetActive(true);
         ResourceManager.Instance.SetImage(_Icon, showItem.CommonItemRecord.Icon);
         ResourceManager.Instance.SetImage(_Quality, CommonDefine.GetQualityIcon(showItem.GetQuality()));
 

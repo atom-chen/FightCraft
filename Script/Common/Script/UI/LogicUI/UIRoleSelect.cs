@@ -22,6 +22,7 @@ public class UIRoleSelect : UIBase
     public GameObject[] _ProMain;
     public GameObject[] _ProSub;
     public AnimationClip[] _Anims;
+    public GameObject _SubProGO;
 
     public override void Show(Hashtable hash)
     {
@@ -33,6 +34,15 @@ public class UIRoleSelect : UIBase
         //}
         _SelectRoleID = PlayerDataPack.Instance._LastSelectRole;
         SelectRole(_SelectRoleID);
+
+        if (PlayerDataPack.Instance.RoleLevel >= GameDataValue._ROLE_OPEN_LEVEL)
+        {
+            _SubProGO.SetActive(true);
+        }
+        else
+        {
+            _SubProGO.SetActive(false);
+        }
     }
 
     private void OnDestroy()
@@ -100,7 +110,7 @@ public class UIRoleSelect : UIBase
 
     public void OnProSelect2(int idx)
     {
-
+        
         if (_SelectSex == 0 && idx == 0)
         {
             _SelectRoleID = 0;
@@ -126,6 +136,7 @@ public class UIRoleSelect : UIBase
     {
         LogicManager.Instance.StartLoadRole(_SelectRoleID);
         Hide();
+        UIManager.Instance.DestoryUI(UIConfig.UIRoleSelect.AssetPath);
     }
     #endregion
 

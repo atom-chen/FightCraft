@@ -271,6 +271,87 @@ public class SkillData : SaveItemBase
         return skillItem;
     }
 
+    public bool IsCanSkillLvUP(ItemSkill skillItem, bool isTip = true)
+    {
+        var skillTab = skillItem.SkillRecord;
+        if (skillTab.MaxLevel <= skillItem.SkillLevel)
+        {
+            if (isTip)
+            {
+                UIMessageTip.ShowMessageTip(62004);
+            }
+            return false;
+        }
+
+        //cost
+        int nextLv = skillTab.StartRoleLevel + skillItem.SkillLevel * skillTab.NextLvInterval;
+        if (RoleData.SelectRole.RoleLevel < nextLv)
+        {
+            if (isTip)
+            {
+                UIMessageTip.ShowMessageTip(62002);
+            }
+            return false;
+        }
+
+        if (skillTab.StartPreSkill > 0)
+        {
+            var preSkillTab = TableReader.SkillInfo.GetRecord(skillTab.StartPreSkill.ToString());
+            var skillPreItem = SkillData.Instance.GetSkillInfo(preSkillTab.Id);
+            if (skillPreItem.SkillActureLevel < skillTab.StartPreSkillLv)
+            {
+                if (isTip)
+                {
+                    UIMessageTip.ShowMessageTip(62003);
+                }
+                return false;
+            }
+
+        }
+
+        if (skillTab.CostStep[0] == (int)MONEYTYPE.GOLD)
+        {
+            int costValue = GameDataValue.GetSkillLvUpGold(skillTab, skillItem.SkillLevel);
+            if (PlayerDataPack.Instance.Gold < (costValue))
+                return false;
+        }
+        else
+        {
+            int skillItemCnt = BackBagPack.Instance.PageItems.GetItemCnt(GameDataValue._SkillItemID);
+            if (skillItemCnt > 0)
+            {
+                if (BackBagPack.Instance.PageItems.GetItemCnt(GameDataValue._SkillItemID) < 1)
+                    return false;
+            }
+            else
+            {
+                int costValue = skillTab.CostStep[1];
+                if (PlayerDataPack.Instance.Diamond < costValue)
+                    return false;
+            }
+        }
+
+        if (skillTab.MaxLevel <= skillItem.SkillLevel)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    public bool IsCanAnySkillLvUp()
+    {
+        foreach (var professionSkill in ProfessionSkills)
+        {
+            if (professionSkill.SkillRecord.SkillType.Equals("61000"))
+            {
+                if (IsCanSkillLvUP(professionSkill, false))
+                    return true;
+            }
+        }
+        return false;
+    }
+
     public void SkillLevelUp(string skillID)
     {
         var findSkill = _SkillItems.Find((skillInfo) =>
@@ -345,6 +426,11 @@ public class SkillData : SaveItemBase
         }
 
         RoleData.SelectRole.CalculateAttr();
+
+        Hashtable eventHash = new Hashtable();
+        eventHash.Add("SkillID", findSkill.SkillID);
+        eventHash.Add("SkillLevel", findSkill.SkillLevel);
+        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_LEVELUP_SKILL, this, eventHash);
     }
 
     public void SetSkillAttr(RoleAttrStruct _BaseAttr)

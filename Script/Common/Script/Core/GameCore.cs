@@ -89,8 +89,10 @@ public class GameCore : MonoBehaviour
     bool _HasInitLogic = false;
     void StartGameLogic()
     {
+        InitLanguage();
         Tables.TableReader.ReadTables();
         UILogin.ShowAsyn();
+        DataRecordManager.Instance.InitDataRecord();
     }
 
     #endregion
@@ -130,7 +132,29 @@ public class GameCore : MonoBehaviour
     public int _StrVersion = 0;
     public bool _IsTestMode = true;
 
-    #endregion
+    public void InitLanguage()
+    {
+//#if UNITY_EDITOR
+//        _StrVersion = 0;
+//        return;
+//#else
+        if (Application.systemLanguage == SystemLanguage.Chinese
+            || Application.systemLanguage == SystemLanguage.ChineseSimplified)
+        {
+            _StrVersion = 1;
+        }
+        else if (Application.systemLanguage == SystemLanguage.ChineseTraditional)
+        {
+            _StrVersion = 2;
+        }
+        else
+        {
+            _StrVersion = 0;
+        }
+//#endif
+    }
+
+#endregion
 
 }
 

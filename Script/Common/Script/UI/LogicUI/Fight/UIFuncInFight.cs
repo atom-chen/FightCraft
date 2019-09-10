@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using Tables;
 
 public class UIFuncInFight : UIBase
 {
@@ -46,16 +47,29 @@ public class UIFuncInFight : UIBase
         instance.SetMonsterKillCnt(curCnt, maxCnt);
     }
 
+    public static void UpdateKillEliteMonster(int curCnt, int maxCnt)
+    {
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIFuncInFight>(UIConfig.UIFuncInFight);
+        if (instance == null)
+            return;
+
+        instance.SetEliteMonsterKillCnt(curCnt, maxCnt);
+    }
+
     #endregion
 
     public override void Show(Hashtable hash)
     {
         base.Show(hash);
 
-        StartFightTime();
         UpdateSkillInfo();
 
         GameCore.Instance.EventController.RegisteEvent(EVENT_TYPE.EVENT_LOGIC_PASS_STAGE, EventDelegate);
+    }
+
+    private void Update()
+    {
+        UpdateFightTime();
     }
 
     public override void Destory()
@@ -84,16 +98,18 @@ public class UIFuncInFight : UIBase
 
     public int _FightSecond = 0;
 
-    private void StartFightTime()
-    {
-        InvokeRepeating("UpdateFightTime", 1, 1);
-    }
-
     private void UpdateFightTime()
     {
-        ++_FightSecond;
-        DateTime dateTime = new DateTime((long)(_FightSecond * 10000000L));
-        _FightTime.text = string.Format("{0:mm:ss}", dateTime);
+        
+        DateTime dateTime = new DateTime((long)(FightManager.Instance._LogicFightTime * 10000000L));
+        if (FightManager.Instance._LogicFightTime > 10)
+        {
+            _FightTime.text = StrDictionary.GetFormatStr(2402002, string.Format("{0:mm:ss}", dateTime));
+        }
+        else
+        {
+            _FightTime.text = StrDictionary.GetFormatStr(2402003, string.Format("{0:mm:ss}", dateTime));
+        }
     }
 
     private void EventDelegate(object go, Hashtable eventArgs)
@@ -138,9 +154,21 @@ public class UIFuncInFight : UIBase
     #region kill monster
 
     public Text _KillMonsterText;
+    public Text _KillEliteText;
+    public GameObject _BossConditionGO;
 
     private void SetMonsterKillCnt(int curCnt, int maxCnt)
     {
+        if (curCnt < 0)
+        {
+            _BossConditionGO.SetActive(false);
+            return;
+        }
+        else
+        {
+            _BossConditionGO.SetActive(true);
+        }
+
         if (maxCnt < 0 && curCnt < 0)
         {
             _KillMonsterText.text = "";
@@ -151,7 +179,28 @@ public class UIFuncInFight : UIBase
         }
         else 
         {
-            _KillMonsterText.text = string.Format("{0}/{1}", curCnt, maxCnt);
+            _KillMonsterText.text = Tables.StrDictionary.GetFormatStr(2402000, curCnt, maxCnt);
+        }
+    }
+
+    private void SetEliteMonsterKillCnt(int curCnt, int maxCnt)
+    {
+        if (curCnt < 0)
+        {
+            return;
+        }
+
+        if (maxCnt < 0 && curCnt < 0)
+        {
+            _KillEliteText.text = "";
+        }
+        else if (maxCnt < 0 && curCnt >= 0)
+        {
+            _KillEliteText.text = curCnt.ToString();
+        }
+        else
+        {
+            _KillEliteText.text = Tables.StrDictionary.GetFormatStr(2402001, curCnt, maxCnt);
         }
     }
 

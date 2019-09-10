@@ -14,6 +14,13 @@ public class UIMainFun : UIBase
         GameCore.Instance.UIManager.ShowUI(UIConfig.UIMainFun, UILayer.BaseUI, hash);
     }
 
+    public static void ShowAsynInFight()
+    {
+        Hashtable hash = new Hashtable();
+        hash.Add("IsInFight", true);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UIMainFun, UILayer.BaseUI, hash);
+    }
+
     public static void UpdateMoney()
     {
         var instance = GameCore.Instance.UIManager.GetUIInstance<UIMainFun>(UIConfig.UIMainFun);
@@ -48,6 +55,14 @@ public class UIMainFun : UIBase
 
         UpdateMoneyInner();
         RefreshGiftBtns();
+
+        bool isInFight = false;
+        if (hash.ContainsKey("IsInFight"))
+        {
+            isInFight = (bool)hash["IsInFight"];
+        }
+        InitFightBtn(isInFight);
+        RefreshBtn();
     }
 
     #endregion
@@ -149,7 +164,10 @@ public class UIMainFun : UIBase
     public void BtnStage()
     {
         if (ActData.Instance._NormalStageIdx == 0)
+        {
+            ActData.Instance.StartDefaultStage();
             return;
+        }
 
         UIStageSelect.ShowAsyn();
     }
@@ -170,12 +188,12 @@ public class UIMainFun : UIBase
         if (GiftData.Instance._GiftItems != null)
         {
             _AdGift.SetActive(true);
-            _PurchGift.SetActive(true);
+            //_PurchGift.SetActive(true);
         }
         else
         {
             _AdGift.SetActive(false);
-            _PurchGift.SetActive(false);
+            //_PurchGift.SetActive(false);
         }
     }
 
@@ -187,6 +205,79 @@ public class UIMainFun : UIBase
     public void OnBtnPurchGift()
     {
         UIGiftPack.ShowAsyn();
+    }
+
+    #endregion
+
+    #region Fight
+
+    public GameObject _BG;
+    public GameObject _LargeFightBtn;
+    public GameObject _SmallFightBtn;
+    public GameObject _RetryBtn;
+    public GameObject _NextBtn;
+
+    public void InitFightBtn(bool isInFight)
+    {
+        _BG.SetActive(!isInFight);
+        _LargeFightBtn.SetActive(!isInFight);
+        _SmallFightBtn.SetActive(isInFight);
+
+        if (ActData.Instance._ProcessStageIdx > ActData.Instance._NormalStageIdx)
+        {
+            _NextBtn.SetActive(false);
+            
+        }
+        else
+        {
+            _NextBtn.SetActive(true);
+        }
+    }
+
+    public void OnBtnRetry()
+    {
+        ActData.Instance.StartCurrentStage();
+    }
+
+    #endregion
+
+    #region func open
+
+    public GameObject _LargeActLock;
+    public GameObject _SmallAct;
+    public GameObject _BtnGem;
+    public GameObject _BtnSoul;
+
+    public void RefreshBtn()
+    {
+        if (GemData.Instance.PackGemDatas._PackItems.Count > 0 || GemData.Instance.PackExtraGemDatas._PackItems.Count > 0)
+        {
+            _BtnGem.SetActive(true);
+        }
+        else
+        {
+            _BtnGem.SetActive(false);
+        }
+
+        if (RoleData.SelectRole.TotalLevel >= GameDataValue._SOUL_START_LEVEL)
+        {
+            _BtnSoul.SetActive(true);
+        }
+        else
+        {
+            _BtnSoul.SetActive(false);
+        }
+
+        if (RoleData.SelectRole.TotalLevel >= GameDataValue.ACT_GOLD_START)
+        {
+            _SmallAct.SetActive(true);
+            _LargeActLock.SetActive(false);
+        }
+        else
+        {
+            _LargeActLock.SetActive(true);
+            _SmallAct.SetActive(false);
+        }
     }
 
     #endregion

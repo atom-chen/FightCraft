@@ -195,34 +195,45 @@ public class ShopData : SaveItemBase
         _RefreshShopItemsFlag = false;
     }
 
-    public bool BuyItem(ItemShop shopItem)
+    public bool BuyItem(ItemShop shopItem, int buyNum = 1)
     {
-
-        int lastNumCnt = shopItem.ShopRecord.DailyLimit - shopItem.BuyTimes;
-        if (lastNumCnt == 0)
+        if (shopItem.ShopRecord.DailyLimit > 0)
         {
-            UIMessageTip.ShowMessageTip(20004);
-            return false;
+            int lastNumCnt = shopItem.ShopRecord.DailyLimit - shopItem.BuyTimes;
+            if (lastNumCnt < buyNum)
+            {
+                UIMessageTip.ShowMessageTip(20004);
+                return false;
+            }
         }
 
+        var totalPrice = buyNum * shopItem.BuyPrice;
         if (shopItem.ShopRecord.MoneyType == 0)
         {
-            if (!PlayerDataPack.Instance.DecGold(shopItem.BuyPrice))
+            if (!PlayerDataPack.Instance.DecGold(totalPrice))
                 return false;
         }
         else
         {
-            if (!PlayerDataPack.Instance.DecDiamond(shopItem.BuyPrice))
+            if (!PlayerDataPack.Instance.DecDiamond(totalPrice))
                 return false;
         }
 
         var scriptType = Type.GetType(shopItem.ShopRecord.Script);
         var buyMethod = scriptType.GetMethod("BuyItem", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
-        buyMethod.Invoke(null, new object[1] { shopItem} );
+        for (int i = 0; i < buyNum; ++i)
+        {
+            buyMethod.Invoke(null, new object[1] { shopItem });
 
-        ++shopItem.BuyTimes;
+            ++shopItem.BuyTimes;
+        }
 
         Debug.Log("BuyItem:" + shopItem.ItemDataID);
+
+        Hashtable eventHash = new Hashtable();
+        eventHash.Add("ShopBuyItem", shopItem);
+        eventHash.Add("ShopBuyNum", buyNum);
+        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_SHOP_BUY, this, eventHash);
         return true;
     }
 
@@ -303,6 +314,9 @@ public class ShopData : SaveItemBase
 
         BackBagPack.Instance.AddEquip(itemEquip);
         _GamblingEquips.Remove(itemEquip);
+
+        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_GAMBLING, this, null);
+
         return true;
     }
 

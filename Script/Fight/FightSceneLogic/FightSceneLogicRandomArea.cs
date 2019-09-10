@@ -16,8 +16,11 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
 
         //InitMons();
         //InitAreas();
+        _FindBossKillCnt = Tables.TableReader.AttrValueLevel.GetSpValue(ActData.Instance._NormalStageIdx, 14);
+        _FindBossKillElite = Tables.TableReader.AttrValueLevel.GetSpValue(ActData.Instance._NormalStageIdx, 34);
 
         UIFuncInFight.UpdateKillMonster(0, _FindBossKillCnt);
+        UIFuncInFight.UpdateKillEliteMonster(0, _FindBossKillElite);
     }
 
     protected override void UpdateLogic()
@@ -32,12 +35,16 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
                 continue;
             }
 
-            if (_ActingGroup._FightAreas[i].AreaStrated)
+            if (_ActingGroup._FightAreas[i].AreaState == AreaState.Acting
+                || _ActingGroup._FightAreas[i].AreaState == AreaState.Hiding)
             {
                 _ActingGroup._FightAreas[i].UpdateArea();
             }
             
         }
+
+        UIFuncInFight.UpdateKillMonster(_KillCnt, _FindBossKillCnt);
+        UIFuncInFight.UpdateKillEliteMonster(_KillEliteCnt, _FindBossKillElite);
 
         UpdateArea();
     }
@@ -47,6 +54,7 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
     private List<FightSceneAreaRandom> _WaitingArea;
     private static int _WatchingAreaCnt = 3;
     private static int _StartInitCnt = 2;
+    public static int _InitAreaPos = 25;
 
     private void UpdateArea()
     {
@@ -56,17 +64,18 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
             return;
         }
 
-        int watchingCnt = _WaitingArea.Count > _WatchingAreaCnt?_WatchingAreaCnt: _WaitingArea.Count;
-        for (int i = 0; i < watchingCnt; ++i)
+        //int watchingCnt = _WaitingArea.Count > _WatchingAreaCnt?_WatchingAreaCnt: _WaitingArea.Count;
+        for (int i = 0; i < _WaitingArea.Count; ++i)
         {
             _WaitingArea[i]._DistanceToPlayer = AI_Base.GetPathLength(FightManager.Instance.MainChatMotion.transform.position, _WaitingArea[i].transform.position);
-            if (_WaitingArea[i]._DistanceToPlayer < 25)
+            if (_WaitingArea[i]._DistanceToPlayer < _InitAreaPos)
             {
                 _WaitingArea[i].InitArea();
                 _WaitingArea.RemoveAt(i);
                 return;
             }
         }
+
 
         
     }
@@ -108,8 +117,10 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
 
     #region motion die
 
-    public static int _FindBossKillCnt = 1;
+    public int _FindBossKillCnt = 1;
+    public int _FindBossKillElite = 0;
     private int _KillCnt = 0;
+    private int _KillEliteCnt = 0;
     public int KillMonsterCnt
     {
         get
@@ -139,14 +150,38 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
     {
         if (motion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.MainChar)
         {
+            for (int i = 0; i < _ActingGroup._FightAreas.Count; ++i)
+            {
+                _ActingGroup._FightAreas[i].FinishArea();
+
+            }
+
             LogicFinish(false);
             return;
         }
 
-        ++_KillCnt;
-        UIFuncInFight.UpdateKillMonster(_KillCnt, _FindBossKillCnt);
-        if (_KillCnt >= _FindBossKillCnt)
+
+        if (_FindBossKillCnt > 0)
         {
+            if (motion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.Normal)
+            {
+                ++_KillCnt;
+                UIFuncInFight.UpdateKillMonster(_KillCnt, _FindBossKillCnt);
+            }
+            else
+            {
+                ++_KillEliteCnt;
+                UIFuncInFight.UpdateKillEliteMonster(_KillEliteCnt, _FindBossKillElite);
+            }
+        }
+
+        if (_KillCnt >= _FindBossKillCnt && _KillEliteCnt >= _FindBossKillElite)
+        {
+            _FindBossKillCnt = -1;
+            _KillCnt = -1;
+            _KillEliteCnt = -1;
+            _FindBossKillElite = -1;
+            UIFuncInFight.UpdateKillMonster(-1, -1);
             if (!_IsChangeToBoss)
             {
                 _IsChangeToBoss = true;
@@ -156,6 +191,12 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
 
         if (motion.MonsterBase.MotionType == Tables.MOTION_TYPE.Hero)
         {
+            for (int i = 0; i < _ActingGroup._FightAreas.Count; ++i)
+            {
+                _ActingGroup._FightAreas[i].FinishArea();
+
+            }
+
             LogicFinish(true);
         }
 
@@ -167,7 +208,7 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
                 continue;
             }
 
-            if (_ActingGroup._FightAreas[i].AreaStrated)
+            if (_ActingGroup._FightAreas[i].AreaState == AreaState.Acting)
             {
                 _ActingGroup._FightAreas[i].MotionDie(motion);
             }
@@ -245,10 +286,12 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
         if (_ActingGroup != null)
         {
             _ActingGroup._LightGO.SetActive(false);
-            _ActingGroup.gameObject.SetActive(false);
+            _ActingGroup.transform.parent.gameObject.SetActive(false);
         }
         _CurActSceneIdx = actSceneIdx;
-        _ActingGroup = GameObject.Find(PreLoadScenes[_CurActSceneIdx] + "_RandomAreas").GetComponent<AreaGroup>();
+        _ActingGroup = FightManager.Instance._AreaGroups[PreLoadScenes[_CurActSceneIdx]];
+        _ActingGroup.enabled = true;
+        _ActingGroup.transform.parent.gameObject.SetActive(true);
         _WaitingArea = null;
         //_ActingGroup.gameObject.SetActive(false);
         for (int i = 0; i < _ActingGroup._FightAreas.Count; ++i)
@@ -402,7 +445,6 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
             _ActingGroup._FightAreas[i].ClearAllEnemy();
         }
         _ActingGroup._LightGO.SetActive(false);
-        _ActingGroup.gameObject.SetActive(false);
 
         var oldSceneName = _CurActScene;
 

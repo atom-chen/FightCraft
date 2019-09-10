@@ -40,7 +40,7 @@ public class UICurrencyItem : UIItemBase
 
     public void ShowCurrency(MONEYTYPE currencyType, int currencyValue)
     {
-        _CurrencyIcon.sprite = _CurrencySprite[(int)currencyType];
+        ResourceManager.Instance.SetImage(_CurrencyIcon, CommonDefine.GetMoneyIcon(currencyType));
 
         _CurrencyValue.text = currencyValue.ToString();
         _CurrencyIntValue = currencyValue;
@@ -49,7 +49,7 @@ public class UICurrencyItem : UIItemBase
 
     public void ShowCurrency(MONEYTYPE currencyType, long currencyValue)
     {
-        _CurrencyIcon.sprite = _CurrencySprite[(int)currencyType];
+        ResourceManager.Instance.SetImage(_CurrencyIcon, CommonDefine.GetMoneyIcon(currencyType));
 
         _CurrencyValue.text = currencyValue.ToString();
         _CurrencyIntValue = (int)currencyValue;
@@ -59,6 +59,8 @@ public class UICurrencyItem : UIItemBase
     public void ShowCurrency(string itemID, long currencyValue)
     {
         //_CurrencyIcon.sprite = _CurrencySprite[(int)currencyType];
+        var itemBase = Tables.TableReader.CommonItem.GetRecord(itemID);
+        ResourceManager.Instance.SetImage(_CurrencyIcon, itemBase.Icon);
 
         _CurrencyValue.text = currencyValue.ToString();
         _CurrencyIntValue = (int)currencyValue;
@@ -165,9 +167,18 @@ public class UICurrencyItem : UIItemBase
     public void OnBtnAddClick()
     {
 
-        PlayerDataPack.Instance.AddGold(50000);
-        PlayerDataPack.Instance.AddDiamond(1000);
-        UIMainFun.UpdateMoney();
+        //PlayerDataPack.Instance.AddGold(50000);
+        //PlayerDataPack.Instance.AddDiamond(1000);
+        //UIMainFun.UpdateMoney();
+
+        if (_CurrencyType == MONEYTYPE.GOLD)
+        {
+            UIShopPack.ShowAsyn();
+        }
+        else if (_CurrencyType == MONEYTYPE.DIAMOND)
+        {
+            UIRechargePack.ShowAsyn();
+        }
 
     }
 }

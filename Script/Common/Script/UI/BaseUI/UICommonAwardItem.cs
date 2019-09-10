@@ -15,6 +15,18 @@ public class UICommonAwardItem : UIItemBase
 
     #region 
 
+    public override void Show(Hashtable hash)
+    {
+        base.Show(hash);
+
+        if (hash["InitObj"] is Tables.CommonItemRecord)
+        {
+            var commonItem = (Tables.CommonItemRecord)hash["InitObj"];
+            ResourceManager.Instance.SetImage(_CurrencyIcon, commonItem.Icon);
+            _CurrencyValue.text = "";
+        }
+    }
+
     public void SetValue(int value)
     {
         _CurrencyValue.text = value.ToString();
@@ -22,14 +34,14 @@ public class UICommonAwardItem : UIItemBase
 
     public void ShowAward(MONEYTYPE currencyType, int currencyValue)
     {
-        _CurrencyIcon.sprite = _CurrencySprite[(int)currencyType];
+        ResourceManager.Instance.SetImage(_CurrencyIcon, CommonDefine.GetMoneyIcon(currencyType));
 
         _CurrencyValue.text = currencyValue.ToString();
     }
 
     public void ShowAward(MONEYTYPE currencyType, long currencyValue)
     {
-        _CurrencyIcon.sprite = _CurrencySprite[(int)currencyType];
+        ResourceManager.Instance.SetImage(_CurrencyIcon, CommonDefine.GetMoneyIcon(currencyType));
 
         _CurrencyValue.text = currencyValue.ToString();
     }
@@ -37,8 +49,16 @@ public class UICommonAwardItem : UIItemBase
     public void ShowAward(string itemID, long currencyValue)
     {
         //_CurrencyIcon.sprite = _CurrencySprite[(int)currencyType];
-
-        _CurrencyValue.text = currencyValue.ToString();
+        var commonItem = Tables.TableReader.CommonItem.GetRecord(itemID);
+        ResourceManager.Instance.SetImage(_CurrencyIcon, commonItem.Icon);
+        if (currencyValue > 0)
+        {
+            _CurrencyValue.text = currencyValue.ToString();
+        }
+        else
+        {
+            _CurrencyValue.text = "";
+        }
     }
     
     #endregion

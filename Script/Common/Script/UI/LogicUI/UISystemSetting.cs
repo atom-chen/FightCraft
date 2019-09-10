@@ -41,14 +41,15 @@ public class UISystemSetting : UIBase
         _Volumn.value = GlobalValPack.Instance.Volume;
         _AimTarget.isOn = GlobalValPack.Instance.IsRotToAnimTarget;
 
+        _FightTipsGO.SetActive(true);
         if (isInFight)
         {
-            _FightTipsGO.SetActive(true);
+            
             _QuitFightBtn.gameObject.SetActive(true);
         }
         else
         {
-            _FightTipsGO.SetActive(false);
+            //_FightTipsGO.SetActive(false);
             _QuitFightBtn.gameObject.SetActive(false);
         }
     }
@@ -56,6 +57,27 @@ public class UISystemSetting : UIBase
     public void OnTrigShadow(bool isTrig)
     {
         GlobalValPack.Instance.IsShowShadow = isTrig;
+    }
+
+    public void OnTriggerLight(bool isTrigger)
+    {
+
+        if (!isTrigger)
+        {
+            var light = GameObject.FindObjectOfType<Light>();
+            if (light != null)
+            {
+                light.enabled = false;
+            }
+        }
+        else
+        {
+            var light = GameObject.FindObjectOfType<Light>();
+            if (light != null)
+            {
+                light.enabled = true;
+            }
+        }
     }
 
     public void OnSlider()
@@ -82,7 +104,7 @@ public class UISystemSetting : UIBase
     {
         UIMessageBox.Show(100000, ()=>
         {
-            LogicManager.Instance.ExitFight();
+            LogicManager.Instance.ExitFightScene();
         }, null);
     }
 

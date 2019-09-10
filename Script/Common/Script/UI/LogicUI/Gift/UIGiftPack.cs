@@ -41,24 +41,27 @@ public class UIGiftPack : UIBase
 
     public GiftShow[] GiftShows;
     public Text _Price;
+    public Text Tips;
+    public Text ItemTips;
 
     public override void Show(Hashtable hash)
     {
+        AdManager.Instance.PrepareVideo();
         base.Show(hash);
 
         for (int i = 0; i < GiftData.Instance._GiftItems.Count; ++i)
         {
             var commonItem = Tables.TableReader.CommonItem.GetRecord(GiftData.Instance._GiftItems[i].Id);
             GiftShows[i].Name.text = Tables.StrDictionary.GetFormatStr(commonItem.NameStrDict);
-            if (GiftData.Instance._GiftItems[i].ActScript.Equals("BuyOneTime"))
-            {
-                GiftShows[i].Tips.text = Tables.StrDictionary.GetFormatStr(1720000);
-            }
-            else
-            {
-                GiftShows[i].Tips.text = "";
-            }
-
+            //if (GiftData.Instance._GiftItems[i].ActScript.Equals("BuyOneTime"))
+            //{
+            //    GiftShows[i].Tips.text = Tables.StrDictionary.GetFormatStr(1720000);
+            //}
+            //else
+            //{
+            //    GiftShows[i].Tips.text = "";
+            //}
+            
             if (GiftData.Instance._GiftItems[i].Diamond > 0)
             {
                 GiftShows[i].GiftItem[0].gameObject.SetActive(true);
@@ -90,18 +93,65 @@ public class UIGiftPack : UIBase
             }
         }
 
-        _Price.text = GiftData.Instance._GiftItems[1].Price.ToString();
+        //_Price.text = GiftData.Instance._GiftItems[1].Price.ToString();
+
+        if (GiftData.Instance._GiftItems[1].Item[0] != null)
+        {
+            ItemTips.text = Tables.StrDictionary.GetFormatStr(GiftData.Instance._GiftItems[1].Item[0].DescStrDict);
+        }
+        else
+        {
+            ItemTips.text = "";
+        }
+
+        Hashtable eventHash = new Hashtable();
+        eventHash.Add("GiftGroup", GiftData.Instance._GiftItems[0].GroupID);
+        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_GIFT_OPEN, this, eventHash);
     }
-    
+
+    public override void Hide()
+    {
+        base.Hide();
+
+        GameCore.Instance.EventController.UnRegisteEvent(EVENT_TYPE.EVENT_LOGIC_IAP_SUCESS, OnChargeSucess);
+    }
+
     public void OnBtnAdGift()
     {
-        GiftData.Instance.BuyGift(true);
+        GiftData.Instance.SetLockingGift(true);
+        AdManager.Instance.WatchAdVideo(OnAdGift);
+    }
+
+    public void OnAdGift()
+    {
+        UIGiftGetTips.ShowAsyn(GiftData.Instance.LockingGift);
+
+        Hashtable eventHash = new Hashtable();
+        eventHash.Add("GiftID", GiftData.Instance.LockingGift.Id);
+        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_GIFT_AD, this, eventHash);
+
+        GiftData.Instance.BuyGift();
         Hide();
     }
 
     public void OnBtnPurchGift()
     {
-        GiftData.Instance.BuyGift(false);
+        GiftData.Instance.SetLockingGift(false);
+        UIRechargePack.ShowAsyn();
+
+        GameCore.Instance.EventController.RegisteEvent(EVENT_TYPE.EVENT_LOGIC_IAP_SUCESS, OnChargeSucess);
+
+    }
+
+    public void OnChargeSucess(object e, Hashtable hash)
+    {
+        UIGiftGetTips.ShowAsyn(GiftData.Instance.LockingGift);
+
+        Hashtable eventHash = new Hashtable();
+        eventHash.Add("GiftID", GiftData.Instance.LockingGift.Id);
+        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_GIFT_BUY, this, eventHash);
+
+        GiftData.Instance.BuyGift();
         Hide();
     }
 

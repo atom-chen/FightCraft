@@ -65,11 +65,15 @@ namespace Tables
 //
         public static GlobalBuff GlobalBuff { get; internal set; }
 //
+        public static LoadingTips LoadingTips { get; internal set; }
+//
         public static Mission Mission { get; internal set; }
 //
         public static MonsterAttr MonsterAttr { get; internal set; }
 //
         public static MonsterBase MonsterBase { get; internal set; }
+//
+        public static Recharge Recharge { get; internal set; }
 //
         public static RoleExp RoleExp { get; internal set; }
 //
@@ -90,8 +94,6 @@ namespace Tables
         public static SummonSkillAttr SummonSkillAttr { get; internal set; }
 //
         public static SummonSkillLottery SummonSkillLottery { get; internal set; }
-//
-        public static LoadingTips LoadingTips { get; internal set; }
 
         public static void ReadTables()
         {
@@ -116,9 +118,11 @@ namespace Tables
             GemTable = new GemTable(TableReadBase.GetTableText("GemTable"), false);
             GiftPacket = new GiftPacket(TableReadBase.GetTableText("GiftPacket"), false);
             GlobalBuff = new GlobalBuff(TableReadBase.GetTableText("GlobalBuff"), false);
+            LoadingTips = new LoadingTips(TableReadBase.GetTableText("LoadingTips"), false);
             Mission = new Mission(TableReadBase.GetTableText("Mission"), false);
             MonsterAttr = new MonsterAttr(TableReadBase.GetTableText("MonsterAttr"), false);
             MonsterBase = new MonsterBase(TableReadBase.GetTableText("MonsterBase"), false);
+            Recharge = new Recharge(TableReadBase.GetTableText("Recharge"), false);
             RoleExp = new RoleExp(TableReadBase.GetTableText("RoleExp"), false);
             ShopItem = new ShopItem(TableReadBase.GetTableText("ShopItem"), false);
             SkillBase = new SkillBase(TableReadBase.GetTableText("SkillBase"), false);
@@ -129,7 +133,6 @@ namespace Tables
             SummonSkill = new SummonSkill(TableReadBase.GetTableText("SummonSkill"), false);
             SummonSkillAttr = new SummonSkillAttr(TableReadBase.GetTableText("SummonSkillAttr"), false);
             SummonSkillLottery = new SummonSkillLottery(TableReadBase.GetTableText("SummonSkillLottery"), false);
-            LoadingTips = new LoadingTips(TableReadBase.GetTableText("LoadingTips"), false);
 
             //初始化所有表
             Achievement.CoverTableContent();
@@ -152,9 +155,11 @@ namespace Tables
             GemTable.CoverTableContent();
             GiftPacket.CoverTableContent();
             GlobalBuff.CoverTableContent();
+            LoadingTips.CoverTableContent();
             Mission.CoverTableContent();
             MonsterAttr.CoverTableContent();
             MonsterBase.CoverTableContent();
+            Recharge.CoverTableContent();
             RoleExp.CoverTableContent();
             ShopItem.CoverTableContent();
             SkillBase.CoverTableContent();
@@ -165,7 +170,6 @@ namespace Tables
             SummonSkill.CoverTableContent();
             SummonSkillAttr.CoverTableContent();
             SummonSkillLottery.CoverTableContent();
-            LoadingTips.CoverTableContent();
         }
 
         #endregion

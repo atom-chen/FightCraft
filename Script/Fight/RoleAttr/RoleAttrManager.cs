@@ -797,6 +797,7 @@ public class RoleAttrManager : MonoBehaviour
         damageClass.TotalDamageValue = damageClass.FireDamage + damageClass.IceDamage + damageClass.LightingDamage + damageClass.WindDamage + damageClass.NormalDamageValue;
         damageClass.TotalDamageValue -= _BaseAttr.GetValue(RoleAttrEnum.FinalDamageReduse);
         damageClass.TotalDamageValue = Mathf.Max(damageClass.TotalDamageValue, 0);
+        damageClass.TotalDamageValue = GameDataValue.GetTotalDamage(damageClass.TotalDamageValue, sender.Level - Level);
     }
 
     public void CaculateAttachDamage(RoleAttrManager sender, Hashtable resultHash, DamageClass damageClass)

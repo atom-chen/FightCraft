@@ -41,6 +41,18 @@ public class UISkillBar : UIBase
         instance.SetAimType(aimType);
     }
 
+    public static void HideAsyn()
+    {
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UISkillBar>(UIConfig.UISkillBar);
+        if (instance == null)
+            return;
+
+        //if (!instance.isActiveAndEnabled)
+        //    return;
+
+        instance.Hide();
+    }
+
     public void Update()
     {
         UpdateCD();

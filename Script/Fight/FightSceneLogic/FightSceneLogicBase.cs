@@ -88,11 +88,13 @@ public class FightSceneLogicBase : MonoBehaviour
 
     private IEnumerator ExitFightLogic(bool isWin)
     {
-        yield return new WaitForSeconds(3);
         if (isWin)
         {
             FightManager.Instance.StagePass();
         }
+
+        yield return new WaitForSeconds(3);
+        
         UIFightFinish.ShowAsyn(isWin);
     }
 }

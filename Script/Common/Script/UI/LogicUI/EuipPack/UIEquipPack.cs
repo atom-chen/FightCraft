@@ -50,8 +50,6 @@ public class UIEquipPack : UIBase,IDragablePack
         _BackPack._OnDragItemCallBack = OnDragItem;
         _BackPack._IsCanDropItemCallBack = IsCanDropItem;
         RefreshCombat();
-
-        ResourceManager.Instance.SetImage(_CharIcon, RoleData.SelectRole.IconName);
         
     }
 
@@ -65,6 +63,9 @@ public class UIEquipPack : UIBase,IDragablePack
         RefreshCombat();
 
         _OtherRoleWeapon.gameObject.SetActive(false);
+        ResourceManager.Instance.SetImage(_CharIcon, RoleData.SelectRole.IconName);
+
+        RefreshBtn();
     }
 
     public override void Hide()
@@ -298,6 +299,24 @@ public class UIEquipPack : UIBase,IDragablePack
     #region page refresh
 
     public UIEquipPackRefresh _UIEquipPackRefresh;
+
+    #endregion
+
+    #region func open
+
+    public GameObject _RefreshLock;
+
+    public void RefreshBtn()
+    {
+        if (RoleData.SelectRole.TotalLevel >= GameDataValue.EQUIP_REFRESH)
+        {
+            _RefreshLock.gameObject.SetActive(false);
+        }
+        else
+        {
+            _RefreshLock.gameObject.SetActive(true);
+        }
+    }
 
     #endregion
 }

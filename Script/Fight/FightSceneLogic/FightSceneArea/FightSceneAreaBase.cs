@@ -10,36 +10,35 @@ public class SerializeEnemyInfo
     public string _EnemyDataID;
 }
 
+public enum AreaState
+{
+    None,
+    Wait,
+    Acting,
+    Hiding,
+    Finished,
+}
 
 public class FightSceneAreaBase : MonoBehaviour
 {
     public int AreaID { get; set; }
 
-    protected bool _AreaStarted = false;
+    protected AreaState _AreaState = AreaState.None;
 
-    public bool AreaStrated
+    public AreaState AreaState
     {
         get
         {
-            return _AreaStarted;
+            return _AreaState;
         }
     }
-
-    protected bool _AreaFinished = false;
-    public bool AreaFinished
-    {
-        get
-        {
-            return _AreaFinished;
-        }
-    }
-
+    
     public virtual void InitArea()
     { }
 
     public virtual void StartArea()
     {
-        _AreaStarted = true;
+        _AreaState = AreaState.Acting;
         UpdateEnemyAlert();
         InitFightLogic();
         CloseAllDoor();
@@ -47,7 +46,7 @@ public class FightSceneAreaBase : MonoBehaviour
 
     public virtual void FinishArea()
     {
-        _AreaFinished = true;
+        _AreaState = AreaState.Finished;
         OpenAllDoor();
         _FightSceneLogic.AreaFinish(this);
     }

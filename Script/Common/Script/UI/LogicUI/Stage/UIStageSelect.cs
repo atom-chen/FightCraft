@@ -19,6 +19,15 @@ public class UIStageSelect : UIBase
         GameCore.Instance.UIManager.ShowUI(UIConfig.UIStageSelect, UILayer.PopUI, hash);
     }
 
+    public static void Refresh()
+    {
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIStageSelect>(UIConfig.UIStageSelect);
+        if (instance == null)
+            return;
+
+        instance.InitPassedStages();
+    }
+
     public static int GetSelectedDiff()
     {
         var instance = GameCore.Instance.UIManager.GetUIInstance<UIStageSelect>(UIConfig.UIStageSelect);
@@ -153,11 +162,11 @@ public class UIStageSelect : UIBase
             return;
 
         List<StageInfoItem> stageList = new List<StageInfoItem>();
-
+        List<StageInfoItem> selectedStage = new List<StageInfoItem>();
 
         for (int i = 0; i < ActData._MAX_NROMAL_PRE_STAGE; ++i)
         {
-            int stageIdx = ActData.Instance._NormalStageIdx - i;
+            int stageIdx = ActData.Instance._NormalStageIdx - i + 5;
             if (stageIdx > 0)
             {
                 StageInfoItem stageInfo = new StageInfoItem();
@@ -166,12 +175,17 @@ public class UIStageSelect : UIBase
                 stageInfo._Level = GameDataValue.GetStageLevel(stageInfo._StageIdx, STAGE_TYPE.NORMAL);
 
                 stageList.Add(stageInfo);
+
+                if (ActData.Instance._NormalStageIdx == 0 || stageInfo._StageIdx == ActData.Instance._NormalStageIdx + 1)
+                {
+                    selectedStage.Add(stageInfo);
+                }
             }
         }
 
         stageList.Reverse();
-        List<StageInfoItem> selectedStage = new List<StageInfoItem>();
-        selectedStage.Add(stageList[stageList.Count - 1]);
+        
+        
         _StageContainer.InitSelectContent(stageList, selectedStage, OnSelectStage);
     }
 
@@ -194,16 +208,41 @@ public class UIStageSelect : UIBase
     public Text _StageLevel;
     public Text _StageDesc;
     public Text _Condition;
+    public Image _BossIcon;
+    public UIContainerBase _BossDrops;
 
     private void SetStageInfo(StageInfoItem stage)
     {
         int stageID = _SelectedStage._StageIdx;
         int stageLevel = _SelectedStage._Level;
         _StageName.text = StrDictionary.GetFormatStr(stage._StageRecord.Name);
-        _StageLevel.text = stageLevel.ToString();
+        string colorStageLevel = stageLevel.ToString();
+        if (RoleData.SelectRole.TotalLevel - stageLevel >= 5)
+        {
+            colorStageLevel = StrDictionary.GetFormatStr(72004, stageLevel.ToString());
+        }
+        else if (RoleData.SelectRole.TotalLevel - stageLevel >= -5)
+        {
+            colorStageLevel = StrDictionary.GetFormatStr(72005, stageLevel.ToString());
+        }
+        else if (RoleData.SelectRole.TotalLevel - stageLevel >= -10)
+        {
+            colorStageLevel = StrDictionary.GetFormatStr(72006, stageLevel.ToString());
+        }
+        else
+        {
+            colorStageLevel = StrDictionary.GetFormatStr(72007, stageLevel.ToString());
+        }
+        _StageLevel.text = StrDictionary.GetFormatStr(2300079) + colorStageLevel;
         _StageDesc.text = StrDictionary.GetFormatStr(stage._StageRecord.Desc);
 
         _Condition.text = "";
+
+        var bossRecord = TableReader.MonsterBase.GetRecord(stage._StageRecord.ExParam[2].ToString());
+        ResourceManager.Instance.SetImage(_BossIcon, bossRecord.HeadIcon);
+
+        var dropItems = bossRecord.ValidSpDrops;
+        _BossDrops.InitContentItem(dropItems, OnDropClick);
         //if (stageLevel > RoleData.SelectRole.TotalLevel + 10)
         //{
         //    _Condition.text = StrDictionary.GetFormatStr(71100);
@@ -212,6 +251,13 @@ public class UIStageSelect : UIBase
         //{
         //    _Condition.text = StrDictionary.GetFormatStr(71102);
         //}
+    }
+
+    public void OnDropClick(object spDrop)
+    {
+        var commonItem = spDrop as CommonItemRecord;
+        var equipItem = Tables.TableReader.EquipItem.GetRecord(commonItem.Id);
+        UILegendaryItemTooltips.ShowAsyn(equipItem);
     }
 
     public void OnEnterStage()
@@ -231,6 +277,14 @@ public class UIStageSelect : UIBase
         //{
         //    OnEnterStageOk();
         //}
+
+        if (ActData.Instance._NormalStageIdx + 1 < _SelectedStage._StageIdx)
+        {
+            UIMessageTip.ShowMessageTip(71102);
+            return;
+        }
+
+        ActData.Instance.StartStage(_SelectedStage._StageIdx, STAGE_TYPE.NORMAL);
     }
 
     private void OnEnterStageOk()

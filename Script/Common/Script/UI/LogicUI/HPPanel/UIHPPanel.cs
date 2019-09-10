@@ -13,10 +13,11 @@ public class UIHPPanel : UIInstanceBase<UIHPPanel>
     }
 
     static List<Hashtable> _ShowHpMotions = new List<Hashtable>();
-    public static void ShowHPItem(MotionManager motionManager)
+    public static void ShowHPItem(MotionManager motionManager, bool shoHPValue = true)
     {
         Hashtable hash = new Hashtable();
         hash.Add("InitObj", motionManager);
+        hash.Add("ShowHP", shoHPValue);
         if (Instance != null)
         {
             

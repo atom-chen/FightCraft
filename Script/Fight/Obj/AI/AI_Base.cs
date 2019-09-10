@@ -665,6 +665,7 @@ public class AI_Base : MonoBehaviour
                     _ProtectTimes.Remove(impactHit.SkillMotion._ActInput);
                 }
                 ProtectTimesDirty = true;
+                UIMessageTip.ShowMessageTip(2300083);
                 return;
             }
 

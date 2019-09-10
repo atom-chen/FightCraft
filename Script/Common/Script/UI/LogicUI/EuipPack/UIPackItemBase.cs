@@ -32,8 +32,19 @@ public class UIPackItemBase : UIItemSelect
 
         var showItem = (ItemBase)hash["InitObj"];
         ShowItem(showItem);
-        ResourceManager.Instance.SetImage(_Icon, showItem.CommonItemRecord.Icon);
-        ResourceManager.Instance.SetImage(_Quality, CommonDefine.GetQualityIcon(showItem.GetQuality()));
+        if (showItem == null || !showItem.IsVolid())
+        {
+            _Icon.gameObject.SetActive(false);
+            _Quality.gameObject.SetActive(false);
+        }
+        else
+        {
+            _Icon.gameObject.SetActive(true);
+            _Quality.gameObject.SetActive(true);
+
+            ResourceManager.Instance.SetImage(_Icon, showItem.CommonItemRecord.Icon);
+            ResourceManager.Instance.SetImage(_Quality, CommonDefine.GetQualityIcon(showItem.GetQuality()));
+        }
     }
 
     public override void Refresh()

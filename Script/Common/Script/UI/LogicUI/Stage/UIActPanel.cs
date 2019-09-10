@@ -35,11 +35,16 @@ public class UIActPanel : UIBase
                 OnShowTipTicket();
             }
         }
+
+        Tips1.text = StrDictionary.GetFormatStr(2300064, CommonDefine.GetQualityItemName(ActData._ACT_TICKET, true));
+        Tips2.text = StrDictionary.GetFormatStr(2300065, CommonDefine.GetQualityItemName(ActData._ACT_TICKET, true));
     }
 
     #region 
 
     public GameObject _TipGetTicket;
+    public Text Tips1;
+    public Text Tips2;
 
     #endregion
 

@@ -44,6 +44,7 @@ public class UISummonSkillPack : UIBase
 
         _ArrayMode = false;
         RefreshAttr();
+        _BtnAbsort.SetActive(false);
     }
 
     public void OnShowPage(int page)
@@ -284,12 +285,12 @@ public class UISummonSkillPack : UIBase
 
     public void RefreshAttr()
     {
-        _Exp.text = SummonSkillData.Instance.SummonRemainExp.ToString();
-        _Level.text = SummonSkillData.Instance.SummonLevel.ToString();
-
         var lvUpExp = GameDataValue.GetSummonLevelExp(SummonSkillData.Instance.SummonLevel);
         float process = (float)SummonSkillData.Instance.SummonRemainExp / lvUpExp;
         _ExpSlider.value = process;
+
+        _Exp.text = SummonSkillData.Instance.SummonRemainExp.ToString() + "/" + lvUpExp;
+        _Level.text = Tables.StrDictionary.GetFormatStr(1350003, SummonSkillData.Instance.SummonLevel.ToString());
     }
 
     #endregion

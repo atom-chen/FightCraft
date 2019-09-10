@@ -34,7 +34,7 @@ public class UIItemInfo : UIBase
         }
 
         _ShowItem = itemBase;
-        _Name.text = _ShowItem.CommonItemRecord.Name;
+        _Name.text = StrDictionary.GetFormatStr(_ShowItem.CommonItemRecord.NameStrDict);
 
         if (_ShopPrice != null)
         {

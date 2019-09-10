@@ -17,6 +17,7 @@ public class StageInfoItem
 public class UIStageInfoItem : UIItemSelect
 {
     public Text _StageName;
+    public Image _StageIcon;
     public GameObject _LockedGO;
     public Text _StageCondition;
 
@@ -35,7 +36,7 @@ public class UIStageInfoItem : UIItemSelect
     {
         _ShowItem = showItem;
         _StageName.text = StrDictionary.GetFormatStr(_ShowItem._StageRecord.Name);
-
+        ResourceManager.Instance.SetImage(_StageIcon, showItem._StageRecord.Icon);
         int stageId = _ShowItem._StageIdx;
 
         _ConditionTips = "";
@@ -49,11 +50,11 @@ public class UIStageInfoItem : UIItemSelect
         else
         {
             
-            if (RoleData.SelectRole.TotalLevel + ActData.LEVEL_LIMIT < stageLevel)
+            /*if (RoleData.SelectRole.TotalLevel + ActData.LEVEL_LIMIT < stageLevel)
             {
                 _ConditionTips = CommonDefine.GetEnableRedStr(0) + StrDictionary.GetFormatStr(71103, stageLevel) + "</color>";
             }
-            else if (ActData.Instance._NormalStageIdx < stageId)
+            else */if (ActData.Instance._NormalStageIdx + 1 < stageId)
             {
                 _ConditionTips = StrDictionary.GetFormatStr(71103, stageLevel);
             }
@@ -73,18 +74,18 @@ public class UIStageInfoItem : UIItemSelect
 
     public override void OnItemClick()
     {
-        if (_LockedGO.activeSelf)
-        {
-            if (ActData.Instance._NormalStageIdx < _ShowItem._StageIdx)
-            {
-                UIMessageTip.ShowMessageTip(71102);
-            }
-            else
-            {
-                UIMessageTip.ShowMessageTip(71100);
-            }
-            return;
-        }
+        //if (_LockedGO.activeSelf)
+        //{
+        //    if (ActData.Instance._NormalStageIdx < _ShowItem._StageIdx)
+        //    {
+        //        UIMessageTip.ShowMessageTip(71102);
+        //    }
+        //    else
+        //    {
+        //        UIMessageTip.ShowMessageTip(71100);
+        //    }
+        //    return;
+        //}
 
         base.OnItemClick();
     }

@@ -40,8 +40,6 @@ public class UIGemTooltips : UIItemTooltips
 
     public UIGemInfo _GemInfo;
 
-    public UICurrencyItem _CostMat;
-
     #endregion
 
     #region 
@@ -55,7 +53,6 @@ public class UIGemTooltips : UIItemTooltips
         _ShowItem = _ItemGem;
         _GemInfo.ShowTips(_ItemGem);
 
-        _CostMat.ShowCostCurrency(_ItemGem.ItemDataID, GemData.Instance.GetLevelCostMat(_ItemGem), _ItemGem.ItemStackNum);
 
         _HideAfterBtn = false;
     }
