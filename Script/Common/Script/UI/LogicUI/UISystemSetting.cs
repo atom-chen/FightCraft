@@ -97,7 +97,7 @@ public class UISystemSetting : UIBase
 
     public void OnBtnStageTips()
     {
-        UIStageDiffTips.ShowAsyn();
+        UIStageDiffTips.ShowForEnsure(ActData.Instance._NormalStageIdx, null);
     }
 
     public void OnBtnQuitFight()

@@ -134,10 +134,10 @@ public class GameCore : MonoBehaviour
 
     public void InitLanguage()
     {
-//#if UNITY_EDITOR
-//        _StrVersion = 0;
-//        return;
-//#else
+#if UNITY_EDITOR
+        _StrVersion = 0;
+        return;
+#else
         if (Application.systemLanguage == SystemLanguage.Chinese
             || Application.systemLanguage == SystemLanguage.ChineseSimplified)
         {
@@ -151,7 +151,7 @@ public class GameCore : MonoBehaviour
         {
             _StrVersion = 0;
         }
-//#endif
+#endif
     }
 
 #endregion

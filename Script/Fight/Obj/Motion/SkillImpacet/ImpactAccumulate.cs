@@ -31,7 +31,7 @@ public class ImpactAccumulate : ImpactBase
     {
         base.Init(skillMotion, selector);
 
-        string animPath = "Animation/" + SkillMotion.MotionManager._MotionAnimPath + "/Act_Skill_Accumulate";
+        string animPath = SkillMotion.MotionManager._MotionAnimPath + "/Act_Skill_Accumulate";
         ResourceManager.Instance.LoadAnimation(animPath, (resName, resData, hash)=>
         {
             _AccumulateAnim = resData;
@@ -45,8 +45,13 @@ public class ImpactAccumulate : ImpactBase
             SkillMotion._NextEffect.Insert(0, null);
             skillMotion.MotionManager.AnimationEvent.AddSelectorEvent(_AccumulateAnim, 0, selector._ColliderID);
             skillMotion.MotionManager.AnimationEvent.AddSelectorFinishEvent(_AccumulateAnim, 2.0f, selector._ColliderID);
+            skillMotion.MotionManager.InitAnimation(_AccumulateAnim);
         }, null);
-        
+
+        //foreach (var animEvent in _AccumulateAnim.events)
+        //{
+        //    Debug.Log("accumulateAnimEvent:" + animEvent.time + "," + animEvent.functionName);
+        //}
     }
 
     public override void ActImpact(MotionManager senderManager, MotionManager reciverManager)

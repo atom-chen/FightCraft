@@ -56,6 +56,15 @@ public class UIFuncInFight : UIBase
         instance.SetEliteMonsterKillCnt(curCnt, maxCnt);
     }
 
+    public static void UpdateGoldActInfo(int kMonster, int getGold)
+    {
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIFuncInFight>(UIConfig.UIFuncInFight);
+        if (instance == null)
+            return;
+
+        instance.SetGoldActInfo(kMonster, getGold);
+    }
+
     #endregion
 
     public override void Show(Hashtable hash)
@@ -159,6 +168,7 @@ public class UIFuncInFight : UIBase
 
     private void SetMonsterKillCnt(int curCnt, int maxCnt)
     {
+        _ActGoldInfo.SetActive(false);
         if (curCnt < 0)
         {
             _BossConditionGO.SetActive(false);
@@ -185,6 +195,7 @@ public class UIFuncInFight : UIBase
 
     private void SetEliteMonsterKillCnt(int curCnt, int maxCnt)
     {
+        _ActGoldInfo.SetActive(false);
         if (curCnt < 0)
         {
             return;
@@ -203,6 +214,24 @@ public class UIFuncInFight : UIBase
             _KillEliteText.text = Tables.StrDictionary.GetFormatStr(2402001, curCnt, maxCnt);
         }
     }
+
+    #endregion
+
+    #region gold act
+
+    public Text _KMonsterCnt;
+    public Text _GetGold;
+    public GameObject _ActGoldInfo;
+
+    public void SetGoldActInfo(int killMonster, int getGold)
+    {
+        _ActGoldInfo.SetActive(true);
+        _BossConditionGO.SetActive(false);
+
+        _KMonsterCnt.text = Tables.StrDictionary.GetFormatStr(2402004, killMonster);
+        _GetGold.text = Tables.StrDictionary.GetFormatStr(2402005, getGold);
+    }
+
 
     #endregion
 }

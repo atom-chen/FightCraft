@@ -31,7 +31,7 @@ public class PlatformHelper : MonoBehaviour
         {
             PLATFORM_CLASS = Application.identifier + ".PlatformHelper";
         }
-        Debug.Log("OnCallAndroid:" + func + "," + param);
+        Debug.LogError("OnCallAndroid:" + func + "," + param);
         using (AndroidJavaClass cls = new AndroidJavaClass(PLATFORM_CLASS))
         {   
             string ret = cls.CallStatic<string>("jniCall", func, param);
@@ -43,7 +43,7 @@ public class PlatformHelper : MonoBehaviour
 
     public void OnAndroidCall(string jsonstr)
     {
-        Debug.Log("OnCallResult : " + jsonstr);
+        Debug.LogError("OnCallResult : " + jsonstr);
         JsonData jsonobj = JsonMapper.ToObject(jsonstr);
         string func = (string)jsonobj["func"];
 

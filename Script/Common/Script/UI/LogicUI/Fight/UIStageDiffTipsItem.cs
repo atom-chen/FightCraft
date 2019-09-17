@@ -18,10 +18,11 @@ public class UIStageDiffTipsItem : UIItemBase
         base.Show(hash);
 
         var tipsID = (int)hash["InitObj"];
-        int curDiff = ActData.Instance.GetNormalDiff();
+        int curDiff = UIStageDiffTips._LastShowDiff;
         if (tipsID == curDiff)
         {
             _SelectedGO.SetActive(true);
+            _LockGO.SetActive(false);
         }
         else
         {

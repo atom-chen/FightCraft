@@ -201,7 +201,8 @@ public class ActData : DataPackBase
 
     public int GetNormalDiff()
     {
-        return _NormalStageIdx / _CIRCLE_STAGE_COUNT;
+        return GameDataValue.GetStageDiff(_NormalStageIdx, STAGE_TYPE.NORMAL);
+        //return (_NormalStageIdx - 1) / _CIRCLE_STAGE_COUNT;
         //return _NormalStageIdx;
     }
 

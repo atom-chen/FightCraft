@@ -129,9 +129,9 @@ public class MotionManager : MonoBehaviour
         List<AnimationEvent> eveneList = new List<UnityEngine.AnimationEvent>();
         foreach (var animEvent in animClip.events)
         {
-            if (animEvent.functionName == "ColliderStart" && animEvent.intParameter >= 1000)
+            if (animEvent.functionName == "ColliderStart" && animEvent.intParameter >= 1000 && animEvent.intParameter < 10000)
             { }
-            else if (animEvent.functionName == "CollidertEnd" && animEvent.intParameter >= 1000)
+            else if (animEvent.functionName == "CollidertEnd" && animEvent.intParameter >= 1000 && animEvent.intParameter < 10000)
             { }
             else
             {

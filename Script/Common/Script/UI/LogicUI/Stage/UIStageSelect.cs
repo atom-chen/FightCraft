@@ -284,7 +284,11 @@ public class UIStageSelect : UIBase
             return;
         }
 
-        ActData.Instance.StartStage(_SelectedStage._StageIdx, STAGE_TYPE.NORMAL);
+        UIStageDiffTips.ShowForEnsure(_SelectedStage._StageIdx, ()=>
+        {
+            ActData.Instance.StartStage(_SelectedStage._StageIdx, STAGE_TYPE.NORMAL);
+        });
+        
     }
 
     private void OnEnterStageOk()

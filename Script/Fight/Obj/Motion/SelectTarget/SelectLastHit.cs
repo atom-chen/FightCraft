@@ -6,6 +6,7 @@ public class SelectLastHit : SelectBase
 {
 
     public int _HittedAudio;
+    public bool _ClearLastSelect = true;
     
     public override void ColliderStart()
     {

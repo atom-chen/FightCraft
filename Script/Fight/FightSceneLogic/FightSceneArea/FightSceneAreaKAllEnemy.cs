@@ -51,7 +51,7 @@ public class FightSceneAreaKAllEnemy : FightSceneAreaBase
 
     public SerializeEnemyInfo[] _EnemyBornPos;
     protected int _DeadEnemyCnt;
-    protected List<AI_Base> _EnemyAI = new List<AI_Base>();
+    public List<AI_Base> _EnemyAI = new List<AI_Base>();
 
     protected virtual void StartStep()
     {
@@ -130,5 +130,14 @@ public class FightSceneAreaKAllEnemy : FightSceneAreaBase
         }
 
         return monIdList;
+    }
+
+    public void ClearMonsters()
+    {
+        var dieMons = new List<AI_Base>(_EnemyAI);
+        foreach (var fishMotion in dieMons)
+        {
+            fishMotion._SelfMotion.MotionDie();
+        }
     }
 }

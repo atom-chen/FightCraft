@@ -61,8 +61,9 @@ public class GiftData : DataPackBase
             }
             else
             {
-                ClearGift();
-                UIMainFun.RefreshGift();
+                RefreshGift(true);
+                _LastRefreshTimes = 0;
+                _NextRefreshInterval = UnityEngine.Random.Range(_RefreshIntervalMin, _RefreshIntervalMax);
             }
         }
     }
@@ -84,32 +85,39 @@ public class GiftData : DataPackBase
         }
     }
 
-    private void RefreshGift()
+    private void RefreshGift(bool isDefaultGift = false)
     {
-        List<int> randomGift = new List<int>();
-        foreach (var giftRecrod in TableReader.GiftPacket.Records.Values)
+        if (isDefaultGift)
         {
-            if (IsCanShowGift(giftRecrod))
-            {
-                if (!randomGift.Contains(giftRecrod.GroupID))
-                {
-                    randomGift.Add(giftRecrod.GroupID);
-                }
-            }
-            else
-            {
-                if (randomGift.Contains(giftRecrod.GroupID))
-                {
-                    randomGift.Remove(giftRecrod.GroupID);
-                }
-            }
+            _GiftItems = TableReader.GiftPacket.GiftPacketGroup[11];
         }
+        else
+        {
+            List<int> randomGift = new List<int>();
+            foreach (var giftRecrod in TableReader.GiftPacket.Records.Values)
+            {
+                if (IsCanShowGift(giftRecrod))
+                {
+                    if (!randomGift.Contains(giftRecrod.GroupID))
+                    {
+                        randomGift.Add(giftRecrod.GroupID);
+                    }
+                }
+                else
+                {
+                    if (randomGift.Contains(giftRecrod.GroupID))
+                    {
+                        randomGift.Remove(giftRecrod.GroupID);
+                    }
+                }
+            }
 
-        if (randomGift.Count == 0)
-            return;
+            if (randomGift.Count == 0)
+                return;
 
-        int randomGroup = UnityEngine.Random.Range(0, randomGift.Count);
-        _GiftItems = TableReader.GiftPacket.GiftPacketGroup[randomGift[randomGroup]];
+            int randomGroup = UnityEngine.Random.Range(0, randomGift.Count);
+            _GiftItems = TableReader.GiftPacket.GiftPacketGroup[randomGift[randomGroup]];
+        }
 
         UIMainFun.RefreshGift();
     }

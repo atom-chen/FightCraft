@@ -50,8 +50,12 @@ public class StateBase
         if (!string.IsNullOrEmpty(animName) && _Animation == null)
         {
             string animPath = motionManager._MotionAnimPath + "/" + animName;
+            if(animPath.Contains("Stand"))
+                Debug.Log("InitAnimation:" + motionManager.name + "," + animPath);
             ResourceManager.Instance.LoadAnimation(animPath, (resName, resData, hash) =>
             {
+                if (animPath.Contains("Stand"))
+                    Debug.Log("InitAnimation finish:" + motionManager.name + "," + animPath);
                 _Animation = resData;
                 InitState(motionManager);
 
@@ -78,8 +82,12 @@ public class StateBase
 
     public virtual void StartState(params object[] args)
     {
+        if (GetAnimName().Contains("Stand"))
+            Debug.Log("StartState:" + _MotionManager.name + "," + GetAnimName());
         if (_MotionManager != null && _Animation != null)
         {
+            if (GetAnimName().Contains("Stand"))
+                Debug.Log("StartState start:" + _MotionManager.name + "," + _Animation.name);
             _MotionManager.PlayAnimation(_Animation);
         }
         else
@@ -108,6 +116,8 @@ public class StateBase
         {
             yield return null;
         }
+        if (GetAnimName().Contains("Stand"))
+            Debug.Log("StartAnim:" + _MotionManager.name + "," + _Animation.name);
         _MotionManager.PlayAnimation(_Animation);
     }
     #endregion

@@ -160,7 +160,7 @@ public class SelectCollider : SelectBase
 
             if (!motion._CanBeSelectByEnemy)
                 return;
-
+            
             {
                 foreach (var impact in _ImpactList)
                 {

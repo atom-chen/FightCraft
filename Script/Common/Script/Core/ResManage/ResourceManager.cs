@@ -164,6 +164,7 @@ public class ResourceManager:MonoBehaviour
         }
         else
         {
+            yield return null;
             AnimationClip resData = Resources.Load<AnimationClip>(assetBundleName);
 
             if (callBack != null)

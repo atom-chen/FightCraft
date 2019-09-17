@@ -69,7 +69,7 @@ public class UILoadingScene : UIBase
 
         if (AdManager.Instance.IsShowInterAD)
         {
-            Debug.Log("AdManager.Instance.ShowInterAD");
+            Debug.LogError("AdManager.Instance.ShowInterAD");
             AdManager.Instance.ShowInterAD();
         }
     }

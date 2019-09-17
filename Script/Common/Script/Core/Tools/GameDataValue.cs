@@ -2111,6 +2111,22 @@ public class GameDataValue
             return stageIdx;
     }
 
+    public static int GetStageDiff(int stageIdx, STAGE_TYPE stageMode)
+    {
+        if (stageMode == STAGE_TYPE.BOSS)
+            return stageIdx + ActData._CIRCLE_STAGE_COUNT;
+        else if (stageMode == STAGE_TYPE.NORMAL)
+        {
+            int diff = (stageIdx - 1) / ActData._CIRCLE_STAGE_COUNT;
+            diff = Mathf.Max(0, diff);
+            return diff;
+        }
+        else if (stageMode == STAGE_TYPE.ACT_GEM || stageMode == STAGE_TYPE.ACT_GOLD)
+            return RoleData.SelectRole.TotalLevel;
+        else
+            return stageIdx;
+    }
+
     public static float _MotionNormalHPMofify = 1.0f;
     public static float _MotionEliteHPMofify = 2.5f;
     public static float _MotionExEliteHPMofify = 5.0f;

@@ -596,13 +596,13 @@ public class AI_Base : MonoBehaviour
     protected Dictionary<string, HitSkillInfo> _HitDict = new Dictionary<string, HitSkillInfo>();
     protected static int _ReleaseSkillTimes = -1;
     protected static int _ReleaseAttackTimes = 8;
-    protected static int _ReleaseBuffTimes = 2;
+    protected static int _ReleaseBuffTimes = 8;
     protected ObjMotionSkillBase _HittingSkill;
 
     private void InitReleaseSkillTimes()
     {
-        if (_ReleaseSkillTimes > 0)
-            return;
+        //if (_ReleaseSkillTimes > 0)
+        //    return;
 
         if (FightSkillManager.Instance.ReuseSkillConfig != "0")
         {

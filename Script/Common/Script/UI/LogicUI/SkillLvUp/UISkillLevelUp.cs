@@ -198,6 +198,7 @@ public class UISkillLevelUp : UIBase
         else
         {
             _LevelUp.interactable = true;
+            _MoneyCost.gameObject.SetActive(true);
         }
     }
 

@@ -1,4 +1,4 @@
-stage diff tips;
-monster/boss atk
-monster init idle anim
+gold act tips
 fail tip
+weapon drop rate
+20 /purple rate

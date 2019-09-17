@@ -25,4 +25,8 @@ public class ImpactCatch : ImpactHit
         reciverManager.CatchEvent(_HitTime, _HitEffect, _HitAudio, senderManager, this, moveDirect, moveTime);
     }
 
+    #region catch
+
+    #endregion
+
 }

@@ -40,7 +40,8 @@ public class StateCatch : StateBase
                 SetHitMove((Vector3)args[4], (float)args[5]);
                 break;
             case MotionOpt.Stop_Catch:
-                _MotionManager.TryEnterState(_MotionManager._StateIdle);
+                //_MotionManager.FlyEvent(0.1f, -1, -1, _MotionManager, null, Vector3.zero, 0);
+                _MotionManager.TryEnterState(_MotionManager._StateFly, 0.1f, -1, _MotionManager, null, new Vector3(0,0,0), 0.0f, -1);
                 break;
             default:
                 break;

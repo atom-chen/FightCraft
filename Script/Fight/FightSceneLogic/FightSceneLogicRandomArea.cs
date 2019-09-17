@@ -55,6 +55,7 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
     private static int _WatchingAreaCnt = 3;
     private static int _StartInitCnt = 2;
     public static int _InitAreaPos = 25;
+    public static int _HideAreaPos = 50;
 
     private void UpdateArea()
     {
@@ -355,6 +356,7 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
         //}
 
         _ActingGroup._LightGO.SetActive(true);
+
     }
 
     private void InitAreas()

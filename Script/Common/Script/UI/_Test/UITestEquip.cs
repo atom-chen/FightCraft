@@ -115,6 +115,7 @@ public class UITestEquip : UIBase
     public InputField _TargetLevel;
     public Toggle _TestAct;
     public Toggle _TestActAD;
+    public Toggle _TestBoss;
 
     public void AutoLevel()
     {

@@ -121,26 +121,24 @@
 32011,gem,gem set name,gem set Lv 3-4,宝石套装3-4,寶石套裝3-4
 33001,gem,gem name,Gem of Attack,攻击宝石,攻擊寶石
 33002,gem,gem name,Gem of Defence,防御宝石,防禦寶石
-33003,gem,gem name,Gem of HPMax,生命宝石,生命寶石
-33004,gem,gem name,Gem of Strength,力量宝石,力量寶石
-33005,gem,gem name,Gem of Dexterity,敏捷宝石,敏捷寶石
-33006,gem,gem name,Gem of Intelligence,智力宝石,智力寶石
-33007,gem,gem name,Gem of Vitality,体质宝石,體質寶石
-33008,gem,gem name,Gem of Fire Attack,火宝石,火寶石
-33009,gem,gem name,Gem of Cold Attack,冰宝石,冰寶石
-33010,gem,gem name,Gem of Lighting Attack,电宝石,電寶石
-33011,gem,gem name,Gem of Wind Attack,风宝石,風寶石
+33003,gem,gem name,Gem of Strength,力量宝石,力量寶石
+33004,gem,gem name,Gem of Dexterity,敏捷宝石,敏捷寶石
+33005,gem,gem name,Gem of Intelligence,智力宝石,智力寶石
+33006,gem,gem name,Gem of Vitality,体质宝石,體質寶石
+33007,gem,gem name,Gem of Fire Attack,火宝石,火寶石
+33008,gem,gem name,Gem of Cold Attack,冰宝石,冰寶石
+33009,gem,gem name,Gem of Lighting Attack,电宝石,電寶石
+33010,gem,gem name,Gem of Wind Attack,风宝石,風寶石
 34001,gem,gem desc,Gem of Attack,攻击宝石,攻擊寶石
 34002,gem,gem desc,Gem of Defence,防御宝石,防禦寶石
-34003,gem,gem desc,Gem of HPMax,生命宝石,生命寶石
-34004,gem,gem desc,Gem of Strength,力量宝石,力量寶石
-34005,gem,gem desc,Gem of Dexterity,敏捷宝石,敏捷寶石
-34006,gem,gem desc,Gem of Intelligence,智力宝石,智力寶石
-34007,gem,gem desc,Gem of Vitality,体质宝石,體質寶石
-34008,gem,gem desc,Gem of Fire Attack,火宝石,火寶石
-34009,gem,gem desc,Gem of Cold Attack,冰宝石,冰寶石
-34010,gem,gem desc,Gem of Lighting Attack,电宝石,電寶石
-34011,gem,gem desc,Gem of Wind Attack,风宝石,風寶石
+34003,gem,gem desc,Gem of Strength,力量宝石,力量寶石
+34004,gem,gem desc,Gem of Dexterity,敏捷宝石,敏捷寶石
+34005,gem,gem desc,Gem of Intelligence,智力宝石,智力寶石
+34006,gem,gem desc,Gem of Vitality,体质宝石,體質寶石
+34007,gem,gem desc,Gem of Fire Attack,火宝石,火寶石
+34008,gem,gem desc,Gem of Cold Attack,冰宝石,冰寶石
+34009,gem,gem desc,Gem of Lighting Attack,电宝石,電寶石
+34010,gem,gem desc,Gem of Wind Attack,风宝石,風寶石
 35000,gem,Any Green Gem,Any Green Gem,任意绿宝石,任意綠寶石
 35001,gem,gem desc,Any Green Gem,任意绿宝石,任意綠寶石
 35002,gem,gem desc,Any Blue Gem,任意蓝宝石,任意藍寶石
@@ -189,7 +187,7 @@
 60023,Skill,TalentName,Training-Technique,强化-技,強化-技
 60024,Skill,TalentName,Training-Technique,强化-技,強化-技
 60025,Skill,TalentName,Rapid,急速,急速
-60026,Skill,TalentName,Charge,冲刺,衝刺
+60026,Skill,TalentName,Accumulate,蓄力,蓄力
 60027,Skill,TalentName,Tactical,战术,戰術
 60028,Skill,TalentName,Seize the Initiative,机敏,機敏
 60029,Skill,TalentName,Explode,爆发,爆發
@@ -228,7 +226,7 @@
 60123,Skill,TalentDesc,"Improve Spinning Cross,add multi-hit attack times.",强化巨旋风，增加多次击中攻击次数。,強化巨旋風，增加多次擊中攻擊次數。
 60124,Skill,TalentDesc,"Improve Atomic Smash,change final stab to multi-hit.",强化无双击，将最终攻击改为多重攻击。,強化無雙擊，將最終攻擊改為多重攻擊。
 60125,Skill,TalentDesc,"Can gains an additional attack after last hit by press Attack or Skill button.\nCast <color=#00FF00>{1}</color> hit, Damage:<color=#00FF00>{0}%</color> skill damage.",技能最后一击时按下攻击或技能按钮可以获得额外的攻击\n \nCast <color=#00FF00>{1}</color>命中，伤害:<color=#00FF00>{0}%</color>。,技能最後一擊時按下攻擊或技能按鈕可以獲得額外的攻擊\n \nCast <color=#00FF00>{1}</color>命中，傷害:<color=#00FF00>{0}%</color>。
-60126,Skill,TalentDesc,"Can charge when using skill by hold the skill button, charge will increase the damage of skill.\nCharge time: <color=#00FF00>{1}</color>s, Increase Damage:<color=#00FF00>{0}%</color>",使用技能按钮时可以蓄力，蓄力会增加技能伤害\n蓄力时间:<color=#00FF00>{1}</color>s，增加伤害:<color=#00FF00>{0}%</color>,使用技能按鈕時可以蓄力，蓄力會增加技能傷害\n蓄力時間:<color=#00FF00>{1}</color> s，增加傷害:<color=#00FF00>{0} %</color>
+60126,Skill,TalentDesc,"Can accumulate when using skill by hold the skill button, accumulate will increase the damage of skill.\nAccumulate time: <color=#00FF00>{1}</color>s, Increase Damage:<color=#00FF00>{0}%</color>",使用技能按钮时可以蓄力，蓄力会增加技能伤害\n蓄力时间:<color=#00FF00>{1}</color>s，增加伤害:<color=#00FF00>{0}%</color>,使用技能按鈕時可以蓄力，蓄力會增加技能傷害\n蓄力時間:<color=#00FF00>{1}</color> s，增加傷害:<color=#00FF00>{0} %</color>
 60127,Skill,TalentDesc,Can use skill after acting Corse.,震慑后可直接释放技能,震懾後可直接釋放技能
 60128,Skill,TalentDesc,Can act any skill once again after use them.,使用技能技能后可立即再次使用。,使用技能技能後可立即再次使用。
 60129,Skill,TalentDesc,Can hit and push enemy away when being hited.,被击状态下可以按下技能键使用该技能。,被擊狀態下可以使用次技能。
@@ -673,7 +671,7 @@
 1100015,GlobalBuff,Name,Seize the Initiative,机敏,機敏
 1100016,GlobalBuff,Name,Explode,爆发,爆發
 1100017,GlobalBuff,Name,Tactical,战术,戰術
-1100018,GlobalBuff,Name,Charge,冲刺,衝刺
+1100018,GlobalBuff,Name,Accumulate,蓄力,蓄力
 1100019,GlobalBuff,Name,In the Shadow,暗影,暗影
 1100020,GlobalBuff,Name,Accelerate,加速,加速
 1100021,GlobalBuff,Name,Iron Blood,铁血,鐵血
@@ -708,7 +706,7 @@
 1110015,GlobalBuff,Desc,Bless will increase 10% atk speed.,使用技能按钮时可以蓄力，蓄力会增加技能伤害\n蓄力时间:<color=#00FF00>{1}</color> s，增加伤害:<color=#00FF00>{0} %</color>,使用技能按鈕時可以蓄力，蓄力會增加技能傷害\n蓄力時間:<color=#00FF00>{1}</color> s，增加傷害:<color=#00FF00>{0} %</color>
 1110016,GlobalBuff,Desc,"When act Corse and Bless, will hit surrounding targets.",震慑后可直接释放技能,震懾後可直接釋放技能
 1110017,GlobalBuff,Desc,Can use skill after acting Corse.,使用技能技能后可立即再次使用。,使用技能技能後可立即再次使用。
-1110018,GlobalBuff,Desc,"Can charge when using skill by hold the skill button, charge will increase the damage of skill.",使用技能按钮时可以蓄力，蓄力会增加技能伤害\n蓄力时间:<color=#00FF00>{1}</color> s，增加伤害:<color=#00FF00>{0} %</color>,使用技能按鈕時可以蓄力，蓄力會增加技能傷害\n蓄力時間:<color=#00FF00>{1}</color> s，增加傷害:<color=#00FF00>{0} %</color>
+1110018,GlobalBuff,Desc,"Can accumulate when using skill by hold the skill button, accumulate will increase the damage of skill.",使用技能按钮时可以蓄力，蓄力会增加技能伤害\n蓄力时间:<color=#00FF00>{1}</color> s，增加伤害:<color=#00FF00>{0} %</color>,使用技能按鈕時可以蓄力，蓄力會增加技能傷害\n蓄力時間:<color=#00FF00>{1}</color> s，增加傷害:<color=#00FF00>{0} %</color>
 1110019,GlobalBuff,Desc,Roll will get an Shadow buff.,翻滚后获得影子buff，移动时闪避攻击\n持续 <color=#00FF00>{0}</color> sec。,翻滾後獲得影子buff，移動時閃避攻擊\n持續 <color=#00FF00>{0}</color> sec。
 1110020,GlobalBuff,Desc,Decrease Roll CD.,使用技能时霸体。,使用技能時霸體。
 1110021,GlobalBuff,Desc,Get Super Armor buff when defence success.,防御成功时获得超级装甲buff。,防禦成功時獲得超級裝甲buff。
@@ -965,7 +963,7 @@
 2300056,,,Gift,礼包,禮包
 2300057,,,Stage,关卡,關卡
 2300058,,,Challenge,挑战,挑戰
-2300059,,,Next,下一个,下一個
+2300059,,,Next,下一关,下一個
 2300060,,,Retry,重试,重試
 2300061,,,Enter,进入,進入
 2300062,,,Boss,Boss,Boss
@@ -992,6 +990,7 @@
 2300083,,,Boss is in a state of protection and needs to break protect with different skills.,Boss处于保护状态，需要用不同技能击破保护才能连招,Boss处于保护状态，需要用不同技能击破保护才能连招
 2300084,,,Act,激活,激活
 2300085,,,Gem Suit,宝石套装,宝石套装
+2300086,,,Show only on new difficulty levels,仅在新难度时展示,仅在新难度时展示
 2400000,loadingtip,,Bai Qi,白起,白起
 2400001,loadingtip,,Cao Cao,曹操,曹操
 2400002,loadingtip,,Da Ji,妲己,妲己
@@ -1018,6 +1017,8 @@
 2402001,fighttip,,Elite: {0}/{1},精英:{0} / {1},精英:{0} / {1}
 2402002,fighttip,timecolor,<color=#FFFFFFFF>{0}</color>,<color=#FFFFFFFF>{0}</color>,<color=#FFFFFFFF>{0}</color>
 2402003,fighttip,timecolor,<color=#FF0000FF>{0}</color>,<color=#FF0000FF>{0}</color>,<color=#FF0000FF>{0}</color>
+2402004,fighttip,,Monster: {0},杀怪:{0},杀怪:{0}
+2402005,fighttip,,Gold: {0},金币:{0},金币:{0}
 2410000,stageTips,,1.Boss:using skill super armor;,1.Boss:释放技能时霸体;,1.Boss:釋放技能時霸體;
 2410001,stageTips,,"2.Elite monster appear;Boss:normal attack super armor,rising explosion",2.精英怪物出现;Boss:普通攻击霸体，起身气爆,2.精英怪物出現;Boss:普通攻擊霸體，起身氣爆
 2410002,stageTips,,3.More elite monster;Boss:protecte buff * 1,3.更多精英怪物;Boss:保护buff * 1,3.更多精英怪物;Boss:保護buff * 1

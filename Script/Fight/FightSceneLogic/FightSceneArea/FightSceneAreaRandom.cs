@@ -31,7 +31,7 @@ public class FightSceneAreaRandom : FightSceneAreaBase
             UpdateFish();
 
             var distance = Vector3.Distance(FightManager.Instance.MainChatMotion.transform.position, transform.position);
-            if (distance > FightSceneLogicRandomArea._InitAreaPos)
+            if (distance > FightSceneLogicRandomArea._HideAreaPos)
             {
                 HideArea();
             }
@@ -39,7 +39,7 @@ public class FightSceneAreaRandom : FightSceneAreaBase
         else if (AreaState == AreaState.Hiding)
         {
             var distance = Vector3.Distance(FightManager.Instance.MainChatMotion.transform.position, transform.position);
-            if (distance < FightSceneLogicRandomArea._InitAreaPos)
+            if (distance < FightSceneLogicRandomArea._HideAreaPos)
             {
                 ResumeArea();
             }
