@@ -30,15 +30,15 @@ public class UIHPItem : UIItemBase
         }
         _RectTransform = GetComponent<RectTransform>();
         _FollowTransform = _ObjMotion.AnimationEvent.transform;
-        var transform = _FollowTransform.Find("center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck");
-        if (transform == null)
+        var neckTransform = _FollowTransform.Find("center/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck");
+        if (neckTransform == null)
         {
-            transform = _FollowTransform.Find("Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck");
+            neckTransform = _FollowTransform.Find("Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck");
         }
 
         _HPProcess.value = 1;
 
-        _HeightDelta = transform.position - _FollowTransform.position;
+        _HeightDelta = neckTransform.position - _FollowTransform.position;
         _HeightDelta.x = 0;
         _HeightDelta.z = 0;
         _HeightDelta.y += 0.2f;

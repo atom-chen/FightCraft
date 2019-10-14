@@ -65,15 +65,37 @@ public class UISellShopPack : UIBase
         if (hash.ContainsKey("SelectQualities"))
         {
             List<ITEM_QUALITY> selectQualities = (List<ITEM_QUALITY>)hash["SelectQualities"];
+            _SelectedItems.Clear();
+            for (int i = 0; i < _ShowItems.Count; ++i)
+            {
+                if (ShopData.Instance._SellQualityTemp.Contains(_ShowItems[i].GetQuality()))
+                {
+                    _SelectedItems.Add(_ShowItems[i]);
+                }
+            }
             _ConditionContainer.InitSelectContent(selectQualities, ShopData.Instance._SellQualityTemp, OnQualitySelect, OnQualitySelect);
         }
         if (hash.ContainsKey("SelectLevels"))
         {
-            List<Vector2> selectQualities = (List<Vector2>)hash["SelectLevels"];
-            _ConditionContainer.InitSelectContent(selectQualities, ShopData.Instance._SellLevelTemp, OnLevelSelect, OnLevelSelect);
+            List<Vector2> selectLevel = (List<Vector2>)hash["SelectLevels"];
+            _SelectedItems.Clear();
+            for (int i = 0; i < _ShowItems.Count; ++i)
+            {
+                for (int j = 0; j < ShopData.Instance._SellLevelTemp.Count; ++j)
+                {
+                    if (selectLevel[j].x <= _ShowItems[i].GetLevel()
+                        && selectLevel[j].y >= _ShowItems[i].GetLevel())
+                    {
+                        _SelectedItems.Add(_ShowItems[i]);
+                        break;
+                    }
+                }
+            }
+            _ConditionContainer.InitSelectContent(selectLevel, ShopData.Instance._SellLevelTemp, OnLevelSelect, OnLevelSelect);
             
         }
-        _ItemsContainer.InitSelectContent(_ShowItems, null, OnItemSelect, OnItemUnSelect);
+
+        _ItemsContainer.InitSelectContent(_ShowItems, _SelectedItems, OnItemSelect, OnItemUnSelect);
         _ItemsContainer.SetShowItemFinishCallFun(AfterInit);
 
         _SellPrice.ShowCurrency(MONEYTYPE.GOLD, 0);

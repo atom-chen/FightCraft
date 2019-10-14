@@ -43,6 +43,7 @@ public class UILoadingScene : UIBase
     private string _LoadingSceneName;
     private bool _IsEnterFight;
     private float _StartTime;
+    private float _ShowADTime;
     #endregion
 
     #region 
@@ -67,11 +68,8 @@ public class UILoadingScene : UIBase
             LogicManager.Instance.InitFightScene();
         }
 
-        if (AdManager.Instance.IsShowInterAD)
-        {
-            Debug.LogError("AdManager.Instance.ShowInterAD");
-            AdManager.Instance.ShowInterAD();
-        }
+        _ShowADTime = 0;
+        AdManager.Instance.PrepareInterAD();
     }
     
     public void FixedUpdate()
@@ -79,7 +77,24 @@ public class UILoadingScene : UIBase
         if (_IsEnterFight)
         {
             _LoadProcess.value = FightManager.Instance.InitProcess;
-            if (FightManager.Instance.InitProcess == 1)
+            if (AdManager.Instance.IsShowInterAD)
+            {
+                //Debug.LogError("AdManager.Instance.ShowInterAD");
+                if (FightManager.Instance._InitStep > FightManager.InitStep.InitSceneFinish && _ShowADTime == 0)
+                {
+                    _ShowADTime = Time.time;
+                    AdManager.Instance.ShowInterAD();
+                }
+
+                if (_ShowADTime > 0 && AdManager.Instance.IsShowInterADFinish()&& FightManager.Instance.InitProcess == 1)
+                {
+                    AdManager.Instance.AddLoadSceneTimes();
+
+                    LogicManager.Instance.EnterFightFinish();
+                    base.Destory();
+                }
+            }
+            else if (FightManager.Instance.InitProcess == 1)
             {
                 AdManager.Instance.AddLoadSceneTimes();
 
@@ -92,10 +107,26 @@ public class UILoadingScene : UIBase
             _LoadProcess.value = (Time.time - _StartTime) * 0.66f;
             if (_LoadProcess.value >=1 && SceneManager.GetActiveScene().name == _LoadingSceneName)
             {
-                AdManager.Instance.AddLoadSceneTimes();
+                if (FightManager.Instance._InitStep > FightManager.InitStep.InitSceneFinish && _ShowADTime == 0)
+                {
+                    _ShowADTime = Time.time;
+                    AdManager.Instance.ShowInterAD();
+                }
 
-                LogicManager.Instance.StartLogic();
-                base.Destory();
+                if (_ShowADTime > 0 && AdManager.Instance.IsShowInterADFinish())
+                {
+                    AdManager.Instance.AddLoadSceneTimes();
+
+                    LogicManager.Instance.StartLogic();
+                    base.Destory();
+                }
+                else
+                {
+                    AdManager.Instance.AddLoadSceneTimes();
+
+                    LogicManager.Instance.StartLogic();
+                    base.Destory();
+                }
             }
         }
     }

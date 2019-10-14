@@ -17,6 +17,10 @@ public class SelectBase : MonoBehaviour
 
     public virtual void Init()
     {
+        if (_ColliderID < 1000)
+        {
+            gameObject.SetActive(false);
+        }
         _SkillMotion = gameObject.GetComponentInParent<ObjMotionSkillBase>();
         _ObjMotion = gameObject.GetComponentInParent<MotionManager>();
         _ImpactList = gameObject.GetComponents<ImpactBase>();

@@ -47,7 +47,18 @@ public class UIShopItem : UIItemSelect
     {
         base.Refresh();
 
-        ShowItem(_ShowItem);
+        if (_ShowItem != null)
+        {
+            ShowItem(_ShowItem);
+        }
+        else if (_ShowEquip != null)
+        {
+            ShowEquip(_ShowEquip);
+        }
+        else if (_ShowCore != null)
+        {
+            ShowCore(_ShowCore);
+        }
     }
 
     public void ShowItem(ItemShop showItem)
@@ -61,6 +72,7 @@ public class UIShopItem : UIItemSelect
         _ShowItem = showItem;
         if (!showItem.IsVolid())
         {
+            _SellOutFlag.SetActive(true);
             ClearItem();
             return;
         }
@@ -82,6 +94,7 @@ public class UIShopItem : UIItemSelect
             _SellOutFlag.SetActive(false);
         }
         _Icon.gameObject.SetActive(true);
+        _Quality.gameObject.SetActive(true);
         ResourceManager.Instance.SetImage(_Icon, showItem.CommonItemRecord.Icon);
         ResourceManager.Instance.SetImage(_Quality, CommonDefine.GetQualityIcon(showItem.CommonItemRecord.Quality));
         _BuyPrice.ShowCurrency((MONEYTYPE)showItem.ShopRecord.MoneyType, showItem.BuyPrice);
@@ -101,6 +114,7 @@ public class UIShopItem : UIItemSelect
         _ShowEquip = showItem;
         if (!showItem.IsVolid())
         {
+            _SellOutFlag.SetActive(true);
             ClearItem();
             return;
         }
@@ -108,6 +122,7 @@ public class UIShopItem : UIItemSelect
         _SellOutFlag.SetActive(false);
 
         _Icon.gameObject.SetActive(true);
+        _Quality.gameObject.SetActive(true);
         ResourceManager.Instance.SetImage(_Icon, showItem.CommonItemRecord.Icon);
         ResourceManager.Instance.SetImage(_Quality, CommonDefine.GetQualityIcon(showItem.CommonItemRecord.Quality));
 

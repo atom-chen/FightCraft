@@ -121,14 +121,14 @@ public class UIRoleAttr : UIBase
 
     public void RefreshFuncBtn()
     {
-        if (RoleData.SelectRole.TotalLevel >= GameDataValue.ROLE_SELECT)
-        {
-            _BtnChangeRole.interactable = true;
-        }
-        else
-        {
-            _BtnChangeRole.interactable = false;
-        }
+        //if (RoleData.SelectRole.TotalLevel >= GameDataValue.ROLE_SELECT)
+        //{
+        //    _BtnChangeRole.interactable = true;
+        //}
+        //else
+        //{
+        //    _BtnChangeRole.interactable = false;
+        //}
     }
 
     #endregion

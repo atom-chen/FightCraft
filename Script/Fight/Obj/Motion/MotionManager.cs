@@ -419,6 +419,8 @@ public class MotionManager : MonoBehaviour
             //Hashtable hash = new Hashtable();
             //hash.Add("HitEffect", -1);
 
+            //RecvAllEffects();
+            FightManager.Instance.OnObjDie(this);
             FlyEvent(0.1f, -1, -1, this, null, Vector3.zero, 0);
             //_EventController.PushEvent(GameBase.EVENT_TYPE.EVENT_MOTION_FLY, this, new Hashtable());
             //_BaseMotionManager.FlyEvent(0.1f, -1, this, null);
@@ -428,7 +430,6 @@ public class MotionManager : MonoBehaviour
             _RoleAttrManager.AddHP(1);
         }
         Profiler.EndSample();
-        FightManager.Instance.OnObjDie(this);
     }
 
     public void MotionCorpse()
@@ -697,6 +698,19 @@ public class MotionManager : MonoBehaviour
     {
         ++_DynamicEffectID;
         return _DynamicEffectID;
+    }
+
+    public void RecvAllEffects()
+    {
+        foreach (var effect in _SkillEffects.Values)
+        {
+            ResourcePool.Instance.RecvIldeEffect(effect);
+        }
+
+        foreach (var effect in _DynamicEffects.Values)
+        {
+            ResourcePool.Instance.RecvIldeEffect(effect);
+        }
     }
 
     public EffectController PlaySkillEffect(EffectController effect, float speed = -1, ElementType elementType = ElementType.None)

@@ -82,6 +82,15 @@ public class UITestEquip : UIBase
         }
     }
 
+    public void OnBtnAllBaseItem()
+    {
+        foreach (var equipRecord in TableReader.EquipItem.Records.Values)
+        {
+            var equipItem = ItemEquip.CreateEquip(1, ITEM_QUALITY.PURPER, -1, -1,-1,int.Parse(equipRecord.Id));
+            var newEquip = BackBagPack.Instance.AddEquip(equipItem);
+        }
+    }
+
     public void OnBtnPackEquip()
     {
         int equipQuality = int.Parse(_EquipPackQuality.text);

@@ -18,6 +18,7 @@ public class PlatformHelper : MonoBehaviour
 
     private void Start()
     {
+        DontDestroyOnLoad(this);
         _Instance = this;
     }
     #endregion
@@ -63,16 +64,24 @@ public class PlatformHelper : MonoBehaviour
         {
             OnInterADLoaded();
         }
+        else if (func.Equals("OnInterADExpusure"))
+        {
+            OnInterADExposure();
+        }
+        else if (func.Equals("OnInterADClose"))
+        {
+            OnInterADClosed();
+        }
     }
 
 #endif
 
         #region AD
 
-    public void GetLocationPermission()
+    public bool GetLocationPermission()
     {
         string permissionStr = "android.permission.ACCESS_FINE_LOCATION";
-        CallAndroid("RequstePermission", permissionStr);
+        return CallAndroid("RequstePermission", permissionStr).Equals("1");
     }
 
     public void LoadVideoAD()
@@ -118,6 +127,16 @@ public class PlatformHelper : MonoBehaviour
     public void OnInterADLoaded()
     {
         //result.text = "OnInterADLoaded";
+    }
+
+    public void OnInterADExposure()
+    {
+        AdManager.Instance.OnInterADExposure();
+    }
+
+    public void OnInterADClosed()
+    {
+        AdManager.Instance.OnInterADClosed();
     }
 
     #endregion

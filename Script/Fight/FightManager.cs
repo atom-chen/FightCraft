@@ -60,7 +60,7 @@ public class FightManager : InstanceBase<FightManager>
 
         InitFinish
     }
-    private InitStep _InitStep;
+    public InitStep _InitStep;
 
     public float _LogicFightTime = 0;
     public float _LogicPassTime = 0;
@@ -108,11 +108,13 @@ public class FightManager : InstanceBase<FightManager>
         }
         else if (_InitStep == InitStep.InitMonsterWait)
         {
+            Debug.Log("_InitStep InitMonsterWait:" + _InitProcess);
             _InitProcess += 0.01f;
             _InitProcess = Mathf.Min(_InitProcess, 0.99f);
         }
         else if (_InitStep == InitStep.InitMonsterFinish)
         {
+            //StopAllCoroutines();
             ResourcePool.Instance.InitDefaultRes();
             StartSceneLogic();
             _InitProcess = 1.0f;
@@ -158,7 +160,7 @@ public class FightManager : InstanceBase<FightManager>
         sceneCamera.transform.localPosition = Vector3.zero;
         sceneCamera.transform.localRotation = Quaternion.Euler(Vector3.zero);
         sceneCamera.cullingMask &= ~(1 << LayerMask.NameToLayer("UI"));
-        sceneCamera.nearClipPlane = 2;
+        sceneCamera.nearClipPlane = 1.0f;
         //cameraRoot.AddComponent<AudioListener>();
 
         //var subUICamera = ResourceManager.Instance.GetInstanceGameObject("Common/SubUICamera");
@@ -551,6 +553,7 @@ public class FightManager : InstanceBase<FightManager>
 
     public void MoveToNewScene(string sceneName)
     {
+        MonsterDrop.ClearAllDrops();
         var sceneCnt = SceneManager.sceneCount;
         //for (int i = 0; i < sceneCnt; ++i)
         {

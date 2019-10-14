@@ -102,12 +102,17 @@ public class ResourcePool : InstanceBase<ResourcePool>
 
     public void RecvIldeEffect(EffectController effct)
     {
+        if (effct is EffectOutLine)
+            return;
+
         string effectName = effct.name;
         if (!_IdleEffects.ContainsKey(effectName))
         {
             _IdleEffects.Add(effectName, new Stack<EffectController>());
         }
         effct.transform.SetParent(transform);
+        effct.HideEffect();
+        effct.transform.localPosition = Vector3.zero;
         _IdleEffects[effectName].Push(effct);
     }
 
@@ -290,8 +295,10 @@ public class ResourcePool : InstanceBase<ResourcePool>
         List<string> initMontionIDs = new List<string>();
         List<string> initModelIDs = new List<string>();
 
+        Debug.Log("InitMonsterBase count:" + monIds.Count);
         if (_ShaowPanel == null)
         {
+            Debug.Log("InitMonsterBase ShadowPlane:");
             yield return ResourceManager.Instance.LoadPrefab("Common/ShadowPlane", (resName, resGO, hash) =>
             {
                 _ShaowPanel = resGO;
@@ -309,6 +316,7 @@ public class ResourcePool : InstanceBase<ResourcePool>
             initModelIDs.Add(monsterTab.ModelPath);
             if (!_MonsterBasePrefab.ContainsKey(monsterTab.MotionPath))
             {
+                Debug.Log("InitMonsterBase motion:" + monsterTab.MotionPath);
                 yield return ResourceManager.Instance.LoadPrefab("ModelBase/" + monsterTab.MotionPath, (resName, resGO, hash) =>
                 {
                     resGO.gameObject.SetActive(false);
@@ -319,6 +327,7 @@ public class ResourcePool : InstanceBase<ResourcePool>
 
             if (!_MonsterModels.ContainsKey(monsterTab.ModelPath))
             {
+                Debug.Log("InitMonsterBase model:" + monsterTab.ModelPath);
                 yield return ResourceManager.Instance.LoadPrefab("Model/" + monsterTab.ModelPath, (resName, resData, hash) =>
                 {
                     resData.gameObject.SetActive(false);
@@ -330,12 +339,13 @@ public class ResourcePool : InstanceBase<ResourcePool>
             var monElite = Tables.TableReader.MonsterBase.GetGroupMonType(monsterTab, Tables.MOTION_TYPE.Elite);
             if (monElite != null)
             {
+                
                 initMontionIDs.Add(monElite.MotionPath);
                 initModelIDs.Add(monElite.ModelPath);
             }
             if (monElite != null && !_MonsterBasePrefab.ContainsKey(monElite.MotionPath))
             {
-
+                Debug.Log("InitMonsterBase motionElite:" + monElite.MotionPath);
                 yield return ResourceManager.Instance.LoadPrefab("ModelBase/" + monElite.MotionPath, (resName, resData, hashParam) =>
                 {
                     resData.gameObject.SetActive(false);
@@ -345,6 +355,7 @@ public class ResourcePool : InstanceBase<ResourcePool>
             }
             if (monElite != null && !_MonsterModels.ContainsKey(monElite.ModelPath))
             {
+                Debug.Log("InitMonsterBase modelElite:" + monElite.ModelPath);
                 yield return ResourceManager.Instance.LoadPrefab("Model/" + monElite.ModelPath, (resName, resData, hashParam) =>
                 {
                     resData.gameObject.SetActive(false);
@@ -361,7 +372,7 @@ public class ResourcePool : InstanceBase<ResourcePool>
             }
             if (monEx != null && !_MonsterBasePrefab.ContainsKey(monEx.MotionPath))
             {
-                
+                Debug.Log("InitMonsterBase motionEx:" + monEx.MotionPath);
                 yield return ResourceManager.Instance.LoadPrefab("ModelBase/" + monEx.MotionPath, (resName, resData, hashParam) =>
                 {
                     resData.gameObject.SetActive(false);
@@ -371,6 +382,7 @@ public class ResourcePool : InstanceBase<ResourcePool>
             }
             if (monEx != null && !_MonsterModels.ContainsKey(monEx.ModelPath))
             {
+                Debug.Log("InitMonsterBase modelEx:" + monEx.ModelPath);
                 yield return ResourceManager.Instance.LoadPrefab("Model/" + monEx.ModelPath, (resName, resData, hashParam) =>
                 {
                     resData.gameObject.SetActive(false);
@@ -380,6 +392,7 @@ public class ResourcePool : InstanceBase<ResourcePool>
             }
         }
 
+        Debug.Log("Clear monsters");
         ClearMonsterPrefab(initMontionIDs, initModelIDs);
     }
 
@@ -456,6 +469,7 @@ public class ResourcePool : InstanceBase<ResourcePool>
 
     public void RecvIldeMotion(MotionManager objMotion)
     {
+        objMotion.RecvAllEffects();
         var model = objMotion.AnimationEvent.gameObject;
         string objName = objMotion.MonsterBase.ModelPath;
         if (!_IdleModel.ContainsKey(objName))
@@ -496,6 +510,7 @@ public class ResourcePool : InstanceBase<ResourcePool>
 
     public IEnumerator LoadCharModel(string modelName, string weaponName, LoadBundleAssetCallback<GameObject> callBack, Hashtable hash)
     {
+        Debug.Log("LoadCharModel");
         string resPath = "Model/" + weaponName;
         GameObject weaponGO = null;
         yield return ResourceManager.Instance.LoadPrefab(resPath, (subResName, subResGO, subCallBack) =>

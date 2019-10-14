@@ -116,6 +116,20 @@ public class GemData : DataPackBase
         GemSuit.Instance.IsActSet();
     }
 
+    public void RefreshEquipedIDs()
+    {
+        for (int i = 0; i < _EquipedGemDatas.Count; ++i)
+        {
+            if (_EquipedGemDatas[i] == null || !_EquipedGemDatas[i].IsVolid())
+            {
+                _EquipGemDataID[i] = _EquipedGemDatas[i]._SaveFileName;
+            }
+        }
+
+        SaveClass(true);
+        GemSuit.Instance.IsActSet();
+    }
+
     public bool InitGemPack()
     {
         if (_EquipGemDataID == null || _EquipGemDataID.Count == 0)
@@ -252,7 +266,7 @@ public class GemData : DataPackBase
 
     #region gem container
 
-    public const int MAX_GEM_PACK = -1;
+    public const int MAX_GEM_PACK = 10;
 
     private ItemPackBase<ItemGem> _PackGemDatas;
     public ItemPackBase<ItemGem> PackGemDatas
@@ -707,7 +721,7 @@ public class GemData : DataPackBase
                 needSave = true;
             }
         }
-        
+
 
         if (GemData.Instance.PackGemDatas._PackItems.Contains(combines[2]))
         {
@@ -736,7 +750,7 @@ public class GemData : DataPackBase
                 needSave = true;
             }
         }
-        
+
 
         if (needSave)
         {
@@ -928,10 +942,15 @@ public class GemData : DataPackBase
 
     public bool IsGemCanLvUp(ItemGem targetGem)
     {
+        if (!targetGem.IsVolid())
+            return false;
+
         if (!targetGem.IsGemExtra())
         {
             foreach (var itemGem in PackExtraGemDatas._PackItems)
             {
+                if (!itemGem.IsVolid())
+                    continue;
                 if (targetGem.ItemDataID == itemGem.ItemDataID)
                 {
                     return false;
@@ -954,6 +973,8 @@ public class GemData : DataPackBase
 
             foreach (var itemGem in PackGemDatas._PackItems)
             {
+                if (!itemGem.IsVolid())
+                    continue;
                 if (itemGem.GemAttr[0].AttrParams[0] == targetGem.ExAttr)
                 {
                     if (itemGem.ItemStackNum > 1)
@@ -1040,6 +1061,9 @@ public class GemData : DataPackBase
     {
         foreach (var itemGem in PackExtraGemDatas._PackItems)
         {
+            if (!itemGem.IsVolid())
+                continue;
+
             if (itemGem.ItemDataID == curGem.ItemDataID)
             {
                 return true;

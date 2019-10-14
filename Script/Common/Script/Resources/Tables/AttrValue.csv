@@ -1,4 +1,4 @@
-"""ID""","""Name""","""Desc""","""AttrImpact""","""StrParam1""","""StrParam2""","""StrParam3""","""AttrParams1""","""AttrParams2""","""AttrParams3""","""AttrParams4""","""AttrParams5""","""AttrParams6""","""AttrParams7""","""AttrParams8""","""AttrParams9""","""AttrParams10"""
+﻿"""ID""","""Name""","""Desc""","""AttrImpact""","""StrParam1""","""StrParam2""","""StrParam3""","""AttrParams1""","""AttrParams2""","""AttrParams3""","""AttrParams4""","""AttrParams5""","""AttrParams6""","""AttrParams7""","""AttrParams8""","""AttrParams9""","""AttrParams10"""
 #legendary equip LV1,,,,,,,,,,,,,,,,
 120000,,,RoleAttrImpactElementBullet,ImpactAttr2_B3_Stone,3,120000,10000,2500,0,0,0,0,0,389,1,2
 120001,,,RoleAttrImpactElementBullet,ImpactAttr4_B3_WhirlWind,3,120001,10000,2500,0,0,0,0,0,435,78,3
@@ -56,16 +56,16 @@
 123008,,,RoleAttrImpactPassiveBeHitBullet,PassiveHitCircle,3,123008,10000,5000,30000,200000,-20000,50000,0,0,0,2
 123009,,,RoleAttrImpactPassiveDamageArea,PassiveDamageArea,3,123009,800,200,5000,30000,3000,60000,10000,0,0,3
 123010,,,RoleAttrImpactPassiveBeHitBullet,PassiveIceCircle,3,123010,10000,5000,30000,200000,-20000,50000,0,0,0,3
-124001,,,RoleAttrImpactPassiveHitEnemy,PassiveHitWindBullet,3,124001,1500,250,30000,2000,500,5000,10000,0,0,5
+124001,,,RoleAttrImpactPassiveHitEnemy,PassiveHitWindBullet,3,124001,10000,2500,25000,300,50,500,10000,0,0,5
 124002,,,RoleAttrImpactPassiveHPHeightAttack,PassiveHPLowAttack,3,124002,1500,300,4000,100,0,0,0,0,0,2
 124003,,,RoleAttrImpactPassiveAddAttr,PassiveAttrIce,3,124003,30000000,5000000,60000000,1,0,0,0,0,0,2
 124004,,,RoleAttrImpactPassiveAddAttr,PassiveAttrLighting,3,124004,30000000,5000000,60000000,1,0,0,0,0,0,2
-124005,,,RoleAttrImpactPassiveHitEnemy,PassiveHitLightingBullet,3,124005,1500,250,30000,2000,500,5000,10000,0,0,5
+124005,,,RoleAttrImpactPassiveHitEnemy,PassiveHitLightingBullet,3,124005,10000,2500,25000,300,50,500,10000,0,0,5
 124006,,,RoleAttrImpactPassiveLightCircleBuff,PassiveLightingBuff,3,124006,200,50,30000,400,50,5000,200000,0,0,3
 124007,,,RoleAttrImpactPassiveAddAttr,PassiveAttrFire,3,124007,30000000,5000000,60000000,1,0,0,0,0,0,2
-124008,,,RoleAttrImpactPassiveHitEnemy,PassiveHitFireBullet,3,124008,1500,250,30000,2000,500,5000,10000,0,0,5
+124008,,,RoleAttrImpactPassiveHitEnemy,PassiveHitFireBullet,3,124008,10000,2500,25000,300,50,500,10000,0,0,5
 124009,,,RoleAttrImpactPassiveAddAttr,PassiveAttrWind,3,124009,30000000,5000000,60000000,1,0,0,0,0,0,3
-124010,,,RoleAttrImpactPassiveHitEnemy,PassiveHitIceBullet,3,124010,1500,250,30000,2000,500,5000,10000,0,0,5
+124010,,,RoleAttrImpactPassiveHitEnemy,PassiveHitIceBullet,3,124010,10000,2500,25000,300,50,500,10000,0,0,5
 125000,,,RoleAttrImpactBaseAttr,gold,,125000,33,1000,100,0,0,0,0,0,0,0
 126000,,,RoleAttrImpactBaseAttr,mat,,126000,34,2500,250,0,0,0,0,0,0,0
 127000,,,RoleAttrImpactBaseAttr,gem,,127000,35,1000,100,0,0,0,0,0,0,0

@@ -20,7 +20,7 @@ public class AimTarget : InstanceBase<AimTarget>
 
     void Update()
     {
-        FreeAimUpdate();
+        //FreeAimUpdate();
     }
 
     public enum AimTargetType

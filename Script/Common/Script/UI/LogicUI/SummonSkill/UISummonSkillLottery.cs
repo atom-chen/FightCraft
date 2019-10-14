@@ -68,7 +68,7 @@ public class UISummonSkillLottery : UIBase
         }
         else
         {
-            _GoldTen.ShowCurrency(MONEYTYPE.GOLD, GameDataValue.GetSummonCostGold(SummonSkillData.Instance.SummonLevel));
+            _GoldTen.ShowCurrency(MONEYTYPE.GOLD, GameDataValue.GetSummonCostGold(SummonSkillData.Instance.SummonLevel) * 10);
         }
 
         int backPackDiamondItem = BackBagPack.Instance.PageItems.GetItemCnt(SummonSkillData._DiamondCostItem);
@@ -87,7 +87,7 @@ public class UISummonSkillLottery : UIBase
         }
         else
         {
-            _DiamondTen.ShowCurrency(MONEYTYPE.DIAMOND, GameDataValue.GetSummonCostDiamond(SummonSkillData.Instance.SummonLevel));
+            _DiamondTen.ShowCurrency(MONEYTYPE.DIAMOND, GameDataValue.GetSummonCostDiamond(SummonSkillData.Instance.SummonLevel) * 10);
         }
     }
 

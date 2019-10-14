@@ -63,6 +63,8 @@ public class ItemBase : SaveItemBase
 
     public virtual string GetName()
     {
+        if (CommonItemRecord == null)
+            return "";
         return StrDictionary.GetFormatStr(CommonItemRecord.NameStrDict);
     }
 

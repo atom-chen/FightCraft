@@ -180,7 +180,7 @@ public class ItemEquip : ItemBase
                 if (string.IsNullOrEmpty(CommonItemDataID.ToString()))
                     return null;
 
-                if (CommonItemDataID < 0)
+                if (CommonItemDataID <= 0)
                     return null;
 
                 _CommonItemRecord = TableReader.CommonItem.GetRecord(CommonItemDataID.ToString());
@@ -241,6 +241,8 @@ public class ItemEquip : ItemBase
     {
         get
         {
+            if (DynamicDataInt == null || DynamicDataInt.Count < 5)
+                return -1;
             return DynamicDataInt[4];
         }
         set
@@ -767,7 +769,7 @@ public class ItemEquip : ItemBase
         return itemEquip;
     }
 
-    public static ItemEquip CreateEquip(int level, Tables.ITEM_QUALITY quality, int legencyEquipID = -1, int equipSlotIdx = -1, int prePro = -1)
+    public static ItemEquip CreateEquip(int level, Tables.ITEM_QUALITY quality, int legencyEquipID = -1, int equipSlotIdx = -1, int prePro = -1, int baseItem = -1)
     {
         Tables.ITEM_QUALITY equipQuality = quality;
         EquipItemRecord legencyEquip = null;
@@ -817,7 +819,14 @@ public class ItemEquip : ItemBase
 
         var equipLevel = GameDataValue.GetEquipLv(equipSlot, level);
         int value = GameDataValue.GetEquipLvValue(equipLevel, equipSlot);
-        baseEquip = GetRandomItem(equipSlot, equipLevel, profession);
+        if (baseItem < 0)
+        {
+            baseEquip = GetRandomItem(equipSlot, equipLevel, profession);
+        }
+        else
+        {
+            baseEquip = Tables.TableReader.EquipItem.GetRecord(baseItem.ToString());
+        }
         if (baseEquip == null)
             return null;
 

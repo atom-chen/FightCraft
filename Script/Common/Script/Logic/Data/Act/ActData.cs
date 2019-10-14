@@ -201,7 +201,7 @@ public class ActData : DataPackBase
 
     public int GetNormalDiff()
     {
-        return GameDataValue.GetStageDiff(_NormalStageIdx, STAGE_TYPE.NORMAL);
+        return GameDataValue.GetStageDiff(_ProcessStageIdx, STAGE_TYPE.NORMAL);
         //return (_NormalStageIdx - 1) / _CIRCLE_STAGE_COUNT;
         //return _NormalStageIdx;
     }
@@ -278,6 +278,7 @@ public class ActData : DataPackBase
 
     public static List<string> _ActStageRecord = new List<string>() { "200", "201" };
     public static string _ACT_TICKET = "1600001";
+    public static int _ACT_TICKET_PRICE = 50;
     public static int _MAX_ACT_USING_TICKET = 1;
     public static int _MAX_START_ACT_LEVEL = 15;
     public static List<float> _DropGoldRateAdds = new List<float>() { 0.5f, 0.5f};

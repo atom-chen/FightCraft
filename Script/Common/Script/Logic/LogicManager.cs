@@ -80,6 +80,8 @@ public class LogicManager
         GiftData.Instance.InitGiftData();
 
         UIMainFun.ShowAsyn();
+
+        PurchManager.Instance.InitIAPInfo();
     }
 
     #endregion

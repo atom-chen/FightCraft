@@ -15,6 +15,7 @@ public class StateFly : StateBase
         base.InitState(motionManager);
 
         _MotionManager.AddAnimationEndEvent(_Animation);
+        _MotionManager.AnimationEvent.AddEvent(_Animation, 0.5f, FlyEnd);
         _FlyBody = _MotionManager.AnimationEvent.gameObject;
     }
 
@@ -155,7 +156,7 @@ public class StateFly : StateBase
         if (audioID > 0)
             _MotionManager.PlayAudio(ResourcePool.Instance._CommonAudio[audioID]);
 
-        Debug.Log("MotionFlyStay isPauseFly:" + isPauseFly);
+        //Debug.Log("MotionFlyStay isPauseFly:" + isPauseFly);
         if (isPauseFly)
         {
             var flyStayTime = time * (GameDataValue.ConfigIntToFloat(_MotionManager.RoleAttrManager.GetBaseAttr(RoleAttrEnum.FlyGravity)));
@@ -195,6 +196,8 @@ public class StateFly : StateBase
                 _FlyBody.transform.localPosition = new Vector3(0, _FlyHeight, 0);
                 _FlyHeight = 0;
             }
+
+            Debug.Log("_FlyHeight:" + _FlyBody.transform.localPosition.y);
         }
         else if (_FlyBody.transform.localPosition.y > 0)
         {
@@ -203,7 +206,7 @@ public class StateFly : StateBase
             {
                 _FlyBody.transform.localPosition = Vector3.zero;
             }
-
+            Debug.Log("_FlyBody.transform.localPosition.y:" + _FlyBody.transform.localPosition.y);
         }
         else if (IsFlyEnd)
         {

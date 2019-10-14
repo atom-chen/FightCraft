@@ -946,7 +946,7 @@
 2300039,,,Soul Info,武将信息,武將資訊
 2300040,,,Act,上阵,上陣
 2300041,,,Disact,下阵,下陣
-2300042,,,Stage,关卡,關卡
+2300042,,,Step,进阶,进阶
 2300043,,,Shop,商店,商店
 2300044,,,Buy,购买,購買
 2300045,,,Refresh,刷新,刷新
@@ -976,7 +976,7 @@
 2300069,,,Ticket,券,券
 2300070,,,"Congratulations, you got this gift.",恭喜你收到了这份礼物。,恭喜你收到了這份禮物。
 2300071,,,Charge,充值,充值
-2300072,,,*Buy any diamond box can get this gift.,*充值任意金额都可以获得此礼物。,*充值任意金額都可以獲得此禮物。
+2300072,,,*Buy any diamond box from this page can get this gift.,*在此页面充值任意金额都可以获得此礼物。,*在此页面充值任意金额都可以获得此礼物。
 2300073,,,Watch Video,看广告,看廣告
 2300074,,,*Watch a video to get this gift.,*观看广告以获得此礼物。,*觀看廣告以獲得此禮物。
 2300075,,,Charge sucess! Got {0} diamond.,充值成功！得到{0}钻石。,充值成功！得到{0}鑽石。
@@ -991,6 +991,8 @@
 2300084,,,Act,激活,激活
 2300085,,,Gem Suit,宝石套装,宝石套装
 2300086,,,Show only on new difficulty levels,仅在新难度时展示,仅在新难度时展示
+2300087,,,Pass level in time to open the next level,在限定时间内通过才能开启下一级关卡,在限定时间内通过才能开启下一级关卡
+2300088,,,Got {0},获得{0},获得{0}
 2400000,loadingtip,,Bai Qi,白起,白起
 2400001,loadingtip,,Cao Cao,曹操,曹操
 2400002,loadingtip,,Da Ji,妲己,妲己

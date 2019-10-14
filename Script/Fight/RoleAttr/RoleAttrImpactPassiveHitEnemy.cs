@@ -37,6 +37,14 @@ public class RoleAttrImpactPassiveHitEnemy : RoleAttrImpactPassive
                     subBuff._Damage = _Damage;
                 }
 
+                var subBuffs3 = buffGO.GetComponentsInChildren<ImpactDamage>();
+                foreach (var subBuff in subBuffs3)
+                {
+                    if (subBuff.gameObject == buffGO)
+                        continue;
+                    subBuff._DamageRate = _Damage;
+                }
+
                 buff._ActCD = _ActCD;
                 buff._Rate = _ActRate;
                 buff.ActImpact(roleMotion, roleMotion);

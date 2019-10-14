@@ -262,6 +262,7 @@ public class UISkillBar : UIBase
     #region switch aim
 
     public Text _AimText;
+    public GameObject _AimOnGO;
 
     private int _AimType = 0;
     public void OnSwitchAimType()
@@ -272,7 +273,8 @@ public class UISkillBar : UIBase
 
         //AimTarget.Instance.SwitchAimType(_AimType);
         //UpdateAim();
-        AimTarget.Instance.SwitchAimTarget();
+        //AimTarget.Instance.SwitchAimTarget();
+        GlobalValPack.Instance.IsRotToAnimTarget = !GlobalValPack.Instance.IsRotToAnimTarget;
     }
 
     public void SetAimType(AimTarget.AimTargetType aimType)
@@ -283,17 +285,21 @@ public class UISkillBar : UIBase
 
     private void UpdateAim()
     {
-        switch ((AimTarget.AimTargetType)_AimType)
+        //switch ((AimTarget.AimTargetType)_AimType)
+        //{
+        //    case AimTarget.AimTargetType.None:
+        //        _AimText.text = "N";
+        //        break;
+        //    case AimTarget.AimTargetType.Free:
+        //        _AimText.text = "F";
+        //        break;
+        //    case AimTarget.AimTargetType.Lock:
+        //        _AimText.text = "L";
+        //        break;
+        //}
+        if (GlobalValPack.Instance.IsRotToAnimTarget)
         {
-            case AimTarget.AimTargetType.None:
-                _AimText.text = "N";
-                break;
-            case AimTarget.AimTargetType.Free:
-                _AimText.text = "F";
-                break;
-            case AimTarget.AimTargetType.Lock:
-                _AimText.text = "L";
-                break;
+            _AimOnGO.SetActive(GlobalValPack.Instance.IsRotToAnimTarget);
         }
     }
 

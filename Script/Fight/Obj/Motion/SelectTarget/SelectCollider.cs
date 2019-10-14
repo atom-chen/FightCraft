@@ -31,6 +31,7 @@ public class SelectCollider : SelectBase
     public int _NonHittedAudio = -1;
     private bool _IsPlayHitAudio = false;
     private bool _IsPlayedNonHitAudio = false;
+    private bool _HittedFlag = false;
 
     public override void Init()
     {
@@ -80,7 +81,8 @@ public class SelectCollider : SelectBase
         base.ColliderStart();
         _IsPlayedNonHitAudio = false;
         _IsPlayHitAudio = false;
-        //Debug.Log("ColliderStart:" + _ColliderID);
+        _HittedFlag = false;
+        Debug.Log("ColliderStart:" + _ColliderID);
     }
 
     public override void ColliderFinish()
@@ -124,10 +126,12 @@ public class SelectCollider : SelectBase
                 break;
             }
         }
-        if (hitImpact != null)
+
+        if (_TrigMotions.Count != 0)
         {
             _ObjMotion.BuffHitEnemy(hitImpact, _TrigMotions);
         }
+        
         
 
         if (_Collider != null)
@@ -147,6 +151,8 @@ public class SelectCollider : SelectBase
             return;
 
         TriggerMotion(motion);
+
+        Debug.Log("OnTriggerStay:" + _ColliderID);
     }
 
     protected virtual void TriggerMotion(MotionManager motion)
@@ -167,7 +173,11 @@ public class SelectCollider : SelectBase
                     impact.ActImpact(_ObjMotion, motion);
                 }
 
-                _ObjMotion.BuffHitEnemy();
+                if (!_HittedFlag)
+                {
+                    _HittedFlag = true;
+                    _ObjMotion.BuffHitEnemy();
+                }
 
                 if (_IsRemindSelected && _ObjMotion.ActingSkill != null)
                 {

@@ -139,6 +139,7 @@ public class DropItem : MonoBehaviour
     {
         MonsterDrop.PickItem(_DropData);
         PlayEffect();
+        MonsterDrop._SceneDrops.Remove(this);
         ResourceManager.Instance.DestoryObj(gameObject);
     }
 

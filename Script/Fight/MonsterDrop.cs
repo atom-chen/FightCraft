@@ -26,6 +26,8 @@ public class MonsterDrop
         { "20003","30003","40003"},
         { "20004","30004","40004"}};
 
+    public static List<DropItem> _SceneDrops = new List<DropItem>();
+
     public static void MonsterDropItems(MotionManager monsterMotion)
     {
 
@@ -50,6 +52,18 @@ public class MonsterDrop
         RoleData.SelectRole.AddExp(dropExp);
     }
 
+    public static void ClearAllDrops()
+    {
+        foreach (var dropItem in _SceneDrops)
+        {
+            if (dropItem != null)
+            {
+                ResourceManager.Instance.DestoryObj(dropItem.gameObject);
+            }
+        }
+        _SceneDrops.Clear();
+    }
+
     public static void MonsterDropItems(MonsterBaseRecord monsterBase, MOTION_TYPE motionType, int level, Transform dropBasePos)
     {
         var drops = GetMonsterDrops(monsterBase, motionType, level, ActData.Instance._StageMode);
@@ -64,6 +78,7 @@ public class MonsterDrop
             ResourceManager.Instance.LoadPrefab("Drop/DropItem", (resName, resGO, hash) =>
             {
                 DropItem dropItem = resGO.GetComponent<DropItem>();
+                _SceneDrops.Add(dropItem);
                 dropItem.InitDrop(drop);
             }, null);
         }

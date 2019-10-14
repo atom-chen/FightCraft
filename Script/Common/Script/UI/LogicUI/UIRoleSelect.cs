@@ -149,10 +149,10 @@ public class UIRoleSelect : UIBase
     public void ShowModel(int idx)
     {
 
-        InitCharModel(idx);
+        StartCoroutine(InitCharModel(idx));
     }
 
-    public void InitCharModel(int idx)
+    public IEnumerator InitCharModel(int idx)
     {
         if (!_ShowAnims.ContainsKey(idx))
         {
@@ -160,13 +160,14 @@ public class UIRoleSelect : UIBase
             string modelName = PlayerDataPack.Instance._RoleList[idx].ModelName;
             string weaponName = PlayerDataPack.Instance._RoleList[idx].DefaultWeaponModel;
 
-            StartCoroutine(ResourcePool.Instance.LoadCharModel(modelName, weaponName, (resName, resGO, hash) =>
+            yield return (ResourcePool.Instance.LoadCharModel(modelName, weaponName, (resName, resGO, hash) =>
             {
+                Debug.Log("UIRoleSelect InitCharModel");
                 var modelAnim = resGO.AddComponent<UIModelAnim>();
                 List<AnimationClip> anims = new List<AnimationClip>();
                 anims.Add(_Anims[idx * 2]);
                 anims.Add(_Anims[idx * 2 + 1]);
-                modelAnim.InitAnim(anims);
+                modelAnim.InitAnim(anims, false);
 
                 _ShowAnims[idx] = (modelAnim);
                 _UICameraTexture.InitShowGO(resGO);

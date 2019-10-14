@@ -17,6 +17,19 @@ public class ParticleEditor : Editor
         }
     }
 
+    [MenuItem("TyTools/Editor/ParticleProbability")]
+    public static void ParticleProbability()
+    {
+        var selects = Selection.GetFiltered(typeof(Object), SelectionMode.DeepAssets);
+        foreach (var selectGO in selects)
+        {
+            if (selectGO is GameObject)
+            {
+                ParticleProbability(selectGO as GameObject);
+            }
+        }
+    }
+
     [MenuItem("TyTools/Editor/ParticleAwakePlay")]
     public static void ParticleAwakePlay()
     {
@@ -82,6 +95,25 @@ public class ParticleEditor : Editor
         }
     }
 
+    private static void ParticleProbability(GameObject particleObj)
+    {
+        var particleSys = particleObj.GetComponentsInChildren<ParticleSystem>();
+        foreach (var particle in particleSys)
+        {
+            int bustCnt = particle.emission.burstCount;
+            for (int i = 0; i < bustCnt; ++i)
+            {
+                var burst = particle.emission.GetBurst(i);
+                if (burst.probability == 0)
+                {
+                    burst.probability = 1;
+                    particle.emission.SetBurst(i, burst);
+                    Debug.Log("Particle go:" + particleObj.name);
+                }
+            }
+        }
+    }
+
     #endregion
 
     #region particleAwkePlay
@@ -112,11 +144,7 @@ public class ParticleEditor : Editor
             if (render.sharedMaterial.shader == null)
                 continue;
 
-            //if (render.sharedMaterial.shader.name.Contains("TDGame"))
-            {
-                render.sharedMaterial.shader = Shader.Find("Mobile/Diffuse/Additive");
-                Debug.Log("Change shader:" + particleObj.name);
-            }
+            render.sharedMaterial.renderQueue = 3000;
         }
     }
 

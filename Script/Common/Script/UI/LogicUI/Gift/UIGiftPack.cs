@@ -156,5 +156,22 @@ public class UIGiftPack : UIBase
     }
 
     #endregion
+
+    #region test 
+
+    public void OnBtnLoad()
+    {
+        AdManager.Instance.PrepareInterAD();
+    }
+
+    public void OnBtnShow()
+    {
+        GiftData.Instance.SetLockingGift(false);
+        UIGiftGetTips.ShowAsyn(GiftData.Instance.LockingGift);
+        GiftData.Instance.BuyGift();
+
+    }
+
+    #endregion
 }
 

@@ -47,7 +47,7 @@ public class UIRoleSelect2 : UIBase
     {
         base.Show(hash);
 
-        if (RoleData.SelectRole.TotalLevel >= GameDataValue._ROLE_OPEN_LEVEL)
+        if (RoleData.SelectRole.TotalLevel >= GameDataValue.ROLE_SELECT)
         {
             for (int i = 0; i < _DisableGO.Length; ++i)
             {

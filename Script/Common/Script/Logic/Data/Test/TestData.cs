@@ -40,6 +40,7 @@ public class TestData : SaveItemBase
 
     public void SetDamage(ImpactBase impact, int finalDamage)
     {
+#if UNITY_EDITOR
         ImpactHit impactHit = impact as ImpactHit;
         if (impactHit != null)
         {
@@ -59,17 +60,17 @@ public class TestData : SaveItemBase
             }
             _DamageInfos[skillName] += finalDamage;
 
-            if (impact.transform.parent != null)
-            {
-                Debug.Log("Skill Damage:" + impactHit.transform.parent.name + "." + impactHit.gameObject.name + ", value:" + finalDamage);
-            }
-            else
-            {
-                Debug.Log("Skill Damage:" + impactHit.gameObject.name + ", value:" + finalDamage);
-            }
+            //if (impact.transform.parent != null)
+            //{
+            //    Debug.Log("Skill Damage:" + impactHit.transform.parent.name + "." + impactHit.gameObject.name + ", value:" + finalDamage);
+            //}
+            //else
+            //{
+            //    Debug.Log("Skill Damage:" + impactHit.gameObject.name + ", value:" + finalDamage);
+            //}
         }
+#endif
 
-        
     }
 
     public void FinishFight(string stageName)

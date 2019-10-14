@@ -148,6 +148,7 @@ public class FightSceneAreaRandom : FightSceneAreaBase
 
             FightManager.Instance.ObjDisapear(ai._SelfMotion);
         }
+        _EnemyAI.Clear();
     }
 
     #endregion
@@ -246,6 +247,7 @@ public class FightSceneAreaRandom : FightSceneAreaBase
                 {
                     motionType = Tables.MOTION_TYPE.ExElite;
                     monId = stageDiffInfo.ExtraMonID.ToString();
+                    
                 }
             }
 
@@ -640,34 +642,34 @@ public class FightSceneAreaRandom : FightSceneAreaBase
             case 0:
                 break;
             case 1:
-                if (eliteRate < 1500)
+                if (eliteRate < 2500)
                 {
                     stageInfo.EliteIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
                 }
                 break;
             case 2:
-                if (eliteRate < 2500)
+                if (eliteRate < 4000)
                 {
                     stageInfo.EliteIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
                 }
                 break;
             case 3:
-                if (eliteRate < 2500)
+                if (eliteRate < 3000)
                 {
                     stageInfo.EliteIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
                 }
-                else if(eliteRate < 4000)
+                else if(eliteRate < 5000)
                 {
                     stageInfo.ExIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
                 }
 
                 break;
             case 4:
-                if (eliteRate < 2500)
+                if (eliteRate < 300)
                 {
                     stageInfo.EliteIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
                 }
-                else if (eliteRate < 5000)
+                else if (eliteRate < 6000)
                 {
                     stageInfo.ExIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
                 }
@@ -683,8 +685,12 @@ public class FightSceneAreaRandom : FightSceneAreaBase
                 }
                 else if (eliteRate < 6500)
                 {
-                    stageInfo.ExtraMonIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
-                    stageInfo.ExtraMonID = randomArea.QiLin;
+                    if (randomArea.SceneQiLinCnt < 1)
+                    {
+                        ++randomArea.SceneQiLinCnt;
+                        stageInfo.ExtraMonIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
+                        stageInfo.ExtraMonID = randomArea.QiLin;
+                    }
                 }
 
                 break;
@@ -699,8 +705,12 @@ public class FightSceneAreaRandom : FightSceneAreaBase
                 }
                 else if (eliteRate < 7500)
                 {
-                    stageInfo.ExtraMonIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
-                    stageInfo.ExtraMonID = randomArea.QiLin;
+                    if (randomArea.SceneQiLinCnt < 1)
+                    {
+                        ++randomArea.SceneQiLinCnt;
+                        stageInfo.ExtraMonIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
+                        stageInfo.ExtraMonID = randomArea.QiLin;
+                    }
                 }
                 break;
             case 7:
@@ -714,8 +724,12 @@ public class FightSceneAreaRandom : FightSceneAreaBase
                 }
                 else if (eliteRate < 7500)
                 {
-                    stageInfo.ExtraMonIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
-                    stageInfo.ExtraMonID = randomArea.QiLin;
+                    if (randomArea.SceneQiLinCnt < 1)
+                    {
+                        ++randomArea.SceneQiLinCnt;
+                        stageInfo.ExtraMonIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
+                        stageInfo.ExtraMonID = randomArea.QiLin;
+                    }
                 }
                 break;
             case 8:
@@ -729,8 +743,12 @@ public class FightSceneAreaRandom : FightSceneAreaBase
                 }
                 else if (eliteRate < 8500)
                 {
-                    stageInfo.ExtraMonIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
-                    stageInfo.ExtraMonID = randomArea.QiLin;
+                    if (randomArea.SceneQiLinCnt < 1)
+                    {
+                        ++randomArea.SceneQiLinCnt;
+                        stageInfo.ExtraMonIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
+                        stageInfo.ExtraMonID = randomArea.QiLin;
+                    }
                 }
                 break;
             case 9:
@@ -744,8 +762,12 @@ public class FightSceneAreaRandom : FightSceneAreaBase
                 }
                 else if (eliteRate < 8500)
                 {
-                    stageInfo.ExtraMonIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
-                    stageInfo.ExtraMonID = randomArea.QiLin;
+                    if (randomArea.SceneQiLinCnt < 1)
+                    {
+                        ++randomArea.SceneQiLinCnt;
+                        stageInfo.ExtraMonIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
+                        stageInfo.ExtraMonID = randomArea.QiLin;
+                    }
                 }
                 stageInfo.RandomBuffCnt = 1;
                 break;
@@ -760,8 +782,12 @@ public class FightSceneAreaRandom : FightSceneAreaBase
                 }
                 else if (eliteRate < 8500)
                 {
-                    stageInfo.ExtraMonIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
-                    stageInfo.ExtraMonID = randomArea.QiLin;
+                    if (randomArea.SceneQiLinCnt < 1)
+                    {
+                        ++randomArea.SceneQiLinCnt;
+                        stageInfo.ExtraMonIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
+                        stageInfo.ExtraMonID = randomArea.QiLin;
+                    }
                 }
                 stageInfo.RandomBuffCnt = 2;
                 break;
@@ -776,8 +802,12 @@ public class FightSceneAreaRandom : FightSceneAreaBase
                 }
                 else if (eliteRate < 10000)
                 {
-                    stageInfo.ExtraMonIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
-                    stageInfo.ExtraMonID = randomArea.QiLin;
+                    if (randomArea.SceneQiLinCnt < 1)
+                    {
+                        ++randomArea.SceneQiLinCnt;
+                        stageInfo.ExtraMonIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
+                        stageInfo.ExtraMonID = randomArea.QiLin;
+                    }
                 }
                 stageInfo.RandomBuffCnt = 2;
                 break;

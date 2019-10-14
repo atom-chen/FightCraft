@@ -649,11 +649,6 @@ public class RoleAttrManager : MonoBehaviour
         }
 
         DamageHP(damageClass.TotalDamageValue + damageClass.AttachDamageValue);
-
-        if (sender == FightManager.Instance.MainChatMotion.RoleAttrManager)
-        {
-            TestData.Instance.SetDamage(impactBase, damageClass.TotalDamageValue);
-        }
     }
 
     public void CalculateNormalDamage(RoleAttrManager sender, Hashtable resultHash, DamageClass damageClass)

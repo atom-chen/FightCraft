@@ -16,8 +16,8 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
 
         //InitMons();
         //InitAreas();
-        _FindBossKillCnt = Tables.TableReader.AttrValueLevel.GetSpValue(ActData.Instance._NormalStageIdx, 14);
-        _FindBossKillElite = Tables.TableReader.AttrValueLevel.GetSpValue(ActData.Instance._NormalStageIdx, 34);
+        _FindBossKillCnt = Tables.TableReader.AttrValueLevel.GetSpValue(ActData.Instance._ProcessStageIdx, 14);
+        _FindBossKillElite = Tables.TableReader.AttrValueLevel.GetSpValue(ActData.Instance._ProcessStageIdx, 34);
 
         UIFuncInFight.UpdateKillMonster(0, _FindBossKillCnt);
         UIFuncInFight.UpdateKillEliteMonster(0, _FindBossKillElite);
@@ -57,6 +57,9 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
     public static int _InitAreaPos = 25;
     public static int _HideAreaPos = 50;
 
+    public float _UpdateTime = 0;
+    public static float _UpdateAreaInterval = 0.2f;
+
     private void UpdateArea()
     {
         if (_WaitingArea == null)
@@ -64,6 +67,10 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
             InitArea();
             return;
         }
+
+        if (Time.time - _UpdateTime < _UpdateAreaInterval)
+            return;
+        _UpdateTime = Time.time;
 
         //int watchingCnt = _WaitingArea.Count > _WatchingAreaCnt?_WatchingAreaCnt: _WaitingArea.Count;
         for (int i = 0; i < _WaitingArea.Count; ++i)
@@ -276,6 +283,7 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
     public List<string> PreLoadScenes { get; set; }
     public List<int> ExtraBoss { get; set; }
     public int QiLin { get; set; }
+    public int SceneQiLinCnt = 0;
 
     private int MainCharPosIdxInFightArea;
     private List<string> _ExcludeScene;
@@ -284,6 +292,7 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
     private int _CurActSceneIdx = 0;
     private void InitPos(int actSceneIdx)
     {
+        SceneQiLinCnt = 0;
         if (_ActingGroup != null)
         {
             _ActingGroup._LightGO.SetActive(false);
@@ -421,7 +430,7 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
 
     private void InitScenes()
     {
-        PreLoadScenes = GetRandomScenes(LogicManager.Instance.EnterStageInfo.ExParam[0], 3);
+        PreLoadScenes = GetRandomScenes(LogicManager.Instance.EnterStageInfo.ExParam[0], 2);
         PreLoadScenes.Add(GetBossScene(PreLoadScenes));
     }
 

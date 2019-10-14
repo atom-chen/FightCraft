@@ -26,8 +26,11 @@ public class EffectOutLine : EffectController
     {
         base.HideEffect();
 
-        RemoveMaterial();
-        _SkinnedMesh = null;
+        if (_SkinnedMesh != null)
+        {
+            RemoveMaterial();
+            _SkinnedMesh = null;
+        }
     }
 
     public void Update()
@@ -151,7 +154,7 @@ public class EffectOutLine : EffectController
 
     private int DecMatCnt()
     {
-        if (!_RenderMatCnt.ContainsKey(_SkinnedMesh))
+        if (_SkinnedMesh == null || !_RenderMatCnt.ContainsKey(_SkinnedMesh))
         {
             return 0;
         }

@@ -49,4 +49,7 @@ public class UIModelAnim : MonoBehaviour
         _Animation.Play("1");
 
     }
+
+    public void ColliderStart(int idx)
+    { }
 }

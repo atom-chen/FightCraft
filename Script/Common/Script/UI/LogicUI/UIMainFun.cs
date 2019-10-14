@@ -181,6 +181,7 @@ public class UIMainFun : UIBase
     #region gift 
 
     public GameObject _AdGift;
+    public GameObject _SpGiftEffect;
     public GameObject _PurchGift;
 
     public void RefreshGiftBtns()
@@ -188,6 +189,14 @@ public class UIMainFun : UIBase
         if (GiftData.Instance._GiftItems != null)
         {
             _AdGift.SetActive(true);
+            if (GiftData.Instance._IsShowDefaultGift)
+            {
+                _SpGiftEffect.SetActive(false);
+            }
+            else
+            {
+                _SpGiftEffect.SetActive(true);
+            }
             //_PurchGift.SetActive(true);
         }
         else
@@ -216,6 +225,7 @@ public class UIMainFun : UIBase
     public GameObject _SmallFightBtn;
     public GameObject _RetryBtn;
     public GameObject _NextBtn;
+    public GameObject _DisableNextBtn;
 
     public void InitFightBtn(bool isInFight)
     {
@@ -223,20 +233,35 @@ public class UIMainFun : UIBase
         _LargeFightBtn.SetActive(!isInFight);
         _SmallFightBtn.SetActive(isInFight);
 
-        if (ActData.Instance._ProcessStageIdx > ActData.Instance._NormalStageIdx)
+        if (ActData.Instance._StageMode == Tables.STAGE_TYPE.NORMAL)
         {
-            _NextBtn.SetActive(false);
-            
+            _RetryBtn.SetActive(true);
+            _NextBtn.SetActive(true);
+            if (ActData.Instance._ProcessStageIdx > ActData.Instance._NormalStageIdx)
+            {
+                _DisableNextBtn.SetActive(true);
+
+            }
+            else
+            {
+                _DisableNextBtn.SetActive(false);
+            }
         }
         else
         {
-            _NextBtn.SetActive(true);
+            _RetryBtn.SetActive(false);
+            _NextBtn.SetActive(false);
         }
     }
 
     public void OnBtnRetry()
     {
         ActData.Instance.StartCurrentStage();
+    }
+
+    public void OnBtnDisableNext()
+    {
+        UIMessageTip.ShowMessageTip(2300087);
     }
 
     #endregion

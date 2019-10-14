@@ -1,4 +1,20 @@
-gold act tips
+super armor effect
+elite monster num
+equiping gem combine
+elite back
+elite flag
+//zhouwang collider
+-model reuse remain effect
+//digong effect layou
+*weapon model attr not match
+sound
+-hit protect
+-exattack hit protect
+teleport process
+//buff hit fly hight(for accamulate)
+//sell selected quality
+*girl skill1 ex add hit range
 fail tip
 weapon drop rate
 20 /purple rate
+combat tip

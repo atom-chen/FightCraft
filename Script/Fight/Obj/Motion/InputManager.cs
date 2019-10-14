@@ -24,6 +24,12 @@ public class InputManager : InstanceBase<InputManager>
         if (InputMotion == null)
             return;
 
+        if (FightManager.Instance == null)
+            return;
+
+        if (FightManager.Instance._InitStep != FightManager.InitStep.InitFinish)
+            return;
+
 #if UNITY_EDITOR
         Axis = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 #endif
@@ -138,6 +144,7 @@ public class InputManager : InstanceBase<InputManager>
         {
             realKey = "u";
         }
+        
 #if UNITY_EDITOR
         if (_EmulateMode)
         {
@@ -145,7 +152,14 @@ public class InputManager : InstanceBase<InputManager>
         }
         return Input.GetKey(realKey);
 #else
-        return UISkillBar.IsKeyDown(key);
+        if (UISkillBar != null)
+        {
+            return UISkillBar.IsKeyDown(key);
+        }
+        else
+        {
+            return false;
+        }
 #endif
     }
 

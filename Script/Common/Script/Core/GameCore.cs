@@ -13,7 +13,8 @@ public class GameCore : MonoBehaviour
     public void Awake()
     {
         DontDestroyOnLoad(this);
-        Application.runInBackground = true;
+        Application.runInBackground = false;
+        Application.targetFrameRate = 60;
         _Instance = this;
     }
 
@@ -93,6 +94,7 @@ public class GameCore : MonoBehaviour
         Tables.TableReader.ReadTables();
         UILogin.ShowAsyn();
         DataRecordManager.Instance.InitDataRecord();
+        
     }
 
     #endregion
@@ -134,10 +136,10 @@ public class GameCore : MonoBehaviour
 
     public void InitLanguage()
     {
-#if UNITY_EDITOR
-        _StrVersion = 0;
-        return;
-#else
+//#if UNITY_EDITOR
+//        _StrVersion = 0;
+//        return;
+//#else
         if (Application.systemLanguage == SystemLanguage.Chinese
             || Application.systemLanguage == SystemLanguage.ChineseSimplified)
         {
@@ -151,7 +153,7 @@ public class GameCore : MonoBehaviour
         {
             _StrVersion = 0;
         }
-#endif
+//#endif
     }
 
 #endregion

@@ -7,9 +7,15 @@ public class SelectLastHit : SelectBase
 
     public int _HittedAudio;
     public bool _ClearLastSelect = true;
+    public int _Num = -1;
     
     public override void ColliderStart()
     {
+        int hitNum = _Num;
+        if (hitNum < 0)
+        {
+            hitNum = _ObjMotion.ActingSkill._SkillHitMotions.Count;
+        }
         foreach (var skillMotion in _ObjMotion.ActingSkill._SkillHitMotions)
         {
 
@@ -22,7 +28,9 @@ public class SelectLastHit : SelectBase
             {
                 GlobalEffect.Instance.Pause(_ObjMotion._RoleHitTime);
             }
-
+            --hitNum;
+            if (hitNum <= 0)
+                break;
         }
 
         if (_ObjMotion.ActingSkill._SkillHitMotions.Count > 0)

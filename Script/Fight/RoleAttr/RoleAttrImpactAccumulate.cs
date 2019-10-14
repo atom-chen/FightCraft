@@ -34,10 +34,16 @@ public class RoleAttrImpactAccumulate : RoleAttrImpactBase
             ResourcePool.Instance.LoadConfig("SkillMotion\\CommonImpact\\" + _ImpactName, (resName, resGO, hash) =>
             {
                 resGO.transform.SetParent(skillMotion.transform);
-
+                resGO.transform.localPosition = Vector3.zero;
                 var bulletEmitterEle = resGO.GetComponent<ImpactAccumulate>();
                 bulletEmitterEle._AccumulateTime = _AccumulateTime;
                 bulletEmitterEle._AccumulateDamage = _DamageEnhance;
+            }, null);
+
+            ResourcePool.Instance.LoadConfig("SkillMotion\\CommonImpact\\" + _ImpactName + "Hit", (resName, resGO, hash) =>
+            {
+                resGO.transform.SetParent(skillMotion.transform);
+                resGO.transform.localPosition = Vector3.zero;
             }, null);
 
         }
@@ -53,10 +59,16 @@ public class RoleAttrImpactAccumulate : RoleAttrImpactBase
                 ResourcePool.Instance.LoadConfig("SkillMotion\\CommonImpact\\" + _ImpactName, (resName, resGO, hash) =>
                 {
                     resGO.transform.SetParent(skillMotion.transform);
-
+                    resGO.transform.localPosition = Vector3.zero;
                     var bulletEmitterEle = resGO.GetComponent<ImpactAccumulate>();
                     bulletEmitterEle._AccumulateTime = _AccumulateTime;
                     bulletEmitterEle._AccumulateDamage = _DamageEnhance;
+                }, null);
+
+                ResourcePool.Instance.LoadConfig("SkillMotion\\CommonImpact\\" + _ImpactName + "Hit", (resName, resGO, hash) =>
+                {
+                    resGO.transform.SetParent(skillMotion.transform);
+                    resGO.transform.localPosition = Vector3.zero;
                 }, null);
             }
         }

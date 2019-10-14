@@ -348,7 +348,7 @@ public class ObjMotionSkillBase : MonoBehaviour
     protected virtual void ColliderStart(object param)
     {
         int index = (int)param;
-        Debug.Log("ColliderStart:" + index);
+        //Debug.Log("ColliderStart:" + index);
         if (_ColliderControl != null && _ColliderControl.ContainsKey(index))
         {
             for (int i = 0; i< _ColliderControl[index].Count; ++i)

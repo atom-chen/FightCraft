@@ -31,6 +31,10 @@ public class GiftData : DataPackBase
     public void InitGiftData()
     {
         GameCore.Instance.EventController.RegisteEvent(EVENT_TYPE.EVENT_LOGIC_PASS_STAGE, StagePassEvent);
+
+        RefreshGift(true);
+        _LastRefreshTimes = 0;
+        _NextRefreshInterval = UnityEngine.Random.Range(_RefreshIntervalMin, _RefreshIntervalMax);
     }
 
     #region refresh gift
@@ -62,8 +66,6 @@ public class GiftData : DataPackBase
             else
             {
                 RefreshGift(true);
-                _LastRefreshTimes = 0;
-                _NextRefreshInterval = UnityEngine.Random.Range(_RefreshIntervalMin, _RefreshIntervalMax);
             }
         }
     }
@@ -75,6 +77,7 @@ public class GiftData : DataPackBase
     #region gift
 
     public List<GiftPacketRecord> _GiftItems = null;
+    public bool _IsShowDefaultGift = true;
 
     private GiftPacketRecord _LockingGift;
     public GiftPacketRecord LockingGift
@@ -87,15 +90,21 @@ public class GiftData : DataPackBase
 
     private void RefreshGift(bool isDefaultGift = false)
     {
+        _IsShowDefaultGift = isDefaultGift;
         if (isDefaultGift)
         {
-            _GiftItems = TableReader.GiftPacket.GiftPacketGroup[11];
+            if (IsCanShowGift(TableReader.GiftPacket.GiftPacketGroup[11][0]))
+            {
+                _GiftItems = TableReader.GiftPacket.GiftPacketGroup[11];
+            }
         }
         else
         {
             List<int> randomGift = new List<int>();
             foreach (var giftRecrod in TableReader.GiftPacket.Records.Values)
             {
+                if (giftRecrod.GroupID == 11)
+                    continue;
                 if (IsCanShowGift(giftRecrod))
                 {
                     if (!randomGift.Contains(giftRecrod.GroupID))

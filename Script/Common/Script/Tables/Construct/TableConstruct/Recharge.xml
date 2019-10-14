@@ -69,4 +69,15 @@
     <constructDefault>0</constructDefault>
     <constructRepeat>1</constructRepeat>
   </constructColumn>
+  <constructColumn>
+    <constructName>BundleName</constructName>
+    <constructCode>BundleName</constructCode>
+    <constructType1>基本类型</constructType1>
+    <constructType2>
+      <constructType2>字符串</constructType2>
+    </constructType2>
+    <constructDefault>
+    </constructDefault>
+    <constructRepeat>1</constructRepeat>
+  </constructColumn>
 </root>

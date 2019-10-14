@@ -143,8 +143,22 @@ public class UIGemPack : UIBase
         //_GemPack.RefreshItems();
         Hashtable hash = new Hashtable();
         hash.Add("RefreshType", UIGemItem.GemRefreshType.PUNCH);
-        List<ItemGem> combineItems = new List<ItemGem>(GemData.Instance.PackExtraGemDatas._PackItems);
-        combineItems.AddRange(GemData.Instance.PackGemDatas._PackItems);
+        List<ItemGem> combineItems = new List<ItemGem>();
+        foreach (var gemItem in GemData.Instance.PackExtraGemDatas._PackItems)
+        {
+            if (gemItem != null && gemItem.IsVolid())
+            {
+                combineItems.Add(gemItem);
+            }
+        }
+        foreach (var gemItem in GemData.Instance.PackGemDatas._PackItems)
+        {
+            if (gemItem != null && gemItem.IsVolid())
+            {
+                combineItems.Add(gemItem);
+            }
+        }
+        
         _GemPack.InitContentItem(combineItems, OnPackItemClick, hash, OnPackPanelItemClick);
     }
 
@@ -153,8 +167,21 @@ public class UIGemPack : UIBase
         //_GemPack.RefreshItems();
         Hashtable hash = new Hashtable();
         hash.Add("RefreshType", UIGemItem.GemRefreshType.COMBINE);
-        List<ItemGem> combineItems = new List<ItemGem>(GemData.Instance.PackExtraGemDatas._PackItems);
-        combineItems.AddRange(GemData.Instance.PackGemDatas._PackItems);
+        List<ItemGem> combineItems = new List<ItemGem>();
+        foreach (var gemItem in GemData.Instance.PackExtraGemDatas._PackItems)
+        {
+            if (gemItem != null && gemItem.IsVolid())
+            {
+                combineItems.Add(gemItem);
+            }
+        }
+        foreach (var gemItem in GemData.Instance.PackGemDatas._PackItems)
+        {
+            if (gemItem != null && gemItem.IsVolid())
+            {
+                combineItems.Add(gemItem);
+            }
+        }
         _GemPack.InitContentItem(combineItems, OnPackItemClick, hash, OnPackPanelItemClick);
     }
 

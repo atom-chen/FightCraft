@@ -111,6 +111,7 @@ public class ResourceManager:MonoBehaviour
         }
         else
         {
+            Debug.Log("LoadPrefab:" + assetBundleName);
             GameObject prefab = Resources.Load<GameObject>(assetBundleName);
             var instanceGO = GameObject.Instantiate(prefab);
 
@@ -249,11 +250,15 @@ public class ResourceManager:MonoBehaviour
         }
         else
         {
+            Debug.Log("LoadPrefab:" + bundleName);
             GameObject resData = Resources.Load<GameObject>(prefabName);
             var instanceGO = GameObject.Instantiate(resData);
 
+            Debug.Log("LoadPrefab instanceGO:" + prefabName);
             if (callBack != null)
                 callBack.Invoke(assetName, instanceGO, null);
+
+            Debug.Log("LoadPrefab callBack.Invoke:" + prefabName);
         }
     }
 
@@ -283,6 +288,7 @@ public class ResourceManager:MonoBehaviour
 
     public IEnumerator LoadLevelAsync(string levelName, bool isAdditive)
     {
+        Debug.Log("LoadLevelAsync:" + levelName);
         if (_ResFromBundle)
         {
             string sceneAssetBundle = "Scene/" + levelName + ".common";

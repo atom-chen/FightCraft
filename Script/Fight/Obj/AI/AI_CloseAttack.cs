@@ -42,10 +42,7 @@ public class AI_CloseAttack : AI_Base
         if (StartSkill())
             return;
 
-        if (!IsActMove())
-        {
-            StartSkill();
-        }
+        IsActMove();
         
     }
 

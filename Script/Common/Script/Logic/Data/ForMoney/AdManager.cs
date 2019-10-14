@@ -36,8 +36,8 @@ public class AdManager
     {
         _AdVideoCallBack = finishCallBack;
 
-        PlatformHelper.Instance.GetLocationPermission();
-        PlatformHelper.Instance.ShowVideoAD();
+        if(PlatformHelper.Instance.GetLocationPermission())
+            PlatformHelper.Instance.ShowVideoAD();
     }
 
     public void WatchAdVideoFinish()
@@ -52,10 +52,11 @@ public class AdManager
 
     #region ad inter
 
-    public float _ShowInterADTime = 4.0f;
+    public float _ShowInterADTime = 3.0f;
     public float _StartInterADTime;
     public bool _IsInterADPrepared = false;
 
+    private bool _InterADExposure = false;
     private int _LoadSceneTimes = 0;
     private int _ShowAdLoadTimes = 1;
     private bool _IsShowInterAD = false;
@@ -75,6 +76,7 @@ public class AdManager
     public void LoadedInterAD()
     {
         _IsInterADPrepared = true;
+        _StartInterADTime = 0;
     }
 
     public void ShowInterAD()
@@ -84,8 +86,37 @@ public class AdManager
         PlatformHelper.Instance.ShowInterAD();
     }
 
+    public bool IsShowInterADFinish()
+    {
+        if (!_InterADExposure)
+            return true;
+
+        if (Time.time - _StartInterADTime > _ShowInterADTime)
+        {
+            CloseInterAD();
+            return true;
+        }
+        return false;
+    }
+
+    public void CloseInterAD()
+    {
+        PlatformHelper.Instance.CloseInterAD();
+    }
+
+    public void OnInterADExposure()
+    {
+        _InterADExposure = true;
+    }
+
+    public void OnInterADClosed()
+    {
+        _InterADExposure = false;
+    }
+
     public void AddLoadSceneTimes()
     {
+        CloseInterAD();
         ++_LoadSceneTimes;
         if (_LoadSceneTimes % _ShowAdLoadTimes == 0)
         {

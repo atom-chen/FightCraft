@@ -92,6 +92,7 @@ public class ObjMotionSkillBuff : ObjMotionSkillBase
             _ActSkillInput = _AttackStep.ToString();
         }
         _SkillProcess = 0;
+        ++_SkillActTimes;
         return true;
     }
 

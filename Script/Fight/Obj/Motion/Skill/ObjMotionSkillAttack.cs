@@ -104,6 +104,7 @@ public class ObjMotionSkillAttack : ObjMotionSkillBase
         _CanNextInput = false;
         _CurStep = -1;
         ContinueAttack();
+        ++_SkillActTimes;
         FightSkillManager.Instance.ResetReuseSkill();
 
         return true;

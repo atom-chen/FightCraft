@@ -22,6 +22,7 @@ public class AreaGate : MonoBehaviour
     public bool _IsTransScene = true;
     public bool _NeedInitEffect = true;
     public static float _TeleDistance = 3;
+    public static float _TeleAlertDistance = 5;
     public static float _TeleProcessTime = 1;
     public static float _TeleTipsTime = 5;
 
@@ -50,7 +51,7 @@ public class AreaGate : MonoBehaviour
             }
             UpdateTeleProcesing();
         }
-        else
+        else if(distance < _TeleAlertDistance)
         {
             if (_Teleporting)
             {

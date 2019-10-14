@@ -400,11 +400,13 @@ public class AI_Base : MonoBehaviour
     protected float _CloseInterval = 0.5f;
     protected Vector3 _BornPos;
     protected bool _IsReturnToBornPos = false;
-
+    private float _MoveActTime = 0;
+    private float _MoveInterval = -1;
     private float _CloseWait;
 
     public bool IsActMove()
     {
+
         if (_SelfMotion._ActionState != _SelfMotion._StateIdle
             && _SelfMotion._ActionState != _SelfMotion._StateMove)
         {
@@ -415,6 +417,9 @@ public class AI_Base : MonoBehaviour
         {
             return false;
         }
+
+        
+
 
         float distance = Vector3.Distance(transform.position, _TargetMotion.transform.position);
         float bornDis = Vector3.Distance(transform.position, _BornPos);
@@ -439,7 +444,7 @@ public class AI_Base : MonoBehaviour
             if (bornDis > _HuntRange)
             {
                 _IsReturnToBornPos = true;
-                _SelfMotion.StartMoveState(_BornPos);
+                SetMove(_BornPos);
                 return true;
             }
             //close enough
@@ -451,7 +456,7 @@ public class AI_Base : MonoBehaviour
             }
             else //hunt
             {
-                _SelfMotion.StartMoveState(_TargetMotion.transform.position);
+                SetMove(_TargetMotion.transform.position);
                 return true;
             }
         }
@@ -464,12 +469,12 @@ public class AI_Base : MonoBehaviour
                 if (bornDis < _HuntRange * 0.5f)
                 {
                     _IsReturnToBornPos = false;
-                    _SelfMotion.StartMoveState(_TargetMotion.transform.position);
+                    SetMove(_TargetMotion.transform.position);
                     return true;
                 }
                 else
                 {
-                    _SelfMotion.StartMoveState(_BornPos);
+                    SetMove(_BornPos);
                     return true;
                 }
             }
@@ -483,11 +488,40 @@ public class AI_Base : MonoBehaviour
             }
             else
             {
-                _SelfMotion.StartMoveState(_BornPos);
+                SetMove(_BornPos);
                 return true;
             }
+        }   
+    }
+
+    public void SetMove(Vector3 position)
+    {
+        if (_MoveInterval < 0)
+        {
+            switch (_SelfMotion.MotionType)
+            {
+                case Tables.MOTION_TYPE.Normal:
+                    _MoveInterval = 0.2f;
+                    break;
+                case Tables.MOTION_TYPE.Elite:
+                    _MoveInterval = 0.1f;
+                    break;
+                case Tables.MOTION_TYPE.ExElite:
+                    _MoveInterval = 0.05f;
+                    break;
+                case Tables.MOTION_TYPE.Hero:
+                    _MoveInterval = 0f;
+                    break;
+            }
         }
-        
+
+        if (Time.time - _MoveActTime < _MoveInterval)
+        {
+            return;
+        }
+        _MoveActTime = Time.time;
+
+        _SelfMotion.StartMoveState(position);
     }
 
     public static NavMeshPath GetPath(Vector3 fromPos, Vector3 toPos)
@@ -604,14 +638,24 @@ public class AI_Base : MonoBehaviour
         //if (_ReleaseSkillTimes > 0)
         //    return;
 
-        if (FightSkillManager.Instance.ReuseSkillConfig != "0")
+        if (FightSkillManager.Instance.ReuseSkillConfig.Equals("0"))
         {
-            _ReleaseSkillTimes = 2;
+            _ReleaseSkillTimes = 1;
+            _ReleaseBuffTimes = 5;
+            _ReleaseAttackTimes = 4;
         }
         else
         {
-            _ReleaseSkillTimes = 1;
+            _ReleaseSkillTimes = 2;
+            _ReleaseBuffTimes = 8;
+            _ReleaseAttackTimes = 5;
             Debug.Log("_ReleaseSkillTimes:" + _ReleaseSkillTimes);
+        }
+
+        if (RoleData.SelectRole.Profession == Tables.PROFESSION.GIRL_DEFENCE
+                || RoleData.SelectRole.Profession == Tables.PROFESSION.GIRL_DOUGE)
+        {
+            _ReleaseAttackTimes += 1;
         }
     }
 
@@ -631,7 +675,7 @@ public class AI_Base : MonoBehaviour
             _HitDict.Add(impactHit.SkillMotion._ActInput, new HitSkillInfo() { SkillBase = impactHit.SkillMotion , SkillActTimes= -1, HitTimes=0});
         }
 
-        //protect times
+            //protect times
         if (_HittingSkill != null 
             && _HittingSkill != impactHit.SkillMotion 
             && !(_HittingSkill is ObjMotionSkillBuff)
@@ -654,9 +698,17 @@ public class AI_Base : MonoBehaviour
         
 
         if (_HitDict[impactHit.SkillMotion._ActInput].SkillActTimes != impactHit.SkillMotion._SkillActTimes
-            && _HittingSkill != impactHit.SkillMotion)
+            || _HittingSkill != impactHit.SkillMotion)
         {
             _HittingSkill = impactHit.SkillMotion;
+
+            if (_HittingSkill != null
+                && _HittingSkill._ActInput.Equals("e"))
+            {
+                Debug.Log("ExAttackRelease");
+                return;
+            }
+
             if (_ProtectTimes.ContainsKey(impactHit.SkillMotion._ActInput))
             {
                 --_ProtectTimes[impactHit.SkillMotion._ActInput];
@@ -674,7 +726,7 @@ public class AI_Base : MonoBehaviour
             ++_HitDict[impactHit.SkillMotion._ActInput].HitTimes;
             if (impactHit.SkillMotion is ObjMotionSkillBuff)
             {
-                if (impactHit.SkillMotion._ActInput == "5")
+                //if (impactHit.SkillMotion._ActInput == "5")
                 {
                     if (_HitDict[impactHit.SkillMotion._ActInput].HitTimes > _ReleaseBuffTimes)
                     {

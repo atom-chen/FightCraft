@@ -17,6 +17,7 @@ namespace Tables
         public string Icon { get; set; }
         public int Num { get; set; }
         public int Price { get; set; }
+        public string BundleName { get; set; }
         public RechargeRecord(DataRecord dataRecord)
         {
             if (dataRecord != null)
@@ -35,6 +36,7 @@ namespace Tables
             recordStrList.Add(TableWriteBase.GetWriteStr(Icon));
             recordStrList.Add(TableWriteBase.GetWriteStr(Num));
             recordStrList.Add(TableWriteBase.GetWriteStr(Price));
+            recordStrList.Add(TableWriteBase.GetWriteStr(BundleName));
 
             return recordStrList.ToArray();
         }
@@ -103,6 +105,7 @@ namespace Tables
                 pair.Value.Icon = TableReadBase.ParseString(pair.Value.ValueStr[3]);
                 pair.Value.Num = TableReadBase.ParseInt(pair.Value.ValueStr[4]);
                 pair.Value.Price = TableReadBase.ParseInt(pair.Value.ValueStr[5]);
+                pair.Value.BundleName = TableReadBase.ParseString(pair.Value.ValueStr[6]);
             }
         }
     }

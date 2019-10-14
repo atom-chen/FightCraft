@@ -66,11 +66,18 @@ public class UIShopPack : UIBase
         }
         else if(page == 1)
         {
-            ShopData.Instance.RefreshGambling();
+            //ShopData.Instance.RefreshGambling();
             List<ItemBase> gamblingItems = new List<ItemBase>();
+            List<ItemBase> selectItems = new List<ItemBase>();
+
             for (int i = 0; i < ShopData.Instance._GamblingEquips.Count; ++i)
             {
                 gamblingItems.Add(ShopData.Instance._GamblingEquips[i]);
+
+                if (selectItems.Count == 0 && ShopData.Instance._GamblingEquips[i].IsVolid())
+                {
+                    selectItems.Add(ShopData.Instance._GamblingEquips[i]);
+                }
             }
             for (int i = 0; i < ShopData.Instance._GamblingCores.Count; ++i)
             {
@@ -79,7 +86,7 @@ public class UIShopPack : UIBase
 
             if (gamblingItems.Count > 0)
             {
-                _ShopItemContainer.InitSelectContent(gamblingItems, new List<ItemBase>() { gamblingItems[0] }, OnSelectItem);
+                _ShopItemContainer.InitSelectContent(gamblingItems, selectItems, OnSelectItem);
             }
             else
             {

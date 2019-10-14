@@ -42,7 +42,7 @@ public class StateLie : StateBase
 
     #region 
 
-    private static float _LieTime = 0.6f;
+    private static float _LieTime = 0.9f;
     private float _LieStartTime = -1;
     private float _RealLieTime = _LieTime;
 

@@ -29,6 +29,7 @@ public class BulletEmitterLineForward : BulletEmitterElement
         _OriginPos = senderManager.transform.position + modifyPos;
         _OriginDirect = senderManager.transform.forward;
         //var bullet = InitBulletGO<BulletBase>();
+        gameObject.SetActive(true);
         StartCoroutine(InitBullet());
     }
 

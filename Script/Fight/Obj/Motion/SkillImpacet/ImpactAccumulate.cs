@@ -10,7 +10,6 @@ public class ImpactAccumulate : ImpactBase
         {
             if (!InputManager.Instance.IsKeyHold("k"))
             {
-                Debug.Log("ReleaseAccumulate");
                 ReleaseAccumulate();
             }
             else if (Time.time - _HoldTime >= _AccumulateTime)
