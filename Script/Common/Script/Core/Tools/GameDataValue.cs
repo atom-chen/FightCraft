@@ -1548,7 +1548,8 @@ public class GameDataValue
     public static int GetSummonAtk(int level)
     {
         int summonLevel = level + _SOUL_START_LEVEL - 1;
-        return Tables.TableReader.AttrValueLevel.GetSpValue(level + _SOUL_START_LEVEL - 1, 32) * CalLvValue(summonLevel);
+        float atrLevelRate = ConfigIntToFloat(Tables.TableReader.AttrValueLevel.GetSpValue(level + _SOUL_START_LEVEL - 1, 32));
+        return (int)(atrLevelRate * CalLvValue(summonLevel));
     }
 
     public static float GetSummonDamageRate(int level)
@@ -2036,6 +2037,7 @@ public class GameDataValue
 
     public static ItemBase GetMonsterDropBossTicket(int level, STAGE_TYPE stageType)
     {
+        return null;
         if (stageType != STAGE_TYPE.NORMAL)
             return null;
 
@@ -2053,6 +2055,7 @@ public class GameDataValue
 
     public static ItemBase GetMonsterDropActTicket(int level, STAGE_TYPE stageType)
     {
+        return null;
         if (stageType != STAGE_TYPE.BOSS && stageType != STAGE_TYPE.NORMAL)
             return null;
 

@@ -9,8 +9,9 @@ public class BulletEmitterTargetDelay : BulletEmitterBase
 
     public override void ActImpact(MotionManager senderManager, MotionManager reciverManager)
     {
+        Debug.Log("BulletEmitterTargetDelay ActImpact");
         base.ActImpact(senderManager, reciverManager);
-
+        gameObject.SetActive(true);
         StartCoroutine(BulletDelay(reciverManager));
     }
 
@@ -18,6 +19,7 @@ public class BulletEmitterTargetDelay : BulletEmitterBase
     {
         yield return new WaitForSeconds(_DelayTime);
 
+        Debug.Log("BulletDelay:" + _DelayTime);
         var bullet = InitBulletGO<BulletBase>();
         bullet.transform.position = reciverManager.transform.position;
     }

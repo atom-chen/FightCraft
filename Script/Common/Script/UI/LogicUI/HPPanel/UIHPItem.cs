@@ -7,6 +7,7 @@ public class UIHPItem : UIItemBase
 {
     public Slider _HPProcess;
     public Slider _MPProcess;
+    public GameObject _EliteFlag;
 
     private RectTransform _RectTransform;
     public MotionManager _ObjMotion;
@@ -38,15 +39,25 @@ public class UIHPItem : UIItemBase
 
         _HPProcess.value = 1;
 
-        _HeightDelta = neckTransform.position - _FollowTransform.position;
+        //_HeightDelta = neckTransform.position - _FollowTransform.position;
         _HeightDelta.x = 0;
         _HeightDelta.z = 0;
-        _HeightDelta.y += 0.2f;
+        _HeightDelta.y = 1.8f * _FollowTransform.localScale.y;
 
         for (int i = 0; i < _SpBuffNameTexts.Count; ++i)
         {
             _SpBuffNameTexts[i].gameObject.SetActive(false);
         }
+
+        if (_ObjMotion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.Normal)
+        {
+            _EliteFlag.SetActive(false);
+        }
+        else
+        {
+            _EliteFlag.SetActive(true);
+        }
+        
     }
 
 
@@ -79,18 +90,18 @@ public class UIHPItem : UIItemBase
 
     private void ActHPProcess()
     {
-        if (_ObjMotion._ActionState != _ObjMotion._StateIdle
-            && _ObjMotion._ActionState != _ObjMotion._StateMove)
-        {
-            _ShowHpTime = _ShowHpTimeStatic;
-        }
+        //if (_ObjMotion._ActionState != _ObjMotion._StateIdle
+        //    && _ObjMotion._ActionState != _ObjMotion._StateMove)
+        //{
+        //    _ShowHpTime = _ShowHpTimeStatic;
+        //}
 
-        if (_ShowHpTime <= 0)
-        {
-            return;
-        }
+        //if (_ShowHpTime <= 0)
+        //{
+        //    return;
+        //}
 
-        _ShowHpTime -= Time.deltaTime;
+        //_ShowHpTime -= Time.deltaTime;
         _HPProcess.gameObject.SetActive(true);
         _HPProcess.value = _ObjMotion.RoleAttrManager.HPPersent;
     }

@@ -11,12 +11,25 @@ public class ImpactBuffSub : ImpactBuffCD
         if (_SubImpactGO != null)
         {
             _SubImpacts = new List<ImpactBase>(_SubImpactGO.GetComponentsInChildren<ImpactBase>());
+            //foreach (var subImpact in _SubImpacts)
+            //{
+            //    if (subImpact is ImpactDamage)
+            //    {
+            //        (subImpact as ImpactDamage)._DamageRate *= _DamageRate;
+            //    }
+            //    else if (subImpact is BulletEmitterBase)
+            //    {
+            //        (subImpact as BulletEmitterBase)._Damage *= _DamageRate;
+            //    }
+
+            //}
         }
     }
 
     #region sub impact
 
     public GameObject _SubImpactGO;
+    public float _DamageRate;
 
     protected List<ImpactBase> _SubImpacts;
 

@@ -41,7 +41,7 @@ public class StateCatch : StateBase
                 break;
             case MotionOpt.Stop_Catch:
                 //_MotionManager.FlyEvent(0.1f, -1, -1, _MotionManager, null, Vector3.zero, 0);
-                _MotionManager.TryEnterState(_MotionManager._StateFly, 0.1f, -1, _MotionManager, null, new Vector3(0,0,0), 0.0f, -1);
+                StopCatch();
                 break;
             default:
                 break;
@@ -59,9 +59,14 @@ public class StateCatch : StateBase
                 HitKeyframe(param);
                 break;
             case AnimEventManager.ANIMATION_END:
-                _MotionManager.TryEnterState(_MotionManager._StateIdle);
+                StopCatch();
                 break;
         }
+    }
+
+    public void StopCatch()
+    {
+        _MotionManager.TryEnterState(_MotionManager._StateFly, 0.1f, -1, _MotionManager, null, new Vector3(0, 0, 0), 0.0f, -1);
     }
 
     public void HitKeyframe(object param)
@@ -110,6 +115,7 @@ public class StateCatch : StateBase
         yield return new WaitForSeconds(_StopKeyFrameTime);
 
         _MotionManager.ResumeAnimation(_Animation);
+        StopCatch();
     }
 
     #endregion

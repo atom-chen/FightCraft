@@ -71,7 +71,7 @@ public class SummonMotionData : ItemBase
 
     #region level
 
-    private int _Level = 1;
+    private int _Level = -1;
     public int Level
     {
         get
@@ -240,6 +240,7 @@ public class SummonMotionData : ItemBase
     {
         StarExp += expValue;
         CalculateStarLevel();
+        UpdateAttrs();
     }
 
     private void CalculateStarLevel()
@@ -262,7 +263,7 @@ public class SummonMotionData : ItemBase
         _StarLevel = starLv;
         _CurStarExp = tempExp;
 
-        UpdateAttrs();
+        //UpdateAttrs();
     }
 
     public bool IsStageMax()
@@ -310,6 +311,7 @@ public class SummonMotionData : ItemBase
             {
                 UpdateAttrs();
             }
+
             return _SummonAttrs;
         }
     }
@@ -317,9 +319,10 @@ public class SummonMotionData : ItemBase
     public void UpdateAttrs()
     {
         _SummonAttrs = new List<EquipExAttr>();
+        _SummonAttrs.Clear();
         //InitStageAttr();
 
-        int atkValue = (int)(GameDataValue.GetSummonAtk(Level) * SummonRecord.AttrModelfy);
+        int atkValue = (int)(GameDataValue.GetSummonAtk(SummonSkillData.Instance.SummonLevel) * GameDataValue.ConfigIntToFloat( SummonRecord.AttrModelfy));
         int critiDmgValue = 0;
         if (StarLevel > 1)
         {

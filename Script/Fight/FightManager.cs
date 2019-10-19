@@ -355,29 +355,35 @@ public class FightManager : InstanceBase<FightManager>
         FightLayerCommon.SetEnemyLayer(mainBase);
 
         AI_Base aiBase = mainBase.GetComponent<AI_Base>();
-        aiBase.SetCombatLevel(1);
 
         _MonMotion.Add(mainBase);
 
         if (monsterBase.MotionType == Tables.MOTION_TYPE.Elite)
         {
+            aiBase.InitSkillDamageRate(0.6f);
             mainBase.Animation.transform.localScale = mainBase.Animation.transform.localScale * 1.1f;
             mainBase.NavAgent.radius = mainBase.NavAgent.radius * mainBase.Animation.transform.localScale.x * 1.1f;
         }
         else if (monsterBase.MotionType == Tables.MOTION_TYPE.ExElite)
         {
+            aiBase.InitSkillDamageRate(0.6f);
             mainBase.Animation.transform.localScale = mainBase.Animation.transform.localScale * 1.2f;
             mainBase.NavAgent.radius = mainBase.NavAgent.radius * mainBase.Animation.transform.localScale.x * 1.2f;
         }
-        else if(monsterBase.MotionType == Tables.MOTION_TYPE.Hero && motionType != Tables.MOTION_TYPE.Hero)
+        else if(monsterBase.MotionType == Tables.MOTION_TYPE.Hero)
         {
-            mainBase.Animation.transform.localScale = mainBase.Animation.transform.localScale * 0.8f;
-            mainBase.NavAgent.radius = mainBase.NavAgent.radius * mainBase.Animation.transform.localScale.x * 0.8f;
+            aiBase.InitSkillDamageRate(1.0f);
+            //mainBase.Animation.transform.localScale = mainBase.Animation.transform.localScale * 0.8f;
+            //mainBase.NavAgent.radius = mainBase.NavAgent.radius * mainBase.Animation.transform.localScale.x * 0.8f;
         }
         else
         {
+            aiBase.InitSkillDamageRate(0.3f);
             mainBase.NavAgent.radius = mainBase.NavAgent.radius * mainBase.Animation.transform.localScale.x;
         }
+        aiBase.InitMonsterDamageRate();
+
+        aiBase.SetCombatLevel(1);
 
         if (motionType == Tables.MOTION_TYPE.Hero)
         {

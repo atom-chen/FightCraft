@@ -54,6 +54,11 @@ public class UIRechargePack : UIBase
         Tables.RechargeRecord rechargeRecord = rechargeGO as Tables.RechargeRecord;
         PurchManager.Instance.Purch(rechargeRecord.Id, null);
     }
+
+    public void BtnTest()
+    {
+        PurchManager.Instance.PurchFinish("6");
+    }
     
     #endregion
 

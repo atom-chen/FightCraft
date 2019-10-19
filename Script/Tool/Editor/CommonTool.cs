@@ -435,4 +435,30 @@ public class CommonTool : Editor
     }
 
     #endregion
+
+    #region texture
+
+    [MenuItem("TyTools/Editor/CheckTexture")]
+    public static void CheckTexture()
+    {
+        var selects = Selection.GetFiltered(typeof(Object), SelectionMode.DeepAssets);
+        foreach (var selectGO in selects)
+        {
+            if (selectGO is Texture)
+            {
+                string assetPath = AssetDatabase.GetAssetPath(selectGO);
+                TextureImporter textureImporter = AssetImporter.GetAtPath(assetPath) as TextureImporter;
+                if (textureImporter.mipmapEnabled)
+                {
+                    textureImporter.mipmapEnabled = false;
+                    Debug.Log(selectGO.name + "," + textureImporter.mipmapEnabled);
+                    //AssetDatabase.ImportAsset(assetPath, ImportAssetOptions.ForceUpdate);
+                }
+            }
+        }
+        
+    }
+    
+
+    #endregion
 }

@@ -65,6 +65,7 @@ public class UISystemSetting : UIBase
         if (!isTrigger)
         {
             var light = GameObject.FindObjectOfType<Light>();
+            UIMessageTip.ShowMessageTip(light.name + "," + light.transform.parent.name);
             if (light != null)
             {
                 light.enabled = false;

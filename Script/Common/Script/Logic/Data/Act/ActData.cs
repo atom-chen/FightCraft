@@ -390,7 +390,12 @@ public class ActData : DataPackBase
 
         for (int i = 0; i < bossMonsterCnt; ++i)
         {
-            var monRecord = TableReader.MonsterBase.GetRecord("1");
+            int bossID = _ProcessStageIdx % 20 + 100;
+            if (bossID == 100)
+            {
+                bossID += 20;
+            }
+            var monRecord = TableReader.MonsterBase.GetRecord(bossID.ToString());
             var monsterDrops = MonsterDrop.GetMonsterDrops(monRecord, monRecord.MotionType, stageLevel);
             foreach (var dropItem in monsterDrops)
             {

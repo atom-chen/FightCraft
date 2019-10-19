@@ -1,8 +1,19 @@
-super armor effect
-elite monster num
-equiping gem combine
-elite back
-elite flag
+gem suit tips
+equip impact CD
+loading tips
+summon hide/ stage tips
+summon stage damage rate
+//ticket drop
+//weapon drop
+//summon attack normal monster
+//exit tip
+//gem lv up error
+//diff 3 bati 
+//direnjie bullet
+//diff3 protect hit
+//equiping gem combine
+//elite back
+//elite flag
 //zhouwang collider
 -model reuse remain effect
 //digong effect layou

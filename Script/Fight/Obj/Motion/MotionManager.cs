@@ -40,7 +40,10 @@ public class MotionManager : MonoBehaviour
             //_NavAgent.avoidancePriority = 0;
         }
 
-        TriggerCollider.enabled = true;
+        if (TriggerCollider != null)
+        {
+            TriggerCollider.enabled = true;
+        }
         _CanBeSelectByEnemy = true;
 
         //InitSkills();
@@ -341,6 +344,13 @@ public class MotionManager : MonoBehaviour
     }
 
     private SummonMotionData _SummonMotionData;
+    public bool IsSummonMotion
+    {
+        get
+        {
+            return _SummonMotionData != null;
+        }
+    }
 
     private bool _IsMotionDie = false;
     public bool IsMotionDie
@@ -1175,6 +1185,7 @@ public class MotionManager : MonoBehaviour
 
     public Vector3 _ColliderInfo = new Vector3(0.4f, 1.8f, 0);
     public Vector3 _ColliderCenter = new Vector3(0, 0, 0);
+    public bool _IsTrigger = true;
 
     private Collider _TriggerCollider;
     public Collider TriggerCollider
@@ -1183,31 +1194,41 @@ public class MotionManager : MonoBehaviour
         {
             if (_TriggerCollider == null)
             {
-                _TriggerCollider = AnimationEvent.GetComponentInChildren<Collider>();
-                if (_TriggerCollider == null)
+                if (_ColliderInfo.x > 0)
                 {
-                    var sole = AnimationEvent.transform.Find("center/sole");
-                    if (sole == null)
+                    _TriggerCollider = AnimationEvent.GetComponentInChildren<Collider>();
+                    if (_TriggerCollider == null)
                     {
-                        sole = AnimationEvent.transform.Find("Bip001/sole");
+                        var sole = AnimationEvent.transform.Find("center/sole");
+                        if (sole == null)
+                        {
+                            sole = AnimationEvent.transform.Find("Bip001/sole");
+                        }
+                        var collider = sole.gameObject.AddComponent<CapsuleCollider>();
+                        collider.radius = _ColliderInfo.x;
+                        collider.height = _ColliderInfo.y;
+                        collider.direction = 2;
+                        if (!_IsTrigger)
+                        {
+                            collider.center = new Vector3(0, 0, 3000);
+                        }
+                        else
+                        {
+                            if (_ColliderCenter == Vector3.zero)
+                            {
+                                collider.center = _ColliderCenter;
+                            }
+                            else
+                            {
+                                collider.center = new Vector3(0, 0, collider.height * 0.5f);
+                            }
+                        }
+                        collider.isTrigger = true;
+                        var rigidbody = sole.gameObject.AddComponent<Rigidbody>();
+                        rigidbody.isKinematic = true;
+                        rigidbody.useGravity = false;
+                        _TriggerCollider = collider;
                     }
-                    var collider = sole.gameObject.AddComponent<CapsuleCollider>();
-                    collider.radius = _ColliderInfo.x;
-                    collider.height = _ColliderInfo.y;
-                    collider.direction = 2;
-                    if (_ColliderCenter == Vector3.zero)
-                    {
-                        collider.center = _ColliderCenter;
-                    }
-                    else
-                    {
-                        collider.center = new Vector3(0, 0, collider.height * 0.5f);
-                    }
-                    collider.isTrigger = true;
-                    var rigidbody = sole.gameObject.AddComponent<Rigidbody>();
-                    rigidbody.isKinematic = true;
-                    rigidbody.useGravity = false;
-                    _TriggerCollider = collider;
                 }
             }
             return _TriggerCollider;

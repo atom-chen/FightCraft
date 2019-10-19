@@ -16,6 +16,10 @@ public class BulletLine : BulletBase
 
         _AlreadyHitTimes = 0;
         _AwakeTime = Time.time;
+        if (_HittedMotions != null)
+        {
+            _HittedMotions.Clear();
+        }
     }
 
     private IEnumerator FinishDelay()

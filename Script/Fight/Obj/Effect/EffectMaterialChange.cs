@@ -13,27 +13,28 @@ public class EffectMaterialChange : EffectController
 
     public override void PlayEffect()
     {
-        base.PlayEffect();
+        //base.PlayEffect();
 
-        AddMaterial();
-        _IsPlayingEffect = true;
-        _StartPlayTime = Time.time;
+        //AddMaterial();
+        //_IsPlayingEffect = true;
+        //_StartPlayTime = Time.time;
     }
 
     public override void PlayEffect(float speed)
     {
-        base.PlayEffect(speed);
+        //base.PlayEffect(speed);
 
-        PlayEffect();
+        //PlayEffect();
     }
 
     public override void HideEffect()
     {
-        base.HideEffect();
+        //base.HideEffect();
 
-        RemoveMaterial();
-        _IsPlayingEffect = false;
-        _StartPlayTime = 0;
+        //Debug.Log("EffectMaterialChange HideEffect");
+        //RemoveMaterial();
+        //_IsPlayingEffect = false;
+        //_StartPlayTime = 0;
     }
 
     #region 

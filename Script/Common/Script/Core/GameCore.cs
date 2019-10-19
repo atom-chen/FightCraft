@@ -45,7 +45,11 @@ public class GameCore : MonoBehaviour
         {
             if (FightManager.Instance != null)
             {
-                if (InputManager.Instance != null && InputManager.Instance.Axis != Vector2.zero)
+                if (FightManager.Instance.MainChatMotion != null
+                    && (FightManager.Instance.MainChatMotion._ActionState == FightManager.Instance.MainChatMotion._StateMove
+                    || FightManager.Instance.MainChatMotion._ActionState == FightManager.Instance.MainChatMotion._StateSkill))
+                { }
+                else
                 {
                     UIMessageBox.Show(1000007, () =>
                     {
@@ -54,11 +58,14 @@ public class GameCore : MonoBehaviour
                     }, null);
                 }
             }
-            UIMessageBox.Show(1000006, () =>
+            else
             {
-                LogicManager.Instance.QuitGame();
-                Debug.Log("save data");
-            }, null);
+                UIMessageBox.Show(1000006, () =>
+                {
+                    LogicManager.Instance.QuitGame();
+                    Debug.Log("save data");
+                }, null);
+            }
 
         }
     }

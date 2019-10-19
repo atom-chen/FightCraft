@@ -490,7 +490,7 @@ public class SummonSkillData : SaveItemBase
 
     private void RefreshCD()
     {
-        _SummonSkillCD = _SummonSkillBaseCD - _SummonCDDecrease * _TotalCollectStars;
+        _SummonSkillCD = _SummonSkillBaseCD/* - _SummonCDDecrease * _TotalCollectStars*/;
     }
 
     public List<SummonCollectItem> _CollectionItems = new List<SummonCollectItem>();

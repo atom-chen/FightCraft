@@ -56,6 +56,10 @@ public class ItemGem : ItemBase
     {
         get
         {
+            if (DynamicDataInt[1] < 1)
+            {
+                DynamicDataInt[1] = 1;
+            }
             return DynamicDataInt[1];
         }
         set

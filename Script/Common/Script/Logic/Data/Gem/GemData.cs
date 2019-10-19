@@ -585,9 +585,9 @@ public class GemData : DataPackBase
         if (targetGem.GemAttr[0].AttrParams[0] == combines[1].GemAttr[0].AttrParams[0]
             && targetGem.GemAttr[0].AttrParams[0] == combines[2].GemAttr[0].AttrParams[0])
         {
-            int mat0 = (targetGem.Level - 1) * 2 + 1;
-            int mat1 = (combines[1].Level - 1) * 2 + 1;
-            int mat2 = (combines[2].Level - 1) * 2 + 1;
+            int mat0 = Mathf.Max((targetGem.Level - 1) * 2 + 1, 1);
+            int mat1 = Mathf.Max((combines[1].Level - 1) * 2 + 1, 1);
+            int mat2 = Mathf.Max((combines[2].Level - 1) * 2 + 1, 1);
             int level = (mat0 + mat1 + mat2 - 1) / 2 + 1;
             targetGem.Level = level;
         }
@@ -595,9 +595,9 @@ public class GemData : DataPackBase
             && targetGem.GemAttr[1].AttrParams[0] == combines[1].GemAttr[0].AttrParams[0]
             && targetGem.GemAttr[1].AttrParams[0] == combines[2].GemAttr[0].AttrParams[0])
         {
-            int mat0 = (targetGem.ExAttrLevel) * 2;
-            int mat1 = (combines[1].Level - 1) * 2 + 1;
-            int mat2 = (combines[2].Level - 1) * 2 + 1;
+            int mat0 = Mathf.Max((targetGem.ExAttrLevel) * 2, 1);
+            int mat1 = Mathf.Max((combines[1].Level - 1) * 2 + 1, 1);
+            int mat2 = Mathf.Max((combines[2].Level - 1) * 2 + 1, 1);
             int level = (mat0 + mat1 + mat2 - 1) / 2 + 1;
             targetGem.ExAttrLevel = level;
         }

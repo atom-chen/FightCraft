@@ -63,7 +63,7 @@ public class ImpactBuffFireBurn : ImpactBuff
         _BuffSender.RoleAttrManager.SendDamageEvent(targetMotion, _Damage, ElementType.Fire, this);
         targetMotion.PlayHitEffect(_BuffSender, 3);
         targetMotion.PlayAudio(ResourcePool.Instance._CommonAudio[110]);
-        Debug.Log("OnTriggerStay:" + targetMotion.name);
+        //Debug.Log("OnTriggerStay:" + targetMotion.name);
     }
 
 }

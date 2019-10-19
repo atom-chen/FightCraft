@@ -178,6 +178,7 @@ public class FightSceneLogicRandomArea : FightSceneLogicBase
             }
             else
             {
+                ++_KillCnt;
                 ++_KillEliteCnt;
                 UIFuncInFight.UpdateKillEliteMonster(_KillEliteCnt, _FindBossKillElite);
             }

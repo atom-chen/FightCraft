@@ -105,6 +105,12 @@ public class ResourcePool : InstanceBase<ResourcePool>
         if (effct is EffectOutLine)
             return;
 
+        if (effct is EffectMaterialChange)
+            return;
+
+        if (effct is EffectChangeMainMaterial)
+            return;
+
         string effectName = effct.name;
         if (!_IdleEffects.ContainsKey(effectName))
         {
@@ -811,6 +817,8 @@ public class ResourcePool : InstanceBase<ResourcePool>
         StrBuff,
         ResourceConfig,
         RandomBuff,
+        BlockSummon
+
     }
 
     public static Dictionary<ConfigEnum, string> ConfigPrefabs = new Dictionary<ConfigEnum, string>()
@@ -823,7 +831,8 @@ public class ResourcePool : InstanceBase<ResourcePool>
         { ConfigEnum.IntShieldBuff, "SkillMotion/CommonImpact/IntShieldBuff"},
         { ConfigEnum.StrBuff, "SkillMotion/CommonImpact/StrBuff"},
         { ConfigEnum.ResourceConfig, "Common/ResourceConfig"},
-        { ConfigEnum.RandomBuff, "SkillMotion/CommonImpact/EliteRandomBuff"}
+        { ConfigEnum.RandomBuff, "SkillMotion/CommonImpact/EliteRandomBuff"},
+        { ConfigEnum.BlockSummon, "SkillMotion/CommonImpact/BlockSummon"},
     };
 
     public Dictionary<string, GameObject> _ConfigPrefabs;

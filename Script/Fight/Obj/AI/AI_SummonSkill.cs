@@ -47,14 +47,6 @@ public class AI_SummonSkill : AI_Base
         _DispearTime = _DispearTimeStatic;
     }
 
-    public void InitSkillDamageRate(float damageRate)
-    {
-        foreach (var aiSkill in _AISkills)
-        {
-            aiSkill.MonDamageRate *= damageRate;
-        }
-    }
-
     public void UseSkill(int idx)
     {
         if (_AISkills.Count <= idx)

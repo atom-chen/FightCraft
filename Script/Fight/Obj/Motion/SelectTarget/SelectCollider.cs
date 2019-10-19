@@ -82,7 +82,7 @@ public class SelectCollider : SelectBase
         _IsPlayedNonHitAudio = false;
         _IsPlayHitAudio = false;
         _HittedFlag = false;
-        Debug.Log("ColliderStart:" + _ColliderID);
+        //Debug.Log("ColliderStart:" + _ColliderID);
     }
 
     public override void ColliderFinish()
@@ -152,7 +152,7 @@ public class SelectCollider : SelectBase
 
         TriggerMotion(motion);
 
-        Debug.Log("OnTriggerStay:" + _ColliderID);
+        //Debug.Log("OnTriggerStay:" + _ColliderID);
     }
 
     protected virtual void TriggerMotion(MotionManager motion)

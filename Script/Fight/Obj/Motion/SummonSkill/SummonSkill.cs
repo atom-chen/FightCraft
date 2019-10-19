@@ -77,9 +77,10 @@ public class SummonSkill
 
             FightLayerCommon.SetFriendLayer(summonMotion);
             var summonAI = summonMotion.GetComponent<AI_SummonSkill>();
-            summonAI.InitSkillDamageRate(GameDataValue.GetSummonDamageRate(SummonSkillData.Instance._UsingSummon[i].Level));
+            summonAI.InitSkillDamageRate(GameDataValue.GetSummonDamageRate(SummonSkillData.Instance.SummonLevel));
             _SummonMotions.Add(SummonSkillData.Instance._UsingSummon[i].SummonRecord.Id, summonAI);
             summonMotion.Animation.transform.localScale = summonMotion.Animation.transform.localScale * summonAI._ModelSizeFixed;
+            
         }
     }
 

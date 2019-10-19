@@ -502,7 +502,8 @@ public class RoleAttrManager : MonoBehaviour
     public void InitSummonAttr(SummonMotionData summonData)
     {
         _BaseMoveSpeed = 4;
-        _Level = summonData.Level;
+        //_Level = SummonSkillData.Instance.SummonLevel + GameDataValue._SOUL_START_LEVEL;
+        _Level = PlayerDataPack.Instance._SelectedRole.TotalLevel;
         _MonsterValue = 1;
 
         _BaseAttr = GetMonsterAttr(summonData, _Level, MOTION_TYPE.Elite);
@@ -648,6 +649,7 @@ public class RoleAttrManager : MonoBehaviour
             //DamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, ShowDamageType.Normal, 1);
         }
 
+        Debug.Log("damageClass.TotalDamageValue:" + damageClass.TotalDamageValue);
         DamageHP(damageClass.TotalDamageValue + damageClass.AttachDamageValue);
     }
 
@@ -711,13 +713,13 @@ public class RoleAttrManager : MonoBehaviour
             lightingAttack += (int)(attackValue);
             damageClass.NormalDamageValue = 0;
             int lightingDamage = GameDataValue.GetEleDamage(lightingAttack, damageRate, lightingEnhance, lightingResistan);
-            damageClass.IceDamage = Mathf.Max(lightingDamage, 0);
+            damageClass.LightingDamage = Mathf.Max(lightingDamage, 0);
         }
         else
         {
             
             int lightingDamage = GameDataValue.GetEleDamage(lightingAttack, 1, lightingEnhance, lightingResistan);
-            damageClass.IceDamage = Mathf.Max(lightingDamage, 0);
+            damageClass.LightingDamage = Mathf.Max(lightingDamage, 0);
         }
 
         int windAttack = sender._BaseAttr.GetValue(RoleAttrEnum.WindAttackAdd);
@@ -728,13 +730,13 @@ public class RoleAttrManager : MonoBehaviour
             windAttack += (int)(attackValue);
             damageClass.NormalDamageValue = 0;
             int windDamage = GameDataValue.GetEleDamage(windAttack, damageRate, windEnhance, windResistan);
-            damageClass.IceDamage = Mathf.Max(windDamage, 0);
+            damageClass.WindDamage = Mathf.Max(windDamage, 0);
         }
         else
         {
             
             int windDamage = GameDataValue.GetEleDamage(windAttack, 1, windEnhance, windResistan);
-            damageClass.IceDamage = Mathf.Max(windDamage, 0);
+            damageClass.WindDamage = Mathf.Max(windDamage, 0);
         }
 
         int phyEnhance = sender._BaseAttr.GetValue(RoleAttrEnum.PhysicDamageEnhance);
@@ -746,7 +748,7 @@ public class RoleAttrManager : MonoBehaviour
         }
 
         int ignoreDAttack = sender._BaseAttr.GetValue(RoleAttrEnum.IgnoreDefenceAttack);
-        int ignoreDamge = GameDataValue.GetPhyDamage(attackValue, damageRate, phyEnhance, 0, Level);
+        int ignoreDamge = GameDataValue.GetPhyDamage(ignoreDAttack, damageRate, phyEnhance, 0, Level);
         damageClass.NormalDamageValue += ignoreDamge;
 
     }
