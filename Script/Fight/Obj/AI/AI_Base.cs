@@ -664,6 +664,7 @@ public class AI_Base : MonoBehaviour
     protected static int _ReleaseAttackTimes = 8;
     protected static int _ReleaseBuffTimes = 8;
     protected ObjMotionSkillBase _HittingSkill;
+    protected bool _ProtectMode = false;
 
     private void InitReleaseSkillTimes()
     {
@@ -673,14 +674,14 @@ public class AI_Base : MonoBehaviour
         if (FightSkillManager.Instance.ReuseSkillConfig.Equals("0"))
         {
             _ReleaseSkillTimes = 1;
-            _ReleaseBuffTimes = 5;
-            _ReleaseAttackTimes = 4;
+            _ReleaseBuffTimes = 4;
+            _ReleaseAttackTimes = 3;
         }
         else
         {
             _ReleaseSkillTimes = 2;
-            _ReleaseBuffTimes = 8;
-            _ReleaseAttackTimes = 5;
+            _ReleaseBuffTimes = 7;
+            _ReleaseAttackTimes = 4;
             Debug.Log("_ReleaseSkillTimes:" + _ReleaseSkillTimes);
         }
 
@@ -702,7 +703,6 @@ public class AI_Base : MonoBehaviour
         if (impactHit.SkillMotion == null)
             return;
 
-        Debug.Log("OnHitProtect _IsCharSkillDamage");
         if (!impactHit._IsCharSkillDamage)
             return;
 
@@ -732,11 +732,15 @@ public class AI_Base : MonoBehaviour
         //    }
         //}
 
-        
-
         if (_HitDict[impactHit.SkillMotion._ActInput].SkillActTimes != impactHit.SkillMotion._SkillActTimes
             || _HittingSkill != impactHit.SkillMotion)
         {
+            if (_ProtectMode)
+            {
+                ReleaseHit();
+                return;
+            }
+
             _HittingSkill = impactHit.SkillMotion;
 
             if (_HittingSkill != null
@@ -746,6 +750,8 @@ public class AI_Base : MonoBehaviour
                 return;
             }
 
+            _HitDict[impactHit.SkillMotion._ActInput].SkillActTimes = impactHit.SkillMotion._SkillActTimes;
+
             if (_ProtectTimes.ContainsKey(impactHit.SkillMotion._ActInput))
             {
                 --_ProtectTimes[impactHit.SkillMotion._ActInput];
@@ -754,11 +760,10 @@ public class AI_Base : MonoBehaviour
                     _ProtectTimes.Remove(impactHit.SkillMotion._ActInput);
                 }
                 ProtectTimesDirty = true;
+                _ProtectMode = true;
                 UIMessageTip.ShowMessageTip(2300083);
                 return;
             }
-
-            _HitDict[impactHit.SkillMotion._ActInput].SkillActTimes = impactHit.SkillMotion._SkillActTimes;
 
             ++_HitDict[impactHit.SkillMotion._ActInput].HitTimes;
             if (impactHit.SkillMotion is ObjMotionSkillBuff)
@@ -773,6 +778,7 @@ public class AI_Base : MonoBehaviour
             }
             else if (impactHit.SkillMotion is ObjMotionSkillAttack)
             {
+                Debug.Log("Attack hit time:" + _HitDict[impactHit.SkillMotion._ActInput].HitTimes);
                 if (_HitDict[impactHit.SkillMotion._ActInput].HitTimes > _ReleaseAttackTimes)
                 {
                     ReleaseHit(); 
@@ -799,6 +805,7 @@ public class AI_Base : MonoBehaviour
         impact._DamageRate = 0;
         impact.ActImpact(_SelfMotion, _SelfMotion);
         HitProtectedPrefab.ActBuffInstance(_SelfMotion, _SelfMotion);
+        _ProtectMode = false;
     }
 
     private void HitProtectStateChange(StateBase newState)
@@ -812,6 +819,7 @@ public class AI_Base : MonoBehaviour
 
         _HitDict.Clear();
         _HittingSkill = null;
+        _ProtectMode = false;
     }
 
     #endregion

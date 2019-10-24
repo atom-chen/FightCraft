@@ -28,7 +28,7 @@ public class AI_HeroDexNormal : AI_DexHeroBase
 
     private void CloseUpdate()
     {
-        if (_SelfMotion.ActingSkill!= null)
+        if (!IsCancelNormalAttack && _SelfMotion.ActingSkill != null)
             return;
 
         //specil:do not attack when target lie on floor

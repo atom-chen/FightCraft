@@ -720,6 +720,20 @@ public class SummonSkillData : SaveItemBase
         }
     }
 
+    public bool IsCanStage(SummonMotionData motionData)
+    {
+        if (motionData.IsStageMax())
+        {
+            return false;
+        }
+
+        var packMotion = _SummonMatList.GetItem(motionData.ItemDataID);
+        if (packMotion == null)
+            return false;
+
+        return true;
+    }
+
     public bool IsCanAbsorb()
     {
         for (int i = 0; i < SummonSkillData.Instance._SummonMatList._PackItems.Count; ++i)

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class BulletXiShiFeng : BulletBase
 {
@@ -15,6 +16,8 @@ public class BulletXiShiFeng : BulletBase
     private Vector3 _MoveDirect;
     private float _AwakeTime = 0;
 
+    private static List<MotionManager> _HittedMotion = new List<MotionManager>();
+
     public override void Init(MotionManager senderMotion, BulletEmitterBase emitterBase)
     {
         base.Init(senderMotion, emitterBase);
@@ -23,6 +26,8 @@ public class BulletXiShiFeng : BulletBase
         _InitPos = transform.position;
         _MoveRange = 0;
         _IsMoveBack = false;
+
+        _HittedMotion.Clear();
     }
 
     public void SetDirect(Vector3 direct)
@@ -61,7 +66,13 @@ public class BulletXiShiFeng : BulletBase
         var targetMotion = other.GetComponentInParent<MotionManager>();
         if (targetMotion == null)
             return;
-
-        BulletHit(targetMotion);
+        if (Time.time - _AwakeTime < _Stage1Time)
+        {
+            if (!_HittedMotion.Contains(targetMotion))
+            {
+                BulletHit(targetMotion);
+                _HittedMotion.Add(targetMotion);
+            }
+        }
     }
 }

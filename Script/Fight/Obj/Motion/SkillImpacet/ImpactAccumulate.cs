@@ -94,16 +94,12 @@ public class ImpactAccumulate : ImpactBase
 
     public void PlayEffect()
     {
-        _DynamicEffect = SenderMotion.PlayDynamicEffect(_EffectController);
+        SenderMotion.PlaySkillEffect(_EffectController);
     }
 
     public void StopEffect()
     {
-        if (_DynamicEffect != null)
-        {
-            SenderMotion.StopDynamicEffect(_DynamicEffect);
-            _DynamicEffect = -1;
-        }
+        SenderMotion.StopSkillEffect(_EffectController);
     }
 
     #endregion

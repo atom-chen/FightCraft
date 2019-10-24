@@ -993,6 +993,9 @@
 2300086,,,Show only on new difficulty levels,仅在新难度时展示,仅在新难度时展示
 2300087,,,Pass level in time to open the next level,在限定时间内通过才能开启下一级关卡,在限定时间内通过才能开启下一级关卡
 2300088,,,Got {0},获得{0},获得{0}
+2300089,,,Requires gem level 30,需要宝石等级达到30级,需要宝石等级达到30级
+2300090,,,Skill damage <color=#00FF00>{0}%</color>,技能伤害<color=#00FF00>{0}%</color>,技能伤害<color=#00FF00>{0}%</color>
+2300091,,,Combine All,全部合成,全部合成
 2400000,loadingtip,,Bai Qi,白起,白起
 2400001,loadingtip,,Cao Cao,曹操,曹操
 2400002,loadingtip,,Da Ji,妲己,妲己
@@ -1021,20 +1024,18 @@
 2402003,fighttip,timecolor,<color=#FF0000FF>{0}</color>,<color=#FF0000FF>{0}</color>,<color=#FF0000FF>{0}</color>
 2402004,fighttip,,Monster: {0},杀怪:{0},杀怪:{0}
 2402005,fighttip,,Gold: {0},金币:{0},金币:{0}
-2410000,stageTips,,1.Boss:using skill super armor;,1.Boss:释放技能时霸体;,1.Boss:釋放技能時霸體;
-2410001,stageTips,,"2.Elite monster appear;Boss:normal attack super armor,rising explosion",2.精英怪物出现;Boss:普通攻击霸体，起身气爆,2.精英怪物出現;Boss:普通攻擊霸體，起身氣爆
-2410002,stageTips,,3.More elite monster;Boss:protecte buff * 1,3.更多精英怪物;Boss:保护buff * 1,3.更多精英怪物;Boss:保護buff * 1
-2410003,stageTips,,4.Super monster;Boss:crazy buff when hp low,4.超级怪物;Boss:当hp低时狂化,4.超級怪物;Boss:當hp低時狂化
-2410004,stageTips,,5.More super monster;Boss:protecte buff * 2,5.更多超级怪物; Boss:保护buff * 2,5.更多超級怪物; Boss:保護buff * 2
-2410005,stageTips,,6.QiLin monster;Boss:enhance skill,6.麒麟出现;Boss:技能强化,6.麒麟出現;Boss:技能強化
-2410006,stageTips,,7.More QiLin monster;Boss:use skill after attack,7.更多麒麟;Boss:攻击后使用技能,7.更多麒麟;Boss:攻擊後使用技能
-2410007,stageTips,,8.Super QiLin;Boss:crazy buff when appear,8.超级麒麟出现; Boss:登场时狂化,8.超級麒麟出現; Boss:登場時狂化
-2410008,stageTips,,9.More super QiLin;Boss:appear with 4 monsters,9.更多超级麒麟; Boss:出现4个怪物护卫,9.更多超級麒麟; Boss:出現4個怪物護衛
-2410009,stageTips,,10.Random monster enhance buff;Boss:appear with 1 elite monster,10.怪物获得随机增强buff; Boss:出现1个精英怪物护卫,10.怪物獲得隨機增強buff; Boss:出現1個精英怪物護衛
-2410010,stageTips,,11.More random monster enhance buffs;Boss:appear with 2 elite monsters,11.怪物获得更多随机增强buff; Boss:出现2个精英怪物护卫,11.怪物獲得更多隨機增強buff; Boss:出現2個精英怪物護衛
-2410011,stageTips,,12.Boss:appear with 1 super monster,12.Boss:出现1个超级怪物护卫,12.Boss:出現1個超級怪物護衛
-2410012,stageTips,,13.Boss:appear with 2 super monsters,13.Boss:出现2个超级怪物护卫,13.Boss:出現2個超級怪物護衛
-2410013,stageTips,,14.Boss:appear with unlimit monsters,14.Boss:出现无限怪物护卫,14.Boss:出現無限怪物護衛
-2410014,stageTips,,15.Boss:appear with unlimit monsters and elite monsters,15.Boss:出现无限怪物和精英怪物护卫,15.Boss:出現無限怪物和精英怪物護衛
-2410015,stageTips,,16.Boss:appear with unlimit monsters and super monsters,16.Boss:出现无限怪物和超级怪物护卫,16.Boss:出現無限怪物和超級怪物護衛
-2410016,stageTips,,17.Boss:appear with unlimit monsters and QiLin monsters,17.Boss:出现无限怪物和麒麟护卫,17.Boss:出現無限怪物和麒麟護衛
+2410000,stageTips,,1.Boss:using skill super armor;,1.Boss:释放技能时霸体;,1.Boss:释放技能时霸体;
+2410001,stageTips,,"2.Elite monster appear;Boss:normal attack super armor,rising explosion",2.精英怪物出现;Boss:普通攻击霸体，起身气爆,2.精英怪物出现;Boss:普通攻击霸体，起身气爆
+2410002,stageTips,,3.More elite monster;Boss:protecte buff * 1,3.更多精英怪物;Boss:保护buff * 1,3.更多精英怪物;Boss:保护buff * 1
+2410003,stageTips,,4.Super monster;Boss:crazy buff when hp low,4.超级怪物;Boss:当hp低时狂化,4.超级怪物;Boss:当hp低时狂化
+2410004,stageTips,,5.More super monster;Boss:use skill after attack,5.更多超级怪物; Boss:攻击后使用技能,5.更多超级怪物; Boss:攻击后使用技能
+2410005,stageTips,,6.QiLin monster;Boss:enhance skill,6.麒麟出现;Boss:技能强化,6.麒麟出现;Boss:技能强化
+2410006,stageTips,,7.More QiLin monster;Boss:crazy buff when appear,7.更多麒麟;Boss:登场时狂化,7.更多麒麟;Boss:登场时狂化
+2410007,stageTips,,8.Super QiLin;Boss:appear with 4 monsters,8.超级麒麟出现; Boss:出现4个怪物护卫,8.超级麒麟出现; Boss:出现4个怪物护卫
+2410008,stageTips,,9.More super QiLin;Boss:appear with 1 elite monster,9.更多超级麒麟; Boss:出现精英怪物护卫,9.更多超级麒麟; Boss:出现精英怪物护卫
+2410009,stageTips,,10.Random monster enhance buff;Boss:appear with 1 super monster,10.怪物获得随机增强buff; Boss:出现超级怪物护卫,10.怪物获得随机增强buff; Boss:出现超级怪物护卫
+2410010,stageTips,,11.More random monster enhance buffs;Boss:appear with unlimit monsters,11.怪物获得更多随机增强buff; Boss:无限怪物护卫,11.怪物获得更多随机增强buff; Boss:无限怪物护卫
+2410011,stageTips,,12.Boss:appear with unlimit monsters and elite monsters,12.Boss:无限怪物和精英怪物护卫,12.Boss:无限怪物和精英怪物护卫
+2410012,stageTips,,13.Boss:appear with unlimit monsters and super monsters,13.Boss:无限怪物和超级怪物护卫,13.Boss:无限怪物和超级怪物护卫
+2410013,stageTips,,14.Boss:appear with unlimit monsters and QiLin monsters,14.Boss:无限怪物和麒麟护卫,14.Boss:无限怪物和麒麟护卫
+2410014,stageTips,,15.Boss:appear with unlimit monsters and super QiLin monsters,15.Boss:无限怪物和超级麒麟护卫,15.Boss:无限怪物和超级麒麟护卫

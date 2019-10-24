@@ -765,6 +765,8 @@ public class GemData : DataPackBase
         hash.Add("ItemGem", targetGem);
         GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_EQUIP_GEM_COMBINE, this, hash);
 
+        GemSuit.Instance.IsActSet();
+
         return true;
     }
 
@@ -809,7 +811,7 @@ public class GemData : DataPackBase
 
             if (classID > 0)
             {
-                if (gemData.IsVolid() && gemData.GemRecord.Class == classID && gemData.GemRecord.Level >= minLevel)
+                if (gemData.IsVolid() && gemData.GemRecord.Class == classID && gemData.Level >= minLevel)
                 {
                     if (classItem == null)
                     {
@@ -823,7 +825,10 @@ public class GemData : DataPackBase
             }
             else
             {
-                classItem = gemData;
+                if (gemData.IsVolid() && gemData.Level >= minLevel)
+                {
+                    classItem = gemData;
+                }
             }
         }
 

@@ -26,6 +26,7 @@ public class UIStageDiffTips : UIPopBase
             if (_LastShowDiff < stageDiff)
             {
                 _LastShowDiff = stageDiff;
+                _LastShowDiff = Mathf.Clamp(_LastShowDiff, 0, 16);
                 ShowAsyn(callBack);
             }
             else
@@ -39,6 +40,7 @@ public class UIStageDiffTips : UIPopBase
         else
         {
             _LastShowDiff = stageDiff;
+            _LastShowDiff = Mathf.Clamp(_LastShowDiff, 0, 16);
             ShowAsyn(callBack);
         }
     }
@@ -47,7 +49,7 @@ public class UIStageDiffTips : UIPopBase
 
     #region 
 
-    public UIContainerBase _TipsContainer;
+    public UIContainerSelect _TipsContainer;
     public Toggle _OnlyShowDiff;
     public Action _CallBack;
 
@@ -60,12 +62,11 @@ public class UIStageDiffTips : UIPopBase
             _CallBack = (Action)hash["CallBack"];
         }
         List<int> strTips = new List<int>();
-        for (int i = 0; i <= 16; ++i)
+        for (int i = 0; i <= 14; ++i)
         {
             strTips.Add(i);
         }
-
-        _TipsContainer.InitContentItem(strTips);
+        _TipsContainer.InitSelectContent(strTips, new List<int>() { _LastShowDiff });
 
         _OnlyShowDiff.isOn = _IsOnlyShowDiff;
     }

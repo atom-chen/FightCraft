@@ -187,14 +187,23 @@ public class LogicManager
     public void ExitFightScene()
     {
         GameCore.Instance.UIManager.DestoryAllUI();
-        GameObject.Destroy(FightManager.Instance.gameObject);
+        DestoryFightLogic();
         UILoadingScene.ShowAsyn(GameDefine.GAMELOGIC_SCENE_NAME);
 
         //UIMainFun.ShowAsynInFight();
     }
 
+    public void DestoryFightLogic()
+    {
+        if (FightManager.Instance != null)
+        {
+            GameObject.Destroy(FightManager.Instance.gameObject);
+        }
+    }
+
     public void InitFightScene()
     {
+        DestoryFightLogic();
         GameObject fightGO = new GameObject("FightManager");
         fightGO.AddComponent<FightManager>();
     }

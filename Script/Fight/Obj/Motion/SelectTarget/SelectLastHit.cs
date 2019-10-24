@@ -18,6 +18,8 @@ public class SelectLastHit : SelectBase
         }
         foreach (var skillMotion in _ObjMotion.ActingSkill._SkillHitMotions)
         {
+            if (skillMotion == null)
+                continue;
 
             foreach (var impact in _ImpactList)
             {
@@ -39,6 +41,11 @@ public class SelectLastHit : SelectBase
             {
                 _ObjMotion.PlayAudio(ResourcePool.Instance._CommonAudio[_HittedAudio]);
             }
+        }
+
+        if (_ClearLastSelect)
+        {
+            _ObjMotion.ActingSkill._SkillHitMotions.Clear();
         }
     }
 

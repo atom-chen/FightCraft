@@ -133,12 +133,18 @@ public class EventController : MonoBehaviour
             if (_HandleList.ContainsKey(_EventList[i].EventType))
             {
                 _EventList[i].EventArgs.Add("EVENT_TYPE", _EventList[i].EventType);
+                List<HandlerInfo> invalidHandle = new List<HandlerInfo>();
                 for (int j = 0; j < _HandleList[_EventList[i].EventType].Count; ++j)
                 {
                     EventDelegate handler = _HandleList[_EventList[i].EventType][j]._EventDelegate;
+                    if (handler == null)
+                    {
+                        invalidHandle.Add(_HandleList[_EventList[i].EventType][j]);
+                        continue;
+                    }
                     try
                     {
-                        handler(_EventList[i].Sender, _EventList[i].EventArgs);
+                        handler.Invoke(_EventList[i].Sender, _EventList[i].EventArgs);
                         if (_EventList[i].EventArgs.ContainsKey("StopEvent"))
                         {
                             break;
@@ -146,9 +152,15 @@ public class EventController : MonoBehaviour
                     }
                     catch (Exception ex)
                     {
-                        Debug.LogError("SkillEventController DispatchEvent Exception EventType:" + _EventList[i].EventType +
+                        invalidHandle.Add(_HandleList[_EventList[i].EventType][j]);
+                        Debug.LogError("EventController DispatchEvent Exception EventType:" + _EventList[i].EventType +
                             " handleName:" + handler.ToString() + " e:" + ex);
                     }
+                }
+
+                for (int j = 0; j < invalidHandle.Count; ++j)
+                {
+                    _HandleList[_EventList[i].EventType].Remove(invalidHandle[j]);
                 }
             }
         }

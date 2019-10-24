@@ -2132,7 +2132,7 @@ public class GameDataValue
 
     public static float _MotionNormalHPMofify = 1.0f;
     public static float _MotionEliteHPMofify = 2.5f;
-    public static float _MotionExEliteHPMofify = 5.0f;
+    public static float _MotionExEliteHPMofify = 3.0f;
     public static float _MotionHeroHPMofify = 15.0f;
 
     public static int GetMonsterHP(MonsterBaseRecord monsterBase, int roleLv, MOTION_TYPE monsterType)

@@ -8,6 +8,7 @@ public class UIHPItem : UIItemBase
     public Slider _HPProcess;
     public Slider _MPProcess;
     public GameObject _EliteFlag;
+    public GameObject _ExEliteFlag;
 
     private RectTransform _RectTransform;
     public MotionManager _ObjMotion;
@@ -49,15 +50,21 @@ public class UIHPItem : UIItemBase
             _SpBuffNameTexts[i].gameObject.SetActive(false);
         }
 
-        if (_ObjMotion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.Normal)
+        if (_ObjMotion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.Normal || _ObjMotion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.Hero)
         {
             _EliteFlag.SetActive(false);
+            _ExEliteFlag.SetActive(false);
         }
-        else
+        else if(_ObjMotion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.Elite)
         {
             _EliteFlag.SetActive(true);
+            _ExEliteFlag.SetActive(false);
         }
-        
+        else if (_ObjMotion.RoleAttrManager.MotionType == Tables.MOTION_TYPE.ExElite)
+        {
+            _EliteFlag.SetActive(true);
+            _ExEliteFlag.SetActive(true);
+        }
     }
 
 

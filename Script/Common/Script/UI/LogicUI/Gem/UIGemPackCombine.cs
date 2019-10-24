@@ -18,6 +18,16 @@ public class UIGemPackCombine : UIBase
         ShowPackItems();
         InitCopyPack();
 
+        _BtnCombineAll.SetActive(false);
+        foreach (var gemItem in GemData.Instance.PackGemDatas._PackItems)
+        {
+            if (gemItem.ItemStackNum >= 10)
+            {
+                _BtnCombineAll.SetActive(true);
+                break;
+            }
+        }
+
         //UIGemPack.RefreshPack();
     }
 
@@ -114,6 +124,7 @@ public class UIGemPackCombine : UIBase
 
     public List<UIGemItem> _CombinePack;
     public List<ItemGem> _CombineGems;
+    public GameObject _BtnCombineAll;
 
     private List<UIGemItem> _CopyPack;
 
@@ -189,7 +200,7 @@ public class UIGemPackCombine : UIBase
         {
             TestCombineAll(i);
         }
-
+        ResetPacket();
     }
 
     public static void CombineAll()

@@ -80,7 +80,7 @@ public class GemSuit
         {
             var gemInfo = GemData.Instance.GetGemClassMax(gemRecord, gemSet.MinGemLv, suitGems);
 
-            if (gemInfo == null || !gemInfo.IsVolid() || gemInfo.GemRecord.Level < gemSet.MinGemLv)
+            if (gemInfo == null || !gemInfo.IsVolid() || gemInfo.Level < gemSet.MinGemLv)
             {
                 return -1;
             }
@@ -172,7 +172,7 @@ public class GemSuit
                     break;
                 }
 
-                if (i == gemSuit.Value.Gems.Count - 1)
+                if (i == gemSuit.Value.Gems.Count - 1 && gemSuit.Value.MinGemLv <= _ActLevel)
                 {
                     _ActSet = gemSuit.Value;
                     break;
@@ -219,7 +219,7 @@ public class GemSuit
             {
                 roleAttr.AddValue((RoleAttrEnum)ActSetAttrs[i].AttrParams[0], ActSetAttrs[i].AttrParams[1]);
             }
-            else
+            else if(ActSetAttrs[i].AttrParams[1] > 0)
             {
                 roleAttr.AddExAttr(RoleAttrImpactManager.GetAttrImpact(ActSetAttrs[i]));
             }

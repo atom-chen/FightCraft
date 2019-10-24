@@ -26,6 +26,7 @@ namespace Tables
         public List<int> BaseAttr { get; set; }
         public List<CommonItemRecord> SpDrops { get; set; }
         public float AtkRate { get; set; }
+        public float ModelScale { get; set; }
         public MonsterBaseRecord(DataRecord dataRecord)
         {
             if (dataRecord != null)
@@ -68,6 +69,7 @@ namespace Tables
                 }
             }
             recordStrList.Add(TableWriteBase.GetWriteStr(AtkRate));
+            recordStrList.Add(TableWriteBase.GetWriteStr(ModelScale));
 
             return recordStrList.ToArray();
         }
@@ -201,6 +203,7 @@ namespace Tables
                     pair.Value.SpDrops.Add(null);
                 }
                 pair.Value.AtkRate = TableReadBase.ParseFloat(pair.Value.ValueStr[28]);
+                pair.Value.ModelScale = TableReadBase.ParseFloat(pair.Value.ValueStr[29]);
             }
         }
     }

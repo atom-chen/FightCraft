@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-public class UIStageDiffTipsItem : UIItemBase
+public class UIStageDiffTipsItem : UIItemSelect
 {
 
     #region 

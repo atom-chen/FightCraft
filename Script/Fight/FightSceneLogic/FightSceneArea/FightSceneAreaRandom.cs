@@ -648,42 +648,42 @@ public class FightSceneAreaRandom : FightSceneAreaBase
                 }
                 break;
             case 2:
-                if (eliteRate < 4000)
+                if (eliteRate < 3000)
                 {
                     stageInfo.EliteIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
                 }
                 break;
             case 3:
-                if (eliteRate < 3000)
+                if (eliteRate < 2000)
                 {
                     stageInfo.EliteIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
                 }
-                else if(eliteRate < 5000)
+                else if(eliteRate < 3000)
                 {
                     stageInfo.ExIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
                 }
 
                 break;
             case 4:
-                if (eliteRate < 300)
+                if (eliteRate < 2000)
                 {
                     stageInfo.EliteIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
                 }
-                else if (eliteRate < 6000)
+                else if (eliteRate < 3500)
                 {
                     stageInfo.ExIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
                 }
                 break;
             case 5:
-                if (eliteRate < 2500)
+                if (eliteRate < 2000)
                 {
                     stageInfo.EliteIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
                 }
-                else if (eliteRate < 5000)
+                else if (eliteRate < 3500)
                 {
                     stageInfo.ExIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
                 }
-                else if (eliteRate < 6500)
+                else if (eliteRate < 4000)
                 {
                     if (randomArea.SceneQiLinCnt < 1)
                     {
@@ -695,15 +695,15 @@ public class FightSceneAreaRandom : FightSceneAreaBase
 
                 break;
             case 6:
-                if (eliteRate < 2500)
+                if (eliteRate < 1500)
                 {
                     stageInfo.EliteIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
                 }
-                else if (eliteRate < 5000)
+                else if (eliteRate < 3000)
                 {
                     stageInfo.ExIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
                 }
-                else if (eliteRate < 7500)
+                else if (eliteRate < 3500)
                 {
                     if (randomArea.SceneQiLinCnt < 1)
                     {
@@ -714,15 +714,15 @@ public class FightSceneAreaRandom : FightSceneAreaBase
                 }
                 break;
             case 7:
-                if (eliteRate < 2500)
+                if (eliteRate < 1500)
                 {
                     stageInfo.EliteIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
                 }
-                else if (eliteRate < 5000)
+                else if (eliteRate < 3000)
                 {
                     stageInfo.ExIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
                 }
-                else if (eliteRate < 7500)
+                else if (eliteRate < 4000)
                 {
                     if (randomArea.SceneQiLinCnt < 1)
                     {
@@ -733,15 +733,15 @@ public class FightSceneAreaRandom : FightSceneAreaBase
                 }
                 break;
             case 8:
-                if (eliteRate < 2500)
+                if (eliteRate < 1500)
                 {
                     stageInfo.EliteIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
                 }
-                else if (eliteRate < 6000)
+                else if (eliteRate < 3000)
                 {
                     stageInfo.ExIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
                 }
-                else if (eliteRate < 8500)
+                else if (eliteRate < 4000)
                 {
                     if (randomArea.SceneQiLinCnt < 1)
                     {
@@ -752,15 +752,15 @@ public class FightSceneAreaRandom : FightSceneAreaBase
                 }
                 break;
             case 9:
-                if (eliteRate < 2500)
+                if (eliteRate < 1500)
                 {
                     stageInfo.EliteIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
                 }
-                else if (eliteRate < 6000)
+                else if (eliteRate < 3000)
                 {
                     stageInfo.ExIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
                 }
-                else if (eliteRate < 8500)
+                else if (eliteRate < 4000)
                 {
                     if (randomArea.SceneQiLinCnt < 1)
                     {
@@ -772,15 +772,15 @@ public class FightSceneAreaRandom : FightSceneAreaBase
                 stageInfo.RandomBuffCnt = 1;
                 break;
             case 10:
-                if (eliteRate < 2500)
+                if (eliteRate < 1500)
                 {
                     stageInfo.EliteIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
                 }
-                else if (eliteRate < 6000)
+                else if (eliteRate < 3000)
                 {
                     stageInfo.ExIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
                 }
-                else if (eliteRate < 8500)
+                else if (eliteRate < 4000)
                 {
                     if (randomArea.SceneQiLinCnt < 1)
                     {
@@ -792,15 +792,15 @@ public class FightSceneAreaRandom : FightSceneAreaBase
                 stageInfo.RandomBuffCnt = 2;
                 break;
             default:
-                if (eliteRate < 2500)
+                if (eliteRate < 1500)
                 {
                     stageInfo.EliteIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
                 }
-                else if (eliteRate < 7200)
+                else if (eliteRate < 3000)
                 {
                     stageInfo.ExIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
                 }
-                else if (eliteRate < 10000)
+                else if (eliteRate < 4000)
                 {
                     if (randomArea.SceneQiLinCnt < 1)
                     {
@@ -870,26 +870,27 @@ public class FightSceneAreaRandom : FightSceneAreaBase
             case 4:
                 aiBoss._IsContainsNormalAtk = true;
                 aiBoss._IsRiseBoom = true;
-                aiBoss.InitProtectTimes(2);
+                aiBoss.InitProtectTimes(1);
                 aiBoss._StageBuffHpPersent.Add(0.5f);
+                aiBoss.IsCancelNormalAttack = true;
                 break;
             case 5:
                 aiBoss._IsContainsNormalAtk = true;
                 aiBoss._IsRiseBoom = true;
-                aiBoss.InitProtectTimes(2);
+                aiBoss.InitProtectTimes(1);
                 aiBoss._StageBuffHpPersent.Add(0.5f);
                 break;
             case 6:
                 aiBoss._IsContainsNormalAtk = true;
                 aiBoss._IsRiseBoom = true;
-                aiBoss.InitProtectTimes(2);
+                aiBoss.InitProtectTimes(1);
                 aiBoss._StageBuffHpPersent.Add(0.5f);
                 aiBoss.IsCancelNormalAttack = true;
                 break;
             case 7:
                 aiBoss._IsContainsNormalAtk = true;
                 aiBoss._IsRiseBoom = true;
-                aiBoss.InitProtectTimes(2);
+                aiBoss.InitProtectTimes(1);
                 aiBoss._StageBuffHpPersent.Add(2f);
                 aiBoss._StageBuffHpPersent.Add(0.6f);
                 aiBoss.IsCancelNormalAttack = true;
@@ -897,7 +898,7 @@ public class FightSceneAreaRandom : FightSceneAreaBase
             default:
                 aiBoss._IsContainsNormalAtk = true;
                 aiBoss._IsRiseBoom = true;
-                aiBoss.InitProtectTimes(2);
+                aiBoss.InitProtectTimes(1);
                 aiBoss._StageBuffHpPersent.Add(2f);
                 aiBoss._StageBuffHpPersent.Add(0.6f);
                 aiBoss.IsCancelNormalAttack = true;
@@ -917,46 +918,33 @@ public class FightSceneAreaRandom : FightSceneAreaBase
             case 4:
             case 5:
             case 6:
-            case 7:
                 break;
-            case 8:
+            case 7:
                 fishInfo.FishCnt = 4;
                 break;
-            case 9:
+            case 8:
                 fishInfo.FishCnt = 4;
                 fishInfo.ElitRate = 1;
                 break;
             case 10:
-                fishInfo.FishCnt = 4;
-                fishInfo.ElitRate = 2;
-                break;
-            case 11:
-                fishInfo.FishCnt = 4;
-                fishInfo.ExRate = 1;
-                break;
-            case 12:
-                fishInfo.FishCnt = 4;
-                fishInfo.ExRate = 2;
-                break;
-            case 13:
                 fishInfo.FishCnt = -1;
                 break;
-            case 14:
+            case 11:
                 fishInfo.FishCnt = -1;
                 fishInfo.ElitRate = 0.5f;
                 break;
-            case 15:
+            case 12:
                 fishInfo.FishCnt = -1;
                 fishInfo.ElitRate = 0.4f;
                 fishInfo.ExRate = 0.25f;
                 break;
-            case 16:
+            case 13:
                 fishInfo.FishCnt = -1;
                 fishInfo.ElitRate = 0.3f;
                 fishInfo.ExRate = 0.25f;
                 fishInfo.QiLinRate = 0.15f;
                 break;
-            case 17:
+            case 14:
                 fishInfo.FishCnt = -1;
                 fishInfo.ElitRate = 0.2f;
                 fishInfo.ExRate = 0.2f;

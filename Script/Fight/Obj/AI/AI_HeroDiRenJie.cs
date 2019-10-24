@@ -28,7 +28,7 @@ public class AI_HeroDiRenJie : AI_DexHeroBase
 
     private void CloseUpdate()
     {
-        if (_SelfMotion.ActingSkill!= null)
+        if (!IsCancelNormalAttack && _SelfMotion.ActingSkill != null)
             return;
 
         if (StartSkill())

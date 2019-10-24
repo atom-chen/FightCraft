@@ -16,6 +16,7 @@ public class UISummonSkillItem : UIItemSelect
     public GameObject[] _Stars;
     public GameObject _ArraySelect;
     public GameObject _EquipTag;
+    public GameObject _StageTips;
     public bool _IsLargeIcon = false;
 
     protected SummonMotionData _SummonMotionData;
@@ -113,6 +114,18 @@ public class UISummonSkillItem : UIItemSelect
             else
             {
                 _EquipTag.SetActive(false);
+            }
+        }
+
+        if (_StageTips != null)
+        {
+            if (SummonSkillData.Instance.IsCanStage(summonData))
+            {
+                _StageTips.SetActive(true);
+            }
+            else
+            {
+                _StageTips.SetActive(false);
             }
         }
     }

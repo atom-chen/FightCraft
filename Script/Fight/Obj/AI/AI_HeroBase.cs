@@ -13,7 +13,7 @@ public class AI_HeroBase : AI_Base
 
         //BuffStar();
         BuffBlockSummon();
-        IsCancelNormalAttack = true;
+        //IsCancelNormalAttack = false;
     }
 
     protected override void AIUpdate()
@@ -32,8 +32,11 @@ public class AI_HeroBase : AI_Base
 
     protected override bool StartSkill()
     {
-        if (!IsRandomActSkill())
-            return false;
+        if (!IsCancelNormalAttack || (IsCancelNormalAttack && _SelfMotion.ActingSkill != _AISkills[0].SkillBase))
+        {
+            if (!IsRandomActSkill())
+                return false;
+        }
 
         if (Time.time - _AfterSkillTime < _AfterSkillWait)
             return false;
@@ -72,13 +75,20 @@ public class AI_HeroBase : AI_Base
         {
             if (_SelfMotion.ActingSkill == _AISkills[0].SkillBase)
             {
+                int cancelSkillIdx = -1;
                 for (int i = 1; i < _AISkills.Count; ++i)
                 {
-                    float skillCD = Time.time - _AISkills[i].LastUseSkillTime;
-                    if (skillCD < _AISkills[i].SkillInterval * 0.5f)
+                    float skillCD = _AISkills[i].SkillInterval  - (Time.time - _AISkills[i].LastUseSkillTime);
+                    float lastCD = _AISkills[0].FirstHitTime / _SelfMotion.RoleAttrManager.AttackSpeed + 0.1f;
+                    if (skillCD < lastCD)
                     {
-                        _AISkills[i].LastUseSkillTime = Time.time - _AISkills[i].SkillInterval + _AISkills[i].FirstHitTime / _SelfMotion.RoleAttrManager.AttackSpeed + 0.05f;
-                        break;
+                        _AISkills[i].LastUseSkillTime = Time.time - _AISkills[i].SkillInterval + lastCD;
+                    }
+                    else if (cancelSkillIdx < 0 && skillCD < _AISkills[i].SkillInterval * 0.25f)
+                    {
+                        cancelSkillIdx = i;
+                        _AISkills[i].LastUseSkillTime = Time.time - _AISkills[i].SkillInterval + lastCD;
+                        _AfterSkillWait = lastCD;
                     }
                 }
             }
@@ -95,6 +105,10 @@ public class AI_HeroBase : AI_Base
         set
         {
             _IsCancelNormalAttack = value;
+            if (_IsCancelNormalAttack)
+            {
+                _AISkills[0].SkillBase._SkillMotionPrior = 50;
+            }
         }
     }
 

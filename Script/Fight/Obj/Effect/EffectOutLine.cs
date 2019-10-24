@@ -29,7 +29,7 @@ public class EffectOutLine : EffectController
         if (_SkinnedMesh != null)
         {
             RemoveMaterial();
-            _SkinnedMesh = null;
+            
         }
     }
 
@@ -44,6 +44,7 @@ public class EffectOutLine : EffectController
     private static Dictionary<SkinnedMeshRenderer, int> _RenderMatCnt = new Dictionary<SkinnedMeshRenderer, int>();
     public Material _MatInstance;
 
+    private UnityEngine.Rendering.ShadowCastingMode _OrgShadowMode = UnityEngine.Rendering.ShadowCastingMode.Off;
     private void AddMaterial()
     {
         if (_SkinnedMesh == null)
@@ -54,7 +55,11 @@ public class EffectOutLine : EffectController
             if (go != null)
             {
                 _SkinnedMesh = gameObject.GetComponent<SkinnedMeshRenderer>();
-                _SkinnedMesh.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                if (_SkinnedMesh.shadowCastingMode != UnityEngine.Rendering.ShadowCastingMode.Off)
+                {
+                    _OrgShadowMode = _SkinnedMesh.shadowCastingMode;
+                }
+                //_SkinnedMesh.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             }
             else
             {
@@ -65,7 +70,11 @@ public class EffectOutLine : EffectController
                         continue;
 
                     _SkinnedMesh = objMesh;
-                    _SkinnedMesh.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                    if (_SkinnedMesh.shadowCastingMode != UnityEngine.Rendering.ShadowCastingMode.Off)
+                    {
+                        _OrgShadowMode = _SkinnedMesh.shadowCastingMode;
+                    }
+                    //_SkinnedMesh.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
                 }
             }
             //_SkinnedMesh = motion.GetComponentInChildren<SkinnedMeshRenderer>();
@@ -97,7 +106,6 @@ public class EffectOutLine : EffectController
             }
 
             _SkinnedMesh.materials = newMaterialArray;
-
         }
     }
 
@@ -107,6 +115,7 @@ public class EffectOutLine : EffectController
 
         if (matHandleCnt > 0)
             return;
+
         //foreach (SkinnedMeshRenderer curMeshRender in meshes)
         {
             int newMaterialArrayCount = 0;
@@ -136,7 +145,10 @@ public class EffectOutLine : EffectController
                 }
 
                 _SkinnedMesh.materials = newMaterialArray;
+                _SkinnedMesh.shadowCastingMode = _OrgShadowMode;
             }
+
+            _SkinnedMesh = null;
         }
     }
 

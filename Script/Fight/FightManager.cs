@@ -361,25 +361,28 @@ public class FightManager : InstanceBase<FightManager>
         if (monsterBase.MotionType == Tables.MOTION_TYPE.Elite)
         {
             aiBase.InitSkillDamageRate(0.6f);
-            mainBase.Animation.transform.localScale = mainBase.Animation.transform.localScale * 1.1f;
-            mainBase.NavAgent.radius = mainBase.NavAgent.radius * mainBase.Animation.transform.localScale.x * 1.1f;
+            mainBase.Animation.transform.localScale = Vector3.one * monsterBase.ModelScale * 1.1f;
+            mainBase.NavAgent.radius = mainBase.NavAgent.radius * monsterBase.ModelScale * 1.1f;
         }
         else if (monsterBase.MotionType == Tables.MOTION_TYPE.ExElite)
         {
             aiBase.InitSkillDamageRate(0.6f);
-            mainBase.Animation.transform.localScale = mainBase.Animation.transform.localScale * 1.2f;
-            mainBase.NavAgent.radius = mainBase.NavAgent.radius * mainBase.Animation.transform.localScale.x * 1.2f;
+            mainBase.Animation.transform.localScale = Vector3.one * monsterBase.ModelScale * 1.2f;
+            mainBase.NavAgent.radius = mainBase.NavAgent.radius * monsterBase.ModelScale * 1.2f;
         }
         else if(monsterBase.MotionType == Tables.MOTION_TYPE.Hero)
         {
             aiBase.InitSkillDamageRate(1.0f);
+            mainBase.Animation.transform.localScale = Vector3.one * monsterBase.ModelScale;
+            mainBase.NavAgent.radius = mainBase.NavAgent.radius * monsterBase.ModelScale;
             //mainBase.Animation.transform.localScale = mainBase.Animation.transform.localScale * 0.8f;
             //mainBase.NavAgent.radius = mainBase.NavAgent.radius * mainBase.Animation.transform.localScale.x * 0.8f;
         }
         else
         {
             aiBase.InitSkillDamageRate(0.3f);
-            mainBase.NavAgent.radius = mainBase.NavAgent.radius * mainBase.Animation.transform.localScale.x;
+            mainBase.Animation.transform.localScale = Vector3.one * monsterBase.ModelScale;
+            mainBase.NavAgent.radius = mainBase.NavAgent.radius * monsterBase.ModelScale;
         }
         aiBase.InitMonsterDamageRate();
 

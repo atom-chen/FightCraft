@@ -1,31 +1,16 @@
-gem suit tips
-equip impact CD
+//AI cancel attack
+//shadow time
+ex qilin
+zouwang hit perpare time
+archer muti arrow
+xishi arrow
+
 loading tips
-summon hide/ stage tips
-summon stage damage rate
-//ticket drop
-//weapon drop
-//summon attack normal monster
-//exit tip
-//gem lv up error
-//diff 3 bati 
-//direnjie bullet
-//diff3 protect hit
-//equiping gem combine
-//elite back
-//elite flag
-//zhouwang collider
--model reuse remain effect
-//digong effect layou
-*weapon model attr not match
+summon hide
 sound
--hit protect
--exattack hit protect
 teleport process
-//buff hit fly hight(for accamulate)
-//sell selected quality
-*girl skill1 ex add hit range
 fail tip
 weapon drop rate
 20 /purple rate
 combat tip
+equip impact CD

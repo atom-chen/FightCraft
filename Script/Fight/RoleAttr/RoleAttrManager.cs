@@ -649,7 +649,6 @@ public class RoleAttrManager : MonoBehaviour
             //DamagePanel.ShowItem((Vector3)resultHash["DamagePos"], damageClass.TotalDamageValue, damageClass.AttachDamageValue, ShowDamageType.Normal, 1);
         }
 
-        Debug.Log("damageClass.TotalDamageValue:" + damageClass.TotalDamageValue);
         DamageHP(damageClass.TotalDamageValue + damageClass.AttachDamageValue);
     }
 
@@ -893,6 +892,9 @@ public class RoleAttrManager : MonoBehaviour
 
     public void SendDamageEvent(MotionManager targetMotion, float skillDamageRate, ElementType damageType, ImpactBase impactBase, Vector3 damagePosition)
     {
+        if (targetMotion == null || targetMotion.RoleAttrManager == null)
+            return;
+
         Hashtable hash = new Hashtable();
         hash.Add("SkillDamageRate", skillDamageRate);
         hash.Add("DamagePos", damagePosition);

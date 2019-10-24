@@ -1,10 +1,7 @@
 fileFormatVersion: 2
-guid: 74965b34e640ffa43867e0c9990d5f0a
-timeCreated: 1526625326
-licenseType: Pro
-NativeFormatImporter:
+guid: 907a9f7ab1738344891ffe6e994b6280
+PrefabImporter:
   externalObjects: {}
-  mainObjectFileID: 100100000
   userData: 
-  assetBundleName: asset/bullet/bullets/element/bullet_lighteninghit
-  assetBundleVariant: common
+  assetBundleName: 
+  assetBundleVariant: 

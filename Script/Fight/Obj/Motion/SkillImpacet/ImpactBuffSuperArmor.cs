@@ -3,6 +3,7 @@ using System.Collections;
 
 public class ImpactBuffSuperArmor : ImpactBuff
 {
+    public EffectController _BuffSkillEffect;
     public EffectController _HitEffect;
     public float _BlockTime = 0.0f;
 
@@ -15,11 +16,17 @@ public class ImpactBuffSuperArmor : ImpactBuff
         {
             _BuffOwner.TryEnterState(_BuffOwner._StateIdle);
         }
+        if (_BuffSkillEffect != null)
+        {
+            _BuffOwner.PlaySkillEffect(_BuffSkillEffect);
+        }
+        _BuffEffect = null;
         base.ActBuff(senderManager, reciverManager);
     }
 
     public override void RemoveBuff(MotionManager reciverManager)
     {
+        _BuffOwner.StopSkillEffect(_BuffSkillEffect);
         base.RemoveBuff(reciverManager);
     }
 
