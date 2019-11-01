@@ -64,7 +64,7 @@ public class ImpactBuffAttrAdd : ImpactBuff
         }
         else if (_AddType == ADDTYPE.Persent)
         {
-            value = (int)(originValue * (1 +_AddValue + ExAddValue));
+            value = (int)(originValue * (1 + _AddValue + ExAddValue));
         }
 
         reciverManager.RoleAttrManager.SetBaseAttr(targetAttr, value);

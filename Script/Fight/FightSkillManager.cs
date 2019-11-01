@@ -139,6 +139,8 @@ public class FightSkillManager
 
     public void SetReuse(ObjMotionSkillBase skillBase, float reuseTime)
     {
+        
+
         if (skillBase == null)
         {
             for (int i = 0; i < _FightSkillDict.Count; ++i)
@@ -176,6 +178,9 @@ public class FightSkillManager
         }
         else
         {
+            if (skillBase._ActInput.Equals("e"))
+                return;
+
             var skillInfo = _FightSkillDict.Find((skillinfo) =>
             {
                 if (skillinfo._SkillInput == skillBase._ActInput)
@@ -317,9 +322,18 @@ public class FightSkillManager
                 _ReuseSkillInput = _ReuseSkillConfig;
                 SetReuse(motionSkill, _ReuseLast);
             }
+            _LastUseSkill = motionSkill;
         }
 
-        _LastUseSkill = motionSkill;
+        if (!motionSkill._ActInput.Equals("e"))
+        {
+            _LastUseSkill = motionSkill;
+        }
+    }
+
+    public void ResetLastUseSkill()
+    {
+        _LastUseSkill = null;
     }
 
     public void ResetReuseSkill()

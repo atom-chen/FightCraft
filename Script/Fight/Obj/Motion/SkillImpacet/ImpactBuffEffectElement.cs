@@ -13,30 +13,32 @@ public class ImpactBuffEffectElement : ImpactBuff
         if (_EffectElement == ElementType.None)
             return;
 
-        foreach (var skillInfo in reciverManager._StateSkill._SkillMotions)
-        {
-            for (int i = 0; i < skillInfo.Value._NextEffect.Count; ++i)
-            {
-                if (skillInfo.Value._NextEffect[i] != null)
-                {
-                    skillInfo.Value._NextEffect[i].SetEffectColor(_EffectElement);
-                }
-            }
-        }
+        reciverManager._SkillElement = _EffectElement;
+        //foreach (var skillInfo in reciverManager._StateSkill._SkillMotions)
+        //{
+        //    for (int i = 0; i < skillInfo.Value._NextEffect.Count; ++i)
+        //    {
+        //        if (skillInfo.Value._NextEffect[i] != null)
+        //        {
+        //            skillInfo.Value._NextEffect[i].SetEffectColor(_EffectElement);
+        //        }
+        //    }
+        //}
     }
 
     public override void RemoveBuff(MotionManager reciverManager)
     {
         base.RemoveBuff(reciverManager);
 
-        foreach (var skillInfo in reciverManager._StateSkill._SkillMotions)
-        {
-            for (int i = 0; i < skillInfo.Value._NextEffect.Count; ++i)
-            {
-                if (skillInfo.Value._NextEffect[i] != null)
-                    skillInfo.Value._NextEffect[i].SetEffectColor(ElementType.None);
-            }
-        }
+        reciverManager._SkillElement = ElementType.Physic;
+        //foreach (var skillInfo in reciverManager._StateSkill._SkillMotions)
+        //{
+        //    for (int i = 0; i < skillInfo.Value._NextEffect.Count; ++i)
+        //    {
+        //        if (skillInfo.Value._NextEffect[i] != null)
+        //            skillInfo.Value._NextEffect[i].SetEffectColor(ElementType.None);
+        //    }
+        //}
     }
     
 }

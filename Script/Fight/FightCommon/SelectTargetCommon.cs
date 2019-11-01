@@ -27,7 +27,7 @@ public class SelectTargetCommon
         return null;
     }
 
-    private static bool IsTargetEnemy(MotionManager selfMotion, MotionManager targetMotion)
+    public static bool IsTargetEnemy(MotionManager selfMotion, MotionManager targetMotion)
     {
         if (targetMotion.gameObject.layer != FightLayerCommon.CAMP_1
             && targetMotion.gameObject.layer != FightLayerCommon.CAMP_2
@@ -39,7 +39,7 @@ public class SelectTargetCommon
         return selfMotion.gameObject.layer != targetMotion.gameObject.layer;
     }
 
-    private static bool IsTargetFriend(MotionManager selfMotion, MotionManager targetMotion)
+    public static bool IsTargetFriend(MotionManager selfMotion, MotionManager targetMotion)
     {
         if (targetMotion.gameObject.layer != FightLayerCommon.CAMP_1
             && targetMotion.gameObject.layer != FightLayerCommon.CAMP_2
@@ -51,7 +51,7 @@ public class SelectTargetCommon
         return selfMotion.gameObject.layer != targetMotion.gameObject.layer;
     }
 
-    private static bool IsTargetInType(MotionManager selfMotion, MotionManager targetMotion, SelectTargetType selectType)
+    public static bool IsTargetInType(MotionManager selfMotion, MotionManager targetMotion, SelectTargetType selectType)
     {
         if (selectType == SelectTargetType.Enemy)
         {

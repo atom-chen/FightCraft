@@ -303,7 +303,7 @@ public class GameDataValue
 
     public static int GetEquipLvValue(int level, EQUIP_SLOT equipSlot = EQUIP_SLOT.WEAPON)
     {
-        return (int)(CalLvValue(level) * 1.5f);
+        return (int)(CalLvValue(level) * 1.2f);
     }
 
     #endregion
@@ -762,7 +762,7 @@ public class GameDataValue
         }
         
         int value = CalLvValue(valueIdx);
-        return value;
+        return (int)(value * 1.5f);
     }
 
     public static EquipExAttr GetGemAttr(RoleAttrEnum attr, int value)
@@ -1037,26 +1037,26 @@ public class GameDataValue
                     else if (level <= 50)
                         dropCnt = GameRandom.GetRandomLevel(0, 0, 50, 40, 10);
                     else if (level <= 100)
-                        dropCnt = GameRandom.GetRandomLevel(0, 0, 40, 40, 20);
+                        dropCnt = GameRandom.GetRandomLevel(0, 0, 20, 50, 30);
                     else
-                        dropCnt = GameRandom.GetRandomLevel(0, 0, 30, 40, 30);
+                        dropCnt = GameRandom.GetRandomLevel(0, 0, 10, 50, 40);
                     bool isOringe = false;
                     for (int i = 0; i < dropCnt; ++i)
                     {
                         if (level <= 10)
                             dropQuality = GameRandom.GetRandomLevel(0, 8000, 2000, (int)(0 * exEquipRate));
                         else if (level <= 20)
-                            dropQuality = GameRandom.GetRandomLevel(0, 7000, 2500, (int)(500 * exEquipRate));
-                        else if (level <= 30)
-                            dropQuality = GameRandom.GetRandomLevel(0, 6000, 3000, (int)(1000 * exEquipRate));
+                            dropQuality = GameRandom.GetRandomLevel(0, 6500, 2500, (int)(1000 * exEquipRate));
                         else if (level <= 40)
                             dropQuality = GameRandom.GetRandomLevel(0, 5500, 3000, (int)(1500 * exEquipRate));
-                        else if (level <= 50)
-                            dropQuality = GameRandom.GetRandomLevel(0, 5000, 3000, (int)(2000 * exEquipRate));
+                        else if (level <= 60)
+                            dropQuality = GameRandom.GetRandomLevel(0, 4500, 3000, (int)(2500 * exEquipRate));
+                        else if (level <= 80)
+                            dropQuality = GameRandom.GetRandomLevel(0, 3500, 3000, (int)(3500 * exEquipRate));
                         else if (level <= 100)
-                            dropQuality = GameRandom.GetRandomLevel(0, 3000, 4000, (int)(3000 * exEquipRate));
+                            dropQuality = GameRandom.GetRandomLevel(0, 1500, 3500, (int)(5000 * exEquipRate));
                         else
-                            dropQuality = GameRandom.GetRandomLevel(0, 2000, 3000, (int)(5000 * exEquipRate));
+                            dropQuality = GameRandom.GetRandomLevel(0, 1000, 3000, (int)(6000 * exEquipRate));
                         if (dropQuality == (int)ITEM_QUALITY.ORIGIN)
                         {
                             if (!isOringe)
@@ -1205,15 +1205,15 @@ public class GameDataValue
             return dropEquipList;
 
         int levelDelta = RoleData.SelectRole.TotalLevel - level;
-        int equipDropLevel = level;
+        int equipDropLevel = RoleData.SelectRole.TotalLevel;
         if (levelDelta > _EquipDropLevelMinDelta)
         {
             equipDropLevel = RoleData.SelectRole.TotalLevel - _EquipDropLevelMinDelta;
         }
-        else if(levelDelta < -_EquipDropLevelMaxDelta)
-        {
-            equipDropLevel = RoleData.SelectRole.TotalLevel + _EquipDropLevelMinDelta;
-        }
+        //else if(levelDelta < -_EquipDropLevelMaxDelta)
+        //{
+        //    equipDropLevel = RoleData.SelectRole.TotalLevel + _EquipDropLevelMinDelta;
+        //}
         for (int i = 0; i < dropEquipQualitys.Count; ++i)
         {
             if (dropEquipQualitys[i] == ITEM_QUALITY.ORIGIN)

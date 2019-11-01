@@ -106,6 +106,7 @@ public class ObjMotionSkillAttack : ObjMotionSkillBase
         ContinueAttack();
         ++_SkillActTimes;
         FightSkillManager.Instance.ResetReuseSkill();
+        FightSkillManager.Instance.ResetLastUseSkill();
 
         return true;
     }

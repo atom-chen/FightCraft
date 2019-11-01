@@ -29,6 +29,7 @@ public class AI_EliteHeroJingKe : AI_HeroDexNormal
             return;
 
         StartSkill(_AISkills[_BeHitSkillIdx]);
+        _AISkills[2].LastUseSkillTime = 0;
     }
 
     #endregion

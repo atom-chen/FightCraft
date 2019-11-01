@@ -17,7 +17,6 @@ public class ImpactBuffHitEnemySub : ImpactBuffSub
             if (!GameRandom.IsInRate(_Rate))
                 return;
 
-            Debug.Log("GameRandom.IsInRate:" + _Rate);
             ActSubImpacts();
             SetCD();
         }
@@ -25,7 +24,6 @@ public class ImpactBuffHitEnemySub : ImpactBuffSub
 
     public override void HitEnemy(ImpactHit hitImpact, List<MotionManager> hittedMotions)
     {
-        Debug.Log("HitEnemy:" + hittedMotions.Count);
         if (!_IsNeedTarget)
             return;
 
@@ -35,7 +33,6 @@ public class ImpactBuffHitEnemySub : ImpactBuffSub
                 return;
 
             int randomIdx = Random.Range(0, hittedMotions.Count);
-            Debug.Log("GameRandom.IsInRate:" + _Rate);
             ActSubImpacts(_BuffOwner, hittedMotions[randomIdx]);
             SetCD();
         }

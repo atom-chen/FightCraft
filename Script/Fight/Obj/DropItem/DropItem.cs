@@ -61,7 +61,7 @@ public class DropItem : MonoBehaviour
         else if (dropData._ItemBase != null)
         {
             InitItemModel(dropData._ItemBase);
-            _DropName = dropData._ItemBase.CommonItemRecord.Name;
+            _DropName = Tables.StrDictionary.GetFormatStr(dropData._ItemBase.CommonItemRecord.NameStrDict);
             Collider.enabled = false;
         }
         else

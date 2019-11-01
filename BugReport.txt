@@ -1,10 +1,9 @@
-//AI cancel attack
-//shadow time
-ex qilin
-zouwang hit perpare time
+//fish clear
+//role change skill
+//luban mutong
+random buff
+xishi wind
 archer muti arrow
-xishi arrow
-
 loading tips
 summon hide
 sound

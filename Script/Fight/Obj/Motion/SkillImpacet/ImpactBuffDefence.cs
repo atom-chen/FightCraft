@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class ImpactBuffDefence : ImpactBuff
+public class ImpactBuffDefence : ImpactBuffSub
 {
 
     public float _DefenceRate = 0.5f;
@@ -30,6 +30,10 @@ public class ImpactBuffDefence : ImpactBuff
             _BuffOwner.SetLookAt(damageImpact.SenderMotion.transform.position);
         }
         _BuffOwner.SetMove(-_BuffOwner.transform.forward * _DefenceHitSpeed, _DefenceHitTime);
+        if (!IsInCD())
+        {
+            ActSubImpacts();
+        }
         return false;
     }
 

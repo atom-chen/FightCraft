@@ -38,6 +38,7 @@ public class BulletBase : MonoBehaviour
 
     protected virtual void BulletFinish()
     {
+        Debug.Log("BulletFinish");
         ResourcePool.Instance.RecvIldeBullet(this);
     }
 

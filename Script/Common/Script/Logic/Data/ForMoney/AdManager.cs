@@ -64,6 +64,7 @@ public class AdManager
     {
         get
         {
+            return false;
             return _IsShowInterAD;
         }
     }

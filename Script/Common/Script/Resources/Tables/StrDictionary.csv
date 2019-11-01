@@ -72,8 +72,8 @@
 10002,,,Pack is full,背包已满,背包已滿
 10003,,,PutOn,穿戴,穿戴
 10004,,,PutOff,卸下,卸下
-10005,,,Sell,出售,賣
-10006,,,Buy,购买,買
+10005,,,Sell,出售,出售
+10006,,,Buy,购买,購買
 10007,,,PunchOn,镶嵌,鑲嵌
 10008,,,PunchOff,卸下,卸下
 10009,,,LevelUp,升级,升級
@@ -96,7 +96,7 @@
 30001,gem,,Have not empty gem pos,没有空余的宝石孔,沒有空餘的寶石孔
 30002,gem,,Gem has not created,宝石还没有创建,寶石還沒有創建
 30003,gem,,Lack materials,缺少材料,缺少材料
-30004,gem,,Level:{0},等级:{0},Level:{0}
+30004,gem,,Level:{0},等级:{0},等級:{0}
 30005,gem,,(Lv.{0}),(Lv.{0}),(Lv.{0})
 30006,gem,,Max Level,Max Level,Max Level
 30007,gem,,Consume all {0} to combine highter level gem?,消耗所有{0}来合成高级宝石?,消耗所有{0}來合成高級寶石?
@@ -148,9 +148,9 @@
 36003,gem,gem set name,Lighting,电,電
 36004,gem,gem set name,Wind,风,風
 36101,gem,gem set desc,Equiping Gem Fire Attack + Any Green Gem * 2 + Any Blue Gem * 2,装备火宝石+任意宝石*4,裝備火寶石+任意寶石*4
-36102,gem,gem set desc,Equiping Gem Cold Attack + Any Green Gem * 2 + Any Blue Gem * 2,装备冰宝石+任意宝石*4,裝備冰寶石+任意綠寶石*2+任意藍寶石*2
-36103,gem,gem set desc,Equiping Gem Lighting Attack + Any Green Gem * 2 + Any Blue Gem * 2,装备电宝石+任意宝石*4,裝備電寶石+任意綠寶石*2+任意藍寶石*2
-36104,gem,gem set desc,Equiping Gem Wind Attack + Any Green Gem * 2 + Any Blue Gem * 2,装备风宝石+任意宝石*4,裝備風寶石+任意綠寶石*2+任意藍寶石*2
+36102,gem,gem set desc,Equiping Gem Cold Attack + Any Green Gem * 2 + Any Blue Gem * 2,装备冰宝石+任意宝石*4,裝備冰寶石+任意寶石*4
+36103,gem,gem set desc,Equiping Gem Lighting Attack + Any Green Gem * 2 + Any Blue Gem * 2,装备电宝石+任意宝石*4,裝備電寶石+任意寶石*4
+36104,gem,gem set desc,Equiping Gem Wind Attack + Any Green Gem * 2 + Any Blue Gem * 2,装备风宝石+任意宝石*4,裝備風寶石+任意寶石*4
 40000,equipRefersh,,"Not enough times, watch a video?",没有次数，是否观看广告增加次数？,沒有次數，是否觀看廣告增加次數？
 40001,equipRefersh,,"Decompose this will get {0}*{1}, are you sure?","分解将获得 {0}*{1}, 确定?","分解將獲得 {0}*{1}, 確定?"
 40002,equipRefersh,,The same equip,相同的装备,相同的裝備
@@ -158,7 +158,7 @@
 40004,equipRefersh,,Not enough gem,没有足够的宝石,沒有足夠的寶石
 40005,equipRefersh,,You need to select a equipment,您需要选择一件装备,您需要選擇一件裝備
 40006,equipRefersh,,Combat:<color=#00FF00>{0}</color>,战力:<color=#00FF00>{0}</color>,戰力:<color=#00FF00>{0}</color>
-40007,equipRefersh,,Next Lv <color=#00FF00>{2}</color>: Collect <color=#FF0000>({0}/{1})</color> Legendary Equips.,下级 <color=#00FF00>{2}</color>:收集<color=#FF0000>（{0}/{1}）</color> 件传说装备。,下級 <color=#00FF00>{2}</color>:收集<color=#FF0000>（{0} / {1}）</color> 件傳說裝備。
+40007,equipRefersh,,Next Lv <color=#00FF00>{2}</color>: Collect <color=#FF0000>({0}/{1})</color> Legendary Equips.,下级 <color=#00FF00>{2}</color>:收集<color=#FF0000>（{0}/{1}）</color> 件传说装备。,下級 <color=#00FF00>{2}</color>:收集<color=#FF0000>（{0}/{1}）</color> 件傳說裝備。
 40008,equipRefersh,,Summons <color=#00FF00>{0}</color>  shadow image when using attack skill and deals <color=#00FF00>{1}%</color> extra damage.,使用技能时，召唤<color=#00FF00>{0}</color>个影子，造成<color=#00FF00>{1}%</color>额外伤害。,使用技能時，召喚<color=#00FF00>{0}</color>個影子，造成<color=#00FF00>{1}%</color>額外傷害。
 50000,mission,,Daily,日常,日常
 50001,mission,,Challenge,挑战,挑戰
@@ -196,7 +196,7 @@
 60032,Skill,TalentName,Element,元素,元素
 60033,Skill,TalentName,Element,元素,元素
 60034,Skill,TalentName,Element,元素,元素
-60035,Skill,TalentName,Evocation,气势,招魂
+60035,Skill,TalentName,Evocation,气势,氣勢
 60036,Skill,TalentName,Escape,逃脱,逃脫
 60037,Skill,TalentName,In the Shadow,暗影,暗影
 60038,Skill,TalentName,Iron Blood,铁血,鐵血
@@ -225,11 +225,11 @@
 60122,Skill,TalentDesc,"Improve Gale Smash,add multi-hit attack times.",强化疾风打，增加多次击中攻击次数。,強化疾風打，增加多次擊中攻擊次數。
 60123,Skill,TalentDesc,"Improve Spinning Cross,add multi-hit attack times.",强化巨旋风，增加多次击中攻击次数。,強化巨旋風，增加多次擊中攻擊次數。
 60124,Skill,TalentDesc,"Improve Atomic Smash,change final stab to multi-hit.",强化无双击，将最终攻击改为多重攻击。,強化無雙擊，將最終攻擊改為多重攻擊。
-60125,Skill,TalentDesc,"Can gains an additional attack after last hit by press Attack or Skill button.\nCast <color=#00FF00>{1}</color> hit, Damage:<color=#00FF00>{0}%</color> skill damage.",技能最后一击时按下攻击或技能按钮可以获得额外的攻击\n \nCast <color=#00FF00>{1}</color>命中，伤害:<color=#00FF00>{0}%</color>。,技能最後一擊時按下攻擊或技能按鈕可以獲得額外的攻擊\n \nCast <color=#00FF00>{1}</color>命中，傷害:<color=#00FF00>{0}%</color>。
-60126,Skill,TalentDesc,"Can accumulate when using skill by hold the skill button, accumulate will increase the damage of skill.\nAccumulate time: <color=#00FF00>{1}</color>s, Increase Damage:<color=#00FF00>{0}%</color>",使用技能按钮时可以蓄力，蓄力会增加技能伤害\n蓄力时间:<color=#00FF00>{1}</color>s，增加伤害:<color=#00FF00>{0}%</color>,使用技能按鈕時可以蓄力，蓄力會增加技能傷害\n蓄力時間:<color=#00FF00>{1}</color> s，增加傷害:<color=#00FF00>{0} %</color>
+60125,Skill,TalentDesc,"Can gains an additional attack after last hit by press Attack button.\nCast <color=#00FF00>{1}</color> hit, Damage:<color=#00FF00>{0}%</color> skill damage.",技能最后一击时按下攻击按钮可以获得额外的攻击\n \nCast <color=#00FF00>{1}</color>命中，伤害:<color=#00FF00>{0}%</color>。,技能最後一擊時按下攻擊按鈕可以獲得額外的攻擊\n \nCast <color=#00FF00>{1}</color>命中，傷害:<color=#00FF00>{0}%</color>。
+60126,Skill,TalentDesc,"Can accumulate when using skill by hold the skill button, accumulate will increase the damage of skill.\nAccumulate time: <color=#00FF00>{1}</color>s, Increase Damage:<color=#00FF00>{0}%</color>",使用技能按钮时可以蓄力，蓄力会增加技能伤害\n蓄力时间:<color=#00FF00>{1}</color>s，增加伤害:<color=#00FF00>{0}%</color>,使用技能按鈕時可以蓄力，蓄力會增加技能傷害\n蓄力時間:<color=#00FF00>{1}</color>s，增加傷害:<color=#00FF00>{0}%</color>
 60127,Skill,TalentDesc,Can use skill after acting Corse.,震慑后可直接释放技能,震懾後可直接釋放技能
 60128,Skill,TalentDesc,Can act any skill once again after use them.,使用技能技能后可立即再次使用。,使用技能技能後可立即再次使用。
-60129,Skill,TalentDesc,Can hit and push enemy away when being hited.,被击状态下可以按下技能键使用该技能。,被擊狀態下可以使用次技能。
+60129,Skill,TalentDesc,Can hit and push enemy away when being hited.,被击状态下可以按下技能键使用该技能。,被擊狀態下可以按下技能鍵使用該技能。
 60130,Skill,TalentDesc,Super Armor when using skill.,使用技能时霸体。,使用技能時霸體。
 60131,Skill,TalentDesc,Bless will increase <color=#00FF00>{0}%</color> fire attack and <color=#00FF00>{1}%</color> fire enhance.,威风会增加<color=#00FF00>{0}%</color>火攻击和<color=#00FF00>{1}%</color>火增强。,威風會增加<color=#00FF00>{0}%</color>火攻擊和<color=#00FF00>{1}%</color>火增強。
 60132,Skill,TalentDesc,Bless will increase <color=#00FF00>{0}%</color> lighting attack and <color=#00FF00>{1}%</color> lighting enhance.,威风会增加<color=#00FF00>{0}%</color>电攻击和<color=#00FF00>{1}%</color>电增强。,威風會增加<color=#00FF00>{0}%</color>電攻擊和<color=#00FF00>{1}%</color>電增強。
@@ -238,8 +238,8 @@
 60135,Skill,TalentDesc,Increase damage of Corse and Bless.\nTotal Damage:<color=#00FF00>{0}%</color>,增加威风和震慑的伤害\n总伤害:<color=#00FF00>{0}%</color>,增加威風和震懾的傷害\n總傷害:<color=#00FF00>{0}%</color>
 60136,Skill,TalentDesc,"Role will get an Shadow buff,ignore attack when running.\nBuff last <color=#00FF00>{0}</color> sec.",翻滚后获得影子buff，移动时闪避攻击\n持续 <color=#00FF00>{0}</color> sec。,翻滾後獲得影子buff，移動時閃避攻擊\n持續 <color=#00FF00>{0}</color> sec。
 60137,Skill,TalentDesc,Decrease Roll CD and add using times.\nCD <color=#00FF00>{0}</color> sec.,减少翻滚CD并增加使用次数\n \n <nCD <color=#00FF00>{0}</color>秒。,減少翻滾CD並增加使用次數\n \n <nCD <color=#00FF00>{0}</color>秒。
-60138,Skill,TalentDesc,"Get Super Armor buff when defence success.\nBuff last <color=#00FF00>{0}</color> sec, damage absorbed <color=#00FF00>{1}%</color>.",防御成功时获得霸体\n持续<color=#00FF00>{0}</color>秒，吸收伤害<color=#00FF00>{1}%</color>。,防禦成功時獲得霸體\n持續 <color=#00FF00>{0}</color>秒，吸收傷害<color=#00FF00>{1}%</color>。
-60139,Skill,TalentDesc,"Decrease Defence CD and damage absorbed rate.\nCD <color=#00FF00>{0}</color> sec, absorbed rate:<color=#00FF00>{1}%</color>.",降低防御CD和伤害\n CD<color=#00FF00>{0}</color>秒，减伤:<color=#00FF00>{1}%</color>。,降低防禦CD和傷害\n \n <nCD <color=#00FF00>{0}</color>秒，吸收率:<color=#00FF00>{1}%</color>。
+60138,Skill,TalentDesc,"Get Super Armor buff when defence success.\nBuff last <color=#00FF00>{0}</color> sec, damage absorbed <color=#00FF00>{1}%</color>.",防御成功时获得霸体\n持续<color=#00FF00>{0}</color>秒，吸收伤害<color=#00FF00>{1}%</color>。,防禦成功時獲得霸體\n持續<color=#00FF00>{0}</color>秒，吸收傷害<color=#00FF00>{1}%</color>。
+60139,Skill,TalentDesc,"Decrease Defence CD and damage absorbed rate.\nCD <color=#00FF00>{0}</color> sec, absorbed rate:<color=#00FF00>{1}%</color>.",降低防御CD和伤害\n CD<color=#00FF00>{0}</color>秒，减伤:<color=#00FF00>{1}%</color>。,降低防禦CD和傷害\n CD<color=#00FF00>{0}</color>秒，減傷:<color=#00FF00>{1}%</color>。
 61000,Skill,Tag,Skill,技能,技能
 61001,Skill,Tag,Talent,天赋,天賦
 62000,Skill,UI,Requires Level :,需要等级:,需要等級:
@@ -472,7 +472,7 @@
 90017,Item,legendaryEquip,Breeze,微风,微風
 90018,Item,legendaryEquip,Laws of Justice,正义,正義
 90019,Item,legendaryEquip,Electrocute,触电,觸電
-90020,Item,legendaryEquip,Blink,闪烁,呼嘯
+90020,Item,legendaryEquip,Blink,闪烁,閃爍
 90021,Item,legendaryEquip,Thunder Crash,雷崩,雷崩
 90022,Item,legendaryEquip,Volcanic,火山,火山
 90023,Item,legendaryEquip,Phoenix,凤凰,鳳凰
@@ -489,7 +489,7 @@
 90034,Item,legendaryEquip,Heal,愈合,癒合
 90035,Item,legendaryEquip,Melody,旋律,旋律
 90036,Item,legendaryEquip,Tolerate,容忍,容忍
-90037,Item,legendaryEquip,Thorns,荆棘,垃圾
+90037,Item,legendaryEquip,Thorns,荆棘,荊棘
 90038,Item,legendaryEquip,Ice Walker,冰行者,冰行者
 90039,Item,legendaryEquip,Lighting Walker,电行者,電行者
 90040,Item,legendaryEquip,Escape,飘逸,飄逸
@@ -497,7 +497,7 @@
 90042,Item,legendaryEquip,Fire Walker,火行者,火行者
 90043,Item,legendaryEquip,Fire Wheels,风火轮,風火輪
 90044,Item,legendaryEquip,Wind Walker,风行者,風行者
-90045,Item,legendaryEquip,Retreat,灵动,退卻
+90045,Item,legendaryEquip,Retreat,灵动,靈動
 90046,Item,legendaryEquip,Charm,魅力,魅力
 90047,Item,legendaryEquip,Nerves of Steel,钢铁神经,鋼鐵神經
 90048,Item,legendaryEquip,Frozen Area,冰冻地带,冰凍地帶
@@ -506,7 +506,7 @@
 90051,Item,legendaryEquip,High morale,昂扬,昂揚
 90052,Item,legendaryEquip,Intelligence,精妙,精妙
 90053,Item,legendaryEquip,Majesty,威严,威嚴
-90054,Item,legendaryEquip,Irradiate,辉耀,辉耀
+90054,Item,legendaryEquip,Irradiate,辉耀,輝耀
 90055,Item,legendaryEquip,Cold Blood,冷血,冷血
 90056,Item,legendaryEquip,Unscrupulous hero,枭雄,梟雄
 90057,Item,legendaryEquip,Ruthless,无情,無情
@@ -567,7 +567,7 @@
 121004,legendary attr,,Increase Defence by <color=#00FF00>{0}%</color>.,增加<color=#00FF00>{0}%</color>防御。,增加<color=#00FF00>{0}%</color>防禦。
 121005,legendary attr,,"Absorbs the damage of a single attack,cd:<color=#00FF00>{0}</color> sec.",吸收一次伤害，cd:<color=#00FF00>{0}</color>秒。,吸收一次傷害，cd:<color=#00FF00>{0}</color>秒。
 121006,legendary attr,,"When receiving fatal damage, you instead restore <color=#00FF00>{0}%</color> HP and get Camouflage buff <color=#00FF00>{1}</color> sec",当你收到致命伤害时，你可以恢复<color=#00FF00>{0}%</color> HP并获得暗影buff <color=#00FF00>{1}</color>秒,當你收到致命傷害時，你可以恢復<color=#00FF00>{0}%</color> HP並獲得暗影buff <color=#00FF00>{1}</color>秒
-121007,legendary attr,,"While below 50% HP healing you for <color=#00FF00>{0}%</color>HP per second.Buff Duration 5 sec, CD <color=#00FF00>{1}</color> sec.","当HP低于50%时,每秒恢复<color=#00FF00>{0}%</color>HP。持续时间5秒，CD <color=#00FF00>{1}</color>秒。","當HP低於50%時,恢復<color=#00FF00>{0}%</color>每秒HP。持續時間5秒，CD <color=#00FF00>{1}</color>秒。"
+121007,legendary attr,,"While below 50% HP healing you for <color=#00FF00>{0}%</color>HP per second.Buff Duration 5 sec, CD <color=#00FF00>{1}</color> sec.","当HP低于50%时,每秒恢复<color=#00FF00>{0}%</color>HP。持续时间5秒，CD <color=#00FF00>{1}</color>秒。","當HP低於50%時,每秒恢復<color=#00FF00>{0}%</color>HP。持續時間5秒，CD <color=#00FF00>{1}</color>秒。"
 121008,legendary attr,,While below 50% HP get Shield Of Dao; Buff Duration <color=#00FF00>{0}</color> sec.,当HP低于50%时获得道盾; Buff持续时间<color=#00FF00>{0}</color>秒。,當HP低於50%時獲得道盾; Buff持續時間<color=#00FF00>{0}</color>秒。
 121009,legendary attr,,While below 50% HP get Camouflage; Buff Duration <color=#00FF00>{0}</color> sec.,当HP低于50%时暗影; Buff持续时间<color=#00FF00>{0}</color>秒。,當HP低於50%時暗影; Buff持續時間<color=#00FF00>{0}</color>秒。
 121010,legendary attr,,"While takes attack,the anemy will get <color=#00FF00>{0}%</color> damage.",在受到攻击时，攻击者会受到<color=#00FF00>{0}%</color>的伤害。,在受到攻擊時，攻擊者會受到<color=#00FF00>{0}%</color>的傷害。
@@ -579,9 +579,9 @@
 122006,legendary attr,,Increase Move Speed by <color=#00FF00>{0}%</color>.,增加<color=#00FF00>{0}%</color>移动速度。,增加<color=#00FF00>{0}%</color>移動速度。
 122007,legendary attr,,Add Wind Resistan <color=#00FF00>{0}%</color>,增加风抗<color=#00FF00>{0}%</color>,增加風抗<color=#00FF00>{0}%</color>
 122008,legendary attr,,Increase <color=#00FF00>{0}%</color> Move Speed While below 50% HP,"低于50%HP时,增加<color=#00FF00>{0}%</color>移动速度","低於50%HP時,增加<color=#00FF00>{0}%</color>移動速度"
-123001,legendary attr,,Decreace <color=#00FF00>{0}%</color> defence to enemies within <color=#00FF00>{1}</color> yards.,<color=#00FF00>{1}</color>码内敌人<color=#00FF00>{0}%</color>防御。,降低<color=#00FF00>{1}</color>碼內敵人<color=#00FF00>{0}%</color>防禦。
+123001,legendary attr,,Decreace <color=#00FF00>{0}%</color> defence to enemies within <color=#00FF00>{1}</color> yards.,<color=#00FF00>{1}</color>码内敌人<color=#00FF00>{0}%</color>防御。,<color=#00FF00>{1}</color>碼內敵人<color=#00FF00>{0}%</color>防禦。
 123002,legendary attr,,Increase Attack by <color=#00FF00>{0}%</color>.,增加<color=#00FF00>{0}%</color>攻击力。,增加<color=#00FF00>{0}%</color>攻擊力。
-123003,legendary attr,,Decreace <color=#00FF00>{0}%</color> Attack Speed to enemies within <color=#00FF00>{1}</color> yards.,<color=#00FF00>{1}</color>码内敌人<color=#00FF00>{0}%</color>攻击速度。,降低<color=#00FF00>{1}</color>碼內敵人<color=#00FF00>{0}%</color>攻擊速度。
+123003,legendary attr,,Decreace <color=#00FF00>{0}%</color> Attack Speed to enemies within <color=#00FF00>{1}</color> yards.,<color=#00FF00>{1}</color>码内敌人<color=#00FF00>{0}%</color>攻击速度。,<color=#00FF00>{1}</color>碼內敵人<color=#00FF00>{0}%</color>攻擊速度。
 123004,legendary attr,,"While takes attack,the enemy will be struck by lightning, damage <color=#00FF00>{0}%</color>.",受到攻击时，敌人将被电击。伤害 <color=#00FF00>{0}%</color>。,受到攻擊時，敵人將被電擊。傷害 <color=#00FF00>{0}%</color>。
 123005,legendary attr,,Increase Attack Speed by <color=#00FF00>{0}%</color>.,增加<color=#00FF00>{0}%</color>攻击速度。,增加<color=#00FF00>{0}%</color>攻擊速度。
 123006,legendary attr,,While HP Full Increace attack <color=#00FF00>{0}%</color>.,当HP100%时，增加攻击<color=#00FF00>{0}%</color>。,當HP100%時，增加攻擊<color=#00FF00>{0}%</color>。
@@ -678,7 +678,7 @@
 1100022,GlobalBuff,Name,Tough,强硬,強硬
 1100023,GlobalBuff,Name,Escape,逃逸,逃逸
 1100024,GlobalBuff,Name,Nerves of Steel,钢铁神经,鋼鐵神經
-1100025,GlobalBuff,Name,Evocation,气势,招魂
+1100025,GlobalBuff,Name,Evocation,气势,氣勢
 1100100,GlobalBuff,Name,Blood Sucking,吸血,吸血
 1100101,GlobalBuff,Name,Cutting,切割,切割
 1100102,GlobalBuff,Name,Assassination,刺杀,刺殺
@@ -702,7 +702,7 @@
 1110011,GlobalBuff,Desc,"Improve Gale Smash,add multi-hit attack times.",强化疾风打，增加多次击中攻击次数。,強化疾風打，增加多次擊中攻擊次數。
 1110012,GlobalBuff,Desc,"Improve Spinning Cross,add multi-hit attack times.",强化巨旋风，增加多次击中攻击次数。,強化巨旋風，增加多次擊中攻擊次數。
 1110013,GlobalBuff,Desc,"Improve Atomic Smash,change final stab to multi-hit.",强化无双击，将最终攻击改为多重攻击。,強化無雙擊，將最終攻擊改為多重攻擊。
-1110014,GlobalBuff,Desc,Can gains an additional hit after last hit by press Attack or Skill button.\nDamage:<color=#00FF00>{0}%</color> skill damage.,技能最后一击时按下攻击或技能按钮可以获得额外的攻击\nCast <color=#00FF00>{1}</color>命中，伤害:<color=#00FF00>{0}%</color>。,技能最後一擊時按下攻擊或技能按鈕可以獲得額外的攻擊\n \nCast <color=#00FF00>{1}</color>命中，傷害:<color=#00FF00>{0}%</color>。
+1110014,GlobalBuff,Desc,Can gains an additional hit after last hit by press Attack or Skill button.\nDamage:<color=#00FF00>{0}%</color> skill damage.,技能最后一击时按下攻击或技能按钮可以获得额外的攻击\nCast <color=#00FF00>{1}</color>命中，伤害:<color=#00FF00>{0}%</color>。,技能最後一擊時按下攻擊或技能按鈕可以獲得額外的攻擊\nCast <color=#00FF00>{1}</color>命中，傷害:<color=#00FF00>{0}%</color>。
 1110015,GlobalBuff,Desc,Bless will increase 10% atk speed.,使用技能按钮时可以蓄力，蓄力会增加技能伤害\n蓄力时间:<color=#00FF00>{1}</color> s，增加伤害:<color=#00FF00>{0} %</color>,使用技能按鈕時可以蓄力，蓄力會增加技能傷害\n蓄力時間:<color=#00FF00>{1}</color> s，增加傷害:<color=#00FF00>{0} %</color>
 1110016,GlobalBuff,Desc,"When act Corse and Bless, will hit surrounding targets.",震慑后可直接释放技能,震懾後可直接釋放技能
 1110017,GlobalBuff,Desc,Can use skill after acting Corse.,使用技能技能后可立即再次使用。,使用技能技能後可立即再次使用。
@@ -946,7 +946,7 @@
 2300039,,,Soul Info,武将信息,武將資訊
 2300040,,,Act,上阵,上陣
 2300041,,,Disact,下阵,下陣
-2300042,,,Step,进阶,进阶
+2300042,,,Step,进阶,進階
 2300043,,,Shop,商店,商店
 2300044,,,Buy,购买,購買
 2300045,,,Refresh,刷新,刷新
@@ -963,7 +963,7 @@
 2300056,,,Gift,礼包,禮包
 2300057,,,Stage,关卡,關卡
 2300058,,,Challenge,挑战,挑戰
-2300059,,,Next,下一关,下一個
+2300059,,,Next,下一关,下一關
 2300060,,,Retry,重试,重試
 2300061,,,Enter,进入,進入
 2300062,,,Boss,Boss,Boss
@@ -976,25 +976,25 @@
 2300069,,,Ticket,券,券
 2300070,,,"Congratulations, you got this gift.",恭喜你收到了这份礼物。,恭喜你收到了這份禮物。
 2300071,,,Charge,充值,充值
-2300072,,,*Buy any diamond box from this page can get this gift.,*在此页面充值任意金额都可以获得此礼物。,*在此页面充值任意金额都可以获得此礼物。
+2300072,,,*Buy any diamond box from this page can get this gift.,*在此页面充值任意金额都可以获得此礼物。,*在此頁面充值任意金額都可以獲得此禮物。
 2300073,,,Watch Video,看广告,看廣告
 2300074,,,*Watch a video to get this gift.,*观看广告以获得此礼物。,*觀看廣告以獲得此禮物。
 2300075,,,Charge sucess! Got {0} diamond.,充值成功！得到{0}钻石。,充值成功！得到{0}鑽石。
 2300076,,,Number,数量,數量
 2300077,,,Combat:,战力:,戰力:
-2300078,,,"Gambling an equip, it has random attr",赌博一件装备，属性随机,赌博一件装备，属性随机
-2300079,,,Stage Level:,关卡等级:,关卡等级:
+2300078,,,"Gambling an equip, it has random attr",赌博一件装备，属性随机,賭博一件裝備，屬性隨機
+2300079,,,Stage Level:,关卡等级:,關卡等級:
 2300080,,,Boss:,Boss:,Boss:
 2300081,,,Drops:,掉落:,掉落:
-2300082,,,Standing on the transfer point can be transferred to the next scene,站立在传送点上可传送至下一场景,站立在传送点上可传送至下一场景
-2300083,,,Boss is in a state of protection and needs to break protect with different skills.,Boss处于保护状态，需要用不同技能击破保护才能连招,Boss处于保护状态，需要用不同技能击破保护才能连招
-2300084,,,Act,激活,激活
-2300085,,,Gem Suit,宝石套装,宝石套装
-2300086,,,Show only on new difficulty levels,仅在新难度时展示,仅在新难度时展示
-2300087,,,Pass level in time to open the next level,在限定时间内通过才能开启下一级关卡,在限定时间内通过才能开启下一级关卡
-2300088,,,Got {0},获得{0},获得{0}
-2300089,,,Requires gem level 30,需要宝石等级达到30级,需要宝石等级达到30级
-2300090,,,Skill damage <color=#00FF00>{0}%</color>,技能伤害<color=#00FF00>{0}%</color>,技能伤害<color=#00FF00>{0}%</color>
+2300082,,,Standing on the transfer point can be transferred to the next scene,站立在传送点上可传送至下一场景,站立在傳送點上可傳送至下一場景
+2300083,,,Boss is in a state of protection and needs to break protect with different skills.,Boss处于保护状态，需要用不同技能击破保护才能连招,Boss處於保護狀態，需要用不同技能擊破保護才能連招
+2300084,,,Act,激活,啟動
+2300085,,,Gem Suit,宝石套装,寶石套裝
+2300086,,,Show only on new difficulty levels,仅在新难度时展示,僅在新難度時展示
+2300087,,,Pass level in time to open the next level,在限定时间内通过才能开启下一级关卡,在限定時間內通過才能開啟下一級關卡
+2300088,,,Got {0},获得{0},獲得{0}
+2300089,,,Requires gem level 30,需要宝石等级达到30级,需要寶石等級達到30級
+2300090,,,Skill damage <color=#00FF00>{0}%</color>,技能伤害<color=#00FF00>{0}%</color>,技能傷害<color=#00FF00>{0}%</color>
 2300091,,,Combine All,全部合成,全部合成
 2400000,loadingtip,,Bai Qi,白起,白起
 2400001,loadingtip,,Cao Cao,曹操,曹操
@@ -1016,26 +1016,49 @@
 2400017,loadingtip,,Yang Jian,杨戬,楊戩
 2400018,loadingtip,,Zhao Yun,赵云,趙雲
 2400019,loadingtip,,Shang Zhou,商纣,商紂
+2400100,loadingtip,,Operation: Attack + Attack + Special Attack can cast skills,操作：攻击+攻击+特殊攻击即可施放技能,操作：攻擊+攻擊+特殊攻擊即可施放技能
+2400101,loadingtip,,Operation: Apply [Corse] and then cast special skills by special attack.,操作：施放[震慑]后按特殊攻击可立即施放技能,操作：施放[震懾]後按特殊攻擊可立即施放技能
+2400102,loadingtip,,Operation: [Corse] + [Skill] + [Bless] + [Attack],操作：[震慑]+[技能]+[威风]是不错的连招,操作：[震懾]+[技能]+[威風]是不錯的連招
+2400103,loadingtip,,Operation: You can use [Defense] or [Dash] when enemy attacks.,操作：敌人攻击时可用[防御]或[闪避]技能应付,操作：敵人攻擊時可用[防禦]或[閃避]技能應付
+2400104,loadingtip,,Monster: Elite monsters will get Super Armor when attacks,怪物：精英怪物攻击时会霸体,怪物：精英怪物攻擊時會霸體
+2400105,loadingtip,,Monsters: Elite monsters are protected and cannot be attacked with the same skill.,怪物：精英怪物会用攻击保护，不能使用相同技能攻击,怪物：精英怪物會用攻擊保護，不能使用相同技能攻擊
+2400106,loadingtip,,"Monster: [Protect] Monster protection status will dodge attack, you need to use the corresponding skills to crack",怪物：[保护]怪物保护状态时不能连招，需要用对应技能破解,怪物：[保護]怪物保護狀態時不能連招，需要用對應技能破解
+2400107,loadingtip,,Monsters: [Frenzy] Str monsters increase attack and defense,怪物：[狂化]力量型怪物狂化时大幅增加攻击和防御,怪物：[狂化]力量型怪物狂化時大幅增加攻擊和防禦
+2400108,loadingtip,,Monster: [Frenzy] Dex monsters increase attack speed and movement speed,怪物：[狂化]敏捷型怪物狂化时大幅攻击速度和移动速度,怪物：[狂化]敏捷型怪物狂化時大幅攻擊速度和移動速度
+2400109,loadingtip,,Monster: [Frenzy] Int Monsters reduce skill CDs,怪物：[狂化]智力型怪物狂化时大幅减少技能CD,怪物：[狂化]智力型怪物狂化時大幅減少技能CD
+2400110,loadingtip,,Equipment: Collecting legendary equipment can increase combat power,装备：收藏传说装备可以增加战力,裝備：收藏傳說裝備可以增加戰力
+2400111,loadingtip,,"Equipment: Open the [Refactoring] function after level 50, you can refresh the equipment attributes.",装备：50级后开启[重构]功能，可以刷新装备属性,裝備：50級後開啟[重構]功能，可以刷新裝備屬性
+2400112,loadingtip,,"Role: Open the [Role Switch] function after level 40, you can choose more characters to fight.",角色：40级后开启[角色切换]功能，可以选择更多角色战斗,角色：40級後開啟[角色切換]功能，可以選擇更多角色戰鬥
+2400113,loadingtip,,Role: All characters share level equipment,角色：所有角色共享等级装备,角色：所有角色共用等級裝備
+2400114,loadingtip,,"Challenge: Open the [Gold Challenge] function after level 15, the more you kill the enemy, the more coins you get.",挑战：15级开启金币挑战，击杀敌人越多获得金币越多,挑戰：15級開啟金幣挑戰，擊殺敵人越多獲得金幣越多
+2400115,loadingtip,,Skill: Characters with the same skill share skill level,技能：拥有相同技能的角色共享技能等级,技能：擁有相同技能的角色共用技能等級
+2400116,loadingtip,,Talent: Characters with the same talent share talent level,天赋：拥有相同天赋的角色共享天赋等级,天賦：擁有相同天賦的角色共用天賦等級
+2400117,loadingtip,,Gem: A gem set can be activated when the gem level is sufficient,宝石：宝石等级足够时可以激活宝石套装,寶石：寶石等級足夠時可以啟動寶石套裝
 2401000,loadingtip,fight tip,fight tip,战斗提示,戰鬥提示
 2401001,loadingtip,fight tip,fight tip,战斗提示,戰鬥提示
 2402000,fighttip,,Monster: {0}/{1},怪物:{0} / {1},怪物:{0} / {1}
 2402001,fighttip,,Elite: {0}/{1},精英:{0} / {1},精英:{0} / {1}
 2402002,fighttip,timecolor,<color=#FFFFFFFF>{0}</color>,<color=#FFFFFFFF>{0}</color>,<color=#FFFFFFFF>{0}</color>
 2402003,fighttip,timecolor,<color=#FF0000FF>{0}</color>,<color=#FF0000FF>{0}</color>,<color=#FF0000FF>{0}</color>
-2402004,fighttip,,Monster: {0},杀怪:{0},杀怪:{0}
-2402005,fighttip,,Gold: {0},金币:{0},金币:{0}
-2410000,stageTips,,1.Boss:using skill super armor;,1.Boss:释放技能时霸体;,1.Boss:释放技能时霸体;
-2410001,stageTips,,"2.Elite monster appear;Boss:normal attack super armor,rising explosion",2.精英怪物出现;Boss:普通攻击霸体，起身气爆,2.精英怪物出现;Boss:普通攻击霸体，起身气爆
-2410002,stageTips,,3.More elite monster;Boss:protecte buff * 1,3.更多精英怪物;Boss:保护buff * 1,3.更多精英怪物;Boss:保护buff * 1
-2410003,stageTips,,4.Super monster;Boss:crazy buff when hp low,4.超级怪物;Boss:当hp低时狂化,4.超级怪物;Boss:当hp低时狂化
-2410004,stageTips,,5.More super monster;Boss:use skill after attack,5.更多超级怪物; Boss:攻击后使用技能,5.更多超级怪物; Boss:攻击后使用技能
-2410005,stageTips,,6.QiLin monster;Boss:enhance skill,6.麒麟出现;Boss:技能强化,6.麒麟出现;Boss:技能强化
-2410006,stageTips,,7.More QiLin monster;Boss:crazy buff when appear,7.更多麒麟;Boss:登场时狂化,7.更多麒麟;Boss:登场时狂化
-2410007,stageTips,,8.Super QiLin;Boss:appear with 4 monsters,8.超级麒麟出现; Boss:出现4个怪物护卫,8.超级麒麟出现; Boss:出现4个怪物护卫
-2410008,stageTips,,9.More super QiLin;Boss:appear with 1 elite monster,9.更多超级麒麟; Boss:出现精英怪物护卫,9.更多超级麒麟; Boss:出现精英怪物护卫
-2410009,stageTips,,10.Random monster enhance buff;Boss:appear with 1 super monster,10.怪物获得随机增强buff; Boss:出现超级怪物护卫,10.怪物获得随机增强buff; Boss:出现超级怪物护卫
-2410010,stageTips,,11.More random monster enhance buffs;Boss:appear with unlimit monsters,11.怪物获得更多随机增强buff; Boss:无限怪物护卫,11.怪物获得更多随机增强buff; Boss:无限怪物护卫
-2410011,stageTips,,12.Boss:appear with unlimit monsters and elite monsters,12.Boss:无限怪物和精英怪物护卫,12.Boss:无限怪物和精英怪物护卫
-2410012,stageTips,,13.Boss:appear with unlimit monsters and super monsters,13.Boss:无限怪物和超级怪物护卫,13.Boss:无限怪物和超级怪物护卫
-2410013,stageTips,,14.Boss:appear with unlimit monsters and QiLin monsters,14.Boss:无限怪物和麒麟护卫,14.Boss:无限怪物和麒麟护卫
-2410014,stageTips,,15.Boss:appear with unlimit monsters and super QiLin monsters,15.Boss:无限怪物和超级麒麟护卫,15.Boss:无限怪物和超级麒麟护卫
+2402004,fighttip,,Monster: {0},杀怪:{0},殺怪:{0}
+2402005,fighttip,,Gold: {0},金币:{0},金幣:{0}
+2410000,stageTips,,1.Boss:using skill super armor;,1.Boss:释放技能时霸体;,1.Boss:釋放技能時霸體;
+2410001,stageTips,,"2.Elite monster appear;Boss:normal attack super armor,rising explosion",2.精英怪物出现;Boss:普通攻击霸体，起身气爆,2.精英怪物出現;Boss:普通攻擊霸體，起身氣爆
+2410002,stageTips,,3.More elite monster;Boss:protecte buff * 1,3.更多精英怪物;Boss:保护buff * 1,3.更多精英怪物;Boss:保護buff * 1
+2410003,stageTips,,4.Super monster;Boss:crazy buff when hp low,4.超级怪物;Boss:当hp低时狂化,4.超級怪物;Boss:當hp低時狂化
+2410004,stageTips,,5.More super monster;Boss:use skill after attack,5.更多超级怪物; Boss:攻击后使用技能,5.更多超級怪物; Boss:攻擊後使用技能
+2410005,stageTips,,6.QiLin monster;Boss:enhance skill,6.麒麟出现;Boss:技能强化,6.麒麟出現;Boss:技能強化
+2410006,stageTips,,7.Super QiLin monster;Boss:crazy buff when appear,7.超级麒麟出现;Boss:登场时狂化,7.超級麒麟出現;Boss:登場時狂化
+2410007,stageTips,,8.Random monster enhance buf;Boss:appear with monsters,8.怪物获得随机增强buff; Boss:出现怪物护卫,8.怪物獲得隨機增強buff; Boss:出現怪物護衛
+2410008,stageTips,,9.Random monster enhance buf*2;Boss:appear with elite monster,9.怪物获得随机增强buff*2; Boss:出现精英怪物护卫,9.怪物獲得隨機增強buff*2; Boss:出現精英怪物護衛
+2410009,stageTips,,10.Boss:appear with super monster,10.Boss:出现强力护卫,10.Boss:出現強力護衛
+2500000,bufftips,,Speed,加速,加速
+2500001,bufftips,,Strong,强力,強力
+2500002,bufftips,,Phy Resist,物理抗性,物理抗性
+2500003,bufftips,,Ele Resist,元素抗性,元素抗性
+2500004,bufftips,,Rise,快速起身,快速起身
+2500005,bufftips,,Fall,沉重,沉重
+2500006,bufftips,,HitBack,硬直,硬直
+2500007,bufftips,,Resume,回复,回復
+2500008,bufftips,,Thorns,荆棘,荊棘
+2500009,bufftips,,IceArea,减速,減速

@@ -31,7 +31,6 @@ public class EffectChangeMainMaterial : EffectController
 
     public override void HideEffect()
     {
-        Debug.Log("HideEffect");
         if (!_IsPlayingEffect)
             return;
 

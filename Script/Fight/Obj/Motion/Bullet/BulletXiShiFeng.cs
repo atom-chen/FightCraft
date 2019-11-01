@@ -74,5 +74,9 @@ public class BulletXiShiFeng : BulletBase
                 _HittedMotion.Add(targetMotion);
             }
         }
+        else
+        {
+            BulletHit(targetMotion);
+        }
     }
 }

@@ -12,6 +12,7 @@ public class FightSceneAreaRandom : FightSceneAreaBase
     public override void FinishArea()
     {
         _AreaState = AreaState.Finished;
+        ClearFish();
     }
 
     public override void InitArea()
@@ -79,10 +80,9 @@ public class FightSceneAreaRandom : FightSceneAreaBase
     {
         //Debug.Log("MotionDie motion " + motion.name);
 
-        base.MotionDie(motion);
-
         StepMotionDie(motion);
 
+        base.MotionDie(motion);
     }
 
     public override Transform GetAreaTransform()
@@ -468,6 +468,9 @@ public class FightSceneAreaRandom : FightSceneAreaBase
                 }
 
                 MotionManager enemy = FightManager.Instance.InitEnemy(randomFish, initPos[i], rot.eulerAngles, motionType);
+                var ai = enemy.GetComponent<AI_Base>();
+                ai._HuntRange = 9999;
+                ai._AlertRange = 9999;
                 _FishMotion.Add(enemy);
                 if (eliteType == MonsterEliteType.Normal)
                 {
@@ -511,6 +514,9 @@ public class FightSceneAreaRandom : FightSceneAreaBase
 
             var rot = Quaternion.LookRotation(_MonLookTrans, Vector3.up);
             MotionManager enemy = FightManager.Instance.InitEnemy(randomFish, GetFarPos(), rot.eulerAngles, motionType);
+            var ai = enemy.GetComponent<AI_Base>();
+            ai._HuntRange = 9999;
+            ai._AlertRange = 9999;
             _FishMotion.Add(enemy);
             if (eliteType == MonsterEliteType.Normal)
             {
@@ -629,8 +635,8 @@ public class FightSceneAreaRandom : FightSceneAreaBase
         public float ExQiLinRate = 0;
 
         public int MaxFishCnt = 4;
-        public int NormalBornCD = 5;
-        public int EliteDieCD = 15;
+        public int NormalBornCD = 10;
+        public int EliteDieCD = 22;
     }
 
     public static StageDiffInfo GetStageDiffInfo(int diff, int monCnt, FightSceneLogicRandomArea randomArea)
@@ -683,7 +689,7 @@ public class FightSceneAreaRandom : FightSceneAreaBase
                 {
                     stageInfo.ExIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
                 }
-                else if (eliteRate < 4000)
+                else if (eliteRate < 6000)
                 {
                     if (randomArea.SceneQiLinCnt < 1)
                     {
@@ -699,11 +705,11 @@ public class FightSceneAreaRandom : FightSceneAreaBase
                 {
                     stageInfo.EliteIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
                 }
-                else if (eliteRate < 3000)
+                else if (eliteRate < 3500)
                 {
                     stageInfo.ExIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
                 }
-                else if (eliteRate < 3500)
+                else if (eliteRate < 6000)
                 {
                     if (randomArea.SceneQiLinCnt < 1)
                     {
@@ -718,49 +724,11 @@ public class FightSceneAreaRandom : FightSceneAreaBase
                 {
                     stageInfo.EliteIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
                 }
-                else if (eliteRate < 3000)
+                else if (eliteRate < 3500)
                 {
                     stageInfo.ExIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
                 }
-                else if (eliteRate < 4000)
-                {
-                    if (randomArea.SceneQiLinCnt < 1)
-                    {
-                        ++randomArea.SceneQiLinCnt;
-                        stageInfo.ExtraMonIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
-                        stageInfo.ExtraMonID = randomArea.QiLin;
-                    }
-                }
-                break;
-            case 8:
-                if (eliteRate < 1500)
-                {
-                    stageInfo.EliteIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
-                }
-                else if (eliteRate < 3000)
-                {
-                    stageInfo.ExIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
-                }
-                else if (eliteRate < 4000)
-                {
-                    if (randomArea.SceneQiLinCnt < 1)
-                    {
-                        ++randomArea.SceneQiLinCnt;
-                        stageInfo.ExtraMonIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
-                        stageInfo.ExtraMonID = randomArea.QiLin;
-                    }
-                }
-                break;
-            case 9:
-                if (eliteRate < 1500)
-                {
-                    stageInfo.EliteIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
-                }
-                else if (eliteRate < 3000)
-                {
-                    stageInfo.ExIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
-                }
-                else if (eliteRate < 4000)
+                else if (eliteRate < 7000)
                 {
                     if (randomArea.SceneQiLinCnt < 1)
                     {
@@ -771,16 +739,16 @@ public class FightSceneAreaRandom : FightSceneAreaBase
                 }
                 stageInfo.RandomBuffCnt = 1;
                 break;
-            case 10:
+            case 8:
                 if (eliteRate < 1500)
                 {
                     stageInfo.EliteIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
                 }
-                else if (eliteRate < 3000)
+                else if (eliteRate < 3500)
                 {
                     stageInfo.ExIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
                 }
-                else if (eliteRate < 4000)
+                else if (eliteRate < 8000)
                 {
                     if (randomArea.SceneQiLinCnt < 1)
                     {
@@ -796,11 +764,11 @@ public class FightSceneAreaRandom : FightSceneAreaBase
                 {
                     stageInfo.EliteIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
                 }
-                else if (eliteRate < 3000)
+                else if (eliteRate < 3500)
                 {
                     stageInfo.ExIdxs = GameRandom.GetIndependentRandoms(0, monCnt, 1);
                 }
-                else if (eliteRate < 4000)
+                else if (eliteRate < 8000)
                 {
                     if (randomArea.SceneQiLinCnt < 1)
                     {
@@ -830,7 +798,7 @@ public class FightSceneAreaRandom : FightSceneAreaBase
 
     public static bool IsExQiLin(int diff)
     {
-        if (diff >= 7)
+        if (diff >= 6)
             return true;
         return false;
     }
@@ -879,15 +847,9 @@ public class FightSceneAreaRandom : FightSceneAreaBase
                 aiBoss._IsRiseBoom = true;
                 aiBoss.InitProtectTimes(1);
                 aiBoss._StageBuffHpPersent.Add(0.5f);
-                break;
-            case 6:
-                aiBoss._IsContainsNormalAtk = true;
-                aiBoss._IsRiseBoom = true;
-                aiBoss.InitProtectTimes(1);
-                aiBoss._StageBuffHpPersent.Add(0.5f);
                 aiBoss.IsCancelNormalAttack = true;
                 break;
-            case 7:
+            case 6:
                 aiBoss._IsContainsNormalAtk = true;
                 aiBoss._IsRiseBoom = true;
                 aiBoss.InitProtectTimes(1);
@@ -920,43 +882,25 @@ public class FightSceneAreaRandom : FightSceneAreaBase
             case 6:
                 break;
             case 7:
-                fishInfo.FishCnt = 4;
+                fishInfo.FishCnt = -1;
                 break;
             case 8:
-                fishInfo.FishCnt = 4;
-                fishInfo.ElitRate = 1;
-                break;
-            case 10:
-                fishInfo.FishCnt = -1;
-                break;
-            case 11:
-                fishInfo.FishCnt = -1;
-                fishInfo.ElitRate = 0.5f;
-                break;
-            case 12:
-                fishInfo.FishCnt = -1;
-                fishInfo.ElitRate = 0.4f;
-                fishInfo.ExRate = 0.25f;
-                break;
-            case 13:
-                fishInfo.FishCnt = -1;
-                fishInfo.ElitRate = 0.3f;
-                fishInfo.ExRate = 0.25f;
-                fishInfo.QiLinRate = 0.15f;
-                break;
-            case 14:
                 fishInfo.FishCnt = -1;
                 fishInfo.ElitRate = 0.2f;
-                fishInfo.ExRate = 0.2f;
-                fishInfo.QiLinRate = 0.2f;
-                fishInfo.ExQiLinRate = 0.2f;
+                break;
+            case 9:
+                fishInfo.FishCnt = -1;
+                fishInfo.ElitRate = 0.1f;
+                fishInfo.ExRate = 0.05f;
+                fishInfo.QiLinRate = 0.05f;
+                fishInfo.ExQiLinRate = 0.05f;
                 break;
             default:
                 fishInfo.FishCnt = -1;
-                fishInfo.ElitRate = 0.25f;
-                fishInfo.ExRate = 0.25f;
-                fishInfo.QiLinRate = 0.25f;
-                fishInfo.ExQiLinRate = 0.25f;
+                fishInfo.ElitRate = 0.1f;
+                fishInfo.ExRate = 0.05f;
+                fishInfo.QiLinRate = 0.05f;
+                fishInfo.ExQiLinRate = 0.05f;
                 break;
         }
 

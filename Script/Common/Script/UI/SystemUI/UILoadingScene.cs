@@ -138,9 +138,10 @@ public class UILoadingScene : UIBase
     public void ShowBG()
     {
         var imageTips = TableReader.LoadingTips.GetRandomImageTips();
+        var textTips = TableReader.LoadingTips.GetRandomTextTips(RoleData.SelectRole.TotalLevel);
         ResourceManager.Instance.SetImage(_BG, imageTips.ImagePath);
         _NameText.text = StrDictionary.GetFormatStr(imageTips.ImageName);
-        _Tips.text = StrDictionary.GetFormatStr(imageTips.TipsStr);
+        _Tips.text = StrDictionary.GetFormatStr(textTips.TipsStr);
     }
 
     #endregion

@@ -29,8 +29,6 @@ public class RoleAttrImpactPassiveHPResume : RoleAttrImpactPassive
                 var subBuffs = buffGO.GetComponentsInChildren<ImpactBuffHpLowSub>();
                 foreach (var subBuff in subBuffs)
                 {
-                    if (subBuff.gameObject == buffGO)
-                        continue;
                     subBuff._ActCD = _ActCD;
                 }
 

@@ -17,6 +17,7 @@ namespace Tables
         public string ImagePath { get; set; }
         public string ImageName { get; set; }
         public string TipsStr { get; set; }
+        public int MinLevel { get; set; }
         public LoadingTipsRecord(DataRecord dataRecord)
         {
             if (dataRecord != null)
@@ -35,6 +36,7 @@ namespace Tables
             recordStrList.Add(TableWriteBase.GetWriteStr(ImagePath));
             recordStrList.Add(TableWriteBase.GetWriteStr(ImageName));
             recordStrList.Add(TableWriteBase.GetWriteStr(TipsStr));
+            recordStrList.Add(TableWriteBase.GetWriteStr(MinLevel));
 
             return recordStrList.ToArray();
         }
@@ -103,6 +105,7 @@ namespace Tables
                 pair.Value.ImagePath = TableReadBase.ParseString(pair.Value.ValueStr[3]);
                 pair.Value.ImageName = TableReadBase.ParseString(pair.Value.ValueStr[4]);
                 pair.Value.TipsStr = TableReadBase.ParseString(pair.Value.ValueStr[5]);
+                pair.Value.MinLevel = TableReadBase.ParseInt(pair.Value.ValueStr[6]);
             }
         }
     }

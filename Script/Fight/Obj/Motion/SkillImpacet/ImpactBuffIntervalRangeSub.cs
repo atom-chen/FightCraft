@@ -40,6 +40,8 @@ public class ImpactBuffIntervalRangeSub : ImpactBuffSub
     void OnTriggerEnter(Collider other)
     {
         var targetMotion = other.GetComponentInParent<MotionManager>();
+        if (targetMotion == null)
+            return;
         if (targetMotion.IsMotionDie)
             return;
 

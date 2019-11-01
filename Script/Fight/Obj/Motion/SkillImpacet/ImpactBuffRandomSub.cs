@@ -25,7 +25,7 @@ public class ImpactBuffRandomSub : ImpactBuffSub
             int randomIdx = Random.Range(0, _RandomSubList.Count);
             _SubImpacts = new List<ImpactBase>(_RandomSubList[randomIdx].GetComponents<ImpactBase>());
             //_ActSubObjs.Add(_RandomSubList[randomIdx]);
-            _BuffOwner.AddBuffName(_RandomSubList[randomIdx].name);
+            _BuffOwner.AddBuffName(Tables.StrDictionary.GetFormatStr(_RandomSubList[randomIdx].GetComponent<UIText>()._StrDict));
             ActSubImpacts();
         }
     }

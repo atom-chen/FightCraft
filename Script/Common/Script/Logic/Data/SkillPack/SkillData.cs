@@ -133,18 +133,41 @@ public class SkillData : SaveItemBase
 
             if (skillInfo.SkillRecord.SkillInput == "5")
             {
-                if (!skillMotions.Contains("Buff1"))
+                if ((RoleData.SelectRole.Profession == PROFESSION.BOY_DEFENCE || RoleData.SelectRole.Profession == PROFESSION.GIRL_DOUGE))
                 {
-                    skillMotions.Add("Buff1");
+                    if (!skillMotions.Contains("Buff1"))
+                    {
+                        skillMotions.Add("Buff1");
+                    }
+                }
+                else
+                {
+                    if (!skillMotions.Contains("Buff1_2"))
+                    {
+                        skillMotions.Add("Buff1_2");
+                    }
                 }
             }
+            
+
             if (skillInfo.SkillRecord.SkillInput == "6")
             {
-                if (!skillMotions.Contains("Buff2"))
+                if ((RoleData.SelectRole.Profession == PROFESSION.BOY_DEFENCE || RoleData.SelectRole.Profession == PROFESSION.GIRL_DOUGE))
                 {
-                    skillMotions.Add("Buff2");
+                    if (!skillMotions.Contains("Buff2"))
+                    {
+                        skillMotions.Add("Buff2");
+                    }
+                }
+                else
+                {
+                    if (!skillMotions.Contains("Buff2_2"))
+                    {
+                        skillMotions.Add("Buff2_2");
+                    }
                 }
             }
+            
 
             if (skillInfo.SkillRecord.SkillAttr.AttrImpact == "RoleAttrImpactSP")
             {

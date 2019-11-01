@@ -85,6 +85,7 @@ public class FightManager : InstanceBase<FightManager>
         }
         else if (_InitStep == InitStep.InitSceneFinish)
         {
+            ResourcePool.Instance.InitDefaultRes();
             InitCamera();
             _InitStep = InitStep.InitMainRoleWait;
             StartCoroutine(InitMainRole());
@@ -115,7 +116,6 @@ public class FightManager : InstanceBase<FightManager>
         else if (_InitStep == InitStep.InitMonsterFinish)
         {
             //StopAllCoroutines();
-            ResourcePool.Instance.InitDefaultRes();
             StartSceneLogic();
             _InitProcess = 1.0f;
             _InitStep = InitStep.InitFinish;
@@ -240,6 +240,11 @@ public class FightManager : InstanceBase<FightManager>
 
     private IEnumerator InitMainRole()
     {
+        while (ResourcePool.Instance._ConfigPrefabs == null)
+        {
+            yield return null;
+        }
+
         ResourcePool.Instance.ClearObjs();
         ResourcePool.Instance.ClearEffects();
         ResourcePool.Instance.ClearBullets();
@@ -282,6 +287,14 @@ public class FightManager : InstanceBase<FightManager>
                     continue;
 
                 SetSkillElement(skillMotion, skillBase);
+
+                for (int i = 0; i < skillBase._NextEffect.Count; ++i)
+                {
+                    if (skillBase._NextEffect[i] != null)
+                    {
+                        skillBase._NextEffect[i].SetEffectColor(ElementType.Physic);
+                    }
+                }
             }
         }
 

@@ -631,6 +631,7 @@ public class AI_Base : MonoBehaviour
                 //var buffGO = ResourceManager.Instance.GetGameObject("SkillMotion/CommonImpact/HitProtectedBuff");
                 //_HitProtectedPrefab = buffGO.GetComponent<ImpactBuff>();
                 _HitProtectedPrefab = ResourcePool.Instance.GetConfig<ImpactBuff>(ResourcePool.ConfigEnum.HitProtectedBuff);
+                _HitProtectedPrefab.Init(null, null);
             }
             return _HitProtectedPrefab;
         }

@@ -69,7 +69,6 @@ public class BulletLine : BulletBase
             {
                 _HittedMotions.Add(targetMotion);
             }
-            Debug.Log("TriggetMotion hitted:" + _HittedMotions.Count);
         }
 
         BulletHit(targetMotion);

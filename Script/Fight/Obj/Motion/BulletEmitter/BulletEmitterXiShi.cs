@@ -22,6 +22,7 @@ public class BulletEmitterXiShi : BulletEmitterBase
         {
             var emitterGO = new GameObject("XishiBulletEmitter");
             _EmitterTrans = emitterGO.transform;
+            _EmitterTrans.position = transform.position;
         }
         for (int i = 0; i < _BulletCnt; ++i)
         {

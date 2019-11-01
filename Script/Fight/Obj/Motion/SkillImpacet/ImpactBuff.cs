@@ -104,6 +104,10 @@ public class ImpactBuff : ImpactBase
     {
         base.ActImpact(senderManager, reciverManager);
 
+        if (_BuffID == 0)
+        {
+            _BuffID = GetBuffID();
+        }
         _BuffSender = senderManager;
         _BuffOwner = reciverManager;
         var dynamicBuff = reciverManager.AddBuff(this, lastTime + ExLastTime);

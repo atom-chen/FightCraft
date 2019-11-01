@@ -16,7 +16,7 @@ public class SoundManager : MonoBehaviour
     {
         ResourceManager.Instance.LoadAudio(music, (resName, resGO, hash) =>
         {
-            PlayBGMusic(resGO, 0.8f);
+            PlayBGMusic(resGO, 0.9f);
         }, null);
     }
 

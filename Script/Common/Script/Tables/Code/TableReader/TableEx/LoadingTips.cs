@@ -49,10 +49,13 @@ namespace Tables
 
             foreach (var tipRecord in Records)
             {
-                _TipKeys.Add(tipRecord.Key);
                 if (!string.IsNullOrEmpty(tipRecord.Value.ImagePath))
                 {
                     _ImageTipKeys.Add(tipRecord.Key);
+                }
+                else
+                {
+                    _TipKeys.Add(tipRecord.Key);
                 }
             }
         }
@@ -63,6 +66,21 @@ namespace Tables
             return GetRecord(ImageTipKeys[randomIdx]);
         }
 
+        public LoadingTipsRecord GetRandomTextTips(int level)
+        {
+            List<LoadingTipsRecord> levelTips = new List<LoadingTipsRecord>();
+            foreach (var tipKey in _TipKeys)
+            {
+                var tipRecord = GetRecord(tipKey);
+                if (level >= tipRecord.MinLevel)
+                {
+                    levelTips.Add(tipRecord);
+                }
+            }
+
+            int randomIdx = UnityEngine.Random.Range(0, levelTips.Count - 1);
+            return levelTips[randomIdx];
+        }
     }
 
 }

@@ -30,9 +30,11 @@ public class RoleAttrImpactDefenceArmor : RoleAttrImpactBase
 
         ResourcePool.Instance.LoadConfig("SkillMotion\\CommonImpact\\" + _ImpactName, (resName, resGO, hash) =>
         {
-            resGO.transform.SetParent(skillMotion.transform);
+            var defenceImpact = skillMotion.GetComponentInChildren<ImpactBuffDefence>();
+            resGO.transform.SetParent(defenceImpact.transform);
             resGO.transform.localPosition = Vector3.zero;
             resGO.transform.localRotation = Quaternion.Euler(0, 0, 0);
+            defenceImpact._SubImpactGO = resGO;
         }, null);
 
     }

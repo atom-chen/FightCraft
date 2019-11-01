@@ -98,6 +98,7 @@ public class RoleAttrManager : MonoBehaviour
     private void RefreshAttackSpeed()
     {
         var AttackSpeedRate = _BaseAttr.GetValue(RoleAttrEnum.AttackSpeed) * 0.0001f + 1;
+        AttackSpeedRate = Mathf.Clamp(AttackSpeedRate, 0.1f, 3.0f);
         _AttackSpeed = _BaseAttackSpeed * AttackSpeedRate;
     }
 

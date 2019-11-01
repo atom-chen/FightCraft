@@ -710,6 +710,8 @@ public class MotionManager : MonoBehaviour
         return _DynamicEffectID;
     }
 
+    public ElementType _SkillElement = ElementType.Physic;
+
     public void RecvAllEffects()
     {
         foreach (var effect in _SkillEffects.Values)
@@ -723,7 +725,7 @@ public class MotionManager : MonoBehaviour
         }
     }
 
-    public EffectController PlaySkillEffect(EffectController effect, float speed = -1, ElementType elementType = ElementType.None)
+    public EffectController PlaySkillEffect(EffectController effect, float speed = -1, ElementType elementType = ElementType.Physic)
     {
         if (!_SkillEffects.ContainsKey(effect.name))
         {
@@ -736,7 +738,7 @@ public class MotionManager : MonoBehaviour
             _SkillEffects.Add(effect.name, idleEffect);
         }
         _PlayingEffect = _SkillEffects[effect.name];
-        _PlayingEffect.SetEffectColor(elementType);
+        _PlayingEffect.SetEffectColor(_SkillElement);
         if(speed < 0)
             _PlayingEffect.PlayEffect(RoleAttrManager.AttackSpeed);
         else

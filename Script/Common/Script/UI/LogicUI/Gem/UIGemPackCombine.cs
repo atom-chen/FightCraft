@@ -196,18 +196,15 @@ public class UIGemPackCombine : UIBase
         //    UIMessageTip.ShowMessageTip(30008);
         //}
 
-        for (int i = 0; i < _DefaultCombine.Count; ++i)
-        {
-            TestCombineAll(i);
-        }
+        CombineAll();
         ResetPacket();
     }
 
     public static void CombineAll()
     {
-        for (int i = 0; i < _DefaultCombine.Count; ++i)
+        foreach (var gemItem in GemData.Instance.PackExtraGemDatas._PackItems)
         {
-            TestCombineAll(i);
+            CombineAll(gemItem);
         }
     }
 
@@ -220,16 +217,23 @@ public class UIGemPackCombine : UIBase
         new List<string>() { "70010", "70006" },
     };
 
-    private static void TestCombineAll(int idx)
+    private static void CombineAll(ItemGem baseGem)
     {
-        List<string> defaultCombine = _DefaultCombine[idx];
         List<ItemGem> combines = new List<ItemGem>();
+        string exGemID = "";
+        foreach (var gemRecord in Tables.TableReader.GemTable.Records)
+        {
+            if (gemRecord.Value.AttrValue.AttrParams[0] == baseGem.ExAttr)
+            {
+                exGemID = gemRecord.Value.Id;
+            }
+        }
         while (true)
         {
             combines.Clear();
-            ItemGem gemItem1 = GemData.Instance.PackExtraGemDatas.GetItem(defaultCombine[0]);
-            ItemGem gemItemMat1 = GemData.Instance.PackGemDatas.GetItem(defaultCombine[0]);
-            ItemGem gemItemMat11 = GemData.Instance.PackGemDatas.GetItem(defaultCombine[1]);
+            ItemGem gemItem1 = GemData.Instance.PackExtraGemDatas.GetItem(baseGem.ItemDataID);
+            ItemGem gemItemMat1 = GemData.Instance.PackGemDatas.GetItem(baseGem.ItemDataID);
+            ItemGem gemItemMat11 = GemData.Instance.PackGemDatas.GetItem(exGemID);
 
             if (gemItem1 == null)
             {

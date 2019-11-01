@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -6,8 +7,16 @@ public class BulletMuTong : BulletSummon
 {
     public AnimationClip _HitAnimation;
     public BulletEmitterBase _SubBulletEmitter;
-
+    public float _LiveTime = 60;
     private Animation _Animation;
+
+    public void Update()
+    {
+        if (_SkillMotion == null)
+        {
+            BulletFinish();
+        }
+    }
 
     public override void Init(MotionManager senderMotion, BulletEmitterBase emitterBase)
     {
@@ -23,6 +32,8 @@ public class BulletMuTong : BulletSummon
         {
             _Animation.AddClip(_HitAnimation, _HitAnimation.name);
         }
+
+        Invoke("OnBulletHit", _LiveTime);
     }
 
     void OnTriggerEnter(Collider other)
@@ -31,6 +42,12 @@ public class BulletMuTong : BulletSummon
         if (other.gameObject.GetComponent<Rigidbody>() != null)
             return;
 
+        OnBulletHit();
+    }
+
+    public void OnBulletHit()
+    {
+        Debug.Log("OnBulletHit");
         var collider = gameObject.GetComponent<Collider>();
         collider.enabled = false;
 

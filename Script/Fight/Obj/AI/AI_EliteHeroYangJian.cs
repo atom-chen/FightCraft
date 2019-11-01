@@ -32,7 +32,8 @@ public class AI_EliteHeroYangJian : AI_HeroStrNormal
 
         if (_SelfMotion._ActionState == _SelfMotion._StateIdle
             || _SelfMotion._ActionState == _SelfMotion._StateMove
-            || _SelfMotion._ActionState == _SelfMotion._StateSkill)
+            || _SelfMotion._ActionState == _SelfMotion._StateSkill
+            || _SelfMotion._ActionState == _SelfMotion._StateLie)
         {
             if (_AutoStartTime != 0)
             {
@@ -50,12 +51,12 @@ public class AI_EliteHeroYangJian : AI_HeroStrNormal
                 _AutoInterval = 0;
             }
         }
-        else
-        {
-            _TargetMotion.SkillProcessing = 0;
-            _AutoStartTime = 0;
-            _AutoInterval = 0;
-        }
+        //else
+        //{
+        //    _TargetMotion.SkillProcessing = 0;
+        //    _AutoStartTime = 0;
+        //    _AutoInterval = 0;
+        //}
     }
 
     private void ActImpact()
@@ -64,6 +65,8 @@ public class AI_EliteHeroYangJian : AI_HeroStrNormal
         _AutoStartTime = 0;
         _AutoInterval = 0;
     }
+
+
 
     #endregion
 
