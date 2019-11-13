@@ -91,6 +91,7 @@ public class UILoadingScene : UIBase
                     AdManager.Instance.AddLoadSceneTimes();
 
                     LogicManager.Instance.EnterFightFinish();
+                    //AdManager.Instance.DisposeAds();
                     base.Destory();
                 }
             }
@@ -105,28 +106,31 @@ public class UILoadingScene : UIBase
         else
         {
             _LoadProcess.value = (Time.time - _StartTime) * 0.66f;
-            if (_LoadProcess.value >=1 && SceneManager.GetActiveScene().name == _LoadingSceneName)
+            if (AdManager.Instance.IsShowInterAD)
             {
-                if (FightManager.Instance._InitStep > FightManager.InitStep.InitSceneFinish && _ShowADTime == 0)
+                if (_LoadProcess.value >= 1 && SceneManager.GetActiveScene().name == _LoadingSceneName)
                 {
-                    _ShowADTime = Time.time;
-                    AdManager.Instance.ShowInterAD();
-                }
+                    if (FightManager.Instance._InitStep > FightManager.InitStep.InitSceneFinish && _ShowADTime == 0)
+                    {
+                        _ShowADTime = Time.time;
+                        AdManager.Instance.ShowInterAD();
+                    }
 
-                if (_ShowADTime > 0 && AdManager.Instance.IsShowInterADFinish())
-                {
-                    AdManager.Instance.AddLoadSceneTimes();
+                    if (_ShowADTime > 0 && AdManager.Instance.IsShowInterADFinish())
+                    {
+                        AdManager.Instance.AddLoadSceneTimes();
 
-                    LogicManager.Instance.StartLogic();
-                    base.Destory();
+                        LogicManager.Instance.StartLogic();
+                        base.Destory();
+                    }
                 }
-                else
-                {
-                    AdManager.Instance.AddLoadSceneTimes();
+            }
+            else
+            {
+                AdManager.Instance.AddLoadSceneTimes();
 
-                    LogicManager.Instance.StartLogic();
-                    base.Destory();
-                }
+                LogicManager.Instance.StartLogic();
+                base.Destory();
             }
         }
     }

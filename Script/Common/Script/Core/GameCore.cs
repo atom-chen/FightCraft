@@ -101,7 +101,7 @@ public class GameCore : MonoBehaviour
         Tables.TableReader.ReadTables();
         UILogin.ShowAsyn();
         DataRecordManager.Instance.InitDataRecord();
-        
+        AdManager.InitAdManager();
     }
 
     #endregion

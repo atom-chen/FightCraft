@@ -46,6 +46,7 @@ public class UIGiftPack : UIBase
 
     public override void Show(Hashtable hash)
     {
+        Debug.Log("UIGiftPack Show");
         AdManager.Instance.PrepareVideo();
         base.Show(hash);
 

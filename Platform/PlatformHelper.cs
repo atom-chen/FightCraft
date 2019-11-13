@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+#if PLATFORM_ANDROID
+using UnityEngine.Android;
+#endif
+
 public class PlatformHelper : MonoBehaviour
 {
     #region 
@@ -80,8 +84,23 @@ public class PlatformHelper : MonoBehaviour
 
     public bool GetLocationPermission()
     {
-        string permissionStr = "android.permission.ACCESS_FINE_LOCATION";
-        return CallAndroid("RequstePermission", permissionStr).Equals("1");
+        //string permissionStr = "android.permission.ACCESS_FINE_LOCATION";
+        //return CallAndroid("RequstePermission", permissionStr).Equals("1");
+#if PLATFORM_ANDROID
+        if (!Permission.HasUserAuthorizedPermission(Permission.FineLocation))
+        {
+            // The user denied permission to use the microphone.
+            // Display a message explaining why you need it with Yes/No buttons.
+            // If the user says yes then present the request again
+            // Display a dialog here.
+            Permission.RequestUserPermission(Permission.FineLocation);
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+#endif
     }
 
     public void LoadVideoAD()
