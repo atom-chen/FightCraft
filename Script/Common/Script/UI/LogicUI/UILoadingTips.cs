@@ -14,6 +14,13 @@ public class UILoadingTips : UIBase
         GameCore.Instance.UIManager.ShowUI(UIConfig.UILoadingTips, UILayer.TopUI, hash);
     }
 
+    public static void ShowAsyn(float delayTime)
+    {
+        Hashtable hash = new Hashtable();
+        hash.Add("DelayTime", delayTime);
+        GameCore.Instance.UIManager.ShowUI(UIConfig.UILoadingTips, UILayer.TopUI, hash);
+    }
+
     public static void HideAsyn()
     {
         var instance = GameCore.Instance.UIManager.GetUIInstance<UILoadingTips>(UIConfig.UILoadingTips);
@@ -26,7 +33,29 @@ public class UILoadingTips : UIBase
         instance.Hide();
     }
 
+    public static bool IsShowing()
+    {
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UILoadingTips>(UIConfig.UILoadingTips);
+        if (instance == null)
+            return false;
+
+        return instance.isActiveAndEnabled;
+            
+    }
+
     #endregion
+
+    private float _DelayTime = 0;
+
+    public override void Show(Hashtable hash)
+    {
+        base.Show(hash);
+
+        _DelayTime = (float)hash["DelayTime"];
+        ShowLast(_DelayTime);
+    }
+
+    
 
 }
 

@@ -139,7 +139,7 @@ public class GameCore : MonoBehaviour
     #region 
 
     public int _StrVersion = 0;
-    public bool _IsTestMode = true;
+    public bool _IsTestMode = false;
 
     public void InitLanguage()
     {

@@ -102,6 +102,11 @@ public class UILoadingScene : UIBase
                 LogicManager.Instance.EnterFightFinish();
                 base.Destory();
             }
+
+            if (ActData.Instance.GetStageLevel() <= 1)
+            {
+                UIFightTips.ShowAsyn();
+            }
         }
         else
         {
