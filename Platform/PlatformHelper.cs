@@ -27,7 +27,8 @@ public class PlatformHelper : MonoBehaviour
     }
     #endregion
 
-#if UNITY_ANDROID 
+    #region android
+
     public string PLATFORM_CLASS = "";
     public string CallAndroid(string func, string param)
     {
@@ -78,9 +79,9 @@ public class PlatformHelper : MonoBehaviour
         }
     }
 
-#endif
+    #endregion
 
-        #region AD
+    #region AD
 
     public bool GetLocationPermission()
     {

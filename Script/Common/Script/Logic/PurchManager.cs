@@ -40,6 +40,7 @@ public class PurchManager: IStoreListener
             _ProductBundleID.Add(chargeTab.BundleName, chargeTab.Id);
         }
 
+        builder.Configure<IAmazonConfiguration>().WriteSandboxJSON(builder.products);
         UnityPurchasing.Initialize(this, builder);
     }
 
@@ -78,6 +79,7 @@ public class PurchManager: IStoreListener
         }
         catch (Exception e)
         {
+            Debug.Log("Purch error:" + e.ToString());
             UILoadingTips.HideAsyn();
         }
 
