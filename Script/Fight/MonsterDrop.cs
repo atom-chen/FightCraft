@@ -192,7 +192,7 @@ public class MonsterDrop
         }
         else if (dropItemData._ItemEquip != null)
         {
-            if (!BackBagPack.Instance.AddEquip(dropItemData._ItemEquip))
+            if (BackBagPack.Instance.AddEquip(dropItemData._ItemEquip) == null)
                 return;
         }
         else if (dropItemData._ItemBase != null)

@@ -107,20 +107,20 @@ public class BackBagPack : DataPackBase
         }
     }
 
-    public bool AddEquip(ItemEquip equip)
+    public ItemEquip AddEquip(ItemEquip equip)
     {
         var equipSlot = _PageEquips.AddItem(equip);
         if (equipSlot == null)
         {
             UIMessageTip.ShowMessageTip(10002);
-            return false;
+            return null;
         }
 
         Hashtable hash = new Hashtable();
         hash.Add("EquipInfo", equipSlot);
         GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_EQUIP_GET, this, hash);
 
-        return true;
+        return equipSlot;
     }
 
     public void SortEquip()

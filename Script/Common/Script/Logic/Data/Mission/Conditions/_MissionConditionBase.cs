@@ -29,8 +29,14 @@ public class MissionConditionBase
         return "";
     }
 
+    public virtual string GetMissionDesc()
+    {
+        return StrDictionary.GetFormatStr(_MissionRecord.DescID.Id);
+    }
+
     public virtual void ConditionGoto()
     {
 
     }
+    
 }

@@ -168,6 +168,9 @@ public class SummonSkill
             }
             FightSkillManager.Instance.SetSummonCD(SummonSkillData.Instance._UsingSummon[curIdx], SummonSkillData.Instance.SummonSkillCD, false);
             //FightSkillManager.Instance.SetSummonCD(SummonSkillData.Instance._UsingSummon[_CurSummonIdx], SummonSkillData._SummonCommonCD, true);
+
+            Hashtable eventHash = new Hashtable();
+            GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_SOUL_USE_SKILL, this, eventHash);
         }
 
 

@@ -4,21 +4,30 @@ using UnityEngine;
 
 public class ConGemLvUp : MissionConditionBase
 {
-    private int _EquipQuality = 0;
+    private int _GemLevel = 0;
 
     public override void InitCondition(MissionItem missionData, Tables.MissionRecord missionRecord)
     {
         base.InitCondition(missionData, missionRecord);
+        _GemLevel = int.Parse(missionRecord.ConditionParams[0]);
 
-        GameCore.Instance.EventController.RegisteEvent(EVENT_TYPE.EVENT_LOGIC_GEM_LEVEL_UP, EventDelegate);
+        GameCore.Instance.EventController.RegisteEvent(EVENT_TYPE.EVENT_LOGIC_EQUIP_GEM_COMBINE, EventDelegate);
     }
 
     private void EventDelegate(object go, Hashtable eventArgs)
     {
-        
+        var gemItem = (ItemGem)eventArgs["ItemGem"];
+        if (gemItem == null || !gemItem.IsVolid())
+        {
+            return;
+        }
+        if (gemItem.Level < _GemLevel)
+            return;
+
         ++_MissionItem.MissionProcessData;
         _MissionItem.SaveClass(true);
-        
+
+        _MissionItem.RefreshMissionState();
     }
 
     public override float GetConditionProcess()

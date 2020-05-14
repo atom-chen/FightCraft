@@ -29,6 +29,10 @@ public class UIImgText : MonoBehaviour
         if (_CharRoot != null)
             return;
 
+        _CharRoot = transform.Find("CharRoot");
+        if (_CharRoot != null)
+            return;
+
         var charRoot = new GameObject("CharRoot");
         
         var horizon = charRoot.AddComponent<HorizontalLayoutGroup>();

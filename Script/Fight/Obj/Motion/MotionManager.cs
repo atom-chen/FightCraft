@@ -1309,6 +1309,13 @@ public class MotionManager : MonoBehaviour
         {
             aiBase.OnStateChange(orgState, _ActionState);
         }
+
+        if (_ActionState == _StateIdle
+            || _ActionState == _StateDie
+            || _ActionState == _StateRise)
+        {
+            ResetCombo();
+        }
     }
 
     public void StateOpt(StateBase.MotionOpt opt, params object[] args)
@@ -1387,6 +1394,8 @@ public class MotionManager : MonoBehaviour
             aiBase.OnBeHit(hitImpact);
         }
         StateOpt(StateBase.MotionOpt.Hit, hitTime, hitEffect, impactSender, hitImpact, moveDirect, moveTime, hitAudio, isPauseFly);
+
+        AddCombo();
     }
 
     public void FrozenEvent()
@@ -1407,6 +1416,8 @@ public class MotionManager : MonoBehaviour
             aiBase.OnBeHit(hitImpact);
         }
         StateOpt(StateBase.MotionOpt.Fly, flyHeight, hitEffect, impactSender, hitImpact, moveDirect, moveTime, hitAudio);
+
+        AddCombo();
     }
 
     public void CatchEvent(float catchTime, int hitEffect, int hitAudio, MotionManager impactSender, ImpactHit hitImpact, Vector3 moveDirect, float moveTime)
@@ -1421,6 +1432,8 @@ public class MotionManager : MonoBehaviour
             aiBase.OnBeHit(hitImpact);
         }
         StateOpt(StateBase.MotionOpt.Catch, catchTime, hitEffect, impactSender, hitImpact, moveDirect, moveTime, hitAudio);
+
+        AddCombo();
     }
 
     public void StopCatch()
@@ -1445,6 +1458,37 @@ public class MotionManager : MonoBehaviour
 
     public AudioClip _BehitAudio;
     public AudioClip _DeadAudio;
+
+    #endregion
+
+    #region combat
+
+    private int _BeHitCombo = 0;
+    public int BeHitCombo
+    {
+        get
+        {
+            return _BeHitCombo;
+        }
+    }
+
+    public void ResetCombo()
+    {
+        _BeHitCombo = 0;
+    }
+
+    public void AddCombo()
+    {
+        if (FightManager.Instance.MainChatMotion == this)
+        {
+            FightManager.Instance.AddBeHitTimes();
+            return;
+        }
+
+        ++_BeHitCombo;
+
+        FightManager.Instance.SetCombo(_BeHitCombo);
+    }
 
     #endregion
 }

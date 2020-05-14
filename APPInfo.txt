@@ -1,2 +1,22 @@
-Name:chinese heroes
-key:combat 2 free,
+Ancient Hero
+100 diamond
+com.tfimage.fightcraft.100d
+200 diamond
+com.tfimage.fightcraft.200d
+500 diamond
+com.tfimage.fightcraft.500d
+1000 diamond
+com.tfimage.fightcraft.1000d
+2000 diamond
+com.tfimage.fightcraft.2000d
+5000 diamond
+com.tfimage.fightcraft.5000d
+
+"Ancient Hero" is an independent action game where you will experience an ancient Chinese master who challenges all heroes. There is a delicate and free action system, and many diffirent weapons.You can defeat the hero with you operation,and collect the equipment he drops.
+FEATURES
+* Free operation,wonderful combat
+* Rich equipment drops
+* Summon hero assistance
+In addition, there are many heroes of different difficulty waiting for the challenge, but also need to be flexible to find the enemy flaws.
+
+addicting, game, boys, fighting, assassin, good, juegos, offline, top, games, action, free, hunter, hunting, fight, funny, new, wifi, idle, cool, satisfying, 2020, arcade, teen, adventure, ninja, anime, fun, internet, gratis

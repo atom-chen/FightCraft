@@ -148,7 +148,7 @@ public class LegendaryData : SaveItemBase
     public bool PutOffEquip(ItemEquip equip)
     {
         var addEquip = BackBagPack.Instance.AddEquip(equip);
-        if (!addEquip)
+        if (addEquip == null)
             return false;
 
         CalculateAttrs();

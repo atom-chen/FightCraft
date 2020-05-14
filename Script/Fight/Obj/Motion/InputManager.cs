@@ -36,7 +36,7 @@ public class InputManager : InstanceBase<InputManager>
 
 #if UNITY_EDITOR
         if (!_EmulateMode)
-#endif
+
         {
             InputMotion.InputDirect(CameraAxis);
         }
@@ -52,8 +52,6 @@ public class InputManager : InstanceBase<InputManager>
                 }
             }
         }
-        CharSkill();
-        UpdateSummonSkill();
 
         if (GameCore.Instance._IsTestMode)
         {
@@ -62,6 +60,11 @@ public class InputManager : InstanceBase<InputManager>
                 TestFight.TestDrop();
             }
         }
+#endif
+        CharSkill();
+        UpdateSummonSkill();
+
+        
     }
 
     private MotionManager _InputMotion;
@@ -179,6 +182,31 @@ public class InputManager : InstanceBase<InputManager>
     public bool _EmulateMode = false;
     private string _EmulatePress = "";
 
+    public enum BUTTON_TYPE
+    {
+        Attack,
+        Skill,
+        Buff,
+        Defence,
+    }
+
+    public string GetBtnStr(BUTTON_TYPE type)
+    {
+        switch (type)
+        {
+            case BUTTON_TYPE.Attack:
+                return "j";
+            case BUTTON_TYPE.Skill:
+                return "k";
+            case BUTTON_TYPE.Buff:
+                return "u";
+            case BUTTON_TYPE.Defence:
+                return "l";
+        }
+
+        return "j";
+    }
+
     public void SetEmulatePress(string key)
     {
         _EmulateMode = true;
@@ -210,12 +238,12 @@ public class InputManager : InstanceBase<InputManager>
         if (_NormalAttack == null)
             return;
 
-        if (IsKeyHold("j"))
+        if (IsKeyHold(GetBtnStr(BUTTON_TYPE.Attack)))
         {
-            InputMotion.ActSkill(InputMotion._StateSkill._SkillMotions["j"]);
+            InputMotion.ActSkill(InputMotion._StateSkill._SkillMotions[GetBtnStr(BUTTON_TYPE.Attack)]);
         }
 
-        if (IsKeyHold("k"))
+        if (IsKeyHold(GetBtnStr(BUTTON_TYPE.Skill)))
         {
             if (InputMotion.ActingSkill == _NormalAttack && _NormalAttack.CurStep > 0 && _NormalAttack.CurStep < 4 && _NormalAttack.CanNextInput)
             {
@@ -243,7 +271,7 @@ public class InputManager : InstanceBase<InputManager>
                 //    _BuffSkillInput = null;
                 //}
 
-                string inputKey = "k";
+                string inputKey = GetBtnStr(BUTTON_TYPE.Skill);
                 if (InputMotion._StateSkill._SkillMotions.ContainsKey(inputKey) && InputMotion._StateSkill._SkillMotions[inputKey].IsCanActSkill())
                 {
                     SetRotate();
@@ -253,7 +281,7 @@ public class InputManager : InstanceBase<InputManager>
             }
         }
 
-        if (IsKeyHold("u"))
+        if (IsKeyHold(GetBtnStr(BUTTON_TYPE.Buff)))
         {
             if (InputMotion.ActingSkill== _NormalAttack && _NormalAttack.CurStep > 0 && _NormalAttack.CurStep < 4 /*&& _NormalAttack.CanNextInput*/)
             {
@@ -276,7 +304,7 @@ public class InputManager : InstanceBase<InputManager>
             }
         }
 
-        if (IsKeyHold("l"))
+        if (IsKeyHold(GetBtnStr(BUTTON_TYPE.Defence)))
         {
             if (InputMotion._ActionState == InputMotion._StateHit
                 || InputMotion._ActionState == InputMotion._StateFly

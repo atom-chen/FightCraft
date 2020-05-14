@@ -85,8 +85,16 @@ public class UIRoleSelect2 : UIBase
 
     public void ChangeRole(int idx)
     {
+        if (idx != (int)PlayerDataPack.Instance._SelectedRole.Profession)
+        {
+            Hashtable eventHash = new Hashtable();
+            GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_CHANGE_ROLE, this, eventHash);
+        }
+
         PlayerDataPack.Instance.SelectRole(idx);
         Hide();
+
+        
     }
 
     #endregion

@@ -31,6 +31,7 @@ public class FightManager : InstanceBase<FightManager>
                 if (_LogicFightTime < 0)
                     _LogicFightTime = 0;
             }
+            UpdateCombo();
         }
 
     }
@@ -124,6 +125,9 @@ public class FightManager : InstanceBase<FightManager>
             _LogicFightTime = _LogicPassTime;
             _LogicStartTime = Time.time;
             _CountDown = true;
+            _BeHitTimes = 0;
+
+            TimeManager.Instance.Init();
         }
     }
 
@@ -199,6 +203,8 @@ public class FightManager : InstanceBase<FightManager>
         _FightLevel = ActData.Instance.GetStageLevel();
 
         _InitStep = InitStep.InitCameraFinish;
+
+        gameObject.AddComponent<TimeManager>();
     }
 
     private void InitResourcePool()
@@ -390,6 +396,10 @@ public class FightManager : InstanceBase<FightManager>
             mainBase.NavAgent.radius = mainBase.NavAgent.radius * monsterBase.ModelScale;
             //mainBase.Animation.transform.localScale = mainBase.Animation.transform.localScale * 0.8f;
             //mainBase.NavAgent.radius = mainBase.NavAgent.radius * mainBase.Animation.transform.localScale.x * 0.8f;
+
+            Hashtable hash = new Hashtable();
+            hash.Add("MonsterInfo", mainBase);
+            GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_MEET_BOSS, this, hash);
         }
         else
         {
@@ -523,6 +533,11 @@ public class FightManager : InstanceBase<FightManager>
 
     #region combo
 
+    #region combo
+
+    public float _ComboResetTime = 2.0f;
+    public float _LastComboUpdate;
+
     private int _Combo = 0;
     public int Combo
     {
@@ -531,6 +546,47 @@ public class FightManager : InstanceBase<FightManager>
             return _Combo;
         }
     }
+
+    public void SetCombo(int comboValue)
+    {
+        if (comboValue > _Combo)
+        {
+            _Combo = comboValue;
+            _LastComboUpdate = TimeManager.Instance.FightTime;
+
+            Hashtable hash = new Hashtable();
+            hash.Add("Combat", _Combo);
+            GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_COMBAT, this, hash);
+        }
+    }
+
+    public void UpdateCombo()
+    {
+        if (TimeManager.Instance.FightTime - _LastComboUpdate > _ComboResetTime)
+        {
+            _Combo = 0;
+        }
+    }
+
+    #endregion
+
+    #region behit
+
+    private int _BeHitTimes = 0;
+    public int BeHitTimes
+    {
+        get
+        {
+            return _BeHitTimes;
+        }
+    }
+
+    public void AddBeHitTimes()
+    {
+        ++_BeHitTimes;
+    }
+
+    #endregion
 
     #endregion
 

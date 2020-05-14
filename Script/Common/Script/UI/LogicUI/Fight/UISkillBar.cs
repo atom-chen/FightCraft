@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
- 
+
 public class UISkillBar : UIBase
 {
     #region static
@@ -53,10 +53,35 @@ public class UISkillBar : UIBase
         instance.Hide();
     }
 
+    public static void PlayGuideEffect(InputManager.BUTTON_TYPE buttonType)
+    {
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UISkillBar>(UIConfig.UISkillBar);
+        if (instance == null)
+            return;
+
+        if (!instance.isActiveAndEnabled)
+            return;
+
+        instance.PlayGuideEffectInner(buttonType);
+    }
+
+    public static bool IsUIShow()
+    {
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UISkillBar>(UIConfig.UISkillBar);
+        if (instance == null)
+            return false;
+
+        if (!instance.isActiveAndEnabled)
+            return false;
+
+        return true;
+    }
+
     public void Update()
     {
         UpdateCD();
         UpdateSummonCD();
+        UpdateGuideEffect();
     }
 
     #endregion
@@ -77,6 +102,8 @@ public class UISkillBar : UIBase
 
     public override void Show()
     {
+        _Buttons.Clear();
+
         base.Show();
 
         _Buttons.Add("j", _ButtonJ);
@@ -254,7 +281,7 @@ public class UISkillBar : UIBase
                 skillBtn.SetCDPro(skillCDPro);
             }
         }
-        
+
     }
 
     #endregion
@@ -300,6 +327,75 @@ public class UISkillBar : UIBase
         if (GlobalValPack.Instance.IsRotToAnimTarget)
         {
             _AimOnGO.SetActive(GlobalValPack.Instance.IsRotToAnimTarget);
+        }
+    }
+
+    #endregion
+
+    #region guide effect
+
+    public RectTransform _GuideEffect;
+
+    private float _StartPlayTime;
+    private float _StartSize1 = 1250;
+    private float _StartSize2 = 500;
+    private float _SizeDelta1 = 3000;
+    private float _SizeDelta2 = 500;
+
+    public void UpdateGuideEffect()
+    {
+        float deltaTime = Time.realtimeSinceStartup - _StartPlayTime;
+        if (deltaTime > 1)
+        {
+            FinishGuideEffect();
+            return;
+        }
+
+        if (deltaTime < 0.25f)
+        {
+            _GuideEffect.sizeDelta = new Vector2(_StartSize1 - _SizeDelta1 * deltaTime, _StartSize1 - _SizeDelta1 * deltaTime);
+        }
+        else if (deltaTime < 0.5f)
+        {
+            _GuideEffect.sizeDelta = new Vector2(_StartSize2 - _SizeDelta2 * deltaTime, _StartSize2 - _SizeDelta2 * deltaTime);
+        }
+
+        _GuideEffect.rotation = Quaternion.Euler(0, 0, 720 * deltaTime);
+    }
+
+    public void StartGuideEffect()
+    {
+        _GuideEffect.gameObject.SetActive(true);
+        _GuideEffect.sizeDelta = new Vector2(_StartSize1, _StartSize1);
+        _StartPlayTime = Time.realtimeSinceStartup;
+    }
+
+    public void FinishGuideEffect()
+    {
+        _GuideEffect.gameObject.SetActive(false);
+    }
+
+    public void PlayGuideEffectInner(InputManager.BUTTON_TYPE buttonType)
+    {
+        Debug.Log("buttonType:" + buttonType.ToString());
+        switch (buttonType)
+        {
+            case InputManager.BUTTON_TYPE.Attack:
+                _GuideEffect.transform.position = _ButtonJ.transform.position;
+                StartGuideEffect();
+                break;
+            case InputManager.BUTTON_TYPE.Skill:
+                _GuideEffect.transform.position = _ButtonK.transform.position;
+                StartGuideEffect();
+                break;
+            case InputManager.BUTTON_TYPE.Buff:
+                _GuideEffect.transform.position = _ButtonU.transform.position;
+                StartGuideEffect();
+                break;
+            case InputManager.BUTTON_TYPE.Defence:
+                _GuideEffect.transform.position = _ButtonL.transform.position;
+                StartGuideEffect();
+                break;
         }
     }
 

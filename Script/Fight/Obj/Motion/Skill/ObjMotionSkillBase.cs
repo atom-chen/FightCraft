@@ -4,6 +4,35 @@ using System.Collections.Generic;
 
 public class ObjMotionSkillBase : MonoBehaviour
 {
+    #region 
+
+    public enum CharSkillType
+    {
+        NormalAttack,
+        Skill,
+        Ex,
+        Buff,
+        DeBuff
+    }
+
+    public CharSkillType GetSkillType()
+    {
+        if (_ActInput == "j")
+            return CharSkillType.NormalAttack;
+        else if (_ActInput == "1"
+            || _ActInput == "2"
+            || _ActInput == "3")
+            return CharSkillType.Skill;
+        else if (_ActInput == "5")
+            return CharSkillType.Buff;
+        else if (_ActInput == "6")
+            return CharSkillType.DeBuff;
+
+        return CharSkillType.NormalAttack;
+    }
+
+    #endregion
+
     public virtual void Init()
     {
         _MotionManager = gameObject.GetComponentInParent<MotionManager>();

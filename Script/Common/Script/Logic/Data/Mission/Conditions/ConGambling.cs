@@ -28,7 +28,8 @@ public class ConGambling : MissionConditionBase
 
         ++_MissionItem.MissionProcessData;
         _MissionItem.SaveClass(true);
-        
+
+        _MissionItem.RefreshMissionState();
     }
 
     public override float GetConditionProcess()

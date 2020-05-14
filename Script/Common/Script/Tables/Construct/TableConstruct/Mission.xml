@@ -39,6 +39,28 @@
     <constructRepeat>1</constructRepeat>
   </constructColumn>
   <constructColumn>
+    <constructName>NameID</constructName>
+    <constructCode>NameID</constructCode>
+    <constructType1>表格索引</constructType1>
+    <constructType2>
+      <constructType2>StrDictionary</constructType2>
+    </constructType2>
+    <constructDefault>
+    </constructDefault>
+    <constructRepeat>1</constructRepeat>
+  </constructColumn>
+  <constructColumn>
+    <constructName>DescID</constructName>
+    <constructCode>DescID</constructCode>
+    <constructType1>表格索引</constructType1>
+    <constructType2>
+      <constructType2>StrDictionary</constructType2>
+    </constructType2>
+    <constructDefault>
+    </constructDefault>
+    <constructRepeat>1</constructRepeat>
+  </constructColumn>
+  <constructColumn>
     <constructName>Achieve</constructName>
     <constructCode>Achieve</constructCode>
     <constructType1>基本类型</constructType1>
@@ -135,6 +157,16 @@
   <constructColumn>
     <constructName>AwardNum</constructName>
     <constructCode>AwardNum</constructCode>
+    <constructType1>基本类型</constructType1>
+    <constructType2>
+      <constructType2>整数</constructType2>
+    </constructType2>
+    <constructDefault>0</constructDefault>
+    <constructRepeat>1</constructRepeat>
+  </constructColumn>
+  <constructColumn>
+    <constructName>GuideID</constructName>
+    <constructCode>GuideID</constructCode>
     <constructType1>基本类型</constructType1>
     <constructType2>
       <constructType2>整数</constructType2>

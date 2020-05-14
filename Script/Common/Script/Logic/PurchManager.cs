@@ -40,7 +40,6 @@ public class PurchManager: IStoreListener
             _ProductBundleID.Add(chargeTab.BundleName, chargeTab.Id);
         }
 
-        builder.Configure<IAmazonConfiguration>().WriteSandboxJSON(builder.products);
         UnityPurchasing.Initialize(this, builder);
     }
 

@@ -342,6 +342,7 @@ public class DataPackSave
                 {
                     string loadStr = LocalSave.Load(saveFileName);
                     LoadNodes(constumValue, 0, loadStr, isLoadChild);
+                    sortedFields[i].SetValue(dataObj, constumValue);
                 }
             }
             else

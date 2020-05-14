@@ -389,6 +389,12 @@ public class SummonSkillData : SaveItemBase
         List<SummonMotionData> summonList = new List<SummonMotionData>();
         for (int i = 0; i < times; ++i)
         {
+            if (_SummonMotionList._PackItems.Count == 0)
+            {//第一次
+                SummonMotionData firstsummon = AddSummonData("1210003");
+                summonList.Add(firstsummon);
+                continue;
+            }
             int summonIdx = -1;
             if (isGold == 0)
             {

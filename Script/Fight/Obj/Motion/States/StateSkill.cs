@@ -192,6 +192,10 @@ public class StateSkill : StateBase
         skillMotion.StartSkill(exHash);
         _ActingSkill = skillMotion;
         _SkillPrior = _ActingSkill._SkillMotionPrior;
+
+        Hashtable hash = new Hashtable();
+        hash.Add("MainUseSkill", skillMotion);
+        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_MAIN_USE_SKILL, this, hash);
     }
 
     public void FinishSkill(ObjMotionSkillBase skillMotion)

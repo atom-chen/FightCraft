@@ -369,6 +369,16 @@ public class UITestEquip : UIBase
 
     #endregion
 
+    #region Mission
+
+    public InputField _MissionID;
+
+    public void OnSetMission()
+    {
+        GuideMissionData.Instance.SetCurMission(_MissionID.text);
+    }
+
+    #endregion
 
 }
 

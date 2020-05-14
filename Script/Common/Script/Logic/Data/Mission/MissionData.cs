@@ -44,6 +44,7 @@ public class MissionData : DataPackBase
 
     public void InitMissionData()
     {
+        return;
         var timeSpan = System.DateTime.Now - _RefreshTime;
         if (timeSpan.Days > 0)
         {

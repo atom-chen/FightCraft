@@ -14,13 +14,13 @@ public class ConRoleLevel : MissionConditionBase
         _IsRoleLv = int.Parse(_MissionRecord.ConditionParams[0]);
         _TargetLv = int.Parse(_MissionRecord.ConditionParams[1]);
 
-        //GameCore.Instance.EventController.RegisteEvent(EVENT_TYPE.EVENT_LOGIC_ROLE_LEVEL_UP, EventDelegate);
+        GameCore.Instance.EventController.RegisteEvent(EVENT_TYPE.EVENT_LOGIC_ROLE_LEVEL_UP, EventDelegate);
     }
 
     private void EventDelegate(object go, Hashtable eventArgs)
     {
+        _MissionItem.RefreshMissionState();
 
-        
     }
 
     public override float GetConditionProcess()
@@ -31,30 +31,7 @@ public class ConRoleLevel : MissionConditionBase
 
     private int GetRoleCnt()
     {
-        if (_IsRoleLv > 0)
-        {
-            int num = 0;
-            for (int i = 0; i < PlayerDataPack.Instance._RoleList.Count; ++i)
-            {
-                if (PlayerDataPack.Instance._RoleList[i].RoleLevel >= _TargetLv)
-                {
-                    ++num;
-                }
-            }
-            return num;
-        }
-        else
-        {
-            int num = 0;
-            for (int i = 0; i < PlayerDataPack.Instance._RoleList.Count; ++i)
-            {
-                if (PlayerDataPack.Instance._RoleList[i].AttrLevel >= _TargetLv)
-                {
-                    ++num;
-                }
-            }
-            return num;
-        }
+        return RoleData.SelectRole.TotalLevel;
     }
 
     public override string GetConditionProcessText()

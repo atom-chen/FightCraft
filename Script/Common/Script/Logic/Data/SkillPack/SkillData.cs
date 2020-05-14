@@ -281,6 +281,19 @@ public class SkillData : SaveItemBase
         return skillItem;
     }
 
+    public bool IsAllSkillMax()
+    {
+        foreach (var skillItem in _SkillItems)
+        {
+            if (skillItem.SkillRecord.SkillType.Equals("61000"))
+            {
+                if (skillItem.SkillActureLevel < skillItem.SkillRecord.MaxLevel)
+                    return false;
+            }
+        }
+        return true;
+    }
+
     public ItemSkill GetSkillByInput(string skillInput)
     {
         var skillItem = ProfessionSkills.Find((skillInfo) =>
@@ -453,6 +466,7 @@ public class SkillData : SaveItemBase
         Hashtable eventHash = new Hashtable();
         eventHash.Add("SkillID", findSkill.SkillID);
         eventHash.Add("SkillLevel", findSkill.SkillLevel);
+        eventHash.Add("SkillRecord", skillTab);
         GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_LEVELUP_SKILL, this, eventHash);
     }
 

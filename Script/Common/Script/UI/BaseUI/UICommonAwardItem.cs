@@ -60,7 +60,22 @@ public class UICommonAwardItem : UIItemBase
             _CurrencyValue.text = "";
         }
     }
-    
+
+    public void ShowAward(string itemID, int currencyValue)
+    {
+        //_CurrencyIcon.sprite = _CurrencySprite[(int)currencyType];
+        var commonItem = Tables.TableReader.CommonItem.GetRecord(itemID);
+        ResourceManager.Instance.SetImage(_CurrencyIcon, commonItem.Icon);
+        if (currencyValue > 0)
+        {
+            _CurrencyValue.text = currencyValue.ToString();
+        }
+        else
+        {
+            _CurrencyValue.text = "";
+        }
+    }
+
     #endregion
 
 }

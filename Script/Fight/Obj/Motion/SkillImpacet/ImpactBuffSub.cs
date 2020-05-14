@@ -35,6 +35,9 @@ public class ImpactBuffSub : ImpactBuffCD
 
     protected void ActSubImpacts()
     {
+        if (_SubImpacts == null)
+            return;
+
         foreach (var subImpact in _SubImpacts)
         {
             subImpact.ActImpact(_BuffSender, _BuffOwner);

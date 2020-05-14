@@ -79,7 +79,13 @@ public class LogicManager
         GiftData.Instance.LoadClass(true);
         GiftData.Instance.InitGiftData();
 
+        var missionitem = Activator.CreateInstance(typeof(MissionItem));
+        GuideMissionData.Instance.LoadClass(true);
+        GuideMissionData.Instance.InitMissionData();
+
         UIMainFun.ShowAsyn();
+
+        UIMissionBase.ShowAsyn();
 
         PurchManager.Instance.InitIAPInfo();
     }
@@ -98,6 +104,7 @@ public class LogicManager
         {
             UIMainFun.ShowAsyn();
 
+            UIMissionBase.ShowAsyn();
             //UIGiftTipPack.ShowAsyn();
         }
         GameCore.Instance._SoundManager.PlayBGMusic(GameCore.Instance._SoundManager._LogicAudio);
@@ -156,7 +163,10 @@ public class LogicManager
 
         GameCore.Instance.UIManager.HideAllUI();
 
-        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_ENTER_STAGE, this, null);
+        Hashtable hash = new Hashtable();
+        hash.Add("StageRecord", enterStage);
+
+        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_ENTER_STAGE, this, hash);
 
         UILoadingScene.ShowEnterFightAsyn();
     }
@@ -164,12 +174,15 @@ public class LogicManager
     public void EnterFightFinish()
     {
         UIHPPanel.ShowAsyn();
+        UICombo.ShowAsyn();
         UIControlPanel.ShowAsyn();
         UIJoyStick.ShowAsyn();
         UISkillBar.ShowAsyn();
         UIDropNamePanel.ShowAsyn();
         UIPlayerFrame.ShowAsyn();
         UIFuncInFight.ShowAsyn();
+
+        UIMissionBase.ShowAsyn();
 
         GameCore.Instance._SoundManager.PlayBGMusic(EnterStageInfo.Audio);
     }

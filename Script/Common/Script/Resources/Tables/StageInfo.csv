@@ -1,4 +1,4 @@
-"""ID""","""Name""","""Desc""","""StageType""","""FightLogicPath""","""ScenePath1""","""ScenePath2""","""ScenePath3""","""ScenePath4""","""ScenePath5""","""CameraOffset1""","""CameraOffset2""","""CameraOffset3""","""CameraOffset4""","""CameraOffset5""","""Audio""","""ExParam1""","""ExParam2""","""ExParam3""","""Icon"""
+﻿"""ID""","""Name""","""Desc""","""StageType""","""FightLogicPath""","""ScenePath1""","""ScenePath2""","""ScenePath3""","""ScenePath4""","""ScenePath5""","""CameraOffset1""","""CameraOffset2""","""CameraOffset3""","""CameraOffset4""","""CameraOffset5""","""Audio""","""ExParam1""","""ExParam2""","""ExParam3""","""Icon"""
 1,70101,70201,0,FightLogic_Random,,,,,,4;6;-4,4;6;-4,4;6;-4,4;6;-4,4;6;-4,BgMusic/stage-1,1,4,104,stage/Stage_ShaMo_01
 2,70102,70202,0,FightLogic_Random,,,,,,4;6;-4,4;6;-4,4;6;-4,4;6;-4,4;6;-4,BgMusic/stage-1,1,6,106,stage/Stage_ShaMo_02
 3,70103,70203,0,FightLogic_Random,,,,,,4;6;-4,4;6;-4,4;6;-4,4;6;-4,4;6;-4,BgMusic/stage-1,1,10,110,stage/Stage_ShaMo_03

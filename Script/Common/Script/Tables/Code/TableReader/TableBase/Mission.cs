@@ -14,6 +14,8 @@ namespace Tables
 
         public override string Id { get; set; }        public string Name { get; set; }
         public string Desc { get; set; }
+        public StrDictionaryRecord NameID { get; set; }
+        public StrDictionaryRecord DescID { get; set; }
         public int Achieve { get; set; }
         public string Class { get; set; }
         public string SubClass { get; set; }
@@ -24,6 +26,7 @@ namespace Tables
         public int AwardType { get; set; }
         public int AwardSubType { get; set; }
         public int AwardNum { get; set; }
+        public int GuideID { get; set; }
         public MissionRecord(DataRecord dataRecord)
         {
             if (dataRecord != null)
@@ -40,6 +43,22 @@ namespace Tables
             recordStrList.Add(TableWriteBase.GetWriteStr(Id));
             recordStrList.Add(TableWriteBase.GetWriteStr(Name));
             recordStrList.Add(TableWriteBase.GetWriteStr(Desc));
+            if (NameID != null)
+            {
+                recordStrList.Add(NameID.Id);
+            }
+            else
+            {
+                recordStrList.Add("");
+            }
+            if (DescID != null)
+            {
+                recordStrList.Add(DescID.Id);
+            }
+            else
+            {
+                recordStrList.Add("");
+            }
             recordStrList.Add(TableWriteBase.GetWriteStr(Achieve));
             recordStrList.Add(TableWriteBase.GetWriteStr(Class));
             recordStrList.Add(TableWriteBase.GetWriteStr(SubClass));
@@ -53,6 +72,7 @@ namespace Tables
             recordStrList.Add(TableWriteBase.GetWriteStr(AwardType));
             recordStrList.Add(TableWriteBase.GetWriteStr(AwardSubType));
             recordStrList.Add(TableWriteBase.GetWriteStr(AwardNum));
+            recordStrList.Add(TableWriteBase.GetWriteStr(GuideID));
 
             return recordStrList.ToArray();
         }
@@ -118,18 +138,35 @@ namespace Tables
             {
                 pair.Value.Name = TableReadBase.ParseString(pair.Value.ValueStr[1]);
                 pair.Value.Desc = TableReadBase.ParseString(pair.Value.ValueStr[2]);
-                pair.Value.Achieve = TableReadBase.ParseInt(pair.Value.ValueStr[3]);
-                pair.Value.Class = TableReadBase.ParseString(pair.Value.ValueStr[4]);
-                pair.Value.SubClass = TableReadBase.ParseString(pair.Value.ValueStr[5]);
-                pair.Value.ConditionScript = TableReadBase.ParseString(pair.Value.ValueStr[6]);
-                pair.Value.ConditionParams.Add(TableReadBase.ParseString(pair.Value.ValueStr[7]));
-                pair.Value.ConditionParams.Add(TableReadBase.ParseString(pair.Value.ValueStr[8]));
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[3]))
+                {
+                    pair.Value.NameID =  TableReader.StrDictionary.GetRecord(pair.Value.ValueStr[3]);
+                }
+                else
+                {
+                    pair.Value.NameID = null;
+                }
+                if (!string.IsNullOrEmpty(pair.Value.ValueStr[4]))
+                {
+                    pair.Value.DescID =  TableReader.StrDictionary.GetRecord(pair.Value.ValueStr[4]);
+                }
+                else
+                {
+                    pair.Value.DescID = null;
+                }
+                pair.Value.Achieve = TableReadBase.ParseInt(pair.Value.ValueStr[5]);
+                pair.Value.Class = TableReadBase.ParseString(pair.Value.ValueStr[6]);
+                pair.Value.SubClass = TableReadBase.ParseString(pair.Value.ValueStr[7]);
+                pair.Value.ConditionScript = TableReadBase.ParseString(pair.Value.ValueStr[8]);
                 pair.Value.ConditionParams.Add(TableReadBase.ParseString(pair.Value.ValueStr[9]));
-                pair.Value.ConditionNum = TableReadBase.ParseInt(pair.Value.ValueStr[10]);
-                pair.Value.HardStar = TableReadBase.ParseInt(pair.Value.ValueStr[11]);
-                pair.Value.AwardType = TableReadBase.ParseInt(pair.Value.ValueStr[12]);
-                pair.Value.AwardSubType = TableReadBase.ParseInt(pair.Value.ValueStr[13]);
-                pair.Value.AwardNum = TableReadBase.ParseInt(pair.Value.ValueStr[14]);
+                pair.Value.ConditionParams.Add(TableReadBase.ParseString(pair.Value.ValueStr[10]));
+                pair.Value.ConditionParams.Add(TableReadBase.ParseString(pair.Value.ValueStr[11]));
+                pair.Value.ConditionNum = TableReadBase.ParseInt(pair.Value.ValueStr[12]);
+                pair.Value.HardStar = TableReadBase.ParseInt(pair.Value.ValueStr[13]);
+                pair.Value.AwardType = TableReadBase.ParseInt(pair.Value.ValueStr[14]);
+                pair.Value.AwardSubType = TableReadBase.ParseInt(pair.Value.ValueStr[15]);
+                pair.Value.AwardNum = TableReadBase.ParseInt(pair.Value.ValueStr[16]);
+                pair.Value.GuideID = TableReadBase.ParseInt(pair.Value.ValueStr[17]);
             }
         }
     }

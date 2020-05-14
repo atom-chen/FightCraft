@@ -188,7 +188,7 @@ public class UIManager : MonoBehaviour
         {
             uiPair.Value.Hide();
         }
-        _UIObjs.Clear();
+        //_UIObjs.Clear();
     }
 
     public void DestoryAllUI()

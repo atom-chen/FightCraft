@@ -1,5 +1,5 @@
 ﻿"""ID""","""Name""","""Desc""","""Value1""","""Value2""","""Value3"""
-1,Attr,,Strength,力量,力量
+1,Attr,f,Strength,力量,力量
 2,Attr,,Dexterity,敏捷,敏捷
 3,Attr,,Intelligence,智力,智力
 4,Attr,,Vitality,体质,體質
@@ -162,6 +162,185 @@
 40008,equipRefersh,,Summons <color=#00FF00>{0}</color>  shadow image when using attack skill and deals <color=#00FF00>{1}%</color> extra damage.,使用技能时，召唤<color=#00FF00>{0}</color>个影子，造成<color=#00FF00>{1}%</color>额外伤害。,使用技能時，召喚<color=#00FF00>{0}</color>個影子，造成<color=#00FF00>{1}%</color>額外傷害。
 50000,mission,,Daily,日常,日常
 50001,mission,,Challenge,挑战,挑戰
+50002,mission,,All Mission Complate,已完成全部任务,已完成全部任务
+50003,mission,,Mission Complate,完成任务,已完成全部任务
+51000,mission,,Enter battle,进入战斗,進入戰鬥
+51001,mission,,Use skill {0},使用1次技能{0},使用1次技能{0}
+51002,mission,,Kill 3 enemies,干掉3名敌人,幹掉3名敵人
+51003,mission,,Use skill {0},使用1次技能{0},使用1次技能{0}
+51004,mission,,Kill 5 enemies,干掉5名敌人,幹掉5名敵人
+51005,mission,,Use skill {0},使用1次技能{0},使用1次技能{0}
+51006,mission,,Kill 8 enemies,干掉8名敌人,幹掉8名敵人
+51007,mission,,Use skill {0},使用1次技能{0},使用1次技能{0}
+51008,mission,,Kill 10 enemies,干掉10名敌人,幹掉10名敵人
+51009,mission,,Use skill {0},使用1次技能{0},使用1次技能{0}
+51010,mission,,Enter the boss room,进入boss房间,進入boss房間
+51011,mission,,15combot,15combot,15combot
+51012,mission,,Pick up any equipment,拾取任意1件装备,拾取任意1件裝備
+51013,mission,,Put on any equipment,穿戴任意1件装备,穿戴任意1件裝備
+51014,mission,,Kill 1 boss,击杀1次boss,擊殺1次boss
+51015,mission,,Equiped 5 equipments,穿戴5件装备,穿戴5件裝備
+51016,mission,,Pass any stage,通关1次普通关卡,通關1次普通關卡
+51017,mission,,Equiped 3 blue equipments,穿戴3件蓝色以上装备,穿戴3件藍色以上裝備
+51018,mission,,Equiped 1 purple equipments,穿戴1件紫色以上装备,穿戴1件紫色以上裝備
+51019,mission,,20combat,20combat,20combat
+51020,mission,,Pass stage -{0},通关1次关卡{0},通關1次關卡{0}
+51021,mission,,Put on any gem,装备1颗任意宝石,裝備1顆任意寶石
+51022,mission,,Get 5 gems,获得5颗宝石,獲得5顆寶石
+51023,mission,,Combine any gem,合成1次任意宝石,合成1次任意寶石
+51024,mission,,22combat,22combat,22combat
+51025,mission,,Equiped 3 purple equipments,穿戴3件紫色以上装备,穿戴3件紫色以上裝備
+51026,mission,,Kill any boss in 90 seconds,90秒内干掉boss,90秒內幹掉boss
+51027,mission,,Pass stage with 50% HP,HP50%以上通关1次关卡,HP50%以上通關1次關卡
+51028,mission,,Up level to 15,提升到等级15,提升到等級15
+51029,mission,,Pass Gold Challenge,通关1次金币关卡,通關1次金幣關卡
+51030,mission,,Buy any item,商店购买1件任意物品,商店購買1件任意物品
+51031,mission,,Enter boss room with 70%HP,HP70%以上进入1次boss房间,HP70%以上進入1次boss房間
+51032,mission,,25combat,25combat,25combat
+51033,mission,,Gambling once,赌博1次装备,賭博1次裝備
+51034,mission,,Get an origin equipment,获得1件橙色装备,獲得1件橙色裝備
+51035,mission,,Pass stage with 20 behit,被击次数不超过20通关副本,被擊次數不超過20通關副本
+51036,mission,,Pass stage -{0},通关1次关卡{0},通關1次關卡-{0} 
+51037,mission,,Kill 10 elite enemies,干掉10名精英敌人,幹掉10名精英敵人
+51038,mission,,Kill 200 enemies in the Gold Challenge,金币关卡中干掉200名敌人,金幣關卡中幹掉200名敵人
+51039,mission,,Combine a gem above level 4,合成一颗4级以上宝石,合成一顆4級以上寶石
+51040,mission,,30combat,30combat,30combat
+51041,mission,,Up level to 25,提升到等级25,提升到等級25
+51042,mission,,Summon soul with gold,金币召唤1次英雄之魂,金幣召喚1次英雄之魂
+51043,mission,,Use Soul skill 20 times,关卡中使用20次英雄之魂,關卡中使用20次英雄之魂
+51044,mission,,Kill 250 enemies in the Gold Challenge,金币关卡中干掉250名敌人,金幣關卡中幹掉250名敵人
+51045,mission,,35combat,35combat,35combat
+51046,mission,,level up a skill,提升1次技能,提升1次技能
+51047,mission,,Use Soul skill 50 times,关卡中使用50次英雄之魂,關卡中使用50次英雄之魂
+51048,mission,,Pass stage with 60% HP,HP60%以上通关1次关卡,HP60%以上通關1次關卡
+51049,mission,,Collect 1 orange equipment,收藏1件橙色装备,收藏1件橙色裝備
+51050,mission,,Pass stage with 15 behit,被击次数不超过15通关副本,被擊次數不超過15通關副本
+51051,mission,,40combat,40combat,40combat
+51052,mission,,Up level to 40,等级提升到40,等級提升到40
+51053,mission,,Gambling 3 times,赌博3件装备,賭博3件裝備
+51054,mission,,Pass stage with 70% HP,HP50%以上通关1次关卡,HP50%以上通關1次關卡
+51055,mission,,Use Soul skill 100 times,关卡中使用100次英雄之魂,關卡中使用100次英雄之魂
+51056,mission,,Summon soul with gold 10 times,金币召唤10次英雄之魂,金幣召喚10次英雄之魂
+51057,mission,,Kill 260 enemies in the Gold Challenge,金币关卡中干掉260名敌人,金幣關卡中幹掉260名敵人
+51058,mission,,Get 10 gems,获得10颗宝石,獲得10顆寶石
+51059,mission,,Up level to 50,等级提升到50,等級提升到50
+51060,mission,,Refresh equipment once,刷新1次装备属性,刷新1次裝備屬性
+51061,mission,,Equiped 5 orange equipments,穿戴5件橙色装备,穿戴5件橙色裝備
+51062,mission,,45combat,45combat,45combat
+51063,mission,,Switch any role once,切换1次任意角色,切換1次任意角色
+51064,mission,,Learn 1 talent,学习1次天赋,學習1次天賦
+51065,mission,,Activate any gem set,激活任意宝石套装,啟動任意寶石套裝
+51066,mission,,Pass stage with 10 behit,被击次数不超过10通关副本,被擊次數不超過10通關副本
+51067,mission,,Kill 300 enemies in the Gold Challenge,金币关卡中干掉300名敌人,金幣關卡中幹掉300名敵人
+51068,mission,,Pass stage with 90% HP,HP90%以上通关一次关卡,HP90%以上通關一次關卡
+51069,mission,,50combat,50combat,50combat
+51070,mission,,Gambling any orange equipment,赌博到1件橙色装备,賭博到1件橙色裝備
+51071,mission,,Collect 15 orange equipments,收藏15件橙色装备,收藏15件橙色裝備
+51072,mission,,Refresh equipment attributes 30 times,刷新30次装备属性,刷新30次裝備屬性
+51073,mission,,Kill 100 elite enemies,干掉100名精英敌人,幹掉100名精英敵人
+51074,mission,,Summon soul with gold 100 times,金币召唤100次英雄之魂,金幣召喚100次英雄之魂
+51075,mission,,60combat,60combat,60combat
+51076,mission,,Pass 10 stages with 90% HP,干掉10个不同的boss，boss战时间不超过80秒,HP90%以上通關10次關卡
+51077,mission,,Any gem set level reaches 50,任意宝石套装等级达到50,任意寶石套裝等級達到50
+51078,mission,,Summon soul with diamond 100 times,钻石召唤10次英雄之魂,鑽石召喚10次英雄之魂
+51079,mission,,Pass stages with 100% HP,HP100%通关一次关卡,HP100%通關一次關卡
+51080,mission,,Kill 400 enemies in the Gold Challenge,金币关卡中干掉400名敌人,金幣關卡中幹掉400名敵人
+51081,mission,,75combat,75combat,75combat
+51082,mission,,Collect 35 orange equipments,收藏35件橙色装备,收藏35件橙色裝備
+51083,mission,,Kill 500 enemies in the Gold Challenge,金币关卡中干掉500名敌人,金幣關卡中幹掉500名敵人
+51084,mission,,90combat,90combat,90combat
+51085,mission,,Collect 60 orange equipments,收藏60件橙色装备,收藏60件橙色裝備
+51086,mission,,Mission87,激活任意宝石套装,任务87
+51087,mission,,Mission88,激活任意宝石套装,任务88
+51088,mission,,Mission89,激活任意宝石套装,任务89
+51089,mission,,Mission90,激活任意宝石套装,任务90
+51090,mission,,Mission91,激活任意宝石套装,任务91
+55000,mission,,Enter battle,进入战斗,進入戰鬥
+55001,mission,,Use skill {0},使用1次技能{0},使用1次技能{0}
+55002,mission,,Kill 3 enemies,干掉3名敌人,幹掉3名敵人
+55003,mission,,Use skill {0},使用1次技能{0},使用1次技能{0}
+55004,mission,,Kill 5 enemies,干掉5名敌人,幹掉5名敵人
+55005,mission,,Use skill {0},使用1次技能{0},使用1次技能{0}
+55006,mission,,Kill 8 enemies,干掉8名敌人,幹掉8名敵人
+55007,mission,,Use skill {0},使用1次技能{0},使用1次技能{0}
+55008,mission,,Kill 10 enemies,干掉10名敌人,幹掉10名敵人
+55009,mission,,Use skill {0},使用1次技能{0},使用1次技能{0}
+55010,mission,,Enter the boss room,进入boss房间,進入boss房間
+55011,mission,,15combot,15combot,15combot
+55012,mission,,Pick up any equipment,拾取任意1件装备,拾取任意1件裝備
+55013,mission,,Put on any equipment,穿戴任意1件装备,穿戴任意1件裝備
+55014,mission,,Kill 1 boss,击杀1次boss,擊殺1次boss
+55015,mission,,Equiped 5 equipments,穿戴5件装备,穿戴5件裝備
+55016,mission,,Pass any stage,通关1次普通关卡,通關1次普通關卡
+55017,mission,,Equiped 3 blue equipments,穿戴3件蓝色以上装备,穿戴3件藍色以上裝備
+55018,mission,,Equiped 1 purple equipments,穿戴1件紫色以上装备,穿戴1件紫色以上裝備
+55019,mission,,20combat,20combat,20combat
+55020,mission,,Pass stage -{0},通关1次关卡{0},通關1次關卡{0}
+55021,mission,,Put on any gem,装备1颗任意宝石,裝備1顆任意寶石
+55022,mission,,Get 5 gems,获得5颗宝石,獲得5顆寶石
+55023,mission,,Combine any gem,合成1次任意宝石,合成1次任意寶石
+55024,mission,,22combat,22combat,22combat
+55025,mission,,Equiped 3 purple equipments,穿戴3件紫色以上装备,穿戴3件紫色以上裝備
+55026,mission,,Kill any boss in 90 seconds,90秒内干掉boss,90秒內幹掉boss
+55027,mission,,Pass stage with 50% HP,HP50%以上通关1次关卡,HP50%以上通關1次關卡
+55028,mission,,Up level to 15,提升到等级15,提升到等級15
+55029,mission,,Pass Gold Challenge,通关1次金币关卡,通關1次金幣關卡
+55030,mission,,Buy any item,商店购买1件任意物品,商店購買1件任意物品
+55031,mission,,Enter boss room with 70%HP,HP70%以上进入1次boss房间,HP70%以上進入1次boss房間
+55032,mission,,25combat,25combat,25combat
+55033,mission,,Gambling once,赌博1次装备,賭博1次裝備
+55034,mission,,Get an origin equipment,获得1件橙色装备,獲得1件橙色裝備
+55035,mission,,Pass stage with 20 behit,被击次数不超过20通关副本,被擊次數不超過20通關副本
+55036,mission,,Pass stage -{0},通关1次关卡-{0} ,通關1次關卡-{0} 
+55037,mission,,Kill 10 elite enemies,干掉10名精英敌人,幹掉10名精英敵人
+55038,mission,,Kill 200 enemies in the Gold Challenge,金币关卡中干掉200名敌人,金幣關卡中幹掉200名敵人
+55039,mission,,Combine a gem above level 4,合成一颗4级以上宝石,合成一顆4級以上寶石
+55040,mission,,30combat,30combat,30combat
+55041,mission,,Up level to 25,提升到等级25,提升到等級25
+55042,mission,,Summon soul with gold,金币召唤1次英雄之魂,金幣召喚1次英雄之魂
+55043,mission,,Use Soul skill 20 times,关卡中使用20次英雄之魂,關卡中使用20次英雄之魂
+55044,mission,,Kill 250 enemies in the Gold Challenge,金币关卡中干掉250名敌人,金幣關卡中幹掉250名敵人
+55045,mission,,35combat,35combat,35combat
+55046,mission,,level up a skill,提升1次技能,提升1次技能
+55047,mission,,Use Soul skill 50 times,关卡中使用50次英雄之魂,關卡中使用50次英雄之魂
+55048,mission,,Pass stage with 60% HP,HP60%以上通关1次关卡,HP60%以上通關1次關卡
+55049,mission,,Collect 1 orange equipment,收藏1件橙色装备,收藏1件橙色裝備
+55050,mission,,Pass stage with 15 behit,被击次数不超过15通关副本,被擊次數不超過15通關副本
+55051,mission,,40combat,40combat,40combat
+55052,mission,,Up level to 40,等级提升到40,等級提升到40
+55053,mission,,Gambling 3 times,赌博3件装备,賭博3件裝備
+55054,mission,,Pass stage with 70% HP,HP70%以上通关1次关卡,HP70%以上通關1次關卡
+55055,mission,,Use Soul skill 100 times,关卡中使用100次英雄之魂,關卡中使用100次英雄之魂
+55056,mission,,Summon soul with gold 10 times,金币召唤10次英雄之魂,金幣召喚10次英雄之魂
+55057,mission,,Kill 260 enemies in the Gold Challenge,金币关卡中干掉260名敌人,金幣關卡中幹掉260名敵人
+55058,mission,,Get 10 gems,获得10颗宝石,獲得10顆寶石
+55059,mission,,Up level to 50,等级提升到50,等級提升到50
+55060,mission,,Refresh equipment once,刷新1次装备属性,刷新1次裝備屬性
+55061,mission,,Equiped 5 orange equipments,穿戴5件橙色装备,穿戴5件橙色裝備
+55062,mission,,45combat,45combat,45combat
+55063,mission,,Switch any role once,切换1次任意角色,切換1次任意角色
+55064,mission,,Learn 1 talent,学习1次天赋,學習1次天賦
+55065,mission,,Activate any gem set,激活任意宝石套装,啟動任意寶石套裝
+55066,mission,,Pass stage with 10 behit,被击次数不超过10通关副本,被擊次數不超過10通關副本
+55067,mission,,Kill 300 enemies in the Gold Challenge,金币关卡中干掉300名敌人,金幣關卡中幹掉300名敵人
+55068,mission,,Pass stage with 90% HP,HP90%以上通关一次关卡,HP90%以上通關一次關卡
+55069,mission,,50combat,50combat,50combat
+55070,mission,,Gambling any orange equipment,赌博到1件橙色装备,賭博到1件橙色裝備
+55071,mission,,Collect 15 orange equipments,收藏15件橙色装备,收藏15件橙色裝備
+55072,mission,,Refresh equipment attributes 30 times,刷新30次装备属性,刷新30次裝備屬性
+55073,mission,,Kill 100 elite enemies,干掉100名精英敌人,幹掉100名精英敵人
+55074,mission,,Summon soul with gold 100 times,金币召唤100次英雄之魂,金幣召喚100次英雄之魂
+55075,mission,,60combat,60combat,60combat
+55076,mission,,Pass 10 stages with 90% HP,HP90%以上通关10次关卡,HP90%以上通關10次關卡
+55077,mission,,Any gem set level reaches 50,任意宝石套装等级达到50,任意寶石套裝等級達到50
+55078,mission,,Summon soul with diamond 100 times,钻石召唤10次英雄之魂,鑽石召喚10次英雄之魂
+55079,mission,,Pass stages with 100% HP,HP100%通关一次关卡,HP100%通關一次關卡
+55080,mission,,Kill 400 enemies in the Gold Challenge,金币关卡中干掉400名敌人,金幣關卡中幹掉400名敵人
+55081,mission,,75combat,75combat,75combat
+55082,mission,,Collect 35 orange equipments,收藏35件橙色装备,收藏35件橙色裝備
+55083,mission,,Kill 500 enemies in the Gold Challenge,金币关卡中干掉500名敌人,金幣關卡中幹掉500名敵人
+55084,mission,,90combat,90combat,90combat
+55085,mission,,Collect 60 orange equipments,收藏60件橙色装备,收藏60件橙色裝備
 60001,Skill,skillName,Basic Attack,基本攻击,基本攻擊
 60002,Skill,skillName,Gale Smash,疾风打,疾風打
 60003,Skill,skillName,Spinning Cross,巨旋风,巨旋風
@@ -1034,6 +1213,7 @@
 2400115,loadingtip,,Skill: Characters with the same skill share skill level,技能：拥有相同技能的角色共享技能等级,技能：擁有相同技能的角色共用技能等級
 2400116,loadingtip,,Talent: Characters with the same talent share talent level,天赋：拥有相同天赋的角色共享天赋等级,天賦：擁有相同天賦的角色共用天賦等級
 2400117,loadingtip,,Gem: A gem set can be activated when the gem level is sufficient,宝石：宝石等级足够时可以激活宝石套装,寶石：寶石等級足夠時可以啟動寶石套裝
+2400118,loadingtip,,Operation: Hold the key to continue attack,操作：按住攻击键可连续攻击,操作：按住攻擊鍵可連續攻擊
 2401000,loadingtip,fight tip,fight tip,战斗提示,戰鬥提示
 2401001,loadingtip,fight tip,fight tip,战斗提示,戰鬥提示
 2402000,fighttip,,Monster: {0}/{1},怪物:{0} / {1},怪物:{0} / {1}

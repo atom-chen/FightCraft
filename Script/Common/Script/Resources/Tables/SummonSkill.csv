@@ -1,4 +1,4 @@
-"""ID""","""??""","""??""","""NameDict""","""Icon""","""Quality""","""MonsterBase""","""ActSkillIdx""","""AttrModelfy""","""StarExp1""","""StarExp2""","""StarExp3""","""StarExp4""","""StarExp5""","""SkillDesc""","""SkillRate1""","""SkillRate2""","""SkillRate3""","""SkillRate4""","""SkillRate5""","""SkillRate6"""
+﻿"""ID""","""名称""","""描述""","""NameDict""","""Icon""","""Quality""","""MonsterBase""","""ActSkillIdx""","""AttrModelfy""","""StarExp1""","""StarExp2""","""StarExp3""","""StarExp4""","""StarExp5""","""SkillDesc""","""SkillRate1""","""SkillRate2""","""SkillRate3""","""SkillRate4""","""SkillRate5""","""SkillRate6"""
 1210001,,,1210001,,0,10001,0,10000,0,1,2,3,4,2300090,1,1,1.1,1.2,1.35,1.5
 1210002,,,1210002,,1,10002,0,10000,0,1,2,3,4,2300090,1,1,1.1,1.2,1.35,1.5
 1210003,,,1210003,,2,10003,0,10000,0,1,2,3,4,2300090,1,1,1.1,1.2,1.35,1.5

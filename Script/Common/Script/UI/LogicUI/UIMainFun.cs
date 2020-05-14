@@ -45,6 +45,30 @@ public class UIMainFun : UIBase
         instance.RefreshGiftBtns();
     }
 
+    public static bool IsUIShow()
+    {
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIMainFun>(UIConfig.UIMainFun);
+        if (instance == null)
+            return false;
+
+        if (!instance.isActiveAndEnabled)
+            return false;
+
+        return true;
+    }
+
+    public static bool IsShowInFight()
+    {
+        var instance = GameCore.Instance.UIManager.GetUIInstance<UIMainFun>(UIConfig.UIMainFun);
+        if (instance == null)
+            return false;
+
+        if (!instance.isActiveAndEnabled)
+            return false;
+
+        return !instance._LargeFightBtn.activeSelf;
+    }
+
     #endregion
 
     #region 

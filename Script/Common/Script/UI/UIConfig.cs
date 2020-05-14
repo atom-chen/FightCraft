@@ -52,6 +52,7 @@ public class UIConfig
     public static AssetInfo UIFightWarning = new AssetInfo("LogicUI/Fight/UIFightWarning");
     public static AssetInfo UIFightSetting = new AssetInfo("LogicUI/Fight/UIFightSetting");
     public static AssetInfo UIFightTips = new AssetInfo("LogicUI/Fight/UIFightTips");
+    public static AssetInfo UICombo = new AssetInfo("LogicUI/Fight/UICombo");
     public static AssetInfo UIStageDiffTips = new AssetInfo("LogicUI/Fight/UIStageDiffTips");
     public static AssetInfo UIFuncInFight = new AssetInfo("LogicUI/Fight/UIFuncInFight");
     public static AssetInfo UIJoyStick = new AssetInfo("LogicUI/Fight/UIJoyStick");
@@ -73,6 +74,8 @@ public class UIConfig
     public static AssetInfo UIMessageTip = new AssetInfo("LogicUI/Message/UIMessageTip");
     public static AssetInfo UITextTip = new AssetInfo("LogicUI/Message/UITextTip");
     public static AssetInfo UIDailyMission = new AssetInfo("LogicUI/Mission/UIDailyMission");
+    public static AssetInfo UIMissionBase = new AssetInfo("LogicUI/Mission/UIMissionBase");
+    public static AssetInfo UIGuideTip = new AssetInfo("LogicUI/Mission/UIGuideTip");
     public static AssetInfo UIRoleAttr = new AssetInfo("LogicUI/RoleAttr/UIRoleAttr");
     public static AssetInfo UIShopNum = new AssetInfo("LogicUI/Shop/UIShopNumInput");
     public static AssetInfo UIShopPack = new AssetInfo("LogicUI/Shop/UIShopPack");

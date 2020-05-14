@@ -315,11 +315,12 @@ public class ShopData : SaveItemBase
         string strTips = Tables.StrDictionary.GetFormatStr(2300088, string.Format("{0} * {1}", itemEquip.GetEquipNameWithColor(), 1));
         UIMessageTip.ShowMessageTip(strTips);
 
-        BackBagPack.Instance.AddEquip(itemEquip);
+        var backpackItem = BackBagPack.Instance.AddEquip(itemEquip);
         //_GamblingEquips.Remove(itemEquip);
-        
 
-        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_GAMBLING, this, null);
+        Hashtable hash = new Hashtable();
+        hash.Add("EquipInfo", backpackItem);
+        GameCore.Instance.EventController.PushEvent(EVENT_TYPE.EVENT_LOGIC_GAMBLING, this, hash);
 
         return true;
     }
